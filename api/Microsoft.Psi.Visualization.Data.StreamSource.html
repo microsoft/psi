@@ -141,16 +141,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L29">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource__ctor_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamSource__ctor_Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_System_Type_System_String_Microsoft_Psi_IStreamMetadata_Microsoft_Psi_Visualization_Data_IStreamAdapter_Microsoft_Psi_Visualization_Data_ISummarizer_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.#ctor(Microsoft.Psi.Visualization.ViewModels.PartitionViewModel,System.Type,System.String,Microsoft.Psi.IStreamMetadata,Microsoft.Psi.Visualization.Data.IStreamAdapter,Microsoft.Psi.Visualization.Data.ISummarizer)">StreamSource(PartitionViewModel, Type, String, IStreamMetadata, IStreamAdapter, ISummarizer)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamSource__ctor_Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_System_Type_System_String_Microsoft_Psi_IStreamMetadata_Microsoft_Psi_Visualization_Data_IStreamAdapter_Microsoft_Psi_Visualization_Data_ISummarizer_System_Func_System_Object__System_Action_System_Object__" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.#ctor(Microsoft.Psi.Visualization.ViewModels.PartitionViewModel,System.Type,System.String,Microsoft.Psi.IStreamMetadata,Microsoft.Psi.Visualization.Data.IStreamAdapter,Microsoft.Psi.Visualization.Data.ISummarizer,System.Func{System.Object},System.Action{System.Object})">StreamSource(PartitionViewModel, Type, String, IStreamMetadata, IStreamAdapter, ISummarizer, Func&lt;Object&gt;, Action&lt;Object&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public StreamSource(PartitionViewModel partitionViewModel, Type streamReaderType, string streamName, IStreamMetadata streamMetadata, IStreamAdapter streamAdapter, ISummarizer summarizer)</code></pre>
+    <pre><code class="lang-csharp hljs">public StreamSource(PartitionViewModel partitionViewModel, Type streamReaderType, string streamName, IStreamMetadata streamMetadata, IStreamAdapter streamAdapter, ISummarizer summarizer, Func&lt;dynamic&gt; allocator, Action&lt;dynamic&gt; deallocator)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -198,13 +198,81 @@
         <td><p>The summarizer to use when reading the stream.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">allocator</span></td>
+        <td><p>The allocator to use when reading data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">deallocator</span></td>
+        <td><p>The deallocator to use when reading data.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L100">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamSource_Allocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Allocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_Allocator" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Allocator">Allocator</h4>
+  <div class="markdown level1 summary"><p>Gets the stream source allocator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;dynamic&gt; Allocator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamSource_Deallocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Deallocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_Deallocator" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Deallocator">Deallocator</h4>
+  <div class="markdown level1 summary"><p>Gets the stream source deallocator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Action&lt;dynamic&gt; Deallocator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_IsLive_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.IsLive*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_IsLive" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.IsLive">IsLive</h4>
@@ -232,7 +300,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_StoreName_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StoreName*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_StoreName" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StoreName">StoreName</h4>
@@ -260,7 +328,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L55">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_StorePath_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StorePath*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_StorePath" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StorePath">StorePath</h4>
@@ -288,7 +356,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L75">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_StreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamAdapter*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_StreamAdapter" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamAdapter">StreamAdapter</h4>
@@ -316,7 +384,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_StreamMetadata_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamMetadata*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_StreamMetadata" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamMetadata">StreamMetadata</h4>
@@ -344,7 +412,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_StreamName_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamName*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_StreamName" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamName">StreamName</h4>
@@ -372,7 +440,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L60">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_StreamReaderType_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamReaderType*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_StreamReaderType" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.StreamReaderType">StreamReaderType</h4>
@@ -400,7 +468,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L80">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L86">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_Summarizer_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Summarizer*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_Summarizer" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Summarizer">Summarizer</h4>
@@ -430,7 +498,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L134">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L150">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_Equals_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Equals*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_Equals_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Equals(Microsoft.Psi.Visualization.Data.StreamSource)">Equals(StreamSource)</h4>
@@ -474,7 +542,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L128">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L144">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_Equals_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Equals*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_Equals_System_Object_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.Equals(System.Object)">Equals(Object)</h4>
@@ -520,7 +588,7 @@
   <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L154">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L170">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_GetHashCode_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.GetHashCode*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_GetHashCode" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.GetHashCode">GetHashCode()</h4>
@@ -551,7 +619,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L113">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_op_Equality_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.op_Equality*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_op_Equality_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.op_Equality(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.Visualization.Data.StreamSource)">Equality(StreamSource, StreamSource)</h4>
@@ -604,7 +672,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L122">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSource.cs/#L138">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSource_op_Inequality_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.op_Inequality*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamSource_op_Inequality_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.StreamSource.op_Inequality(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.Visualization.Data.StreamSource)">Inequality(StreamSource, StreamSource)</h4>

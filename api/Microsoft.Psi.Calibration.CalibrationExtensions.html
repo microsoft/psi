@@ -1,0 +1,554 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CalibrationExtensions
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CalibrationExtensions
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions">
+  
+  
+  <h1 id="Microsoft_Psi_Calibration_CalibrationExtensions" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions" class="text-break">Class CalibrationExtensions
+  </h1>
+  <div class="markdown level0 summary"><p>Provides various helper and extension methods for dealing with calibration objects, camera intrinsics, rotations, etc.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">CalibrationExtensions</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Calibration.html">Microsoft.Psi.Calibration</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Calibration.dll</h6>
+  <h5 id="Microsoft_Psi_Calibration_CalibrationExtensions_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class CalibrationExtensions : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L134">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_AxisAngleToMatrix_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.AxisAngleToMatrix*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_AxisAngleToMatrix_Vector_System_Double__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.AxisAngleToMatrix(Vector{System.Double})">AxisAngleToMatrix(Vector&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Use the Rodrigues formula for transforming a given rotation from axis-angle representation to a 3x3 matrix.
+Where 'r' is a rotation vector:
+theta = norm(r)
+M = skew(r/theta)
+R = I + M * sin(theta) + M*M * (1-cos(theta)).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix&lt;double&gt; AxisAngleToMatrix(Vector&lt;double&gt; vectorRotation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">vectorRotation</span></td>
+        <td><p>Rotation in axis-angle vector representation,
+where the angle is represented by the length (L2-norm) of the vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>Rotation in a 3x3 matrix representation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L50">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics(Microsoft.Psi.Imaging.ImageBase,System.Double,System.Double)">ComputeCameraIntrinsics(ImageBase, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Construct a new <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a> object
+computed from an image (width and height) and focal length.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ICameraIntrinsics ComputeCameraIntrinsics(this ImageBase image, double focalLengthX, double focalLengthY)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></td>
+        <td><span class="parametername">image</span></td>
+        <td><p>The image to construct the intrinsics for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">focalLengthX</span></td>
+        <td><p>The focal length in the X dimension.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">focalLengthY</span></td>
+        <td><p>The focal length in the Y dimension.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
+        <td><p>A newly computed <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L27">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_System_Int32_System_Int32_System_Double_System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics(System.Int32,System.Int32,System.Double,System.Double)">ComputeCameraIntrinsics(Int32, Int32, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Construct a new <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a> object
+computed from image width/height and focal length.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ICameraIntrinsics ComputeCameraIntrinsics(int imageWidth, int imageHeight, double focalLengthX, double focalLengthY)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">imageWidth</span></td>
+        <td><p>The image width.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">imageHeight</span></td>
+        <td><p>The image height.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">focalLengthX</span></td>
+        <td><p>The focal length in the X dimension.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">focalLengthY</span></td>
+        <td><p>The focal length in the Y dimension.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
+        <td><p>A newly computed <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_IntersectLineWithDepthMesh_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.IntersectLineWithDepthMesh*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_IntersectLineWithDepthMesh_Microsoft_Psi_Calibration_ICameraIntrinsics_Line3D_Microsoft_Psi_Imaging_DepthImage_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.IntersectLineWithDepthMesh(Microsoft.Psi.Calibration.ICameraIntrinsics,Line3D,Microsoft.Psi.Imaging.DepthImage,System.Double,System.Double,System.Boolean)">IntersectLineWithDepthMesh(ICameraIntrinsics, Line3D, DepthImage, Double, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Performs a ray/mesh intersection with the depth map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Point3D? IntersectLineWithDepthMesh(ICameraIntrinsics depthIntrinsics, Line3D line, DepthImage depthImage, double maxDistance = null, double skipFactor = 0.05, bool undistort = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
+        <td><span class="parametername">depthIntrinsics</span></td>
+        <td><p>The intrinsics for the depth camera.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Line3D</span></td>
+        <td><span class="parametername">line</span></td>
+        <td><p>Ray to intersect against depth map.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">depthImage</span></td>
+        <td><p>Depth map to ray cast against.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">maxDistance</span></td>
+        <td><p>The maximum distance to search for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">skipFactor</span></td>
+        <td><p>Distance to march on each step along ray.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">undistort</span></td>
+        <td><p>Whether undistortion should be applied to the point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>Returns point of intersection.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L179">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_MatrixToAxisAngle_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.MatrixToAxisAngle*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_MatrixToAxisAngle_Matrix_System_Double__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.MatrixToAxisAngle(Matrix{System.Double})">MatrixToAxisAngle(Matrix&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Convert a rotation matrix to axis-angle representation (a unit vector scaled by the angular distance to rotate).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vector&lt;double&gt; MatrixToAxisAngle(Matrix&lt;double&gt; m)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">m</span></td>
+        <td><p>Input rotation matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>Same rotation in axis-angle representation (L2-Norm of the vector represents angular distance).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectTo3D_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectTo3D*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectTo3D_Microsoft_Psi_IProducer_System_ValueTuple_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__List_Point2D__Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo___Microsoft_Psi_DeliveryPolicy_System_ValueTuple_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__List_Point2D__Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo___" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectTo3D(Microsoft.Psi.IProducer{System.ValueTuple{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage},List{Point2D},Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo}},Microsoft.Psi.DeliveryPolicy{System.ValueTuple{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage},List{Point2D},Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo}})">ProjectTo3D(IProducer&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo)&gt;, DeliveryPolicy&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo)&gt;)</h4>
+  <div class="markdown level1 summary"><p>Projects set of 2D image points into 3D.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;List&lt;Point3D&gt;&gt; ProjectTo3D(this IProducer&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo)&gt; source, DeliveryPolicy&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo)&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;, <span class="xref">List</span>&lt;<span class="xref">Point2D</span>&gt;, <a class="xref" href="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.html">IDepthDeviceCalibrationInfo</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Tuple of depth image, list of points to project, and calibration information.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;, <span class="xref">List</span>&lt;<span class="xref">Point2D</span>&gt;, <a class="xref" href="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.html">IDepthDeviceCalibrationInfo</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">List</span>&lt;<span class="xref">Point3D</span>&gt;&gt;</td>
+        <td><p>Returns a producer that generates a list of corresponding 3D points in Kinect camera space.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectToCameraSpace_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectToCameraSpace*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectToCameraSpace_Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_Point2D_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectToCameraSpace(Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo,Point2D,Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage})">ProjectToCameraSpace(IDepthDeviceCalibrationInfo, Point2D, Shared&lt;DepthImage&gt;)</h4>
+  <div class="markdown level1 summary"><p>Method for projecting a point in pixel coordinate from the color camera into the depth camera's coordinates by determining the corresponding depth pixel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Point3D? ProjectToCameraSpace(IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo, Point2D point2D, Shared&lt;DepthImage&gt; depthImage)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.html">IDepthDeviceCalibrationInfo</a></td>
+        <td><span class="parametername">depthDeviceCalibrationInfo</span></td>
+        <td><p>Defines the calibration information (extrinsics and intrinsics) for the depth device.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">point2D</span></td>
+        <td><p>Pixel coordinates in the color camera.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;</td>
+        <td><span class="parametername">depthImage</span></td>
+        <td><p>Depth map.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>Point in 3D depth camera coordinates, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

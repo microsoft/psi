@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer" class="text-break">Class VisualizationContainer
   </h1>
-  <div class="markdown level0 summary"><p>Represents the container where all visualization panels are hosted. The is the root UI element for visualizations.</p>
+  <div class="markdown level0 summary"><p>Implements the container where all visualization panels are hosted. The is the root UI element for visualizations.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -146,7 +146,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L72">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.#ctor">VisualizationContainer()</h4>
@@ -161,7 +161,37 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ClearSelectionCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ClearSelectionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ClearSelectionCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ClearSelectionCommand">ClearSelectionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the clear selection command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ClearSelectionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L146">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_CurrentPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.CurrentPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_CurrentPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.CurrentPanel">CurrentPanel</h4>
@@ -190,7 +220,7 @@ public VisualizationPanel CurrentPanel { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L150">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L208">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_DeleteVisualizationPanelCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.DeleteVisualizationPanelCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_DeleteVisualizationPanelCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.DeleteVisualizationPanelCommand">DeleteVisualizationPanelCommand</h4>
@@ -219,7 +249,7 @@ public RelayCommand&lt;VisualizationPanel&gt; DeleteVisualizationPanelCommand { 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L163">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Navigator_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Navigator*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Navigator" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Navigator">Navigator</h4>
@@ -248,7 +278,7 @@ public Navigator Navigator { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L115">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L173">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Panels_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Panels*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Panels" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Panels">Panels</h4>
@@ -277,7 +307,7 @@ public ObservableCollection&lt;VisualizationPanel&gt; Panels { get; }</code></pr
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L141">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L199">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ShowNavigator_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ShowNavigator*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ShowNavigator" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ShowNavigator">ShowNavigator</h4>
@@ -305,7 +335,7 @@ public ObservableCollection&lt;VisualizationPanel&gt; Panels { get; }</code></pr
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L125">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L183">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_SnapToVisualizationObject_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.SnapToVisualizationObject*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_SnapToVisualizationObject" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.SnapToVisualizationObject">SnapToVisualizationObject</h4>
@@ -332,11 +362,71 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToSelectionCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToSelectionCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToSelectionCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToSelectionCommand">ZoomToSelectionCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the zoom to selection command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ZoomToSelectionCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L126">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToSessionExtentsCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToSessionExtentsCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToSessionExtentsCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToSessionExtentsCommand">ZoomToSessionExtentsCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the zoom to session extents command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L242">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L300">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_AddPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.AddPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_AddPanel_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_System_Boolean_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.AddPanel(Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel,System.Boolean)">AddPanel(VisualizationPanel, Boolean)</h4>
@@ -373,7 +463,7 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L256">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L324">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Clear_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Clear*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Clear" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Clear">Clear()</h4>
@@ -386,16 +476,16 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L309">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L381">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_GetStreamMemberVisualizers_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.GetStreamMemberVisualizers*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_GetStreamMemberVisualizers" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.GetStreamMemberVisualizers">GetStreamMemberVisualizers()</h4>
-  <div class="markdown level1 summary"><p>Gets all of the visualization objects that visualize a stream member rather than a stream.</p>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_GetDerivedStreamVisualizationObjects_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.GetDerivedStreamVisualizationObjects*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_GetDerivedStreamVisualizationObjects" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.GetDerivedStreamVisualizationObjects">GetDerivedStreamVisualizationObjects()</h4>
+  <div class="markdown level1 summary"><p>Gets all of the visualization objects that visualize a derived stream, rather than a raw stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;IStreamVisualizationObject&gt; GetStreamMemberVisualizers()</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;IStreamVisualizationObject&gt; GetDerivedStreamVisualizationObjects()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -408,14 +498,14 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>&gt;</td>
-        <td><p>The collection ov visualization objects that visualize a stream member rathan a stream.</p>
+        <td><p>The collection of visualization objects that visualize a derived stream.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L175">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L233">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Load_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Load*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Load_System_String_System_String_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Load(System.String,System.String,Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer)">Load(String, String, VisualizationContainer)</h4>
@@ -474,7 +564,7 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L271">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L339">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_RemovePanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.RemovePanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_RemovePanel_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.RemovePanel(Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel)">RemovePanel(VisualizationPanel)</h4>
@@ -505,7 +595,7 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L325">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L397">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Save_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Save*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Save_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Save(System.String)">Save(String)</h4>
@@ -536,7 +626,7 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L372">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L444">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_UpdateStreamSources_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.UpdateStreamSources*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_UpdateStreamSources_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.UpdateStreamSources(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">UpdateStreamSources(SessionViewModel)</h4>
@@ -567,7 +657,7 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L394">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L466">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToRange_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToRange*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToRange_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToRange(Microsoft.Psi.TimeInterval)">ZoomToRange(TimeInterval)</h4>
@@ -621,7 +711,7 @@ public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L28" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L29" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

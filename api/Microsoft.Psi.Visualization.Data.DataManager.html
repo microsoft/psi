@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Data_DataManager" data-uid="Microsoft.Psi.Visualization.Data.DataManager" class="text-break">Class DataManager
   </h1>
-  <div class="markdown level0 summary"><p>Provides cached-controlled read access to data stores used by the visualization runtime.
+  <div class="markdown level0 summary"><p>Provides read access to data stores used by the visualization system.
 Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a>s and <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummaryManager.html">StreamSummaryManager</a>s.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -159,7 +159,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L374">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L348">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_CloseStore_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.CloseStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_CloseStore_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.CloseStore(System.String,System.String)">CloseStore(String, String)</h4>
@@ -196,7 +196,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L90">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_Dispose_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Dispose*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Dispose" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Dispose">Dispose()</h4>
@@ -208,7 +208,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L74">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_Finalize_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Finalize*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Finalize" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Finalize">Finalize()</h4>
@@ -221,64 +221,11 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L390">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_GetOriginatingTimeOfNearestInstantMessage_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetOriginatingTimeOfNearestInstantMessage*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetOriginatingTimeOfNearestInstantMessage_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetOriginatingTimeOfNearestInstantMessage(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime)">GetOriginatingTimeOfNearestInstantMessage(StreamSource, DateTime)</h4>
-  <div class="markdown level1 summary"><p>Gets originating time of the message in a stream that's closest to a given time.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DateTime? GetOriginatingTimeOfNearestInstantMessage(StreamSource streamSource, DateTime time)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
-        <td><span class="parametername">streamSource</span></td>
-        <td><p>The stream source indicating which stream to read from.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
-        <td><span class="parametername">time</span></td>
-        <td><p>The time for which to return the message with the closest originating time.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
-        <td><p>The originating time of the message closest to time.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L327">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L290">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadata_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadata*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadata__1_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadata``1(Microsoft.Psi.Visualization.Data.StreamSource)">GetSupplementalMetadata&lt;TSupplementalMetadata&gt;(StreamSource)</h4>
-  <div class="markdown level1 summary"><p>Gets the supplemental metadata for a stream.</p>
+  <div class="markdown level1 summary"><p>Gets the supplemental metadata for a stream specified by a stream source.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -298,7 +245,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
         <td><span class="parametername">streamSource</span></td>
-        <td><p>The stream source indicating which stream to read from.</p>
+        <td><p>The stream source.</p>
 </td>
       </tr>
     </tbody>
@@ -337,16 +284,97 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L184">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L303">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_IsStreamUnreadable_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.IsStreamUnreadable*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_IsStreamUnreadable_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.IsStreamUnreadable(Microsoft.Psi.Visualization.Data.StreamSource)">IsStreamUnreadable(StreamSource)</h4>
-  <div class="markdown level1 summary"><p>Checks if a stream is known to be unreadable.</p>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadataByName_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadataByName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetSupplementalMetadataByName__1_System_String_System_String_System_Type_System_String_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetSupplementalMetadataByName``1(System.String,System.String,System.Type,System.String)">GetSupplementalMetadataByName&lt;TSupplementalMetadata&gt;(String, String, Type, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the supplemental metadata for a specified stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsStreamUnreadable(StreamSource streamSource)</code></pre>
+    <pre><code class="lang-csharp hljs">public TSupplementalMetadata GetSupplementalMetadataByName&lt;TSupplementalMetadata&gt;(string storeName, string storePath, Type streamReaderType, string streamName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storeName</span></td>
+        <td><p>The store name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storePath</span></td>
+        <td><p>The store path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">streamReaderType</span></td>
+        <td><p>The type of stream reader.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>The stream name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSupplementalMetadata</span></td>
+        <td><p>The supplemental metadata for the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TSupplementalMetadata</span></td>
+        <td><p>The type of the supplemental metadata.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L373">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_GetTimeOfNearestMessage_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetTimeOfNearestMessage*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetTimeOfNearestMessage_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_Microsoft_Psi_Visualization_Helpers_NearestMessageType_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetTimeOfNearestMessage(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,Microsoft.Psi.Visualization.Helpers.NearestMessageType)">GetTimeOfNearestMessage(StreamSource, DateTime, NearestMessageType)</h4>
+  <div class="markdown level1 summary"><p>Gets the time of the nearest message to a specified time, on a specified stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestMessageType nearestMessageType)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -361,7 +389,66 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
         <td><span class="parametername">streamSource</span></td>
-        <td><p>The stream source indicating which stream to read from.</p>
+        <td><p>The stream source specifying the stream of interest.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The time to find the nearest message to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Helpers.NearestMessageType.html">NearestMessageType</a></td>
+        <td><span class="parametername">nearestMessageType</span></td>
+        <td><p>The type of nearest message to find.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><p>The time of the nearest message, if one is found or null otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L174">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_IsUnreadable_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.IsUnreadable*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_IsUnreadable_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.IsUnreadable(Microsoft.Psi.Visualization.Data.StreamSource)">IsUnreadable(StreamSource)</h4>
+  <div class="markdown level1 summary"><p>Checks if a stream is known to be unreadable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsUnreadable(StreamSource streamSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></td>
+        <td><span class="parametername">streamSource</span></td>
+        <td><p>The stream source indicating which stream to check.</p>
 </td>
       </tr>
     </tbody>
@@ -384,48 +471,17 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L171">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L146">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_OnInstantViewRangeChanged_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.OnInstantViewRangeChanged*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_OnInstantViewRangeChanged_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.OnInstantViewRangeChanged(Microsoft.Psi.TimeInterval)">OnInstantViewRangeChanged(TimeInterval)</h4>
-  <div class="markdown level1 summary"><p>Notifies the data manager that the possible range of data that may be read has changed.</p>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadAndPublishStreamValue_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadAndPublishStreamValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadAndPublishStreamValue_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadAndPublishStreamValue(System.DateTime)">ReadAndPublishStreamValue(DateTime)</h4>
+  <div class="markdown level1 summary"><p>Reads and publishes a stream value to all stream value subscribers based on the
+specified date-time. This method is only called by the UI thread.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void OnInstantViewRangeChanged(TimeInterval viewRange)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
-        <td><span class="parametername">viewRange</span></td>
-        <td><p>The new view range of the navigator.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L152">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadInstantData_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadInstantData*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadInstantData_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadInstantData(System.DateTime)">ReadInstantData(DateTime)</h4>
-  <div class="markdown level1 summary"><p>Reads the data for all instant data targets and calls them back
-when the data is ready. This method is only called by the UI thread.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ReadInstantData(DateTime cursorTime)</code></pre>
+    <pre><code class="lang-csharp hljs">public void ReadAndPublishStreamValue(DateTime dateTime)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -439,19 +495,19 @@ when the data is ready. This method is only called by the UI thread.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
-        <td><span class="parametername">cursorTime</span></td>
-        <td><p>The time of the visualization container's cursor.</p>
+        <td><span class="parametername">dateTime</span></td>
+        <td><p>The time for the values to be read.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L197">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L186">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,System.DateTime)">ReadStream&lt;T&gt;(StreamSource, DateTime, DateTime)</h4>
-  <div class="markdown level1 summary"><p>Creates a view of the messages identified by the matching start and end times and asynchronously fills it in.</p>
+  <div class="markdown level1 summary"><p>Creates and asynchronously fills in a view of the messages for a specified stream source and time interval.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -515,14 +571,14 @@ when the data is ready. This method is only called by the UI thread.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>The type of the message to read.</p>
+        <td><p>The type of the data in the stream.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L233">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L213">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.Func{System.DateTime,System.DateTime})">ReadStream&lt;T&gt;(StreamSource, Func&lt;DateTime, DateTime&gt;)</h4>
@@ -591,7 +647,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L215">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L200">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_UInt32_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.UInt32)">ReadStream&lt;T&gt;(StreamSource, UInt32)</h4>
@@ -660,7 +716,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L278">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L246">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_System_DateTime_System_TimeSpan_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,System.DateTime,System.TimeSpan)">ReadSummary&lt;T&gt;(StreamSource, DateTime, DateTime, TimeSpan)</h4>
@@ -669,7 +725,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, DateTime startTime, DateTime endTime, TimeSpan interval)</code></pre>
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, DateTime startTime, DateTime endTime, TimeSpan summaryInterval)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -701,7 +757,7 @@ when the data is ready. This method is only called by the UI thread.</p>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
-        <td><span class="parametername">interval</span></td>
+        <td><span class="parametername">summaryInterval</span></td>
         <td><p>The time interval each summary value should cover.</p>
 </td>
       </tr>
@@ -741,7 +797,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L312">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L277">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_TimeSpan_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.TimeSpan,System.Func{System.DateTime,System.DateTime})">ReadSummary&lt;T&gt;(StreamSource, TimeSpan, Func&lt;DateTime, DateTime&gt;)</h4>
@@ -750,7 +806,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, TimeSpan interval, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, TimeSpan summaryInterval, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -770,7 +826,7 @@ when the data is ready. This method is only called by the UI thread.</p>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
-        <td><span class="parametername">interval</span></td>
+        <td><span class="parametername">summaryInterval</span></td>
         <td><p>The time interval each summary value should cover.</p>
 </td>
       </tr>
@@ -816,7 +872,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L295">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L262">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_System_TimeSpan_System_UInt32_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,System.TimeSpan,System.UInt32)">ReadSummary&lt;T&gt;(StreamSource, TimeSpan, UInt32)</h4>
@@ -825,7 +881,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, TimeSpan interval, uint tailCount)</code></pre>
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, TimeSpan summaryInterval, uint tailCount)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -845,7 +901,7 @@ when the data is ready. This method is only called by the UI thread.</p>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
-        <td><span class="parametername">interval</span></td>
+        <td><span class="parametername">summaryInterval</span></td>
         <td><p>The time interval each summary value should cover.</p>
 </td>
       </tr>
@@ -891,16 +947,29 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L99">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L358">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterInstantDataTarget*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterInstantDataTarget__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_RelativeTimeInterval_System_Action_System_Object_Microsoft_Psi_Visualization_Data_StreamCacheEntry__Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterInstantDataTarget``1(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.RelativeTimeInterval,System.Action{System.Object,Microsoft.Psi.Visualization.Data.StreamCacheEntry},Microsoft.Psi.TimeInterval)">RegisterInstantDataTarget&lt;TTarget&gt;(StreamSource, RelativeTimeInterval, Action&lt;Object, StreamCacheEntry&gt;, TimeInterval)</h4>
-  <div class="markdown level1 summary"><p>Registers an instant data target to be notified when new data for a stream is available.</p>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_Refresh_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Refresh*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_Refresh" data-uid="Microsoft.Psi.Visualization.Data.DataManager.Refresh">Refresh()</h4>
+  <div class="markdown level1 summary"><p>Refreshes all the existing stores.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Guid RegisterInstantDataTarget&lt;TTarget&gt;(StreamSource streamSource, RelativeTimeInterval cursorEpsilon, Action&lt;object, StreamCacheEntry&gt; callback, TimeInterval viewRange)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Refresh()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterStreamValueSubscriber_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterStreamValueSubscriber*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterStreamValueSubscriber__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_RelativeTimeInterval_System_Action_System_Boolean___0_System_DateTime_System_DateTime__Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterStreamValueSubscriber``1(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.RelativeTimeInterval,System.Action{System.Boolean,``0,System.DateTime,System.DateTime},Microsoft.Psi.TimeInterval)">RegisterStreamValueSubscriber&lt;TData&gt;(StreamSource, RelativeTimeInterval, Action&lt;Boolean, TData, DateTime, DateTime&gt;, TimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Registers a stream value subscriber.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid RegisterStreamValueSubscriber&lt;TData&gt;(StreamSource streamSource, RelativeTimeInterval epsilonInterval, Action&lt;bool, TData, DateTime, DateTime&gt; target, TimeInterval cacheInterval)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -920,20 +989,20 @@ when the data is ready. This method is only called by the UI thread.</p>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
-        <td><span class="parametername">cursorEpsilon</span></td>
-        <td><p>The epsilon window to use when reading data at a given time.</p>
+        <td><span class="parametername">epsilonInterval</span></td>
+        <td><p>The epsilon interval to use when retrieving stream values.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-2">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCacheEntry.html">StreamCacheEntry</a>&gt;</td>
-        <td><span class="parametername">callback</span></td>
-        <td><p>The method to call when new data is available.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-4">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, TData, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">target</span></td>
+        <td><p>The target method to call when new data is available.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
-        <td><span class="parametername">viewRange</span></td>
-        <td><p>The initial time range over which data is expected.</p>
+        <td><span class="parametername">cacheInterval</span></td>
+        <td><p>The time interval to cache.</p>
 </td>
       </tr>
     </tbody>
@@ -949,7 +1018,7 @@ when the data is ready. This method is only called by the UI thread.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
-        <td><p>A registration token that must be used by the target to unregister from updates or to modify the read epsilon.</p>
+        <td><p>A registration token that can be used to unregister the stream value subscriber.</p>
 </td>
       </tr>
     </tbody>
@@ -964,15 +1033,20 @@ when the data is ready. This method is only called by the UI thread.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TTarget</span></td>
-        <td><p>The type of data the target requires.</p>
+        <td><span class="parametername">TData</span></td>
+        <td><p>The type of data expected by the stream value subscriber.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterStreamValueSubscriber__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_RelativeTimeInterval_System_Action_System_Boolean___0_System_DateTime_System_DateTime__Microsoft_Psi_TimeInterval__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The target action is called when new data becomes available. The data object passed is only
+valid for the duration of the target action; as a result, if the stream value subscriber needs
+to hold on to this object past the endpoint of the target method, it must make a copy of it.</p>
+</div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L249">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L224">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_RegisterSummaryDataConsumer_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterSummaryDataConsumer*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_RegisterSummaryDataConsumer_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.RegisterSummaryDataConsumer(Microsoft.Psi.Visualization.Data.StreamSource)">RegisterSummaryDataConsumer(StreamSource)</h4>
@@ -1019,7 +1093,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L360">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L334">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_SaveStore_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SaveStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_SaveStore_System_String_System_String_System_IProgress_System_Double__" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SaveStore(System.String,System.String,System.IProgress{System.Double})">SaveStore(String, String, IProgress&lt;Double&gt;)</h4>
@@ -1062,16 +1136,47 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L126">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L165">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterInstantDataTarget_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterInstantDataTarget*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterInstantDataTarget_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterInstantDataTarget(System.Guid)">UnregisterInstantDataTarget(Guid)</h4>
-  <div class="markdown level1 summary"><p>Unregisters instant data target from being notified when the current value of a stream changes.</p>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_SetStreamValueProvidersCacheInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SetStreamValueProvidersCacheInterval*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_SetStreamValueProvidersCacheInterval_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.SetStreamValueProvidersCacheInterval(Microsoft.Psi.TimeInterval)">SetStreamValueProvidersCacheInterval(TimeInterval)</h4>
+  <div class="markdown level1 summary"><p>Sets the cache interval for stream value providers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void UnregisterInstantDataTarget(Guid registrationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetStreamValueProvidersCacheInterval(TimeInterval timeInterval)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td><span class="parametername">timeInterval</span></td>
+        <td><p>The new cache interval for stream value providers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L137">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterStreamValueSubscriber_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterStreamValueSubscriber*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterStreamValueSubscriber__1_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterStreamValueSubscriber``1(System.Guid)">UnregisterStreamValueSubscriber&lt;TData&gt;(Guid)</h4>
+  <div class="markdown level1 summary"><p>Unregisters a stream value subscriber.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterStreamValueSubscriber&lt;TData&gt;(Guid registrationToken)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1086,14 +1191,30 @@ when the data is ready. This method is only called by the UI thread.</p>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
         <td><span class="parametername">registrationToken</span></td>
-        <td><p>The registration token that the target was given when it was initially registered.</p>
+        <td><p>The registration token that the subscriber was assigned when it was initially registered.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TData</span></td>
+        <td><p>The type of data expected by the stream value subscriber.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L261">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L232">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterSummaryDataConsumer_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterSummaryDataConsumer*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UnregisterSummaryDataConsumer_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UnregisterSummaryDataConsumer(System.Guid)">UnregisterSummaryDataConsumer(Guid)</h4>
@@ -1124,44 +1245,7 @@ when the data is ready. This method is only called by the UI thread.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L139">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_DataManager_UpdateInstantDataTargetEpsilon_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateInstantDataTargetEpsilon*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UpdateInstantDataTargetEpsilon_System_Guid_Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateInstantDataTargetEpsilon(System.Guid,Microsoft.Psi.RelativeTimeInterval)">UpdateInstantDataTargetEpsilon(Guid, RelativeTimeInterval)</h4>
-  <div class="markdown level1 summary"><p>Updates the cursor epsilon for a registered instant visualization object.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void UpdateInstantDataTargetEpsilon(Guid registrationToken, RelativeTimeInterval epsilon)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
-        <td><span class="parametername">registrationToken</span></td>
-        <td><p>The registration token that the target was given when it was initially registered.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
-        <td><span class="parametername">epsilon</span></td>
-        <td><p>A relative time interval specifying the window around a message time that may be considered a match.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L340">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L314">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_UpdateStream_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_UpdateStream__1_Microsoft_Psi_Visualization_Data_StreamSource_System_Collections_Generic_IEnumerable_Microsoft_Psi_Visualization_Data_StreamUpdate___0___" data-uid="Microsoft.Psi.Visualization.Data.DataManager.UpdateStream``1(Microsoft.Psi.Visualization.Data.StreamSource,System.Collections.Generic.IEnumerable{Microsoft.Psi.Visualization.Data.StreamUpdate{``0}})">UpdateStream&lt;T&gt;(StreamSource, IEnumerable&lt;StreamUpdate&lt;T&gt;&gt;)</h4>
@@ -1217,7 +1301,7 @@ either a stream adapter or a stream summarizer are not permitted to update a str
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L82">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_DataStoreStatusChanged" data-uid="Microsoft.Psi.Visualization.Data.DataManager.DataStoreStatusChanged">DataStoreStatusChanged</h4>
   <div class="markdown level1 summary"><p>Event that fires when a data store's dirty/clean status has changed.</p>
@@ -1244,7 +1328,7 @@ either a stream adapter or a stream summarizer are not permitted to update a str
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L87">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_Data_DataManager_StreamReadError" data-uid="Microsoft.Psi.Visualization.Data.DataManager.StreamReadError">StreamReadError</h4>
   <div class="markdown level1 summary"><p>Event that fires when a stream is unable to be read from.</p>

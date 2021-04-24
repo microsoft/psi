@@ -171,7 +171,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void Receive(Shared&lt;Image&gt; sharedImage, Envelope e)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void Receive(Shared&lt;Image&gt; sharedImage, Envelope envelope)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -190,8 +190,9 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
-        <td><span class="parametername">e</span></td>
-        <td></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The input message envelope.</p>
+</td>
       </tr>
     </tbody>
   </table>

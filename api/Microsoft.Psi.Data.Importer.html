@@ -89,20 +89,166 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">Importer</span></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Audio.WaveFileImporter.html">WaveFileImporter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Data.PsiImporter.html">PsiImporter</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Subpipeline.html">Subpipeline</a></div>
+    <div class="level3"><span class="xref">Importer</span></div>
+      <div class="level4"><a class="xref" href="Microsoft.Psi.Audio.WaveFileImporter.html">WaveFileImporter</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.Psi.Data.PsiImporter.html">PsiImporter</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
     <div><span class="xref">IDisposable</span></div>
   </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ParentPipeline">Subpipeline.ParentPipeline</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Create_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy_">Subpipeline.Create(Pipeline, String, DeliveryPolicy)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Start_Action_DateTime__">Subpipeline.Start(Action&lt;DateTime&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Stop_DateTime_Action_">Subpipeline.Stop(DateTime, Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ProposeReplayTime_Microsoft_Psi_TimeInterval_">Subpipeline.ProposeReplayTime(TimeInterval)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_CreateInputConnectorFrom__1_Microsoft_Psi_Pipeline_System_String_">Subpipeline.CreateInputConnectorFrom&lt;T&gt;(Pipeline, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_CreateOutputConnectorTo__1_Microsoft_Psi_Pipeline_System_String_">Subpipeline.CreateOutputConnectorTo&lt;T&gt;(Pipeline, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ToString">Subpipeline.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_Clock_IProgress_System_Double__">Subpipeline.RunAsync(ReplayDescriptor, Clock, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineRun">Pipeline.PipelineRun</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineCompleted">Pipeline.PipelineCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ComponentCompleted">Pipeline.ComponentCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineExceptionNotHandled">Pipeline.PipelineExceptionNotHandled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Id">Pipeline.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Name">Pipeline.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ReplayDescriptor">Pipeline.ReplayDescriptor</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Diagnostics">Pipeline.Diagnostics</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_StartTime">Pipeline.StartTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ProgressReportInterval">Pipeline.ProgressReportInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_LatestFiniteSourceCompletionTime">Pipeline.LatestFiniteSourceCompletionTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_NoRemainingCompletableComponents">Pipeline.NoRemainingCompletableComponents</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Create_System_String_Microsoft_Psi_DeliveryPolicy_System_Int32_System_Boolean_System_Boolean_Microsoft_Psi_Diagnostics_DiagnosticsConfiguration_">Pipeline.Create(String, DeliveryPolicy, Int32, Boolean, Boolean, DiagnosticsConfiguration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultDeliveryPolicy__1">Pipeline.GetDefaultDeliveryPolicy&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultMessageValidator__1">Pipeline.GetDefaultMessageValidator&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action___0_Microsoft_Psi_Envelope__System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;T, Envelope&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action___0__System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;T&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateReceiver__1_System_Object_Action_Microsoft_Psi_Message___0___System_String_System_Boolean_">Pipeline.CreateReceiver&lt;T&gt;(Object, Action&lt;Message&lt;T&gt;&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func___0_Microsoft_Psi_Envelope_Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;T, Envelope, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func___0_Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;T, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateAsyncReceiver__1_System_Object_Func_Microsoft_Psi_Message___0__Task__System_String_System_Boolean_">Pipeline.CreateAsyncReceiver&lt;T&gt;(Object, Func&lt;Message&lt;T&gt;, Task&gt;, String, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateEmitter__1_System_Object_System_String_Microsoft_Psi_Emitter___0__ValidateMessageHandler_">Pipeline.CreateEmitter&lt;T&gt;(Object, String, Emitter.ValidateMessageHandler&lt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_System_Int32_">Pipeline.WaitAll(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_TimeSpan_">Pipeline.WaitAll(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_ReplayDescriptor_">Pipeline.Run(ReplayDescriptor)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_TimeInterval_System_Boolean_">Pipeline.Run(TimeInterval, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_DateTime_System_Boolean_">Pipeline.Run(DateTime, DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_System_Boolean_">Pipeline.Run(DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_ReplayDescriptor_IProgress_System_Double__">Pipeline.RunAsync(ReplayDescriptor, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_Microsoft_Psi_TimeInterval_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(TimeInterval, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_DateTime_DateTime_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(DateTime, DateTime, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_RunAsync_DateTime_System_Boolean_IProgress_System_Double__">Pipeline.RunAsync(DateTime, Boolean, IProgress&lt;Double&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTime">Pipeline.GetCurrentTime()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTimeFromElapsedTicks_System_Int64_">Pipeline.GetCurrentTimeFromElapsedTicks(Int64)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_TimeSpan_">Pipeline.ConvertToRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_DateTime_">Pipeline.ConvertToRealTime(DateTime)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_TimeSpan_">Pipeline.ConvertFromRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_DateTime_">Pipeline.ConvertFromRealTime(DateTime)</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.html">Microsoft.Psi.Data</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
   <h5 id="Microsoft_Psi_Data_Importer_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Importer : object, ISourceComponent, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class Importer : Subpipeline, ISourceComponent, IDisposable</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Data_Importer_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Reads either at the full speed allowed by available resources or at the desired rate
@@ -113,16 +259,16 @@ specified by the <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L38">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer__ctor_" data-uid="Microsoft.Psi.Data.Importer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_IStreamReader_" data-uid="Microsoft.Psi.Data.Importer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Data.IStreamReader)">Importer(Pipeline, IStreamReader)</h4>
+  <h4 id="Microsoft_Psi_Data_Importer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_IStreamReader_System_Boolean_" data-uid="Microsoft.Psi.Data.Importer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Data.IStreamReader,System.Boolean)">Importer(Pipeline, IStreamReader, Boolean)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Importer(Pipeline pipeline, IStreamReader streamReader)</code></pre>
+    <pre><code class="lang-csharp hljs">public Importer(Pipeline pipeline, IStreamReader streamReader, bool usePerStreamReaders)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -146,13 +292,19 @@ specified by the <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a>
         <td><p>Stream reader.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">usePerStreamReaders</span></td>
+        <td><p>Flag indicating whether to use per-stream readers.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L80">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_AvailableStreams_" data-uid="Microsoft.Psi.Data.Importer.AvailableStreams*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_AvailableStreams" data-uid="Microsoft.Psi.Data.Importer.AvailableStreams">AvailableStreams</h4>
@@ -180,7 +332,7 @@ specified by the <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L84">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.Data.Importer.MessageCreationTimeInterval*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_MessageCreationTimeInterval" data-uid="Microsoft.Psi.Data.Importer.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
@@ -208,7 +360,7 @@ specified by the <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L89">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Importer.MessageOriginatingTimeInterval*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Importer.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
@@ -230,62 +382,6 @@ specified by the <a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L52">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_Importer_Name_" data-uid="Microsoft.Psi.Data.Importer.Name*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer_Name" data-uid="Microsoft.Psi.Data.Importer.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Gets the name of the store, or null if this is a volatile store.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L57">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_Importer_Path_" data-uid="Microsoft.Psi.Data.Importer.Path*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer_Path" data-uid="Microsoft.Psi.Data.Importer.Path">Path</h4>
-  <div class="markdown level1 summary"><p>Gets the path of the store, or null if this is a volatile store.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Path { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -319,11 +415,95 @@ Types can be added or re-mapped using the <a class="xref" href="Microsoft.Psi.Se
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L52">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Importer_StoreName_" data-uid="Microsoft.Psi.Data.Importer.StoreName*"></a>
+  <h4 id="Microsoft_Psi_Data_Importer_StoreName" data-uid="Microsoft.Psi.Data.Importer.StoreName">StoreName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the store, or null if this is a volatile store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string StoreName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Importer_StorePath_" data-uid="Microsoft.Psi.Data.Importer.StorePath*"></a>
+  <h4 id="Microsoft_Psi_Data_Importer_StorePath" data-uid="Microsoft.Psi.Data.Importer.StorePath">StorePath</h4>
+  <div class="markdown level1 summary"><p>Gets the path of the store, or null if this is a volatile store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string StorePath { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Importer_StreamTimeInterval_" data-uid="Microsoft.Psi.Data.Importer.StreamTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Importer_StreamTimeInterval" data-uid="Microsoft.Psi.Data.Importer.StreamTimeInterval">StreamTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the interval between the opened times and closed times, across all streams.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval StreamTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L130">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L124">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_Contains_" data-uid="Microsoft.Psi.Data.Importer.Contains*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_Contains_System_String_" data-uid="Microsoft.Psi.Data.Importer.Contains(System.String)">Contains(String)</h4>
@@ -370,7 +550,7 @@ Types can be added or re-mapped using the <a class="xref" href="Microsoft.Psi.Se
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L138">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L132">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_CopyStream_" data-uid="Microsoft.Psi.Data.Importer.CopyStream*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_CopyStream_System_String_Microsoft_Psi_Data_Exporter_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Message_Microsoft_Psi_Common_BufferReader___" data-uid="Microsoft.Psi.Data.Importer.CopyStream(System.String,Microsoft.Psi.Data.Exporter,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Message{Microsoft.Psi.Common.BufferReader}})">CopyStream(String, Exporter, DeliveryPolicy&lt;Message&lt;BufferReader&gt;&gt;)</h4>
@@ -413,20 +593,21 @@ Types can be added or re-mapped using the <a class="xref" href="Microsoft.Psi.Se
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L95">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L169">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_Dispose_" data-uid="Microsoft.Psi.Data.Importer.Dispose*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_Dispose" data-uid="Microsoft.Psi.Data.Importer.Dispose">Dispose()</h4>
-  <div class="markdown level1 summary"><p>Closes the store and disposes of the current instance.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void Dispose()</code></pre>
   </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Dispose">Pipeline.Dispose()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L106">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L101">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_GetMetadata_" data-uid="Microsoft.Psi.Data.Importer.GetMetadata*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_GetMetadata_System_String_" data-uid="Microsoft.Psi.Data.Importer.GetMetadata(System.String)">GetMetadata(String)</h4>
@@ -473,7 +654,7 @@ Types can be added or re-mapped using the <a class="xref" href="Microsoft.Psi.Se
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L114">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_GetSupplementalMetadata_" data-uid="Microsoft.Psi.Data.Importer.GetSupplementalMetadata*"></a>
   <h4 id="Microsoft_Psi_Data_Importer_GetSupplementalMetadata__1_System_String_" data-uid="Microsoft.Psi.Data.Importer.GetSupplementalMetadata``1(System.String)">GetSupplementalMetadata&lt;T&gt;(String)</h4>
@@ -536,17 +717,17 @@ Types can be added or re-mapped using the <a class="xref" href="Microsoft.Psi.Se
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L204">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L162">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_OpenDynamicStream_" data-uid="Microsoft.Psi.Data.Importer.OpenDynamicStream*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer_OpenDynamicStream_System_String_" data-uid="Microsoft.Psi.Data.Importer.OpenDynamicStream(System.String)">OpenDynamicStream(String)</h4>
+  <h4 id="Microsoft_Psi_Data_Importer_OpenDynamicStream_System_String_Func_System_Object__Action_System_Object__" data-uid="Microsoft.Psi.Data.Importer.OpenDynamicStream(System.String,Func{System.Object},Action{System.Object})">OpenDynamicStream(String, Func&lt;Object&gt;, Action&lt;Object&gt;)</h4>
   <div class="markdown level1 summary"><p>Opens the specified stream as dynamic for reading and returns a stream instance that can be used to consume the messages.
 The returned stream will publish data read from the store once the pipeline is running.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IProducer&lt;dynamic&gt; OpenDynamicStream(string streamName)</code></pre>
+    <pre><code class="lang-csharp hljs">public IProducer&lt;dynamic&gt; OpenDynamicStream(string streamName, Func&lt;dynamic&gt; allocator = null, Action&lt;dynamic&gt; deallocator = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -562,6 +743,18 @@ The returned stream will publish data read from the store once the pipeline is r
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">streamName</span></td>
         <td><p>The name of the stream to open.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">allocator</span></td>
+        <td><p>An optional allocator of messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td><span class="parametername">deallocator</span></td>
+        <td><p>An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="!:IDisposable"></see> messages.)</p>
 </td>
       </tr>
     </tbody>
@@ -582,22 +775,22 @@ The returned stream will publish data read from the store once the pipeline is r
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Data_Importer_OpenDynamicStream_System_String__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Data_Importer_OpenDynamicStream_System_String_Func_System_Object__Action_System_Object___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Messages are deserialized as dynamic primitives and/or ExpandoObject of dynamic.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L159">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L147">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Importer_OpenStream_" data-uid="Microsoft.Psi.Data.Importer.OpenStream*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer_OpenStream__1_System_String_" data-uid="Microsoft.Psi.Data.Importer.OpenStream``1(System.String)">OpenStream&lt;T&gt;(String)</h4>
+  <h4 id="Microsoft_Psi_Data_Importer_OpenStream__1_System_String_Func___0__Action___0__" data-uid="Microsoft.Psi.Data.Importer.OpenStream``1(System.String,Func{``0},Action{``0})">OpenStream&lt;T&gt;(String, Func&lt;T&gt;, Action&lt;T&gt;)</h4>
   <div class="markdown level1 summary"><p>Opens the specified stream for reading and returns a stream instance that can be used to consume the messages.
 The returned stream will publish data read from the store once the pipeline is running.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IProducer&lt;T&gt; OpenStream&lt;T&gt;(string streamName)</code></pre>
+    <pre><code class="lang-csharp hljs">public IProducer&lt;T&gt; OpenStream&lt;T&gt;(string streamName, Func&lt;T&gt; allocator = null, Action&lt;T&gt; deallocator = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -613,6 +806,18 @@ The returned stream will publish data read from the store once the pipeline is r
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">streamName</span></td>
         <td><p>The name of the stream to open.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;T&gt;</td>
+        <td><span class="parametername">allocator</span></td>
+        <td><p>An optional allocator of messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;T&gt;</td>
+        <td><span class="parametername">deallocator</span></td>
+        <td><p>An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="!:IDisposable"></see> messages.)</p>
 </td>
       </tr>
     </tbody>
@@ -650,86 +855,6 @@ This type will be used to deserialize the stream messages.</p>
       </tr>
     </tbody>
   </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L216">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_Importer_Start_" data-uid="Microsoft.Psi.Data.Importer.Start*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer_Start_Action_DateTime__" data-uid="Microsoft.Psi.Data.Importer.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
-  <div class="markdown level1 summary"><p>Called by the pipeline to start the component once all the subscriptions are established.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Start(Action&lt;DateTime&gt; notifyCompletionTime)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Action</span>&lt;<span class="xref">DateTime</span>&gt;</td>
-        <td><span class="parametername">notifyCompletionTime</span></td>
-        <td><p>Delegate to call to notify the pipeline at what time the component will complete. Finite source components
-should invoke this delegate, passing in the time at which the component completes after which it will post
-no further messages. If this time is not yet known, the component may store a reference to the
-<code data-dev-comment-type="paramref" class="paramref">notifyCompletionTime</code> delegate and call it once the completion time is known. Source
-components that do not have the concept of &quot;completion&quot; must invoke <code data-dev-comment-type="paramref" class="paramref">notifyCompletionTime</code>
-with a completion time of <see cref="!:DateTime.MaxValue"></see>. Similarly, reactive components that implement
-the <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a> due to the fact that they post messages from outside of a receiver method
-should also notify with a completion time of <see cref="!:DateTime.MaxValue"></see>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L225">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_Importer_Stop_" data-uid="Microsoft.Psi.Data.Importer.Stop*"></a>
-  <h4 id="Microsoft_Psi_Data_Importer_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Data.Importer.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
-  <div class="markdown level1 summary"><p>Called by the pipeline when shutting down. The component should stop generating new messages once this
-method completes. However, the component might still receive new messages (if it is subscribed to other
-components) after this call and is expected to handle them.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">DateTime</span></td>
-        <td><span class="parametername">finalOriginatingTime</span></td>
-        <td><p>The last originating time of any message which may be posted, after which the component should stop
-posting non-reactive source messages.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Action</span></td>
-        <td><span class="parametername">notifyCompleted</span></td>
-        <td><p>Delegate to call to notify the pipeline that the component has completed posting non-reactive source
-messages. This delegate should be called once the component has posted its last non-reactive source
-message, but only up to (and possibly including) <code data-dev-comment-type="paramref" class="paramref">finalOriginatingTime</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
@@ -738,6 +863,12 @@ message, but only up to (and possibly including) <code data-dev-comment-type="pa
       <span class="xref">IDisposable</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.DebugExtensions.html#Microsoft_Psi_DebugExtensions_DumpStructure_Microsoft_Psi_Pipeline_System_String_">DebugExtensions.DumpStructure(Pipeline, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Operators.html#Microsoft_Psi_Operators_CreateConnector__1_Microsoft_Psi_Pipeline_System_String_">Operators.CreateConnector&lt;T&gt;(Pipeline, String)</a>
+  </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
   </div>
@@ -755,7 +886,7 @@ message, but only up to (and possibly including) <code data-dev-comment-type="pa
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L21" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Data/Importer.cs/#L22" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

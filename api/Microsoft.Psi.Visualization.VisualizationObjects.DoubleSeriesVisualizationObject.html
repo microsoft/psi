@@ -1,0 +1,622 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DoubleSeriesVisualizationObject
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DoubleSeriesVisualizationObject
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject" class="text-break">Class DoubleSeriesVisualizationObject
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a visualization object for a series of doubles, represented as a dictionary keyed on the series name.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
+    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
+    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html">StreamIntervalVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</div>
+    <div class="level6"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html">PlotSeriesVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div class="level7"><span class="xref">DoubleSeriesVisualizationObject</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_YValueRangeChanged">PlotSeriesVisualizationObject&lt;String, Double&gt;.YValueRangeChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_PaletteColors">PlotSeriesVisualizationObject&lt;String, Double&gt;.PaletteColors</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_LineWidth">PlotSeriesVisualizationObject&lt;String, Double&gt;.LineWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_InterpolationStyle">PlotSeriesVisualizationObject&lt;String, Double&gt;.InterpolationStyle</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_MarkerSize">PlotSeriesVisualizationObject&lt;String, Double&gt;.MarkerSize</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_MarkerStyle">PlotSeriesVisualizationObject&lt;String, Double&gt;.MarkerStyle</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_RangeWidth">PlotSeriesVisualizationObject&lt;String, Double&gt;.RangeWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_YAxis">PlotSeriesVisualizationObject&lt;String, Double&gt;.YAxis</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_YValueRange">PlotSeriesVisualizationObject&lt;String, Double&gt;.YValueRange</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_LegendColor">PlotSeriesVisualizationObject&lt;String, Double&gt;.LegendColor</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_LegendValue">PlotSeriesVisualizationObject&lt;String, Double&gt;.LegendValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_GetNumericValue__1_">PlotSeriesVisualizationObject&lt;String, Double&gt;.GetNumericValue(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_GetStringValue__1_">PlotSeriesVisualizationObject&lt;String, Double&gt;.GetStringValue(Double)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__">PlotSeriesVisualizationObject&lt;String, Double&gt;.GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">PlotSeriesVisualizationObject&lt;String, Double&gt;.OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_OnSummaryDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">PlotSeriesVisualizationObject&lt;String, Double&gt;.OnSummaryDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">PlotSeriesVisualizationObject&lt;String, Double&gt;.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_Data">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.Data</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SummaryData">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.SummaryData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendColor">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.LegendColor</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendValue">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.LegendValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SamplingTicks">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.SamplingTicks</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendFormat">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.LegendFormat</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_IsUsingSummarization">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.IsUsingSummarization</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnStreamBound">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnStreamBound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnStreamUnbound">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnStreamUnbound()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnSummaryDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnSummaryDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.StreamName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.PartitionName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CursorEpsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CanSnapToStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommand">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.ToggleSnapToStreamCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.ZoomToStreamCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_HasCurrentValue">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.HasCurrentValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CurrentValue</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentData">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CurrentData</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.CurrentOriginatingTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.StreamBinding</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamSource">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.StreamSource</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterType">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.StreamAdapterType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamAdapterDisplayName">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.StreamAdapterDisplayName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerType">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.SummarizerType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SummarizerTypeDisplayName">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.SummarizerTypeDisplayName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_RequiresSupplementalMetadata">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.RequiresSupplementalMetadata</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsBound">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.IsBound</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ShowZoomToStreamMenuItem">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.ShowZoomToStreamMenuItem</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamExtents">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.StreamExtents</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IconSource">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.IconSource</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsSnappedToStream">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.IsSnappedToStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStreamCommandText">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.ToggleSnapToStreamCommandText</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.IsLive</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.Allocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Deallocator">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.Deallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.SetCurrentValue(Nullable&lt;Message&lt;Dictionary&lt;String, Double&gt;&gt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.ToggleSnapToStream()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.UpdateStreamSource(SessionViewModel)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnAddToPanel">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnAddToPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnRemoveFromPanel">StreamVisualizationObject&lt;Dictionary&lt;String, Double&gt;&gt;.OnRemoveFromPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible">VisualizationObject.Visible</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container">VisualizationObject.Container</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel">VisualizationObject.Panel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator">VisualizationObject.Navigator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IconSource">VisualizationObject.IconSource</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CanSnapToStream">VisualizationObject.CanSnapToStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsSnappedToStream">VisualizationObject.IsSnappedToStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream">VisualizationObject.IsAudioStream</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ShowZoomToStreamMenuItem">VisualizationObject.ShowZoomToStreamMenuItem</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected">VisualizationObject.IsConnected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleVisibilityCommand">VisualizationObject.ToggleVisibilityCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver">VisualizationObject.ContractResolver</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleSnapToStream">VisualizationObject.ToggleSnapToStream()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString">VisualizationObject.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">VisualizationObject.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">VisualizationObject.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObject.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPanelPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObject.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel">VisualizationObject.OnAddToPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnRemoveFromPanel">VisualizationObject.OnRemoveFromPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[VisualizationObject(&quot;Double Series&quot;, typeof(DoubleSeriesRangeSummarizer), &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/stream.png&quot;, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/panel-stream.png&quot;, &quot;%StreamName%&quot;, false)]
+public class DoubleSeriesVisualizationObject : PlotSeriesVisualizationObject&lt;string, double&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, IYValueRangeProvider</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/DoubleSeriesVisualizationObject.cs/#L20">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_DefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject.DefaultViewTemplate*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_DefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject.DefaultViewTemplate">DefaultViewTemplate</h4>
+  <div class="markdown level1 summary"><p>Gets the default DataTemplate that is used within a VisualizationPanel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public override DataTemplate DefaultViewTemplate { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.datatemplate">DataTemplate</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate">VisualizationObject.DefaultViewTemplate</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/DoubleSeriesVisualizationObject.cs/#L25">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_GetNumericValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject.GetNumericValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_GetNumericValue_System_Double_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject.GetNumericValue(System.Double)">GetNumericValue(Double)</h4>
+  <div class="markdown level1 summary"><p>Converts the data to a double value to use for plotting.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override double GetNumericValue(double data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The double value correspoding to the data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject&lt;System.String, System.Double&gt;.GetNumericValue(System.Double)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/DoubleSeriesVisualizationObject.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_GetStringValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject.GetStringValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_DoubleSeriesVisualizationObject_GetStringValue_System_Double_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.DoubleSeriesVisualizationObject.GetStringValue(System.Double)">GetStringValue(Double)</h4>
+  <div class="markdown level1 summary"><p>Converts the data to a string value to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string GetStringValue(double data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">data</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><p>The string value correspoding to the data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject&lt;System.String, System.Double&gt;.GetStringValue(System.Double)</span></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/DoubleSeriesVisualizationObject.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

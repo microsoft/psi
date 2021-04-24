@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2" class="text-break">Class StreamMemberAdapter&lt;TSource, TDestination&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Adapter from a source stream to a member of that stream.</p>
+  <div class="markdown level0 summary"><p>Implements a stream adapter from a source stream to a member of that stream.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -95,40 +95,36 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter-2.html">StreamMemberAdapter</a>&lt;TSource, TDestination&gt;&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Default">StreamAdapter&lt;TSource, TDestination&gt;.Default</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceIsSharedType">StreamAdapter&lt;TSource, TDestination&gt;.SourceIsSharedType</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Allocator">StreamAdapter&lt;TSource, TDestination&gt;.Allocator</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_DestinationType">StreamAdapter&lt;TSource, TDestination&gt;.DestinationType</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Pool">StreamAdapter&lt;TSource, TDestination&gt;.Pool</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceType">StreamAdapter&lt;TSource, TDestination&gt;.SourceType</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdapterFn">StreamAdapter&lt;TSource, TDestination&gt;.AdapterFn</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceAllocator">StreamAdapter&lt;TSource, TDestination&gt;.SourceAllocator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptData__0_">StreamAdapter&lt;TSource, TDestination&gt;.AdaptData(TSource)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceDeallocator">StreamAdapter&lt;TSource, TDestination&gt;.SourceDeallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator">StreamAdapter&lt;TSource, TDestination&gt;.IStreamAdapter.SourceAllocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator">StreamAdapter&lt;TSource, TDestination&gt;.IStreamAdapter.SourceDeallocator</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptReceiver_System_Action__1_Microsoft_Psi_Envelope__">StreamAdapter&lt;TSource, TDestination&gt;.AdaptReceiver(Action&lt;TDestination, Envelope&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose">StreamAdapter&lt;TSource, TDestination&gt;.Dispose()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_GetAdaptedValue__0_Microsoft_Psi_Envelope_">StreamAdapter&lt;TSource, TDestination&gt;.GetAdaptedValue(TSource, Envelope)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose__1_">StreamAdapter&lt;TSource, TDestination&gt;.Dispose(TDestination)</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
@@ -150,7 +146,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class StreamMemberAdapter&lt;TSource, TDestination&gt; : StreamAdapter&lt;TSource, TDestination&gt;, IStreamAdapter, IDisposable, IEquatable&lt;StreamMemberAdapter&lt;TSource, TDestination&gt;&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class StreamMemberAdapter&lt;TSource, TDestination&gt; : StreamAdapter&lt;TSource, TDestination&gt;, IStreamAdapter, IEquatable&lt;StreamMemberAdapter&lt;TSource, TDestination&gt;&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -210,7 +206,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_Equals_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.Equals*"></a>
   <h4 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_Equals_Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter__0__1__" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.Equals(Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter{`0,`1})">Equals(StreamMemberAdapter&lt;TSource, TDestination&gt;)</h4>
@@ -254,7 +250,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L69">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_Equals_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.Equals*"></a>
   <h4 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_Equals_System_Object_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.Equals(System.Object)">Equals(Object)</h4>
@@ -300,7 +296,62 @@
   <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_GetAdaptedValue_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.GetAdaptedValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_GetAdaptedValue__0_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.GetAdaptedValue(`0,Microsoft.Psi.Envelope)">GetAdaptedValue(TSource, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Gets the adapted value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override TDestination GetAdaptedValue(TSource source, Envelope envelope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSource</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The source envelope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDestination</span></td>
+        <td><p>The adapted value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.Data.StreamAdapter&lt;TSource, TDestination&gt;.GetAdaptedValue(TSource, Microsoft.Psi.Envelope)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_GetHashCode_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.GetHashCode*"></a>
   <h4 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_GetHashCode" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.GetHashCode">GetHashCode()</h4>
@@ -331,7 +382,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L40">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_op_Equality_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.op_Equality*"></a>
   <h4 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_op_Equality_Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter__0__1__Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter__0__1__" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.op_Equality(Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter{`0,`1},Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter{`0,`1})">Equality(StreamMemberAdapter&lt;TSource, TDestination&gt;, StreamMemberAdapter&lt;TSource, TDestination&gt;)</h4>
@@ -384,7 +435,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/StreamMemberAdapter{TSource,TDestination}.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_op_Inequality_" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.op_Inequality*"></a>
   <h4 id="Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter_2_op_Inequality_Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter__0__1__Microsoft_Psi_Visualization_Adapters_StreamMemberAdapter__0__1__" data-uid="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter`2.op_Inequality(Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter{`0,`1},Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter{`0,`1})">Inequality(StreamMemberAdapter&lt;TSource, TDestination&gt;, StreamMemberAdapter&lt;TSource, TDestination&gt;)</h4>
@@ -438,9 +489,6 @@
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.iequatable-1">System.IEquatable&lt;T&gt;</a>

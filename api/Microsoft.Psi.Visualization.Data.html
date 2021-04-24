@@ -87,52 +87,37 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.AdaptingInstantDataProvider-2.html">AdaptingInstantDataProvider&lt;TSource, TDestination&gt;</a></h4>
-      <section><p>Represents a data provider that can provide adapted data to instant data targets.
-Data of type TSrc supplied to the provider is converted to data of type TDest
-by the stream adapter and then routed to all instant data targets.</p>
-</section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.DataManager.html">DataManager</a></h4>
-      <section><p>Provides cached-controlled read access to data stores used by the visualization runtime.
+      <section><p>Provides read access to data stores used by the visualization system.
 Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a>s and <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSummaryManager.html">StreamSummaryManager</a>s.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a></h4>
-      <section><p>Represents an object used to read data stores. Reads data stores by reading their underlying streams.
-Attempts to batch reads through a data store where possible.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.EpsilonInstantStreamReader-1.html">EpsilonInstantStreamReader&lt;T&gt;</a></h4>
-      <section><p>Represents a stream reader which can read instant data based on a fixed cursor epsilon, and
-which then pushes the read data to a collection of adapting data providers.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.InstantDataTarget.html">InstantDataTarget</a></h4>
-      <section><p>Represents an instant data target.</p>
+      <section><p>Implements an object used to read stream data from a specific data store.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData.html">IntervalData</a></h4>
       <section><p>Static class containing factory methods for IntervalData{T}.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.Pool-1.html">Pool&lt;T&gt;</a></h4>
-      <section><p>Represents an allocation pool for a set of shared objects.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.PoolManager.html">PoolManager</a></h4>
-      <section><p>Represents a singleton object that manages a set of shared object allocation pools based on object type.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.MessageIndex-1.html">MessageIndex&lt;T&gt;</a></h4>
+      <section><p>Represents a indexed message reader thunk, which can be used to read data
+in an indexed fashion from a stream reader.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.ReadRequest.html">ReadRequest</a></h4>
       <section><p>Represents a read request on a stream.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html">StreamAdapter&lt;TSource, TDestination&gt;</a></h4>
-      <section><p>Represents an object that adapts messages from one type to another.</p>
+      <section><p>Provides a base abstract class for stream adapters.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamBinding.html">StreamBinding</a></h4>
       <section><p>Represents information needed to uniquely identify and open a stream.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCache-1.html">StreamCache&lt;T&gt;</a></h4>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamDataProvider-1.html">StreamDataProvider&lt;T&gt;</a></h4>
       <section><p>Represents an object used to read streams.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCacheEntry.html">StreamCacheEntry</a></h4>
-      <section><p>Class describing a cached indexed reader thunk.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamIntervalProvider-1.html">StreamIntervalProvider&lt;T&gt;</a></h4>
+      <section><p>Represents an object used to read streams.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamReadErrorEventArgs.html">StreamReadErrorEventArgs</a></h4>
-      <section><p>Represents the event arguments passed by the stream read error event of <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamCache-1.html">StreamCache&lt;T&gt;</a>.</p>
+      <section><p>Represents the event arguments passed by the stream read error event of <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamDataProvider-1.html">StreamDataProvider&lt;T&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamSource.html">StreamSource</a></h4>
       <section><p>Represents the source of a stream's data.</p>
@@ -152,6 +137,12 @@ are stored in the cache as <a class="xref" href="Microsoft.Psi.Visualization.Dat
       <section><p>Represents a stream update with an attached view of the cache.  The view covers only the stream update itself and exists to
 ensure that the data in the data cache retains a reference to ensure it does not get deleted during a purge of the data cache.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamValuePublisher-2.html">StreamValuePublisher&lt;TSource, TDestination&gt;</a></h4>
+      <section><p>Implements a publisher that pushes adapted data to stream value subscribers.
+Data of type TSource supplied to the provider is converted to data of type
+TDestination by the stream adapter and then routed to all stream value
+subscribers.</p>
+</section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.Summarizer-2.html">Summarizer&lt;TSource, TDestination&gt;</a></h4>
       <section><p>Base class for summarizers that perform interval-based data summarization over a series of data values.</p>
 </section>
@@ -162,24 +153,27 @@ ensure that the data in the data cache retains a reference to ensure it does not
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IAdaptingInstantDataProvider-1.html">IAdaptingInstantDataProvider&lt;TSource&gt;</a></h4>
-      <section><p>Represents a data provider that can provide adapted data to instant data targets.
-Data of type TSrc supplied to the provider is converted to data of type TDest
-by the stream adapter and then routed to all instant data targets.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IPool.html">IPool</a></h4>
-      <section><p>Represents an allocation pool for a set of shared objects.</p>
-</section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></h4>
       <section><p>Represents an object that adapts messages from one type to another.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamCache.html">IStreamCache</a></h4>
-      <section><p>Represents an object used to read streams.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html">IStreamDataProvider</a></h4>
+      <section><p>Defines an interfaces for providers of stream data.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.html">IStreamIntervalProvider</a></h4>
+      <section><p>Defines an interface for providers of stream interval data.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamSummary.html">IStreamSummary</a></h4>
       <section><p>Represents the summarized data of a stream generated from a specified summarizer type.
 Incoming data is summarized over a fixed interval and the resulting summarized values
 are stored in the cache as <a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData.html">IntervalData</a> items.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamValueProvider.html">IStreamValueProvider</a></h4>
+      <section><p>Defines a stream value provider, i.e. an object that provides stream values around a specified time position.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamValuePublisher-1.html">IStreamValuePublisher&lt;TSource&gt;</a></h4>
+      <section><p>Represents a publisher for stream values. A stream value publisher is used
+by a stream value provider of type TSource to adapt data via a stream adapter
+before publishing it to a stream value subscriber.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Data.ISummarizer.html">ISummarizer</a></h4>
       <section><p>Represents summarizers that perform interval-based data summarization over a series of data values.</p>

@@ -92,15 +92,25 @@
     <div class="level1"><span class="xref">Summarizer&lt;TSource, TDestination&gt;</span></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.AudioSummarizer.html">AudioSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.DecimalRangeSummarizer.html">DecimalRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.DecimalSeriesRangeSummarizer.html">DecimalSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.DoubleRangeSummarizer.html">DoubleRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.DoubleSeriesRangeSummarizer.html">DoubleSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.FloatRangeSummarizer.html">FloatRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.FloatSeriesRangeSummarizer.html">FloatSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.IntRangeSummarizer.html">IntRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.IntSeriesRangeSummarizer.html">IntSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.LongRangeSummarizer.html">LongRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.LongSeriesRangeSummarizer.html">LongSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableDecimalRangeSummarizer.html">NullableDecimalRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableDecimalSeriesRangeSummarizer.html">NullableDecimalSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableDoubleRangeSummarizer.html">NullableDoubleRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableDoubleSeriesRangeSummarizer.html">NullableDoubleSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableFloatRangeSummarizer.html">NullableFloatRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableFloatSeriesRangeSummarizer.html">NullableFloatSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableIntRangeSummarizer.html">NullableIntRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableIntSeriesRangeSummarizer.html">NullableIntSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableLongRangeSummarizer.html">NullableLongRangeSummarizer</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.NullableLongSeriesRangeSummarizer.html">NullableLongSeriesRangeSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.ObjectSummarizer.html">ObjectSummarizer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Summarizers.TimeIntervalSummarizer.html">TimeIntervalSummarizer</a></div>
   </div>
@@ -231,6 +241,62 @@
   </table>
   
   <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L50">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_SourceAllocator_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.SourceAllocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_SourceAllocator" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.SourceAllocator">SourceAllocator</h4>
+  <div class="markdown level1 summary"><p>Gets the allocator for reading source objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Func&lt;TSource&gt; SourceAllocator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TSource&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L55">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_SourceDeallocator_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.SourceDeallocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_SourceDeallocator" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.SourceDeallocator">SourceDeallocator</h4>
+  <div class="markdown level1 summary"><p>Gets the deallocator for reading source objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Action&lt;TSource&gt; SourceDeallocator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TSource&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_SourceType_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.SourceType*"></a>
@@ -261,7 +327,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L121">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_Combine_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Combine*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_Combine_Microsoft_Psi_Visualization_Data_IntervalData__1__Microsoft_Psi_Visualization_Data_IntervalData__1__" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Combine(Microsoft.Psi.Visualization.Data.IntervalData{`1},Microsoft.Psi.Visualization.Data.IntervalData{`1})">Combine(IntervalData&lt;TDestination&gt;, IntervalData&lt;TDestination&gt;)</h4>
@@ -315,7 +381,7 @@ the computation of which is implementation-specific and defined by the derived c
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L53">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_DefaultCombiner_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.DefaultCombiner*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_DefaultCombiner_Microsoft_Psi_Visualization_Data_IntervalData__1__Microsoft_Psi_Visualization_Data_IntervalData__1__" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.DefaultCombiner(Microsoft.Psi.Visualization.Data.IntervalData{`1},Microsoft.Psi.Visualization.Data.IntervalData{`1})">DefaultCombiner(IntervalData&lt;TDestination&gt;, IntervalData&lt;TDestination&gt;)</h4>
@@ -368,7 +434,7 @@ the computation of which is implementation-specific and defined by the derived c
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L108">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_GetIntervalStartTime_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.GetIntervalStartTime*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_GetIntervalStartTime_System_DateTime_System_TimeSpan_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.GetIntervalStartTime(System.DateTime,System.TimeSpan)">GetIntervalStartTime(DateTime, TimeSpan)</h4>
@@ -422,7 +488,7 @@ Intervals are bucketized based on their tick count.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L104">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L127">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_Summarize_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Summarize*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_Summarize_System_Collections_Generic_IEnumerable_Microsoft_Psi_Message__0___System_TimeSpan_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Summarize(System.Collections.Generic.IEnumerable{Microsoft.Psi.Message{`0}},System.TimeSpan)">Summarize(IEnumerable&lt;Message&lt;TSource&gt;&gt;, TimeSpan)</h4>
@@ -471,6 +537,64 @@ than the specified interval.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData-1.html">IntervalData</a>&lt;TDestination&gt;&gt;</td>
         <td><p>A list of <a class="xref" href="Microsoft.Psi.Visualization.Data.IntervalData.html">IntervalData</a> values each containing summarized data.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L65">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_Microsoft_Psi_Visualization_Data_ISummarizer_SourceAllocator_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Microsoft#Psi#Visualization#Data#ISummarizer#SourceAllocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_Microsoft_Psi_Visualization_Data_ISummarizer_SourceAllocator" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Microsoft#Psi#Visualization#Data#ISummarizer#SourceAllocator">ISummarizer.SourceAllocator</h4>
+  <div class="markdown level1 summary"><p>Gets the allocator for source messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Func&lt;dynamic&gt; ISummarizer.SourceAllocator { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/Summarizer{TSource,TDestination}.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_Summarizer_2_Microsoft_Psi_Visualization_Data_ISummarizer_SourceDeallocator_" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Microsoft#Psi#Visualization#Data#ISummarizer#SourceDeallocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_Summarizer_2_Microsoft_Psi_Visualization_Data_ISummarizer_SourceDeallocator" data-uid="Microsoft.Psi.Visualization.Data.Summarizer`2.Microsoft#Psi#Visualization#Data#ISummarizer#SourceDeallocator">ISummarizer.SourceDeallocator</h4>
+  <div class="markdown level1 summary"><p>Gets the deallocator for source messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Action&lt;dynamic&gt; ISummarizer.SourceDeallocator { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>

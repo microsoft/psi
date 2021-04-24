@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView" class="text-break">Class PipelineDiagnosticsVisualizationObjectView
   </h1>
-  <div class="markdown level0 summary"><p>Interaction logic for DiagnosticsVisualizationObjectView.xaml.</p>
+  <div class="markdown level0 summary"><p>Interaction logic for PipelineDiagnosticsVisualizationObjectView.xaml.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -97,7 +97,8 @@
     <div class="level6"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.control">Control</a></div>
     <div class="level7"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
-    <div class="level9"><span class="xref">PipelineDiagnosticsVisualizationObjectView</span></div>
+    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html">VisualizationObjectView</a></div>
+    <div class="level10"><span class="xref">PipelineDiagnosticsVisualizationObjectView</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -107,10 +108,32 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.isupportinitialize">ISupportInitialize</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iqueryambient">IQueryAmbient</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_ContextMenuItemsSourceType">VisualizationObjectView.ContextMenuItemsSourceType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_ContextMenuObjectName">VisualizationObjectView.ContextMenuObjectName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_VisualizationObject">VisualizationObjectView.VisualizationObject</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_Navigator">VisualizationObjectView.Navigator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">VisualizationObjectView.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnUnloaded_System_Object_System_Windows_RoutedEventArgs_">VisualizationObjectView.OnUnloaded(Object, RoutedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObjectView.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol.oncreateautomationpeer#System_Windows_Controls_UserControl_OnCreateAutomationPeer">UserControl.OnCreateAutomationPeer()</a>
     </div>
@@ -1985,13 +2008,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PipelineDiagnosticsVisualizationObjectView : UserControl, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class PipelineDiagnosticsVisualizationObjectView : VisualizationObjectView, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L34">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L35">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView__ctor_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView__ctor" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.#ctor">PipelineDiagnosticsVisualizationObjectView()</h4>
@@ -2006,16 +2029,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L43">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_DiagnosticsVisualizationObject_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.DiagnosticsVisualizationObject*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_DiagnosticsVisualizationObject" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.DiagnosticsVisualizationObject">DiagnosticsVisualizationObject</h4>
-  <div class="markdown level1 summary"><p>Gets the image visualization object.</p>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_PipelineDiagnosticsVisualizationObject_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.PipelineDiagnosticsVisualizationObject*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_PipelineDiagnosticsVisualizationObject" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.PipelineDiagnosticsVisualizationObject">PipelineDiagnosticsVisualizationObject</h4>
+  <div class="markdown level1 summary"><p>Gets the pipeline diagnostics visualization object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnosticsVisualizationObject DiagnosticsVisualizationObject { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnosticsVisualizationObject PipelineDiagnosticsVisualizationObject { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2036,7 +2059,40 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L64">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_AppendContextMenuItems_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.AppendContextMenuItems*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.AppendContextMenuItems(System.Collections.Generic.List{System.Windows.Controls.MenuItem})">AppendContextMenuItems(List&lt;MenuItem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets the context menu items the context menu source wishes to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void AppendContextMenuItems(List&lt;MenuItem&gt; menuItems)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.menuitem">MenuItem</a>&gt;</td>
+        <td><span class="parametername">menuItems</span></td>
+        <td><p>A collection of menu items to append to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">VisualizationObjectView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_Dispose_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.Dispose*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_Dispose" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.Dispose">Dispose()</h4>
@@ -2048,7 +2104,88 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L57">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L108">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_OnLoaded_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.OnLoaded*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_OnLoaded_System_Object_System_Windows_RoutedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.OnLoaded(System.Object,System.Windows.RoutedEventArgs)">OnLoaded(Object, RoutedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when the view is loaded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnLoaded(object sender, RoutedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.routedeventargs">RoutedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnLoaded_System_Object_System_Windows_RoutedEventArgs_">VisualizationObjectView.OnLoaded(Object, RoutedEventArgs)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_OnVisualizationObjectPropertyChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.OnVisualizationObjectPropertyChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.OnVisualizationObjectPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when a property of the visualization object has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObjectView.OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</a></div>
+  <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will be called on the application dispatcher thread.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_Update_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.Update*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PipelineDiagnosticsVisualizationObjectView_Update_System_Boolean_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.Update(System.Boolean)">Update(Boolean)</h4>
@@ -2097,6 +2234,9 @@
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
   </div>
   <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
+  </div>
+  <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
@@ -2120,7 +2260,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L23" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/DiagnosticsVisualization/PipelineDiagnosticsVisualizationObjectView.xaml.cs/#L24" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

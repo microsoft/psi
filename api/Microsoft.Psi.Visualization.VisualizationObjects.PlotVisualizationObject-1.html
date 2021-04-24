@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1" class="text-break">Class PlotVisualizationObject&lt;TData&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Represents a plot visualization object.</p>
+  <div class="markdown level0 summary"><p>Provides an abstract base class for visualization objects for plotting numerical data.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -93,7 +93,7 @@
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
     <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;TData&gt;</div>
-    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html">TimelineVisualizationObject</a>&lt;TData&gt;</div>
+    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html">StreamIntervalVisualizationObject</a>&lt;TData&gt;</div>
     <div class="level6"><span class="xref">PlotVisualizationObject&lt;TData&gt;</span></div>
       <div class="level7"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.AudioVisualizationObject.html">AudioVisualizationObject</a></div>
       <div class="level7"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DecimalVisualizationObject.html">DecimalVisualizationObject</a></div>
@@ -113,50 +113,60 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_SummaryData">TimelineVisualizationObject&lt;TData&gt;.SummaryData</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_Data">StreamIntervalVisualizationObject&lt;TData&gt;.Data</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_SamplingTicks">TimelineVisualizationObject&lt;TData&gt;.SamplingTicks</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SummaryData">StreamIntervalVisualizationObject&lt;TData&gt;.SummaryData</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_LegendFormat">TimelineVisualizationObject&lt;TData&gt;.LegendFormat</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SamplingTicks">StreamIntervalVisualizationObject&lt;TData&gt;.SamplingTicks</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_IsUsingSummarization">TimelineVisualizationObject&lt;TData&gt;.IsUsingSummarization</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendFormat">StreamIntervalVisualizationObject&lt;TData&gt;.LegendFormat</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_GetSnappedTime_System_DateTime_Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">TimelineVisualizationObject&lt;TData&gt;.GetSnappedTime(DateTime, SnappingBehavior)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_IsUsingSummarization">StreamIntervalVisualizationObject&lt;TData&gt;.IsUsingSummarization</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">TimelineVisualizationObject&lt;TData&gt;.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">StreamIntervalVisualizationObject&lt;TData&gt;.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnAddToPanel">TimelineVisualizationObject&lt;TData&gt;.OnAddToPanel()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnStreamBound">StreamIntervalVisualizationObject&lt;TData&gt;.OnStreamBound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnRemoveFromPanel">TimelineVisualizationObject&lt;TData&gt;.OnRemoveFromPanel()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnStreamUnbound">StreamIntervalVisualizationObject&lt;TData&gt;.OnStreamUnbound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnStreamBound">TimelineVisualizationObject&lt;TData&gt;.OnStreamBound()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">StreamIntervalVisualizationObject&lt;TData&gt;.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnStreamUnbound">TimelineVisualizationObject&lt;TData&gt;.OnStreamUnbound()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObject&lt;TData&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">TimelineVisualizationObject&lt;TData&gt;.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">StreamIntervalVisualizationObject&lt;TData&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">TimelineVisualizationObject&lt;TData&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">StreamIntervalVisualizationObject&lt;TData&gt;.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">TimelineVisualizationObject&lt;TData&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;TData&gt;.CursorEpsilonPosMs</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">TimelineVisualizationObject&lt;TData&gt;.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;TData&gt;.CursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;TData&gt;.StreamName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;TData&gt;.PartitionName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;TData&gt;.CursorEpsilon</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;TData&gt;.CanSnapToStream</a>
@@ -168,6 +178,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand">StreamVisualizationObject&lt;TData&gt;.ZoomToStreamCommand</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_HasCurrentValue">StreamVisualizationObject&lt;TData&gt;.HasCurrentValue</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue">StreamVisualizationObject&lt;TData&gt;.CurrentValue</a>
     </div>
     <div>
@@ -175,9 +188,6 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime">StreamVisualizationObject&lt;TData&gt;.CurrentOriginatingTime</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Data">StreamVisualizationObject&lt;TData&gt;.Data</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding">StreamVisualizationObject&lt;TData&gt;.StreamBinding</a>
@@ -222,10 +232,13 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;TData&gt;.IsLive</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsShared">StreamVisualizationObject&lt;TData&gt;.IsShared</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;TData&gt;.Allocator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___System_Boolean_">StreamVisualizationObject&lt;TData&gt;.SetCurrentValue(Nullable&lt;Message&lt;TData&gt;&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Deallocator">StreamVisualizationObject&lt;TData&gt;.Deallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___">StreamVisualizationObject&lt;TData&gt;.SetCurrentValue(Nullable&lt;Message&lt;TData&gt;&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream">StreamVisualizationObject&lt;TData&gt;.ToggleSnapToStream()</a>
@@ -234,7 +247,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">StreamVisualizationObject&lt;TData&gt;.UpdateStreamSource(SessionViewModel)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetTimeOfNearestMessage_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">StreamVisualizationObject&lt;TData&gt;.GetTimeOfNearestMessage(DateTime, Int32, Func&lt;Int32, DateTime&gt;, SnappingBehavior)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnAddToPanel">StreamVisualizationObject&lt;TData&gt;.OnAddToPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnRemoveFromPanel">StreamVisualizationObject&lt;TData&gt;.OnRemoveFromPanel()</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
@@ -261,16 +277,16 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected">VisualizationObject.IsConnected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver">VisualizationObject.ContractResolver</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleVisibilityCommand">VisualizationObject.ToggleVisibilityCommand</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems">VisualizationObject.GetAdditionalContextMenuItems()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver">VisualizationObject.ContractResolver</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString">VisualizationObject.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_InitNew">VisualizationObject.InitNew()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPanelPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
@@ -316,7 +332,8 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class PlotVisualizationObject&lt;TData&gt; : TimelineVisualizationObject&lt;TData&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject</code></pre>
+    <pre><code class="lang-csharp hljs">[VisualizationPanelType(VisualizationPanelType.Timeline)]
+public abstract class PlotVisualizationObject&lt;TData&gt; : StreamIntervalVisualizationObject&lt;TData&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, IYValueRangeProvider</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -329,7 +346,7 @@
     <tbody>
       <tr>
         <td><span class="parametername">TData</span></td>
-        <td><p>The type of the data for the plot visualization object.</p>
+        <td><p>The type of the numerical data.</p>
 </td>
       </tr>
     </tbody>
@@ -338,7 +355,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_Color_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.Color*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_Color" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.Color">Color</h4>
@@ -367,7 +384,7 @@ public Color Color { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L113">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L106">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_InterpolationStyle_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.InterpolationStyle*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_InterpolationStyle" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.InterpolationStyle">InterpolationStyle</h4>
@@ -396,7 +413,7 @@ public InterpolationStyle InterpolationStyle { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L232">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L197">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LegendColor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.LegendColor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LegendColor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.LegendColor">LegendColor</h4>
@@ -425,10 +442,10 @@ public override Color LegendColor { get; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt;TData&gt;.LegendColor</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TData&gt;.LegendColor</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L237">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L202">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LegendValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.LegendValue*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LegendValue" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.LegendValue">LegendValue</h4>
@@ -456,10 +473,10 @@ public override string LegendValue { get; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt;TData&gt;.LegendValue</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TData&gt;.LegendValue</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L101">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L94">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LineWidth_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.LineWidth*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LineWidth" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.LineWidth">LineWidth</h4>
@@ -488,7 +505,7 @@ public double LineWidth { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L125">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L118">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_MarkerColor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.MarkerColor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_MarkerColor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.MarkerColor">MarkerColor</h4>
@@ -517,7 +534,7 @@ public Color MarkerColor { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L137">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L130">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_MarkerSize_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.MarkerSize*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_MarkerSize" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.MarkerSize">MarkerSize</h4>
@@ -546,7 +563,7 @@ public double MarkerSize { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L149">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L142">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_MarkerStyle_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.MarkerStyle*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_MarkerStyle" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.MarkerStyle">MarkerStyle</h4>
@@ -575,7 +592,7 @@ public MarkerStyle MarkerStyle { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L161">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L154">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_RangeColor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.RangeColor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_RangeColor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.RangeColor">RangeColor</h4>
@@ -604,7 +621,7 @@ public Color RangeColor { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L173">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L166">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_RangeWidth_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.RangeWidth*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_RangeWidth" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.RangeWidth">RangeWidth</h4>
@@ -633,17 +650,18 @@ public double RangeWidth { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L185">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L178">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YAxisComputeMode_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YAxisComputeMode*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YAxisComputeMode" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YAxisComputeMode">YAxisComputeMode</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the y axis compute mode.</p>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YAxis_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YAxis*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YAxis" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YAxis">YAxis</h4>
+  <div class="markdown level1 summary"><p>Gets the Y axis.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
-public AxisComputeMode YAxisComputeMode { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+[Browsable(false)]
+public Axis YAxis { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -655,24 +673,25 @@ public AxisComputeMode YAxisComputeMode { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.AxisComputeMode.html">AxisComputeMode</a></td>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Axis.html">Axis</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L202">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L183">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YMax_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YMax*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YMax" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YMax">YMax</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the y max value.</p>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YValueRange_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YValueRange*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YValueRange" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YValueRange">YValueRange</h4>
+  <div class="markdown level1 summary"><p>Gets the Y value range.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[IgnoreDataMember]
-public double YMax { get; set; }</code></pre>
+[Browsable(false)]
+public ValueRange&lt;double&gt; YValueRange { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -684,36 +703,7 @@ public double YMax { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L218">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YMin_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YMin*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YMin" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YMin">YMin</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the y min value.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
-public double YMin { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ValueRange-1.html">ValueRange</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -722,7 +712,7 @@ public double YMin { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L255">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L220">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_GetIndexForTime_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.GetIndexForTime*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.GetIndexForTime(System.DateTime,System.Int32,System.Func{System.Int32,System.DateTime})">GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;)</h4>
@@ -784,7 +774,7 @@ Uses binary search to find exact match or location where match should be.</p>
   <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;TData&gt;.GetIndexForTime(System.DateTime, System.Int32, System.Func&lt;System.Int32, System.DateTime&gt;)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L245">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L210">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_GetNumericValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.GetNumericValue*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_GetNumericValue__0_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.GetNumericValue(`0)">GetNumericValue(TData)</h4>
@@ -831,7 +821,7 @@ Uses binary search to find exact match or location where match should be.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L252">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L217">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_GetStringValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.GetStringValue*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_GetStringValue__0_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.GetStringValue(`0)">GetStringValue(TData)</h4>
@@ -878,7 +868,7 @@ Uses binary search to find exact match or location where match should be.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L261">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L226">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnDataCollectionChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.OnDataCollectionChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.OnDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</h4>
@@ -908,14 +898,53 @@ Uses binary search to find exact match or location where match should be.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;TData&gt;.OnDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TData&gt;.OnDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L269">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L242">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnPanelPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.OnPanelPropertyChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.OnPanelPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Implements a response to a notification that a property of the visualization panel has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender of the event.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The event args for the event.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TData&gt;.OnPanelPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L234">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnSummaryDataCollectionChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.OnSummaryDataCollectionChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnSummaryDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.OnSummaryDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">OnSummaryDataCollectionChanged(NotifyCollectionChangedEventArgs)</h4>
-  <div class="markdown level1 summary"><p>Invoked when the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_SummaryData">SummaryData</a> collection changes.</p>
+  <div class="markdown level1 summary"><p>Invoked when the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SummaryData">SummaryData</a> collection changes.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -941,7 +970,36 @@ Uses binary search to find exact match or location where match should be.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject&lt;TData&gt;.OnSummaryDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TData&gt;.OnSummaryDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L70">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YValueRangeChanged" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject`1.YValueRangeChanged">YValueRangeChanged</h4>
+  <div class="markdown level1 summary"><p>Fires when the Y value range has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;EventArgs&gt; YValueRangeChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">EventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
@@ -951,6 +1009,9 @@ Uses binary search to find exact match or location where match should be.</p>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -970,7 +1031,7 @@ Uses binary search to find exact match or location where match should be.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L20" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/NumericPlot/PlotVisualizationObject{TData}.cs/#L21" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

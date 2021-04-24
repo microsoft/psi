@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IPlotVisualizationObjectView&lt;TKey, TData&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IPlotVisualizationObjectView&lt;TKey, TData&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2" class="text-break">Interface IPlotVisualizationObjectView&lt;TKey, TData&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Defines a plot visualization object view.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.html">Microsoft.Psi.Visualization.Views.Visuals2D</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IPlotVisualizationObjectView&lt;TKey, TData&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TKey</span></td>
+        <td><p>The type of the series key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TData</span></td>
+        <td><p>The type of data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This interface is used to abstract over the two different types of plot visualization
+object views currently available: <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView-2.html">PlotVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;</a>,
+which is used for simple numerical plots, and
+<a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.PlotSeriesVisualizationObjectView-3.html">PlotSeriesVisualizationObjectView&lt;TPlotSeriesVisualizationObject, TKey, TData&gt;</a>,
+which is used for plot series. The interface enables encapsulating the common
+functionality for creating plot views in the
+<a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectViewHelper-2.html">PlotVisualizationObjectViewHelper&lt;TKey, TData&gt;</a> class such as to avoid
+code duplication.</p>
+</div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L38">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_Canvas_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.Canvas*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_Canvas" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.Canvas">Canvas</h4>
+  <div class="markdown level1 summary"><p>Gets the canvas.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Canvas Canvas { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.canvas">Canvas</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L48">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_InterpolationStyle_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.InterpolationStyle*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_InterpolationStyle" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.InterpolationStyle">InterpolationStyle</h4>
+  <div class="markdown level1 summary"><p>Gets the interpolation style.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">InterpolationStyle InterpolationStyle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.InterpolationStyle.html">InterpolationStyle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L58">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_MarkerSize_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.MarkerSize*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_MarkerSize" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.MarkerSize">MarkerSize</h4>
+  <div class="markdown level1 summary"><p>Gets the marker size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double MarkerSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L53">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_MarkerStyle_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.MarkerStyle*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_MarkerStyle" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.MarkerStyle">MarkerStyle</h4>
+  <div class="markdown level1 summary"><p>Gets the marker style.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">MarkerStyle MarkerStyle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.MarkerStyle.html">MarkerStyle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L33">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_Navigator_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.Navigator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_Navigator" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.Navigator">Navigator</h4>
+  <div class="markdown level1 summary"><p>Gets the navigator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Navigator Navigator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Navigation.Navigator.html">Navigator</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L63">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_ScaleTransform_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.ScaleTransform*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_ScaleTransform" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.ScaleTransform">ScaleTransform</h4>
+  <div class="markdown level1 summary"><p>Gets the scale transform.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ScaleTransform ScaleTransform { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.scaletransform">ScaleTransform</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L43">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_TransformGroup_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.TransformGroup*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_TransformGroup" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.TransformGroup">TransformGroup</h4>
+  <div class="markdown level1 summary"><p>Gets the transform group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Transform TransformGroup { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.transform">Transform</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L72">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_CreateBindings_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.CreateBindings*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_CreateBindings__0_System_Windows_Shapes_Path_System_Windows_Shapes_Path_System_Windows_Shapes_Path_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.CreateBindings(`0,System.Windows.Shapes.Path,System.Windows.Shapes.Path,System.Windows.Shapes.Path)">CreateBindings(TKey, Path, Path, Path)</h4>
+  <div class="markdown level1 summary"><p>Creates the bindings for the line, markers and range paths for a specified series key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CreateBindings(TKey seriesKey, Path linePath, Path markerPath, Path rangePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><span class="parametername">seriesKey</span></td>
+        <td><p>The series key.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.path">Path</a></td>
+        <td><span class="parametername">linePath</span></td>
+        <td><p>The line path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.path">Path</a></td>
+        <td><span class="parametername">markerPath</span></td>
+        <td><p>The marker path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.path">Path</a></td>
+        <td><span class="parametername">rangePath</span></td>
+        <td><p>The range path.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L79">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_GetDataPoints_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.GetDataPoints*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_GetDataPoints__0_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.GetDataPoints(`0)">GetDataPoints(TKey)</h4>
+  <div class="markdown level1 summary"><p>Gets the data points to render for a given series.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;(DateTime OriginatingTime, TData Value, bool Available)&gt; GetDataPoints(TKey seriesKey)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><span class="parametername">seriesKey</span></td>
+        <td><p>The series key.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, TData, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><p>An enumeration of datapoints to render.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_GetNumericValue_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.GetNumericValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_2_GetNumericValue__1_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView`2.GetNumericValue(`1)">GetNumericValue(TData)</h4>
+  <div class="markdown level1 summary"><p>Gets the numeric value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double GetNumericValue(TData data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TData</span></td>
+        <td><span class="parametername">data</span></td>
+        <td><p>The data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The corresponding numberic value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/IPlotVisualizationObjectView.cs/#L28" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

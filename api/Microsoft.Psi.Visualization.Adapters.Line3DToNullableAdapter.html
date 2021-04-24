@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Adapters_Line3DToNullableAdapter" data-uid="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter" class="text-break">Class Line3DToNullableAdapter
   </h1>
-  <div class="markdown level0 summary"><p>Used to adapt streams of <see cref="!:Line3D"></see> into nullable <see cref="!:Line3D"></see>.</p>
+  <div class="markdown level0 summary"><p>Implements a stream adapter <see cref="!:Line3D"></see> to nullable <see cref="!:Line3D"></see>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -95,39 +95,35 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Default">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.Default</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceIsSharedType">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.SourceIsSharedType</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Allocator">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.Allocator</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_DestinationType">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.DestinationType</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Pool">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.Pool</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceType">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.SourceType</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdapterFn">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.AdapterFn</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceAllocator">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.SourceAllocator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptData__0_">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.AdaptData(Line3D)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceDeallocator">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.SourceDeallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.IStreamAdapter.SourceAllocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.IStreamAdapter.SourceDeallocator</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptReceiver_System_Action__1_Microsoft_Psi_Envelope__">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.AdaptReceiver(Action&lt;Nullable&lt;Line3D&gt;, Envelope&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.Dispose()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_GetAdaptedValue__0_Microsoft_Psi_Envelope_">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.GetAdaptedValue(Line3D, Envelope)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose__1_">StreamAdapter&lt;Line3D, Nullable&lt;Line3D&gt;&gt;.Dispose(Nullable&lt;Line3D&gt;)</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
@@ -155,29 +151,67 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Adapters_Line3DToNullableAdapter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Line3DToNullableAdapter : StreamAdapter&lt;Line3D, Line3D?&gt;, IStreamAdapter, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class Line3DToNullableAdapter : StreamAdapter&lt;Line3D, Line3D?&gt;, IStreamAdapter</code></pre>
   </div>
-  <h3 id="constructors">Constructors
+  <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/Line3DToNullableAdapter.cs/#L18">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/Line3DToNullableAdapter.cs/#L16">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Adapters_Line3DToNullableAdapter__ctor_" data-uid="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Adapters_Line3DToNullableAdapter__ctor" data-uid="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.#ctor">Line3DToNullableAdapter()</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.html">Line3DToNullableAdapter</a> class.</p>
+  <a id="Microsoft_Psi_Visualization_Adapters_Line3DToNullableAdapter_GetAdaptedValue_" data-uid="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.GetAdaptedValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Adapters_Line3DToNullableAdapter_GetAdaptedValue_Line3D_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.GetAdaptedValue(Line3D,Microsoft.Psi.Envelope)">GetAdaptedValue(Line3D, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Gets the adapted value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Line3DToNullableAdapter()</code></pre>
+    <pre><code class="lang-csharp hljs">public override Line3D? GetAdaptedValue(Line3D source, Envelope envelope)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Line3D</span></td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The source envelope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Line3D</span>&gt;</td>
+        <td><p>The adapted value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.Data.StreamAdapter&lt;Line3D, System.Nullable&lt;Line3D&gt;&gt;.GetAdaptedValue(Line3D, Microsoft.Psi.Envelope)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

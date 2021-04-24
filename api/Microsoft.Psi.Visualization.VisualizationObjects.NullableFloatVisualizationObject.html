@@ -93,7 +93,7 @@
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
     <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>&gt;&gt;</div>
-    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html">TimelineVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>&gt;&gt;</div>
+    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html">StreamIntervalVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>&gt;&gt;</div>
     <div class="level6"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html">PlotVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>&gt;&gt;</div>
     <div class="level7"><span class="xref">NullableFloatVisualizationObject</span></div>
   </div>
@@ -102,9 +102,13 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YValueRangeChanged">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.YValueRangeChanged</a>
+    </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_Color">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.Color</a>
     </div>
@@ -130,13 +134,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_RangeWidth">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.RangeWidth</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YAxisComputeMode">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.YAxisComputeMode</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YAxis">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.YAxis</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YMax">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.YMax</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YMin">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.YMin</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_YValueRange">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.YValueRange</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_LegendColor">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.LegendColor</a>
@@ -154,46 +155,58 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnSummaryDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnSummaryDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_SummaryData">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.SummaryData</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotVisualizationObject_1_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">PlotVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_SamplingTicks">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.SamplingTicks</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_Data">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.Data</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_LegendFormat">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.LegendFormat</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SummaryData">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.SummaryData</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_IsUsingSummarization">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.IsUsingSummarization</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SamplingTicks">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.SamplingTicks</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_GetSnappedTime_System_DateTime_Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.GetSnappedTime(DateTime, SnappingBehavior)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendFormat">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.LegendFormat</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_IsUsingSummarization">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.IsUsingSummarization</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnAddToPanel">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnAddToPanel()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnRemoveFromPanel">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnRemoveFromPanel()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnStreamBound">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnStreamBound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnStreamBound">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnStreamBound()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnStreamUnbound">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnStreamUnbound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnStreamUnbound">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnStreamUnbound()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">StreamIntervalVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimelineVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_TimelineVisualizationObject_1_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_">TimelineVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.CursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.CursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.StreamName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.PartitionName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.CursorEpsilon</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.CanSnapToStream</a>
@@ -205,6 +218,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.ZoomToStreamCommand</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_HasCurrentValue">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.HasCurrentValue</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.CurrentValue</a>
     </div>
     <div>
@@ -212,9 +228,6 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.CurrentOriginatingTime</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Data">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.Data</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.StreamBinding</a>
@@ -259,10 +272,13 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.IsLive</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsShared">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.IsShared</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.Allocator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___System_Boolean_">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.SetCurrentValue(Nullable&lt;Message&lt;Nullable&lt;Single&gt;&gt;&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Deallocator">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.Deallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.SetCurrentValue(Nullable&lt;Message&lt;Nullable&lt;Single&gt;&gt;&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.ToggleSnapToStream()</a>
@@ -271,7 +287,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.UpdateStreamSource(SessionViewModel)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetTimeOfNearestMessage_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.GetTimeOfNearestMessage(DateTime, Int32, Func&lt;Int32, DateTime&gt;, SnappingBehavior)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnAddToPanel">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnAddToPanel()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnRemoveFromPanel">StreamVisualizationObject&lt;Nullable&lt;Single&gt;&gt;.OnRemoveFromPanel()</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
@@ -295,16 +314,16 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected">VisualizationObject.IsConnected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver">VisualizationObject.ContractResolver</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleVisibilityCommand">VisualizationObject.ToggleVisibilityCommand</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems">VisualizationObject.GetAdditionalContextMenuItems()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver">VisualizationObject.ContractResolver</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString">VisualizationObject.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_InitNew">VisualizationObject.InitNew()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPanelPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
@@ -351,7 +370,7 @@
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_NullableFloatVisualizationObject_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[VisualizationObject(&quot;Float&quot;, typeof(NullableFloatRangeSummarizer), &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/stream.png&quot;, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/panel-stream.png&quot;, &quot;%StreamName%&quot;, false)]
-public class NullableFloatVisualizationObject : PlotVisualizationObject&lt;float?&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject</code></pre>
+public class NullableFloatVisualizationObject : PlotVisualizationObject&lt;float?&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, IYValueRangeProvider</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -494,6 +513,9 @@ public override DataTemplate DefaultViewTemplate { get; }</code></pre>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

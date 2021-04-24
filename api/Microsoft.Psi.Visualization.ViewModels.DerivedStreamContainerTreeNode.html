@@ -1,0 +1,685 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class DerivedStreamContainerTreeNode
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class DerivedStreamContainerTreeNode
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode" class="text-break">Class DerivedStreamContainerTreeNode
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a node in the dataset tree that represents a derived stream container.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html">StreamContainerTreeNode</a></div>
+    <div class="level4"><span class="xref">DerivedStreamContainerTreeNode</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_DatasetViewModel">StreamContainerTreeNode.DatasetViewModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SessionViewModel">StreamContainerTreeNode.SessionViewModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PartitionViewModel">StreamContainerTreeNode.PartitionViewModel</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_Path">StreamContainerTreeNode.Path</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_Name">StreamContainerTreeNode.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_Children">StreamContainerTreeNode.Children</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedTimeInterval">StreamContainerTreeNode.SubsumedTimeInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ContextMenuOpeningCommand">StreamContainerTreeNode.ContextMenuOpeningCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_DisplayName">StreamContainerTreeNode.DisplayName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AuxiliaryInfo">StreamContainerTreeNode.AuxiliaryInfo</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_IsInCurrentSession">StreamContainerTreeNode.IsInCurrentSession</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_UiElementOpacity">StreamContainerTreeNode.UiElementOpacity</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_HasNonDerivedChildren">StreamContainerTreeNode.HasNonDerivedChildren</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedOpenedTime">StreamContainerTreeNode.SubsumedOpenedTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedClosedTime">StreamContainerTreeNode.SubsumedClosedTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedOriginatingTimeInterval">StreamContainerTreeNode.SubsumedOriginatingTimeInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageOriginatingTime">StreamContainerTreeNode.SubsumedFirstMessageOriginatingTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageCreationTime">StreamContainerTreeNode.SubsumedFirstMessageCreationTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageOriginatingTime">StreamContainerTreeNode.SubsumedLastMessageOriginatingTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageCreationTime">StreamContainerTreeNode.SubsumedLastMessageCreationTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedAverageMessageLatencyMs">StreamContainerTreeNode.SubsumedAverageMessageLatencyMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedAverageMessageSize">StreamContainerTreeNode.SubsumedAverageMessageSize</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_InternalChildren">StreamContainerTreeNode.InternalChildren</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AddStreamTreeNode_Microsoft_Psi_IStreamMetadata_">StreamContainerTreeNode.AddStreamTreeNode(IStreamMetadata)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AddChildTreeNode_Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_">StreamContainerTreeNode.AddChildTreeNode(StreamContainerTreeNode)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SelectTreeNode_System_String_">StreamContainerTreeNode.SelectTreeNode(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_FindStreamTreeNode_System_String_">StreamContainerTreeNode.FindStreamTreeNode(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_FindStreamContainerTreeNode_System_String_">StreamContainerTreeNode.FindStreamContainerTreeNode(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ExpandAll">StreamContainerTreeNode.ExpandAll()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_CollapseAll">StreamContainerTreeNode.CollapseAll()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ToString">StreamContainerTreeNode.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_OnPartitionViewModelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamContainerTreeNode.OnPartitionViewModelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_OnDatasetViewModelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamContainerTreeNode.OnDatasetViewModelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenu_System_Windows_Controls_ContextMenu_">StreamContainerTreeNode.PopulateContextMenu(ContextMenu)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenuWithShowStreamInfo_System_Windows_Controls_ContextMenu_">StreamContainerTreeNode.PopulateContextMenuWithShowStreamInfo(ContextMenu)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenuWithExpandAndCollapseAll_System_Windows_Controls_ContextMenu_">StreamContainerTreeNode.PopulateContextMenuWithExpandAndCollapseAll(ContextMenu)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class DerivedStreamContainerTreeNode : StreamContainerTreeNode, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L21">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode__ctor_Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.#ctor(Microsoft.Psi.Visualization.ViewModels.PartitionViewModel,System.String,System.String)">DerivedStreamContainerTreeNode(PartitionViewModel, String, String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.html">DerivedStreamContainerTreeNode</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DerivedStreamContainerTreeNode(PartitionViewModel partitionViewModel, string path, string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html">PartitionViewModel</a></td>
+        <td><span class="parametername">partitionViewModel</span></td>
+        <td><p>The partition for the container tree node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">path</span></td>
+        <td><p>The path to the container tree node.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the container tree node.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L30">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_ForegroundBrush_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.ForegroundBrush*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_ForegroundBrush" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.ForegroundBrush">ForegroundBrush</h4>
+  <div class="markdown level1 summary"><p>Gets the color to use when rendering the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Brush ForegroundBrush { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.brush">Brush</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ForegroundBrush">StreamContainerTreeNode.ForegroundBrush</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L27">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_IconSource_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.IconSource*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_IconSource" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.IconSource">IconSource</h4>
+  <div class="markdown level1 summary"><p>Gets the path to the stream's icon.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string IconSource { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_IconSource">StreamContainerTreeNode.IconSource</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L45">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedClosedTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedClosedTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedClosedTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedClosedTimeString">SubsumedClosedTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the last closed time for the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override string SubsumedClosedTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedClosedTimeString">StreamContainerTreeNode.SubsumedClosedTimeString</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L53">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedFirstMessageCreationTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedFirstMessageCreationTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedFirstMessageCreationTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedFirstMessageCreationTimeString">SubsumedFirstMessageCreationTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the time of the first message in the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override string SubsumedFirstMessageCreationTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageCreationTimeString">StreamContainerTreeNode.SubsumedFirstMessageCreationTimeString</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedFirstMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedFirstMessageOriginatingTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedFirstMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedFirstMessageOriginatingTimeString">SubsumedFirstMessageOriginatingTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the originating time of the first message in the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override string SubsumedFirstMessageOriginatingTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageOriginatingTimeString">StreamContainerTreeNode.SubsumedFirstMessageOriginatingTimeString</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedLastMessageCreationTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedLastMessageCreationTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedLastMessageCreationTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedLastMessageCreationTimeString">SubsumedLastMessageCreationTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the time of the last message in the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override string SubsumedLastMessageCreationTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageCreationTimeString">StreamContainerTreeNode.SubsumedLastMessageCreationTimeString</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedLastMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedLastMessageOriginatingTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedLastMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedLastMessageOriginatingTimeString">SubsumedLastMessageOriginatingTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the originating time of the last message in the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override string SubsumedLastMessageOriginatingTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageOriginatingTimeString">StreamContainerTreeNode.SubsumedLastMessageOriginatingTimeString</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L33">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedMessageCount_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedMessageCount*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedMessageCount" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedMessageCount">SubsumedMessageCount</h4>
+  <div class="markdown level1 summary"><p>Gets the total number of messages in the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override long SubsumedMessageCount { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedMessageCount">StreamContainerTreeNode.SubsumedMessageCount</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L41">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedOpenedTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedOpenedTimeString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedOpenedTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedOpenedTimeString">SubsumedOpenedTimeString</h4>
+  <div class="markdown level1 summary"><p>Gets a string representation of the first opened time for the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override string SubsumedOpenedTimeString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedOpenedTimeString">StreamContainerTreeNode.SubsumedOpenedTimeString</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L37">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedSize_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedSize*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_SubsumedSize" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.SubsumedSize">SubsumedSize</h4>
+  <div class="markdown level1 summary"><p>Gets the total data size in the stream(s) subsumed by the tree node.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override long SubsumedSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedSize">StreamContainerTreeNode.SubsumedSize</a></div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L65">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_UpdateAuxiliaryInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.UpdateAuxiliaryInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DerivedStreamContainerTreeNode_UpdateAuxiliaryInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.UpdateAuxiliaryInfo">UpdateAuxiliaryInfo()</h4>
+  <div class="markdown level1 summary"><p>Updates the auxiliary info to be displayed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void UpdateAuxiliaryInfo()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.html#Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_UpdateAuxiliaryInfo">StreamContainerTreeNode.UpdateAuxiliaryInfo()</a></div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
+  </div>
+  <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DerivedStreamContainerTreeNode.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

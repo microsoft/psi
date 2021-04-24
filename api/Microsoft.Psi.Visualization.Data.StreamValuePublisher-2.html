@@ -1,0 +1,471 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class StreamValuePublisher&lt;TSource, TDestination&gt;
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class StreamValuePublisher&lt;TSource, TDestination&gt;
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2" class="text-break">Class StreamValuePublisher&lt;TSource, TDestination&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a publisher that pushes adapted data to stream value subscribers.
+Data of type TSource supplied to the provider is converted to data of type
+TDestination by the stream adapter and then routed to all stream value
+subscribers.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">StreamValuePublisher&lt;TSource, TDestination&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamValuePublisher-1.html">IStreamValuePublisher</a>&lt;TSource&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class StreamValuePublisher&lt;TSource, TDestination&gt; : IStreamValuePublisher&lt;TSource&gt;</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TSource</span></td>
+        <td><p>The type of source data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TDestination</span></td>
+        <td><p>The type of destination data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L30">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2__ctor_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2__ctor_Microsoft_Psi_Visualization_Data_IStreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.#ctor(Microsoft.Psi.Visualization.Data.IStreamAdapter)">StreamValuePublisher(IStreamAdapter)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamValuePublisher-2.html">StreamValuePublisher&lt;TSource, TDestination&gt;</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamValuePublisher(IStreamAdapter streamAdapter)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></td>
+        <td><span class="parametername">streamAdapter</span></td>
+        <td><p>The stream adapter that will convert the incoming data to the data that the targets require.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L42">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_HasSubscribers_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.HasSubscribers*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_HasSubscribers" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.HasSubscribers">HasSubscribers</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether any targets are registered with the provider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasSubscribers { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L37">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_StreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.StreamAdapter*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_StreamAdapter" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.StreamAdapter">StreamAdapter</h4>
+  <div class="markdown level1 summary"><p>Gets the stream adapter used by this publisher.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IStreamAdapter StreamAdapter { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_HasSubscriber_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.HasSubscriber*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_HasSubscriber_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.HasSubscriber(System.Guid)">HasSubscriber(Guid)</h4>
+  <div class="markdown level1 summary"><p>Checks if a stream value publisher has a specified subscriber.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasSubscriber(Guid registrationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><span class="parametername">registrationToken</span></td>
+        <td><p>The registration token that the target was given when it was initially registered.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the publisher has the specified subscriber.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L82">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_PublishValue_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.PublishValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_PublishValue_System_Boolean__0_System_DateTime_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.PublishValue(System.Boolean,`0,System.DateTime,System.DateTime)">PublishValue(Boolean, TSource, DateTime, DateTime)</h4>
+  <div class="markdown level1 summary"><p>Pushes data to registered stream value subscribers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void PublishValue(bool dataIsAvailable, TSource data, DateTime originatingTime, DateTime creationTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">dataIsAvailable</span></td>
+        <td><p>Indicates whether data is valid, or whether no data was found at the specified read location.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TSource</span></td>
+        <td><span class="parametername">data</span></td>
+        <td><p>The source data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">originatingTime</span></td>
+        <td><p>The originating time.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">creationTime</span></td>
+        <td><p>The creation time.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_RegisterSubscriber_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.RegisterSubscriber*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_RegisterSubscriber_System_Action_System_Boolean__1_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.RegisterSubscriber(System.Action{System.Boolean,`1,System.DateTime,System.DateTime})">RegisterSubscriber(Action&lt;Boolean, TDestination, DateTime, DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Registers a subscriber.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid RegisterSubscriber(Action&lt;bool, TDestination, DateTime, DateTime&gt; target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-4">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, TDestination, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">target</span></td>
+        <td><p>The target action to call for the subscriber.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><p>A registration token that can be user to unregister.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_UnregisterSubscriber_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.UnregisterSubscriber*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamValuePublisher_2_UnregisterSubscriber_System_Guid_" data-uid="Microsoft.Psi.Visualization.Data.StreamValuePublisher`2.UnregisterSubscriber(System.Guid)">UnregisterSubscriber(Guid)</h4>
+  <div class="markdown level1 summary"><p>Unregisters a stream value subscriber.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnregisterSubscriber(Guid registrationToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
+        <td><span class="parametername">registrationToken</span></td>
+        <td><p>The registration token that the stream value subscriber was given when it was initially registered.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamValuePublisher-1.html">IStreamValuePublisher&lt;TSource&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamValuePublisher{TSource,TDestination}.cs/#L19" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

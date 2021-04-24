@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter" class="text-break">Class EncodedDepthImageToDepthImageAdapter
   </h1>
-  <div class="markdown level0 summary"><p>Represents an adapter that converts an encoded depth image to a depth image.</p>
+  <div class="markdown level0 summary"><p>Implements a stream adapter from shared encoded depth image to shared depth image.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -95,39 +95,35 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Default">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.Default</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceIsSharedType">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.SourceIsSharedType</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Allocator">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.Allocator</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_DestinationType">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.DestinationType</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Pool">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.Pool</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceType">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.SourceType</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdapterFn">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.AdapterFn</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceAllocator">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.SourceAllocator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptData__0_">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.AdaptData(Shared&lt;EncodedDepthImage&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceDeallocator">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.SourceDeallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.IStreamAdapter.SourceAllocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.IStreamAdapter.SourceDeallocator</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptReceiver_System_Action__1_Microsoft_Psi_Envelope__">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.AdaptReceiver(Action&lt;Shared&lt;DepthImage&gt;, Envelope&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.Dispose()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_GetAdaptedValue__0_Microsoft_Psi_Envelope_">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.GetAdaptedValue(Shared&lt;EncodedDepthImage&gt;, Envelope)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html#Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose__1_">StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;.Dispose(Shared&lt;DepthImage&gt;)</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
@@ -155,29 +151,99 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EncodedDepthImageToDepthImageAdapter : StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;, IStreamAdapter, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class EncodedDepthImageToDepthImageAdapter : StreamAdapter&lt;Shared&lt;EncodedDepthImage&gt;, Shared&lt;DepthImage&gt;&gt;, IStreamAdapter</code></pre>
   </div>
-  <h3 id="constructors">Constructors
+  <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/EncodedDepthImageToDepthImageAdapter.cs/#L18">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/EncodedDepthImageToDepthImageAdapter.cs/#L31">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter__ctor_" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter__ctor" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.#ctor">EncodedDepthImageToDepthImageAdapter()</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.html">EncodedDepthImageToDepthImageAdapter</a> class.</p>
+  <a id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter_Dispose_" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter_Dispose_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.Dispose(Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage})">Dispose(Shared&lt;DepthImage&gt;)</h4>
+  <div class="markdown level1 summary"><p>Disposes an adapter object that was created by this adapter.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EncodedDepthImageToDepthImageAdapter()</code></pre>
+    <pre><code class="lang-csharp hljs">public override void Dispose(Shared&lt;DepthImage&gt; destination)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;</td>
+        <td><span class="parametername">destination</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.Data.StreamAdapter&lt;Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.EncodedDepthImage&gt;, Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.DepthImage&gt;&gt;.Dispose(Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.DepthImage&gt;)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Adapters/EncodedDepthImageToDepthImageAdapter.cs/#L16">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter_GetAdaptedValue_" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.GetAdaptedValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Adapters_EncodedDepthImageToDepthImageAdapter_GetAdaptedValue_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedDepthImage__Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.GetAdaptedValue(Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedDepthImage},Microsoft.Psi.Envelope)">GetAdaptedValue(Shared&lt;EncodedDepthImage&gt;, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Gets the adapted value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override Shared&lt;DepthImage&gt; GetAdaptedValue(Shared&lt;EncodedDepthImage&gt; source, Envelope envelope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImage.html">EncodedDepthImage</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The source envelope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;</td>
+        <td><p>The adapted value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.Data.StreamAdapter&lt;Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.EncodedDepthImage&gt;, Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.DepthImage&gt;&gt;.GetAdaptedValue(Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.EncodedDepthImage&gt;, Microsoft.Psi.Envelope)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

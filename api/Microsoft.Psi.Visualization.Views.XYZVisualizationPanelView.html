@@ -97,7 +97,7 @@
     <div class="level6"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.control">Control</a></div>
     <div class="level7"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
-    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelViewBase.html">VisualizationPanelViewBase</a></div>
+    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html">VisualizationPanelView</a></div>
     <div class="level10"><span class="xref">XYZVisualizationPanelView</span></div>
   </div>
   <div classs="implements">
@@ -108,9 +108,19 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.isupportinitialize">ISupportInitialize</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iqueryambient">IQueryAmbient</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_ContextMenuItemsSourceType">VisualizationPanelView.ContextMenuItemsSourceType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_ContextMenuObjectName">VisualizationPanelView.ContextMenuObjectName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">VisualizationPanelView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol.oncreateautomationpeer#System_Windows_Controls_UserControl_OnCreateAutomationPeer">UserControl.OnCreateAutomationPeer()</a>
     </div>
@@ -1985,7 +1995,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class XYZVisualizationPanelView : VisualizationPanelViewBase, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public class XYZVisualizationPanelView : VisualizationPanelView, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -2050,6 +2060,9 @@
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

@@ -407,13 +407,13 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamSummaryManager.cs/#L149">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamSummaryManager_ReadSummary_" data-uid="Microsoft.Psi.Visualization.Data.StreamSummaryManager.ReadSummary*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamSummaryManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData___0___ObservableKeyedView_ViewMode_System_DateTime_System_DateTime_System_TimeSpan_System_UInt32_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.StreamSummaryManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.Visualization.Collections.ObservableKeyedCache{System.DateTime,Microsoft.Psi.Visualization.Data.IntervalData{``0}}.ObservableKeyedView.ViewMode,System.DateTime,System.DateTime,System.TimeSpan,System.UInt32,System.Func{System.DateTime,System.DateTime})">ReadSummary&lt;T&gt;(StreamSource, ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView.ViewMode, DateTime, DateTime, TimeSpan, UInt32, Func&lt;DateTime, DateTime&gt;)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamSummaryManager_ReadSummary__1_Microsoft_Psi_Visualization_Data_StreamSource_Microsoft_Psi_Visualization_Collections_ObservableKeyedViewMode_System_DateTime_System_DateTime_System_TimeSpan_System_UInt32_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.StreamSummaryManager.ReadSummary``1(Microsoft.Psi.Visualization.Data.StreamSource,Microsoft.Psi.Visualization.Collections.ObservableKeyedViewMode,System.DateTime,System.DateTime,System.TimeSpan,System.UInt32,System.Func{System.DateTime,System.DateTime})">ReadSummary&lt;T&gt;(StreamSource, ObservableKeyedViewMode, DateTime, DateTime, TimeSpan, UInt32, Func&lt;DateTime, DateTime&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets a view over the specified time range of the cached summary data.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView.ViewMode viewMode, DateTime startTime, DateTime endTime, TimeSpan interval, uint tailCount, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
+    <pre><code class="lang-csharp hljs">public ObservableKeyedCache&lt;DateTime, IntervalData&lt;T&gt;&gt;.ObservableKeyedView ReadSummary&lt;T&gt;(StreamSource streamSource, ObservableKeyedViewMode viewMode, DateTime startTime, DateTime endTime, TimeSpan interval, uint tailCount, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -432,7 +432,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.ViewMode.html">ObservableKeyedCache.ObservableKeyedView.ViewMode</a>&lt;&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedViewMode.html">ObservableKeyedViewMode</a></td>
         <td><span class="parametername">viewMode</span></td>
         <td><p>The view mode, which may be either fixed or live data.</p>
 </td>

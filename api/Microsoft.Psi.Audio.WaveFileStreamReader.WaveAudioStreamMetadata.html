@@ -111,10 +111,10 @@
       <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_SupplementalMetadataTypeName">StreamMetadataBase.SupplementalMetadataTypeName</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_PartitionName">StreamMetadataBase.PartitionName</a>
+      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_StoreName">StreamMetadataBase.StoreName</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_PartitionPath">StreamMetadataBase.PartitionPath</a>
+      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_StorePath">StreamMetadataBase.StorePath</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_OpenedTime">StreamMetadataBase.OpenedTime</a>
@@ -138,13 +138,13 @@
       <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_LastMessageOriginatingTime">StreamMetadataBase.LastMessageOriginatingTime</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_MessageCount">StreamMetadataBase.MessageCount</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_AverageMessageSize">StreamMetadataBase.AverageMessageSize</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_AverageLatency">StreamMetadataBase.AverageLatency</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_MessageCount">StreamMetadataBase.MessageCount</a>
+      <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_AverageMessageLatencyMs">StreamMetadataBase.AverageMessageLatencyMs</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html#Microsoft_Psi_StreamMetadataBase_GetSupplementalMetadata__1">StreamMetadataBase.GetSupplementalMetadata&lt;T&gt;()</a>
@@ -162,87 +162,6 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class WaveAudioStreamMetadata : StreamMetadataBase, IStreamMetadata</code></pre>
   </div>
-  <h3 id="constructors">Constructors
-  </h3>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileStreamReader.cs/#L333">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Audio_WaveFileStreamReader_WaveAudioStreamMetadata__ctor_" data-uid="Microsoft.Psi.Audio.WaveFileStreamReader.WaveAudioStreamMetadata.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_WaveFileStreamReader_WaveAudioStreamMetadata__ctor_System_String_System_String_System_String_System_String_DateTime_DateTime_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Audio.WaveFileStreamReader.WaveAudioStreamMetadata.#ctor(System.String,System.String,System.String,System.String,DateTime,DateTime,System.Int32,System.Int32,System.Int32)">WaveAudioStreamMetadata(String, String, String, String, DateTime, DateTime, Int32, Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.WaveFileStreamReader.WaveAudioStreamMetadata.html">WaveFileStreamReader.WaveAudioStreamMetadata</a> class.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WaveAudioStreamMetadata(string name, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, int averageMessageSize, int messageCount, int averageLatency)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">name</span></td>
-        <td><p>Stream name.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">typeName</span></td>
-        <td><p>Stream type name.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">partitionName</span></td>
-        <td><p>Partition/file name.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">partitionPath</span></td>
-        <td><p>Partition/file path.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">DateTime</span></td>
-        <td><span class="parametername">first</span></td>
-        <td><p>First message time.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">DateTime</span></td>
-        <td><span class="parametername">last</span></td>
-        <td><p>Last message time.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">averageMessageSize</span></td>
-        <td><p>Average message size (bytes).</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">messageCount</span></td>
-        <td><p>Total message count.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">averageLatency</span></td>
-        <td><p>Average message latency.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a>
@@ -265,7 +184,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileStreamReader.cs/#L319" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileStreamReader.cs/#L349" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

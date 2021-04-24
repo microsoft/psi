@@ -137,6 +137,9 @@
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___">ImageBase.CopyFrom(Byte[])</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___System_Int32_System_Int32_">ImageBase.CopyFrom(Byte[], Int32, Int32)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_IntPtr_">ImageBase.CopyFrom(IntPtr)</a>
     </div>
     <div>
@@ -637,7 +640,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L383">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L420">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.Image.CreateEmptyOfSameSize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.Image.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
@@ -802,7 +805,60 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L333">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L275">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_Image_GetPixel_" data-uid="Microsoft.Psi.Imaging.Image.GetPixel*"></a>
+  <h4 id="Microsoft_Psi_Imaging_Image_GetPixel_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.GetPixel(System.Int32,System.Int32)">GetPixel(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets a pixel value in the image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (int r, int g, int b, int a) GetPixel(int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The x coordinate of the pixel.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>The y coordinate of the pixel.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-4">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><p>A tuple containing the channel values of the pixel.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L414">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_SetPixel_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_SetPixel_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel(System.Int32,System.Int32,System.Int32)">SetPixel(Int32, Int32, Int32)</h4>
@@ -845,7 +901,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L278">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L348">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_SetPixel_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_SetPixel_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">SetPixel(Int32, Int32, Int32, Int32, Int32, Int32)</h4>
@@ -904,7 +960,17 @@ data is made, and the bitmap data can be released right after the <a class="xref
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_Imaging_Image_SetPixel_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>For grayscale images (Gray_8bpp and Gray_16bpp), the pixel value is set using the <code data-dev-comment-type="paramref" class="paramref">r</code>
+parameter. The <code data-dev-comment-type="paramref" class="paramref">g</code>, <code data-dev-comment-type="paramref" class="paramref">b</code> and <code data-dev-comment-type="paramref" class="paramref">a</code> parameters are ignored.</p>
+</div>
   <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_">CalibrationExtensions.ComputeCameraIntrinsics(ImageBase, Double, Double)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Convert_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_PixelFormat_">Operators.Convert(Image, PixelFormat)</a>
+  </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Flip_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_FlipMode_">Operators.Flip(Image, FlipMode)</a>
   </div>
@@ -937,6 +1003,18 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_System_Int32_System_Int32_">Operators.Crop(Image, Image, Int32, Int32, Int32, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_AverageColor_Microsoft_Psi_Imaging_Image_">Operators.AverageColor(Image)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_AverageColor_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_System_Int32_System_Int32_">Operators.AverageColor(Image, Int32, Int32, Int32, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_AverageColorF_Microsoft_Psi_Imaging_Image_">Operators.AverageColorF(Image)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_AverageColorF_Microsoft_Psi_Imaging_Image_System_Int32_System_Int32_System_Int32_System_Int32_">Operators.AverageColorF(Image, Int32, Int32, Int32, Int32)</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_DrawRectangle_Microsoft_Psi_Imaging_Image_Rectangle_Color_System_Int32_">Operators.DrawRectangle(Image, Rectangle, Color, Int32)</a>

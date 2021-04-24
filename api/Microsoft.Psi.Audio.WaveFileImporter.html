@@ -89,8 +89,10 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a></div>
-    <div class="level2"><span class="xref">WaveFileImporter</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Subpipeline.html">Subpipeline</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a></div>
+    <div class="level4"><span class="xref">WaveFileImporter</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -100,10 +102,10 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Name">Importer.Name</a>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_StoreName">Importer.StoreName</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Path">Importer.Path</a>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_StorePath">Importer.StorePath</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Serializers">Importer.Serializers</a>
@@ -118,7 +120,7 @@
       <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_MessageOriginatingTimeInterval">Importer.MessageOriginatingTimeInterval</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Dispose">Importer.Dispose()</a>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_StreamTimeInterval">Importer.StreamTimeInterval</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_GetMetadata_System_String_">Importer.GetMetadata(String)</a>
@@ -133,16 +135,148 @@
       <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_CopyStream_System_String_Microsoft_Psi_Data_Exporter_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Message_Microsoft_Psi_Common_BufferReader___">Importer.CopyStream(String, Exporter, DeliveryPolicy&lt;Message&lt;BufferReader&gt;&gt;)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_OpenStream__1_System_String_">Importer.OpenStream&lt;T&gt;(String)</a>
+      <span class="xref">Microsoft.Psi.Data.Importer.OpenStream&lt;T&gt;(System.String, Func&lt;&gt;, Action&lt;&gt;)</span>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_OpenDynamicStream_System_String_">Importer.OpenDynamicStream(String)</a>
+      <span class="xref">Microsoft.Psi.Data.Importer.OpenDynamicStream(System.String, Func&lt;&gt;, Action&lt;&gt;)</span>
     </div>
     <div>
-      <span class="xref">Microsoft.Psi.Data.Importer.Start(Action&lt;&gt;)</span>
+      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Dispose">Importer.Dispose()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Data.Importer.html#Microsoft_Psi_Data_Importer_Stop_DateTime_Action_">Importer.Stop(DateTime, Action)</a>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ParentPipeline">Subpipeline.ParentPipeline</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Create_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy_">Subpipeline.Create(Pipeline, String, DeliveryPolicy)</a>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Subpipeline.Start(Action&lt;&gt;)</span>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_Stop_DateTime_Action_">Subpipeline.Stop(DateTime, Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ProposeReplayTime_Microsoft_Psi_TimeInterval_">Subpipeline.ProposeReplayTime(TimeInterval)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_CreateInputConnectorFrom__1_Microsoft_Psi_Pipeline_System_String_">Subpipeline.CreateInputConnectorFrom&lt;T&gt;(Pipeline, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_CreateOutputConnectorTo__1_Microsoft_Psi_Pipeline_System_String_">Subpipeline.CreateOutputConnectorTo&lt;T&gt;(Pipeline, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Subpipeline.html#Microsoft_Psi_Subpipeline_ToString">Subpipeline.ToString()</a>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Subpipeline.RunAsync(Microsoft.Psi.ReplayDescriptor, Microsoft.Psi.Clock, IProgress&lt;&gt;)</span>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineRun">Pipeline.PipelineRun</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineCompleted">Pipeline.PipelineCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ComponentCompleted">Pipeline.ComponentCompleted</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_PipelineExceptionNotHandled">Pipeline.PipelineExceptionNotHandled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Id">Pipeline.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Name">Pipeline.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ReplayDescriptor">Pipeline.ReplayDescriptor</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Diagnostics">Pipeline.Diagnostics</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_StartTime">Pipeline.StartTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ProgressReportInterval">Pipeline.ProgressReportInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_LatestFiniteSourceCompletionTime">Pipeline.LatestFiniteSourceCompletionTime</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_NoRemainingCompletableComponents">Pipeline.NoRemainingCompletableComponents</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Create_System_String_Microsoft_Psi_DeliveryPolicy_System_Int32_System_Boolean_System_Boolean_Microsoft_Psi_Diagnostics_DiagnosticsConfiguration_">Pipeline.Create(String, DeliveryPolicy, Int32, Boolean, Boolean, DiagnosticsConfiguration)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultDeliveryPolicy__1">Pipeline.GetDefaultDeliveryPolicy&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetDefaultMessageValidator__1">Pipeline.GetDefaultMessageValidator&lt;T&gt;()</a>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.CreateReceiver&lt;T&gt;(System.Object, Action&lt;, &gt;, System.String, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.CreateReceiver&lt;T&gt;(System.Object, Action&lt;&gt;, System.String, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.CreateAsyncReceiver&lt;T&gt;(System.Object, Func&lt;, , &gt;, System.String, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.CreateAsyncReceiver&lt;T&gt;(System.Object, Func&lt;, &gt;, System.String, System.Boolean)</span>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_CreateEmitter__1_System_Object_System_String_Microsoft_Psi_Emitter___0__ValidateMessageHandler_">Pipeline.CreateEmitter&lt;T&gt;(Object, String, Emitter.ValidateMessageHandler&lt;&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_System_Int32_">Pipeline.WaitAll(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_WaitAll_TimeSpan_">Pipeline.WaitAll(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_ReplayDescriptor_">Pipeline.Run(ReplayDescriptor)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_Microsoft_Psi_TimeInterval_System_Boolean_">Pipeline.Run(TimeInterval, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_DateTime_System_Boolean_">Pipeline.Run(DateTime, DateTime, Boolean)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_Run_DateTime_System_Boolean_">Pipeline.Run(DateTime, Boolean)</a>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.RunAsync(Microsoft.Psi.ReplayDescriptor, IProgress&lt;&gt;)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.RunAsync(Microsoft.Psi.TimeInterval, System.Boolean, IProgress&lt;&gt;)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.RunAsync(DateTime, DateTime, System.Boolean, IProgress&lt;&gt;)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Psi.Pipeline.RunAsync(DateTime, System.Boolean, IProgress&lt;&gt;)</span>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTime">Pipeline.GetCurrentTime()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_GetCurrentTimeFromElapsedTicks_System_Int64_">Pipeline.GetCurrentTimeFromElapsedTicks(Int64)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_TimeSpan_">Pipeline.ConvertToRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertToRealTime_DateTime_">Pipeline.ConvertToRealTime(DateTime)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_TimeSpan_">Pipeline.ConvertFromRealTime(TimeSpan)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Pipeline.html#Microsoft_Psi_Pipeline_ConvertFromRealTime_DateTime_">Pipeline.ConvertFromRealTime(DateTime)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Audio.html">Microsoft.Psi.Audio</a></h6>

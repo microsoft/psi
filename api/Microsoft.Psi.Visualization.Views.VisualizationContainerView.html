@@ -107,6 +107,7 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.isupportinitialize">ISupportInitialize</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iqueryambient">IQueryAmbient</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -1984,13 +1985,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class VisualizationContainerView : UserControl, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public class VisualizationContainerView : UserControl, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L37">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_VisualizationContainerView__ctor_" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_VisualizationContainerView__ctor" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.#ctor">VisualizationContainerView()</h4>
@@ -2001,6 +2002,97 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public VisualizationContainerView()</code></pre>
   </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L44">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_ContextMenuItemsSourceType_" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.ContextMenuItemsSourceType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_ContextMenuItemsSourceType" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.ContextMenuItemsSourceType">ContextMenuItemsSourceType</h4>
+  <div class="markdown level1 summary"><p>Gets the context menu items source type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ContextMenuItemsSourceType ContextMenuItemsSourceType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Views.ContextMenuItemsSourceType.html">ContextMenuItemsSourceType</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L47">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_ContextMenuObjectName_" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.ContextMenuObjectName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_ContextMenuObjectName" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.ContextMenuObjectName">ContextMenuObjectName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the context menu items source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ContextMenuObjectName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L50">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_AppendContextMenuItems_" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.AppendContextMenuItems*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_VisualizationContainerView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__" data-uid="Microsoft.Psi.Visualization.Views.VisualizationContainerView.AppendContextMenuItems(System.Collections.Generic.List{System.Windows.Controls.MenuItem})">AppendContextMenuItems(List&lt;MenuItem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets the context menu items the context menu source wishes to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AppendContextMenuItems(List&lt;MenuItem&gt; menuItems)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.menuitem">MenuItem</a>&gt;</td>
+        <td><span class="parametername">menuItems</span></td>
+        <td><p>A collection of menu items to append to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
@@ -2019,6 +2111,9 @@
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -2041,7 +2136,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L22" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/VisualizationContainerView.xaml.cs/#L25" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

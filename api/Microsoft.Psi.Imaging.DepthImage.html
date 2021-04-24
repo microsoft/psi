@@ -137,6 +137,9 @@
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___">ImageBase.CopyFrom(Byte[])</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___System_Int32_System_Int32_">ImageBase.CopyFrom(Byte[], Int32, Int32)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CopyFrom_IntPtr_">ImageBase.CopyFrom(IntPtr)</a>
     </div>
     <div>
@@ -611,7 +614,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L277">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L327">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
@@ -776,16 +779,98 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L272">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_GetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixel*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_GetPixel_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixel(System.Int32,System.Int32)">GetPixel(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the value of a pixel in the depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort GetPixel(int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>Pixel's X coordinate.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Pixel's Y coordinate.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td><p>The value of the pixel at the specified coordinates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L294">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_GetPixelRange_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixelRange*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_GetPixelRange" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixelRange">GetPixelRange()</h4>
+  <div class="markdown level1 summary"><p>Gets the range of values in the depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public (ushort, ushort) GetPixelRange()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a>&gt;</td>
+        <td><p>A tuple describing the range of values in the depth image.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L246">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_SetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage_SetPixel_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel(System.Int32,System.Int32,System.Int32)">SetPixel(Int32, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_SetPixel_System_Int32_System_Int32_System_UInt16_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel(System.Int32,System.Int32,System.UInt16)">SetPixel(Int32, Int32, UInt16)</h4>
   <div class="markdown level1 summary"><p>Sets a pixel in the depth image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetPixel(int x, int y, int gray)</code></pre>
+    <pre><code class="lang-csharp hljs">public void SetPixel(int x, int y, ushort gray)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -810,7 +895,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
         <td><span class="parametername">gray</span></td>
         <td><p>Gray value to set pixel to.</p>
 </td>
@@ -818,6 +903,9 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </tbody>
   </table>
   <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_">CalibrationExtensions.ComputeCameraIntrinsics(ImageBase, Double, Double)</a>
+  </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Compare_Microsoft_Psi_Imaging_ImageBase_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_Microsoft_Psi_Imaging_ImageError__">Operators.Compare(ImageBase, ImageBase, Double, Double, ref ImageError)</a>
   </div>
@@ -828,10 +916,10 @@ data is made, and the bitmap data can be released right after the <a class="xref
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage_System_Int32_System_Int32_System_Int32_System_Int32_">Operators.Crop(DepthImage, DepthImage, Int32, Int32, Int32, Int32)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_System_ValueTuple_System_UInt16_System_UInt16__">Operators.PseudoColorize(DepthImage, (UInt16 MinValue, UInt16 MaxValue))</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_System_ValueTuple_System_UInt16_System_UInt16__System_Nullable_System_UInt16__System_Boolean_">Operators.PseudoColorize(DepthImage, (UInt16 MinValue, UInt16 MaxValue), Nullable&lt;UInt16&gt;, Boolean)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_Image_System_ValueTuple_System_UInt16_System_UInt16__">Operators.PseudoColorize(DepthImage, Image, (UInt16 MinValue, UInt16 MaxValue))</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_PseudoColorize_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_Image_System_ValueTuple_System_UInt16_System_UInt16__System_Nullable_System_UInt16__System_Boolean_">Operators.PseudoColorize(DepthImage, Image, (UInt16 MinValue, UInt16 MaxValue), Nullable&lt;UInt16&gt;, Boolean)</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>

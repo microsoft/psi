@@ -97,7 +97,7 @@
     <div class="level6"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.control">Control</a></div>
     <div class="level7"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
-    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelViewBase.html">VisualizationPanelViewBase</a></div>
+    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html">VisualizationPanelView</a></div>
     <div class="level10"><span class="xref">TimelineVisualizationPanelView</span></div>
   </div>
   <div classs="implements">
@@ -108,9 +108,16 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.isupportinitialize">ISupportInitialize</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iqueryambient">IQueryAmbient</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_ContextMenuItemsSourceType">VisualizationPanelView.ContextMenuItemsSourceType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_ContextMenuObjectName">VisualizationPanelView.ContextMenuObjectName</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol.oncreateautomationpeer#System_Windows_Controls_UserControl_OnCreateAutomationPeer">UserControl.OnCreateAutomationPeer()</a>
     </div>
@@ -1982,13 +1989,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TimelineVisualizationPanelView : VisualizationPanelViewBase, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public class TimelineVisualizationPanelView : VisualizationPanelView, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L29">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView__ctor_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView__ctor" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.#ctor">TimelineVisualizationPanelView()</h4>
@@ -2003,7 +2010,40 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L47">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_AppendContextMenuItems_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.AppendContextMenuItems*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.AppendContextMenuItems(System.Collections.Generic.List{System.Windows.Controls.MenuItem})">AppendContextMenuItems(List&lt;MenuItem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets the context menu items the context menu source wishes to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void AppendContextMenuItems(List&lt;MenuItem&gt; menuItems)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.menuitem">MenuItem</a>&gt;</td>
+        <td><span class="parametername">menuItems</span></td>
+        <td><p>A collection of menu items to append to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">VisualizationPanelView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_ContextMenuMouseMove_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.ContextMenuMouseMove*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_ContextMenuMouseMove_System_Object_System_Windows_Input_MouseEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.ContextMenuMouseMove(System.Object,System.Windows.Input.MouseEventArgs)">ContextMenuMouseMove(Object, MouseEventArgs)</h4>
@@ -2040,7 +2080,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L65">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_FinishDragDrop_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.FinishDragDrop*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_FinishDragDrop" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.FinishDragDrop">FinishDragDrop()</h4>
@@ -2053,7 +2093,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L64">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_OnRenderSizeChanged_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.OnRenderSizeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_TimelineVisualizationPanelView_OnRenderSizeChanged_System_Windows_SizeChangedInfo_" data-uid="Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.OnRenderSizeChanged(System.Windows.SizeChangedInfo)">OnRenderSizeChanged(SizeChangedInfo)</h4>
@@ -2101,6 +2141,9 @@
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
   </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Extensions.DependencyObjectExtensions.html#Microsoft_Psi_Visualization_Extensions_DependencyObjectExtensions_FindChild__1_System_Windows_DependencyObject_System_String_">DependencyObjectExtensions.FindChild&lt;T&gt;(DependencyObject, String)</a>
@@ -2122,7 +2165,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L20" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/TimelineVisualizationPanelView.xaml.cs/#L21" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -470,60 +470,6 @@
       </tr>
     </tbody>
   </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizerMetadata.cs/#L185">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_VisualizerMetadata_GetClosestVisualizerMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizerMetadata.GetClosestVisualizerMetadata*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizerMetadata_GetClosestVisualizerMetadata_System_Type_System_Collections_Generic_IEnumerable_Microsoft_Psi_Visualization_VisualizerMetadata__" data-uid="Microsoft.Psi.Visualization.VisualizerMetadata.GetClosestVisualizerMetadata(System.Type,System.Collections.Generic.IEnumerable{Microsoft.Psi.Visualization.VisualizerMetadata})">GetClosestVisualizerMetadata(Type, IEnumerable&lt;VisualizerMetadata&gt;)</h4>
-  <div class="markdown level1 summary"><p>Gets the visualizer metadata whose data type is hierarchically closest to a stream's data type.
-Metadata objects that don't use an adapter are prioritized first.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static VisualizerMetadata GetClosestVisualizerMetadata(Type dataType, IEnumerable&lt;VisualizerMetadata&gt; metadatas)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
-        <td><span class="parametername">dataType</span></td>
-        <td><p>The data type of messages in the stream.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizerMetadata.html">VisualizerMetadata</a>&gt;</td>
-        <td><span class="parametername">metadatas</span></td>
-        <td><p>A list of metadatas to select from.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizerMetadata.html">VisualizerMetadata</a></td>
-        <td><p>The metadata whose data type is closest (hierarchically, prioritizing non-adapters) to the message data type.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>

@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject" class="text-break">Class XYPanel3DVisualizationObject
   </h1>
-  <div class="markdown level0 summary"><p>Represents a XY panel 3D visualization object.</p>
+  <div class="markdown level0 summary"><p>Implements an XY panel 3D visualization object.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -93,8 +93,8 @@
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
     <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<span class="xref">CoordinateSystem</span>&gt;</div>
-    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html">InstantVisualizationObject</a>&lt;<span class="xref">CoordinateSystem</span>&gt;</div>
-    <div class="level6"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html">Instant3DVisualizationObject</a>&lt;<span class="xref">CoordinateSystem</span>&gt;</div>
+    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html">StreamValueVisualizationObject</a>&lt;<span class="xref">CoordinateSystem</span>&gt;</div>
+    <div class="level6"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.XYZValueVisualizationObject-1.html">XYZValueVisualizationObject</a>&lt;<span class="xref">CoordinateSystem</span>&gt;</div>
     <div class="level7"><span class="xref">XYPanel3DVisualizationObject</span></div>
   </div>
   <div classs="implements">
@@ -107,31 +107,37 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_Instant3DVisualizationObject_1_DefaultViewTemplate">Instant3DVisualizationObject&lt;CoordinateSystem&gt;.DefaultViewTemplate</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.XYZValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_XYZValueVisualizationObject_1_DefaultViewTemplate">XYZValueVisualizationObject&lt;CoordinateSystem&gt;.DefaultViewTemplate</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_Instant3DVisualizationObject_1_Visual3D">Instant3DVisualizationObject&lt;CoordinateSystem&gt;.Visual3D</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.XYZValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_XYZValueVisualizationObject_1_Visual3D">XYZValueVisualizationObject&lt;CoordinateSystem&gt;.Visual3D</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.Instant3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_Instant3DVisualizationObject_1_ContractResolver">Instant3DVisualizationObject&lt;CoordinateSystem&gt;.ContractResolver</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.XYZValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_XYZValueVisualizationObject_1_ContractResolver">XYZValueVisualizationObject&lt;CoordinateSystem&gt;.ContractResolver</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_CursorEpsilonMs">InstantVisualizationObject&lt;CoordinateSystem&gt;.CursorEpsilonMs</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamValueVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamValueVisualizationObject&lt;CoordinateSystem&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_CursorEpsilon">InstantVisualizationObject&lt;CoordinateSystem&gt;.CursorEpsilon</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamValueVisualizationObject_1_OnStreamBound">StreamValueVisualizationObject&lt;CoordinateSystem&gt;.OnStreamBound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_GetSnappedTime_System_DateTime_Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">InstantVisualizationObject&lt;CoordinateSystem&gt;.GetSnappedTime(DateTime, SnappingBehavior)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamValueVisualizationObject_1_OnStreamUnbound">StreamValueVisualizationObject&lt;CoordinateSystem&gt;.OnStreamUnbound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_OnInstantDataChanged_System_Object_Microsoft_Psi_Visualization_Data_StreamCacheEntry_">InstantVisualizationObject&lt;CoordinateSystem&gt;.OnInstantDataChanged(Object, StreamCacheEntry)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;CoordinateSystem&gt;.CursorEpsilonPosMs</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_OnStreamBound">InstantVisualizationObject&lt;CoordinateSystem&gt;.OnStreamBound()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;CoordinateSystem&gt;.CursorEpsilonNegMs</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.InstantVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_InstantVisualizationObject_1_OnStreamUnbound">InstantVisualizationObject&lt;CoordinateSystem&gt;.OnStreamUnbound()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;CoordinateSystem&gt;.StreamName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;CoordinateSystem&gt;.PartitionName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;CoordinateSystem&gt;.CursorEpsilon</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;CoordinateSystem&gt;.CanSnapToStream</a>
@@ -143,6 +149,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ZoomToStreamCommand">StreamVisualizationObject&lt;CoordinateSystem&gt;.ZoomToStreamCommand</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_HasCurrentValue">StreamVisualizationObject&lt;CoordinateSystem&gt;.HasCurrentValue</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentValue">StreamVisualizationObject&lt;CoordinateSystem&gt;.CurrentValue</a>
     </div>
     <div>
@@ -150,9 +159,6 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CurrentOriginatingTime">StreamVisualizationObject&lt;CoordinateSystem&gt;.CurrentOriginatingTime</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Data">StreamVisualizationObject&lt;CoordinateSystem&gt;.Data</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamBinding">StreamVisualizationObject&lt;CoordinateSystem&gt;.StreamBinding</a>
@@ -197,10 +203,13 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;CoordinateSystem&gt;.IsLive</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsShared">StreamVisualizationObject&lt;CoordinateSystem&gt;.IsShared</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;CoordinateSystem&gt;.Allocator</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___System_Boolean_">StreamVisualizationObject&lt;CoordinateSystem&gt;.SetCurrentValue(Nullable&lt;Message&lt;CoordinateSystem&gt;&gt;, Boolean)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Deallocator">StreamVisualizationObject&lt;CoordinateSystem&gt;.Deallocator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SetCurrentValue_System_Nullable_Microsoft_Psi_Message__0___">StreamVisualizationObject&lt;CoordinateSystem&gt;.SetCurrentValue(Nullable&lt;Message&lt;CoordinateSystem&gt;&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_ToggleSnapToStream">StreamVisualizationObject&lt;CoordinateSystem&gt;.ToggleSnapToStream()</a>
@@ -209,13 +218,7 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_UpdateStreamSource_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">StreamVisualizationObject&lt;CoordinateSystem&gt;.UpdateStreamSource(SessionViewModel)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetTimeOfNearestMessage_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_SnappingBehavior_">StreamVisualizationObject&lt;CoordinateSystem&gt;.GetTimeOfNearestMessage(DateTime, Int32, Func&lt;Int32, DateTime&gt;, SnappingBehavior)</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__">StreamVisualizationObject&lt;CoordinateSystem&gt;.GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamVisualizationObject&lt;CoordinateSystem&gt;.OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
@@ -239,7 +242,7 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected">VisualizationObject.IsConnected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_GetAdditionalContextMenuItems">VisualizationObject.GetAdditionalContextMenuItems()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleVisibilityCommand">VisualizationObject.ToggleVisibilityCommand</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString">VisualizationObject.ToString()</a>
@@ -254,7 +257,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObject.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObject.OnPanelPropertyChanging(Object, PropertyChangingEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObject.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
@@ -301,13 +307,13 @@
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[VisualizationObject(&quot;2D Panel in 3D Space&quot;, null, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/stream.png&quot;, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/panel-stream.png&quot;, &quot;%StreamName%&quot;, false)]
-public class XYPanel3DVisualizationObject : Instant3DVisualizationObject&lt;CoordinateSystem&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, I3DVisualizationObject</code></pre>
+public class XYPanel3DVisualizationObject : XYZValueVisualizationObject&lt;CoordinateSystem&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, I3DVisualizationObject</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L23">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L22">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_Height_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.Height*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_Height" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.Height">Height</h4>
@@ -336,7 +342,7 @@ public double Height { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L32">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_Width_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.Width*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_Width" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.Width">Width</h4>
@@ -365,7 +371,7 @@ public double Width { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L43">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L42">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_XYVisualizationPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.XYVisualizationPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_XYVisualizationPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.XYVisualizationPanel">XYVisualizationPanel</h4>
@@ -396,22 +402,7 @@ public XYVisualizationPanel XYVisualizationPanel { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L47">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_InitNew_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.InitNew*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_InitNew" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.InitNew">InitNew()</h4>
-  <div class="markdown level1 summary"><p>Initialize properties for visualization objects as part of object construction or after deserialization.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void InitNew()</code></pre>
-  </div>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_InitNew">VisualizationObject.InitNew()</a></div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L55">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_OnAddToPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.OnAddToPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_OnAddToPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.OnAddToPanel">OnAddToPanel()</h4>
@@ -426,7 +417,7 @@ public XYVisualizationPanel XYVisualizationPanel { get; set; }</code></pre>
   <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;CoordinateSystem&gt;.OnAddToPanel()</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_OnRemoveFromPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.OnRemoveFromPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYPanel3DVisualizationObject_OnRemoveFromPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYPanel3DVisualizationObject.OnRemoveFromPanel">OnRemoveFromPanel()</h4>
@@ -470,7 +461,7 @@ public XYVisualizationPanel XYVisualizationPanel { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYPanel3DVisualizationObject.cs/#L13" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

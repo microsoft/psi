@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2" class="text-break">Class StreamAdapter&lt;TSource, TDestination&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Represents an object that adapts messages from one type to another.</p>
+  <div class="markdown level0 summary"><p>Provides a base abstract class for stream adapters.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,43 +91,63 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">StreamAdapter&lt;TSource, TDestination&gt;</span></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.BoolToDoubleAdapter.html">BoolToDoubleAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CompressedImageAdapter.html">CompressedImageAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CameraIntrinsicsToSpatialCameraAdapter.html">CameraIntrinsicsToSpatialCameraAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CameraViewToSpatialCameraViewAdapter.html">CameraViewToSpatialCameraViewAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthCameraViewToSpatialDepthCameraViewAdapter.html">DepthCameraViewToSpatialDepthCameraViewAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthImageToImageAdapter.html">DepthImageToImageAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthImageToSpatialDepthImageAdapter.html">DepthImageToSpatialDepthImageAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DictionaryKeyToStringAdapter-2.html">DictionaryKeyToStringAdapter&lt;TKey, TValue&gt;</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedCameraViewToSpatialCameraViewAdapter.html">EncodedCameraViewToSpatialCameraViewAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthCameraViewToSpatialDepthCameraViewAdapter.html">EncodedDepthCameraViewToSpatialDepthCameraViewAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.html">EncodedDepthImageToDepthImageAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToImageAdapter.html">EncodedDepthImageToImageAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToSpatialDepthCameraViewManualFocalLengthAdapter.html">EncodedDepthImageToSpatialDepthCameraViewManualFocalLengthAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedImageToImageAdapter.html">EncodedImageToImageAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EuclideanPoint3DAdapter.html">EuclideanPoint3DAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialCameraViewToSpatialCameraViewAdapter.html">EncodedSpatialCameraViewToSpatialCameraViewAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialDepthCameraViewToSpatialDepthCameraViewAdapter.html">EncodedSpatialDepthCameraViewToSpatialDepthCameraViewAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialDepthImageToSpatialDepthImageAdapter.html">EncodedSpatialDepthImageToSpatialDepthImageAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialImageToSpatialImageAdapter.html">EncodedSpatialImageToSpatialImageAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.FloatToDoubleAdapter.html">FloatToDoubleAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ImageToSpatialImageAdapter.html">ImageToSpatialImageAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.IntToDoubleAdapter.html">IntToDoubleAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleSystemTupleAdapter.html">LabeledRectangleSystemTupleAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleSystemTupleListAdapter.html">LabeledRectangleSystemTupleListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleValueTupleAdapter.html">LabeledRectangleValueTupleAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleValueTupleListAdapter.html">LabeledRectangleValueTupleListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleWithTooltipSystemTupleAdapter.html">LabeledRectangleWithTooltipSystemTupleAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleWithTooltipValueTupleAdapter.html">LabeledRectangleWithTooltipValueTupleAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleWithTooltipValueTupleListAdapter.html">LabeledRectangleWithTooltipValueTupleListAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DListToNullableAdapter.html">Line3DListToNullableAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.html">Line3DToNullableAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint2DToScatterPlotAdapter.html">MathNetNullablePoint2DToScatterPlotAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter.html">MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsNullablePoint3DAdapter.html">MathNetNullablePoint3DToWindowsNullablePoint3DAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsNullablePoint3DListAdapter.html">MathNetPoint3DListToWindowsNullablePoint3DListAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToWindowsNullablePoint3DAdapter.html">MathNetPoint3DToWindowsNullablePoint3DAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToNullablePoint3DListAdapter.html">MathNetNullablePoint3DListToNullablePoint3DListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToPoint3DListAdapter.html">MathNetNullablePoint3DListToPoint3DListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToNullablePoint3DAdapter.html">MathNetNullablePoint3DToNullablePoint3DAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToNullablePoint3DListAdapter.html">MathNetPoint3DListToNullablePoint3DListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToPoint3DListAdapter.html">MathNetPoint3DListToPoint3DListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToNullablePoint3DAdapter.html">MathNetPoint3DToNullablePoint3DAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.NullablePoint3DListToPoint3DListAdapter.html">NullablePoint3DListToPoint3DListAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ObjectAdapter-1.html">ObjectAdapter&lt;T&gt;</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ObjectToLatencyAdapter-1.html">ObjectToLatencyAdapter&lt;T&gt;</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PassthroughAdapter-1.html">PassthroughAdapter&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PipelineDiagnosticsToReceiverDiagnosticsMemberStreamAdapter-1.html">PipelineDiagnosticsToReceiverDiagnosticsMemberStreamAdapter&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Point2DListToScatterPlotAdapter.html">Point2DListToScatterPlotAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Point3DListToNullablePoint3DListAdapter.html">Point3DListToNullablePoint3DListAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Point3DToNullablePoint3DAdapter.html">Point3DToNullablePoint3DAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PointArrayToScatterPlotAdapter.html">PointArrayToScatterPlotAdapter</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Ray3DToNullableRay3DAdapter.html">Ray3DToNullableRay3DAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Rect3DListToNullableAdapter.html">Rect3DListToNullableAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Rect3DToNullableAdapter.html">Rect3DToNullableAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleAdapter.html">RectangleAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleListAdapter.html">RectangleListAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleSystemTupleAdapter.html">RectangleSystemTupleAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleValueTupleAdapter.html">RectangleValueTupleAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleValueTupleListAdapter.html">RectangleValueTupleListAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter-2.html">StreamMemberAdapter&lt;TSource, TDestination&gt;</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter-4.html">StreamMemberAdapter&lt;TSource, TMember, TAdapter, TDestination&gt;</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.TimeSpanToDoubleAdapter.html">TimeSpanToDoubleAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.WindowsPoint3DListToNullableAdapter.html">WindowsPoint3DListToNullableAdapter</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Adapters.WindowsPoint3DToNullableAdapter.html">WindowsPoint3DToNullableAdapter</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.LiveCharts.SingleSeriesChartStreamAdapter.html">SingleSeriesChartStreamAdapter</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -157,7 +177,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class StreamAdapter&lt;TSource, TDestination&gt; : IStreamAdapter, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class StreamAdapter&lt;TSource, TDestination&gt; : IStreamAdapter</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -184,7 +204,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L29">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2__ctor_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2__ctor" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.#ctor">StreamAdapter()</h4>
@@ -196,154 +216,11 @@ When used, subtypes should set the adapter field in their ctor.</p>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">protected StreamAdapter()</code></pre>
   </div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L40">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2__ctor_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2__ctor_System_Func__0_Microsoft_Psi_Envelope__1__" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.#ctor(System.Func{`0,Microsoft.Psi.Envelope,`1})">StreamAdapter(Func&lt;TSource, Envelope, TDestination&gt;)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamAdapter-2.html">StreamAdapter&lt;TSource, TDestination&gt;</a> class.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected StreamAdapter(Func&lt;TSource, Envelope, TDestination&gt; adapterFn)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TSource, <a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a>, TDestination&gt;</td>
-        <td><span class="parametername">adapterFn</span></td>
-        <td><p>Adapter function.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="fields">Fields
-  </h3>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L18">View Source</a>
-  </span>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Default" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Default">Default</h4>
-  <div class="markdown level1 summary"><p>Gets default stream adapter.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly IStreamAdapter Default</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L23">View Source</a>
-  </span>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceIsSharedType" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceIsSharedType">SourceIsSharedType</h4>
-  <div class="markdown level1 summary"><p>Flag indicating whether type parameter TSrc is Shared{} or not.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly bool SourceIsSharedType</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L76">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdapterFn_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.AdapterFn*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdapterFn" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.AdapterFn">AdapterFn</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the adapter function for the stream adapter.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected Func&lt;TSource, Envelope, TDestination&gt; AdapterFn { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-3">Func</a>&lt;TSource, <a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a>, TDestination&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L49">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Allocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Allocator*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Allocator" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Allocator">Allocator</h4>
-  <div class="markdown level1 summary"><p>Gets the allocator.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Func&lt;TSource&gt; Allocator { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TSource&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_DestinationType_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.DestinationType*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_DestinationType" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.DestinationType">DestinationType</h4>
@@ -371,16 +248,16 @@ When used, subtypes should set the adapter field in their ctor.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L68">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L34">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Pool_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Pool*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Pool" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Pool">Pool</h4>
-  <div class="markdown level1 summary"><p>Gets the shared allocation pool.</p>
+  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceAllocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceAllocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceAllocator" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceAllocator">SourceAllocator</h4>
+  <div class="markdown level1 summary"><p>Gets the allocator for reading source objects.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IPool Pool { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual Func&lt;TSource&gt; SourceAllocator { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -392,14 +269,42 @@ When used, subtypes should set the adapter field in their ctor.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IPool.html">IPool</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;TSource&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceDeallocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceDeallocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceDeallocator" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceDeallocator">SourceDeallocator</h4>
+  <div class="markdown level1 summary"><p>Gets the deallocator for reading source objects.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Action&lt;TSource&gt; SourceDeallocator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;TSource&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L29">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceType_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceType*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_SourceType" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.SourceType">SourceType</h4>
@@ -429,54 +334,7 @@ When used, subtypes should set the adapter field in their ctor.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L83">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptData_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.AdaptData*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptData__0_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.AdaptData(`0)">AdaptData(TSource)</h4>
-  <div class="markdown level1 summary"><p>Adapts source data to destination data.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TDestination AdaptData(TSource data)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TSource</span></td>
-        <td><span class="parametername">data</span></td>
-        <td><p>Source data.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TDestination</span></td>
-        <td><p>Destination data.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptReceiver_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.AdaptReceiver*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_AdaptReceiver_System_Action__1_Microsoft_Psi_Envelope__" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.AdaptReceiver(System.Action{`1,Microsoft.Psi.Envelope})">AdaptReceiver(Action&lt;TDestination, Envelope&gt;)</h4>
@@ -523,22 +381,149 @@ When used, subtypes should set the adapter field in their ctor.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L110">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L82">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Dispose*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Dispose">Dispose()</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Dispose__1_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Dispose(`1)">Dispose(TDestination)</h4>
+  <div class="markdown level1 summary"><p>Disposes an adapter object that was created by this adapter.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+    <pre><code class="lang-csharp hljs">public virtual void Dispose(TDestination destination)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDestination</span></td>
+        <td><span class="parametername">destination</span></td>
+        <td><p>The adapted object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_GetAdaptedValue_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.GetAdaptedValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_GetAdaptedValue__0_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.GetAdaptedValue(`0,Microsoft.Psi.Envelope)">GetAdaptedValue(TSource, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Gets the adapted value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract TDestination GetAdaptedValue(TSource source, Envelope envelope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TSource</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source value.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>The source envelope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TDestination</span></td>
+        <td><p>The adapted value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Microsoft#Psi#Visualization#Data#IStreamAdapter#SourceAllocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Microsoft#Psi#Visualization#Data#IStreamAdapter#SourceAllocator">IStreamAdapter.SourceAllocator</h4>
+  <div class="markdown level1 summary"><p>Gets the allocator for source messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Func&lt;dynamic&gt; IStreamAdapter.SourceAllocator { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamAdapter{TSource,TDestination}.cs/#L52">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Microsoft#Psi#Visualization#Data#IStreamAdapter#SourceDeallocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamAdapter_2_Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator" data-uid="Microsoft.Psi.Visualization.Data.StreamAdapter`2.Microsoft#Psi#Visualization#Data#IStreamAdapter#SourceDeallocator">IStreamAdapter.SourceDeallocator</h4>
+  <div class="markdown level1 summary"><p>Gets the deallocator for source messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Action&lt;dynamic&gt; IStreamAdapter.SourceDeallocator { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2" class="text-break">Class PlotVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Base class for PlotVisualizationObject views.</p>
+  <div class="markdown level0 summary"><p>Implements a visualization object view for a <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotVisualizationObject-1.html">PlotVisualizationObject&lt;TData&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -97,21 +97,23 @@
     <div class="level6"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.control">Control</a></div>
     <div class="level7"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
-    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html">CanvasVisualizationObjectView</a>&lt;TPlotVisualizationObject, TData&gt;</div>
-    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html">TimelineCanvasVisualizationObjectView</a>&lt;TPlotVisualizationObject, TData&gt;</div>
-    <div class="level11"><span class="xref">PlotVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;</span></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.AudioVisualizationObjectView.html">AudioVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.DecimalVisualizationObjectView.html">DecimalVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.DoubleVisualizationObjectView.html">DoubleVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.FloatVisualizationObjectView.html">FloatVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.IntVisualizationObjectView.html">IntVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.LongVisualizationObjectView.html">LongVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.MessageVisualizationObjectView.html">MessageVisualizationObjectView</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableDecimalVisualizationObjectViewBase.html">NullableDecimalVisualizationObjectViewBase</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableDoubleVisualizationObjectViewBase.html">NullableDoubleVisualizationObjectViewBase</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableFloatVisualizationObjectViewBase.html">NullableFloatVisualizationObjectViewBase</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableIntVisualizationObjectViewBase.html">NullableIntVisualizationObjectViewBase</a></div>
-      <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableLongVisualizationObjectViewBase.html">NullableLongVisualizationObjectViewBase</a></div>
+    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html">VisualizationObjectView</a></div>
+    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;TPlotVisualizationObject, TData&gt;</div>
+    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html">StreamIntervalVisualizationObjectCanvasView</a>&lt;TPlotVisualizationObject, TData&gt;</div>
+    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html">StreamIntervalVisualizationObjectTimelineCanvasView</a>&lt;TPlotVisualizationObject, TData&gt;</div>
+    <div class="level13"><span class="xref">PlotVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;</span></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.AudioVisualizationObjectView.html">AudioVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.DecimalVisualizationObjectView.html">DecimalVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.DoubleVisualizationObjectView.html">DoubleVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.FloatVisualizationObjectView.html">FloatVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.IntVisualizationObjectView.html">IntVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.LongVisualizationObjectView.html">LongVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.MessageVisualizationObjectView.html">MessageVisualizationObjectView</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableDecimalVisualizationObjectViewBase.html">NullableDecimalVisualizationObjectViewBase</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableDoubleVisualizationObjectViewBase.html">NullableDoubleVisualizationObjectViewBase</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableFloatVisualizationObjectViewBase.html">NullableFloatVisualizationObjectViewBase</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableIntVisualizationObjectViewBase.html">NullableIntVisualizationObjectViewBase</a></div>
+      <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.NullableLongVisualizationObjectViewBase.html">NullableLongVisualizationObjectViewBase</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -121,71 +123,100 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.isupportinitialize">ISupportInitialize</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iqueryambient">IQueryAmbient</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView-2.html">IPlotVisualizationObjectView</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, TData&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_Navigator">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.Navigator</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectTimelineCanvasView_2_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_VisualizationObject">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.VisualizationObject</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectTimelineCanvasView_2_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectTimelineCanvasView_2_OnNavigatorViewRangeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeRangeChangedEventArgs_">StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnNavigatorViewRangeChanged(Object, NavigatorTimeRangeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectTimelineCanvasView_2_OnNavigatorDataRangeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeRangeChangedEventArgs_">StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnNavigatorDataRangeChanged(Object, NavigatorTimeRangeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectTimelineCanvasView_2_UpdateTransforms">StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.UpdateTransforms()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_OnNavigatorViewRangeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeRangeChangedEventArgs_">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnNavigatorViewRangeChanged(Object, NavigatorTimeRangeChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectCanvasView_2_StreamIntervalVisualizationObject">StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.StreamIntervalVisualizationObject</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_UpdateTransforms">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.UpdateTransforms()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectCanvasView_2_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_TimelineCanvasVisualizationObjectView_2_OnSummaryDataCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnSummaryDataCollectionChanged(Object, NotifyCollectionChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectCanvasView_2_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_Canvas">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.Canvas</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectCanvasView_2_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_TransformGroup">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.TransformGroup</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectCanvasView_2_OnDataCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnDataCollectionChanged(Object, NotifyCollectionChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_ScaleTransform">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.ScaleTransform</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamIntervalVisualizationObjectCanvasView_2_OnSummaryDataCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnSummaryDataCollectionChanged(Object, NotifyCollectionChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_TranslateTransform">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.TranslateTransform</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_Canvas">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.Canvas</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_VisualizationObject">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.VisualizationObject</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_TransformGroup">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.TransformGroup</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_ScaleTransform">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.ScaleTransform</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_TranslateTransform">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.TranslateTransform</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_StreamVisualizationObject">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.StreamVisualizationObject</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnSizeChanged_System_Object_System_Windows_SizeChangedEventArgs_">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnSizeChanged(Object, SizeChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnTransformsChanged">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnTransformsChanged()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_OnSizeChanged_System_Object_System_Windows_SizeChangedEventArgs_">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnSizeChanged(Object, SizeChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_UpdateTransforms">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.UpdateTransforms()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_OnTransformsChanged">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnTransformsChanged()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnDataCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnDataCollectionChanged(Object, NotifyCollectionChangedEventArgs)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_UpdateTransforms">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.UpdateTransforms()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_CanvasVisualizationObjectView_2_OnCurrentValueChanged">CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnCurrentValueChanged()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_OnCurrentValueChanged">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnCurrentValueChanged()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html#Microsoft_Psi_Visualization_Views_Visuals2D_StreamVisualizationObjectCanvasView_2_UpdateView">StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.UpdateView()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_ContextMenuItemsSourceType">VisualizationObjectView.ContextMenuItemsSourceType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_ContextMenuObjectName">VisualizationObjectView.ContextMenuObjectName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_VisualizationObject">VisualizationObjectView.VisualizationObject</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_Navigator">VisualizationObjectView.Navigator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">VisualizationObjectView.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnLoaded_System_Object_System_Windows_RoutedEventArgs_">VisualizationObjectView.OnLoaded(Object, RoutedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnUnloaded_System_Object_System_Windows_RoutedEventArgs_">VisualizationObjectView.OnUnloaded(Object, RoutedEventArgs)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObjectView.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a>
     </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol.oncreateautomationpeer#System_Windows_Controls_UserControl_OnCreateAutomationPeer">UserControl.OnCreateAutomationPeer()</a>
@@ -2061,7 +2092,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class PlotVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt; : TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild where TPlotVisualizationObject : PlotVisualizationObject&lt;TData&gt;, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class PlotVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt; : StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource, IPlotVisualizationObjectView&lt;int, TData&gt; where TPlotVisualizationObject : PlotVisualizationObject&lt;TData&gt;, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2074,21 +2105,26 @@
     <tbody>
       <tr>
         <td><span class="parametername">TPlotVisualizationObject</span></td>
-        <td><p>The type of timeline visualization object.</p>
+        <td><p>The type of the corresponding visualization object.</p>
 </td>
       </tr>
       <tr>
         <td><span class="parametername">TData</span></td>
-        <td><p>The type of the data to plot.</p>
+        <td><p>The type of the data.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The class implements the <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView-2.html">IPlotVisualizationObjectView&lt;TKey, TData&gt;</a> interface, and uses
+the <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectViewHelper-2.html">PlotVisualizationObjectViewHelper&lt;TKey, TData&gt;</a> helper class via aggregation to
+generate the necessary views.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L34">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2__ctor_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2__ctor" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.#ctor">PlotVisualizationObjectView()</h4>
@@ -2103,16 +2139,100 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L39">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L55">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_VisualizationObject_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.VisualizationObject*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_VisualizationObject" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.VisualizationObject">VisualizationObject</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the stream visualization object.</p>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_InterpolationStyle_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.InterpolationStyle*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_InterpolationStyle" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.InterpolationStyle">InterpolationStyle</h4>
+  <div class="markdown level1 summary"><p>Gets the interpolation style.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override TPlotVisualizationObject VisualizationObject { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public InterpolationStyle InterpolationStyle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.InterpolationStyle.html">InterpolationStyle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_MarkerSize_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.MarkerSize*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_MarkerSize" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.MarkerSize">MarkerSize</h4>
+  <div class="markdown level1 summary"><p>Gets the marker size.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MarkerSize { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L58">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_MarkerStyle_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.MarkerStyle*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_MarkerStyle" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.MarkerStyle">MarkerStyle</h4>
+  <div class="markdown level1 summary"><p>Gets the marker style.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MarkerStyle MarkerStyle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.MarkerStyle.html">MarkerStyle</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L49">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_PlotVisualizationObject_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.PlotVisualizationObject*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_PlotVisualizationObject" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.PlotVisualizationObject">PlotVisualizationObject</h4>
+  <div class="markdown level1 summary"><p>Gets the plot visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TPlotVisualizationObject PlotVisualizationObject { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2129,13 +2249,185 @@
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.VisualizationObject</span></div>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L123">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L64">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_AppendContextMenuItems_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.AppendContextMenuItems*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.AppendContextMenuItems(System.Collections.Generic.List{System.Windows.Controls.MenuItem})">AppendContextMenuItems(List&lt;MenuItem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Gets the context menu items the context menu source wishes to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void AppendContextMenuItems(List&lt;MenuItem&gt; menuItems)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.menuitem">MenuItem</a>&gt;</td>
+        <td><span class="parametername">menuItems</span></td>
+        <td><p>A collection of menu items to append to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">VisualizationObjectView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L88">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_CreateBindings_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.CreateBindings*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_CreateBindings_System_Int32_System_Windows_Shapes_Path_System_Windows_Shapes_Path_System_Windows_Shapes_Path_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.CreateBindings(System.Int32,System.Windows.Shapes.Path,System.Windows.Shapes.Path,System.Windows.Shapes.Path)">CreateBindings(Int32, Path, Path, Path)</h4>
+  <div class="markdown level1 summary"><p>Creates the bindings for the line, markers and range paths for a specified series key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CreateBindings(int seriesKey, Path linePath, Path markerPath, Path rangePath)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">seriesKey</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.path">Path</a></td>
+        <td><span class="parametername">linePath</span></td>
+        <td><p>The line path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.path">Path</a></td>
+        <td><span class="parametername">markerPath</span></td>
+        <td><p>The marker path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.shapes.path">Path</a></td>
+        <td><span class="parametername">rangePath</span></td>
+        <td><p>The range path.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L138">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_GetDataPoints_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.GetDataPoints*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_GetDataPoints_System_Int32_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.GetDataPoints(System.Int32)">GetDataPoints(Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the data points to render for a given series.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;(DateTime OriginatingTime, TData Value, bool Available)&gt; GetDataPoints(int seriesKey)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">seriesKey</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, TData, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><p>An enumeration of datapoints to render.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L144">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_GetNumericValue_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.GetNumericValue*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_GetNumericValue__1_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.GetNumericValue(`1)">GetNumericValue(TData)</h4>
+  <div class="markdown level1 summary"><p>Gets the numeric value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double GetNumericValue(TData data)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TData</span></td>
+        <td><span class="parametername">data</span></td>
+        <td><p>The data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The corresponding numberic value.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L197">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnDataCollectionChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnDataCollectionChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnDataCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnDataCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">OnDataCollectionChanged(Object, NotifyCollectionChangedEventArgs)</h4>
@@ -2171,49 +2463,10 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnDataCollectionChanged(System.Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnDataCollectionChanged(System.Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L42">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnDataContextChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnDataContextChanged*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnDataContextChanged(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</h4>
-  <div class="markdown level1 summary"><p>Implements changes in response to data context changing.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
-        <td><span class="parametername">sender</span></td>
-        <td><p>The sender of the change.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencypropertychangedeventargs">DependencyPropertyChangedEventArgs</a></td>
-        <td><span class="parametername">e</span></td>
-        <td><p>The event arguments.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnDataContextChanged(System.Object, System.Windows.DependencyPropertyChangedEventArgs)</span></div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L111">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L189">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnNavigatorDataRangeChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnNavigatorDataRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnNavigatorDataRangeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeRangeChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnNavigatorDataRangeChanged(System.Object,Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)">OnNavigatorDataRangeChanged(Object, NavigatorTimeRangeChangedEventArgs)</h4>
@@ -2222,7 +2475,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected virtual void OnNavigatorDataRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override void OnNavigatorDataRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2248,9 +2501,11 @@
       </tr>
     </tbody>
   </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnNavigatorDataRangeChanged(System.Object, Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L95">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L178">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnNavigatorViewRangeChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnNavigatorViewRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnNavigatorViewRangeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeRangeChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnNavigatorViewRangeChanged(System.Object,Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)">OnNavigatorViewRangeChanged(Object, NavigatorTimeRangeChangedEventArgs)</h4>
@@ -2286,10 +2541,10 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnNavigatorViewRangeChanged(System.Object, Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnNavigatorViewRangeChanged(System.Object, Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L158">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L232">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnSummaryDataCollectionChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnSummaryDataCollectionChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnSummaryDataCollectionChanged_System_Object_System_Collections_Specialized_NotifyCollectionChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnSummaryDataCollectionChanged(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">OnSummaryDataCollectionChanged(Object, NotifyCollectionChangedEventArgs)</h4>
@@ -2325,29 +2580,14 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnSummaryDataCollectionChanged(System.Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnSummaryDataCollectionChanged(System.Object, System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L231">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnTransformsChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnTransformsChanged*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnTransformsChanged" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnTransformsChanged">OnTransformsChanged()</h4>
-  <div class="markdown level1 summary"><p>Implements changes in response to a change in the transforms.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnTransformsChanged()</code></pre>
-  </div>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.CanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnTransformsChanged()</span></div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L64">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L147">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnVisualizationObjectPropertyChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnVisualizationObjectPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnVisualizationObjectPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</h4>
-  <div class="markdown level1 summary"><p>Implements changes in response to data context changed.</p>
+  <div class="markdown level1 summary"><p>Called when a property of the visualization object has changed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -2367,7 +2607,7 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">sender</span></td>
-        <td><p>The sender of the change.</p>
+        <td><p>The sender.</p>
 </td>
       </tr>
       <tr>
@@ -2379,49 +2619,13 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L51">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnVisualizationObjectPropertyChanging_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnVisualizationObjectPropertyChanging*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.OnVisualizationObjectPropertyChanging(System.Object,System.ComponentModel.PropertyChangingEventArgs)">OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</h4>
-  <div class="markdown level1 summary"><p>Implements changes in response to visualization object property changing.</p>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
+  <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will be called on the application dispatcher thread.</p>
 </div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void OnVisualizationObjectPropertyChanging(object sender, PropertyChangingEventArgs e)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
-        <td><span class="parametername">sender</span></td>
-        <td><p>The sender of the change.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangingeventargs">PropertyChangingEventArgs</a></td>
-        <td><span class="parametername">e</span></td>
-        <td><p>The event arguments.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.OnVisualizationObjectPropertyChanging(System.Object, System.ComponentModel.PropertyChangingEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L202">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L278">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_UpdateTransforms_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.UpdateTransforms*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_UpdateTransforms" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.UpdateTransforms">UpdateTransforms()</h4>
@@ -2449,7 +2653,52 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.TimelineCanvasVisualizationObjectView&lt;TPlotVisualizationObject, TData&gt;.UpdateTransforms()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView&lt;TPlotVisualizationObject, TData&gt;.UpdateTransforms()</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L307">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_UpdateView_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.UpdateView*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_UpdateView" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.UpdateView">UpdateView()</h4>
+  <div class="markdown level1 summary"><p>Update the view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void UpdateView()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;TPlotVisualizationObject, TData&gt;.UpdateView()</span></div>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L52">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_System_Int32_TData__TransformGroup_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.Microsoft#Psi#Visualization#Views#Visuals2D#IPlotVisualizationObjectView{System#Int32,TData}#TransformGroup*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_PlotVisualizationObjectView_2_Microsoft_Psi_Visualization_Views_Visuals2D_IPlotVisualizationObjectView_System_Int32_TData__TransformGroup" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView`2.Microsoft#Psi#Visualization#Views#Visuals2D#IPlotVisualizationObjectView{System#Int32,TData}#TransformGroup">IPlotVisualizationObjectView&lt;Int32, TData&gt;.TransformGroup</h4>
+  <div class="markdown level1 summary"><p>Gets the transform group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Transform IPlotVisualizationObjectView&lt;int, TData&gt;.TransformGroup { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.transform">Transform</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
@@ -2468,6 +2717,12 @@
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.IPlotVisualizationObjectView-2.html">IPlotVisualizationObjectView&lt;TKey, TData&gt;</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -2490,7 +2745,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView{TPlotVisualizationObject,TData}.cs/#L25" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/NumericPlot/PlotVisualizationObjectView.cs/#L31" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -125,17 +125,17 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Helpers/IndexHelper.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Helpers/IndexHelper.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Helpers_IndexHelper_GetIndexForTime_" data-uid="Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Helpers_IndexHelper_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_RelativeTimeInterval_" data-uid="Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime(System.DateTime,System.Int32,System.Func{System.Int32,System.DateTime},Microsoft.Psi.RelativeTimeInterval)">GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;, RelativeTimeInterval)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Helpers_IndexHelper_GetIndexForTime_System_DateTime_Microsoft_Psi_RelativeTimeInterval_System_Int32_System_Func_System_Int32_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime(System.DateTime,Microsoft.Psi.RelativeTimeInterval,System.Int32,System.Func{System.Int32,System.DateTime})">GetIndexForTime(DateTime, RelativeTimeInterval, Int32, Func&lt;Int32, DateTime&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets the index id corresponding to a specified time for
 a collection of indices that are ordered by time.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int GetIndexForTime(DateTime currentTime, int count, Func&lt;int, DateTime&gt; timeAtIndex, RelativeTimeInterval cursorEpsilon)</code></pre>
+    <pre><code class="lang-csharp hljs">public static int GetIndexForTime(DateTime dateTime, RelativeTimeInterval epsilonTimeInterval, int count, Func&lt;int, DateTime&gt; timeAtIndex)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -149,8 +149,14 @@ a collection of indices that are ordered by time.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
-        <td><span class="parametername">currentTime</span></td>
+        <td><span class="parametername">dateTime</span></td>
         <td><p>The time to find the index for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td><span class="parametername">epsilonTimeInterval</span></td>
+        <td><p>The epsilon interval used to determine if an index is close enough to the specified time to be counted as a match.</p>
 </td>
       </tr>
       <tr>
@@ -163,12 +169,6 @@ a collection of indices that are ordered by time.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
         <td><span class="parametername">timeAtIndex</span></td>
         <td><p>A function that returns the time for a given index id.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
-        <td><span class="parametername">cursorEpsilon</span></td>
-        <td><p>The cursor epsilon to use to determine if an index is close enough to the specified time to be counted as a match.</p>
 </td>
       </tr>
     </tbody>
@@ -194,14 +194,14 @@ a collection of indices that are ordered by time.</p>
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Helpers/IndexHelper.cs/#L22">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Helpers_IndexHelper_GetIndexForTime_" data-uid="Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Helpers_IndexHelper_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_SnappingBehavior_" data-uid="Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime(System.DateTime,System.Int32,System.Func{System.Int32,System.DateTime},Microsoft.Psi.Visualization.Helpers.SnappingBehavior)">GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;, SnappingBehavior)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Helpers_IndexHelper_GetIndexForTime_System_DateTime_System_Int32_System_Func_System_Int32_System_DateTime__Microsoft_Psi_Visualization_Helpers_NearestMessageType_" data-uid="Microsoft.Psi.Visualization.Helpers.IndexHelper.GetIndexForTime(System.DateTime,System.Int32,System.Func{System.Int32,System.DateTime},Microsoft.Psi.Visualization.Helpers.NearestMessageType)">GetIndexForTime(DateTime, Int32, Func&lt;Int32, DateTime&gt;, NearestMessageType)</h4>
   <div class="markdown level1 summary"><p>Gets the index id corresponding to a specified time for
 a collection of indices that are ordered by time.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static int GetIndexForTime(DateTime currentTime, int count, Func&lt;int, DateTime&gt; timeAtIndex, SnappingBehavior snappingBehavior = SnappingBehavior.Nearest)</code></pre>
+    <pre><code class="lang-csharp hljs">public static int GetIndexForTime(DateTime dateTime, int count, Func&lt;int, DateTime&gt; timeAtIndex, NearestMessageType snappingBehavior = NearestMessageType.Nearest)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -215,7 +215,7 @@ a collection of indices that are ordered by time.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
-        <td><span class="parametername">currentTime</span></td>
+        <td><span class="parametername">dateTime</span></td>
         <td><p>The time to find the index for.</p>
 </td>
       </tr>
@@ -232,7 +232,7 @@ a collection of indices that are ordered by time.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.Helpers.SnappingBehavior.html">SnappingBehavior</a></td>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Helpers.NearestMessageType.html">NearestMessageType</a></td>
         <td><span class="parametername">snappingBehavior</span></td>
         <td><p>Timeline snapping behaviors.</p>
 </td>

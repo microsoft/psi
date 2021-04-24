@@ -109,13 +109,13 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_StreamMetadataBase__ctor_" data-uid="Microsoft.Psi.StreamMetadataBase.#ctor*"></a>
-  <h4 id="Microsoft_Psi_StreamMetadataBase__ctor_System_String_System_Int32_System_String_System_String_System_String_DateTime_DateTime_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.StreamMetadataBase.#ctor(System.String,System.Int32,System.String,System.String,System.String,DateTime,DateTime,System.Int32,System.Int32,System.Int32)">StreamMetadataBase(String, Int32, String, String, String, DateTime, DateTime, Int32, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_StreamMetadataBase__ctor_System_String_System_Int32_System_String_System_String_System_String_DateTime_DateTime_System_Int64_System_Double_System_Double_" data-uid="Microsoft.Psi.StreamMetadataBase.#ctor(System.String,System.Int32,System.String,System.String,System.String,DateTime,DateTime,System.Int64,System.Double,System.Double)">StreamMetadataBase(String, Int32, String, String, String, DateTime, DateTime, Int64, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.StreamMetadataBase.html">StreamMetadataBase</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public StreamMetadataBase(string name, int id, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, int averageMessageSize, int messageCount, int averageLatency)</code></pre>
+    <pre><code class="lang-csharp hljs">public StreamMetadataBase(string name, int id, string typeName, string partitionName, string partitionPath, DateTime first, DateTime last, long messageCount, double averageMessageSize, double averageLatencyMs)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,21 +170,21 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">averageMessageSize</span></td>
-        <td><p>Average message size (bytes).</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td><span class="parametername">messageCount</span></td>
         <td><p>Total message count.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">averageLatency</span></td>
-        <td><p>Average message latency.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">averageMessageSize</span></td>
+        <td><p>Average message size (bytes).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">averageLatencyMs</span></td>
+        <td><p>Average message latency (milliseconds).</p>
 </td>
       </tr>
     </tbody>
@@ -193,16 +193,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L83">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L86">View Source</a>
   </span>
-  <a id="Microsoft_Psi_StreamMetadataBase_AverageLatency_" data-uid="Microsoft.Psi.StreamMetadataBase.AverageLatency*"></a>
-  <h4 id="Microsoft_Psi_StreamMetadataBase_AverageLatency" data-uid="Microsoft.Psi.StreamMetadataBase.AverageLatency">AverageLatency</h4>
-  <div class="markdown level1 summary"><p>Gets the average latency of messages in the stream, in microseconds.</p>
+  <a id="Microsoft_Psi_StreamMetadataBase_AverageMessageLatencyMs_" data-uid="Microsoft.Psi.StreamMetadataBase.AverageMessageLatencyMs*"></a>
+  <h4 id="Microsoft_Psi_StreamMetadataBase_AverageMessageLatencyMs" data-uid="Microsoft.Psi.StreamMetadataBase.AverageMessageLatencyMs">AverageMessageLatencyMs</h4>
+  <div class="markdown level1 summary"><p>Gets the average latency (milliseconds) of messages in the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int AverageLatency { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double AverageMessageLatencyMs { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -214,23 +214,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L80">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L83">View Source</a>
   </span>
   <a id="Microsoft_Psi_StreamMetadataBase_AverageMessageSize_" data-uid="Microsoft.Psi.StreamMetadataBase.AverageMessageSize*"></a>
   <h4 id="Microsoft_Psi_StreamMetadataBase_AverageMessageSize" data-uid="Microsoft.Psi.StreamMetadataBase.AverageMessageSize">AverageMessageSize</h4>
-  <div class="markdown level1 summary"><p>Gets the average size of messages in the stream.</p>
+  <div class="markdown level1 summary"><p>Gets the average size (bytes) of messages in the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int AverageMessageSize { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double AverageMessageSize { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -242,7 +242,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -461,7 +461,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L86">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L80">View Source</a>
   </span>
   <a id="Microsoft_Psi_StreamMetadataBase_MessageCount_" data-uid="Microsoft.Psi.StreamMetadataBase.MessageCount*"></a>
   <h4 id="Microsoft_Psi_StreamMetadataBase_MessageCount" data-uid="Microsoft.Psi.StreamMetadataBase.MessageCount">MessageCount</h4>
@@ -470,7 +470,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int MessageCount { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public long MessageCount { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -482,7 +482,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -547,14 +547,14 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L53">View Source</a>
   </span>
-  <a id="Microsoft_Psi_StreamMetadataBase_PartitionName_" data-uid="Microsoft.Psi.StreamMetadataBase.PartitionName*"></a>
-  <h4 id="Microsoft_Psi_StreamMetadataBase_PartitionName" data-uid="Microsoft.Psi.StreamMetadataBase.PartitionName">PartitionName</h4>
-  <div class="markdown level1 summary"><p>Gets the name of the partition where the stream is stored.</p>
+  <a id="Microsoft_Psi_StreamMetadataBase_StoreName_" data-uid="Microsoft.Psi.StreamMetadataBase.StoreName*"></a>
+  <h4 id="Microsoft_Psi_StreamMetadataBase_StoreName" data-uid="Microsoft.Psi.StreamMetadataBase.StoreName">StoreName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the store containing the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PartitionName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string StoreName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -575,14 +575,14 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/StreamMetadataBase.cs/#L56">View Source</a>
   </span>
-  <a id="Microsoft_Psi_StreamMetadataBase_PartitionPath_" data-uid="Microsoft.Psi.StreamMetadataBase.PartitionPath*"></a>
-  <h4 id="Microsoft_Psi_StreamMetadataBase_PartitionPath" data-uid="Microsoft.Psi.StreamMetadataBase.PartitionPath">PartitionPath</h4>
-  <div class="markdown level1 summary"><p>Gets the path of the partition where the stream is stored.</p>
+  <a id="Microsoft_Psi_StreamMetadataBase_StorePath_" data-uid="Microsoft.Psi.StreamMetadataBase.StorePath*"></a>
+  <h4 id="Microsoft_Psi_StreamMetadataBase_StorePath" data-uid="Microsoft.Psi.StreamMetadataBase.StorePath">StorePath</h4>
+  <div class="markdown level1 summary"><p>Gets the path of the store containing the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PartitionPath { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string StorePath { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">

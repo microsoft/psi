@@ -88,85 +88,154 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.BoolToDoubleAdapter.html">BoolToDoubleAdapter</a></h4>
-      <section><p>Used to adapt streams of booleans into doubles.</p>
+      <section><p>Implements a stream adapter from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a> to <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CompressedImageAdapter.html">CompressedImageAdapter</a></h4>
-      <section><p>Used to adapt streams of compresed images into <a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>s.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CameraIntrinsicsToSpatialCameraAdapter.html">CameraIntrinsicsToSpatialCameraAdapter</a></h4>
+      <section><p>Implements a stream adapter from <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a> to spatial camera with default position.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.CameraViewToSpatialCameraViewAdapter.html">CameraViewToSpatialCameraViewAdapter</a></h4>
+      <section><p>Implements a stream adapter from camera view to spatial camera view with default position.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthCameraViewToSpatialDepthCameraViewAdapter.html">DepthCameraViewToSpatialDepthCameraViewAdapter</a></h4>
+      <section><p>Implements a stream adapter from depth camera view to spatial depth camera view with default position.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthImageToImageAdapter.html">DepthImageToImageAdapter</a></h4>
-      <section><p>Represents an adapter that converts a depth image to an image.</p>
+      <section><p>Implements a stream adapter from a shared depth image to a shared image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DepthImageToSpatialDepthImageAdapter.html">DepthImageToSpatialDepthImageAdapter</a></h4>
+      <section><p>Implements a stream adapter from depth image to spatial depth image with default position.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.DictionaryKeyToStringAdapter-2.html">DictionaryKeyToStringAdapter&lt;TKey, TValue&gt;</a></h4>
+      <section><p>Implements a stream adapter from a generic dictionary to dictionary with string keys.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedCameraViewToSpatialCameraViewAdapter.html">EncodedCameraViewToSpatialCameraViewAdapter</a></h4>
+      <section><p>Implements a stream adapter from camera view (shared encoded image with intrinsics) to spatial camera view (shared image with intrinsics) with default position.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthCameraViewToSpatialDepthCameraViewAdapter.html">EncodedDepthCameraViewToSpatialDepthCameraViewAdapter</a></h4>
+      <section><p>Implements a stream adapter from depth camera view (shared encoded depth image with intrinsics) to spatial depth camera view (shared depth image with intrinsics) with default position.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToDepthImageAdapter.html">EncodedDepthImageToDepthImageAdapter</a></h4>
-      <section><p>Represents an adapter that converts an encoded depth image to a depth image.</p>
+      <section><p>Implements a stream adapter from shared encoded depth image to shared depth image.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToImageAdapter.html">EncodedDepthImageToImageAdapter</a></h4>
-      <section><p>Represents an adapter that converts an encoded depth image to an image.</p>
+      <section><p>Implements a stream adapter from shared encoded depth image to shared image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedDepthImageToSpatialDepthCameraViewManualFocalLengthAdapter.html">EncodedDepthImageToSpatialDepthCameraViewManualFocalLengthAdapter</a></h4>
+      <section><p>Implements a stream adapter from shared encoded depth image to shared depth image with default position.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedImageToImageAdapter.html">EncodedImageToImageAdapter</a></h4>
-      <section><p>Represents an adapter that converts encoded images to images.</p>
+      <section><p>Implements a stream adapter from shared encoded images to shared images.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EuclideanPoint3DAdapter.html">EuclideanPoint3DAdapter</a></h4>
-      <section><p>Used to adapt streams of floats into doubles.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialCameraViewToSpatialCameraViewAdapter.html">EncodedSpatialCameraViewToSpatialCameraViewAdapter</a></h4>
+      <section><p>Implements a stream adapter from encoded spatial camera view (shared encoded image with intrinsics and position) to spatial camera view (shared image with intrinsics and position).</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialDepthCameraViewToSpatialDepthCameraViewAdapter.html">EncodedSpatialDepthCameraViewToSpatialDepthCameraViewAdapter</a></h4>
+      <section><p>Implements a stream adapter from encoded spatial depth camera view (shared encoded depth image with intrinsics and position) to spatial depth camera view (shared depth image with intrinsics and position).</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialDepthImageToSpatialDepthImageAdapter.html">EncodedSpatialDepthImageToSpatialDepthImageAdapter</a></h4>
+      <section><p>Implements a stream adapter from encoded spatial depth image (shared encoded depth image with position) to spatial depth image (shared depth image with position).</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.EncodedSpatialImageToSpatialImageAdapter.html">EncodedSpatialImageToSpatialImageAdapter</a></h4>
+      <section><p>Implements a stream adapter from encoded spatial image (shared encoded image with position) to spatial image (shared image with position).</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.FloatToDoubleAdapter.html">FloatToDoubleAdapter</a></h4>
-      <section><p>Used to adapt streams of floats into doubles.</p>
+      <section><p>Implements a stream adapter from float to double.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ImageToSpatialImageAdapter.html">ImageToSpatialImageAdapter</a></h4>
+      <section><p>Implements a stream adapter from shared image to spatial image (shared image with default position).</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.IntToDoubleAdapter.html">IntToDoubleAdapter</a></h4>
-      <section><p>Used to adapt streams of integers into doubles.</p>
+      <section><p>Implements a stream adapter from int into double.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleSystemTupleAdapter.html">LabeledRectangleSystemTupleAdapter</a></h4>
+      <section><p>Implements a stream adapter from single System.Tuple labeled rectangle into lists of System.Tuple labeled rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleSystemTupleListAdapter.html">LabeledRectangleSystemTupleListAdapter</a></h4>
+      <section><p>Implements a stream adapter from lists of System.Tuple labeled rectangles into lists of System.Tuple labeled rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleValueTupleAdapter.html">LabeledRectangleValueTupleAdapter</a></h4>
+      <section><p>Implements an adapter from streams of value tuple labeled rectangle into lists of System.Tuple labeled rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleValueTupleListAdapter.html">LabeledRectangleValueTupleListAdapter</a></h4>
+      <section><p>Implements an adapter from streams of lists of value tuple named rectangles into lists of System.Tuple named rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleWithTooltipSystemTupleAdapter.html">LabeledRectangleWithTooltipSystemTupleAdapter</a></h4>
+      <section><p>Implements an adapter from streams of single System.Tuple labeled rectangle into lists of System.Tuple labeled rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleWithTooltipValueTupleAdapter.html">LabeledRectangleWithTooltipValueTupleAdapter</a></h4>
+      <section><p>Implements a stream adapter from value tuple labeled rectangle into lists of System.Tuple labeled rectangles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.LabeledRectangleWithTooltipValueTupleListAdapter.html">LabeledRectangleWithTooltipValueTupleListAdapter</a></h4>
+      <section><p>Implements an adapter from streams of lists of value tuple labeled rectangles into lists of System.Tuple labeled rectangles.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DListToNullableAdapter.html">Line3DListToNullableAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of <see cref="!:Line3D"></see> to lists of nullable <see cref="!:Line3D"></see>.</p>
+      <section><p>Implements a stream adapter from list of <see cref="!:Line3D"></see> to list of nullable <see cref="!:Line3D"></see>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Line3DToNullableAdapter.html">Line3DToNullableAdapter</a></h4>
-      <section><p>Used to adapt streams of <see cref="!:Line3D"></see> into nullable <see cref="!:Line3D"></see>.</p>
+      <section><p>Implements a stream adapter <see cref="!:Line3D"></see> to nullable <see cref="!:Line3D"></see>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint2DToScatterPlotAdapter.html">MathNetNullablePoint2DToScatterPlotAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of nullable MathNet.Spatial.Euclidean.Point2Ds into lists named points.</p>
+      <section><p>Implements an adapter from streams of lists of nullable MathNet.Spatial.Euclidean.Point2Ds into lists named points.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter.html">MathNetNullablePoint3DListToWindowsNullablePoint3DListAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of nullable <see cref="!:MathNet.Point3D"></see> into lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToNullablePoint3DListAdapter.html">MathNetNullablePoint3DListToNullablePoint3DListAdapter</a></h4>
+      <section><p>Implements a stream adapter from list of nullable <see cref="!:MathNet.Point3D"></see> to list of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToWindowsNullablePoint3DAdapter.html">MathNetNullablePoint3DToWindowsNullablePoint3DAdapter</a></h4>
-      <section><p>Used to adapt streams of nullable <see cref="!:MathNet.Point3D"></see> into nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DListToPoint3DListAdapter.html">MathNetNullablePoint3DListToPoint3DListAdapter</a></h4>
+      <section><p>Implements a stream adapter from list of nullable <see cref="!:MathNet.Point3D"></see> to list of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToWindowsNullablePoint3DListAdapter.html">MathNetPoint3DListToWindowsNullablePoint3DListAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of <see cref="!:MathNet.Point3D"></see> into lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetNullablePoint3DToNullablePoint3DAdapter.html">MathNetNullablePoint3DToNullablePoint3DAdapter</a></h4>
+      <section><p>Implements a stream adapter from nullable <see cref="!:MathNet.Point3D"></see> to nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToWindowsNullablePoint3DAdapter.html">MathNetPoint3DToWindowsNullablePoint3DAdapter</a></h4>
-      <section><p>Used to adapt streams of <see cref="!:MathNet.Point3D"></see> into nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToNullablePoint3DListAdapter.html">MathNetPoint3DListToNullablePoint3DListAdapter</a></h4>
+      <section><p>Implements a stream adapter from list of <see cref="!:MathNet.Point3D"></see> to list of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DListToPoint3DListAdapter.html">MathNetPoint3DListToPoint3DListAdapter</a></h4>
+      <section><p>Implements a stream adapter from list of <see cref="!:MathNet.Point3D"></see> to list of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.MathNetPoint3DToNullablePoint3DAdapter.html">MathNetPoint3DToNullablePoint3DAdapter</a></h4>
+      <section><p>Implements a stream adapter from <see cref="!:MathNet.Point3D"></see> to nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.NullablePoint3DListToPoint3DListAdapter.html">NullablePoint3DListToPoint3DListAdapter</a></h4>
+      <section><p>Implements a stream adapter from list of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to list of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ObjectAdapter-1.html">ObjectAdapter&lt;T&gt;</a></h4>
-      <section><p>Used to adapt streams of any type into objects.</p>
+      <section><p>Implements a stream adapter from a specified type to object.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.ObjectToLatencyAdapter-1.html">ObjectToLatencyAdapter&lt;T&gt;</a></h4>
-      <section><p>Used to adapt streams of any type into tuples of originating and message times.</p>
+      <section><p>Implements a stream adapter from a specified type to tuples of originating and creation times.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PassthroughAdapter-1.html">PassthroughAdapter&lt;T&gt;</a></h4>
-      <section><p>Represents a stream adapter that passes its input through to its output unchanged.</p>
+      <section><p>Implements a stream adapter that passes its input through to its output unchanged.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PipelineDiagnosticsToReceiverDiagnosticsMemberStreamAdapter-1.html">PipelineDiagnosticsToReceiverDiagnosticsMemberStreamAdapter&lt;T&gt;</a></h4>
+      <section><p>Implements a stream adapter from pipeline diagnostics to a specific receiver statistic.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Point2DListToScatterPlotAdapter.html">Point2DListToScatterPlotAdapter</a></h4>
+      <section><p>Implements an adapter from streams of lists of MathNet.Spatial.Euclidean.Point2Ds list of labeled points.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Point3DListToNullablePoint3DListAdapter.html">Point3DListToNullablePoint3DListAdapter</a></h4>
+      <section><p>Implements a stream adapter from list of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to list of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Point3DToNullablePoint3DAdapter.html">Point3DToNullablePoint3DAdapter</a></h4>
+      <section><p>Implements a stream adapter from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.PointArrayToScatterPlotAdapter.html">PointArrayToScatterPlotAdapter</a></h4>
-      <section><p>Used to adapt streams of point arrays into lists named points.</p>
+      <section><p>Implements a stream adapter from point arrays into lists named points.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Ray3DToNullableRay3DAdapter.html">Ray3DToNullableRay3DAdapter</a></h4>
+      <section><p>Implements a stream adapter from <see cref="!:Ray3D"></see> to nullable <see cref="!:Ray3D"></see>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Rect3DListToNullableAdapter.html">Rect3DListToNullableAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a> to lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a>.</p>
+      <section><p>Implements a stream adapter from list of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a> to list of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.Rect3DToNullableAdapter.html">Rect3DToNullableAdapter</a></h4>
-      <section><p>Used to adapt streams of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a> into nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a>.</p>
+      <section><p>Implements a stream adapter from <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a> to nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.rect3d">Rect3D</a>.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleAdapter.html">RectangleAdapter</a></h4>
-      <section><p>Used to adapt streams of rectangle into lists of named rectangles.</p>
+      <section><p>Implements a stream adapter from rectangle into lists of named rectangles.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleListAdapter.html">RectangleListAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of rectangles into lists of named rectangles.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleSystemTupleAdapter.html">RectangleSystemTupleAdapter</a></h4>
-      <section><p>Used to adapt streams of single System.Tuple named rectangle into lists of System.Tuple named rectangles.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleValueTupleAdapter.html">RectangleValueTupleAdapter</a></h4>
-      <section><p>Used to adapt streams of of value tuple named rectangle into lists of System.Tuple named rectangles.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.RectangleValueTupleListAdapter.html">RectangleValueTupleListAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of value tuple named rectangles into lists of System.Tuple named rectangles.</p>
+      <section><p>Implements a stream adapter from lists of rectangles into lists of named rectangles.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamAdapterAttribute.html">StreamAdapterAttribute</a></h4>
       <section><p>Represents a stream adapter attribute.</p>
@@ -175,19 +244,13 @@
       <section><p>Represents information about a stream adapter.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter-2.html">StreamMemberAdapter&lt;TSource, TDestination&gt;</a></h4>
-      <section><p>Adapter from a source stream to a member of that stream.</p>
+      <section><p>Implements a stream adapter from a source stream to a member of that stream.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.StreamMemberAdapter-4.html">StreamMemberAdapter&lt;TSource, TMember, TAdapter, TDestination&gt;</a></h4>
-      <section><p>Implements an adapter from a source stream to an adapted version of a member of that stream.</p>
+      <section><p>Implements a stream adapter from a source stream to an adapted version of a member of that stream.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.TimeSpanToDoubleAdapter.html">TimeSpanToDoubleAdapter</a></h4>
-      <section><p>Used to adapt streams of time spans into doubles.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.WindowsPoint3DListToNullableAdapter.html">WindowsPoint3DListToNullableAdapter</a></h4>
-      <section><p>Used to adapt streams of lists of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to lists of nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
-</section>
-      <h4><a class="xref" href="Microsoft.Psi.Visualization.Adapters.WindowsPoint3DToNullableAdapter.html">WindowsPoint3DToNullableAdapter</a></h4>
-      <section><p>Used to adapt streams of <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a> to nullable <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>.</p>
+      <section><p>Implements a stream adapter from time span to double.</p>
 </section>
 </article>
           </div>

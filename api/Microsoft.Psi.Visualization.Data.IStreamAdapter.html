@@ -86,23 +86,17 @@
   <div class="markdown level0 summary"><p>Represents an object that adapts messages from one type to another.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#System_IDisposable_Dispose">IDisposable.Dispose()</a>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Data_IStreamAdapter_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IStreamAdapter : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IStreamAdapter</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L21">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L16">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_IStreamAdapter_DestinationType_" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.DestinationType*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_IStreamAdapter_DestinationType" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.DestinationType">DestinationType</h4>
@@ -130,16 +124,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L16">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L26">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_IStreamAdapter_Pool_" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.Pool*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_IStreamAdapter_Pool" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.Pool">Pool</h4>
-  <div class="markdown level1 summary"><p>Gets the shared allocation pool.</p>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator_" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.SourceAllocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceAllocator" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.SourceAllocator">SourceAllocator</h4>
+  <div class="markdown level1 summary"><p>Gets the allocator for source messages.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">IPool Pool { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">Func&lt;dynamic&gt; SourceAllocator { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -151,14 +145,42 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IPool.html">IPool</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L26">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator_" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.SourceDeallocator*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceDeallocator" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.SourceDeallocator">SourceDeallocator</h4>
+  <div class="markdown level1 summary"><p>Gets the deallocator for source messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Action&lt;dynamic&gt; SourceDeallocator { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamAdapter.cs/#L21">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceType_" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.SourceType*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_IStreamAdapter_SourceType" data-uid="Microsoft.Psi.Visualization.Data.IStreamAdapter.SourceType">SourceType</h4>

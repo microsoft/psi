@@ -97,7 +97,8 @@
     <div class="level6"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.control">Control</a></div>
     <div class="level7"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
-    <div class="level9"><span class="xref">TimeIntervalVisualizationObjectView</span></div>
+    <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html">VisualizationObjectView</a></div>
+    <div class="level10"><span class="xref">TimeIntervalVisualizationObjectView</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -107,9 +108,28 @@
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.isupportinitialize">ISupportInitialize</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iqueryambient">IQueryAmbient</a></div>
     <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">IAddChild</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_ContextMenuItemsSourceType">VisualizationObjectView.ContextMenuItemsSourceType</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_ContextMenuObjectName">VisualizationObjectView.ContextMenuObjectName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_VisualizationObject">VisualizationObjectView.VisualizationObject</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_Navigator">VisualizationObjectView.Navigator</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">VisualizationObjectView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnLoaded_System_Object_System_Windows_RoutedEventArgs_">VisualizationObjectView.OnLoaded(Object, RoutedEventArgs)</a>
+    </div>
     <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol.oncreateautomationpeer#System_Windows_Controls_UserControl_OnCreateAutomationPeer">UserControl.OnCreateAutomationPeer()</a>
     </div>
@@ -1984,13 +2004,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TimeIntervalVisualizationObjectView : UserControl, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public class TimeIntervalVisualizationObjectView : VisualizationObjectView, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L44">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView__ctor_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView__ctor" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.#ctor">TimeIntervalVisualizationObjectView()</h4>
@@ -2005,7 +2025,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_TimeIntervalVisualizationObject_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.TimeIntervalVisualizationObject*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_TimeIntervalVisualizationObject" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.TimeIntervalVisualizationObject">TimeIntervalVisualizationObject</h4>
@@ -2031,6 +2051,167 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L72">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnDataContextChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnDataContextChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnDataContextChanged(System.Object,System.Windows.DependencyPropertyChangedEventArgs)">OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when the data context is changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.dependencypropertychangedeventargs">DependencyPropertyChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The dependency property changed event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnDataContextChanged_System_Object_System_Windows_DependencyPropertyChangedEventArgs_">VisualizationObjectView.OnDataContextChanged(Object, DependencyPropertyChangedEventArgs)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnUnloaded_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnUnloaded*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnUnloaded_System_Object_System_Windows_RoutedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnUnloaded(System.Object,System.Windows.RoutedEventArgs)">OnUnloaded(Object, RoutedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when the view is unloaded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnUnloaded(object sender, RoutedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.routedeventargs">RoutedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnUnloaded_System_Object_System_Windows_RoutedEventArgs_">VisualizationObjectView.OnUnloaded(Object, RoutedEventArgs)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L117">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnVisualizationObjectPropertyChanged_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnVisualizationObjectPropertyChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnVisualizationObjectPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when a property of the visualization object has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObjectView.OnVisualizationObjectPropertyChanged(Object, PropertyChangedEventArgs)</a></div>
+  <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This method will be called on the application dispatcher thread.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnVisualizationObjectPropertyChanging_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnVisualizationObjectPropertyChanging*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalVisualizationObjectView_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_" data-uid="Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.OnVisualizationObjectPropertyChanging(System.Object,System.ComponentModel.PropertyChangingEventArgs)">OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</h4>
+  <div class="markdown level1 summary"><p>Called when a property of the visualization object is about to change.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnVisualizationObjectPropertyChanging(object sender, PropertyChangingEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">sender</span></td>
+        <td><p>The sender.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangingeventargs">PropertyChangingEventArgs</a></td>
+        <td><span class="parametername">e</span></td>
+        <td><p>The event arguments.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html#Microsoft_Psi_Visualization_Views_VisualizationObjectView_OnVisualizationObjectPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_">VisualizationObjectView.OnVisualizationObjectPropertyChanging(Object, PropertyChangingEventArgs)</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
@@ -2049,6 +2230,9 @@
   </div>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.markup.iaddchild">System.Windows.Markup.IAddChild</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -2071,7 +2255,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L21" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalVisualizationObjectView.xaml.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

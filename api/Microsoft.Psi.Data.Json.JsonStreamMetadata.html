@@ -105,7 +105,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L20">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L18">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata__ctor_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.#ctor*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata__ctor" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.#ctor">JsonStreamMetadata()</h4>
@@ -118,7 +118,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata__ctor_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.#ctor*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata__ctor_System_String_System_Int32_System_String_System_String_System_String_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.#ctor(System.String,System.Int32,System.String,System.String,System.String,System.String)">JsonStreamMetadata(String, Int32, String, String, String, String)</h4>
@@ -127,7 +127,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public JsonStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string partitionName, string partitionPath)</code></pre>
+    <pre><code class="lang-csharp hljs">public JsonStreamMetadata(string name, int id, string typeName, string supplementalMetadataTypeName, string storeName, string storePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -165,14 +165,14 @@
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">partitionName</span></td>
-        <td><p>The name of the partition where the stream is stored.</p>
+        <td><span class="parametername">storeName</span></td>
+        <td><p>The name of the store containing the stream.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">partitionPath</span></td>
-        <td><p>The path of the partition where the stream is stored.</p>
+        <td><span class="parametername">storePath</span></td>
+        <td><p>The path of the store containing the stream.</p>
 </td>
       </tr>
     </tbody>
@@ -181,15 +181,15 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L99">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_AverageLatency_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.AverageLatency*"></a>
-  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_AverageLatency" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.AverageLatency">AverageLatency</h4>
+  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_AverageMessageLatencyMs_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.AverageMessageLatencyMs*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_AverageMessageLatencyMs" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.AverageMessageLatencyMs">AverageMessageLatencyMs</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int AverageLatency { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double AverageMessageLatencyMs { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -201,14 +201,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L81">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L95">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_AverageMessageSize_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.AverageMessageSize*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_AverageMessageSize" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.AverageMessageSize">AverageMessageSize</h4>
@@ -216,7 +216,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int AverageMessageSize { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double AverageMessageSize { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -228,14 +228,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L101">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L111">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_ClosedTime_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.ClosedTime*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_ClosedTime" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.ClosedTime">ClosedTime</h4>
@@ -262,7 +262,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_FirstMessageCreationTime_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.FirstMessageCreationTime*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_FirstMessageCreationTime" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.FirstMessageCreationTime">FirstMessageCreationTime</h4>
@@ -289,7 +289,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_FirstMessageOriginatingTime_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.FirstMessageOriginatingTime*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_FirstMessageOriginatingTime" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.FirstMessageOriginatingTime">FirstMessageOriginatingTime</h4>
@@ -316,7 +316,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Id_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Id*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Id" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Id">Id</h4>
@@ -343,7 +343,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L115">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_IsClosed_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.IsClosed*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_IsClosed" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.IsClosed">IsClosed</h4>
@@ -370,7 +370,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L67">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_LastMessageCreationTime_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.LastMessageCreationTime*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_LastMessageCreationTime" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.LastMessageCreationTime">LastMessageCreationTime</h4>
@@ -397,7 +397,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_LastMessageOriginatingTime_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.LastMessageOriginatingTime*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_LastMessageOriginatingTime" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.LastMessageOriginatingTime">LastMessageOriginatingTime</h4>
@@ -424,15 +424,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L91">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_MessageCount_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.MessageCount*"></a>
-  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_MessageCount" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.MessageCount">MessageCount</h4>
-  <div class="markdown level1 summary"></div>
+  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_LatencyCumulativeSum_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.LatencyCumulativeSum*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_LatencyCumulativeSum" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.LatencyCumulativeSum">LatencyCumulativeSum</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the cumulative sum of latencies of messages in the stream.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int MessageCount { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public long LatencyCumulativeSum { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -444,14 +445,69 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L79">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_MessageCount_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.MessageCount*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_MessageCount" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.MessageCount">MessageCount</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long MessageCount { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L85">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_MessageSizeCumulativeSum_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.MessageSizeCumulativeSum*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_MessageSizeCumulativeSum" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.MessageSizeCumulativeSum">MessageSizeCumulativeSum</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the total size (bytes) of messages in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public long MessageSizeCumulativeSum { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Name_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Name*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Name" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Name">Name</h4>
@@ -478,7 +534,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_OpenedTime_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.OpenedTime*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_OpenedTime" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.OpenedTime">OpenedTime</h4>
@@ -505,15 +561,15 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L57">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L55">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_PartitionName_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.PartitionName*"></a>
-  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_PartitionName" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.PartitionName">PartitionName</h4>
+  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_StoreName_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.StoreName*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_StoreName" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.StoreName">StoreName</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PartitionName { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string StoreName { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -532,15 +588,15 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L59">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_PartitionPath_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.PartitionPath*"></a>
-  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_PartitionPath" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.PartitionPath">PartitionPath</h4>
+  <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_StorePath_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.StorePath*"></a>
+  <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_StorePath" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.StorePath">StorePath</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PartitionPath { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string StorePath { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -559,7 +615,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L103">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_SupplementalMetadataTypeName_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.SupplementalMetadataTypeName*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_SupplementalMetadataTypeName" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.SupplementalMetadataTypeName">SupplementalMetadataTypeName</h4>
@@ -586,7 +642,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L53">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_TypeName_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.TypeName*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_TypeName" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.TypeName">TypeName</h4>
@@ -615,7 +671,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L109">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L119">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_GetSupplementalMetadata_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.GetSupplementalMetadata*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_GetSupplementalMetadata__1" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.GetSupplementalMetadata``1">GetSupplementalMetadata&lt;T&gt;()</h4>
@@ -660,7 +716,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L115">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L125">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Update_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Update*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Update_Microsoft_Psi_Envelope_System_Int32_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Update(Microsoft.Psi.Envelope,System.Int32)">Update(Envelope, Int32)</h4>
@@ -694,7 +750,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L131">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonStreamMetadata.cs/#L141">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Update_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Update*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonStreamMetadata_Update_Microsoft_Psi_TimeInterval_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Data.Json.JsonStreamMetadata.Update(Microsoft.Psi.TimeInterval,Microsoft.Psi.TimeInterval)">Update(TimeInterval, TimeInterval)</h4>

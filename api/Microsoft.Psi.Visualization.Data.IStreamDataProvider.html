@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IStreamDataProvider
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IStreamDataProvider
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider" class="text-break">Interface IStreamDataProvider
+  </h1>
+  <div class="markdown level0 summary"><p>Defines an interfaces for providers of stream data.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#System_IDisposable_Dispose">IDisposable.Dispose()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IStreamDataProvider : IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L19">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_ReadRequests_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.ReadRequests*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_ReadRequests" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.ReadRequests">ReadRequests</h4>
+  <div class="markdown level1 summary"><p>Gets a list of outstanding read requests.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IReadOnlyList&lt;ReadRequest&gt; ReadRequests { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.Data.ReadRequest.html">ReadRequest</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L24">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_StreamName_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.StreamName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_StreamName" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.StreamName">StreamName</h4>
+  <div class="markdown level1 summary"><p>Gets the stream name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string StreamName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L43">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_DispatchData_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.DispatchData*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_DispatchData" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.DispatchData">DispatchData()</h4>
+  <div class="markdown level1 summary"><p>Dispatches read data to subscribers. Called by <a class="xref" href="Microsoft.Psi.Visualization.Data.DataStoreReader.html">DataStoreReader</a> on the UI thread to populate data cache.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void DispatchData()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L32">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_GetTimeOfNearestMessage_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.GetTimeOfNearestMessage*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_GetTimeOfNearestMessage_System_DateTime_Microsoft_Psi_Visualization_Helpers_NearestMessageType_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.GetTimeOfNearestMessage(System.DateTime,Microsoft.Psi.Visualization.Helpers.NearestMessageType)">GetTimeOfNearestMessage(DateTime, NearestMessageType)</h4>
+  <div class="markdown level1 summary"><p>Gets the time of the nearest message to a specified time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">DateTime? GetTimeOfNearestMessage(DateTime time, NearestMessageType nearestMessageType)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The time to find the nearest message to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Helpers.NearestMessageType.html">NearestMessageType</a></td>
+        <td><span class="parametername">nearestMessageType</span></td>
+        <td><p>The type of nearest message to find.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><p>The time of the nearest message, if one is found or null otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L38">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_OpenStream_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.OpenStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_OpenStream_Microsoft_Psi_Data_IStreamReader_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.OpenStream(Microsoft.Psi.Data.IStreamReader)">OpenStream(IStreamReader)</h4>
+  <div class="markdown level1 summary"><p>Open stream given a reader.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void OpenStream(IStreamReader streamReader)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></td>
+        <td><span class="parametername">streamReader</span></td>
+        <td><p>Reader to open stream with.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L50">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_RemoveReadRequest_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.RemoveReadRequest*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_RemoveReadRequest_System_DateTime_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.RemoveReadRequest(System.DateTime,System.DateTime)">RemoveReadRequest(DateTime, DateTime)</h4>
+  <div class="markdown level1 summary"><p>Remove read requests identified by the matching start and end times.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RemoveReadRequest(DateTime startTime, DateTime endTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">startTime</span></td>
+        <td><p>Start time of read requests to complete.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">endTime</span></td>
+        <td><p>End time of read requests to complete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L55">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_Stop_" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.Stop*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamDataProvider_Stop" data-uid="Microsoft.Psi.Visualization.Data.IStreamDataProvider.Stop">Stop()</h4>
+  <div class="markdown level1 summary"><p>Stops the stream provider from publishing more data.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Stop()</code></pre>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamDataProvider.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

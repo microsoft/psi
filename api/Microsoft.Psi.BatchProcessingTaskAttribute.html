@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L20">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L18">View Source</a>
   </span>
   <a id="Microsoft_Psi_BatchProcessingTaskAttribute__ctor_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.#ctor*"></a>
-  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute__ctor_System_String_System_String_System_String_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.#ctor(System.String,System.String,System.String)">BatchProcessingTaskAttribute(String, String, String)</h4>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute__ctor_System_String_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.#ctor(System.String)">BatchProcessingTaskAttribute(String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.BatchProcessingTaskAttribute.html">BatchProcessingTaskAttribute</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BatchProcessingTaskAttribute(string name, string description, string iconSourcePath = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public BatchProcessingTaskAttribute(string name)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -128,34 +128,50 @@
         <td><p>Name of this task.</p>
 </td>
       </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">description</span></td>
-        <td><p>Description of this task.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">iconSourcePath</span></td>
-        <td><p>An optional path to the icon to be used for this task.</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_BatchProcessingTaskAttribute_DeliveryPolicyLatestMessage_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.DeliveryPolicyLatestMessage*"></a>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_DeliveryPolicyLatestMessage" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.DeliveryPolicyLatestMessage">DeliveryPolicyLatestMessage</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to use the <a class="xref" href="Microsoft.Psi.DeliveryPolicy.html#Microsoft_Psi_DeliveryPolicy_LatestMessage">LatestMessage</a> pipeline-level delivery policy when executing this batch task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool DeliveryPolicyLatestMessage { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L36">View Source</a>
   </span>
   <a id="Microsoft_Psi_BatchProcessingTaskAttribute_Description_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.Description*"></a>
   <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_Description" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.Description">Description</h4>
-  <div class="markdown level1 summary"><p>Gets the description of this task.</p>
+  <div class="markdown level1 summary"><p>Gets or sets the description.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Description { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Description { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -174,16 +190,44 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L56">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_BatchProcessingTaskAttribute_EnableDiagnostics_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.EnableDiagnostics*"></a>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_EnableDiagnostics" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.EnableDiagnostics">EnableDiagnostics</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to enable pipeline diagnostics when running this batch task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool EnableDiagnostics { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_BatchProcessingTaskAttribute_IconSourcePath_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.IconSourcePath*"></a>
   <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_IconSourcePath" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.IconSourcePath">IconSourcePath</h4>
-  <div class="markdown level1 summary"><p>Gets the path to the icon associated with the batch task.</p>
+  <div class="markdown level1 summary"><p>Gets or sets the path to the associated icon.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string IconSourcePath { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string IconSourcePath { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -202,11 +246,11 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L40">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_BatchProcessingTaskAttribute_Name_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.Name*"></a>
   <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_Name" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Gets the name of this task.</p>
+  <div class="markdown level1 summary"><p>Gets the name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -224,6 +268,118 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L71">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_BatchProcessingTaskAttribute_OutputPartitionName_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.OutputPartitionName*"></a>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_OutputPartitionName" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.OutputPartitionName">OutputPartitionName</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the output partition name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string OutputPartitionName { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_BatchProcessingTaskAttribute_OutputStoreName_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.OutputStoreName*"></a>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_OutputStoreName" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.OutputStoreName">OutputStoreName</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the output store name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string OutputStoreName { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L66">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_BatchProcessingTaskAttribute_OutputStorePath_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.OutputStorePath*"></a>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_OutputStorePath" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.OutputStorePath">OutputStorePath</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the output store path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string OutputStorePath { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/BatchProcessingTaskAttribute.cs/#L46">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_BatchProcessingTaskAttribute_ReplayAllRealTime_" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.ReplayAllRealTime*"></a>
+  <h4 id="Microsoft_Psi_BatchProcessingTaskAttribute_ReplayAllRealTime" data-uid="Microsoft.Psi.BatchProcessingTaskAttribute.ReplayAllRealTime">ReplayAllRealTime</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to use the <a class="xref" href="Microsoft.Psi.ReplayDescriptor.html#Microsoft_Psi_ReplayDescriptor_ReplayAllRealTime">ReplayAllRealTime</a> descriptor when executing this batch task.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ReplayAllRealTime { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>

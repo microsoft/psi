@@ -96,16 +96,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L95">View Source</a>
   </span>
-  <a id="Microsoft_Psi_IStreamMetadata_AverageLatency_" data-uid="Microsoft.Psi.IStreamMetadata.AverageLatency*"></a>
-  <h4 id="Microsoft_Psi_IStreamMetadata_AverageLatency" data-uid="Microsoft.Psi.IStreamMetadata.AverageLatency">AverageLatency</h4>
-  <div class="markdown level1 summary"><p>Gets the average latency of messages in the stream, in microseconds.</p>
+  <a id="Microsoft_Psi_IStreamMetadata_AverageMessageLatencyMs_" data-uid="Microsoft.Psi.IStreamMetadata.AverageMessageLatencyMs*"></a>
+  <h4 id="Microsoft_Psi_IStreamMetadata_AverageMessageLatencyMs" data-uid="Microsoft.Psi.IStreamMetadata.AverageMessageLatencyMs">AverageMessageLatencyMs</h4>
+  <div class="markdown level1 summary"><p>Gets the average latency (milliseconds) of messages in the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int AverageLatency { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">double AverageMessageLatencyMs { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -117,23 +117,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L90">View Source</a>
   </span>
   <a id="Microsoft_Psi_IStreamMetadata_AverageMessageSize_" data-uid="Microsoft.Psi.IStreamMetadata.AverageMessageSize*"></a>
   <h4 id="Microsoft_Psi_IStreamMetadata_AverageMessageSize" data-uid="Microsoft.Psi.IStreamMetadata.AverageMessageSize">AverageMessageSize</h4>
-  <div class="markdown level1 summary"><p>Gets the average size of messages in the stream.</p>
+  <div class="markdown level1 summary"><p>Gets the average size (bytes) of messages in the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int AverageMessageSize { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">double AverageMessageSize { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -145,7 +145,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -364,7 +364,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L95">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L85">View Source</a>
   </span>
   <a id="Microsoft_Psi_IStreamMetadata_MessageCount_" data-uid="Microsoft.Psi.IStreamMetadata.MessageCount*"></a>
   <h4 id="Microsoft_Psi_IStreamMetadata_MessageCount" data-uid="Microsoft.Psi.IStreamMetadata.MessageCount">MessageCount</h4>
@@ -373,7 +373,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int MessageCount { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">long MessageCount { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -385,7 +385,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -450,14 +450,14 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L36">View Source</a>
   </span>
-  <a id="Microsoft_Psi_IStreamMetadata_PartitionName_" data-uid="Microsoft.Psi.IStreamMetadata.PartitionName*"></a>
-  <h4 id="Microsoft_Psi_IStreamMetadata_PartitionName" data-uid="Microsoft.Psi.IStreamMetadata.PartitionName">PartitionName</h4>
-  <div class="markdown level1 summary"><p>Gets the name of the partition where the stream is stored.</p>
+  <a id="Microsoft_Psi_IStreamMetadata_StoreName_" data-uid="Microsoft.Psi.IStreamMetadata.StoreName*"></a>
+  <h4 id="Microsoft_Psi_IStreamMetadata_StoreName" data-uid="Microsoft.Psi.IStreamMetadata.StoreName">StoreName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the store containing the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string PartitionName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">string StoreName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -478,14 +478,14 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/IStreamMetadata.cs/#L41">View Source</a>
   </span>
-  <a id="Microsoft_Psi_IStreamMetadata_PartitionPath_" data-uid="Microsoft.Psi.IStreamMetadata.PartitionPath*"></a>
-  <h4 id="Microsoft_Psi_IStreamMetadata_PartitionPath" data-uid="Microsoft.Psi.IStreamMetadata.PartitionPath">PartitionPath</h4>
-  <div class="markdown level1 summary"><p>Gets the path of the partition where the stream is stored.</p>
+  <a id="Microsoft_Psi_IStreamMetadata_StorePath_" data-uid="Microsoft.Psi.IStreamMetadata.StorePath*"></a>
+  <h4 id="Microsoft_Psi_IStreamMetadata_StorePath" data-uid="Microsoft.Psi.IStreamMetadata.StorePath">StorePath</h4>
+  <div class="markdown level1 summary"><p>Gets the path of the store containing the stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string PartitionPath { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">string StorePath { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">

@@ -150,7 +150,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L281">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor">DatasetViewModel()</h4>
@@ -163,7 +163,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L256">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_Microsoft_Psi_Data_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor(Microsoft.Psi.Data.Dataset)">DatasetViewModel(Dataset)</h4>
@@ -196,17 +196,17 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L139">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L346">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ContextMenuOpeningCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ContextMenuOpeningCommand*"></a>
-  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ContextMenuOpeningCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ContextMenuOpeningCommand">ContextMenuOpeningCommand</h4>
-  <div class="markdown level1 summary"><p>Gets the command that executes when opening the dataset context menu.</p>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_AuxiliaryInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.AuxiliaryInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_AuxiliaryInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.AuxiliaryInfo">AuxiliaryInfo</h4>
+  <div class="markdown level1 summary"><p>Gets the auxiliary info.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Browsable(false)]
-public RelayCommand&lt;StackPanel&gt; ContextMenuOpeningCommand { get; }</code></pre>
+public string AuxiliaryInfo { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -218,14 +218,43 @@ public RelayCommand&lt;StackPanel&gt; ContextMenuOpeningCommand { get; }</code><
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.stackpanel">StackPanel</a>&gt;</td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L125">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L339">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ContextMenuOpeningCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ContextMenuOpeningCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ContextMenuOpeningCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ContextMenuOpeningCommand">ContextMenuOpeningCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command that executes when opening the dataset context menu.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public RelayCommand&lt;Grid&gt; ContextMenuOpeningCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.grid">Grid</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L323">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionCommand">CreateSessionCommand</h4>
@@ -255,7 +284,7 @@ public RelayCommand CreateSessionCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L132">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L331">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStoreCommand_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStoreCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStoreCommand" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStoreCommand">CreateSessionFromStoreCommand</h4>
@@ -285,7 +314,7 @@ public RelayCommand CreateSessionFromStoreCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L301">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CurrentSessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CurrentSessionViewModel*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CurrentSessionViewModel" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CurrentSessionViewModel">CurrentSessionViewModel</h4>
@@ -314,7 +343,7 @@ public SessionViewModel CurrentSessionViewModel { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L145">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L289">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Dataset*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Dataset" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Dataset">Dataset</h4>
@@ -323,7 +352,8 @@ public SessionViewModel CurrentSessionViewModel { get; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Dataset Dataset { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public Dataset Dataset { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -342,7 +372,7 @@ public SessionViewModel CurrentSessionViewModel { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L375">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_FileName_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.FileName*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_FileName" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.FileName">FileName</h4>
@@ -370,7 +400,7 @@ public SessionViewModel CurrentSessionViewModel { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L356">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Name_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Name*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Name" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Name">Name</h4>
@@ -398,7 +428,7 @@ public SessionViewModel CurrentSessionViewModel { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L115">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L307">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.OriginatingTimeInterval*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_OriginatingTimeInterval" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.OriginatingTimeInterval">OriginatingTimeInterval</h4>
@@ -427,7 +457,7 @@ public TimeInterval OriginatingTimeInterval { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L109">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L295">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SessionViewModels_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SessionViewModels*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SessionViewModels" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SessionViewModels">SessionViewModels</h4>
@@ -454,11 +484,160 @@ public ReadOnlyObservableCollection&lt;SessionViewModel&gt; SessionViewModels { 
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L386">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliaryDatasetInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliaryDatasetInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliaryDatasetInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliaryDatasetInfo">ShowAuxiliaryDatasetInfo</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the type of auxiliary dataset information to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public AuxiliaryDatasetInfo ShowAuxiliaryDatasetInfo { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.AuxiliaryDatasetInfo.html">AuxiliaryDatasetInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L408">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliaryPartitionInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliaryPartitionInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliaryPartitionInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliaryPartitionInfo">ShowAuxiliaryPartitionInfo</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the type of auxiliary partition information to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public AuxiliaryPartitionInfo ShowAuxiliaryPartitionInfo { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.AuxiliaryPartitionInfo.html">AuxiliaryPartitionInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L397">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliarySessionInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliarySessionInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliarySessionInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliarySessionInfo">ShowAuxiliarySessionInfo</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the type of auxiliary session information to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public AuxiliarySessionInfo ShowAuxiliarySessionInfo { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.AuxiliarySessionInfo.html">AuxiliarySessionInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L419">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliaryStreamInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliaryStreamInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ShowAuxiliaryStreamInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ShowAuxiliaryStreamInfo">ShowAuxiliaryStreamInfo</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the type of auxiliary stream information to display.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public AuxiliaryStreamInfo ShowAuxiliaryStreamInfo { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.AuxiliaryStreamInfo.html">AuxiliaryStreamInfo</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L317">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_TotalDuration_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.TotalDuration*"></a>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_TotalDuration" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.TotalDuration">TotalDuration</h4>
+  <div class="markdown level1 summary"><p>Gets the total duration of the dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public TimeSpan TotalDuration { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L182">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L455">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStore_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStore_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStore(Microsoft.Psi.Data.IStreamReader,System.String)">CreateFromStore(IStreamReader, String)</h4>
@@ -511,7 +690,7 @@ public ReadOnlyObservableCollection&lt;SessionViewModel&gt; SessionViewModels { 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L196">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L467">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStoreAsync_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStoreAsync*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateFromStoreAsync_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateFromStoreAsync(Microsoft.Psi.Data.IStreamReader,System.String)">CreateFromStoreAsync(IStreamReader, String)</h4>
@@ -565,7 +744,7 @@ contains the newly created dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L287">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L557">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSession*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSession" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSession">CreateSession()</h4>
@@ -578,7 +757,7 @@ contains the newly created dataset view model.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L296">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L566">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore">CreateSessionFromStore()</h4>
@@ -591,7 +770,7 @@ contains the newly created dataset view model.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L322">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L592">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_CreateSessionFromStore_System_String_Microsoft_Psi_Data_IStreamReader_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.CreateSessionFromStore(System.String,Microsoft.Psi.Data.IStreamReader,System.String)">CreateSessionFromStore(String, IStreamReader, String)</h4>
@@ -634,7 +813,7 @@ contains the newly created dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L152">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L432">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Load_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Load*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Load_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Load(System.String)">Load(String)</h4>
@@ -681,7 +860,7 @@ contains the newly created dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L169">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L446">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_LoadAsync_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.LoadAsync*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_LoadAsync_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.LoadAsync(System.String)">LoadAsync(String)</h4>
@@ -729,7 +908,7 @@ contains the newly loaded dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L354">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L620">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_RemoveSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.RemoveSession*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_RemoveSession_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.RemoveSession(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">RemoveSession(SessionViewModel)</h4>
@@ -760,7 +939,7 @@ contains the newly loaded dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L332">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L602">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Save_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Save*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Save_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Save(System.String)">Save(String)</h4>
@@ -791,7 +970,7 @@ contains the newly loaded dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L343">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L613">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SaveAsync_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SaveAsync*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_SaveAsync_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.SaveAsync(System.String)">SaveAsync(String)</h4>
@@ -838,7 +1017,7 @@ contains the newly loaded dataset view model.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L368">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L634">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ToString_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ToString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_ToString" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.ToString">ToString()</h4>
@@ -867,20 +1046,38 @@ contains the newly loaded dataset view model.</p>
   <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L206">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L474">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Update_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Update*"></a>
-  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Update" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Update">Update()</h4>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Update_Microsoft_Psi_Data_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.Update(Microsoft.Psi.Data.Dataset)">Update(Dataset)</h4>
   <div class="markdown level1 summary"><p>Updates the dataset view model based on the latest version of the dataset.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Update()</code></pre>
+    <pre><code class="lang-csharp hljs">public void Update(Dataset dataset)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a></td>
+        <td><span class="parametername">dataset</span></td>
+        <td><p>The new dataset.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L249">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L519">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_VisualizeSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.VisualizeSession*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_VisualizeSession_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.VisualizeSession(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">VisualizeSession(SessionViewModel)</h4>
@@ -934,7 +1131,7 @@ contains the newly loaded dataset view model.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L29" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L232" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -1,0 +1,397 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IStreamIntervalProvider
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IStreamIntervalProvider
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider">
+  
+  
+  <h1 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider" class="text-break">Interface IStreamIntervalProvider
+  </h1>
+  <div class="markdown level0 summary"><p>Defines an interface for providers of stream interval data.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_ReadRequests">IStreamDataProvider.ReadRequests</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_StreamName">IStreamDataProvider.StreamName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_GetTimeOfNearestMessage_System_DateTime_Microsoft_Psi_Visualization_Helpers_NearestMessageType_">IStreamDataProvider.GetTimeOfNearestMessage(DateTime, NearestMessageType)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_OpenStream_Microsoft_Psi_Data_IStreamReader_">IStreamDataProvider.OpenStream(IStreamReader)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_DispatchData">IStreamDataProvider.DispatchData()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_RemoveReadRequest_System_DateTime_System_DateTime_">IStreamDataProvider.RemoveReadRequest(DateTime, DateTime)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_Stop">IStreamDataProvider.Stop()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#System_IDisposable_Dispose">IDisposable.Dispose()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
+  <h5 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IStreamIntervalProvider : IStreamDataProvider, IDisposable</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamIntervalProvider.cs/#L23">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_HasUncommittedUpdates_" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.HasUncommittedUpdates*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_HasUncommittedUpdates" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.HasUncommittedUpdates">HasUncommittedUpdates</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the stream reader has updates that have not yet been committed to disk.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool HasUncommittedUpdates { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamIntervalProvider.cs/#L18">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_StreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.StreamAdapter*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_StreamAdapter" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.StreamAdapter">StreamAdapter</h4>
+  <div class="markdown level1 summary"><p>Gets the stream adapter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IStreamAdapter StreamAdapter { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamIntervalProvider.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_GetUncommittedUpdates_" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.GetUncommittedUpdates*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_GetUncommittedUpdates" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.GetUncommittedUpdates">GetUncommittedUpdates()</h4>
+  <div class="markdown level1 summary"><p>Gets the collection of all updates to the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerable&lt;(bool, dynamic, DateTime)&gt; GetUncommittedUpdates()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;&gt;</td>
+        <td><p>A collection of updates to the stream.  If the boolean value is true then the update is an upsert operation, otherwise it's a delete operation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamIntervalProvider.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_ReadStream_" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.ReadStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_ReadStream__1_Microsoft_Psi_Visualization_Collections_ObservableKeyedViewMode_System_DateTime_System_DateTime_System_UInt32_System_Func_System_DateTime_System_DateTime__" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.ReadStream``1(Microsoft.Psi.Visualization.Collections.ObservableKeyedViewMode,System.DateTime,System.DateTime,System.UInt32,System.Func{System.DateTime,System.DateTime})">ReadStream&lt;TItem&gt;(ObservableKeyedViewMode, DateTime, DateTime, UInt32, Func&lt;DateTime, DateTime&gt;)</h4>
+  <div class="markdown level1 summary"><p>Creates a view of the messages identified by the matching parameters and asynchronously fills it in.
+View mode can be one of three values:
+Fixed - fixed range based on start and end times
+TailCount - sliding dynamic range that includes the tail of the underlying data based on quantity
+TailRange - sliding dynamic range that includes the tail of the underlying data based on function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ObservableKeyedCache&lt;DateTime, Message&lt;TItem&gt;&gt;.ObservableKeyedView ReadStream&lt;TItem&gt;(ObservableKeyedViewMode viewMode, DateTime startTime, DateTime endTime, uint tailCount, Func&lt;DateTime, DateTime&gt; tailRange)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedViewMode.html">ObservableKeyedViewMode</a></td>
+        <td><span class="parametername">viewMode</span></td>
+        <td><p>Mode the view will be created in.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">startTime</span></td>
+        <td><p>Start time of messages to read.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><span class="parametername">endTime</span></td>
+        <td><p>End time of messages to read.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint32">UInt32</a></td>
+        <td><span class="parametername">tailCount</span></td>
+        <td><p>Number of messages to included in tail.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><span class="parametername">tailRange</span></td>
+        <td><p>Function to determine range included in tail.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Collections.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache.ObservableKeyedView</a>&lt;&gt;</td>
+        <td><p>Observable view of data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of the message to read.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamIntervalProvider.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_UpdateStream_" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.UpdateStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_IStreamIntervalProvider_UpdateStream__1_System_Collections_Generic_IEnumerable_Microsoft_Psi_Visualization_Data_StreamUpdate___0___" data-uid="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.UpdateStream``1(System.Collections.Generic.IEnumerable{Microsoft.Psi.Visualization.Data.StreamUpdate{``0}})">UpdateStream&lt;TItem&gt;(IEnumerable&lt;StreamUpdate&lt;TItem&gt;&gt;)</h4>
+  <div class="markdown level1 summary"><p>Performs a series of updates to the messages in a stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void UpdateStream&lt;TItem&gt;(IEnumerable&lt;StreamUpdate&lt;TItem&gt;&gt; updates)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.Data.StreamUpdate-1.html">StreamUpdate</a>&lt;TItem&gt;&gt;</td>
+        <td><span class="parametername">updates</span></td>
+        <td><p>A collection of updates to perform.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TItem</span></td>
+        <td><p>The type of the messages in the stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/IStreamIntervalProvider.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

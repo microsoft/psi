@@ -289,16 +289,47 @@ Consecutive index entries point to locations that are at least this many bytes a
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L170">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L191">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseAllStreams_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseAllStreams*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseAllStreams_DateTime_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseAllStreams(DateTime)">CloseAllStreams(DateTime)</h4>
+  <div class="markdown level1 summary"><p>Closes the streams and persists the stream statistics.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseAllStreams(DateTime originatingTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">originatingTime</span></td>
+        <td><p>The originating time when the streams are closed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L176">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseStream*"></a>
-  <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseStream_System_Int32_System_Nullable_DateTime__" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseStream(System.Int32,System.Nullable{DateTime})">CloseStream(Int32, Nullable&lt;DateTime&gt;)</h4>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseStream_System_Int32_DateTime_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseStream(System.Int32,DateTime)">CloseStream(Int32, DateTime)</h4>
   <div class="markdown level1 summary"><p>Closes the stream and persists the stream statistics.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CloseStream(int streamId, DateTime? originatingTime = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CloseStream(int streamId, DateTime originatingTime)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -317,7 +348,7 @@ Consecutive index entries point to locations that are at least this many bytes a
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">DateTime</span>&gt;</td>
+        <td><span class="xref">DateTime</span></td>
         <td><span class="parametername">originatingTime</span></td>
         <td><p>The originating time when the stream was closed.</p>
 </td>
@@ -339,7 +370,38 @@ Consecutive index entries point to locations that are at least this many bytes a
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L127">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L203">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreWriter_InitializeStreamOpenedTimes_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.InitializeStreamOpenedTimes*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_InitializeStreamOpenedTimes_DateTime_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.InitializeStreamOpenedTimes(DateTime)">InitializeStreamOpenedTimes(DateTime)</h4>
+  <div class="markdown level1 summary"><p>Initialize stream opened times.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void InitializeStreamOpenedTimes(DateTime originatingTime)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DateTime</span></td>
+        <td><span class="parametername">originatingTime</span></td>
+        <td><p>The originating time when the streams are opened.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L122">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_Microsoft_Psi_PsiStreamMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream(Microsoft.Psi.PsiStreamMetadata)">OpenStream(PsiStreamMetadata)</h4>
@@ -387,7 +449,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L140">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L135">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_System_Int32_System_String_System_Boolean_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream(System.Int32,System.String,System.Boolean,System.String)">OpenStream(Int32, String, Boolean, String)</h4>
@@ -452,7 +514,60 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L186">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L166">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreWriter_TryGetMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.TryGetMetadata*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_TryGetMetadata_System_Int32_Microsoft_Psi_PsiStreamMetadata__" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.TryGetMetadata(System.Int32,Microsoft.Psi.PsiStreamMetadata@)">TryGetMetadata(Int32, out PsiStreamMetadata)</h4>
+  <div class="markdown level1 summary"><p>Attempt to get stream metadata (available once stream has been opened).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryGetMetadata(int streamId, out PsiStreamMetadata meta)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">streamId</span></td>
+        <td><p>The id of the stream, unique for this store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
+        <td><span class="parametername">meta</span></td>
+        <td><p>The metadata for the stream, if it has previously been opened.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if stream metadata if stream has been opened so that metadata is available.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L216">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_Write_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Write*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_Write_Microsoft_Psi_Common_BufferReader_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Write(Microsoft.Psi.Common.BufferReader,Microsoft.Psi.Envelope)">Write(BufferReader, Envelope)</h4>
