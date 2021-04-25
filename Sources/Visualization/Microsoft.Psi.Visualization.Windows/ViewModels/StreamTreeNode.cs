@@ -99,7 +99,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                             {
                                 this.PartitionViewModel.StoreName,
                                 this.PartitionViewModel.StorePath,
-                                TypeResolutionHelper.GetVerifiedType(this.PartitionViewModel.StreamReaderTypeName),
+                                TypeResolutionHelper.GetVerifiedType(this.PartitionViewModel.Partition.StreamReaderTypeName),
                                 this.SourceStreamName,
                             };
                         genericMethodInfo.Invoke(DataManager.Instance, parameters);

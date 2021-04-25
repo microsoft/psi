@@ -209,7 +209,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [DisplayName("Stream Reader Type")]
         [Description("The type of stream reader used by the partition.")]
-        public string StreamReaderTypeName => TypeSpec.Simplify(this.partition.StreamReaderTypeName);
+        public string StreamReaderTypeDisplayName => TypeSpec.Simplify(this.partition.StreamReaderTypeName);
 
         /// <summary>
         /// Gets a string representation of the originating time of the first message in the partition.
@@ -410,7 +410,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 // Create the stream source
                 streamSource = new StreamSource(
                     this,
-                    TypeResolutionHelper.GetVerifiedType(this.StreamReaderTypeName),
+                    TypeResolutionHelper.GetVerifiedType(this.Partition.StreamReaderTypeName),
                     streamBinding.StreamName,
                     streamMetadata,
                     streamBinding.StreamAdapter,
