@@ -18,19 +18,13 @@ A high-level overview of the framework is available in [this blog post](https://
 
 # What’s New
 
-__Upcoming Workshop__: Please join us __April 27-28th__ for a [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! This virtual workshop will introduce you to the basics of using the framework to accelerate your own work in the space of multimodal, integrative AI, and will include in-depth tutorials, demos, and discussions of specific topics. For more information and to register, please see the [event website](https://aka.ms/psi-w1).
+__04/29/2021__: Thanks to all who joined us for the [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! In this workshop, we discussed the basics on how to use the framework to accelerate your own work in the space of multimodal, integrative AI; presented some in-depth tutorials, demos, and previews of new features; and had a fun panel on how to build and nurture the open source community. All sessions were recorded, and will be posted to the [event website](https://aka.ms/psi-w1) within the next 1-2 weeks.
+
+__04/23/2021__: Announcing a new beta-release, version 0.15.49.1. This release includes various updates to the runtime, tools, and components. Numerous improvements have been made in particular to Platform for Situated Intelligence Studio and features around capturing and visualizing diagnostic metrics. Check the [release notes](https://github.com/microsoft/psi/wiki/Release-Notes#20210423-beta-release-version-015491) for more information.
 
 __04/14/2021__: We uploaded a [brief overview](https://innovation.microsoft.com/en-us/tech-minutes-platform-for-situated-intelligence) on Platform for Situated Intelligence as part of the Microsoft Innovation Tech Minutes series.
 
 __03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
-
-__12/07/2020__: We have published a new beta release, version 0.14.35.3, which includes a new ONNX model runner for ImageNet models, new components for screen and window capture, updates to annotation editing in PsiStudio, as well as a number of bug fixes and updates -- see the [full release notes](https://github.com/microsoft/psi/wiki/Release-Notes) for more details.
-
-__09/30/2020__: We have added three additional samples: a basic [HelloWorld]( https://github.com/Microsoft/psi-samples/tree/main/Samples/HelloWorld) sample illustrating the simplest starting point for a \psi application, a more complex one demonstrating how to do some basic audio capture and processing to construct [a simple voice activity detector]( https://github.com/Microsoft/psi-samples/tree/main/Samples/SimpleVoiceActivityDetector), and a third sample that combines information from Azure Kinect with Cognitive Services vision and speech to [detect objects that a person is pointing to](https://github.com/microsoft/psi-samples/tree/main/Samples/WhatIsThat).
-
-__09/02/2020__: We published [a blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/) with a high-level overview of the framework.
-
-__08/31/2020__: We released version [0.13.38.2]( https://github.com/microsoft/psi/releases/tag/v0.13.38.2-beta), which brings important updates to Platform for Situated Intelligence Studio (including data annotation), updates to the runtime to support 3rd party data store sources, and components for running ONNX models. See the [release notes]( https://github.com/microsoft/psi/wiki/Release-Notes#20200831-beta-release-version-013382) for a more complete description of updates.
 
 # Getting Started
 
