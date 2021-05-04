@@ -1381,7 +1381,7 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="image">Image to draw on.</param>
         /// <param name="str">Text to render.</param>
-        /// <param name="p0">Pixel coordinates for center of circle.</param>
+        /// <param name="p0">Pixel coordinates for upper-left corner of the text.</param>
         /// <param name="backgroundColor">Background color to use when drawing text.</param>
         /// <param name="textColor">Color to use to draw the text.</param>
         /// <param name="font">Name of font to use. Optional.</param>

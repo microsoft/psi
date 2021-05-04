@@ -116,7 +116,6 @@ namespace Test.Psi.Imaging
             using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
             this.testImage_Gray.CopyTo(sharedImage.Resource);
             sharedImage.Resource.FillRectangle(new System.Drawing.Rectangle(0, 0, 20, 20), System.Drawing.Color.White);
-            sharedImage.Resource.ToBitmap().Save(@"C:\Users\tteichmeister\Desktop\fill_rect.bmp");
             this.AssertAreImagesEqual(this.testImage_GrayFillRect, sharedImage.Resource);
         }
 
@@ -127,7 +126,6 @@ namespace Test.Psi.Imaging
             using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
             this.testImage_Gray.CopyTo(sharedImage.Resource);
             sharedImage.Resource.FillCircle(new System.Drawing.Point(this.testImage_Gray.Width / 2, this.testImage_Gray.Height / 2), 100, System.Drawing.Color.White);
-            sharedImage.Resource.ToBitmap().Save(@"C:\Users\tteichmeister\Desktop\fill_circle.bmp");
             this.AssertAreImagesEqual(this.testImage_GrayFillCircle, sharedImage.Resource);
         }
 
