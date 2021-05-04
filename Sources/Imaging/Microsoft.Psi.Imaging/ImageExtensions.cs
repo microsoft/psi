@@ -1375,6 +1375,142 @@ namespace Microsoft.Psi.Imaging
             drawFormat.FormatFlags = 0;
             graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
         }
+
+        /// <summary>
+        /// Renders text on the image at the specified pixel (p0).
+        /// </summary>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="str">Text to render.</param>
+        /// <param name="p0">Pixel coordinates for upper-left corner of the text.</param>
+        /// <param name="backgroundColor">Background color to use when drawing text.</param>
+        /// <param name="textColor">Color to use to draw the text.</param>
+        /// <param name="font">Name of font to use. Optional.</param>
+        /// <param name="fontSize">Size of font. Optional.</param>
+        public static void DrawText(this Image image, string str, Point p0, Color backgroundColor, Color textColor, string font = "Arial", float fontSize = 24.0f)
+        {
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.DrawText(str, p0, backgroundColor, textColor, font, fontSize);
+                image.CopyFrom(tmpImage);
+                return;
+            }
+
+            font ??= "Arial";
+            using Bitmap bm = image.ToBitmap(false);
+            using var graphics = Graphics.FromImage(bm);
+            using Font drawFont = new Font(font, fontSize);
+            using SolidBrush textBrush = new SolidBrush(textColor);
+            using SolidBrush backgroundBrush = new SolidBrush(backgroundColor);
+            using StringFormat drawFormat = new StringFormat();
+            drawFormat.FormatFlags = 0;
+
+            SizeF textSize = graphics.MeasureString(str, drawFont);
+
+            // Drawing the background before drawing the text
+            var bg = new RectangleF(p0.X, p0.Y, textSize.Width, textSize.Height);
+            graphics.FillRectangle(backgroundBrush, bg);
+            graphics.DrawString(str, drawFont, textBrush, p0.X, p0.Y, drawFormat);
+        }
+
+        /// <summary>
+        /// Fills a rectangle at the specified pixel coordinates on the image.
+        /// </summary>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="rect">Pixel coordinates for rectangle.</param>
+        /// <param name="color">Color to use for drawing.</param>
+        public static void FillRectangle(this Image image, Rectangle rect, Color color)
+        {
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.FillRectangle(rect, color);
+                image.CopyFrom(tmpImage);
+                return;
+            }
+
+            using Bitmap bm = image.ToBitmap(false);
+            using var graphics = Graphics.FromImage(bm);
+            using var drawingBrush = new SolidBrush(color);
+            graphics.FillRectangle(drawingBrush, rect);
+        }
+
+        /// <summary>
+        /// Fills a circle centered at the specified pixel (p0) with the specified radius.
+        /// </summary>
+        /// <param name="image">Image to draw on.</param>
+        /// <param name="p0">Pixel coordinates for center of circle.</param>
+        /// <param name="radius">Radius of the circle.</param>
+        /// <param name="color">Color to use for drawing.</param>
+        public static void FillCircle(this Image image, Point p0, int radius, Color color)
+        {
+            if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new InvalidOperationException(
+                    "Drawing on 16bpp and 64bpp images is not currently supported. " +
+                    "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
+            }
+
+            // If our image is 8bpp we won't be able to call Graphics.FromImage because
+            // that call doesn't support the 8bpp pixel format. See:
+            // https://docs.microsoft.com/en-us/dotnet/api/system.drawing.graphics.fromimage?view=dotnet-plat-ext-3.1
+            // for details.
+            //
+            // Additionally, there is no corresponding System pixel format for RGB 24bpp.
+            //
+            // To work around these issues, we will convert the image to 24bpp, perform the operation,
+            // and then convert back to the original format.
+            if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
+            {
+                int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                image.CopyTo(tmpImage);
+                tmpImage.FillCircle(p0, radius, color);
+                image.CopyFrom(tmpImage);
+                return;
+            }
+
+            using Bitmap bm = image.ToBitmap(false);
+            using var graphics = Graphics.FromImage(bm);
+            using var drawingBrush = new SolidBrush(color);
+            graphics.FillEllipse(drawingBrush, p0.X - radius, p0.Y - radius, 2 * radius, 2 * radius);
+        }
     }
 
     /// <summary>

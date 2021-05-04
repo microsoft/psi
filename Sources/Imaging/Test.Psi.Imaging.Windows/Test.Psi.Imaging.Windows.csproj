@@ -154,6 +154,9 @@
     <Content Include="Resources\TestImage2_DrawLine.bmp" />
     <Content Include="Resources\TestImage2_DrawRect.bmp" />
     <Content Include="Resources\TestImage2_DrawText.bmp" />
+    <Content Include="Resources\TestImage2_DrawTextWithBackground.bmp" />
+    <Content Include="Resources\TestImage2_FillRect.bmp" />
+    <Content Include="Resources\TestImage2_FillCircle.bmp" />
     <Content Include="Resources\TestImage2_FlipHoriz.bmp" />
     <Content Include="Resources\TestImage2_FlipVert.bmp" />
     <Content Include="Resources\TestImage2_GreenChannel.bmp" />
@@ -170,6 +173,9 @@
     <Content Include="Resources\TestImage_GrayDrawLine.bmp" />
     <Content Include="Resources\TestImage_GrayDrawRect.bmp" />
     <Content Include="Resources\TestImage_GrayDrawText.bmp" />
+    <Content Include="Resources\TestImage_GrayDrawTextWithBackground.bmp" />
+    <Content Include="Resources\TestImage_GrayFillRect.bmp" />
+    <Content Include="Resources\TestImage_GrayFillCircle.bmp" />
     <Content Include="Resources\TestImage_GrayFlip.bmp" />
     <Content Include="Resources\TestImage_GrayResized.bmp" />
     <Content Include="Resources\TestImage_GrayRotate.bmp" />
