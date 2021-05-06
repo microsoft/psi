@@ -46,7 +46,9 @@ __Samples.__ If you would like to directly start from sample code, a number of s
 __Documentation.__ The documentation for \\psi is available in the [github project wiki](https://github.com/microsoft/psi/wiki). It contains many additional resources, including [tutorials]( https://github.com/microsoft/psi/wiki/Tutorials), other [specialized topics]( https://github.com/microsoft/psi/wiki/Other-Topics), and a full [API reference](https://microsoft.github.io/psi/api/Microsoft.Psi.html) that can help you learn more about the framework.
 
 # Getting Help
-If you find a bug or if you would like to request a new feature or additional documentation, please file an [issue in github](https://github.com/microsoft/psi/issues). Use the [`bug`](https://github.com/microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce the bug. Use the [`feature request`](https://github.com/microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/microsoft/psi/labels/documentation) label to request additional documentation. 
+If you find a bug or if you would like to request a new feature or additional documentation, please file an [issue in github](https://github.com/microsoft/psi/issues). Use the [`bug`](https://github.com/microsoft/psi/labels/bug) label when filing issues that represent code defects, and provide enough information to reproduce the bug. Use the [`feature request`](https://github.com/microsoft/psi/labels/feature%20request) label to request new features, and use the [`documentation`](https://github.com/microsoft/psi/labels/documentation) label to request additional documentation.
+
+Please also make use of the [Discussions](https://github.com/microsoft/psi/discussions) for asking general questions, sharing ideas about new features or applications you might be interested in, showing off the wonderful things you're building with \psi, and engaging with other community members.
 
 # Contributing
 
