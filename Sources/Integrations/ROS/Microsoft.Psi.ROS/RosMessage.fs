@@ -172,5 +172,11 @@ module RosMessage =
                                                              ReturnFields = List.ofSeq returnFields }
                                                              
     let CreateStructDef def = StructDef (def.Fields)
+    
+    let CreateStructVal fields = StructVal (List.ofSeq fields)
+
+    let CreateVariableArrayVal vals = VariableArrayVal (List.ofSeq vals)
+
+    let CreatFixedArrayVal vals = FixedArrayVal (List.ofSeq vals)
 
     let malformed () = failwith "Malformed message structure"
