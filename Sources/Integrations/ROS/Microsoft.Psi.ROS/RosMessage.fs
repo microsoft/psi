@@ -170,5 +170,7 @@ module RosMessage =
                                                              MD5          = md5
                                                              CallFields   = List.ofSeq callFields
                                                              ReturnFields = List.ofSeq returnFields }
+                                                             
+    let CreateStructDef def = StructDef (def.Fields)
 
     let malformed () = failwith "Malformed message structure"
