@@ -298,7 +298,7 @@ namespace Test.Psi
                 p.Run(ReplayDescriptor.ReplayAllRealTime);
 
                 // now check the two clocks for equivalence
-                var now = DateTime.Now;
+                var now = DateTime.UtcNow;
                 Assert.AreEqual(clock1.Origin, clock2.Origin);
                 Assert.AreEqual(clock1.RealTimeOrigin, clock2.RealTimeOrigin);
                 Assert.AreEqual(clock1.ToVirtualTime(now), clock2.ToVirtualTime(now));

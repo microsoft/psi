@@ -62,12 +62,12 @@ namespace Microsoft.Psi.Visualization.Windows
 
                 if (this.startTime == DateTime.MinValue)
                 {
-                    this.startTime = DateTime.Now;
+                    this.startTime = DateTime.UtcNow;
                 }
                 else if (value > 0)
                 {
                     var progress = value * 0.01;
-                    var elapsedTime = DateTime.Now - this.startTime;
+                    var elapsedTime = DateTime.UtcNow - this.startTime;
                     var estimatedRemainingTime = TimeSpan.FromTicks((long)(elapsedTime.Ticks * ((1 - progress) / progress)));
                     this.ElapsedTimeLabel.Content = this.GetTimeSpanAsFriendlyString(elapsedTime);
                     this.EstimatedRemainingTimeLabel.Content = "about " + this.GetTimeSpanAsFriendlyString(estimatedRemainingTime);

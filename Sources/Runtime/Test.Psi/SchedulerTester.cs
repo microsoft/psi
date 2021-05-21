@@ -317,7 +317,7 @@ namespace Test.Psi
         public void TimerPerfTest()
         {
             uint timerInterval = 1;
-            var currentTime = DateTime.Now;
+            var currentTime = DateTime.UtcNow;
             var timerDelegate = new Time.TimerDelegate(
                 (timerID, msg, userCtx, dw1, dw2) =>
                 {
@@ -329,7 +329,7 @@ namespace Test.Psi
 
             Console.ReadLine();
             timer.Stop();
-            var lastTime = DateTime.Now;
+            var lastTime = DateTime.UtcNow;
 
             Console.WriteLine($"Current = {currentTime:H:mm:ss fff}, last = {lastTime:H:mm:ss fff}");
         }
@@ -337,8 +337,8 @@ namespace Test.Psi
         // [TestMethod, Timeout(60000)]
         public void TimerHighRateTest()
         {
-            var lastTime = DateTime.Now;
-            var currentTime = DateTime.Now;
+            var lastTime = DateTime.UtcNow;
+            DateTime currentTime;
             int count = 0;
             double sum = 0;
             while (true)
