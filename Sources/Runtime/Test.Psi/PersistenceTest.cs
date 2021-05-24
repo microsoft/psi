@@ -1238,7 +1238,7 @@ namespace Test.Psi
                 // write to store and times
                 var lastWrite = DateTime.MinValue;
                 var g = Generators.Repeat(p, payload, numMessages, TimeSpan.FromMilliseconds(50));
-                g.Do(_ => lastWrite = DateTime.Now);
+                g.Do(_ => lastWrite = DateTime.UtcNow);
                 var s = PsiStore.Create(p, "store", this.path);
                 g.Write("g", s);
                 p.RunAsync();
@@ -1251,13 +1251,13 @@ namespace Test.Psi
                 h.Do(_ =>
                 {
                     Console.Write('.');
-                    var delay = DateTime.Now - lastRead;
+                    var delay = DateTime.UtcNow - lastRead;
                     if (delay > largestDelay)
                     {
                         largestDelay = delay;
                     }
 
-                    lastRead = DateTime.Now;
+                    lastRead = DateTime.UtcNow;
                     if (++count == numMessages)
                     {
                         p.Dispose(); // close store; allowing this pipeline to complete reading

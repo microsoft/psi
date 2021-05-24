@@ -117,7 +117,7 @@ namespace Test.Psi
                 sourceB
                     .Join(sourceB, TimeSpan.FromTicks(5))
                     .Do(t => resultsBB.Add(ValueTuple.Create(t.Item1, t.Item2)));
-                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+                p.Run(new ReplayDescriptor(DateTime.UtcNow, DateTime.MaxValue));
             }
 
             Assert.AreEqual(3, resultsAB.Count);
@@ -155,7 +155,7 @@ namespace Test.Psi
                 Operators
                     .Join(new[] { sourceA, sourceB, sourceA, sourceB }, TimeSpan.FromTicks(5))
                     .Do(t => results.Add(t.DeepClone()));
-                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+                p.Run(new ReplayDescriptor(DateTime.UtcNow, DateTime.MaxValue));
             }
 
             Assert.AreEqual(3, results.Count);
@@ -176,7 +176,7 @@ namespace Test.Psi
                 Operators
                     .Join(new[] { source }, TimeSpan.FromTicks(5))
                     .Do(t => results.Add(t.DeepClone()));
-                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+                p.Run(new ReplayDescriptor(DateTime.UtcNow, DateTime.MaxValue));
             }
 
             Assert.AreEqual(10, results.Count);
@@ -202,7 +202,7 @@ namespace Test.Psi
                 Operators
                     .Join(keyMapping, new[] { sourceA, sourceB, sourceC }, Reproducible.Nearest<int>(TimeSpan.FromTicks(5)))
                     .Do(t => results.Add(t.DeepClone()));
-                p.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+                p.Run(new ReplayDescriptor(DateTime.UtcNow, DateTime.MaxValue));
             }
 
             Assert.AreEqual(12, results.Count);

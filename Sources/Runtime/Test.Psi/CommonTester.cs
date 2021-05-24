@@ -53,7 +53,7 @@ namespace Test.Psi
             ushort us = 0xFFFF;
             uint ui = 0xFFFFFFFF;
             ulong ul = 0xFFFFFFFFFFFFFFFF;
-            DateTime dt = DateTime.Now;
+            DateTime dt = DateTime.UtcNow;
             var stream = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 });
 
             bufW.Write(b);

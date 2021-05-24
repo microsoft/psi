@@ -80,7 +80,7 @@ namespace Test.Psi.Kinect
                         if (writePLY)
                         {
                             string temppath = System.IO.Path.GetTempPath();
-                            string fn = temppath + @"\Mesh-New-" + DateTime.Now.ToString("MM-dd-yy.HH.mm.ss") + ".ply";
+                            string fn = temppath + @"\Mesh-New-" + DateTime.UtcNow.ToString("MM-dd-yy.HH.mm.ss") + ".ply";
                             using (System.IO.StreamWriter file = new System.IO.StreamWriter(fn))
                             {
                                 file.WriteLine("ply");

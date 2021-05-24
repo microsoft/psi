@@ -170,7 +170,7 @@ namespace Microsoft.Psi.Visualization
                 using VisualizationLogWriter logWriter = new VisualizationLogWriter(fileStream);
 
                 // Log preamble
-                logWriter.WriteLine("Loading PsiStudio Plugins ({0})", DateTime.Now.ToString("G"));
+                logWriter.WriteLine("Loading PsiStudio Plugins ({0})", DateTime.UtcNow.ToString("G"));
                 logWriter.WriteLine("----------------------------------------------------");
                 logWriter.WriteLine();
 
@@ -236,7 +236,7 @@ namespace Microsoft.Psi.Visualization
 
                 // Log complete
                 logWriter.WriteLine();
-                logWriter.WriteLine("PsiStudio plugin loading has completed. ({0})", DateTime.Now.ToString("G"));
+                logWriter.WriteLine("PsiStudio plugin loading has completed. ({0})", DateTime.UtcNow.ToString("G"));
 
                 hasErrors = logWriter.HasErrors;
             }

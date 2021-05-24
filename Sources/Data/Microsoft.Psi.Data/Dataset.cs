@@ -209,11 +209,11 @@ namespace Microsoft.Psi.Data
                 var result = new TResult();
                 computeDerived(pipeline, importer, result);
 
-                var startTime = DateTime.Now;
+                var startTime = DateTime.UtcNow;
                 Console.WriteLine($"Computing derived features on {inputPartition.StorePath} ...");
                 pipeline.Run(ReplayDescriptor.ReplayAll);
 
-                var finishTime = DateTime.Now;
+                var finishTime = DateTime.UtcNow;
                 Console.WriteLine($" - Time elapsed: {(finishTime - startTime).TotalMinutes:0.00} min.");
 
                 results.Add(result);
