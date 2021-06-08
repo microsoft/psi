@@ -57,18 +57,14 @@ namespace Microsoft.Psi.Data
             get => this.name;
             set
             {
-                if (this.Dataset != null)
+                if (this.Dataset != null && this.Dataset.Sessions.Any(s => s.Name == value))
                 {
-                    if (this.Dataset.Sessions.Any(s => s.Name == value))
-                    {
-                        // session names must be unique
-                        throw new InvalidOperationException($"Dataset already contains a session named {value}");
-                    }
-
-                    this.Dataset.UponChangingOperations();
+                    // session names must be unique
+                    throw new InvalidOperationException($"Dataset already contains a session named {value}");
                 }
 
                 this.name = value;
+                this.Dataset?.UponChangingOperations();
             }
         }
 
@@ -113,11 +109,7 @@ namespace Microsoft.Psi.Data
         {
             var partition = new Partition<TStreamReader>(this, streamReader, partitionName);
             this.AddPartition(partition);
-            if (this.Dataset != null)
-            {
-                this.Dataset.UponChangingOperations();
-            }
-
+            this.Dataset?.UponChangingOperations();
             return partition;
         }
 
@@ -303,10 +295,7 @@ namespace Microsoft.Psi.Data
         public void RemovePartition(IPartition partition)
         {
             this.InternalPartitions.Remove(partition);
-            if (this.Dataset != null)
-            {
-                this.Dataset.UponChangingOperations();
-            }
+            this.Dataset?.UponChangingOperations();
         }
 
         /// <summary>
@@ -322,10 +311,7 @@ namespace Microsoft.Psi.Data
             }
 
             this.InternalPartitions.Add(partition);
-            if (this.Dataset != null)
-            {
-                this.Dataset.UponChangingOperations();
-            }
+            this.Dataset?.UponChangingOperations();
         }
 
         [OnDeserialized]
