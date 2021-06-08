@@ -30,11 +30,19 @@ namespace Microsoft.Psi.Data
         /// Initializes a new instance of the <see cref="Dataset"/> class.
         /// </summary>
         /// <param name="name">The name of the new dataset. Default is <see cref="DefaultName"/>.</param>
+        /// <param name="savePath">The path to save the dataset for autosave and unparameterd save.<see cref="DefaultName"/>.</param>
+        /// <param name="autoSaveOnChange">Whether the dataset automatically autosave changes if a path is given. Default is false.</param>
         [JsonConstructor]
-        public Dataset(string name = Dataset.DefaultName)
+        public Dataset(string name = Dataset.DefaultName, string savePath = "", bool autoSaveOnChange = false)
         {
             this.Name = name;
+            this.CurrentSavePath = savePath;
+            this.AutoSaveChanges = autoSaveOnChange;
             this.InternalSessions = new List<Session>();
+            if (this.AutoSaveChanges && savePath == string.Empty)
+            {
+                throw new ArgumentException("savepath needed to be provided for autosave dataset.");
+            }
         }
 
         /// <summary>
@@ -42,6 +50,21 @@ namespace Microsoft.Psi.Data
         /// </summary>
         [DataMember]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current save path of this dataset.
+        /// </summary>
+        public string CurrentSavePath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether autosave is enabled.
+        /// </summary>
+        public bool AutoSaveChanges { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether changes to this dataset have been saved.
+        /// </summary>
+        public bool UnsavedChanges { get; private set; } = false;
 
         /// <summary>
         /// Gets the originating time interval (earliest to latest) of the messages in this dataset.
@@ -118,6 +141,7 @@ namespace Microsoft.Psi.Data
         {
             var session = new Session(this, sessionName);
             this.InternalSessions.Add(session);
+            this.UponChangingOperations();
             return session;
         }
 
@@ -128,6 +152,7 @@ namespace Microsoft.Psi.Data
         public void RemoveSession(Session session)
         {
             this.InternalSessions.Remove(session);
+            this.UponChangingOperations();
         }
 
         /// <summary>
@@ -145,6 +170,8 @@ namespace Microsoft.Psi.Data
                     newSession.AddStorePartition(StreamReader.Create(p.StoreName, p.StorePath, p.StreamReaderTypeName), p.Name);
                 }
             }
+
+            this.UponChangingOperations();
         }
 
         /// <summary>
@@ -152,13 +179,22 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="filename">The name of the file to save this dataset into.</param>
         /// <param name="useRelativePaths">Indicates whether to use full or relative store paths.</param>
-        public void Save(string filename, bool useRelativePaths = true)
+        public void Save(string filename = "", bool useRelativePaths = true)
         {
+            if (filename != string.Empty)
+            {
+                this.CurrentSavePath = filename;
+            }
+            else if (this.CurrentSavePath == string.Empty)
+            {
+                throw new ArgumentException("filename to save the dataset must pe provided if no default paths are set.");
+            }
+
             var serializer = JsonSerializer.Create(
                 new JsonSerializerSettings()
                 {
                     // pass the dataset filename in the context to allow relative store paths to be computed using the RelativePathConverter
-                    Context = useRelativePaths ? new StreamingContext(StreamingContextStates.File, filename) : default,
+                    Context = useRelativePaths ? new StreamingContext(StreamingContextStates.File, this.CurrentSavePath) : default,
                     Formatting = Formatting.Indented,
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -166,9 +202,10 @@ namespace Microsoft.Psi.Data
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                     SerializationBinder = new SafeSerializationBinder(),
                 });
-            using var jsonFile = File.CreateText(filename);
+            using var jsonFile = File.CreateText(this.CurrentSavePath);
             using var jsonWriter = new JsonTextWriter(jsonFile);
             serializer.Serialize(jsonWriter, this);
+            this.UnsavedChanges = false;
         }
 
         /// <summary>
@@ -183,6 +220,7 @@ namespace Microsoft.Psi.Data
             var session = new Session(this, sessionName ?? streamReader.Name);
             session.AddStorePartition(streamReader, partitionName);
             this.AddSession(session);
+            this.UponChangingOperations();
             return session;
         }
 
@@ -383,22 +421,26 @@ namespace Microsoft.Psi.Data
                 }).ToList();
             var sessionDuration = this.Sessions.Select(s => s.OriginatingTimeInterval.Span.TotalSeconds).ToList();
 
-            for (int i = 0; i < this.Sessions.Count; i++)
+            await Task.Run(async () =>
             {
-                var session = this.Sessions[i];
-                await session.CreateDerivedPsiPartitionAsync(
-                    computeDerived,
-                    parameter,
-                    outputPartitionName,
-                    overwrite,
-                    outputStoreName ?? outputPartitionName,
-                    outputStorePathFunction(session) ?? session.Partitions.First().StorePath,
-                    replayDescriptor,
-                    deliveryPolicy,
-                    enableDiagnostics,
-                    progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionStart[i] + tuple.Item2 * sessionDuration[i]) / totalDuration))) : null,
-                    cancellationToken);
-            }
+                for (int i = 0; i < this.Sessions.Count; i++)
+                {
+                    var session = this.Sessions[i];
+                    await session.CreateDerivedPsiPartitionAsync(
+                        computeDerived,
+                        parameter,
+                        outputPartitionName,
+                        overwrite,
+                        outputStoreName ?? outputPartitionName,
+                        outputStorePathFunction(session) ?? session.Partitions.First().StorePath,
+                        replayDescriptor,
+                        deliveryPolicy,
+                        enableDiagnostics,
+                        progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionStart[i] + tuple.Item2 * sessionDuration[i]) / totalDuration))) : null,
+                        cancellationToken);
+                }
+            });
+            this.UponChangingOperations();
         }
 
         /// <summary>
@@ -412,6 +454,8 @@ namespace Microsoft.Psi.Data
             {
                 this.AddSessionFromPsiStore(store.Name, store.Path, store.Session, partitionName);
             }
+
+            this.UponChangingOperations();
         }
 
         /// <summary>
@@ -427,6 +471,7 @@ namespace Microsoft.Psi.Data
             }
 
             this.InternalSessions.Add(session);
+            this.UponChangingOperations();
         }
 
         [OnDeserialized]
@@ -435,6 +480,21 @@ namespace Microsoft.Psi.Data
             foreach (var session in this.InternalSessions)
             {
                 session.Dataset = this;
+            }
+        }
+
+        /// <summary>
+        /// Operation call upon any dataset changing operations.
+        /// </summary>
+        private void UponChangingOperations()
+        {
+            if (this.AutoSaveChanges)
+            {
+                this.Save();
+            }
+            else
+            {
+                this.UnsavedChanges = true;
             }
         }
     }

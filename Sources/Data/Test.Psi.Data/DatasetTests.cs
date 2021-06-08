@@ -423,6 +423,51 @@ namespace Test.Psi.Data
             }
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetAutoSave()
+        {
+            var datasetPath = Path.Join(StorePath, "autosave.pds");
+
+            var dataset = new Dataset("autosave", datasetPath, autoSaveOnChange: true);
+            GenerateTestStore("store1", StorePath);
+
+            var session1 = dataset.CreateSession("test-session1");
+            var session2 = dataset.AddSessionFromPsiStore("store1", StorePath);
+
+            // open the dataset file as a different dataset and validate information
+            var sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(sameDataset.Sessions.Count, 2);
+            Assert.AreEqual(sameDataset.Sessions[0].Name, session1.Name);
+            Assert.AreEqual(sameDataset.Sessions[1].Name, session2.Name);
+
+            // remove a session and verify changes are saved.
+            dataset.RemoveSession(session1);
+            sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(sameDataset.Sessions.Count, 1);
+            Assert.AreEqual(sameDataset.Sessions[0].Name, session2.Name);
+            Assert.AreEqual(sameDataset.Sessions[0].OriginatingTimeInterval.Left, session2.OriginatingTimeInterval.Left);
+            Assert.AreEqual(sameDataset.Sessions[0].OriginatingTimeInterval.Right, session2.OriginatingTimeInterval.Right);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetAutoSaveAsync()
+        {
+            //TODO Write a test to see how async might work.
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetUnsavedChanges()
+        {
+            var dataset = new Dataset("autosave");
+            dataset.CreateSession("test-session1");
+            Assert.IsTrue(dataset.UnsavedChanges);
+            dataset.Save("unsave.pds");
+            Assert.IsTrue(!dataset.UnsavedChanges);
+        }
+
         private static void GenerateTestStore(string storeName, string storePath)
         {
             using var p = Pipeline.Create();
