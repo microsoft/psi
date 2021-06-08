@@ -428,9 +428,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
+        /// <param name="enableAutoSave">A value to indicate whether to enable the autosave feature.</param>
         /// <returns>The newly loaded dataset view model.</returns>
-        public static DatasetViewModel Load(string filename) =>
-            new DatasetViewModel(Dataset.Load(filename))
+        public static DatasetViewModel Load(string filename, bool enableAutoSave) =>
+            new DatasetViewModel(Dataset.Load(filename, enableAutoSave))
             {
                 FileName = filename,
             };
@@ -439,12 +440,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Asynchronously loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
+        /// <param name="enableAutoSave">A value to indicate whether to enable the dataset's autosave feature.</param>
         /// <returns>
         /// A task that represents the asynchronous operation. The value of the TResult parameter
         /// contains the newly loaded dataset view model.
         /// </returns>
-        public static Task<DatasetViewModel> LoadAsync(string filename) =>
-            Task.Run(() => Load(filename));
+        public static Task<DatasetViewModel> LoadAsync(string filename, bool enableAutoSave = false) =>
+            Task.Run(() => Load(filename, enableAutoSave));
 
         /// <summary>
         /// Creates a new dataset from an existing data store.

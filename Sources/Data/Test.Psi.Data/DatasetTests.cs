@@ -433,6 +433,7 @@ namespace Test.Psi.Data
             GenerateTestStore("store1", StorePath);
 
             var session1 = dataset.CreateSession("test-session1");
+            session1.Name = "no-longer-test-session1";
             var session2 = dataset.AddSessionFromPsiStore("store1", StorePath);
 
             // open the dataset file as a different dataset and validate information
@@ -446,8 +447,17 @@ namespace Test.Psi.Data
             sameDataset = Dataset.Load(datasetPath);
             Assert.AreEqual(sameDataset.Sessions.Count, 1);
             Assert.AreEqual(sameDataset.Sessions[0].Name, session2.Name);
+            Assert.AreEqual(sameDataset.Sessions[0].Partitions.Count, 1);
             Assert.AreEqual(sameDataset.Sessions[0].OriginatingTimeInterval.Left, session2.OriginatingTimeInterval.Left);
             Assert.AreEqual(sameDataset.Sessions[0].OriginatingTimeInterval.Right, session2.OriginatingTimeInterval.Right);
+
+            // now we edit the session and we want to make sure the changes stick!
+            GenerateTestStore("store3", StorePath);
+            session2.AddPsiStorePartition("store3", StorePath);
+            sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(sameDataset.Sessions[0].Name, session2.Name);
+            Assert.AreEqual(sameDataset.Sessions[0].Partitions.Count, 2);
+            Assert.AreEqual(sameDataset.Sessions[0].Partitions[1].Name, "store3");
         }
 
         [TestMethod]

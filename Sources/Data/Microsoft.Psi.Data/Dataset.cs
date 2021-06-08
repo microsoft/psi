@@ -99,8 +99,9 @@ namespace Microsoft.Psi.Data
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
+        /// <param name="enableAutosave">A value to indicate whether to enable autosave.</param>
         /// <returns>The newly loaded dataset.</returns>
-        public static Dataset Load(string filename)
+        public static Dataset Load(string filename, bool enableAutosave = false)
         {
             var serializer = JsonSerializer.Create(
                 new JsonSerializerSettings()
@@ -115,7 +116,10 @@ namespace Microsoft.Psi.Data
                 });
             using var jsonFile = File.OpenText(filename);
             using var jsonReader = new JsonTextReader(jsonFile);
-            return serializer.Deserialize<Dataset>(jsonReader);
+            var dataset = serializer.Deserialize<Dataset>(jsonReader);
+            dataset.AutoSaveChanges = enableAutosave;
+            dataset.CurrentSavePath = filename;
+            return dataset;
         }
 
         /// <summary>
@@ -459,6 +463,21 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
+        /// Operation call upon any dataset changing operations.
+        /// </summary>
+        public void UponChangingOperations()
+        {
+            if (this.AutoSaveChanges)
+            {
+                this.Save();
+            }
+            else
+            {
+                this.UnsavedChanges = true;
+            }
+        }
+
+        /// <summary>
         /// Adds a session to this dataset and updates its originating time interval.
         /// </summary>
         /// <param name="session">The session to be added.</param>
@@ -480,21 +499,6 @@ namespace Microsoft.Psi.Data
             foreach (var session in this.InternalSessions)
             {
                 session.Dataset = this;
-            }
-        }
-
-        /// <summary>
-        /// Operation call upon any dataset changing operations.
-        /// </summary>
-        private void UponChangingOperations()
-        {
-            if (this.AutoSaveChanges)
-            {
-                this.Save();
-            }
-            else
-            {
-                this.UnsavedChanges = true;
             }
         }
     }

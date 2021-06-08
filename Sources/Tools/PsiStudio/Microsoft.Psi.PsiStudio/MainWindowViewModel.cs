@@ -339,7 +339,7 @@ namespace Microsoft.Psi.PsiStudio
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
-                                await VisualizationContext.Instance.OpenDatasetAsync(filename);
+                                await VisualizationContext.Instance.OpenDatasetAsync(filename, enableAutoSave: this.AppSettings.AutoSaveDataset);
                                 this.EnsureDerivedStreamTreeNodesExist();
                             }
                         });
@@ -373,7 +373,7 @@ namespace Microsoft.Psi.PsiStudio
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
-                                await VisualizationContext.Instance.OpenDatasetAsync(filename);
+                                await VisualizationContext.Instance.OpenDatasetAsync(filename, enableAutoSave: this.AppSettings.AutoSaveDataset);
                                 this.EnsureDerivedStreamTreeNodesExist();
                             }
                         });
