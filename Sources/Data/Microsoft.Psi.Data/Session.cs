@@ -64,7 +64,7 @@ namespace Microsoft.Psi.Data
                 }
 
                 this.name = value;
-                this.Dataset?.UponChangingOperations();
+                this.Dataset?.OnChangingOperation();
             }
         }
 
@@ -109,7 +109,7 @@ namespace Microsoft.Psi.Data
         {
             var partition = new Partition<TStreamReader>(this, streamReader, partitionName);
             this.AddPartition(partition);
-            this.Dataset?.UponChangingOperations();
+            this.Dataset?.OnChangingOperation();
             return partition;
         }
 
@@ -295,7 +295,7 @@ namespace Microsoft.Psi.Data
         public void RemovePartition(IPartition partition)
         {
             this.InternalPartitions.Remove(partition);
-            this.Dataset?.UponChangingOperations();
+            this.Dataset?.OnChangingOperation();
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Microsoft.Psi.Data
             }
 
             this.InternalPartitions.Add(partition);
-            this.Dataset?.UponChangingOperations();
+            this.Dataset?.OnChangingOperation();
         }
 
         [OnDeserialized]

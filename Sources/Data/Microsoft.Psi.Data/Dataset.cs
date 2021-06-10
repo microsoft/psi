@@ -145,7 +145,7 @@ namespace Microsoft.Psi.Data
         {
             var session = new Session(this, sessionName);
             this.InternalSessions.Add(session);
-            this.UponChangingOperations();
+            this.OnChangingOperation();
             return session;
         }
 
@@ -156,7 +156,7 @@ namespace Microsoft.Psi.Data
         public void RemoveSession(Session session)
         {
             this.InternalSessions.Remove(session);
-            this.UponChangingOperations();
+            this.OnChangingOperation();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Microsoft.Psi.Data
                 }
             }
 
-            this.UponChangingOperations();
+            this.OnChangingOperation();
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Microsoft.Psi.Data
             var session = new Session(this, sessionName ?? streamReader.Name);
             session.AddStorePartition(streamReader, partitionName);
             this.AddSession(session);
-            this.UponChangingOperations();
+            this.OnChangingOperation();
             return session;
         }
 
@@ -442,7 +442,7 @@ namespace Microsoft.Psi.Data
                     cancellationToken);
             }
 
-            this.UponChangingOperations();
+            this.OnChangingOperation();
         }
 
         /// <summary>
@@ -457,13 +457,13 @@ namespace Microsoft.Psi.Data
                 this.AddSessionFromPsiStore(store.Name, store.Path, store.Session, partitionName);
             }
 
-            this.UponChangingOperations();
+            this.OnChangingOperation();
         }
 
         /// <summary>
         /// Operation call upon any dataset changing operations.
         /// </summary>
-        public void UponChangingOperations()
+        public void OnChangingOperation()
         {
             if (this.AutoSaveChanges)
             {
@@ -488,7 +488,7 @@ namespace Microsoft.Psi.Data
             }
 
             this.InternalSessions.Add(session);
-            this.UponChangingOperations();
+            this.OnChangingOperation();
         }
 
         [OnDeserialized]
