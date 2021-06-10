@@ -425,25 +425,23 @@ namespace Microsoft.Psi.Data
                 }).ToList();
             var sessionDuration = this.Sessions.Select(s => s.OriginatingTimeInterval.Span.TotalSeconds).ToList();
 
-            await Task.Run(async () =>
+            for (int i = 0; i < this.Sessions.Count; i++)
             {
-                for (int i = 0; i < this.Sessions.Count; i++)
-                {
-                    var session = this.Sessions[i];
-                    await session.CreateDerivedPsiPartitionAsync(
-                        computeDerived,
-                        parameter,
-                        outputPartitionName,
-                        overwrite,
-                        outputStoreName ?? outputPartitionName,
-                        outputStorePathFunction(session) ?? session.Partitions.First().StorePath,
-                        replayDescriptor,
-                        deliveryPolicy,
-                        enableDiagnostics,
-                        progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionStart[i] + tuple.Item2 * sessionDuration[i]) / totalDuration))) : null,
-                        cancellationToken);
-                }
-            });
+                var session = this.Sessions[i];
+                await session.CreateDerivedPsiPartitionAsync(
+                    computeDerived,
+                    parameter,
+                    outputPartitionName,
+                    overwrite,
+                    outputStoreName ?? outputPartitionName,
+                    outputStorePathFunction(session) ?? session.Partitions.First().StorePath,
+                    replayDescriptor,
+                    deliveryPolicy,
+                    enableDiagnostics,
+                    progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionStart[i] + tuple.Item2 * sessionDuration[i]) / totalDuration))) : null,
+                    cancellationToken);
+            }
+
             this.UponChangingOperations();
         }
 

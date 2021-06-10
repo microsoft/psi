@@ -438,33 +438,59 @@ namespace Test.Psi.Data
 
             // open the dataset file as a different dataset and validate information
             var sameDataset = Dataset.Load(datasetPath);
-            Assert.AreEqual(sameDataset.Sessions.Count, 2);
-            Assert.AreEqual(sameDataset.Sessions[0].Name, "no-longer-test-session1");
-            Assert.AreEqual(sameDataset.Sessions[1].Name, session2.Name);
+            Assert.AreEqual(2, sameDataset.Sessions.Count);
+            Assert.AreEqual("no-longer-test-session1", sameDataset.Sessions[0].Name);
+            Assert.AreEqual(session2.Name, sameDataset.Sessions[1].Name);
 
             // remove a session and verify changes are saved.
             dataset.RemoveSession(session1);
             sameDataset = Dataset.Load(datasetPath);
-            Assert.AreEqual(sameDataset.Sessions.Count, 1);
-            Assert.AreEqual(sameDataset.Sessions[0].Name, session2.Name);
-            Assert.AreEqual(sameDataset.Sessions[0].Partitions.Count, 1);
-            Assert.AreEqual(sameDataset.Sessions[0].OriginatingTimeInterval.Left, session2.OriginatingTimeInterval.Left);
-            Assert.AreEqual(sameDataset.Sessions[0].OriginatingTimeInterval.Right, session2.OriginatingTimeInterval.Right);
+            Assert.AreEqual(1, sameDataset.Sessions.Count);
+            Assert.AreEqual(session2.Name, sameDataset.Sessions[0].Name);
+            Assert.AreEqual(1, sameDataset.Sessions[0].Partitions.Count);
+            Assert.AreEqual(session2.OriginatingTimeInterval.Left, sameDataset.Sessions[0].OriginatingTimeInterval.Left);
+            Assert.AreEqual(session2.OriginatingTimeInterval.Right, sameDataset.Sessions[0].OriginatingTimeInterval.Right);
 
             // now we edit the session and we want to make sure the changes stick!
             GenerateTestStore("store3", StorePath);
             session2.AddPsiStorePartition("store3", StorePath);
             sameDataset = Dataset.Load(datasetPath);
-            Assert.AreEqual(sameDataset.Sessions[0].Name, session2.Name);
-            Assert.AreEqual(sameDataset.Sessions[0].Partitions.Count, 2);
-            Assert.AreEqual(sameDataset.Sessions[0].Partitions[1].Name, "store3");
+            Assert.AreEqual(session2.Name, sameDataset.Sessions[0].Name);
+            Assert.AreEqual(2, sameDataset.Sessions[0].Partitions.Count);
+            Assert.AreEqual("store3", sameDataset.Sessions[0].Partitions[1].Name);
         }
 
         [TestMethod]
         [Timeout(60000)]
         public void DatasetAutoSaveAsync()
         {
-            //TODO Write a test to see how async might work.
+            var datasetPath = Path.Join(StorePath, "autosave.pds");
+            GenerateTestStore("base1", StorePath);
+            GenerateTestStore("base2", StorePath);
+            var dataset = new Dataset("autosave", datasetPath, autoSaveOnChange: true);
+            dataset.AddSessionFromPsiStore("base1", StorePath, "s1");
+            dataset.AddSessionFromPsiStore("base2", StorePath, "s2");
+            Assert.AreEqual(1, dataset.Sessions[0].Partitions.Count());
+            Assert.AreEqual(1, dataset.Sessions[1].Partitions.Count());
+            Task.Run(async () =>
+            {
+                await dataset.CreateDerivedPartitionAsync(
+                    (_, importer, exporter) =>
+                    {
+                        importer.OpenStream<int>("Root").Select(x => x * x).Write("RootSquared", exporter);
+                    },
+                    "derived",
+                    true,
+                    "derived-store");
+            }).Wait();  // wait for the async function to finish
+
+            // open the dataset file as a different dataset and validate information
+            var sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(2, sameDataset.Sessions.Count);
+            Assert.AreEqual(2, sameDataset.Sessions[0].Partitions.Count());
+            Assert.AreEqual(2, sameDataset.Sessions[1].Partitions.Count());
+            Assert.AreEqual("derived", sameDataset.Sessions[1].Partitions[1].Name);
+            Assert.AreEqual("derived-store", sameDataset.Sessions[1].Partitions[1].StoreName);
         }
 
         [TestMethod]
