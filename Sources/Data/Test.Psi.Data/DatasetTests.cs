@@ -430,6 +430,7 @@ namespace Test.Psi.Data
             var datasetPath = Path.Join(StorePath, "autosave.pds");
 
             var dataset = new Dataset("autosave", datasetPath, autoSaveOnChange: true);
+            dataset.Name = "autosave-saved";
             GenerateTestStore("store1", StorePath);
 
             var session1 = dataset.CreateSession("test-session1");
@@ -438,6 +439,7 @@ namespace Test.Psi.Data
 
             // open the dataset file as a different dataset and validate information
             var sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual("autosave-saved", sameDataset.Name);
             Assert.AreEqual(2, sameDataset.Sessions.Count);
             Assert.AreEqual("no-longer-test-session1", sameDataset.Sessions[0].Name);
             Assert.AreEqual(session2.Name, sameDataset.Sessions[1].Name);

@@ -26,6 +26,8 @@ namespace Microsoft.Psi.Data
         /// </summary>
         public const string DefaultName = "Untitled Dataset";
 
+        private string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Dataset"/> class.
         /// </summary>
@@ -49,7 +51,15 @@ namespace Microsoft.Psi.Data
         /// Gets or sets the name of this dataset.
         /// </summary>
         [DataMember]
-        public string Name { get; set; }
+        public string Name
+        {
+            get => this.name;
+            set
+            {
+                this.name = value;
+                this.OnChangingOperation();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the current save path of this dataset.
