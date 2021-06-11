@@ -30,8 +30,8 @@ namespace Microsoft.Psi.Data
         /// Initializes a new instance of the <see cref="Dataset"/> class.
         /// </summary>
         /// <param name="name">The name of the new dataset. Default is <see cref="DefaultName"/>.</param>
-        /// <param name="savePath">The path to save the dataset for autosave and unparameterd save.<see cref="DefaultName"/>.</param>
-        /// <param name="autoSaveOnChange">Whether the dataset automatically autosave changes if a path is given. Default is false.</param>
+        /// <param name="savePath">The path to save the dataset (optional, default is empty).<see cref="DefaultName"/>.</param>
+        /// <param name="autoSaveOnChange">Whether the dataset automatically autosave changes if a path is given (optional, default is false).</param>
         [JsonConstructor]
         public Dataset(string name = Dataset.DefaultName, string savePath = "", bool autoSaveOnChange = false)
         {
@@ -99,7 +99,7 @@ namespace Microsoft.Psi.Data
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
-        /// <param name="enableAutosave">A value to indicate whether to enable autosave.</param>
+        /// <param name="enableAutosave">A value to indicate whether to enable autosave (optional, default is false).</param>
         /// <returns>The newly loaded dataset.</returns>
         public static Dataset Load(string filename, bool enableAutosave = false)
         {
@@ -181,8 +181,8 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Saves this dataset to the specified file.
         /// </summary>
-        /// <param name="filename">The name of the file to save this dataset into.</param>
-        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths.</param>
+        /// <param name="filename">The name of the file to save this dataset into (optional, default is "").</param>
+        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is empty).</param>
         public void Save(string filename = "", bool useRelativePaths = true)
         {
             if (filename != string.Empty)
@@ -191,7 +191,7 @@ namespace Microsoft.Psi.Data
             }
             else if (this.CurrentSavePath == string.Empty)
             {
-                throw new ArgumentException("filename to save the dataset must pe provided if no default paths are set.");
+                throw new ArgumentException("filename to save the dataset must pe provided if no default path is set.");
             }
 
             var serializer = JsonSerializer.Create(
