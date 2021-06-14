@@ -506,6 +506,35 @@ namespace Test.Psi.Data
             Assert.IsTrue(!dataset.HasUnsavedChanges);
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetChangeEvent()
+        {
+            var sessionEventCalled = false;
+            var datasetEventCalled = false;
+            var dataset = new Dataset("autosave");
+
+            GenerateTestStore("base1", StorePath);
+            var session1 = dataset.AddSessionFromPsiStore("base1", StorePath, "session1");
+            dataset.DatasetChanged += (s, e) =>
+            {
+                Assert.AreEqual(e, EventArgs.Empty);
+                datasetEventCalled = true;
+            };
+            session1.SessionChanged += (s, e) =>
+            {
+                Assert.AreEqual(e, EventArgs.Empty);
+                sessionEventCalled = true;
+            };
+
+            // the following change should cause both events to be called.
+            session1.Name = "new name";
+
+            // validate if the events were called.
+            Assert.IsTrue(datasetEventCalled);
+            Assert.IsTrue(sessionEventCalled);
+        }
+
         private static void GenerateTestStore(string storeName, string storePath)
         {
             using var p = Pipeline.Create();
