@@ -163,6 +163,36 @@ namespace Test.Psi.Imaging.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayDrawTextWithBackground {
+            get {
+                object obj = ResourceManager.GetObject("TestImage_GrayDrawTextWithBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayFillCircle {
+            get {
+                object obj = ResourceManager.GetObject("TestImage_GrayFillCircle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage_GrayFillRect {
+            get {
+                object obj = ResourceManager.GetObject("TestImage_GrayFillRect", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap TestImage_GrayFlip {
             get {
                 object obj = ResourceManager.GetObject("TestImage_GrayFlip", resourceCulture);
@@ -316,6 +346,36 @@ namespace Test.Psi.Imaging.Properties {
         internal static System.Drawing.Bitmap TestImage2_DrawText {
             get {
                 object obj = ResourceManager.GetObject("TestImage2_DrawText", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage2_DrawTextWithBackground {
+            get {
+                object obj = ResourceManager.GetObject("TestImage2_DrawTextWithBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage2_FillCircle {
+            get {
+                object obj = ResourceManager.GetObject("TestImage2_FillCircle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TestImage2_FillRect {
+            get {
+                object obj = ResourceManager.GetObject("TestImage2_FillRect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

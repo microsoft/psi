@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Media
         public MediaSource(Pipeline pipeline, Stream input, DateTime? startTime = null, bool dropOutOfOrderPackets = false)
             : base(pipeline)
         {
-            var proposedReplayTime = startTime ?? DateTime.Now;
+            var proposedReplayTime = startTime ?? DateTime.UtcNow;
             pipeline.ProposeReplayTime(new TimeInterval(proposedReplayTime, DateTime.MaxValue));
             this.start = proposedReplayTime;
             this.input = input;

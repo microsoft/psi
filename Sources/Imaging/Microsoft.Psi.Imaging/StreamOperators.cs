@@ -371,6 +371,77 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Draws a piece of text with background over a shared image.
+        /// </summary>
+        /// <param name="source">Image to draw text on.</param>
+        /// <param name="text">Text to render.</param>
+        /// <param name="p0">Coordinates for start of text (in pixels).</param>
+        /// <param name="backgroundColor">Background color to use when drawing text.</param>
+        /// <param name="textColor">Color to use to draw the text.</param>
+        /// <param name="font">Name of font to use. Optional.</param>
+        /// <param name="fontSize">Size of font. Optional.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
+        /// <returns>Returns a producer that generates images overdrawn with text.</returns>
+        public static IProducer<Shared<Image>> DrawText(this IProducer<Shared<Image>> source, string text, Point p0, Color backgroundColor, Color textColor, string font = null, float fontSize = 24.0f, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        {
+            sharedImageAllocator ??= ImagePool.GetOrCreate;
+            return source.Process<Shared<Image>, Shared<Image>>(
+                (sharedImage, envelope, emitter) =>
+                {
+                    using var drawTextSharedImage = sharedImageAllocator(sharedImage.Resource.Width, sharedImage.Resource.Height, sharedImage.Resource.PixelFormat);
+                    drawTextSharedImage.Resource.CopyFrom(sharedImage.Resource);
+                    drawTextSharedImage.Resource.DrawText(text, p0, backgroundColor, textColor, font, fontSize);
+                    emitter.Post(drawTextSharedImage, envelope.OriginatingTime);
+                }, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Fills a rectangle over a shared image.
+        /// </summary>
+        /// <param name="source">Image to draw rectangle on.</param>
+        /// <param name="rect">Pixel coordinates for rectangle.</param>
+        /// <param name="color">Color to use when drawing the rectangle.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
+        /// <returns>Returns a producer that generates images overdrawn with a rectangle.</returns>
+        public static IProducer<Shared<Image>> FillRectangle(this IProducer<Shared<Image>> source, Rectangle rect, Color color, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        {
+            sharedImageAllocator ??= ImagePool.GetOrCreate;
+            return source.Process<Shared<Image>, Shared<Image>>(
+                (sharedImage, envelope, emitter) =>
+                {
+                    using var drawRectSharedImage = sharedImageAllocator(sharedImage.Resource.Width, sharedImage.Resource.Height, sharedImage.Resource.PixelFormat);
+                    drawRectSharedImage.Resource.CopyFrom(sharedImage.Resource);
+                    drawRectSharedImage.Resource.FillRectangle(rect, color);
+                    emitter.Post(drawRectSharedImage, envelope.OriginatingTime);
+                }, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Fills a circle over a shared image.
+        /// </summary>
+        /// <param name="source">Image to draw circle on.</param>
+        /// <param name="p0">Center of circle (in pixels).</param>
+        /// <param name="radius">Radius of circle (in pixels).</param>
+        /// <param name="color">Color to use when drawing the circle.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
+        /// <returns>Returns a producer that generates images overdrawn with a circle.</returns>
+        public static IProducer<Shared<Image>> FillCircle(this IProducer<Shared<Image>> source, Point p0, int radius, Color color, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        {
+            sharedImageAllocator ??= ImagePool.GetOrCreate;
+            return source.Process<Shared<Image>, Shared<Image>>(
+                (sharedImage, envelope, emitter) =>
+                {
+                    using var drawCircleSharedImage = sharedImageAllocator(sharedImage.Resource.Width, sharedImage.Resource.Height, sharedImage.Resource.PixelFormat);
+                    drawCircleSharedImage.Resource.CopyFrom(sharedImage.Resource);
+                    drawCircleSharedImage.Resource.FillCircle(p0, radius, color);
+                    emitter.Post(drawCircleSharedImage, envelope.OriginatingTime);
+                }, deliveryPolicy);
+        }
+
+        /// <summary>
         /// Inverts each color channel in a shared image.
         /// </summary>
         /// <param name="source">Images to invert.</param>

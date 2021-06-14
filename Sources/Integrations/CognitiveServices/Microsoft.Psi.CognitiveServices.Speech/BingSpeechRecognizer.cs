@@ -67,7 +67,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <summary>
         /// The time interval of the last detected speech segment.
         /// </summary>
-        private TimeInterval lastVADSpeechTimeInterval = new TimeInterval(DateTime.Now, DateTime.Now);
+        private TimeInterval lastVADSpeechTimeInterval = new TimeInterval(DateTime.UtcNow, DateTime.UtcNow);
 
         /// <summary>
         /// The originating time of the most recently received audio packet.

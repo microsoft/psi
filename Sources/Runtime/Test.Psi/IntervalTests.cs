@@ -170,7 +170,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void BoundedTimeInterval()
         {
-            var start = DateTime.Now;
+            var start = DateTime.UtcNow;
             var end = start.AddMinutes(10);
             var interval = new TimeInterval(start, true, end, false);
             Assert.IsTrue(interval.LeftEndpoint.Bounded);
@@ -191,7 +191,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void LeftBoundedTimeInterval()
         {
-            var start = DateTime.Now;
+            var start = DateTime.UtcNow;
             var interval = TimeInterval.LeftBounded(start);
             Assert.IsTrue(interval.LeftEndpoint.Bounded);
             Assert.IsTrue(interval.LeftEndpoint.Inclusive);
@@ -211,7 +211,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void RightBoundedTimeInterval()
         {
-            var end = DateTime.Now;
+            var end = DateTime.UtcNow;
             var interval = TimeInterval.RightBounded(end);
             Assert.IsFalse(interval.LeftEndpoint.Bounded);
             Assert.IsFalse(interval.LeftEndpoint.Inclusive);
@@ -296,7 +296,7 @@ namespace Test.Psi
             var start = TimeSpan.FromMinutes(-5);
             var end = TimeSpan.FromMinutes(10);
             var timeSpanInterval = new RelativeTimeInterval(start, end);
-            var origin = DateTime.Now;
+            var origin = DateTime.UtcNow;
             var timeInterval = new TimeInterval(origin, timeSpanInterval);
             Assert.IsTrue(timeInterval.LeftEndpoint.Bounded);
             Assert.IsTrue(timeInterval.LeftEndpoint.Inclusive);
@@ -319,7 +319,7 @@ namespace Test.Psi
             var start = TimeSpan.FromMinutes(-5);
             var timeSpanInterval = RelativeTimeInterval.LeftBounded(start);
             var leftBoundedTimeSpanInterval = RelativeTimeInterval.LeftBounded(start);
-            var origin = DateTime.Now;
+            var origin = DateTime.UtcNow;
             var timeInterval = new TimeInterval(origin, timeSpanInterval);
             Assert.IsTrue(timeInterval.LeftEndpoint.Bounded);
             Assert.IsTrue(timeInterval.LeftEndpoint.Inclusive);
@@ -342,7 +342,7 @@ namespace Test.Psi
             var start = TimeSpan.FromMinutes(-5);
             var end = TimeSpan.FromMinutes(10);
             var timeSpanInterval = new RelativeTimeInterval(start, end);
-            var origin = DateTime.Now;
+            var origin = DateTime.UtcNow;
             var timeInterval = origin + timeSpanInterval;
             Assert.IsTrue(timeInterval.LeftEndpoint.Bounded);
             Assert.IsTrue(timeInterval.LeftEndpoint.Inclusive);
@@ -372,7 +372,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void IntervalCenter()
         {
-            var start = DateTime.Now;
+            var start = DateTime.UtcNow;
             var end = start.AddMinutes(10);
             var span = end - start;
             var mid = end - new TimeSpan(span.Ticks / 2);
@@ -393,7 +393,7 @@ namespace Test.Psi
         [Timeout(60000)]
         public void IntervalWithin()
         {
-            var start = DateTime.Now;
+            var start = DateTime.UtcNow;
             var end = start.AddMinutes(10);
             var span = end - start;
             var mid = end - new TimeSpan(span.Ticks / 2);

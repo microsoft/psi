@@ -62,7 +62,7 @@ namespace Test.Psi.Imaging
                     // Simply store the resulting value and compare it later at the bottom of this method.
                     results[rect] = color;
                 });
-                pipeline.Run(new ReplayDescriptor(DateTime.Now, DateTime.MaxValue));
+                pipeline.Run(new ReplayDescriptor(DateTime.UtcNow, DateTime.MaxValue));
             }
 
             foreach (var expectation in SolidColorAverages)
