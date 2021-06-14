@@ -43,6 +43,11 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
+        /// Event invoked when the structure of the session changed.
+        /// </summary>
+        public event EventHandler SessionChanged;
+
+        /// <summary>
         /// Gets the dataset that this session belongs to.
         /// </summary>
         [IgnoreDataMember]
@@ -64,7 +69,7 @@ namespace Microsoft.Psi.Data
                 }
 
                 this.name = value;
-                this.Dataset?.OnChangingOperation();
+                this.OnSessionChanged();
             }
         }
 
@@ -109,7 +114,7 @@ namespace Microsoft.Psi.Data
         {
             var partition = new Partition<TStreamReader>(this, streamReader, partitionName);
             this.AddPartition(partition);
-            this.Dataset?.OnChangingOperation();
+            this.OnSessionChanged();
             return partition;
         }
 
@@ -295,7 +300,17 @@ namespace Microsoft.Psi.Data
         public void RemovePartition(IPartition partition)
         {
             this.InternalPartitions.Remove(partition);
-            this.Dataset?.OnChangingOperation();
+            this.OnSessionChanged();
+        }
+
+        /// <summary>
+        /// Method called when structure of the session changed.
+        /// </summary>
+        protected virtual void OnSessionChanged()
+        {
+            this.Dataset?.OnDatasetChanged();
+            EventHandler handler = this.SessionChanged;
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -311,7 +326,7 @@ namespace Microsoft.Psi.Data
             }
 
             this.InternalPartitions.Add(partition);
-            this.Dataset?.OnChangingOperation();
+            this.OnSessionChanged();
         }
 
         [OnDeserialized]

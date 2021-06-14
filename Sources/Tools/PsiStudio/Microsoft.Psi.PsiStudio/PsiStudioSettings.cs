@@ -38,7 +38,7 @@ namespace Microsoft.Psi.PsiStudio
             this.ShowTimingRelativeToSessionStart = false;
             this.ShowTimingRelativeToSelectionStart = false;
             this.CurrentLayoutName = null;
-            this.AutoSaveDataset = false;
+            this.AutoSaveDatasets = false;
             this.AdditionalAssemblies = null;
         }
 
@@ -105,7 +105,7 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// Gets or sets a value indicating whether to set any open dataset object into autosave mode.
         /// </summary>
-        public bool AutoSaveDataset { get; set; }
+        public bool AutoSaveDatasets { get; set; }
 
         /// <summary>
         /// Gets or sets the list of add-in assemblies.

@@ -32,20 +32,27 @@ namespace Microsoft.Psi.Data
         /// Initializes a new instance of the <see cref="Dataset"/> class.
         /// </summary>
         /// <param name="name">The name of the new dataset. Default is <see cref="DefaultName"/>.</param>
-        /// <param name="savePath">The path to save the dataset (optional, default is empty).<see cref="DefaultName"/>.</param>
-        /// <param name="autoSaveOnChange">Whether the dataset automatically autosave changes if a path is given (optional, default is false).</param>
+        /// <param name="filename">An optional filename that indicates the location to save the dataset.<see cref="DefaultName"/>.</param>
+        /// <param name="autoSave">Whether the dataset automatically autosave changes if a path is given (optional, default is false).</param>
+        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is true).</param>
         [JsonConstructor]
-        public Dataset(string name = Dataset.DefaultName, string savePath = "", bool autoSaveOnChange = false)
+        public Dataset(string name = Dataset.DefaultName, string filename = "", bool autoSave = false, bool useRelativePaths = true)
         {
             this.Name = name;
-            this.CurrentSavePath = savePath;
-            this.AutoSaveChanges = autoSaveOnChange;
+            this.Filename = filename;
+            this.AutoSave = autoSave;
+            this.UseRelativePaths = useRelativePaths;
             this.InternalSessions = new List<Session>();
-            if (this.AutoSaveChanges && savePath == string.Empty)
+            if (this.AutoSave && filename == string.Empty)
             {
-                throw new ArgumentException("savepath needed to be provided for autosave dataset.");
+                throw new ArgumentException("filename needed to be provided for autosave dataset.");
             }
         }
+
+        /// <summary>
+        /// Event raise when the dataset's structure changed.
+        /// </summary>
+        public event EventHandler DatasetChanged;
 
         /// <summary>
         /// Gets or sets the name of this dataset.
@@ -57,24 +64,29 @@ namespace Microsoft.Psi.Data
             set
             {
                 this.name = value;
-                this.OnChangingOperation();
+                this.OnDatasetChanged();
             }
         }
 
         /// <summary>
         /// Gets or sets the current save path of this dataset.
         /// </summary>
-        public string CurrentSavePath { get; set; }
+        public string Filename { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether autosave is enabled.
         /// </summary>
-        public bool AutoSaveChanges { get; set; }
+        public bool AutoSave { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use full or relative store paths.
+        /// </summary>
+        public bool UseRelativePaths { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether changes to this dataset have been saved.
         /// </summary>
-        public bool UnsavedChanges { get; private set; } = false;
+        public bool HasUnsavedChanges { get; private set; } = false;
 
         /// <summary>
         /// Gets the originating time interval (earliest to latest) of the messages in this dataset.
@@ -109,9 +121,9 @@ namespace Microsoft.Psi.Data
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
-        /// <param name="enableAutosave">A value to indicate whether to enable autosave (optional, default is false).</param>
+        /// <param name="autoSave">A value to indicate whether to enable autosave (optional, default is false).</param>
         /// <returns>The newly loaded dataset.</returns>
-        public static Dataset Load(string filename, bool enableAutosave = false)
+        public static Dataset Load(string filename, bool autoSave = false)
         {
             var serializer = JsonSerializer.Create(
                 new JsonSerializerSettings()
@@ -127,8 +139,8 @@ namespace Microsoft.Psi.Data
             using var jsonFile = File.OpenText(filename);
             using var jsonReader = new JsonTextReader(jsonFile);
             var dataset = serializer.Deserialize<Dataset>(jsonReader);
-            dataset.AutoSaveChanges = enableAutosave;
-            dataset.CurrentSavePath = filename;
+            dataset.AutoSave = autoSave;
+            dataset.Filename = filename;
             return dataset;
         }
 
@@ -155,7 +167,7 @@ namespace Microsoft.Psi.Data
         {
             var session = new Session(this, sessionName);
             this.InternalSessions.Add(session);
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
             return session;
         }
 
@@ -166,7 +178,7 @@ namespace Microsoft.Psi.Data
         public void RemoveSession(Session session)
         {
             this.InternalSessions.Remove(session);
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
         }
 
         /// <summary>
@@ -185,30 +197,36 @@ namespace Microsoft.Psi.Data
                 }
             }
 
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
         }
 
         /// <summary>
-        /// Saves this dataset to the specified file.
+        /// Saves this dataset.
         /// </summary>
-        /// <param name="filename">The name of the file to save this dataset into (optional, default is "").</param>
+        /// <param name="filename">The filename that indicates the location to save the dataset.</param>
         /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is empty).</param>
-        public void Save(string filename = "", bool useRelativePaths = true)
+        public void SaveAs(string filename, bool useRelativePaths = true)
         {
-            if (filename != string.Empty)
+            this.Filename = filename;
+            this.UseRelativePaths = useRelativePaths;
+            this.Save();
+        }
+
+        /// <summary>
+        /// Saves this dataset.
+        /// </summary>
+        public void Save()
+        {
+            if (this.Filename == string.Empty)
             {
-                this.CurrentSavePath = filename;
-            }
-            else if (this.CurrentSavePath == string.Empty)
-            {
-                throw new ArgumentException("filename to save the dataset must pe provided if no default path is set.");
+                throw new ArgumentException("filename to save the dataset must be set before save operation.");
             }
 
             var serializer = JsonSerializer.Create(
                 new JsonSerializerSettings()
                 {
                     // pass the dataset filename in the context to allow relative store paths to be computed using the RelativePathConverter
-                    Context = useRelativePaths ? new StreamingContext(StreamingContextStates.File, this.CurrentSavePath) : default,
+                    Context = this.UseRelativePaths ? new StreamingContext(StreamingContextStates.File, this.Filename) : default,
                     Formatting = Formatting.Indented,
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -216,10 +234,10 @@ namespace Microsoft.Psi.Data
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                     SerializationBinder = new SafeSerializationBinder(),
                 });
-            using var jsonFile = File.CreateText(this.CurrentSavePath);
+            using var jsonFile = File.CreateText(this.Filename);
             using var jsonWriter = new JsonTextWriter(jsonFile);
             serializer.Serialize(jsonWriter, this);
-            this.UnsavedChanges = false;
+            this.HasUnsavedChanges = false;
         }
 
         /// <summary>
@@ -234,7 +252,7 @@ namespace Microsoft.Psi.Data
             var session = new Session(this, sessionName ?? streamReader.Name);
             session.AddStorePartition(streamReader, partitionName);
             this.AddSession(session);
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
             return session;
         }
 
@@ -452,7 +470,7 @@ namespace Microsoft.Psi.Data
                     cancellationToken);
             }
 
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
         }
 
         /// <summary>
@@ -467,22 +485,26 @@ namespace Microsoft.Psi.Data
                 this.AddSessionFromPsiStore(store.Name, store.Path, store.Session, partitionName);
             }
 
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
         }
 
         /// <summary>
-        /// Operation call upon any dataset changing operations.
+        /// Method called when structure of the dataset changed.
         /// </summary>
-        public void OnChangingOperation()
+        public virtual void OnDatasetChanged()
         {
-            if (this.AutoSaveChanges)
+            if (this.AutoSave)
             {
                 this.Save();
             }
             else
             {
-                this.UnsavedChanges = true;
+                this.HasUnsavedChanges = true;
             }
+
+            // raise the event.
+            EventHandler handler = this.DatasetChanged;
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -498,7 +520,7 @@ namespace Microsoft.Psi.Data
             }
 
             this.InternalSessions.Add(session);
-            this.OnChangingOperation();
+            this.OnDatasetChanged();
         }
 
         [OnDeserialized]

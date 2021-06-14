@@ -227,7 +227,7 @@ namespace Test.Psi.Data
 
             // save dataset with absolute store paths
             string datasetFile = Path.Combine(StorePath, "dataset.pds");
-            dataset.Save(datasetFile, false);
+            dataset.SaveAs(datasetFile, false);
 
             // create Temp sub-folder
             var tempFolder = Path.Combine(StorePath, "Temp");
@@ -257,7 +257,7 @@ namespace Test.Psi.Data
 
             // save dataset with relative store paths
             string datasetFile = Path.Combine(StorePath, "dataset.pds");
-            dataset.Save(datasetFile, true);
+            dataset.SaveAs(datasetFile, true);
 
             // create Temp sub-folder
             var tempFolder = Path.Combine(StorePath, "Temp");
@@ -429,7 +429,7 @@ namespace Test.Psi.Data
         {
             var datasetPath = Path.Join(StorePath, "autosave.pds");
 
-            var dataset = new Dataset("autosave", datasetPath, autoSaveOnChange: true);
+            var dataset = new Dataset("autosave", datasetPath, autoSave: true);
             dataset.Name = "autosave-saved";
             GenerateTestStore("store1", StorePath);
 
@@ -469,7 +469,7 @@ namespace Test.Psi.Data
             var datasetPath = Path.Join(StorePath, "autosave.pds");
             GenerateTestStore("base1", StorePath);
             GenerateTestStore("base2", StorePath);
-            var dataset = new Dataset("autosave", datasetPath, autoSaveOnChange: true);
+            var dataset = new Dataset("autosave", datasetPath, autoSave: true);
             dataset.AddSessionFromPsiStore("base1", StorePath, "s1");
             dataset.AddSessionFromPsiStore("base2", StorePath, "s2");
             Assert.AreEqual(1, dataset.Sessions[0].Partitions.Count());
@@ -501,9 +501,9 @@ namespace Test.Psi.Data
         {
             var dataset = new Dataset("autosave");
             dataset.CreateSession("test-session1");
-            Assert.IsTrue(dataset.UnsavedChanges);
-            dataset.Save("unsave.pds");
-            Assert.IsTrue(!dataset.UnsavedChanges);
+            Assert.IsTrue(dataset.HasUnsavedChanges);
+            dataset.SaveAs("unsave.pds");
+            Assert.IsTrue(!dataset.HasUnsavedChanges);
         }
 
         private static void GenerateTestStore(string storeName, string storePath)

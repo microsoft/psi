@@ -84,7 +84,7 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand jumpLeftCommand;
         private RelayCommand openStoreCommand;
         private RelayCommand openDatasetCommand;
-        private RelayCommand saveDatasetCommand;
+        private RelayCommand saveAsDatasetCommand;
         private RelayCommand insertTimelinePanelCommand;
         private RelayCommand insert1CellInstantPanelCommand;
         private RelayCommand insert2CellInstantPanelCommand;
@@ -339,7 +339,7 @@ namespace Microsoft.Psi.PsiStudio
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
-                                await VisualizationContext.Instance.OpenDatasetAsync(filename, enableAutoSave: this.AppSettings.AutoSaveDataset);
+                                await VisualizationContext.Instance.OpenDatasetAsync(filename, autoSave: this.AppSettings.AutoSaveDatasets);
                                 this.EnsureDerivedStreamTreeNodesExist();
                             }
                         });
@@ -373,7 +373,7 @@ namespace Microsoft.Psi.PsiStudio
                             if (result == true)
                             {
                                 string filename = dlg.FileName;
-                                await VisualizationContext.Instance.OpenDatasetAsync(filename, enableAutoSave: this.AppSettings.AutoSaveDataset);
+                                await VisualizationContext.Instance.OpenDatasetAsync(filename, autoSave: this.AppSettings.AutoSaveDatasets);
                                 this.EnsureDerivedStreamTreeNodesExist();
                             }
                         });
@@ -388,13 +388,13 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand SaveDatasetCommand
+        public RelayCommand SaveAsDatasetCommand
         {
             get
             {
-                if (this.saveDatasetCommand == null)
+                if (this.saveAsDatasetCommand == null)
                 {
-                    this.saveDatasetCommand = new RelayCommand(
+                    this.saveAsDatasetCommand = new RelayCommand(
                         async () =>
                         {
                             SaveFileDialog dlg = new SaveFileDialog
@@ -409,12 +409,12 @@ namespace Microsoft.Psi.PsiStudio
                                 string filename = dlg.FileName;
 
                                 // this should be a relatively quick operation so no need to show progress
-                                await VisualizationContext.Instance.DatasetViewModel.SaveAsync(filename);
+                                await VisualizationContext.Instance.DatasetViewModel.SaveAsAsync(filename);
                             }
                         });
                 }
 
-                return this.saveDatasetCommand;
+                return this.saveAsDatasetCommand;
             }
         }
 
