@@ -468,8 +468,6 @@ namespace Microsoft.Psi.Data
                     progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionStart[i] + tuple.Item2 * sessionDuration[i]) / totalDuration))) : null,
                     cancellationToken);
             }
-
-            this.OnDatasetChanged();
         }
 
         /// <summary>
