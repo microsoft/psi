@@ -204,7 +204,7 @@ namespace Microsoft.Psi.Data
         /// Saves this dataset.
         /// </summary>
         /// <param name="filename">The filename that indicates the location to save the dataset.</param>
-        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is empty).</param>
+        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is true).</param>
         public void SaveAs(string filename, bool useRelativePaths = true)
         {
             this.Filename = filename;
@@ -252,7 +252,6 @@ namespace Microsoft.Psi.Data
             var session = new Session(this, sessionName ?? streamReader.Name);
             session.AddStorePartition(streamReader, partitionName);
             this.AddSession(session);
-            this.OnDatasetChanged();
             return session;
         }
 
@@ -484,8 +483,6 @@ namespace Microsoft.Psi.Data
             {
                 this.AddSessionFromPsiStore(store.Name, store.Path, store.Session, partitionName);
             }
-
-            this.OnDatasetChanged();
         }
 
         /// <summary>

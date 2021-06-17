@@ -84,7 +84,7 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand jumpLeftCommand;
         private RelayCommand openStoreCommand;
         private RelayCommand openDatasetCommand;
-        private RelayCommand saveAsDatasetCommand;
+        private RelayCommand saveDatasetAsCommand;
         private RelayCommand insertTimelinePanelCommand;
         private RelayCommand insert1CellInstantPanelCommand;
         private RelayCommand insert2CellInstantPanelCommand;
@@ -388,13 +388,13 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand SaveAsDatasetCommand
+        public RelayCommand SaveDatasetAsCommand
         {
             get
             {
-                if (this.saveAsDatasetCommand == null)
+                if (this.saveDatasetAsCommand == null)
                 {
-                    this.saveAsDatasetCommand = new RelayCommand(
+                    this.saveDatasetAsCommand = new RelayCommand(
                         async () =>
                         {
                             SaveFileDialog dlg = new SaveFileDialog
@@ -414,7 +414,7 @@ namespace Microsoft.Psi.PsiStudio
                         });
                 }
 
-                return this.saveAsDatasetCommand;
+                return this.saveDatasetAsCommand;
             }
         }
 

@@ -114,7 +114,6 @@ namespace Microsoft.Psi.Data
         {
             var partition = new Partition<TStreamReader>(this, streamReader, partitionName);
             this.AddPartition(partition);
-            this.OnSessionChanged();
             return partition;
         }
 
