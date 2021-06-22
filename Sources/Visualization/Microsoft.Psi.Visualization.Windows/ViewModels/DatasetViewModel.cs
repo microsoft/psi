@@ -430,7 +430,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
         /// <param name="autoSave">A value to indicate whether to enable the autosave feature.</param>
         /// <returns>The newly loaded dataset view model.</returns>
-        public static DatasetViewModel Load(string filename, bool autoSave) =>
+        public static DatasetViewModel Load(string filename, bool autoSave = false) =>
             new DatasetViewModel(Dataset.Load(filename, autoSave))
             {
                 FileName = filename,
