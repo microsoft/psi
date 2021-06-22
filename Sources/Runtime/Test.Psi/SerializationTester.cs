@@ -435,7 +435,7 @@ namespace Test.Psi
         {
             int iter = 100000;
             Poco poco = new Poco();
-            poco.DateProp = DateTime.Now;
+            poco.DateProp = DateTime.UtcNow;
             poco.IntProp = 100;
             poco.GuidProp = Guid.NewGuid();
             poco.StringProp = "test data";
@@ -506,7 +506,7 @@ namespace Test.Psi
         {
             int iter = 100000;
             Poco poco = new Poco();
-            poco.DateProp = DateTime.Now;
+            poco.DateProp = DateTime.UtcNow;
             poco.IntProp = 100;
             poco.GuidProp = Guid.NewGuid();
             poco.StringProp = "test data";
@@ -554,7 +554,7 @@ namespace Test.Psi
             int count = 23;
             var dict = new Dictionary<string, Poco>();
             Poco poco = new Poco();
-            poco.DateProp = DateTime.Now;
+            poco.DateProp = DateTime.UtcNow;
             poco.IntProp = 100;
             poco.GuidProp = Guid.NewGuid();
             poco.StringProp = "test data";

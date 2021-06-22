@@ -86,7 +86,7 @@ namespace Microsoft.Psi.FiniteStateMachine
 
             if (tran.To != this)
             {
-                Trace.WriteLine($"State transition {this.Name} -> {tran.To.Name} ({DateTime.Now})");
+                Trace.WriteLine($"State transition {this.Name} -> {tran.To.Name} ({DateTime.UtcNow})");
             }
 
             updated = tran.Traverse(this.exitFn == null ? context : this.exitFn(context));

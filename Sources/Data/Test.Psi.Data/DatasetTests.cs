@@ -227,7 +227,7 @@ namespace Test.Psi.Data
 
             // save dataset with absolute store paths
             string datasetFile = Path.Combine(StorePath, "dataset.pds");
-            dataset.Save(datasetFile, false);
+            dataset.SaveAs(datasetFile, false);
 
             // create Temp sub-folder
             var tempFolder = Path.Combine(StorePath, "Temp");
@@ -257,7 +257,7 @@ namespace Test.Psi.Data
 
             // save dataset with relative store paths
             string datasetFile = Path.Combine(StorePath, "dataset.pds");
-            dataset.Save(datasetFile, true);
+            dataset.SaveAs(datasetFile, true);
 
             // create Temp sub-folder
             var tempFolder = Path.Combine(StorePath, "Temp");
@@ -421,6 +421,118 @@ namespace Test.Psi.Data
 
                 throw;
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetAutoSave()
+        {
+            var datasetPath = Path.Join(StorePath, "autosave.pds");
+
+            var dataset = new Dataset("autosave", datasetPath, autoSave: true);
+            dataset.Name = "autosave-saved";
+            GenerateTestStore("store1", StorePath);
+
+            var session1 = dataset.CreateSession("test-session1");
+            var session2 = dataset.AddSessionFromPsiStore("store1", StorePath);
+            session1.Name = "no-longer-test-session1";
+
+            // open the dataset file as a different dataset and validate information
+            var sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual("autosave-saved", sameDataset.Name);
+            Assert.AreEqual(2, sameDataset.Sessions.Count);
+            Assert.AreEqual("no-longer-test-session1", sameDataset.Sessions[0].Name);
+            Assert.AreEqual(session2.Name, sameDataset.Sessions[1].Name);
+
+            // remove a session and verify changes are saved.
+            dataset.RemoveSession(session1);
+            sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(1, sameDataset.Sessions.Count);
+            Assert.AreEqual(session2.Name, sameDataset.Sessions[0].Name);
+            Assert.AreEqual(1, sameDataset.Sessions[0].Partitions.Count);
+            Assert.AreEqual(session2.OriginatingTimeInterval.Left, sameDataset.Sessions[0].OriginatingTimeInterval.Left);
+            Assert.AreEqual(session2.OriginatingTimeInterval.Right, sameDataset.Sessions[0].OriginatingTimeInterval.Right);
+
+            // now we edit the session and we want to make sure the changes stick!
+            GenerateTestStore("store3", StorePath);
+            session2.AddPsiStorePartition("store3", StorePath);
+            sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(session2.Name, sameDataset.Sessions[0].Name);
+            Assert.AreEqual(2, sameDataset.Sessions[0].Partitions.Count);
+            Assert.AreEqual("store3", sameDataset.Sessions[0].Partitions[1].Name);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetAutoSaveAsync()
+        {
+            var datasetPath = Path.Join(StorePath, "autosave.pds");
+            GenerateTestStore("base1", StorePath);
+            GenerateTestStore("base2", StorePath);
+            var dataset = new Dataset("autosave", datasetPath, autoSave: true);
+            dataset.AddSessionFromPsiStore("base1", StorePath, "s1");
+            dataset.AddSessionFromPsiStore("base2", StorePath, "s2");
+            Assert.AreEqual(1, dataset.Sessions[0].Partitions.Count());
+            Assert.AreEqual(1, dataset.Sessions[1].Partitions.Count());
+            Task.Run(async () =>
+            {
+                await dataset.CreateDerivedPartitionAsync(
+                    (_, importer, exporter) =>
+                    {
+                        importer.OpenStream<int>("Root").Select(x => x * x).Write("RootSquared", exporter);
+                    },
+                    "derived",
+                    true,
+                    "derived-store");
+            }).Wait();  // wait for the async function to finish
+
+            // open the dataset file as a different dataset and validate information
+            var sameDataset = Dataset.Load(datasetPath);
+            Assert.AreEqual(2, sameDataset.Sessions.Count);
+            Assert.AreEqual(2, sameDataset.Sessions[0].Partitions.Count());
+            Assert.AreEqual(2, sameDataset.Sessions[1].Partitions.Count());
+            Assert.AreEqual("derived", sameDataset.Sessions[1].Partitions[1].Name);
+            Assert.AreEqual("derived-store", sameDataset.Sessions[1].Partitions[1].StoreName);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetUnsavedChanges()
+        {
+            var dataset = new Dataset("autosave");
+            dataset.CreateSession("test-session1");
+            Assert.IsTrue(dataset.HasUnsavedChanges);
+            dataset.SaveAs("unsave.pds");
+            Assert.IsTrue(!dataset.HasUnsavedChanges);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DatasetChangeEvent()
+        {
+            var sessionEventCalled = false;
+            var datasetEventCalled = false;
+            var dataset = new Dataset("autosave");
+
+            GenerateTestStore("base1", StorePath);
+            var session1 = dataset.AddSessionFromPsiStore("base1", StorePath, "session1");
+            dataset.DatasetChanged += (s, e) =>
+            {
+                Assert.AreEqual(e, EventArgs.Empty);
+                datasetEventCalled = true;
+            };
+            session1.SessionChanged += (s, e) =>
+            {
+                Assert.AreEqual(e, EventArgs.Empty);
+                sessionEventCalled = true;
+            };
+
+            // the following change should cause both events to be called.
+            session1.Name = "new name";
+
+            // validate if the events were called.
+            Assert.IsTrue(datasetEventCalled);
+            Assert.IsTrue(sessionEventCalled);
         }
 
         private static void GenerateTestStore(string storeName, string storePath)

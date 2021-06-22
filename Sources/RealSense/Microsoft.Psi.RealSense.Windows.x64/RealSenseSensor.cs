@@ -119,7 +119,7 @@ namespace Microsoft.Psi.RealSense.Windows
             while (!this.shutdown)
             {
                 this.device.ReadFrame(colorImage.Resource.ImageData, colorImageSize, depthImage.Resource.ImageData, depthImageSize);
-                DateTime t = DateTime.Now;
+                DateTime t = DateTime.UtcNow;
                 this.ColorImage.Post(colorImage, t);
                 this.DepthImage.Post(depthImage, t);
             }

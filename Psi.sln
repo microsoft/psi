@@ -194,6 +194,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.ModelRun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Psi.Onnx", "Sources\Integrations\Onnx\Test.Psi.Onnx\Test.Psi.Onnx.csproj", "{A0677BEA-ADB1-4950-89E6-89483D621A52}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Filters", "Filters", "{E0E7957E-731F-4FDD-83FE-634FFE24862F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Filters", "Sources\Filters\Microsoft.Psi.Filters\Microsoft.Psi.Filters.csproj", "{E0621435-AF35-4CFA-BE9E-3781AF6E161F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -428,6 +432,10 @@ Global
 		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0677BEA-ADB1-4950-89E6-89483D621A52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -512,6 +520,8 @@ Global
 		{D649D56B-777C-4246-8D59-C32749D94D39} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
 		{8B4F93E0-86D7-474C-8DD5-14E0AAD8BF91} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
 		{A0677BEA-ADB1-4950-89E6-89483D621A52} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
+		{E0E7957E-731F-4FDD-83FE-634FFE24862F} = {A0856299-D28A-4513-B964-3FA5290FF160}
+		{E0621435-AF35-4CFA-BE9E-3781AF6E161F} = {E0E7957E-731F-4FDD-83FE-634FFE24862F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

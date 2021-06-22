@@ -203,7 +203,7 @@ namespace Microsoft.Psi.Visualization
                 // if the dataset has a known associated file, save it.
                 if (datasetViewModel.FileName != null)
                 {
-                    await datasetViewModel.SaveAsync(datasetViewModel.FileName);
+                    await datasetViewModel.SaveAsAsync(datasetViewModel.FileName);
                 }
             }
             catch (InvalidOperationException)
@@ -263,7 +263,7 @@ namespace Microsoft.Psi.Visualization
                 // if the dataset has a known associated file, save it.
                 if (sessionViewModel.DatasetViewModel.FileName != null)
                 {
-                    await sessionViewModel.DatasetViewModel.SaveAsync(sessionViewModel.DatasetViewModel.FileName);
+                    await sessionViewModel.DatasetViewModel.SaveAsAsync(sessionViewModel.DatasetViewModel.FileName);
                 }
             }
             catch (InvalidOperationException)
@@ -352,8 +352,9 @@ namespace Microsoft.Psi.Visualization
         /// </summary>
         /// <param name="filename">Fully qualified path to dataset file.</param>
         /// <param name="showStatusWindow">Indicates whether to show the status window.</param>
+        /// <param name="autoSave">Indicates whether to enable autosave.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public async Task OpenDatasetAsync(string filename, bool showStatusWindow = true)
+        public async Task OpenDatasetAsync(string filename, bool showStatusWindow = true, bool autoSave = false)
         {
             var loadDatasetTask = default(Task);
             if (showStatusWindow)
@@ -374,7 +375,7 @@ namespace Microsoft.Psi.Visualization
                 });
 
                 // start the load dataset task
-                loadDatasetTask = this.LoadDatasetOrStoreAsync(filename, progress);
+                loadDatasetTask = this.LoadDatasetOrStoreAsync(filename, progress, autoSave);
 
                 try
                 {
@@ -389,7 +390,7 @@ namespace Microsoft.Psi.Visualization
             }
             else
             {
-                loadDatasetTask = this.LoadDatasetOrStoreAsync(filename);
+                loadDatasetTask = this.LoadDatasetOrStoreAsync(filename, autoSave: autoSave);
             }
 
             try
@@ -473,7 +474,7 @@ namespace Microsoft.Psi.Visualization
             this.RequestDisplayObjectProperties?.Invoke(this, new RequestDisplayObjectPropertiesEventArgs(requestingObject));
         }
 
-        private async Task LoadDatasetOrStoreAsync(string filename, IProgress<(string, double)> progress = null)
+        private async Task LoadDatasetOrStoreAsync(string filename, IProgress<(string, double)> progress = null, bool autoSave = false)
         {
             try
             {
@@ -481,7 +482,7 @@ namespace Microsoft.Psi.Visualization
                 if (fileInfo.Extension == ".pds")
                 {
                     progress?.Report(("Loading dataset...", 0.5));
-                    this.DatasetViewModel = await DatasetViewModel.LoadAsync(filename);
+                    this.DatasetViewModel = await DatasetViewModel.LoadAsync(filename, autoSave);
                 }
                 else
                 {

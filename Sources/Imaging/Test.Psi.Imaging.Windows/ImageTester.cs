@@ -20,6 +20,9 @@ namespace Test.Psi.Imaging
         private Image testImage_GrayDrawLine = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawLine);
         private Image testImage_GrayDrawRect = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawRect);
         private Image testImage_GrayDrawText = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawText);
+        private Image testImage_GrayFillRect = Image.FromBitmap(Properties.Resources.TestImage_GrayFillRect);
+        private Image testImage_GrayFillCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayFillCircle);
+        private Image testImage_GrayDrawTextWithBackground = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawTextWithBackground);
         private Image testImage_GrayFlip = Image.FromBitmap(Properties.Resources.TestImage_GrayFlip);
         private Image testImage_GrayResized = Image.FromBitmap(Properties.Resources.TestImage_GrayResized);
         private Image testImage_GrayRotate = Image.FromBitmap(Properties.Resources.TestImage_GrayRotate);
@@ -44,6 +47,9 @@ namespace Test.Psi.Imaging
         private Image testImage2_DrawLine = Image.FromBitmap(Properties.Resources.TestImage2_DrawLine);
         private Image testImage2_DrawCircle = Image.FromBitmap(Properties.Resources.TestImage2_DrawCircle);
         private Image testImage2_DrawText = Image.FromBitmap(Properties.Resources.TestImage2_DrawText);
+        private Image testImage2_FillRect = Image.FromBitmap(Properties.Resources.TestImage2_FillRect);
+        private Image testImage2_FillCircle = Image.FromBitmap(Properties.Resources.TestImage2_FillCircle);
+        private Image testImage2_DrawTextWithBackground = Image.FromBitmap(Properties.Resources.TestImage2_DrawTextWithBackground);
         private Image testImage2_AbsDiff = Image.FromBitmap(Properties.Resources.TestImage2_AbsDiff);
         private Image testImage_0_0_200_100 = Image.FromBitmap(Properties.Resources.TestImage_Crop_0_0_200_100);
         private Image testImage_153_57_103_199 = Image.FromBitmap(Properties.Resources.TestImage_Crop_153_57_103_199);
@@ -91,6 +97,36 @@ namespace Test.Psi.Imaging
             this.testImage_Gray.CopyTo(sharedImage.Resource);
             sharedImage.Resource.DrawText("Test", new System.Drawing.Point(0, 20), System.Drawing.Color.Red);
             this.AssertAreImagesEqual(this.testImage_GrayDrawText, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayDrawTextWithBackground()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.DrawText("Test", new System.Drawing.Point(0, 20), System.Drawing.Color.Red, System.Drawing.Color.White);
+            this.AssertAreImagesEqual(this.testImage_GrayDrawTextWithBackground, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayFillRect()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.FillRectangle(new System.Drawing.Rectangle(0, 0, 20, 20), System.Drawing.Color.White);
+            this.AssertAreImagesEqual(this.testImage_GrayFillRect, sharedImage.Resource);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void Image_GrayFillCircle()
+        {
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage_Gray.Width, this.testImage_Gray.Height, this.testImage_Gray.PixelFormat);
+            this.testImage_Gray.CopyTo(sharedImage.Resource);
+            sharedImage.Resource.FillCircle(new System.Drawing.Point(this.testImage_Gray.Width / 2, this.testImage_Gray.Height / 2), 100, System.Drawing.Color.White);
+            this.AssertAreImagesEqual(this.testImage_GrayFillCircle, sharedImage.Resource);
         }
 
         [TestMethod]
@@ -524,6 +560,66 @@ namespace Test.Psi.Imaging
             Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawText("Testing", new System.Drawing.Point(100, 100), System.Drawing.Color.White).Do((img) =>
             {
                 using var refImage = this.testImage2_DrawText.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_DrawTextWithBackgroundViaOperator(PixelFormat pixelFormat)
+        {
+            using var pipeline = Pipeline.Create("DrawTextWithBackgroundViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).DrawText("Testing", new System.Drawing.Point(100, 100), System.Drawing.Color.Red, System.Drawing.Color.White).Do((img) =>
+            {
+                using var refImage = this.testImage2_DrawTextWithBackground.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_FillRectangleViaOperator(PixelFormat pixelFormat)
+        {
+            using var pipeline = Pipeline.Create("FillRectangleViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).FillRectangle(new System.Drawing.Rectangle(20, 20, 255, 255), System.Drawing.Color.White).Do((img) =>
+            {
+                using var refImage = this.testImage2_FillRect.Convert(pixelFormat);
+                this.AssertAreImagesEqual(refImage, img.Resource);
+            });
+            pipeline.Run();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        public void Image_FillCircleViaOperator(PixelFormat pixelFormat)
+        {
+            using var pipeline = Pipeline.Create("FillCircleViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, pixelFormat);
+            this.testImage2.CopyTo(sharedImage.Resource);
+            Generators.Sequence(pipeline, new[] { sharedImage }, default, null, keepOpen: false).FillCircle(new System.Drawing.Point(250, 250), 100, System.Drawing.Color.White).Do((img) =>
+            {
+                using var refImage = this.testImage2_FillCircle.Convert(pixelFormat);
                 this.AssertAreImagesEqual(refImage, img.Resource);
             });
             pipeline.Run();

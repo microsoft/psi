@@ -428,9 +428,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
+        /// <param name="autoSave">A value to indicate whether to enable the autosave feature.</param>
         /// <returns>The newly loaded dataset view model.</returns>
-        public static DatasetViewModel Load(string filename) =>
-            new DatasetViewModel(Dataset.Load(filename))
+        public static DatasetViewModel Load(string filename, bool autoSave = false) =>
+            new DatasetViewModel(Dataset.Load(filename, autoSave))
             {
                 FileName = filename,
             };
@@ -439,12 +440,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Asynchronously loads a dataset from the specified file.
         /// </summary>
         /// <param name="filename">The name of the file that contains the dataset to be loaded.</param>
+        /// <param name="autoSave">A value to indicate whether to enable the dataset's autosave feature.</param>
         /// <returns>
         /// A task that represents the asynchronous operation. The value of the TResult parameter
         /// contains the newly loaded dataset view model.
         /// </returns>
-        public static Task<DatasetViewModel> LoadAsync(string filename) =>
-            Task.Run(() => Load(filename));
+        public static Task<DatasetViewModel> LoadAsync(string filename, bool autoSave = false) =>
+            Task.Run(() => Load(filename, autoSave));
 
         /// <summary>
         /// Creates a new dataset from an existing data store.
@@ -599,9 +601,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Saves this dataset to the specified file.
         /// </summary>
         /// <param name="filename">The name of the file to save this dataset into.</param>
-        public void Save(string filename)
+        public void SaveAs(string filename)
         {
-            this.dataset.Save(filename);
+            this.dataset.SaveAs(filename);
             this.FileName = filename;
         }
 
@@ -610,8 +612,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         /// <param name="filename">The name of the file to save this dataset into.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public Task SaveAsync(string filename) =>
-            Task.Run(() => this.Save(filename));
+        public Task SaveAsAsync(string filename) =>
+            Task.Run(() => this.SaveAs(filename));
 
         /// <summary>
         /// Removes the specified session from the underlying dataset.
