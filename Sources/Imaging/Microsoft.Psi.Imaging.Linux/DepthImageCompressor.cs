@@ -28,6 +28,9 @@ namespace Microsoft.Psi.Imaging
                 case DepthCompressionMethod.Png:
                     this.encoder = new DepthImageToPngStreamEncoder();
                     break;
+                case DepthCompressionMethod.Tiff:
+                    // Currently not supported in Linux.
+                    break;
                 case DepthCompressionMethod.None:
                     break;
             }
