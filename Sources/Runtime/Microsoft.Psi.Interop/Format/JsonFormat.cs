@@ -96,7 +96,7 @@ namespace Microsoft.Psi.Interop.Format
                     tok.Children<JProperty>().ToList().ForEach(p => dict.Add(p.Name, this.JObjectToDynamic(p.Value)));
                     return dict;
                 case JTokenType.Array:
-                    return tok.Children<JValue>().Select(this.JObjectToDynamic).ToArray();
+                    return tok.Children().Select(this.JObjectToDynamic).ToArray();
                 case JTokenType.String:
                     return tok.Value<string>();
                 case JTokenType.Float:

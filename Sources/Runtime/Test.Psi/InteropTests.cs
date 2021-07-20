@@ -89,6 +89,21 @@ namespace Test.Psi
             };
             this.AssertStringSerialization(structured, @"{""originatingTime"":""1971-11-03T00:00:00.1234567Z"",""message"":{""ID"":123,""Confidence"":0.92,""Face"":{""X"":213,""Y"":107,""Width"":42,""Height"":61}}}", json, json);
 
+            var nestedArray = new
+            {
+                Intent = "vanilla",
+                Description = "Testing",
+                ActionList = new[]
+                {
+                    new
+                    {
+                        Name = "SayText",
+                        Args = new[] { "default", "both" },
+                    },
+                },
+            };
+            this.AssertStringSerialization(nestedArray, @"{""originatingTime"":""1971-11-03T00:00:00.1234567Z"",""message"":{""Intent"":""vanilla"",""Description"":""Testing"",""ActionList"":[{""Name"":""SayText"",""Args"":[""default"",""both""]}]}}", json, json);
+
             // also verify "manually"
             var serialized = json.SerializeMessage(structured, this.originatingTime);
             var deserialized = json.DeserializeMessage(serialized.Item1, serialized.Item2, serialized.Item3);
