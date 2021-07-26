@@ -1035,6 +1035,21 @@ namespace Test.Psi.Imaging
             this.AssertAreImagesEqual(testDepthImage, targetDepthImage);
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void EncodeDepthImageAsTiff()
+        {
+            // generate a "depth image" for testing
+            var testImage16bpp = new Image(this.testImage.Width, this.testImage.Height, PixelFormat.Gray_16bpp);
+            this.testImage.CopyTo(testImage16bpp);
+            var testDepthImage = DepthImage.CreateFrom(testImage16bpp.ToBitmap());
+
+            // encode to TIFF and decode
+            var encodedDepthTiffImage = testDepthImage.Encode(new DepthImageToTiffStreamEncoder());
+            var decodedDepthImage = encodedDepthTiffImage.Decode(new DepthImageFromStreamDecoder());
+            this.AssertAreImagesEqual(testDepthImage, decodedDepthImage);
+        }
+
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage, double tolerance = 6.0, double percentOutliersAllowed = 0.01)
         {
             ImageError err = new ImageError();

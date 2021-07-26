@@ -17,6 +17,11 @@ namespace Microsoft.Psi.Imaging
         Png,
 
         /// <summary>
+        /// Use TIFF compression.
+        /// </summary>
+        Tiff,
+
+        /// <summary>
         /// Use no compression.
         /// </summary>
         None,
