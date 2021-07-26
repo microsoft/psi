@@ -27,16 +27,13 @@ namespace Microsoft.Psi.Imaging
             {
                 case DepthCompressionMethod.Png:
                     this.encoder = new DepthImageToPngStreamEncoder();
-                    this.decoder = new DepthImageFromStreamDecoder();
                     break;
                 case DepthCompressionMethod.Tiff:
                     this.encoder = new DepthImageToTiffStreamEncoder();
-                    this.decoder = new DepthImageFromTiffStreamDecoder();
-                    break;
-                case DepthCompressionMethod.None:
-                    this.decoder = new DepthImageFromStreamDecoder();
                     break;
             }
+
+            this.decoder = new DepthImageFromStreamDecoder();
         }
 
         /// <inheritdoc/>

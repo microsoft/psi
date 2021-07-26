@@ -1046,7 +1046,7 @@ namespace Test.Psi.Imaging
 
             // encode to TIFF and decode
             var encodedDepthTiffImage = testDepthImage.Encode(new DepthImageToTiffStreamEncoder());
-            var decodedDepthImage = encodedDepthTiffImage.Decode(new DepthImageFromTiffStreamDecoder());
+            var decodedDepthImage = encodedDepthTiffImage.Decode(new DepthImageFromStreamDecoder());
             this.AssertAreImagesEqual(testDepthImage, decodedDepthImage);
         }
 
