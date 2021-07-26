@@ -31,6 +31,8 @@ namespace Microsoft.Psi.Imaging
                 case DepthCompressionMethod.Tiff:
                     this.encoder = new DepthImageToTiffStreamEncoder();
                     break;
+                case DepthCompressionMethod.None:
+                    break;
             }
 
             this.decoder = new DepthImageFromStreamDecoder();
