@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Imaging
 {
+    using System;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Serialization;
 
@@ -28,6 +29,8 @@ namespace Microsoft.Psi.Imaging
                 case DepthCompressionMethod.Png:
                     this.encoder = new DepthImageToPngStreamEncoder();
                     break;
+                case DepthCompressionMethod.Tiff:
+                    throw new NotImplementedException();
                 case DepthCompressionMethod.None:
                     break;
             }

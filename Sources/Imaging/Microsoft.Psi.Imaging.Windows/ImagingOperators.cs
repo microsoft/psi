@@ -54,6 +54,17 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Encodes a depth image to a TIFF format.
+        /// </summary>
+        /// <param name="source">A producer of depth images to encode.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>A producer that generates the TIFF-encoded depth images.</returns>
+        public static IProducer<Shared<EncodedDepthImage>> EncodeTiff(this IProducer<Shared<DepthImage>> source, DeliveryPolicy<Shared<DepthImage>> deliveryPolicy = null)
+        {
+            return source.Encode(new DepthImageToTiffStreamEncoder(), deliveryPolicy);
+        }
+
+        /// <summary>
         /// Decodes an encoded depth image.
         /// </summary>
         /// <param name="source">A producer of encoded depth images to decode.</param>

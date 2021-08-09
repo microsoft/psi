@@ -18,12 +18,12 @@ A high-level overview of the framework is available in [this blog post](https://
 
 # What’s New
 
+__07/29/2021__: Check out this [new sample application](https://github.com/microsoftgraph/microsoft-graph-comms-samples/tree/master/Samples/PublicSamples/PsiBot) which shows how you can integrate \\psi with the Teams bot architecture to develop bots that can participate in live meetings! (Please note that although it is hosted in the Microsoft Graph repository, you should post any issues or questions about this sample here).
+
 __05/02/2021__: We've opened the [Discussions](https://github.com/microsoft/psi/discussions) tab on the repo and plan to use it as a place to connect with other members of our community. Please use these forums to
 [ask questions](https://github.com/microsoft/psi/discussions/categories/q-a), [share ideas and feature requests](https://github.com/microsoft/psi/discussions/categories/ideas), [show off the cool components or projects you're building with \psi](https://github.com/microsoft/psi/discussions/categories/show-and-tell), and generally engage with other community members.
 
 __04/29/2021__: Thanks to all who joined us for the [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! In this workshop, we discussed the basics on how to use the framework to accelerate your own work in the space of multimodal, integrative AI; presented some in-depth tutorials, demos, and previews of new features; and had a fun panel on how to build and nurture the open source community. All sessions were recorded, and you can find the videos on the [event website](https://aka.ms/psi-w1) now.
-
-__04/23/2021__: Announcing a new beta-release, version 0.15.49.1. This release includes various updates to the runtime, tools, and components. Numerous improvements have been made in particular to Platform for Situated Intelligence Studio and features around capturing and visualizing diagnostic metrics. Check the [release notes](https://github.com/microsoft/psi/wiki/Release-Notes#20210423-beta-release-version-015491) for more information.
 
 __04/14/2021__: We uploaded a [brief overview](https://innovation.microsoft.com/en-us/tech-minutes-platform-for-situated-intelligence) on Platform for Situated Intelligence as part of the Microsoft Innovation Tech Minutes series.
 
