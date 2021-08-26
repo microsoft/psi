@@ -214,36 +214,6 @@ namespace Test.Psi.Data
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetAbsolutePaths()
-        {
-            var dataset = new Dataset();
-
-            // generate a test store
-            GenerateTestStore("PsiStore", StorePath);
-
-            // add a session and assume it loaded correctly if it has a partition containing a stream
-            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
-            Assert.IsTrue(dataset.Sessions[0].Partitions[0].AvailableStreams.Count() > 0);
-
-            // save dataset with absolute store paths
-            string datasetFile = Path.Combine(StorePath, "dataset.pds");
-            dataset.SaveAs(datasetFile, false);
-
-            // create Temp sub-folder
-            var tempFolder = Path.Combine(StorePath, "Temp");
-            Directory.CreateDirectory(tempFolder);
-
-            // move the dataset file only
-            string newDatasetFile = Path.Combine(tempFolder, "dataset.pds");
-            File.Move(datasetFile, newDatasetFile);
-
-            // reload the saved dataset and verify that the store paths are still valid
-            var newDataset = Dataset.Load(newDatasetFile);
-            Assert.IsTrue(newDataset.Sessions[0].Partitions[0].AvailableStreams.Count() > 0);
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
         public void DatasetRelativePaths()
         {
             var dataset = new Dataset();
@@ -257,7 +227,7 @@ namespace Test.Psi.Data
 
             // save dataset with relative store paths
             string datasetFile = Path.Combine(StorePath, "dataset.pds");
-            dataset.SaveAs(datasetFile, true);
+            dataset.SaveAs(datasetFile);
 
             // create Temp sub-folder
             var tempFolder = Path.Combine(StorePath, "Temp");

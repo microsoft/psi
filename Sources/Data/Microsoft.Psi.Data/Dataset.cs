@@ -34,14 +34,12 @@ namespace Microsoft.Psi.Data
         /// <param name="name">The name of the new dataset. Default is <see cref="DefaultName"/>.</param>
         /// <param name="filename">An optional filename that indicates the location to save the dataset.<see cref="DefaultName"/>.</param>
         /// <param name="autoSave">Whether the dataset automatically autosave changes if a path is given (optional, default is false).</param>
-        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is true).</param>
         [JsonConstructor]
-        public Dataset(string name = Dataset.DefaultName, string filename = "", bool autoSave = false, bool useRelativePaths = true)
+        public Dataset(string name = Dataset.DefaultName, string filename = "", bool autoSave = false)
         {
             this.Name = name;
             this.Filename = filename;
             this.AutoSave = autoSave;
-            this.UseRelativePaths = useRelativePaths;
             this.InternalSessions = new List<Session>();
             if (this.AutoSave && filename == string.Empty)
             {
@@ -77,11 +75,6 @@ namespace Microsoft.Psi.Data
         /// Gets or sets a value indicating whether autosave is enabled.
         /// </summary>
         public bool AutoSave { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to use full or relative store paths.
-        /// </summary>
-        public bool UseRelativePaths { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether changes to this dataset have been saved.
@@ -204,11 +197,9 @@ namespace Microsoft.Psi.Data
         /// Saves this dataset.
         /// </summary>
         /// <param name="filename">The filename that indicates the location to save the dataset.</param>
-        /// <param name="useRelativePaths">Indicates whether to use full or relative store paths (optional, default is true).</param>
-        public void SaveAs(string filename, bool useRelativePaths = true)
+        public void SaveAs(string filename)
         {
             this.Filename = filename;
-            this.UseRelativePaths = useRelativePaths;
             this.Save();
         }
 
@@ -226,7 +217,7 @@ namespace Microsoft.Psi.Data
                 new JsonSerializerSettings()
                 {
                     // pass the dataset filename in the context to allow relative store paths to be computed using the RelativePathConverter
-                    Context = this.UseRelativePaths ? new StreamingContext(StreamingContextStates.File, this.Filename) : default,
+                    Context = new StreamingContext(StreamingContextStates.File, this.Filename),
                     Formatting = Formatting.Indented,
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
