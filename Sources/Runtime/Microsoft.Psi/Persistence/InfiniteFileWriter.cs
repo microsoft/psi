@@ -270,7 +270,8 @@ namespace Microsoft.Psi.Persistence
             // store the id of the new file in the old file and close it
             if (this.mappedFile != null)
             {
-                *(int*)this.freePointer = -newFileId; // end of file marker
+                // the id of the next file is encoded as a negative value to mark the end of the current file
+                *(int*)this.freePointer = -newFileId;
                 this.CloseCurrent(false);
             }
 

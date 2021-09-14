@@ -124,7 +124,9 @@ namespace Microsoft.Psi.Persistence
             this.remainingBlockSize = *(int*)(this.startPointer + this.currentPosition);
             if (this.remainingBlockSize == 0)
             {
-                // a zero block size means there is no more data to read (for now)
+                // A zero block size means there is no more data to read for now. This
+                // may change if more data is subsequently written to this extent, if
+                // it is open for simultaneous reading/writing.
                 return false;
             }
 
@@ -138,9 +140,10 @@ namespace Microsoft.Psi.Persistence
 #endif
             this.currentPosition += sizeof(int);
 
-            // eof?
+            // a negative remaining block size indicates we have reached the end of the extent
             if (this.remainingBlockSize < 0)
             {
+                // clear the start pointer and move to the next extent
                 this.startPointer = null;
                 return this.MoveNext();
             }
@@ -194,19 +197,21 @@ namespace Microsoft.Psi.Persistence
 
         private void LoadNextExtent()
         {
-            // get the name of the new file from the old file
+            // If there is a current extent open, it means we have reached the EOF and remainingBlockSize
+            // will be a negative number whose absolute value represents the next file extent id.
             if (this.mappedFile != null)
             {
-                this.fileId = -this.remainingBlockSize; // we've read the EOF when reading the remaining size
+                // Get the fileId of the next extent to load and close the current extent.
+                this.fileId = -this.remainingBlockSize;
                 this.CloseCurrent();
             }
 
-            string name = string.Format(InfiniteFileWriter.FileNameFormat, this.fileName, this.fileId);
+            string extentName = string.Format(InfiniteFileWriter.FileNameFormat, this.fileName, this.fileId);
 
             if (this.path != null)
             {
                 // create a new MMF from persisted file, if the file can be found
-                string fullName = System.IO.Path.Combine(this.path, name);
+                string fullName = System.IO.Path.Combine(this.path, extentName);
                 if (File.Exists(fullName))
                 {
                     int maxAttempts = 5;
@@ -237,7 +242,7 @@ namespace Microsoft.Psi.Persistence
             if (this.mappedFile == null)
             {
                 // attach to an in-memory MMF
-                this.mappedFile = MemoryMappedFile.OpenExisting(name);
+                this.mappedFile = MemoryMappedFile.OpenExisting(extentName);
             }
 
             this.view = this.mappedFile.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);
