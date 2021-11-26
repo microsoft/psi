@@ -141,10 +141,22 @@ namespace Microsoft.Psi.CognitiveServices.Face
                 {
                     var trainingStatus = await client.PersonGroup.GetTrainingStatusAsync(groupId);
                     await Task.Delay(throttleMs + 1000);
-                    loggingCallback?.Invoke("Training...");
-                    if (trainingStatus.Status == TrainingStatusType.Succeeded)
+                    if (trainingStatus.Status == TrainingStatusType.Nonstarted)
+                    {
+                        loggingCallback?.Invoke("Waiting...");
+                    }
+                    else if (trainingStatus.Status == TrainingStatusType.Running)
+                    {
+                        loggingCallback?.Invoke("Training...");
+                    }
+                    else if (trainingStatus.Status == TrainingStatusType.Succeeded)
                     {
                         loggingCallback?.Invoke("Done.");
+                        break;
+                    }
+                    else if (trainingStatus.Status == TrainingStatusType.Failed)
+                    {
+                        loggingCallback?.Invoke($"Failed: {trainingStatus.Message}");
                         break;
                     }
                 }
