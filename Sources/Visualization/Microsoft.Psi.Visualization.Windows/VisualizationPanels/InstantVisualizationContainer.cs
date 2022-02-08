@@ -10,6 +10,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Runtime.Serialization;
     using System.Windows;
     using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Views;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Newtonsoft.Json;
@@ -29,7 +30,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         public const int DefaultCellCount = 1;
 
-        private ObservableCollection<VisualizationPanel> panels = new ObservableCollection<VisualizationPanel>();
+        private ObservableCollection<VisualizationPanel> panels = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InstantVisualizationContainer"/> class.
@@ -76,7 +77,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <inheritdoc/>
-        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>();
+        public override List<VisualizationPanelType> CompatiblePanelTypes => new ();
 
         /// <summary>
         /// Gets the increase cell count command.
@@ -88,11 +89,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             int panelIndex = this.panels.IndexOf(panel);
 
-            PsiCommand command = new PsiCommand(
+            return new PsiCommand(
                         () => this.IncreaseCellCount(insertOnLeft ? panelIndex : panelIndex + 1),
                         this.Panels.Count < MaxCells);
-
-            return command;
         }
 
         /// <summary>
@@ -101,7 +100,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <param name="panel">The child panel to remove.</param>
         /// <returns>The complete relay command.</returns>
         public PsiCommand CreateRemoveCellCommand(VisualizationPanel panel) =>
-            new PsiCommand(() => this.RemoveCell(panel), true);
+            new (() => this.RemoveCell(panel), true);
 
         /// <summary>
         /// Replaces an instant visualization placeholder panel with an instant visualization panel.
@@ -128,14 +127,14 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             }
 
             // Disconnect the placeholder panel
-            oldPanel.PropertyChanged -= this.ChildVisualizationPanel_PropertyChanged;
+            oldPanel.PropertyChanged -= this.OnChildVisualizationPanelPropertyChanged;
             oldPanel.SetParentContainer(null);
 
             // Wire up the new panel
             newPanel.SetParentContainer(this.Container);
-            newPanel.ParentPanel = this;
+            newPanel.SetParentPanel(this);
             newPanel.Width = oldPanel.Width;
-            newPanel.PropertyChanged += this.ChildVisualizationPanel_PropertyChanged;
+            newPanel.PropertyChanged += this.OnChildVisualizationPanelPropertyChanged;
 
             // Replace the panel
             this.Panels[placeholderPanelIndex] = newPanel;
@@ -165,14 +164,14 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             foreach (VisualizationPanel panel in this.Panels)
             {
                 panel.SetParentContainer(container);
-                panel.ParentPanel = this;
+                panel.SetParentPanel(this);
             }
         }
 
         /// <inheritdoc/>
         public override List<IStreamVisualizationObject> GetDerivedStreamVisualizationObjects()
         {
-            List<IStreamVisualizationObject> streamMemberVisualizers = new List<IStreamVisualizationObject>();
+            var streamMemberVisualizers = new List<IStreamVisualizationObject>();
 
             foreach (VisualizationPanel visualizationPanel in this.Panels)
             {
@@ -192,10 +191,19 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             int panelIndex = this.Panels.IndexOf(panel);
 
             // Unhook and remove the child panel
-            panel.PropertyChanged -= this.ChildVisualizationPanel_PropertyChanged;
+            panel.PropertyChanged -= this.OnChildVisualizationPanelPropertyChanged;
             panel.Clear();
             this.Panels.Remove(panel);
             this.UpdateChildPanelMargins();
+        }
+
+        /// <inheritdoc/>
+        public override void UpdateStreamSources(SessionViewModel sessionViewModel)
+        {
+            foreach (var instantVisualizationPanel in this.Panels)
+            {
+                instantVisualizationPanel.UpdateStreamSources(sessionViewModel);
+            }
         }
 
         /// <inheritdoc />
@@ -224,15 +232,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             // Increases the cell count by adding a new empty placeholder visualization panel at the specified index
             VisualizationPanel panel = new InstantVisualizationPlaceholderPanel(this);
             panel.SetParentContainer(this.Container);
-            panel.ParentPanel = this;
+            panel.SetParentPanel(this);
             this.panels.Insert(index, panel);
-            panel.PropertyChanged += this.ChildVisualizationPanel_PropertyChanged;
+            panel.PropertyChanged += this.OnChildVisualizationPanelPropertyChanged;
             this.UpdateChildPanelMargins();
         }
 
-        private void ChildVisualizationPanel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnChildVisualizationPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(InstantVisualizationPlaceholderPanel.RelativeWidth))
+            if (e.PropertyName == nameof(InstantVisualizationPlaceholderPanel.RelativeWidth) ||
+                e.PropertyName == nameof(VisualizationPanel.Visible))
             {
                 this.ChildVisualizationPanelWidthChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -241,6 +250,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [OnDeserialized]
         private void OnDeserialized(StreamingContext context)
         {
+            foreach (var panel in this.panels)
+            {
+                panel.PropertyChanged += this.OnChildVisualizationPanelPropertyChanged;
+            }
+
             this.UpdateChildPanelMargins();
         }
     }

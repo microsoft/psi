@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
-    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using Microsoft.Psi.Common;
@@ -285,6 +284,35 @@ namespace Microsoft.Psi.Imaging
             {
                 return *(ushort*)((byte*)this.ImageData.ToPointer() + y * this.Stride + x * this.BitsPerPixel / 8);
             }
+        }
+
+        /// <summary>
+        /// Try to gets the value of a pixel in the depth image.
+        /// </summary>
+        /// <param name="x">Pixel's X coordinate.</param>
+        /// <param name="y">Pixel's Y coordinate.</param>
+        /// <param name="value">The output value of the pixel.</param>
+        /// <returns>True if a pixel value is returned, otherwise false.</returns>
+        public bool TryGetPixel(int x, int y, out ushort value)
+        {
+            value = 0;
+
+            if (x < 0 || x >= this.Width)
+            {
+                return false;
+            }
+
+            if (y < 0 || y >= this.Height)
+            {
+                return false;
+            }
+
+            unsafe
+            {
+                value = *(ushort*)((byte*)this.ImageData.ToPointer() + y * this.Stride + x * this.BitsPerPixel / 8);
+            }
+
+            return true;
         }
 
         /// <summary>

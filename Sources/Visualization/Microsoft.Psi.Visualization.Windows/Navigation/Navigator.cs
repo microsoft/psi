@@ -5,13 +5,14 @@ namespace Microsoft.Psi.Visualization.Navigation
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Windows;
     using System.Windows.Threading;
-
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -33,7 +34,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 
         // The dictionary of audio playback sources, keyed by audio visualization objects.  The audio
         // of all currently bound audio sources in this collection will be played during playback.
-        private readonly Dictionary<AudioVisualizationObject, StreamSource> audioPlaybackSources = new Dictionary<AudioVisualizationObject, StreamSource>();
+        private readonly Dictionary<AudioVisualizationObject, StreamSource> audioPlaybackSources = new ();
 
         private readonly int playTimerTickIntervalMs = 10;
 
@@ -70,6 +71,8 @@ namespace Microsoft.Psi.Visualization.Navigation
         // True if the timeline cursor should follow the mouse cursor when in manual navigation mode, otherwise false
         private bool cursorFollowsMouse = true;
 
+        private RelayCommand copyCursorTimeToClipboardCommand;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
         /// </summary>
@@ -96,6 +99,14 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// Occurs when the cursor changes.
         /// </summary>
         public event NavigatorTimeChangedHandler CursorChanged;
+
+        /// <summary>
+        /// Gets the command for copying the cursor time to clipboard.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand CopyCursorTimeToClipboardCommand
+            => this.copyCursorTimeToClipboardCommand ??= new RelayCommand(() => Clipboard.SetText(this.Cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
 
         /// <summary>
         /// Gets or the cursor mode.
@@ -372,17 +383,17 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Initializes a navigator with the properties of an existing navigator.
         /// </summary>
-        /// <param name="navigator">The existing navigator instance whoce properties should be copied.</param>
-        public void Initialize(Navigator navigator)
+        /// <param name="navigator">The existing navigator instance whose properties should be copied.</param>
+        public void CopyFrom(Navigator navigator)
         {
-            this.DataRange.SetRange(navigator.DataRange.AsTimeInterval);
-            this.ViewRange.SetRange(navigator.ViewRange.AsTimeInterval);
-            this.SelectionRange.SetRange(navigator.SelectionRange.AsTimeInterval);
-            this.Cursor = navigator.Cursor;
-            this.ShowAbsoluteTiming = navigator.ShowAbsoluteTiming;
-            this.ShowTimingRelativeToSessionStart = navigator.ShowTimingRelativeToSessionStart;
-            this.ShowTimingRelativeToSelectionStart = navigator.ShowTimingRelativeToSelectionStart;
-            this.CursorFollowsMouse = navigator.CursorFollowsMouse;
+            this.dataRange.Set(navigator.DataRange.AsTimeInterval);
+            this.viewRange.Set(navigator.ViewRange.AsTimeInterval);
+            this.selectionRange.Set(navigator.SelectionRange.AsTimeInterval);
+            this.cursor = navigator.Cursor;
+            this.showAbsoluteTiming = navigator.ShowAbsoluteTiming;
+            this.showTimingRelativeToSessionStart = navigator.ShowTimingRelativeToSessionStart;
+            this.showTimingRelativeToSelectionStart = navigator.ShowTimingRelativeToSelectionStart;
+            this.cursorFollowsMouse = navigator.CursorFollowsMouse;
         }
 
         /// <summary>
@@ -518,12 +529,12 @@ namespace Microsoft.Psi.Visualization.Navigation
             if (datetime > this.DataRange.EndTime)
             {
                 // Update the data range
-                this.DataRange.SetRange(this.DataRange.StartTime, datetime);
+                this.DataRange.Set(this.DataRange.StartTime, datetime);
 
                 // If we're in Live mode, scrub the viewport
                 if (this.CursorMode == CursorMode.Live)
                 {
-                    this.ViewRange.SetRange(this.DataRange.EndTime - this.liveCursorOffsetFromViewRangeStart, this.ViewRange.Duration);
+                    this.ViewRange.Set(this.DataRange.EndTime - this.liveCursorOffsetFromViewRangeStart, this.ViewRange.Duration);
 
                     // Set the cursor
                     this.Cursor = datetime;
@@ -538,7 +549,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <param name="end">The end of the time interval to zoom to.</param>
         public void Zoom(DateTime start, DateTime end)
         {
-            this.viewRange.SetRange(start, end);
+            this.viewRange.Set(start, end);
         }
 
         /// <summary>
@@ -549,7 +560,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         {
             DateTime viewCenter = this.viewRange.StartTime + TimeSpan.FromTicks(this.viewRange.Duration.Ticks / 2);
             TimeSpan halfViewDuration = TimeSpan.FromTicks((long)(this.viewRange.Duration.Ticks * ratio * 0.5));
-            this.viewRange.SetRange(viewCenter - halfViewDuration, viewCenter + halfViewDuration);
+            this.viewRange.Set(viewCenter - halfViewDuration, viewCenter + halfViewDuration);
         }
 
         /// <summary>
@@ -560,7 +571,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         {
             DateTime viewCenter = this.viewRange.StartTime + TimeSpan.FromTicks(this.viewRange.Duration.Ticks / 2);
             TimeSpan halfViewDuration = TimeSpan.FromTicks((long)(viewDuration.Ticks * 0.5));
-            this.viewRange.SetRange(viewCenter - halfViewDuration, viewCenter + halfViewDuration);
+            this.viewRange.Set(viewCenter - halfViewDuration, viewCenter + halfViewDuration);
         }
 
         /// <summary>
@@ -571,7 +582,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         {
             TimeSpan beforeDuration = TimeSpan.FromTicks((long)((this.Cursor.Ticks - this.viewRange.StartTime.Ticks) * ratio));
             TimeSpan afterDuration = TimeSpan.FromTicks((long)((this.viewRange.EndTime.Ticks - this.Cursor.Ticks) * ratio));
-            this.viewRange.SetRange(this.Cursor - beforeDuration, this.Cursor + afterDuration);
+            this.viewRange.Set(this.Cursor - beforeDuration, this.Cursor + afterDuration);
         }
 
         /// <summary>
@@ -581,7 +592,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         public void ZoomAroundCursor(TimeSpan viewDuration)
         {
             TimeSpan halfViewDuration = TimeSpan.FromTicks((long)(viewDuration.Ticks * 0.5));
-            this.viewRange.SetRange(this.Cursor - halfViewDuration, this.Cursor + halfViewDuration);
+            this.viewRange.Set(this.Cursor - halfViewDuration, this.Cursor + halfViewDuration);
         }
 
         /// <summary>
@@ -605,7 +616,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         public void ZoomToDataRange()
         {
-            this.viewRange.SetRange(this.dataRange.StartTime, this.dataRange.EndTime);
+            this.viewRange.Set(this.dataRange.StartTime, this.dataRange.EndTime);
         }
 
         /// <summary>
@@ -614,7 +625,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         public void ZoomToSelection()
         {
             TimeSpan padding = TimeSpan.FromTicks((long)(this.selectionRange.Duration.Ticks * this.zoomToSelectionPadding * 0.5));
-            this.viewRange.SetRange(this.selectionRange.StartTime - padding, this.selectionRange.EndTime + padding);
+            this.viewRange.Set(this.selectionRange.StartTime - padding, this.selectionRange.EndTime + padding);
         }
 
         /// <summary>
@@ -629,7 +640,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         public void ClearSelection()
         {
-            this.selectionRange.SetRange(DateTime.MinValue, DateTime.MaxValue);
+            this.selectionRange.Set(DateTime.MinValue, DateTime.MaxValue);
         }
 
         /// <summary>
@@ -731,7 +742,7 @@ namespace Microsoft.Psi.Visualization.Navigation
             // Set the view range to just the last 30 seconds of data
             if (this.DataRange.IsFinite)
             {
-                this.ViewRange.SetRange(this.DataRange.EndTime.AddSeconds(-DefaultLiveModeViewportWidthSeconds) - this.liveCursorOffsetFromViewRangeStart, new TimeSpan(0, 0, DefaultLiveModeViewportWidthSeconds));
+                this.ViewRange.Set(this.DataRange.EndTime.AddSeconds(-DefaultLiveModeViewportWidthSeconds) - this.liveCursorOffsetFromViewRangeStart, new TimeSpan(0, 0, DefaultLiveModeViewportWidthSeconds));
             }
         }
 
@@ -764,7 +775,7 @@ namespace Microsoft.Psi.Visualization.Navigation
             // Make sure the cursor is visible in the view window
             if (this.Cursor > this.ViewRange.EndTime)
             {
-                this.ViewRange.SetRange(this.Cursor, this.ViewRange.Duration);
+                this.ViewRange.Set(this.Cursor, this.ViewRange.Duration);
             }
 
             this.lastPlayTimerTickTime = now;
@@ -776,7 +787,7 @@ namespace Microsoft.Psi.Visualization.Navigation
             // so that the cursor is at the 20th percentile position in the view window.
             if ((this.Cursor < this.ViewRange.StartTime) || (this.Cursor > this.ViewRange.EndTime))
             {
-                this.ViewRange.SetRange(this.Cursor.AddTicks((long)(this.ViewRange.Duration.Ticks * -0.2d)), this.ViewRange.Duration);
+                this.ViewRange.Set(this.Cursor.AddTicks((long)(this.ViewRange.Duration.Ticks * -0.2d)), this.ViewRange.Duration);
             }
         }
 

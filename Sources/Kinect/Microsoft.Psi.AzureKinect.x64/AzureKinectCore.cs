@@ -4,18 +4,15 @@
 namespace Microsoft.Psi.AzureKinect
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Threading;
-    using System.Threading.Tasks;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Azure.Kinect.Sensor;
     using Microsoft.Psi;
     using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Components;
-    using Microsoft.Psi.DeviceManagement;
     using Microsoft.Psi.Imaging;
     using Image = Microsoft.Psi.Imaging.Image;
 

@@ -139,11 +139,12 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HeatmapColor) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HeatmapStatistics) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.Highlight) ||
-                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HighlightColor) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.HighlightOpacity) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.InfoTextSize) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.JoinColor) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.NodeColor) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowDeliveryPolicies) ||
+                e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowLossyDeliveryPoliciesAsDotted) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowEmitterNames) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowExporterConnections) ||
                 e.PropertyName == nameof(this.PipelineDiagnosticsVisualizationObject.ShowReceiverNames) ||
@@ -213,8 +214,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
                 if (edge != null && !e.RightButtonIsPressed)
                 {
-                    this.presenter.UpdateReceiverDiagnostics(
-                        this.presenter.DiagnosticsGraph.GetAllReceiverDiagnostics().FirstOrDefault(rd => rd.Id == (int)edge.UserData));
+                    this.presenter.UpdateReceiverDiagnostics(edge);
                 }
             }
         }

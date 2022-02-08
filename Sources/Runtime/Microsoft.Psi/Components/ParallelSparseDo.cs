@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelSparseDo{TIn, TBranchKey, TBranchIn}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="splitter">A function that generates a dictionary of key-value pairs for each given input message.</param>
         /// <param name="action">Action to perform in parallel.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>

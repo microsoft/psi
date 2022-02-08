@@ -5,7 +5,6 @@ namespace Microsoft.Psi.Visualization.Data
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Psi.Visualization.Collections;
 
     /// <summary>
     /// Defines an interface for providers of stream interval data.
@@ -40,6 +39,40 @@ namespace Microsoft.Psi.Visualization.Data
             ObservableKeyedViewMode viewMode,
             DateTime startTime,
             DateTime endTime,
+            uint tailCount,
+            Func<DateTime, DateTime> tailRange);
+
+        /// <summary>
+        /// Registers a subscriber to stream interval data.
+        /// </summary>
+        /// <param name="streamSource">A stream source that indicates the store and stream data that the client consumes.</param>
+        /// <returns>A unique subscriber id that should be provided when the subscriber unregisters.</returns>
+        public Guid RegisterStreamIntervalSubscriber(StreamSource streamSource);
+
+        /// <summary>
+        /// Unregisters a subscriber from stream interval data.
+        /// </summary>
+        /// <param name="subscriberId">The id that was returned to the subscriber when it registered.</param>
+        public void UnregisterStreamIntervalSubscriber(Guid subscriberId);
+
+        /// <summary>
+        /// Gets a view over the specified time range of the cached summary data.
+        /// </summary>
+        /// <typeparam name="TItem">The summary data type.</typeparam>
+        /// <param name="streamSource">The stream source indicating which stream to read from.</param>
+        /// <param name="viewMode">The view mode, which may be either fixed or live data.</param>
+        /// <param name="startTime">The start time of the view range.</param>
+        /// <param name="endTime">The end time of the view range.</param>
+        /// <param name="interval">The time interval each summary value should cover.</param>
+        /// <param name="tailCount">Not yet supported and should be set to zero.</param>
+        /// <param name="tailRange">Tail duration function. Computes the view range start time given an end time. Applies to live view mode only.</param>
+        /// <returns>A view over the cached summary data that covers the specified time range.</returns>
+        ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView ReadSummary<TItem>(
+            StreamSource streamSource,
+            ObservableKeyedViewMode viewMode,
+            DateTime startTime,
+            DateTime endTime,
+            TimeSpan interval,
             uint tailCount,
             Func<DateTime, DateTime> tailRange);
 

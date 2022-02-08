@@ -167,6 +167,78 @@ namespace Test.Psi
             }
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void DeliverOutOfOrderSequenceIdsShouldThrow()
+        {
+            var exceptionThrown = false;
+            try
+            {
+                using (var p = Pipeline.Create())
+                {
+                    var time = DateTime.UtcNow;
+                    var emitter = p.CreateEmitter<int>(this, "test");
+                    emitter.Deliver(123, new Envelope(time, time, emitter.Id, 2));
+                    emitter.Deliver(456, new Envelope(time.AddTicks(1), time.AddTicks(1), emitter.Id, 1)); // this should fail (posting with out of order sequence ID)
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                exceptionThrown = true;
+                Assert.IsTrue(ex.Message.StartsWith("Attempted to post a message with a sequence ID that is out of order"));
+            }
+
+            Assert.IsTrue(exceptionThrown);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DeliverOutOfOrderOriginatingTimesShouldThrow()
+        {
+            var exceptionThrown = false;
+            try
+            {
+                using (var p = Pipeline.Create())
+                {
+                    var time = DateTime.UtcNow;
+                    var emitter = p.CreateEmitter<int>(this, "test");
+                    emitter.Deliver(123, new Envelope(time, time, emitter.Id, 2));
+                    emitter.Deliver(456, new Envelope(time, time.AddTicks(1), emitter.Id, 3)); // this should fail (posting with non-increasing originating times)
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                exceptionThrown = true;
+                Assert.IsTrue(ex.Message.StartsWith("Attempted to post a message without strictly increasing originating times"));
+            }
+
+            Assert.IsTrue(exceptionThrown);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DeliverOutOfOrderCreationTimesShouldThrow()
+        {
+            var exceptionThrown = false;
+            try
+            {
+                using (var p = Pipeline.Create())
+                {
+                    var time = DateTime.UtcNow;
+                    var emitter = p.CreateEmitter<int>(this, "test");
+                    emitter.Deliver(123, new Envelope(time, time, emitter.Id, 2));
+                    emitter.Deliver(456, new Envelope(time.AddTicks(1), time.AddTicks(-1), emitter.Id, 3)); // this should fail (posting with out of order creation times)
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                exceptionThrown = true;
+                Assert.IsTrue(ex.Message.StartsWith("Attempted to post a message that is out of order in wall-clock time"));
+            }
+
+            Assert.IsTrue(exceptionThrown);
+        }
+
 #if DEBUG
         [TestMethod]
         [Timeout(60000)]

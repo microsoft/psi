@@ -20,6 +20,31 @@ namespace Microsoft.Psi.Diagnostics
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineDiagnostics"/> class.
         /// </summary>
+        /// <param name="id">Pipeline ID.</param>
+        /// <param name="name">Pipeline name.</param>
+        /// <param name="isPipelineRunning">Whether the pipeline is running (after started, before stopped).</param>
+        /// <param name="parentPipelineDiagnostics">Parent pipeline of this pipeline (it any).</param>
+        /// <param name="subpipelineDiagnostics">Subpipelines of this pipeline.</param>
+        /// <param name="pipelineElements">Elements in this pipeline.</param>
+        public PipelineDiagnostics(
+            int id,
+            string name,
+            bool isPipelineRunning,
+            PipelineDiagnostics parentPipelineDiagnostics,
+            PipelineDiagnostics[] subpipelineDiagnostics,
+            PipelineElementDiagnostics[] pipelineElements)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.IsPipelineRunning = isPipelineRunning;
+            this.ParentPipelineDiagnostics = parentPipelineDiagnostics;
+            this.SubpipelineDiagnostics = subpipelineDiagnostics ?? new PipelineDiagnostics[0];
+            this.PipelineElements = pipelineElements ?? new PipelineElementDiagnostics[0];
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PipelineDiagnostics"/> class.
+        /// </summary>
         /// <param name="pipelineDiagnosticsInternal">Internal pipeline diagnostics.</param>
         /// <param name="includeStoppedPipelines">Whether to include stopped pipelines.</param>
         /// <param name="includeStoppedPipelineElements">Whether to include stopped pipeline elements.</param>
@@ -62,19 +87,19 @@ namespace Microsoft.Psi.Diagnostics
         public bool IsPipelineRunning { get; private set; }
 
         /// <summary>
-        /// Gets elements in this pipeline.
+        /// Gets or sets elements in this pipeline.
         /// </summary>
-        public PipelineElementDiagnostics[] PipelineElements { get; private set; }
+        public PipelineElementDiagnostics[] PipelineElements { get; set; }
 
         /// <summary>
-        /// Gets parent pipeline of this pipeline (it any).
+        /// Gets or sets parent pipeline of this pipeline (it any).
         /// </summary>
-        public PipelineDiagnostics ParentPipelineDiagnostics { get; private set; }
+        public PipelineDiagnostics ParentPipelineDiagnostics { get; set; }
 
         /// <summary>
-        /// Gets subpipelines of this pipeline.
+        /// Gets or sets subpipelines of this pipeline.
         /// </summary>
-        public PipelineDiagnostics[] SubpipelineDiagnostics { get; private set; }
+        public PipelineDiagnostics[] SubpipelineDiagnostics { get; set; }
 
         /// <summary>
         /// Gets ancestor pipeline diagnostics.
@@ -141,6 +166,49 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         public class PipelineElementDiagnostics
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="PipelineElementDiagnostics"/> class.
+            /// </summary>
+            /// <param name="id">Pipeline element ID.</param>
+            /// <param name="name">Pipeline element name.</param>
+            /// <param name="typeName">Pipeline element type name.</param>
+            /// <param name="kind">Pipeline element kind.</param>
+            /// <param name="isRunning">Whether the pipeline element is running (after started, before stopped).</param>
+            /// <param name="finalized">Whether the pipeline element is finalized.</param>
+            /// <param name="diagnosticState">Diagnostic state for the pipeline element.</param>
+            /// <param name="pipelineId">ID of pipeline to which this element belongs.</param>
+            /// <param name="emitters">Pipeline element emitters.</param>
+            /// <param name="receivers">Pipeline element receivers.</param>
+            /// <param name="representsSubpipeline">Pipeline which this element represents (e.g. Subpipeline).</param>
+            /// <param name="connectorBridgeToPipelineElement">Bridge to pipeline element in another pipeline (e.g. Connectors).</param>
+            public PipelineElementDiagnostics(
+                int id,
+                string name,
+                string typeName,
+                PipelineElementKind kind,
+                bool isRunning,
+                bool finalized,
+                string diagnosticState,
+                int pipelineId,
+                EmitterDiagnostics[] emitters,
+                ReceiverDiagnostics[] receivers,
+                PipelineDiagnostics representsSubpipeline,
+                PipelineElementDiagnostics connectorBridgeToPipelineElement)
+            {
+                this.Id = id;
+                this.Name = name;
+                this.TypeName = typeName;
+                this.Kind = kind;
+                this.IsRunning = isRunning;
+                this.Finalized = finalized;
+                this.DiagnosticState = diagnosticState;
+                this.PipelineId = pipelineId;
+                this.Emitters = emitters;
+                this.Receivers = receivers;
+                this.RepresentsSubpipeline = representsSubpipeline;
+                this.ConnectorBridgeToPipelineElement = connectorBridgeToPipelineElement;
+            }
+
             /// <summary>
             /// Initializes a new instance of the <see cref="PipelineElementDiagnostics"/> class.
             /// </summary>
@@ -217,30 +285,30 @@ namespace Microsoft.Psi.Diagnostics
             public string DiagnosticState { get; }
 
             /// <summary>
-            /// Gets pipeline element emitters.
-            /// </summary>
-            public EmitterDiagnostics[] Emitters { get; }
-
-            /// <summary>
-            /// Gets pipeline element receivers.
-            /// </summary>
-            public ReceiverDiagnostics[] Receivers { get; }
-
-            /// <summary>
             /// Gets ID of pipeline to which this element belongs.
             /// </summary>
             public int PipelineId { get; }
 
             /// <summary>
-            /// Gets pipeline which this element represents (e.g. Subpipeline).
+            /// Gets or sets pipeline element emitters.
             /// </summary>
-            /// <remarks>This is used when a pipeline element is a pipeline (e.g. Subpipeline).</remarks>
-            public PipelineDiagnostics RepresentsSubpipeline { get; private set; }
+            public EmitterDiagnostics[] Emitters { get; set;  }
 
             /// <summary>
-            /// Gets bridge to pipeline element in another pipeline (e.g. Connectors).
+            /// Gets or sets pipeline element receivers.
             /// </summary>
-            public PipelineElementDiagnostics ConnectorBridgeToPipelineElement { get; private set; }
+            public ReceiverDiagnostics[] Receivers { get; set;  }
+
+            /// <summary>
+            /// Gets or sets pipeline which this element represents (e.g. Subpipeline).
+            /// </summary>
+            /// <remarks>This is used when a pipeline element is a pipeline (e.g. Subpipeline).</remarks>
+            public PipelineDiagnostics RepresentsSubpipeline { get; set; }
+
+            /// <summary>
+            /// Gets or sets bridge to pipeline element in another pipeline (e.g. Connectors).
+            /// </summary>
+            public PipelineElementDiagnostics ConnectorBridgeToPipelineElement { get; set; }
         }
 
         /// <summary>
@@ -248,6 +316,28 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         public class EmitterDiagnostics
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="EmitterDiagnostics"/> class.
+            /// </summary>
+            /// <param name="id">Emitter ID.</param>
+            /// <param name="name">Emitter name.</param>
+            /// <param name="type">Emitter type.</param>
+            /// <param name="pipelineElement">Pipeline element to which emitter belongs.</param>
+            /// <param name="targets">Emitter target receivers.</param>
+            public EmitterDiagnostics(
+                int id,
+                string name,
+                string type,
+                PipelineElementDiagnostics pipelineElement,
+                ReceiverDiagnostics[] targets)
+            {
+                this.Id = id;
+                this.Name = name;
+                this.Type = type;
+                this.PipelineElement = pipelineElement;
+                this.Targets = targets;
+            }
+
             /// <summary>
             /// Initializes a new instance of the <see cref="EmitterDiagnostics"/> class.
             /// </summary>
@@ -284,14 +374,14 @@ namespace Microsoft.Psi.Diagnostics
             public string Type { get; }
 
             /// <summary>
-            /// Gets pipeline element to which emitter belongs.
+            /// Gets or sets pipeline element to which emitter belongs.
             /// </summary>
-            public PipelineElementDiagnostics PipelineElement { get; private set; }
+            public PipelineElementDiagnostics PipelineElement { get; set; }
 
             /// <summary>
-            /// Gets emitter target receivers.
+            /// Gets or sets emitter target receivers.
             /// </summary>
-            public ReceiverDiagnostics[] Targets { get; private set; }
+            public ReceiverDiagnostics[] Targets { get; set; }
         }
 
         /// <summary>
@@ -299,6 +389,88 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         public class ReceiverDiagnostics
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ReceiverDiagnostics"/> class.
+            /// </summary>
+            /// <param name="id">Receiver ID.</param>
+            /// <param name="receiverName">Receiver name.</param>
+            /// <param name="deliveryPolicyName">Name of delivery policy used by receiver.</param>
+            /// <param name="typeName">Receiver type name.</param>
+            /// <param name="receiverIsThrottled">Whether receiver is throttled.</param>
+            /// <param name="lastDeliveryQueueSize">Delivery queue size at last message.</param>
+            /// <param name="avgDeliveryQueueSize">Average delivery queue size.</param>
+            /// <param name="totalMessageEmittedCount">Total count of emitted messages.</param>
+            /// <param name="windowMessageEmittedCount">Count of emitted messages in last averaging time window.</param>
+            /// <param name="totalMessageProcessedCount">Total count of processed messages.</param>
+            /// <param name="windowMessageProcessedCount">Count of processed messages in last averaging time window.</param>
+            /// <param name="totalMessageDroppedCount">Total count of dropped messages.</param>
+            /// <param name="windowMessageDroppedCount">Count of dropped messages in last averaging time window.</param>
+            /// <param name="lastMessageCreatedLatency">Latency with which the last message was created.</param>
+            /// <param name="avgMessageCreatedLatency">Average message created latency in last averaging time window.</param>
+            /// <param name="lastMessageEmittedLatency">Latency with which the last message was emitted.</param>
+            /// <param name="avgMessageEmittedLatency">Average message emitted latency in last averaging time window.</param>
+            /// <param name="lastMessageReceivedLatency">Latency with which the last message was received.</param>
+            /// <param name="avgMessageReceivedLatency">Average message received latency in last averaging time window.</param>
+            /// <param name="lastMessageProcessTime">Receiver processing time for the last message.</param>
+            /// <param name="avgMessageProcessTime">Average receiver processing time in last averaging time window.</param>
+            /// <param name="lastMessageSize">Message size for the last message.</param>
+            /// <param name="avgMessageSize">Average message size over in last averaging time window.</param>
+            /// <param name="pipelineElement">Pipeline element to which emitter belongs.</param>
+            /// <param name="source">Receiver's source emitter.</param>
+            public ReceiverDiagnostics(
+                int id,
+                string receiverName,
+                string deliveryPolicyName,
+                string typeName,
+                bool receiverIsThrottled,
+                double lastDeliveryQueueSize,
+                double avgDeliveryQueueSize,
+                int totalMessageEmittedCount,
+                int windowMessageEmittedCount,
+                int totalMessageProcessedCount,
+                int windowMessageProcessedCount,
+                int totalMessageDroppedCount,
+                int windowMessageDroppedCount,
+                double lastMessageCreatedLatency,
+                double avgMessageCreatedLatency,
+                double lastMessageEmittedLatency,
+                double avgMessageEmittedLatency,
+                double lastMessageReceivedLatency,
+                double avgMessageReceivedLatency,
+                double lastMessageProcessTime,
+                double avgMessageProcessTime,
+                double lastMessageSize,
+                double avgMessageSize,
+                PipelineElementDiagnostics pipelineElement,
+                EmitterDiagnostics source)
+            {
+                this.Id = id;
+                this.ReceiverName = receiverName;
+                this.DeliveryPolicyName = deliveryPolicyName;
+                this.TypeName = typeName;
+                this.ReceiverIsThrottled = receiverIsThrottled;
+                this.LastDeliveryQueueSize = lastDeliveryQueueSize;
+                this.AvgDeliveryQueueSize = avgDeliveryQueueSize;
+                this.TotalMessageEmittedCount = totalMessageEmittedCount;
+                this.WindowMessageEmittedCount = windowMessageEmittedCount;
+                this.TotalMessageProcessedCount = totalMessageProcessedCount;
+                this.WindowMessageProcessedCount = windowMessageProcessedCount;
+                this.TotalMessageDroppedCount = totalMessageDroppedCount;
+                this.WindowMessageDroppedCount = windowMessageDroppedCount;
+                this.LastMessageCreatedLatency = lastMessageCreatedLatency;
+                this.AvgMessageCreatedLatency = avgMessageCreatedLatency;
+                this.LastMessageEmittedLatency = lastMessageEmittedLatency;
+                this.AvgMessageEmittedLatency = avgMessageEmittedLatency;
+                this.LastMessageReceivedLatency = lastMessageReceivedLatency;
+                this.AvgMessageReceivedLatency = avgMessageReceivedLatency;
+                this.LastMessageProcessTime = lastMessageProcessTime;
+                this.AvgMessageProcessTime = avgMessageProcessTime;
+                this.LastMessageSize = lastMessageSize;
+                this.AvgMessageSize = avgMessageSize;
+                this.PipelineElement = pipelineElement;
+                this.Source = source;
+            }
+
             /// <summary>
             /// Initializes a new instance of the <see cref="ReceiverDiagnostics"/> class.
             /// </summary>
@@ -364,7 +536,7 @@ namespace Microsoft.Psi.Diagnostics
             public string DeliveryPolicyName { get; }
 
             /// <summary>
-            /// Gets receiver type.
+            /// Gets receiver type name.
             /// </summary>
             public string TypeName { get; }
 
@@ -464,14 +636,14 @@ namespace Microsoft.Psi.Diagnostics
             public double AvgMessageSize { get; }
 
             /// <summary>
-            /// Gets pipeline element to which emitter belongs.
+            /// Gets or sets pipeline element to which emitter belongs.
             /// </summary>
-            public PipelineElementDiagnostics PipelineElement { get; private set; }
+            public PipelineElementDiagnostics PipelineElement { get; set; }
 
             /// <summary>
-            /// Gets receiver's source emitter.
+            /// Gets or sets receiver's source emitter.
             /// </summary>
-            public EmitterDiagnostics Source { get; private set; }
+            public EmitterDiagnostics Source { get; set; }
         }
 
         /// <summary>

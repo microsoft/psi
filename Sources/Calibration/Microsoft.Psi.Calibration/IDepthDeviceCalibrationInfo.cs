@@ -44,7 +44,17 @@ namespace Microsoft.Psi.Calibration
         /// Converts a 3D point from depth camera coordinates into color image coordinates.
         /// </summary>
         /// <param name="point3D">The 3D point in depth camera coordinates.</param>
+        /// <param name="nullIfOutsideFieldOfView">Optional flag indicating whether to return null if point is outside the field of view (default true).</param>
         /// <returns>The 2D point in color image space.</returns>
-        Point2D ToColorSpace(Point3D point3D);
+        Point2D? GetPixelPosition(Point3D point3D, bool nullIfOutsideFieldOfView = true);
+
+        /// <summary>
+        /// Converts a 3D point from depth camera coordinates into color image coordinates.
+        /// </summary>
+        /// <param name="point3D">The 3D point in depth camera coordinates.</param>
+        /// <param name="pixelPosition">Output point containing the pixel position.</param>
+        /// <param name="nullIfOutsideFieldOfView">Optional flag indicating whether to return null if point is outside the field of view (default true).</param>
+        /// <returns>True if <paramref name="pixelPosition"/> is within field of view, otherwise false.</returns>
+        bool TryGetPixelPosition(Point3D point3D, out Point2D pixelPosition, bool nullIfOutsideFieldOfView = true);
     }
 }

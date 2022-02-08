@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="DepthImageEncoder"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to add this component to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="encoder">The depth image encoder to use.</param>
         public DepthImageEncoder(Pipeline pipeline, IDepthImageToStreamEncoder encoder)
             : base(pipeline)

@@ -73,7 +73,7 @@
 
         <!-- Annotation definition -->
         <Label Grid.Row="2" Grid.Column="0" Target="{Binding ElementName=AnnotationDefinitionComboBox}">Annotation _Definition</Label>
-        <ComboBox Grid.Row="2" Grid.Column="1" Name="AnnotationDefinitionComboBox" ItemsSource="{Binding AvailableAnnotationDefinitions}" SelectedIndex="0">
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="AnnotationSchemaComboBox" ItemsSource="{Binding AvailableAnnotationSchemas}" SelectedIndex="0">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}" />

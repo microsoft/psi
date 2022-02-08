@@ -8,6 +8,7 @@
     xmlns:cmd="http://www.galasoft.ch/mvvmlight"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:views="clr-namespace:Microsoft.Psi.Visualization.Views"
+    xmlns:visconv="clr-namespace:Microsoft.Psi.Visualization.Converters"
     Height="{Binding Height}"
     IsHitTestVisible="True">
 
@@ -16,9 +17,10 @@
         <Style TargetType="{x:Type ScrollViewer}">
             <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
         </Style>
+        <visconv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Control.Resources>
 
-    <Grid x:Name="PanelGrid" Background="Transparent" MouseMove="Root_MouseMove">
+    <Grid x:Name="PanelGrid" Background="Transparent">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -45,6 +47,7 @@
             </ItemsControl.FocusVisualStyle>
             <ItemsControl.ItemContainerStyle>
                 <Style>
+                    <Setter Property="Control.Visibility" Value="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <Setter Property="Control.Background" Value="Transparent" />
                     <Setter Property="Control.BorderBrush" Value="Transparent" />
                     <Setter Property="Control.Focusable" Value="False" />
@@ -73,6 +76,21 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
+
+        <Border Name="ReorderThumb" Width="15" Cursor="ScrollNS" VerticalAlignment="Stretch" HorizontalAlignment="Left" MouseMove="ReorderThumb_MouseMove" Background="{StaticResource CursorBrush}">
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=ReorderThumb}" Value="False">
+                            <Setter Property="Opacity" Value="0"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=ReorderThumb}" Value="True">
+                            <Setter Property="Opacity" Value="100"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
 
         <Thumb Height="3" Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0">
             <i:Interaction.Triggers>

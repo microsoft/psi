@@ -7,12 +7,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:Microsoft.Psi.Visualization.Views.Visuals2D"
     xmlns:vv="clr-namespace:Microsoft.Psi.Visualization.Views"
     mc:Ignorable="d" 
     d:DesignHeight="300" 
     d:DesignWidth="300">
+    
     <Grid Background="{StaticResource DarkBackgroundBrush}">
-        <TextBlock Text="{Binding Path=CurrentValue.Data}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}"/>
+        </Grid.Resources>
+
+        <Border Grid.Row="0" Padding="5,2,0,0">
+            <TextBlock Text="{Binding Name}" FontWeight="Bold"></TextBlock>
+        </Border>
+        <Border Grid.Row="1" Padding="5,2,0,0">
+            <ScrollViewer>
+                <TextBlock Text="{Binding Path=CurrentValue.Data}"/>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </vv:VisualizationObjectView>

@@ -15,6 +15,9 @@ namespace Microsoft.Psi.Serialization
         private SerializeDelegate<T> serializeImpl;
         private DeserializeDelegate<T> deserializeImpl;
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => false;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             var schema = TypeSchema.FromType(typeof(T), serializers.RuntimeVersion, this.GetType(), Version);

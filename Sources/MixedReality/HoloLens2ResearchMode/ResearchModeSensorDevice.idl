@@ -1,0 +1,173 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+namespace HoloLens2ResearchMode
+{
+    enum ResearchModeSensorType
+    {
+        LeftFront,
+        LeftLeft,
+        RightFront,
+        RightRight,
+        DepthAhat,
+        DepthLongThrow,
+        ImuAccel,
+        ImuGyro,
+        ImuMag,
+    };
+
+    struct Luid {
+        UInt32 LowPart;
+        Int32 HighPart;
+    };
+
+    struct ResearchModeSensorDescriptor
+    {
+        Luid sensorId;
+        ResearchModeSensorType sensorType;
+    };
+
+    enum ResearchModeSensorTimestampSource
+    {
+        UsbSof = 0,
+        Unknown = 1,
+        CenterOfExposure = 2,
+        Count = 3,
+    };
+
+    struct ResearchModeSensorTimestamp {
+        ResearchModeSensorTimestampSource Source;
+        UInt64 SensorTicks;
+        UInt64 SensorTicksPerSecond;
+        UInt64 HostTicks;
+        UInt64 HostTicksPerSecond;
+    };
+
+    struct ResearchModeSensorResolution
+    {
+        UInt32 Width;
+        UInt32 Height;
+        UInt32 Stride;
+        UInt32 BitsPerPixel;
+        UInt32 BytesPerPixel;
+    };
+
+    struct AccelDataStruct
+    {
+        UInt64 VinylHupTicks;
+        UInt64 SocTicks;
+        Single X;
+        Single Y;
+        Single Z;
+        Single temperature;
+    };
+
+    struct GyroDataStruct
+    {
+        UInt64 VinylHupTicks;
+        UInt64 SocTicks;
+        Single X;
+        Single Y;
+        Single Z;
+        Single temperature;
+    };
+
+    struct MagDataStruct
+    {
+        UInt64 VinylHupTicks;
+        UInt64 SocTicks;
+        Single X;
+        Single Y;
+        Single Z;
+    };
+
+    enum ResearchModeSensorConsent
+    {
+        DeniedBySystem = 0,
+        NotDeclaredByApp = 1,
+        DeniedByUser = 2,
+        UserPromptRequired = 3,
+        Allowed = 4,
+    };
+
+    runtimeclass ResearchModeSensorDevice : IResearchModeSensorDevicePerception, IResearchModeSensorDeviceConsent
+    {
+        ResearchModeSensorDevice();
+
+        Int32 GetSensorCount();
+        void DisableEyeSelection();
+        void EnableEyeSelection();
+        ResearchModeSensorDescriptor[] GetSensorDescriptors();
+        IResearchModeSensor GetSensor(ResearchModeSensorType sensorType);
+    };
+
+    runtimeclass ResearchModeCameraSensor : [default] IResearchModeSensor
+    {
+        // Note: the map methods return the HRESULT instead of throwing so we can detect legitimate failures
+        [noexcept] Int32 MapImagePointToCameraUnitPlane(Windows.Foundation.Point uv, out Windows.Foundation.Point xy);
+        [noexcept] Int32 MapCameraSpaceToImagePoint(Windows.Foundation.Point xy, out Windows.Foundation.Point uv);
+
+        Windows.Foundation.Numerics.Matrix4x4 GetCameraExtrinsicsMatrix();
+    };
+
+    runtimeclass ResearchModeImuSensor : [default] IResearchModeSensor
+    {
+    };
+
+    interface IResearchModeSensorDevicePerception
+    {
+        Guid GetRigNodeId();
+    };
+
+    interface IResearchModeSensorDeviceConsent
+    {
+        Windows.Foundation.IAsyncOperation<ResearchModeSensorConsent> RequestCameraAccessAsync();
+        Windows.Foundation.IAsyncOperation<ResearchModeSensorConsent> RequestIMUAccessAsync();
+    };
+
+    interface IResearchModeSensorFrame
+    {
+        ResearchModeSensorResolution GetResolution();
+
+        // For frames with batched samples this returns the time stamp for the first sample in the frame.
+        ResearchModeSensorTimestamp GetTimeStamp();
+    };
+
+    runtimeclass ResearchModeSensorVlcFrame : IResearchModeSensorFrame
+    {
+        UInt8[] GetBuffer();
+        UInt32 GetGain();
+        UInt64 GetExposure();
+    };
+
+    runtimeclass ResearchModeSensorDepthFrame : IResearchModeSensorFrame
+    {
+        UInt16[] GetBuffer();
+        UInt16[] GetAbDepthBuffer();
+        UInt8[] GetSigmaBuffer();
+    };
+
+    runtimeclass ResearchModeAccelFrame : IResearchModeSensorFrame
+    {
+        AccelDataStruct[] GetCalibratedAccelarationSamples();
+    };
+
+    runtimeclass ResearchModeGyroFrame : IResearchModeSensorFrame
+    {
+        GyroDataStruct[] GetCalibratedGyroSamples();
+    };
+
+    runtimeclass ResearchModeMagFrame : IResearchModeSensorFrame
+    {
+        MagDataStruct[] GetMagnetometerSamples();
+    };
+
+    interface IResearchModeSensor
+    {
+        void OpenStream();
+        void CloseStream();
+        String GetFriendlyName();
+        ResearchModeSensorType GetSensorType();
+        IResearchModeSensorFrame GetNextBuffer();
+    };
+}

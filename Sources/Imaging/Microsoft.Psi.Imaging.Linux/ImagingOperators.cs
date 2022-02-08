@@ -85,7 +85,7 @@ namespace Microsoft.Psi.Imaging
                 _ => throw new ArgumentException($"Unsupported pixel format: {image.PixelFormat}"),
             };
             var info = new SKImageInfo(image.Width, image.Height, colorType);
-            return SKImage.FromPixelData(info, data, image.Stride);
+            return SKImage.FromPixels(info, data, image.Stride);
         }
     }
 }

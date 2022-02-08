@@ -18,7 +18,6 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.PsiStudio.Windows;
     using Microsoft.Psi.Visualization;
-    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
@@ -44,15 +43,15 @@ namespace Microsoft.Psi.PsiStudio
         private static readonly string PsiStudioLayoutsPath = Path.Combine(PsiStudioDocumentsPath, "Layouts");
 
         /// <summary>
-        /// The path to the annotations definitions directory.
+        /// The path to the annotations schemas directory.
         /// </summary>
-        private static readonly string PsiStudioAnnotationDefinitionsPath = Path.Combine(PsiStudioDocumentsPath, "AnnotationDefinitions");
+        private static readonly string PsiStudioAnnotationSchemasPath = Path.Combine(PsiStudioDocumentsPath, "AnnotationSchemas");
 
         private readonly TimeSpan nudgeTimeSpan = TimeSpan.FromSeconds(1 / 30.0);
         private readonly TimeSpan jumpTimeSpan = TimeSpan.FromSeconds(1 / 6.0);
         private readonly string newLayoutName = "<New>";
-        private List<LayoutInfo> availableLayouts = new List<LayoutInfo>();
-        private List<AnnotationDefinition> annotationDefinitions;
+        private List<LayoutInfo> availableLayouts = new ();
+        private List<AnnotationSchema> annotationSchemas;
         private LayoutInfo currentLayout = null;
 
         /// <summary>
@@ -102,6 +101,7 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand saveLayoutCommand;
         private RelayCommand saveLayoutAsCommand;
         private RelayCommand clearLayoutCommand;
+        private RelayCommand deleteLayoutCommand;
         private RelayCommand expandDatasetsTreeCommand;
         private RelayCommand collapseDatasetsTreeCommand;
         private RelayCommand expandVisualizationsTreeCommand;
@@ -112,6 +112,8 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand<string> treeSelectedCommand;
         private RelayCommand closedCommand;
         private RelayCommand exitCommand;
+        private RelayCommand autoSaveDatasetsCommand;
+        private RelayCommand autoLoadMRUDatasetOnStartupCommand;
 
         ////private RelayCommand showSettingsWindowComand;
 
@@ -125,11 +127,11 @@ namespace Microsoft.Psi.PsiStudio
 
             // Wait until the main window is visible before initializing the visualizer
             // map as we may need to display some message boxes during this process.
-            Application.Current.MainWindow.ContentRendered += this.MainWindow_Activated;
+            Application.Current.MainWindow.ContentRendered += this.OnMainWindowContentRendered;
 
             // Listen for property change events from the visualization context (specifically when the visualization container changes)
-            VisualizationContext.Instance.PropertyChanging += this.VisualizationContext_PropertyChanging;
-            VisualizationContext.Instance.PropertyChanged += this.VisualizationContext_PropertyChanged;
+            VisualizationContext.Instance.PropertyChanging += this.OnVisualizationContextPropertyChanging;
+            VisualizationContext.Instance.PropertyChanged += this.OnVisualizationContextPropertyChanged;
 
             // Listen for events that occur when some part of a visualization object requests to have its properties displayed in the property browser.
             VisualizationContext.Instance.RequestDisplayObjectProperties += (sender, e) => this.SelectedPropertiesObject = e.Object;
@@ -177,7 +179,7 @@ namespace Microsoft.Psi.PsiStudio
         {
             get
             {
-                StringBuilder text = new StringBuilder("Platform for Situated Intelligence Studio");
+                var text = new StringBuilder("Platform for Situated Intelligence Studio");
                 if (VisualizationContext.Instance.DatasetViewModel != null)
                 {
                     text.Append(" - ");
@@ -201,19 +203,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand PlayPauseCommand
-        {
-            get
-            {
-                if (this.playPauseCommand == null)
-                {
-                    this.playPauseCommand = new RelayCommand(
-                        () => VisualizationContext.Instance.PlayOrPause(),
-                        () => this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.playPauseCommand;
-            }
-        }
+            => this.playPauseCommand ??= new RelayCommand(
+                () => VisualizationContext.Instance.PlayOrPause(),
+                () => this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the toggle cursor follows mouse command.
@@ -221,18 +213,8 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ToggleCursorFollowsMouseComand
-        {
-            get
-            {
-                if (this.toggleCursorFollowsMouseComand == null)
-                {
-                    this.toggleCursorFollowsMouseComand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.CursorFollowsMouse = !this.VisualizationContainer.Navigator.CursorFollowsMouse);
-                }
-
-                return this.toggleCursorFollowsMouseComand;
-            }
-        }
+            => this.toggleCursorFollowsMouseComand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.CursorFollowsMouse = !this.VisualizationContainer.Navigator.CursorFollowsMouse);
 
         /// <summary>
         /// Gets the nudge cursor right command.
@@ -240,19 +222,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand NudgeRightCommand
-        {
-            get
-            {
-                if (this.nudgeRightCommand == null)
-                {
-                    this.nudgeRightCommand = new RelayCommand(
-                        () => this.MoveCursorBy(this.nudgeTimeSpan, NearestMessageType.Next),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.nudgeRightCommand;
-            }
-        }
+            => this.nudgeRightCommand ??= new RelayCommand(
+                () => this.MoveCursorBy(this.nudgeTimeSpan, NearestMessageType.Next),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the nudge cursor left command.
@@ -260,19 +232,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand NudgeLeftCommand
-        {
-            get
-            {
-                if (this.nudgeLeftCommand == null)
-                {
-                    this.nudgeLeftCommand = new RelayCommand(
-                        () => this.MoveCursorBy(-this.nudgeTimeSpan, NearestMessageType.Previous),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.nudgeLeftCommand;
-            }
-        }
+            => this.nudgeLeftCommand ??= new RelayCommand(
+                () => this.MoveCursorBy(-this.nudgeTimeSpan, NearestMessageType.Previous),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the jump cursor right command.
@@ -280,19 +242,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand JumpRightCommand
-        {
-            get
-            {
-                if (this.jumpRightCommand == null)
-                {
-                    this.jumpRightCommand = new RelayCommand(
-                        () => this.MoveCursorBy(this.jumpTimeSpan, NearestMessageType.Next),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.jumpRightCommand;
-            }
-        }
+            => this.jumpRightCommand ??= new RelayCommand(
+                () => this.MoveCursorBy(this.jumpTimeSpan, NearestMessageType.Next),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the jump cursor left command.
@@ -300,19 +252,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand JumpLeftCommand
-        {
-            get
-            {
-                if (this.jumpLeftCommand == null)
-                {
-                    this.jumpLeftCommand = new RelayCommand(
-                        () => this.MoveCursorBy(-this.jumpTimeSpan, NearestMessageType.Previous),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.jumpLeftCommand;
-            }
-        }
+            => this.jumpLeftCommand ??= new RelayCommand(
+                () => this.MoveCursorBy(-this.jumpTimeSpan, NearestMessageType.Previous),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the open store command.
@@ -320,34 +262,29 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand OpenStoreCommand
-        {
-            get
-            {
-                if (this.openStoreCommand == null)
+            => this.openStoreCommand ??= new RelayCommand(
+                async () =>
                 {
-                    this.openStoreCommand = new RelayCommand(
-                        async () =>
+                    var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
+                    var openFileDialog = new OpenFileDialog
+                    {
+                        DefaultExt = ".psi",
+                        Filter = string.Join("|", formats.Select(f => $"{f.Name}|*{f.Extensions}")),
+                    };
+
+                    bool? result = openFileDialog.ShowDialog(Application.Current.MainWindow);
+                    if (result == true)
+                    {
+                        string filename = openFileDialog.FileName;
+                        await VisualizationContext.Instance.OpenDatasetAsync(filename, true, this.AppSettings.AutoSaveDatasets);
+                        if (this.AppSettings.AutoLoadMRUDatasetOnStartUp)
                         {
-                            var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
-                            OpenFileDialog dlg = new OpenFileDialog
-                            {
-                                DefaultExt = ".psi",
-                                Filter = string.Join("|", formats.Select(f => $"{f.Name}|*{f.Extensions}")),
-                            };
+                            this.AppSettings.MRUDatasetFilename = filename;
+                        }
 
-                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
-                            if (result == true)
-                            {
-                                string filename = dlg.FileName;
-                                await VisualizationContext.Instance.OpenDatasetAsync(filename, autoSave: this.AppSettings.AutoSaveDatasets);
-                                this.EnsureDerivedStreamTreeNodesExist();
-                            }
-                        });
-                }
-
-                return this.openStoreCommand;
-            }
-        }
+                        this.EnsureDerivedStreamTreeNodesExist();
+                    }
+                });
 
         /// <summary>
         /// Gets the open dataset command.
@@ -355,33 +292,28 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand OpenDatasetCommand
-        {
-            get
-            {
-                if (this.openDatasetCommand == null)
+            => this.openDatasetCommand ??= new RelayCommand(
+                async () =>
                 {
-                    this.openDatasetCommand = new RelayCommand(
-                        async () =>
+                    var openFileDialog = new OpenFileDialog
+                    {
+                        DefaultExt = ".pds",
+                        Filter = "Psi Dataset (.pds)|*.pds",
+                    };
+
+                    bool? result = openFileDialog.ShowDialog(Application.Current.MainWindow);
+                    if (result == true)
+                    {
+                        string filename = openFileDialog.FileName;
+                        await VisualizationContext.Instance.OpenDatasetAsync(filename, true, this.AppSettings.AutoSaveDatasets);
+                        this.EnsureDerivedStreamTreeNodesExist();
+
+                        if (this.AppSettings.AutoLoadMRUDatasetOnStartUp)
                         {
-                            OpenFileDialog dlg = new OpenFileDialog
-                            {
-                                DefaultExt = ".pds",
-                                Filter = "Psi Dataset (.pds)|*.pds",
-                            };
-
-                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
-                            if (result == true)
-                            {
-                                string filename = dlg.FileName;
-                                await VisualizationContext.Instance.OpenDatasetAsync(filename, autoSave: this.AppSettings.AutoSaveDatasets);
-                                this.EnsureDerivedStreamTreeNodesExist();
-                            }
-                        });
-                }
-
-                return this.openDatasetCommand;
-            }
-        }
+                            this.AppSettings.MRUDatasetFilename = filename;
+                        }
+                    }
+                });
 
         /// <summary>
         /// Gets the save dataset command.
@@ -389,34 +321,24 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SaveDatasetAsCommand
-        {
-            get
-            {
-                if (this.saveDatasetAsCommand == null)
+            => this.saveDatasetAsCommand ??= new RelayCommand(
+                async () =>
                 {
-                    this.saveDatasetAsCommand = new RelayCommand(
-                        async () =>
-                        {
-                            SaveFileDialog dlg = new SaveFileDialog
-                            {
-                                DefaultExt = ".pds",
-                                Filter = "Psi Dataset (.pds)|*.pds",
-                            };
+                    var saveFileDialog = new SaveFileDialog
+                    {
+                        DefaultExt = ".pds",
+                        Filter = "Psi Dataset (.pds)|*.pds",
+                    };
 
-                            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
-                            if (result == true)
-                            {
-                                string filename = dlg.FileName;
+                    bool? result = saveFileDialog.ShowDialog(Application.Current.MainWindow);
+                    if (result == true)
+                    {
+                        string filename = saveFileDialog.FileName;
 
-                                // this should be a relatively quick operation so no need to show progress
-                                await VisualizationContext.Instance.DatasetViewModel.SaveAsAsync(filename);
-                            }
-                        });
-                }
-
-                return this.saveDatasetAsCommand;
-            }
-        }
+                        // this should be a relatively quick operation so no need to show progress
+                        await VisualizationContext.Instance.DatasetViewModel.SaveAsAsync(filename);
+                    }
+                });
 
         /// <summary>
         /// Gets the insert timeline panel command.
@@ -424,17 +346,8 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand InsertTimelinePanelCommand
-        {
-            get
-            {
-                if (this.insertTimelinePanelCommand == null)
-                {
-                    this.insertTimelinePanelCommand = new RelayCommand(() => VisualizationContext.Instance.VisualizationContainer.AddPanel(new TimelineVisualizationPanel()));
-                }
-
-                return this.insertTimelinePanelCommand;
-            }
-        }
+            => this.insertTimelinePanelCommand ??= new RelayCommand(
+                () => VisualizationContext.Instance.VisualizationContainer.AddPanel(new TimelineVisualizationPanel()));
 
         /// <summary>
         /// Gets the insert 1 cell instant panel command.
@@ -442,17 +355,8 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand Insert1CellInstantPanelCommand
-        {
-            get
-            {
-                if (this.insert1CellInstantPanelCommand == null)
-                {
-                    this.insert1CellInstantPanelCommand = new RelayCommand(() => VisualizationContext.Instance.VisualizationContainer.AddPanel(new InstantVisualizationContainer(1)));
-                }
-
-                return this.insert1CellInstantPanelCommand;
-            }
-        }
+            => this.insert1CellInstantPanelCommand ??= new RelayCommand(
+                () => VisualizationContext.Instance.VisualizationContainer.AddPanel(new InstantVisualizationContainer(1)));
 
         /// <summary>
         /// Gets the insert 2 cell instant panel command.
@@ -460,17 +364,8 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand Insert2CellInstantPanelCommand
-        {
-            get
-            {
-                if (this.insert2CellInstantPanelCommand == null)
-                {
-                    this.insert2CellInstantPanelCommand = new RelayCommand(() => VisualizationContext.Instance.VisualizationContainer.AddPanel(new InstantVisualizationContainer(2)));
-                }
-
-                return this.insert2CellInstantPanelCommand;
-            }
-        }
+            => this.insert2CellInstantPanelCommand ??= new RelayCommand(
+                () => VisualizationContext.Instance.VisualizationContainer.AddPanel(new InstantVisualizationContainer(2)));
 
         /// <summary>
         /// Gets the insert 3 cell instant panel command.
@@ -478,17 +373,8 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand Insert3CellInstantPanelCommand
-        {
-            get
-            {
-                if (this.insert3CellInstantPanelCommand == null)
-                {
-                    this.insert3CellInstantPanelCommand = new RelayCommand(() => VisualizationContext.Instance.VisualizationContainer.AddPanel(new InstantVisualizationContainer(3)));
-                }
-
-                return this.insert3CellInstantPanelCommand;
-            }
-        }
+            => this.insert3CellInstantPanelCommand ??= new RelayCommand(
+                () => VisualizationContext.Instance.VisualizationContainer.AddPanel(new InstantVisualizationContainer(3)));
 
         /// <summary>
         /// Gets the zoom to session extents command.
@@ -496,19 +382,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ZoomToSessionExtentsCommand
-        {
-            get
-            {
-                if (this.zoomToSessionExtentsCommand == null)
-                {
-                    this.zoomToSessionExtentsCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.ZoomToDataRange(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.zoomToSessionExtentsCommand;
-            }
-        }
+            => this.zoomToSessionExtentsCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.ZoomToDataRange(),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the zoom to selection command.
@@ -516,19 +392,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ZoomToSelectionCommand
-        {
-            get
-            {
-                if (this.zoomToSelectionCommand == null)
-                {
-                    this.zoomToSelectionCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.ZoomToSelection(),
-                        () => this.VisualizationContainer.Navigator.CanZoomToSelection());
-                }
-
-                return this.zoomToSelectionCommand;
-            }
-        }
+            => this.zoomToSelectionCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.ZoomToSelection(),
+                () => this.VisualizationContainer.Navigator.CanZoomToSelection());
 
         /// <summary>
         /// Gets the clear selection command.
@@ -536,19 +402,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ClearSelectionCommand
-        {
-            get
-            {
-                if (this.clearSelectionCommand == null)
-                {
-                    this.clearSelectionCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.ClearSelection(),
-                        () => this.VisualizationContainer.Navigator.CanClearSelection());
-                }
-
-                return this.clearSelectionCommand;
-            }
-        }
+            => this.clearSelectionCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.ClearSelection(),
+                () => this.VisualizationContainer.Navigator.CanClearSelection());
 
         /// <summary>
         /// Gets the command to move the cursor to the selection start.
@@ -556,19 +412,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand MoveCursorToSelectionStartCommand
-        {
-            get
-            {
-                if (this.moveToSelectionStartCommand == null)
-                {
-                    this.moveToSelectionStartCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.MoveCursorToSelectionStart(),
-                        () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionStart());
-                }
-
-                return this.moveToSelectionStartCommand;
-            }
-        }
+            => this.moveToSelectionStartCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.MoveCursorToSelectionStart(),
+                () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionStart());
 
         /// <summary>
         /// Gets the toggle play repeat command.
@@ -576,19 +422,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand TogglePlayRepeatCommand
-        {
-            get
-            {
-                if (this.togglePlayRepeatCommand == null)
-                {
-                    this.togglePlayRepeatCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.RepeatPlayback = !this.VisualizationContainer.Navigator.RepeatPlayback,
-                        () => VisualizationContext.Instance.IsDatasetLoaded());
-                }
-
-                return this.togglePlayRepeatCommand;
-            }
-        }
+            => this.togglePlayRepeatCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.RepeatPlayback = !this.VisualizationContainer.Navigator.RepeatPlayback,
+                () => VisualizationContext.Instance.IsDatasetLoaded());
 
         /// <summary>
         /// Gets the command to move the cursor to the selection end.
@@ -596,19 +432,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand MoveCursorToSelectionEndCommand
-        {
-            get
-            {
-                if (this.moveToSelectionEndCommand == null)
-                {
-                    this.moveToSelectionEndCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.MoveCursorToSelectionEnd(),
-                        () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionEnd());
-                }
-
-                return this.moveToSelectionEndCommand;
-            }
-        }
+            => this.moveToSelectionEndCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.MoveCursorToSelectionEnd(),
+                () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionEnd());
 
         /// <summary>
         /// Gets the increase play speed command.
@@ -616,19 +442,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand IncreasePlaySpeedCommand
-        {
-            get
-            {
-                if (this.increasePlaySpeedCommand == null)
-                {
-                    this.increasePlaySpeedCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.PlaySpeed *= 2,
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.increasePlaySpeedCommand;
-            }
-        }
+            => this.increasePlaySpeedCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.PlaySpeed *= 2,
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the decrease play speed command.
@@ -636,19 +452,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand DecreasePlaySpeedCommand
-        {
-            get
-            {
-                if (this.decreasePlaySpeedCommand == null)
-                {
-                    this.decreasePlaySpeedCommand = new RelayCommand(
-                        () => this.VisualizationContainer.Navigator.PlaySpeed /= 2,
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
-                }
-
-                return this.decreasePlaySpeedCommand;
-            }
-        }
+            => this.decreasePlaySpeedCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.PlaySpeed /= 2,
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
 
         /// <summary>
         /// Gets the toggle live mode command.
@@ -656,19 +462,9 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ToggleLiveModeCommand
-        {
-            get
-            {
-                if (this.toggleLiveModeCommand == null)
-                {
-                    this.toggleLiveModeCommand = new RelayCommand(
-                        () => VisualizationContext.Instance.ToggleLiveMode(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel?.ContainsLivePartitions == true);
-                }
-
-                return this.toggleLiveModeCommand;
-            }
-        }
+            => this.toggleLiveModeCommand ??= new RelayCommand(
+                () => VisualizationContext.Instance.ToggleLiveMode(),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel?.ContainsLivePartitions == true);
 
         /// <summary>
         /// Gets the save layout command.
@@ -676,28 +472,18 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SaveLayoutCommand
-        {
-            get
-            {
-                if (this.saveLayoutCommand == null)
+            => this.saveLayoutCommand ??= new RelayCommand(
+                () =>
                 {
-                    this.saveLayoutCommand = new RelayCommand(
-                        () =>
-                        {
-                            if (this.CurrentLayout.Name == this.newLayoutName)
-                            {
-                                this.SaveLayoutAs();
-                            }
-                            else
-                            {
-                                this.VisualizationContainer.Save(this.CurrentLayout.Path);
-                            }
-                        });
-                }
-
-                return this.saveLayoutCommand;
-            }
-        }
+                    if (this.CurrentLayout.Name == this.newLayoutName)
+                    {
+                        this.SaveLayoutAs();
+                    }
+                    else
+                    {
+                        this.VisualizationContainer.Save(this.CurrentLayout.Path);
+                    }
+                });
 
         /// <summary>
         /// Gets the save layout command.
@@ -705,21 +491,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SaveLayoutAsCommand
-        {
-            get
-            {
-                if (this.saveLayoutAsCommand == null)
-                {
-                    this.saveLayoutAsCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.SaveLayoutAs();
-                        });
-                }
-
-                return this.saveLayoutAsCommand;
-            }
-        }
+            => this.saveLayoutAsCommand ??= new RelayCommand(() => this.SaveLayoutAs());
 
         /// <summary>
         /// Gets the clear layout command.
@@ -727,21 +499,15 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ClearLayoutCommand
-        {
-            get
-            {
-                if (this.clearLayoutCommand == null)
-                {
-                    this.clearLayoutCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.ClearLayout();
-                        });
-                }
+            => this.clearLayoutCommand ??= new RelayCommand(() => this.ClearLayout());
 
-                return this.clearLayoutCommand;
-            }
-        }
+        /// <summary>
+        /// Gets the delete layout command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand DeleteLayoutCommand
+            => this.deleteLayoutCommand ??= new RelayCommand(() => this.DeleteLayout(), () => this.CurrentLayout != this.AvailableLayouts[0]);
 
         /// <summary>
         /// Gets the expand all command.
@@ -749,17 +515,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ExpandDatasetsTreeCommand
-        {
-            get
-            {
-                if (this.expandDatasetsTreeCommand == null)
-                {
-                    this.expandDatasetsTreeCommand = new RelayCommand(() => this.ExpandDatasetsTree());
-                }
-
-                return this.expandDatasetsTreeCommand;
-            }
-        }
+            => this.expandDatasetsTreeCommand ??= new RelayCommand(() => this.ExpandDatasetsTree());
 
         /// <summary>
         /// Gets the collapse all command.
@@ -767,17 +523,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand CollapseDatasetsTreeCommand
-        {
-            get
-            {
-                if (this.collapseDatasetsTreeCommand == null)
-                {
-                    this.collapseDatasetsTreeCommand = new RelayCommand(() => this.CollapseDatasetsTree());
-                }
-
-                return this.collapseDatasetsTreeCommand;
-            }
-        }
+            => this.collapseDatasetsTreeCommand ??= new RelayCommand(() => this.CollapseDatasetsTree());
 
         /// <summary>
         /// Gets the expand visualizations tree command.
@@ -785,17 +531,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ExpandVisualizationsTreeCommand
-        {
-            get
-            {
-                if (this.expandVisualizationsTreeCommand == null)
-                {
-                    this.expandVisualizationsTreeCommand = new RelayCommand(() => this.ExpandVisualizationsTree());
-                }
-
-                return this.expandVisualizationsTreeCommand;
-            }
-        }
+            => this.expandVisualizationsTreeCommand ??= new RelayCommand(() => this.ExpandVisualizationsTree());
 
         /// <summary>
         /// Gets the collapse visualizations tree command.
@@ -803,17 +539,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand CollapseVisualizationsTreeCommand
-        {
-            get
-            {
-                if (this.collapseVisualizationsTreeCommand == null)
-                {
-                    this.collapseVisualizationsTreeCommand = new RelayCommand(() => this.CollapseVisualizationsTree());
-                }
-
-                return this.collapseVisualizationsTreeCommand;
-            }
-        }
+            => this.collapseVisualizationsTreeCommand ??= new RelayCommand(() => this.CollapseVisualizationsTree());
 
         /// <summary>
         /// Gets the synchronize trees command.
@@ -821,17 +547,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SynchronizeTreesCommand
-        {
-            get
-            {
-                if (this.synchronizeTreesCommand == null)
-                {
-                    this.synchronizeTreesCommand = new RelayCommand(() => this.SynchronizeDatasetsTreeToVisualizationsTree());
-                }
-
-                return this.synchronizeTreesCommand;
-            }
-        }
+            => this.synchronizeTreesCommand ??= new RelayCommand(() => this.SynchronizeDatasetsTreeToVisualizationsTree());
 
         /// <summary>
         /// Gets the selected visualization changed command.
@@ -839,33 +555,23 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<RoutedPropertyChangedEventArgs<object>> SelectedVisualizationChangedCommand
-        {
-            get
-            {
-                if (this.selectedVisualizationChangedCommand == null)
+            => this.selectedVisualizationChangedCommand ??= new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
+                e =>
                 {
-                    this.selectedVisualizationChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
-                        e =>
-                        {
-                            if (e.NewValue is VisualizationPanel visualizationPanel)
-                            {
-                                this.VisualizationContainer.CurrentPanel = visualizationPanel;
-                            }
-                            else if (e.NewValue is VisualizationObject visualizationObject)
-                            {
-                                this.VisualizationContainer.CurrentPanel = visualizationObject.Panel;
-                                visualizationObject.Panel.CurrentVisualizationObject = visualizationObject;
-                            }
+                    if (e.NewValue is VisualizationPanel visualizationPanel)
+                    {
+                        this.VisualizationContainer.CurrentPanel = visualizationPanel;
+                    }
+                    else if (e.NewValue is VisualizationObject visualizationObject)
+                    {
+                        this.VisualizationContainer.CurrentPanel = visualizationObject.Panel;
+                        visualizationObject.Panel.CurrentVisualizationObject = visualizationObject;
+                    }
 
-                            this.selectedVisualization = e.NewValue;
-                            this.SelectedPropertiesObject = e.NewValue;
-                            e.Handled = true;
-                        });
-                }
-
-                return this.selectedVisualizationChangedCommand;
-            }
-        }
+                    this.selectedVisualization = e.NewValue;
+                    this.SelectedPropertiesObject = e.NewValue;
+                    e.Handled = true;
+                });
 
         /// <summary>
         /// Gets the selected dataset changed command.
@@ -873,23 +579,13 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<RoutedPropertyChangedEventArgs<object>> SelectedDatasetChangedCommand
-        {
-            get
-            {
-                if (this.selectedDatasetChangedCommand == null)
+            => this.selectedDatasetChangedCommand ??= new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
+                e =>
                 {
-                    this.selectedDatasetChangedCommand = new RelayCommand<RoutedPropertyChangedEventArgs<object>>(
-                        e =>
-                        {
-                            this.selectedDatasetObject = e.NewValue;
-                            this.SelectedPropertiesObject = e.NewValue;
-                            e.Handled = true;
-                        });
-                }
-
-                return this.selectedDatasetChangedCommand;
-            }
-        }
+                    this.selectedDatasetObject = e.NewValue;
+                    this.SelectedPropertiesObject = e.NewValue;
+                    e.Handled = true;
+                });
 
         /// <summary>
         /// Gets the command that executes after the user clicks on either the datasets or the visualizations tree views.
@@ -897,30 +593,20 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<string> TreeSelectedCommand
-        {
-            get
-            {
-                if (this.treeSelectedCommand == null)
+            => this.treeSelectedCommand ??= new RelayCommand<string>(
+                e =>
                 {
-                    this.treeSelectedCommand = new RelayCommand<string>(
-                        e =>
-                        {
-                            // Update the properties view to show the properties
-                            // of the selected item in the appropriate tree view
-                            if (e == "VisualizationTreeView")
-                            {
-                                this.SelectedPropertiesObject = this.selectedVisualization;
-                            }
-                            else
-                            {
-                                this.SelectedPropertiesObject = this.selectedDatasetObject;
-                            }
-                        });
-                }
-
-                return this.treeSelectedCommand;
-            }
-        }
+                    // Update the properties view to show the properties
+                    // of the selected item in the appropriate tree view
+                    if (e == "VisualizationTreeView")
+                    {
+                        this.SelectedPropertiesObject = this.selectedVisualization;
+                    }
+                    else
+                    {
+                        this.SelectedPropertiesObject = this.selectedDatasetObject;
+                    }
+                });
 
         /// <summary>
         /// Gets the closed command.
@@ -928,25 +614,15 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ClosedCommand
-        {
-            get
-            {
-                if (this.closedCommand == null)
+            => this.closedCommand ??= new RelayCommand(
+                () =>
                 {
                     // Ensure playback is stopped before exiting
-                    this.closedCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
+                    this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
 
-                            // Explicitly dispose so that DataManager doesn't keep the app running for a while longer.
-                            DataManager.Instance?.Dispose();
-                        });
-                }
-
-                return this.closedCommand;
-            }
-        }
+                    // Explicitly dispose so that DataManager doesn't keep the app running for a while longer.
+                    DataManager.Instance?.Dispose();
+                });
 
         /// <summary>
         /// Gets the exit command.
@@ -954,17 +630,7 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ExitCommand
-        {
-            get
-            {
-                if (this.exitCommand == null)
-                {
-                    this.exitCommand = new RelayCommand(() => Application.Current.Shutdown());
-                }
-
-                return this.exitCommand;
-            }
-        }
+            => this.exitCommand ??= new RelayCommand(() => Application.Current.Shutdown());
 
         /// <summary>
         /// Gets the create annotation stream command.
@@ -972,17 +638,36 @@ namespace Microsoft.Psi.PsiStudio
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand CreateAnnotationStreamCommand
-        {
-            get
-            {
-                if (this.createAnnotationStreamCommand == null)
-                {
-                    this.createAnnotationStreamCommand = new RelayCommand(() => this.CreateAnnotationStream());
-                }
+            => this.createAnnotationStreamCommand ??= new RelayCommand(() => this.CreateAnnotationStream());
 
-                return this.createAnnotationStreamCommand;
-            }
-        }
+        /// <summary>
+        /// Gets the auto save datasets command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AutoSaveDatasetsCommand
+            => this.autoSaveDatasetsCommand ??= new RelayCommand(
+                () => this.AppSettings.AutoSaveDatasets = !this.AppSettings.AutoSaveDatasets);
+
+        /// <summary>
+        /// Gets the auto load MRU dataset on startup command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AutoLoadMRUDatasetOnStartupCommand
+            => this.autoLoadMRUDatasetOnStartupCommand ??= new RelayCommand(
+                () =>
+                {
+                    if (this.AppSettings.AutoLoadMRUDatasetOnStartUp)
+                    {
+                        this.AppSettings.MRUDatasetFilename = null;
+                        this.AppSettings.AutoLoadMRUDatasetOnStartUp = false;
+                    }
+                    else
+                    {
+                        this.AppSettings.AutoLoadMRUDatasetOnStartUp = true;
+                    }
+                });
 
         /*/// <summary>
         /// Gets the show settings window command.
@@ -1084,7 +769,7 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// Creates a new annotation stream in a partition.
         /// </summary>
-        public void CreateAnnotationStream()
+        public async void CreateAnnotationStream()
         {
             // Ensure there is a current session.
             SessionViewModel currentSession = VisualizationContext.Instance.DatasetViewModel?.CurrentSessionViewModel;
@@ -1093,18 +778,18 @@ namespace Microsoft.Psi.PsiStudio
                 return;
             }
 
-            CreateAnnotationStreamWindow dlg = new CreateAnnotationStreamWindow(currentSession.PartitionViewModels, this.annotationDefinitions, Application.Current.MainWindow);
-            if (dlg.ShowDialog() == true)
+            var createAnnotationStreamWindow = new CreateAnnotationStreamWindow(currentSession.PartitionViewModels, this.annotationSchemas, Application.Current.MainWindow);
+            if (createAnnotationStreamWindow.ShowDialog() == true)
             {
-                AnnotationDefinition annotationDefinition = dlg.SelectedAnnotationDefinition;
-                string streamName = dlg.StreamName;
+                var annotationSchema = createAnnotationStreamWindow.SelectedAnnotationSchema;
+                string streamName = createAnnotationStreamWindow.StreamName;
                 string storeName;
                 string storePath;
 
-                if (dlg.UseExistingPartition)
+                if (createAnnotationStreamWindow.UseExistingPartition)
                 {
                     // Get the partition that the stream will be created in
-                    PartitionViewModel partitionViewModel = currentSession.PartitionViewModels.FirstOrDefault(p => p.Name == dlg.ExistingPartitionName);
+                    PartitionViewModel partitionViewModel = currentSession.PartitionViewModels.FirstOrDefault(p => p.Name == createAnnotationStreamWindow.ExistingPartitionName);
 
                     // Make note of the partition's name and path so we can reload it later
                     storeName = partitionViewModel.StoreName;
@@ -1117,18 +802,18 @@ namespace Microsoft.Psi.PsiStudio
                         return;
                     }
 
-                    // Close the existing partition's store
-                    DataManager.Instance.CloseStore(storeName, storePath);
+                    // Unbind any visualization objects from the store.
+                    this.VisualizationContainer.UnbindVisualizationObjectsFromStore(partitionViewModel.StoreName, partitionViewModel.StorePath, partitionViewModel.Name);
                 }
                 else
                 {
                     // Make note of the new partition's name and path
-                    storeName = dlg.StoreName;
-                    storePath = dlg.StorePath;
+                    storeName = createAnnotationStreamWindow.StoreName;
+                    storePath = createAnnotationStreamWindow.StorePath;
                 }
 
                 // Create the progress window
-                var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Creating annotations stream {dlg.StreamName}");
+                var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Creating annotations stream {createAnnotationStreamWindow.StreamName}");
                 var progress = new Progress<double>(p =>
                 {
                     progressWindow.Progress = p;
@@ -1141,15 +826,16 @@ namespace Microsoft.Psi.PsiStudio
                 });
 
                 // Run the task to add the stream to the existing or new partition
-                if (dlg.UseExistingPartition)
+                Task addStreamTask;
+                if (createAnnotationStreamWindow.UseExistingPartition)
                 {
                     // Add the empty annotations stream to the existing partition
-                    Task.Run(() => PsiStore.AddStreamInPlace<TimeIntervalAnnotation, AnnotationDefinition>((storeName, storePath), streamName, annotationDefinition, true, progress));
+                    addStreamTask = Task.Run(() => PsiStore.AddStreamInPlace<TimeIntervalAnnotationSet, AnnotationSchema>((storeName, storePath), streamName, annotationSchema, true, progress));
                 }
                 else
                 {
                     // Create the new partition with the empty annotations stream
-                    Task.Run(() => PsiStore.CreateWithStream<TimeIntervalAnnotation, AnnotationDefinition>(storeName, storePath, streamName, annotationDefinition, progress));
+                    addStreamTask = Task.Run(() => PsiStore.CreateWithStream<TimeIntervalAnnotationSet, AnnotationSchema>(storeName, storePath, streamName, annotationSchema, progress));
                 }
 
                 // Show the modal progress window.  If the task has already completed then it will have
@@ -1161,6 +847,8 @@ namespace Microsoft.Psi.PsiStudio
                 catch (InvalidOperationException)
                 {
                 }
+
+                await addStreamTask;
 
                 // Add the partition to the session
                 currentSession.AddStorePartition(new PsiStoreStreamReader(storeName, storePath));
@@ -1212,7 +900,7 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
-        private async void MainWindow_Activated(object sender, EventArgs e)
+        private async void OnMainWindowContentRendered(object sender, EventArgs e)
         {
             if (!this.isInitialized)
             {
@@ -1221,8 +909,8 @@ namespace Microsoft.Psi.PsiStudio
                 // Initialize the visualizer map
                 this.InitializeVisualizerMap();
 
-                // Load the available annotation definitions
-                this.LoadAnnotationDefinitions();
+                // Load the available annotation schemas
+                this.LoadAnnotationSchemas();
 
                 // Open the current layout
                 this.OpenCurrentLayout();
@@ -1232,7 +920,12 @@ namespace Microsoft.Psi.PsiStudio
                 string[] args = Environment.GetCommandLineArgs();
                 if (args.Length > 1)
                 {
-                    await VisualizationContext.Instance.OpenDatasetAsync(args[1]);
+                    await VisualizationContext.Instance.OpenDatasetAsync(args[1], true, this.AppSettings.AutoSaveDatasets);
+                    this.EnsureDerivedStreamTreeNodesExist();
+                }
+                else if (this.AppSettings.AutoLoadMRUDatasetOnStartUp && this.AppSettings.MRUDatasetFilename != null)
+                {
+                    await VisualizationContext.Instance.OpenDatasetAsync(this.AppSettings.MRUDatasetFilename, true, this.AppSettings.AutoSaveDatasets);
                     this.EnsureDerivedStreamTreeNodesExist();
                 }
             }
@@ -1280,15 +973,15 @@ namespace Microsoft.Psi.PsiStudio
         private void InitializeVisualizerMap()
         {
             // The list of additional assemblies PsiStudio will load.
-            List<string> additionalAssemblies = new List<string>();
+            var additionalAssemblies = new List<string>();
 
             // If we have any additional assemblies to search for visualization
             // classes, display the security warning before proceeding.
             if ((this.AppSettings.AdditionalAssembliesList != null) && (this.AppSettings.AdditionalAssembliesList.Count > 0))
             {
-                AdditionalAssembliesWindow dlg = new AdditionalAssembliesWindow(Application.Current.MainWindow, this.AppSettings.AdditionalAssembliesList);
+                var additionalAssembliesWindow = new AdditionalAssembliesWindow(Application.Current.MainWindow, this.AppSettings.AdditionalAssembliesList);
 
-                if (dlg.ShowDialog() == true)
+                if (additionalAssembliesWindow.ShowDialog() == true)
                 {
                     additionalAssemblies.AddRange(this.AppSettings.AdditionalAssembliesList);
                 }
@@ -1301,20 +994,20 @@ namespace Microsoft.Psi.PsiStudio
         private void UpdateLayoutList()
         {
             // Create a new collection of layouts
-            List<LayoutInfo> layouts = new List<LayoutInfo>
+            var layouts = new List<LayoutInfo>
             {
                 new LayoutInfo(this.newLayoutName, null),
             };
 
             // Create the layouts directory if it doesn't already exist
-            DirectoryInfo directoryInfo = new DirectoryInfo(PsiStudioLayoutsPath);
+            var directoryInfo = new DirectoryInfo(PsiStudioLayoutsPath);
             if (!directoryInfo.Exists)
             {
                 Directory.CreateDirectory(PsiStudioLayoutsPath);
             }
 
             // Find all the layout files and add them to the list of available layouts
-            FileInfo[] files = directoryInfo.GetFiles("*.plo");
+            var files = directoryInfo.GetFiles("*.plo");
             foreach (FileInfo fileInfo in files)
             {
                 layouts.Add(new LayoutInfo(Path.GetFileNameWithoutExtension(fileInfo.FullName), fileInfo.FullName));
@@ -1332,12 +1025,12 @@ namespace Microsoft.Psi.PsiStudio
 
         private void SaveLayoutAs()
         {
-            LayoutNameWindow dlg = new LayoutNameWindow(Application.Current.MainWindow, PsiStudioLayoutsPath);
+            var layoutNameWindow = new LayoutNameWindow(Application.Current.MainWindow, PsiStudioLayoutsPath);
 
-            bool? result = dlg.ShowDialog();
+            bool? result = layoutNameWindow.ShowDialog();
             if (result == true)
             {
-                string fileName = Path.Combine(PsiStudioLayoutsPath, dlg.LayoutName);
+                string fileName = Path.Combine(PsiStudioLayoutsPath, layoutNameWindow.LayoutName);
 
                 // Save the layout
                 this.VisualizationContainer.Save(fileName);
@@ -1356,53 +1049,71 @@ namespace Microsoft.Psi.PsiStudio
             this.VisualizationContainer.Clear();
         }
 
-        private void LoadAnnotationDefinitions()
+        private void DeleteLayout()
         {
-            this.annotationDefinitions = new List<AnnotationDefinition>();
+            var result = new MessageBoxWindow(
+                Application.Current.MainWindow,
+                "Are you sure?",
+                $"Are you sure you want to delete the layout called \"{this.CurrentLayout.Name}\"? This will permanently delete it from disk.",
+                "Yes",
+                "Cancel").ShowDialog();
 
-            // Create the annotations definitions directory if it doesn't already exist
-            DirectoryInfo directoryInfo = new DirectoryInfo(PsiStudioAnnotationDefinitionsPath);
-            if (!directoryInfo.Exists)
+            if (result == true)
             {
-                Directory.CreateDirectory(PsiStudioAnnotationDefinitionsPath);
-            }
-
-            // Keep a list of annotation definitions that failed to load
-            List<string> annotationDefinitionLoadFailures = new List<string>();
-
-            // Find all the annotations definitions and add them to the list
-            FileInfo[] files = directoryInfo.GetFiles("*.pad");
-            foreach (FileInfo fileInfo in files)
-            {
-                AnnotationDefinition annotationDefinition = AnnotationDefinition.Load(fileInfo.FullName);
-                if (annotationDefinition != null)
-                {
-                    this.annotationDefinitions.Add(annotationDefinition);
-                }
-                else
-                {
-                    annotationDefinitionLoadFailures.Add(fileInfo.FullName);
-                }
-            }
-
-            if (annotationDefinitionLoadFailures.Count > 0)
-            {
-                this.ReportAnnotationDefinitionLoadFailures(annotationDefinitionLoadFailures);
+                var layoutName = this.CurrentLayout.Name;
+                this.CurrentLayout = this.AvailableLayouts[0];
+                File.Delete(Path.Combine(PsiStudioLayoutsPath, $"{layoutName}.plo"));
+                this.UpdateLayoutList();
             }
         }
 
-        private void ReportAnnotationDefinitionLoadFailures(List<string> annotationDefinitionLoadFailures)
+        private void LoadAnnotationSchemas()
         {
-            StringBuilder errorMessage = new StringBuilder();
-            errorMessage.AppendLine("The following Annotation Definitions could not be loaded because they contain unknown types:");
-            errorMessage.AppendLine();
-            foreach (string annotationDefinitionLoadFailure in annotationDefinitionLoadFailures)
+            this.annotationSchemas = new List<AnnotationSchema>();
+
+            // Create the annotations definitions directory if it doesn't already exist
+            var directoryInfo = new DirectoryInfo(PsiStudioAnnotationSchemasPath);
+            if (!directoryInfo.Exists)
             {
-                FileInfo fileInfo = new FileInfo(annotationDefinitionLoadFailure);
+                Directory.CreateDirectory(PsiStudioAnnotationSchemasPath);
+            }
+
+            // Keep a list of annotation schemas that failed to load
+            var annotationSchemaLoadFailures = new List<string>();
+
+            // Find all the annotation schema files and add them to the list
+            var fileInfos = directoryInfo.GetFiles("*.schema.json");
+            foreach (var fileInfo in fileInfos)
+            {
+                var annotationSchema = AnnotationSchema.Load(fileInfo.FullName);
+                if (annotationSchema != null)
+                {
+                    this.annotationSchemas.Add(annotationSchema);
+                }
+                else
+                {
+                    annotationSchemaLoadFailures.Add(fileInfo.FullName);
+                }
+            }
+
+            if (annotationSchemaLoadFailures.Count > 0)
+            {
+                this.ReportAnnotationSchemaLoadFailures(annotationSchemaLoadFailures);
+            }
+        }
+
+        private void ReportAnnotationSchemaLoadFailures(List<string> annotationSchemaLoadFailures)
+        {
+            var errorMessage = new StringBuilder();
+            errorMessage.AppendLine("The following annotation schemas could not be loaded (please check that they are in the correct format and that all the required types are available to PsiStudio):");
+            errorMessage.AppendLine();
+            foreach (string annotationSchemaLoadFailure in annotationSchemaLoadFailures)
+            {
+                var fileInfo = new FileInfo(annotationSchemaLoadFailure);
                 errorMessage.AppendLine(fileInfo.Name);
             }
 
-            new MessageBoxWindow(Application.Current.MainWindow, "Annotation Definition Load Error", errorMessage.ToString(), "Close", null).ShowDialog();
+            new MessageBoxWindow(Application.Current.MainWindow, "Annotation Schema Load Error", errorMessage.ToString(), "Close", null).ShowDialog();
         }
 
         private void ExpandDatasetsTree()
@@ -1474,24 +1185,21 @@ namespace Microsoft.Psi.PsiStudio
                 if (this.selectedVisualization is IStreamVisualizationObject streamVisualizationObject)
                 {
                     var streamBinding = streamVisualizationObject.StreamBinding;
-                    foreach (var sessionViewModel in VisualizationContext.Instance.DatasetViewModel.SessionViewModels)
+                    var partitionViewModel = VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == streamBinding.PartitionName);
+                    if (partitionViewModel != null)
                     {
-                        var partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == streamBinding.PartitionName);
-                        if (partitionViewModel != null)
+                        if (partitionViewModel.SelectNode(streamBinding.NodePath))
                         {
-                            if (partitionViewModel.SelectNode(streamBinding.NodePath))
-                            {
-                                sessionViewModel.IsTreeNodeExpanded = true;
-                                VisualizationContext.Instance.DatasetViewModel.IsTreeNodeExpanded = true;
-                                return;
-                            }
+                            VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel.IsTreeNodeExpanded = true;
+                            VisualizationContext.Instance.DatasetViewModel.IsTreeNodeExpanded = true;
+                            return;
                         }
                     }
                 }
             }
         }
 
-        private void VisualizationContext_PropertyChanging(object sender, PropertyChangingEventArgs e)
+        private void OnVisualizationContextPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
             if (e.PropertyName == nameof(VisualizationContext.VisualizationContainer))
             {
@@ -1515,7 +1223,7 @@ namespace Microsoft.Psi.PsiStudio
             }
         }
 
-        private void VisualizationContext_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnVisualizationContextPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(VisualizationContext.VisualizationContainer))
             {
@@ -1523,6 +1231,9 @@ namespace Microsoft.Psi.PsiStudio
                 if (VisualizationContext.Instance.VisualizationContainer != null)
                 {
                     VisualizationContext.Instance.VisualizationContainer.PropertyChanged += this.VisualizationContainer_PropertyChanged;
+
+                    // Update the window title to reflect any change in the snap-to stream
+                    this.RaisePropertyChanged(nameof(this.TitleText));
                 }
 
                 this.RaisePropertyChanged(nameof(this.VisualizationContainer));
@@ -1535,6 +1246,7 @@ namespace Microsoft.Psi.PsiStudio
                     VisualizationContext.Instance.DatasetViewModel.PropertyChanged += this.DatasetViewModel_PropertyChanged;
                 }
 
+                // Update the window title to reflect the new dataset
                 this.RaisePropertyChanged(nameof(this.TitleText));
             }
         }

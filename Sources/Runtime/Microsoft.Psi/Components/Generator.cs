@@ -39,7 +39,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to attach to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
         /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
         public Generator(Pipeline pipeline, bool isInfiniteSource = false)

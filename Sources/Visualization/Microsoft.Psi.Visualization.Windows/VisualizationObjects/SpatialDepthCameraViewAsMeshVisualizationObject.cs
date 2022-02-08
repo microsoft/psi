@@ -252,7 +252,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                         }
                         else
                         {
-                            var other = this.intrinsics.ToCameraSpace(new Point2D(ix, iy), this.rawDepth[i] * scale, true);
+                            var other = this.intrinsics.GetCameraSpacePosition(new Point2D(ix, iy), this.rawDepth[i] * scale, true);
                             this.depthFramePoints[i] = other.TransformBy(this.position).ToPoint3D();
                         }
                     }

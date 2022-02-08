@@ -125,7 +125,7 @@ import zmq, random, datetime, json
 
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.bind('tcp://127.0.0.1:12345')
+socket.bind('tcp://127.0.0.1:45678')
 
 while True:
     payload = {}
@@ -147,7 +147,7 @@ The stream of random doubles can then be easily consumed in Psi:
 ```csharp
 using (var p = Pipeline.Create())
 {
-    var mq = new NetMQSource<double>(p, "test-topic", "tcp://localhost:12345", JsonFormat.Instance);
+    var mq = new NetMQSource<double>(p, "test-topic", "tcp://localhost:45678", JsonFormat.Instance);
     mq.Do(x => Console.WriteLine($"Message: {x}"));
     p.Run();
 }

@@ -20,18 +20,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a diagnostics visualization object.
     /// </summary>
     [VisualizationObject("Diagnostics", null, IconSourcePath.Diagnostics, IconSourcePath.Diagnostics)]
-    [VisualizationPanelType(VisualizationPanelType.XY)]
+    [VisualizationPanelType(VisualizationPanelType.Canvas)]
     public class PipelineDiagnosticsVisualizationObject : StreamValueVisualizationObject<PipelineDiagnostics>
     {
         private GraphLayoutDirection layoutDirection = GraphLayoutDirection.LeftToRight;
         private bool showEmitterNames = false;
         private bool showReceiverNames = true;
         private bool showDeliveryPolicies = false;
+        private bool showLossyDeliveryPoliciesAsDotted = true;
         private bool showExporterConnections = false;
-        private HeatmapStats heatmapStats = HeatmapStats.AvgMessageReceivedLatency;
+        private HeatmapStats heatmapStats = HeatmapStats.None;
         private Color heatmapColor = Colors.Red;
         private HighlightCondition highlightCondition = HighlightCondition.None;
-        private Color highlightColor = Colors.Yellow;
+        private int highlightOpacity = 25;
         private double edgeLineThickness = 2;
         private Color edgeColor = Colors.White;
         private Color nodeColor = Colors.White;
@@ -222,12 +223,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to show lossy delivery policies as dotted.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Lossy Delivery Policies as Dotted")]
+        [Description("Shows all lossy delivery policies (everything except Unlimited, Synchronous and SynchronousOrThrottle with dotted lines.")]
+        [PropertyOrder(5)]
+        public bool ShowLossyDeliveryPoliciesAsDotted
+        {
+            get { return this.showLossyDeliveryPoliciesAsDotted; }
+            set { this.Set(nameof(this.ShowLossyDeliveryPoliciesAsDotted), ref this.showLossyDeliveryPoliciesAsDotted, value); }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to show exporter connections.
         /// </summary>
         [DataMember]
         [DisplayName("Show Exporter Links")]
         [Description("Show connections to data Exporters.")]
-        [PropertyOrder(5)]
+        [PropertyOrder(6)]
         public bool ShowExporterConnections
         {
             get { return this.showExporterConnections; }
@@ -240,7 +254,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Heatmap Statistics")]
         [Description("Select statistic used for heatmap visualization.")]
-        [PropertyOrder(6)]
+        [PropertyOrder(7)]
         public HeatmapStats HeatmapStatistics
         {
             get { return this.heatmapStats; }
@@ -253,7 +267,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Heatmap Base Color")]
         [Description("Base color used for heatmap visualization.")]
-        [PropertyOrder(7)]
+        [PropertyOrder(8)]
         public Color HeatmapColor
         {
             get { return this.heatmapColor; }
@@ -266,7 +280,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Highlight")]
         [Description("Select condition to highlight (overrides heatmap).")]
-        [PropertyOrder(8)]
+        [PropertyOrder(9)]
         public HighlightCondition Highlight
         {
             get { return this.highlightCondition; }
@@ -277,13 +291,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets highlight color.
         /// </summary>
         [DataMember]
-        [DisplayName("Highlight Color")]
-        [Description("Color used for highlighting.")]
-        [PropertyOrder(9)]
-        public Color HighlightColor
+        [DisplayName("Highlight Opacity")]
+        [Description("Opacity level (0-100) used when rendering unhighlighed edges when a highlight is selected.")]
+        [PropertyOrder(10)]
+        public int HighlightOpacity
         {
-            get { return this.highlightColor; }
-            set { this.Set(nameof(this.HighlightColor), ref this.highlightColor, value); }
+            get { return this.highlightOpacity; }
+            set { this.Set(nameof(this.HighlightOpacity), ref this.highlightOpacity, value); }
         }
 
         /// <summary>
@@ -292,7 +306,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Node Base Color")]
         [Description("Base color used for node visualization.")]
-        [PropertyOrder(10)]
+        [PropertyOrder(11)]
         public Color NodeColor
         {
             get { return this.nodeColor; }
@@ -305,7 +319,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Source Node Color")]
         [Description("Color used for source node visualization.")]
-        [PropertyOrder(11)]
+        [PropertyOrder(12)]
         public Color SourceNodeColor
         {
             get { return this.sourceNodeColor; }
@@ -318,7 +332,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Subpipeline Color")]
         [Description("Color used for subpipeline node visualization.")]
-        [PropertyOrder(12)]
+        [PropertyOrder(13)]
         public Color SubpipelineColor
         {
             get { return this.subpipelineColor; }
@@ -331,7 +345,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Connector Color")]
         [Description("Color used for connector node visualization.")]
-        [PropertyOrder(13)]
+        [PropertyOrder(14)]
         public Color ConnectorColor
         {
             get { return this.connectorColor; }
@@ -344,7 +358,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Join Color")]
         [Description("Color used for join node visualization.")]
-        [PropertyOrder(14)]
+        [PropertyOrder(15)]
         public Color JoinColor
         {
             get { return this.joinColor; }
@@ -357,7 +371,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Edge Color")]
         [Description("Color used for graph edges.")]
-        [PropertyOrder(15)]
+        [PropertyOrder(16)]
         public Color EdgeColor
         {
             get { return this.edgeColor; }
@@ -370,7 +384,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Edge Line Thickness")]
         [Description("Thickness used for graph edge line visualization.")]
-        [PropertyOrder(16)]
+        [PropertyOrder(17)]
         public double EdgeLineThickness
         {
             get { return this.edgeLineThickness; }
@@ -383,7 +397,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DataMember]
         [DisplayName("Info Text Size")]
         [Description("Text size used for info text visualization.")]
-        [PropertyOrder(17)]
+        [PropertyOrder(18)]
         public double InfoTextSize
         {
             get { return this.infoTextSize; }

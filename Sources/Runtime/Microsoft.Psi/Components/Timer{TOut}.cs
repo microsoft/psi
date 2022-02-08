@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Timer{TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="timerInterval">Time interval with which to produce messages.</param>
         /// <param name="generator">Message generation function.</param>
         public Timer(Pipeline pipeline, uint timerInterval, Func<DateTime, TimeSpan, TOut> generator)

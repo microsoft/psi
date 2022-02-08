@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Common
         /// <summary>
         /// Gets the current runtime info.
         /// </summary>
-        public static readonly RuntimeInfo Current = new RuntimeInfo();
+        public static readonly RuntimeInfo Current = new ();
 
         internal RuntimeInfo(int serializationSystemVersion = CurrentRuntimeVersion)
             : this(

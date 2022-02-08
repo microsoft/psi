@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleConsumer{TIn}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         public SimpleConsumer(Pipeline pipeline)
         {
             this.In = pipeline.CreateReceiver<TIn>(this, this.Receive, nameof(this.In));

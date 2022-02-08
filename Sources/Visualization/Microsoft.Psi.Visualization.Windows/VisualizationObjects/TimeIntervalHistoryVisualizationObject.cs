@@ -32,7 +32,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// The names of all the tracks discovered so far.
         /// </summary>
-        private readonly List<string> trackNames = new List<string>();
+        private readonly List<string> tracks = new ();
 
         private Color lineColor = Colors.LightBlue;
 
@@ -55,7 +55,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Gets the data to be displayed in the control.
         /// </summary>
-        public int TrackCount => Math.Max(1, this.trackNames.Count);
+        public int TrackCount => Math.Max(1, this.tracks.Count);
 
         /// <inheritdoc/>
         [IgnoreDataMember]
@@ -161,11 +161,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             if (this.ShowFinal)
             {
-                this.UpdateDisplayData(this.Data != null ? this.Data.LastOrDefault() : default(Message<TimeIntervalHistory>));
+                this.UpdateDisplayData(this.Data != null ? this.Data.LastOrDefault() : default);
             }
             else
             {
-                this.UpdateDisplayData(this.CurrentValue != null ? this.CurrentValue.Value : default(Message<TimeIntervalHistory>));
+                this.UpdateDisplayData(this.CurrentValue != null ? this.CurrentValue.Value : default);
             }
         }
 
@@ -176,10 +176,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Rebuild the data
             this.DisplayData = new List<TimeIntervalVisualizationObjectData>();
             this.RaisePropertyChanging(nameof(this.TrackCount));
-            this.trackNames.Clear();
+            this.tracks.Clear();
             if ((message != null) && (message.Data != null))
             {
-                this.trackNames.AddRange(message.Data.Keys.OrderBy(s => s));
+                this.tracks.AddRange(message.Data.Keys.OrderBy(s => s));
             }
 
             this.GenerateLegendValue();
@@ -194,7 +194,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     {
                         this.DisplayData.Add(
                             new TimeIntervalVisualizationObjectData(
-                                this.trackNames.IndexOf(dictionaryEntry.Key),
+                                this.tracks.IndexOf(dictionaryEntry.Key),
                                 timeInterval,
                                 text,
                                 this.GetBrush(color)));
@@ -223,10 +223,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private void GenerateLegendValue()
         {
             // For now the legend value is simply a list of all the track names
-            StringBuilder legend = new StringBuilder();
-            foreach (string trackName in this.trackNames)
+            var legend = new StringBuilder();
+            foreach (string track in this.tracks)
             {
-                legend.AppendLine(trackName);
+                legend.AppendLine(track);
             }
 
             this.legendValue = legend.ToString();

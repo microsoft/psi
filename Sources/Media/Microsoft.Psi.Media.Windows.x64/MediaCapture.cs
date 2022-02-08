@@ -256,11 +256,17 @@ namespace Microsoft.Psi.Media
 
                 this.camera.CaptureSample((data, length, timestamp) =>
                 {
-                    var time = DateTime.FromFileTimeUtc(timestamp);
                     using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp);
                     sharedImage.Resource.CopyFrom(data);
 
                     var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(timestamp);
+
+                    // Ensure that originating times are strictly increasing
+                    if (originatingTime <= this.Out.LastEnvelope.OriginatingTime)
+                    {
+                        originatingTime = this.Out.LastEnvelope.OriginatingTime.AddTicks(1);
+                    }
+
                     this.Out.Post(sharedImage, originatingTime);
                 });
             }

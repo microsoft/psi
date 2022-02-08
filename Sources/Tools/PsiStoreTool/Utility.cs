@@ -320,7 +320,7 @@ namespace PsiStoreTool
             {
                 importer
                     .OpenStream<Shared<Image>>(streamInfo.Name)
-                    .ToPixelFormat(PixelFormat.BGRA_32bpp)
+                    .Convert(PixelFormat.BGRA_32bpp)
                     .EncodeJpeg(quality)
                     .Write(streamInfo.Name, exporter, true);
             }

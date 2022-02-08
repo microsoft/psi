@@ -40,7 +40,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">Name of configuration file.</param>
         public KinectSensor(Pipeline pipeline, string configurationFilename)
         : this(pipeline)
@@ -52,7 +52,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Configuration to use.</param>
         public KinectSensor(Pipeline pipeline, KinectSensorConfiguration configuration)
         : this(pipeline)
@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         private KinectSensor(Pipeline pipeline)
         {
             this.pipeline = pipeline;
@@ -473,6 +473,7 @@ namespace Microsoft.Psi.Kinect
                         byte* dstRow = (byte*)rgbd.Resource.ImageData.ToPointer();
                         int depthWidth = depthFrame.FrameDescription.Width;
                         int depthHeight = depthFrame.FrameDescription.Height;
+                        var bytesPerPixel = colorImage.Resource.BitsPerPixel / 8;
                         for (int y = 0; y < colorImage.Resource.Height; y++)
                         {
                             byte* srcCol = srcRow;
@@ -494,7 +495,7 @@ namespace Microsoft.Psi.Kinect
                                 }
 
                                 dstCol += 4;
-                                srcCol += colorImage.Resource.BitsPerPixel / 8;
+                                srcCol += bytesPerPixel;
                                 offset++;
                             }
 

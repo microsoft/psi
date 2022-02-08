@@ -133,7 +133,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets the originating time interval (earliest to latest) of the messages under this stream.
         /// </summary>
         [Browsable(false)]
-        public TimeInterval OriginatingTimeInterval => new TimeInterval(this.SourceStreamFirstMessageOriginatingTime, this.SourceStreamLastMessageOriginatingTime);
+        public TimeInterval OriginatingTimeInterval => new (this.SourceStreamFirstMessageOriginatingTime, this.SourceStreamLastMessageOriginatingTime);
 
         /// <summary>
         /// Gets the id of the data stream.
@@ -166,30 +166,32 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <inheritdoc/>
         public override double SubsumedAverageMessageSize =>
             this.HasNonDerivedChildren ?
-                ((base.SubsumedAverageMessageSize * base.SubsumedMessageCount) + (this.SourceStreamAverageMessageSize * this.SourceStreamMessageCount)) /
+                ((base.SubsumedMessageCount == 0 ? 0 : (base.SubsumedAverageMessageSize * base.SubsumedMessageCount)) +
+                 (this.SourceStreamMessageCount == 0 ? 0 : (this.SourceStreamAverageMessageSize * this.SourceStreamMessageCount))) /
                 (base.SubsumedMessageCount + this.SourceStreamMessageCount) :
-                this.SourceStreamAverageMessageSize;
+                (this.SourceStreamMessageCount > 0 ? this.SourceStreamAverageMessageSize : double.NaN);
 
         /// <summary>
         /// Gets the average message size in the stream.
         /// </summary>
         [DisplayName("Source Stream Avg. Message Size")]
         [Description("The average size (in bytes) of messages in the source stream.")]
-        public virtual double SourceStreamAverageMessageSize => this.SourceStreamMetadata.AverageMessageSize;
+        public virtual double SourceStreamAverageMessageSize => this.SourceStreamMessageCount > 0 ? this.SourceStreamMetadata.AverageMessageSize : double.NaN;
 
         /// <inheritdoc/>
         public override double SubsumedAverageMessageLatencyMs =>
             this.HasNonDerivedChildren ?
-                ((base.SubsumedAverageMessageLatencyMs * base.SubsumedMessageCount) + (this.SourceStreamAverageMessageLatencyMs * this.SourceStreamMessageCount)) /
-                    (base.SubsumedMessageCount + this.SourceStreamMessageCount) :
-                this.SourceStreamAverageMessageLatencyMs;
+                ((base.SubsumedMessageCount == 0 ? 0 : (base.SubsumedAverageMessageLatencyMs * base.SubsumedMessageCount)) +
+                 (this.SourceStreamMessageCount == 0 ? 0 : (this.SourceStreamAverageMessageLatencyMs * this.SourceStreamMessageCount))) /
+                (base.SubsumedMessageCount + this.SourceStreamMessageCount) :
+                (this.SourceStreamMessageCount > 0 ? this.SourceStreamAverageMessageLatencyMs : double.NaN);
 
         /// <summary>
         /// Gets the average latency of messages in the streams(s) subsumed by the tree node.
         /// </summary>
         [DisplayName("Source Stream Avg. Message Latency (ms)")]
         [Description("The average latency (in milliseconds) of messages in the source stream.")]
-        public virtual double SourceStreamAverageMessageLatencyMs => this.SourceStreamMetadata.AverageMessageLatencyMs;
+        public virtual double SourceStreamAverageMessageLatencyMs => this.SourceStreamMessageCount > 0 ? this.SourceStreamMetadata.AverageMessageLatencyMs : double.NaN;
 
         /// <inheritdoc/>
         public override DateTime SubsumedOpenedTime =>
@@ -433,20 +435,22 @@ namespace Microsoft.Psi.Visualization.ViewModels
             if (visualizationPanel == null)
             {
                 results.AddRange(VisualizationContext.Instance.PluginMap.Visualizers.Where(v =>
-                    (nodeDataType == v.DataType || nodeDataType.IsSubclassOf(v.DataType)) &&
+                    (nodeDataType == v.DataType ||
+                        nodeDataType.IsSubclassOf(v.DataType) ||
+                        (v.DataType.IsInterface && v.DataType.IsAssignableFrom(nodeDataType))) &&
                     (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value) &&
-                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal))
-                    .OrderBy(v => v, comparer));
+                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal)));
             }
             else
             {
                 // o/w find out the compatible panel types
                 results.AddRange(VisualizationContext.Instance.PluginMap.Visualizers.Where(v =>
                     visualizationPanel.CompatiblePanelTypes.Contains(v.VisualizationPanelType) &&
-                    (nodeDataType == v.DataType || nodeDataType.IsSubclassOf(v.DataType)) &&
+                    (nodeDataType == v.DataType ||
+                        nodeDataType.IsSubclassOf(v.DataType) ||
+                        (v.DataType.IsInterface && v.DataType.IsAssignableFrom(nodeDataType))) &&
                     (!isInNewPanel.HasValue || v.IsInNewPanel == isInNewPanel.Value) &&
-                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal))
-                    .OrderBy(v => v, comparer));
+                    (!isUniversal.HasValue || v.IsUniversalVisualizer == isUniversal)));
             }
 
             // Special-case: for streams of type Dictionary<TKey, numeric>, create the corresponding
@@ -503,7 +507,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             // Customize each visualizer metadata.
             this.InsertCustomAdapters(results);
 
-            return results;
+            return results.OrderBy(v => v, comparer).ToList();
         }
 
         /// <summary>
@@ -511,8 +515,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         /// <param name="visualizerMetadata">The visualizer to create a stream binding for.</param>
         /// <returns>A corresponding stream binding.</returns>
-        public virtual StreamBinding CreateStreamBinding(VisualizerMetadata visualizerMetadata) =>
-            new StreamBinding(
+        public virtual StreamBinding CreateStreamBinding(VisualizerMetadata visualizerMetadata)
+            => new (
                 this.SourceStreamMetadata.Name,
                 this.PartitionViewModel.Name,
                 this.Path,
@@ -539,12 +543,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     var objectAdapterType = typeof(ObjectAdapter<>).MakeGenericType(streamSourceDataType);
                     metadatas[index] = metadatas[index].GetCloneWithNewStreamAdapterType(objectAdapterType);
                 }
-
-                // For latency visualization object insert a custom object adapter so values can be displayed for known types.
-                if (metadatas[index].VisualizationObjectType == typeof(LatencyVisualizationObject))
+                else if (metadatas[index].VisualizationObjectType == typeof(LatencyVisualizationObject))
                 {
+                    // o/w for latency visualization object insert a custom object adapter so values can be displayed for known types.
                     var objectToLatencyAdapterType = typeof(ObjectToLatencyAdapter<>).MakeGenericType(streamSourceDataType);
                     metadatas[index] = metadatas[index].GetCloneWithNewStreamAdapterType(objectToLatencyAdapterType);
+                }
+                else if (metadatas[index].DataType.IsInterface)
+                {
+                    // o/w for interface types inject an interface adapter
+                    var interfaceAdapterType = typeof(InterfaceAdapter<,>).MakeGenericType(streamSourceDataType, metadatas[index].DataType);
+                    metadatas[index] = metadatas[index].GetCloneWithNewStreamAdapterType(interfaceAdapterType);
                 }
             }
         }
@@ -782,17 +791,41 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatSize(this.SubsumedSize)}] " : string.Empty;
                     this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatSize(this.SourceStreamSize);
                     break;
+                case AuxiliaryStreamInfo.DataThroughputPerHour:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatThroughput(this.SubsumedSize / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalHours, "hour")}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatThroughput(this.SourceStreamSize / (this.SourceStreamClosedTime - this.SourceStreamOpenedTime).TotalHours, "hour");
+                    break;
+                case AuxiliaryStreamInfo.DataThroughputPerMinute:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatThroughput(this.SubsumedSize / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalMinutes, "min")}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatThroughput(this.SourceStreamSize / (this.SourceStreamClosedTime - this.SourceStreamOpenedTime).TotalMinutes, "min");
+                    break;
+                case AuxiliaryStreamInfo.DataThroughputPerSecond:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatThroughput(this.SubsumedSize / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalSeconds, "sec")}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatThroughput(this.SourceStreamSize / (this.SourceStreamClosedTime - this.SourceStreamOpenedTime).TotalSeconds, "sec");
+                    break;
+                case AuxiliaryStreamInfo.MessageCountThroughputPerHour:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{this.SubsumedMessageCount / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalHours:0.01}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + $"{this.SourceStreamMessageCount / (this.SourceStreamClosedTime - this.SourceStreamOpenedTime).TotalHours:0.01}";
+                    break;
+                case AuxiliaryStreamInfo.MessageCountThroughputPerMinute:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{this.SubsumedMessageCount / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalMinutes:0.01}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + $"{this.SourceStreamMessageCount / (this.SourceStreamClosedTime - this.SourceStreamOpenedTime).TotalMinutes:0.01}";
+                    break;
+                case AuxiliaryStreamInfo.MessageCountThroughputPerSecond:
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{this.SubsumedMessageCount / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalSeconds:0.01}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + $"{this.SourceStreamMessageCount / (this.SourceStreamClosedTime - this.SourceStreamOpenedTime).TotalSeconds:0.01}";
+                    break;
                 case AuxiliaryStreamInfo.MessageCount:
                     streamContainerPreamble = hasNonDerivedChildren ? this.SubsumedMessageCount == 0 ? "[0] " : $"[{this.SubsumedMessageCount:0,0}] " : string.Empty;
                     this.AuxiliaryInfo = streamContainerPreamble + (this.SourceStreamMessageCount == 0 ? "0" : $"{this.SourceStreamMessageCount:0,0}");
                     break;
                 case AuxiliaryStreamInfo.AverageMessageLatencyMs:
-                    streamContainerPreamble = hasNonDerivedChildren ? this.SubsumedAverageMessageLatencyMs < 1 ? "[<1 ms] " : $"[{this.SubsumedAverageMessageLatencyMs:0,0 ms}] " : string.Empty;
-                    this.AuxiliaryInfo = streamContainerPreamble + (this.SourceStreamAverageMessageLatencyMs < 1 ? "<1 ms" : $"{this.SourceStreamAverageMessageLatencyMs:0,0 ms}");
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatLatencyMs(this.SubsumedAverageMessageLatencyMs)}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + SizeFormatHelper.FormatLatencyMs(this.SubsumedAverageMessageLatencyMs);
                     break;
                 case AuxiliaryStreamInfo.AverageMessageSize:
-                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatSize((long)this.SubsumedAverageMessageSize)}] " : string.Empty;
-                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatSize((long)this.SourceStreamAverageMessageSize);
+                    streamContainerPreamble = hasNonDerivedChildren ? $"[{SizeFormatHelper.FormatSize(this.SubsumedAverageMessageSize)}] " : string.Empty;
+                    this.AuxiliaryInfo = streamContainerPreamble + indexedMarker + SizeFormatHelper.FormatSize(this.SourceStreamAverageMessageSize);
                     break;
                 default:
                     break;

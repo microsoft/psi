@@ -143,33 +143,47 @@ namespace Microsoft.Psi.Audio
         /// </param>
         public void Initialize(string deviceDescription)
         {
+            Exception taskException = null;
+
             // Activate native audio COM objects on a thread-pool thread to ensure that they are in an MTA
             Task.Run(() =>
             {
-                if (string.IsNullOrEmpty(deviceDescription))
+                try
                 {
-                    // use the default console device
-                    this.audioDevice = DeviceUtil.GetDefaultDevice(EDataFlow.Capture, ERole.Console);
-                }
-                else
-                {
-                    this.audioDevice = DeviceUtil.GetDeviceByName(EDataFlow.Capture, deviceDescription);
-                }
+                    if (string.IsNullOrEmpty(deviceDescription))
+                    {
+                        // use the default console device
+                        this.audioDevice = DeviceUtil.GetDefaultDevice(EDataFlow.Capture, ERole.Console);
+                    }
+                    else
+                    {
+                        this.audioDevice = DeviceUtil.GetDeviceByName(EDataFlow.Capture, deviceDescription);
+                    }
 
-                if (this.audioDevice != null)
-                {
-                    // Try to get the volume control
-                    object obj = this.audioDevice.Activate(new Guid(Guids.IAudioEndpointVolumeIIDString), ClsCtx.ALL, IntPtr.Zero);
-                    this.volume = (IAudioEndpointVolume)obj;
+                    if (this.audioDevice != null)
+                    {
+                        // Try to get the volume control
+                        object obj = this.audioDevice.Activate(new Guid(Guids.IAudioEndpointVolumeIIDString), ClsCtx.ALL, IntPtr.Zero);
+                        this.volume = (IAudioEndpointVolume)obj;
 
-                    // Now create an IAudioEndpointVolumeCallback object that wraps the callback and register it with the endpoint.
-                    this.volumeCallback = new AudioEndpointVolumeCallback(this.AudioVolumeCallback);
-                    this.volume.RegisterControlChangeNotify(this.volumeCallback);
+                        // Now create an IAudioEndpointVolumeCallback object that wraps the callback and register it with the endpoint.
+                        this.volumeCallback = new AudioEndpointVolumeCallback(this.AudioVolumeCallback);
+                        this.volume.RegisterControlChangeNotify(this.volumeCallback);
+                    }
+                }
+                catch (Exception e)
+                {
+                    taskException = e;
                 }
             }).Wait();
 
             // do error checking on the main thread
-            if (this.audioDevice == null)
+            if (taskException != null)
+            {
+                // rethrow exception
+                throw taskException;
+            }
+            else if (this.audioDevice == null)
             {
                 throw new IOException(string.IsNullOrEmpty(deviceDescription) ?
                     "No default audio capture device found." :

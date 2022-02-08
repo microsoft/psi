@@ -36,17 +36,25 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Delay messages by given time span.
+        /// Delays the delivery of messages by a given time span.
         /// </summary>
-        /// <typeparam name="T">Type of source/output messages.</typeparam>
-        /// <param name="source">Source stream.</param>
-        /// <param name="delay">Time span by which to delay.</param>
+        /// <typeparam name="T">The type of the source/output messages.</typeparam>
+        /// <param name="source">The source stream.</param>
+        /// <param name="delay">The time span by which to delay the messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <returns>Output stream.</returns>
+        /// <returns>The output stream.</returns>
+        /// <remarks>
+        /// This operator delays the delivery of messages on the source stream by a fixed amount of time
+        /// ahead of the creation time of the source messages. This ensures that the messages are not
+        /// delivered to the downstream receiver(s) until the pipeline clock has advanced to at least
+        /// the delayed time. The observed delay may be slightly larger than the specified time span to
+        /// account for latencies at the emitters and receivers. The originating times of the source
+        /// messages are preserved.
+        /// </remarks>
         public static IProducer<T> Delay<T>(this IProducer<T> source, TimeSpan delay, DeliveryPolicy<T> deliveryPolicy = null)
         {
             return source
-                .Process<T, (T, DateTime)>((d, e, s) => s.Post((d, e.OriginatingTime), e.OriginatingTime + delay), deliveryPolicy)
+                .Process<T, (T, DateTime)>((d, e, s) => s.Post((d, e.OriginatingTime), e.CreationTime + delay), deliveryPolicy)
                 .Process<(T, DateTime), T>((t, _, s) => s.Post(t.Item1, t.Item2), DeliveryPolicy.SynchronousOrThrottle);
         }
     }

@@ -11,11 +11,13 @@ namespace Microsoft.Psi.Persistence
     internal class PageIndexCache : IDisposable
     {
         private readonly object syncRoot = new object();
+        private readonly string name;
         private IndexEntry[] pageIndex = new IndexEntry[0];
         private InfiniteFileReader indexReader;
 
         public PageIndexCache(string name, string path)
         {
+            this.name = name;
             this.indexReader = new InfiniteFileReader(path, PsiStoreCommon.GetIndexFileName(name));
         }
 
@@ -97,7 +99,7 @@ namespace Microsoft.Psi.Persistence
                     newList.Add(indexEntry);
                 }
 
-                if (!this.indexReader.IsMoreDataExpected())
+                if (!PsiStoreMonitor.IsStoreLive(this.name, this.indexReader.Path))
                 {
                     this.indexReader.Dispose();
                     this.indexReader = null;

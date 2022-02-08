@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.Collections;
     using System.Linq;
-    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
@@ -27,20 +26,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (propertyItem.Instance is TimeIntervalAnnotationDisplayData objectData)
             {
-                // Get the schema definition for the property item.
-                AnnotationSchemaDefinition schemaDefinition = objectData.Definition.SchemaDefinitions.FirstOrDefault(s => s.Name == propertyItem.DisplayName);
+                // Get the attribute schema
+                var attributeSchema = objectData.AnnotationSchema.AttributeSchemas.FirstOrDefault(s => s.Name == propertyItem.DisplayName);
 
                 // If the schema is finite and not readonly, then display the possible values in a combobox, otherwise
                 // just display the current value in a readonly textbox.  Non-finite schemas are always displayed
                 // in a textbox since there are infinite vallues possible.
-                if (!propertyItem.IsReadOnly && schemaDefinition.Schema.IsFiniteAnnotationSchema)
+                if (!propertyItem.IsReadOnly && attributeSchema.ValueSchema is IEnumerableAnnotationValueSchema finiteAnnotationValueSchema)
                 {
                     // Create the combobox and load it with the schema values
-                    ComboBox comboBox = new ComboBox();
-                    Type schemaType = schemaDefinition.Schema.GetType();
-                    MethodInfo valuesProperty = schemaType.GetProperty("Values").GetGetMethod();
-                    comboBox.ItemsSource = (IEnumerable)valuesProperty.Invoke(schemaDefinition.Schema, new object[] { });
-                    comboBox.SelectedItem = propertyItem.Value;
+                    var comboBox = new ComboBox
+                    {
+                        ItemsSource = finiteAnnotationValueSchema.GetPossibleAnnotationValues(),
+                        SelectedItem = propertyItem.Value,
+                    };
 
                     editorControl = comboBox;
                     bindingProperty = ComboBox.SelectedItemProperty;
@@ -48,20 +47,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 else
                 {
                     // create the textbox and optionally make it readonly
-                    TextBox textBox = new TextBox();
-                    textBox.IsReadOnly = propertyItem.IsReadOnly;
+                    var textBox = new TextBox
+                    {
+                        IsReadOnly = propertyItem.IsReadOnly,
+                    };
 
                     editorControl = textBox;
                     bindingProperty = TextBox.TextProperty;
                 }
 
                 // Bind the editor control to the property item's value property.
-                Binding binding = new Binding(nameof(PropertyItem.Value));
-                binding.Source = propertyItem;
-                binding.ValidatesOnExceptions = true;
-                binding.ValidatesOnDataErrors = true;
-                binding.Mode = propertyItem.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay;
-                binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                var binding = new Binding(nameof(PropertyItem.Value))
+                {
+                    Source = propertyItem,
+                    ValidatesOnExceptions = true,
+                    ValidatesOnDataErrors = true,
+                    Mode = propertyItem.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                };
+
                 BindingOperations.SetBinding(editorControl, bindingProperty, binding);
 
                 return editorControl;

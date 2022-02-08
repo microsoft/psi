@@ -17,6 +17,6 @@ namespace Microsoft.Psi.Interop.Serialization
         /// <param name="index">Starting index of message data.</param>
         /// <param name="count">Number of bytes constituting message data.</param>
         /// <returns>Dynamic of primitive or IEnumerable/ExpandoObject of primitive as well as originating time stamp.</returns>
-        (dynamic, DateTime) DeserializeMessage(byte[] payload, int index, int count);
+        (dynamic Message, DateTime OriginatingTime) DeserializeMessage(byte[] payload, int index, int count);
     }
 }

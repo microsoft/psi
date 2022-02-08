@@ -25,7 +25,7 @@ namespace Microsoft.Psi.Components
         /// <see cref="Post"/> action delegate into an event handler compatible with the external
         /// event that is being subscribed to.
         /// </summary>
-        /// <param name="pipeline">The Psi pipeline.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="subscribe">The delegate that subscribes to the external event.</param>
         /// <param name="unsubscribe">The delegate that unsubscribes from the external event.</param>
         /// <param name="converter">

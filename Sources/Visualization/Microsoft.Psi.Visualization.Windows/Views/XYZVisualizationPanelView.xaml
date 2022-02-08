@@ -25,7 +25,21 @@
         </Grid.Resources>
 
         <Border BorderBrush="{StaticResource LightBorderColorBrush}" Background="{StaticResource MediumBackgroundColorBrush}" BorderThickness="1" />
-        <h:HelixViewport3D Grid.Row="1" Name="ViewPort3D" Background="{StaticResource DarkBackgroundBrush}">
+        <h:HelixViewport3D 
+            Grid.Row="1"
+            Name="ViewPort3D"
+            Background="{StaticResource DarkBackgroundBrush}"
+            RotateAroundMouseDownPoint="{Binding RotateAroundMouseDownPoint}"
+            ZoomAroundMouseDownPoint="{Binding ZoomAroundMouseDownPoint}"
+            RotationSensitivity="{Binding RotationSensitivity}"
+            ZoomSensitivity="{Binding ZoomSensitivity}"
+            ShowCameraInfo="{Binding ShowCameraInfo}"
+            ShowCameraTarget="{Binding ShowCameraTarget}"
+            ShowCoordinateSystem="{Binding ShowCoordinateSystem}"
+            ShowFieldOfView="{Binding ShowFieldOfView}"
+            ShowFrameRate="{Binding ShowFrameRate}"
+            ShowTriangleCountInfo="{Binding ShowTriangleCountInfo}"
+            ShowViewCube="{Binding ShowViewCube}">
             <h:HelixViewport3D.Camera>
                 <PerspectiveCamera x:Name="ViewCamera" Position="{Binding CameraPosition, Mode=TwoWay}" LookDirection="{Binding CameraLookDirection, Mode=TwoWay}" UpDirection="{Binding CameraUpDirection, Mode=TwoWay}" FieldOfView="{Binding CameraFieldOfView, Mode=TwoWay}"/>
             </h:HelixViewport3D.Camera>
@@ -67,14 +81,39 @@
         </Border>
 
         <Button 
+            Command="{Binding ToggleVisibilityCommand}"
+            Background="{Binding BackgroundColor, Converter={StaticResource ColorToSolidColorBrushConverter}}"
+            Height="16"
+            Width="16"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            ToolTip="Hide panel"
+            Margin="4,4,22,4">
+            <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-showhide-smallbutton-faded.png}"/>
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=XYZGrid}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsMouseOver, ElementName=XYZGrid}" Value="False">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Button 
             Command="{Binding RemovePanelCommand}"
             Background="{StaticResource DarkBackgroundBrush}"
             Height="16"
             Width="16"
             VerticalAlignment="Top"
             HorizontalAlignment="Right"
+            ToolTip="Remove panel"
             Margin="4,4,4,4">
-            <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=close-panel.png}"/>
+            <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=remove-smallbutton-faded.png}"/>
             <Button.Style>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Style.Triggers>

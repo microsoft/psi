@@ -17,6 +17,7 @@ namespace Microsoft.Psi.Persistence
         internal static readonly string IndexFileName = "Index";
         internal static readonly string DataFileName = "Data";
         internal static readonly string LargeDataFileName = "LargeData";
+        internal static readonly string LivePsiStoreFileName = "Live";
 
         internal static string GetIndexFileName(string appName)
         {
@@ -36,6 +37,11 @@ namespace Microsoft.Psi.Persistence
         internal static string GetLargeDataFileName(string appName)
         {
             return appName + "." + LargeDataFileName;
+        }
+
+        internal static string GetLivePsiStoreFileName(string appName)
+        {
+            return appName + "." + LivePsiStoreFileName;
         }
 
         internal static bool TryGetPathToLatestVersion(string appName, string rootPath, out string fullPath)

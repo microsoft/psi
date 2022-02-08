@@ -173,6 +173,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Gets the current mouse position within the plot.
+        /// </summary>
+        [IgnoreDataMember]
+        [DisplayName("Mouse Position")]
+        [Description("The position of the mouse in the visualization object.")]
+        public string MousePositionString => (this.Panel is TimelineVisualizationPanel timelineVisualizationPanel) ? timelineVisualizationPanel.MousePositionString : default;
+
+        /// <summary>
         /// Gets the Y axis.
         /// </summary>
         [IgnoreDataMember]
@@ -188,8 +196,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             protected set
             {
-                this.yValueRange = value;
-                this.YValueRangeChanged?.Invoke(this, EventArgs.Empty);
+                if (this.yValueRange != value)
+                {
+                    this.yValueRange = value;
+                    this.YValueRangeChanged?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 
@@ -244,6 +255,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(TimelineVisualizationPanel.YAxis))
             {
                 this.RaisePropertyChanged(nameof(this.YAxis));
+            }
+            else if (e.PropertyName == nameof(TimelineVisualizationPanel.MousePositionString))
+            {
+                this.RaisePropertyChanged(nameof(this.MousePositionString));
             }
 
             base.OnPanelPropertyChanged(sender, e);

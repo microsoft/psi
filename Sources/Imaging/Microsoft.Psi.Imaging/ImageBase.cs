@@ -332,6 +332,29 @@ namespace Microsoft.Psi.Imaging
                     });
                 }
             }
+            else if ((this.pixelFormat == PixelFormat.Gray_8bpp) &&
+                     (pixelFormat == PixelFormat.BGRA_32bpp))
+            {
+                unsafe
+                {
+                    byte* src = (byte*)this.image.Data.ToPointer();
+                    byte* dst = (byte*)destination.ToPointer();
+
+                    Parallel.For(0, this.Height, i =>
+                    {
+                        byte* srcCopy = src + (this.stride * i);
+                        byte* dstCopy = dst + (stride * i);
+                        for (int j = 0; j < this.width; j++)
+                        {
+                            // dest = (src << 24) | (src << 16) | (src << 8) | 0xff
+                            *dstCopy++ = *srcCopy;
+                            *dstCopy++ = *srcCopy;
+                            *dstCopy++ = *srcCopy++;
+                            *dstCopy++ = 0xff; // alpha
+                        }
+                    });
+                }
+            }
             else
             {
                 this.CopyImageSlow(this.image.Data, this.pixelFormat, destination, stride, pixelFormat);
@@ -631,6 +654,9 @@ namespace Microsoft.Psi.Imaging
             where TImage : ImageBase
         {
             private const int Version = 4;
+
+            /// <inheritdoc />
+            public bool? IsClearRequired => true;
 
             /// <summary>
             /// Gets the type schema.

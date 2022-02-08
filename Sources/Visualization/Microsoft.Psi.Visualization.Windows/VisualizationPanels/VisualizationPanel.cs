@@ -20,6 +20,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Navigation;
+    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
@@ -32,6 +33,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private const double MinHeight = 10;
 
         private RelayCommand toggleAllVisualizersVisibilityCommand;
+        private RelayCommand toggleVisibilityCommand;
         private RelayCommand removePanelCommand;
         private RelayCommand clearPanelCommand;
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
@@ -48,14 +50,19 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private double width = 400;
 
         /// <summary>
-        /// The background color for the panel.
+        /// The background color for the panel [DarkBackgroundColor in PsiStudioDark.xml].
         /// </summary>
-        private Color backgroundColor = new Color() { R = 0x25, G = 0x25, B = 0x26, A = 0xFF };
+        private Color backgroundColor = new () { R = 0x25, G = 0x25, B = 0x26, A = 0xFF };
 
         /// <summary>
         /// The name of the visualization panel.
         /// </summary>
         private string name = "Visualization Panel";
+
+        /// <summary>
+        /// Indicates whether the visualization panel is visible.
+        /// </summary>
+        private bool visible = true;
 
         /// <summary>
         /// The zoom to panel command.
@@ -107,10 +114,28 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             {
                 if (this.toggleAllVisualizersVisibilityCommand == null)
                 {
-                    this.toggleAllVisualizersVisibilityCommand = new RelayCommand(() => this.ToggleAllVisualizersVisibility());
+                    this.toggleAllVisualizersVisibilityCommand = new RelayCommand(() => this.ToggleAllVisualizationObjectsVisibility());
                 }
 
                 return this.toggleAllVisualizersVisibilityCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the toggle visibility command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ToggleVisibilityCommand
+        {
+            get
+            {
+                if (this.toggleVisibilityCommand == null)
+                {
+                    this.toggleVisibilityCommand = new RelayCommand(() => this.Container.TogglePanelVisibility(this));
+                }
+
+                return this.toggleVisibilityCommand;
             }
         }
 
@@ -215,11 +240,26 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the visualization panel is visible.
+        /// </summary>
+        [DataMember]
+        [Description("The visibility of the visualization panel.")]
+        public bool Visible
+        {
+            get { return this.visible; }
+
+            set
+            {
+                this.Set(nameof(this.Visible), ref this.visible, value);
+                this.RaisePropertyChanged(nameof(this.IsShown));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the height of the panel.
         /// </summary>
         [DataMember]
-        [PropertyOrder(1)]
-        [Description("The height of the visualization panel.")]
+        [Browsable(false)]
         public double Height
         {
             get { return this.height; }
@@ -251,6 +291,13 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Gets a value indicating whether the visualization panel is shown.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public bool IsShown => this.Visible && (this.ParentPanel == null || this.ParentPanel.IsShown);
+
+        /// <summary>
         /// Gets the visualization panel container that contains this panel.
         /// </summary>
         [Browsable(false)]
@@ -258,11 +305,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         public VisualizationContainer Container { get; private set; }
 
         /// <summary>
-        /// Gets or sets the parent visualization panel (if this panel is a child of another panel).
+        /// Gets the parent visualization panel (if this panel is a child of another panel).
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public VisualizationPanel ParentPanel { get; set; }
+        public VisualizationPanel ParentPanel { get; private set; }
 
         /// <summary>
         /// Gets or sets the current visualization object.
@@ -421,14 +468,37 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Toggles the visibility of all visualizers.
+        /// Toggles the visibility of all visualization objects.
         /// </summary>
-        public virtual void ToggleAllVisualizersVisibility()
+        public void ToggleAllVisualizationObjectsVisibility()
         {
             var anyVisible = this.VisualizationObjects.Any(vo => vo.Visible);
             foreach (var visualizationObject in this.VisualizationObjects)
             {
                 visualizationObject.Visible = !anyVisible;
+            }
+        }
+
+        /// <summary>
+        /// Toggles the visibility for a specified visualization object.
+        /// </summary>
+        /// <param name="visualizationObject">The specified visualization object.</param>
+        public void ToggleVisualizationObjectVisibility(VisualizationObject visualizationObject)
+        {
+            // If we are about to make the visualization object visible and the panel is
+            // set to not visible
+            if (this.Visible == false)
+            {
+                // Then toggle the panel to visible
+                this.Container.TogglePanelVisibility(this);
+
+                // And the set the visualization object to visible
+                visualizationObject.Visible = true;
+            }
+            else
+            {
+                // O/w just toggle the visualization object
+                visualizationObject.Visible = !visualizationObject.Visible;
             }
         }
 
@@ -469,6 +539,25 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Sets the parent panel.
+        /// </summary>
+        /// <param name="parentPanel">The new parent panel.</param>
+        public virtual void SetParentPanel(VisualizationPanel parentPanel)
+        {
+            if (this.ParentPanel != null)
+            {
+                this.ParentPanel.PropertyChanged -= this.OnParentPanelPropertyChanged;
+            }
+
+            this.ParentPanel = parentPanel;
+
+            if (this.ParentPanel != null)
+            {
+                this.ParentPanel.PropertyChanged += this.OnParentPanelPropertyChanged;
+            }
+        }
+
+        /// <summary>
         /// Gets all of the visualization objects that visualize a derived stream, rather than a raw stream.
         /// </summary>
         /// <returns>The collection of visualization objects that visualize a derived stream.</returns>
@@ -485,6 +574,39 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             }
 
             return derivedStreamVisualizationObjects;
+        }
+
+        /// <summary>
+        /// Unbinds any visualization objects currently bound to a store.
+        /// </summary>
+        /// <param name="storeName">The name of the store.</param>
+        /// <param name="storePath">The path to the store.</param>
+        /// <param name="partitionName">The partition name of the instance to unbind, or null to unbind all instances.</param>
+        public void UnbindVisualizationObjectsFromStore(string storeName, string storePath, string partitionName)
+        {
+            foreach (IStreamVisualizationObject streamVisualizationObject in this.VisualizationObjects)
+            {
+                if (streamVisualizationObject != null
+                    && streamVisualizationObject.StreamSource != null
+                    && streamVisualizationObject.StreamSource.StoreName == storeName
+                    && streamVisualizationObject.StreamSource.StorePath == storePath
+                    && (partitionName == null || streamVisualizationObject.StreamBinding.PartitionName == partitionName))
+                {
+                    streamVisualizationObject.UpdateStreamSource(null);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Update the stream sources for the visualization objects in this panel.
+        /// </summary>
+        /// <param name="sessionViewModel">The currently active session view model.</param>
+        public virtual void UpdateStreamSources(SessionViewModel sessionViewModel)
+        {
+            foreach (IStreamVisualizationObject streamVisualizationObject in this.VisualizationObjects)
+            {
+                streamVisualizationObject?.UpdateStreamSource(sessionViewModel);
+            }
         }
 
         /// <inheritdoc/>
@@ -583,10 +705,24 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             }
         }
 
+        /// <summary>
+        /// Called when a property of the parent panel has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event args for the event.</param>
+        protected virtual void OnParentPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Visible))
+            {
+                this.RaisePropertyChanged(nameof(this.IsShown));
+                this.RaisePropertyChanged(nameof(this.Visible));
+            }
+        }
+
         private void ZoomToPanel()
         {
             // Get a list of time intervals for all stream visualization objects in this panel
-            List<TimeInterval> streamIntervals = new List<TimeInterval>();
+            var streamIntervals = new List<TimeInterval>();
             foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
             {
                 IStreamVisualizationObject streamVisualizationObject = visualizationObject as IStreamVisualizationObject;

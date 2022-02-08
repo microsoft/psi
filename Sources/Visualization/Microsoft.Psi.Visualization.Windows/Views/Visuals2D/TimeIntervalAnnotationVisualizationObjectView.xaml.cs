@@ -4,10 +4,8 @@
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -19,14 +17,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// <summary>
     /// Interaction logic for TimeIntervalAnnotationVisualizationObjectView.xaml.
     /// </summary>
-    public partial class TimeIntervalAnnotationVisualizationObjectView : StreamIntervalVisualizationObjectTimelineCanvasView<TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotation>
+    public partial class TimeIntervalAnnotationVisualizationObjectView : StreamIntervalVisualizationObjectTimelineCanvasView<TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet>
     {
-        private readonly List<TimeIntervalAnnotationVisualizationObjectViewItem> items = new List<TimeIntervalAnnotationVisualizationObjectViewItem>();
+        private readonly Grid trackHighlight;
+        private readonly List<TimeIntervalAnnotationTrackVisualizationObjectViewItem> trackViews = new ();
+        private readonly List<TimeIntervalAnnotationVisualizationObjectViewItem> itemViews = new ();
 
         /// <summary>
         /// The collection of brushes used in rendering.
         /// </summary>
-        private readonly Dictionary<Color, Brush> brushes = new Dictionary<Color, Brush>();
+        private readonly Dictionary<Color, Brush> brushes = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeIntervalAnnotationVisualizationObjectView"/> class.
@@ -35,6 +35,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             this.InitializeComponent();
             this.Canvas = this._DynamicCanvas;
+
+            this.trackHighlight = new Grid
+            {
+                RenderTransform = new TranslateTransform(),
+                IsHitTestVisible = false,
+                Height = 0,
+            };
+
+            this.Canvas.Children.Add(this.trackHighlight);
         }
 
         /// <inheritdoc/>
@@ -42,12 +51,45 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (this.DataContext is TimeIntervalAnnotationVisualizationObject annotationVisualizationObject && annotationVisualizationObject.IsBound)
             {
-                // Add the add annotation context menu item
-                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Annotation, "Add Annotation", annotationVisualizationObject.GetAddAnnotationCommand()));
+                // Get the track under the cursor
+                var trackUnderCursor = annotationVisualizationObject.GetTrackByIndex(this.GetTrackIndexUnderMouseCursor());
+
+                // Add the add annotation (on current track) context menu item
+                var addAnnotationOnCurrentTrackCommand = annotationVisualizationObject.GetAddAnnotationOnTrackCommand(trackUnderCursor);
+                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Annotation, "Add Annotation", addAnnotationOnCurrentTrackCommand, null, addAnnotationOnCurrentTrackCommand != null));
+
+                // Add the add annotation on new track context menu item
+                var addAnnotationOnNewTrackCommand = annotationVisualizationObject.GetAddAnnotationOnNewTrackCommand();
+                menuItems.Add(MenuItemHelper.CreateMenuItem(null, "Add Annotation on New Track", addAnnotationOnNewTrackCommand, null, addAnnotationOnNewTrackCommand != null));
 
                 // Add the delete annotation context menu item
-                ICommand deleteCommand = annotationVisualizationObject.GetDeleteAnnotationCommand();
-                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Annotation, "Delete Annotation", deleteCommand, null, deleteCommand != null));
+                var deleteCommand = annotationVisualizationObject.GetDeleteAnnotationOnTrackCommand(trackUnderCursor);
+                menuItems.Add(MenuItemHelper.CreateMenuItem(null, "Delete Annotation", deleteCommand, null, deleteCommand != null));
+
+                // Add the delete annotation context menu item
+                var deleteAllAnnotationsOnTrackCommand = annotationVisualizationObject.GetDeleteAllAnnotationsOnTrackCommand(trackUnderCursor);
+                menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Delete All Annotations on Curent Track ({trackUnderCursor})", deleteAllAnnotationsOnTrackCommand, null, deleteAllAnnotationsOnTrackCommand != null));
+
+                // Add the delete annotation context menu item
+                var renameCurrentTrackCommand = annotationVisualizationObject.GetRenameTrackCommand(trackUnderCursor);
+                menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Rename Curent Track ({trackUnderCursor})", renameCurrentTrackCommand, null, renameCurrentTrackCommand != null));
+
+                // Add the command to show all tracks
+                var showAllTracksCommand = annotationVisualizationObject.GetShowAllTracksCommand();
+                if (showAllTracksCommand != null)
+                {
+                    menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Show All Tracks", showAllTracksCommand, null, true));
+                }
+
+                // Add the command to show only tracks with events in view
+                var showOnlyTracksWithEventsInViewCommand = annotationVisualizationObject.GetShowOnlyTracksWithEventsInViewCommand();
+                if (showOnlyTracksWithEventsInViewCommand != null)
+                {
+                    menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Show Only Tracks with Events in View", showOnlyTracksWithEventsInViewCommand, null, true));
+                }
+
+                // Add a separator
+                menuItems.Add(null);
             }
 
             base.AppendContextMenuItems(menuItems);
@@ -60,7 +102,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <returns>A brush of the requested color.</returns>
         internal Brush GetBrush(System.Drawing.Color systemDrawingColor)
         {
-            Color color = Color.FromArgb(systemDrawingColor.A, systemDrawingColor.R, systemDrawingColor.G, systemDrawingColor.B);
+            var color = Color.FromArgb(systemDrawingColor.A, systemDrawingColor.R, systemDrawingColor.G, systemDrawingColor.B);
 
             if (!this.brushes.ContainsKey(color))
             {
@@ -75,12 +117,14 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             if (e.OldValue is TimeIntervalAnnotationVisualizationObject oldVisualizationObject)
             {
-                oldVisualizationObject.TimeIntervalAnnotationEdit -= this.VisualizationObject_TimeIntervalAnnotationEdit;
+                oldVisualizationObject.TimeIntervalAnnotationEdit -= this.OnVisualizationObjectTimeIntervalAnnotationEdit;
+                oldVisualizationObject.TimeIntervalAnnotationDrag -= this.OnVisualizationObjectTimeIntervalAnnotationDrag;
             }
 
             if (e.NewValue is TimeIntervalAnnotationVisualizationObject newVisualizationObject)
             {
-                newVisualizationObject.TimeIntervalAnnotationEdit += this.VisualizationObject_TimeIntervalAnnotationEdit;
+                newVisualizationObject.TimeIntervalAnnotationEdit += this.OnVisualizationObjectTimeIntervalAnnotationEdit;
+                newVisualizationObject.TimeIntervalAnnotationDrag += this.OnVisualizationObjectTimeIntervalAnnotationDrag;
             }
 
             base.OnDataContextChanged(sender, e);
@@ -93,55 +137,98 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             if (e.PropertyName == nameof(this.StreamVisualizationObject.DisplayData) ||
                 e.PropertyName == nameof(this.StreamVisualizationObject.LineWidth) ||
                 e.PropertyName == nameof(this.StreamVisualizationObject.Padding) ||
-                e.PropertyName == nameof(this.StreamVisualizationObject.FontSize))
+                e.PropertyName == nameof(this.StreamVisualizationObject.FontSize) ||
+                e.PropertyName == nameof(this.StreamVisualizationObject.ShowOnlyTracksWithEventsInView))
             {
                 this.OnDisplayDataChanged();
+            }
+            else if (e.PropertyName == nameof(this.StreamVisualizationObject.TrackUnderMouseIndex))
+            {
+                this.UpdateTrackHighlight();
             }
         }
 
         /// <summary>
         /// Implements a response to display data changing.
         /// </summary>
-        protected virtual void OnDisplayDataChanged()
+        protected virtual void OnDisplayDataChanged() => this.UpdateView();
+
+        /// <inheritdoc/>
+        protected override void OnTransformsChanged()
         {
-            this.UpdateView();
+            base.OnTransformsChanged();
+
+            this.EditUnrestrictedAnnotationTextBox.Visibility = Visibility.Collapsed;
         }
 
         /// <inheritdoc/>
         protected override void UpdateView()
         {
+            // Update the track highlight
+            this.UpdateTrackHighlight();
+
+            // Go through the display data and create new items and tracks where
+            // necessary
             for (int i = 0; i < this.StreamVisualizationObject.DisplayData.Count; i++)
             {
-                TimeIntervalAnnotationVisualizationObjectViewItem item;
-
-                if (i < this.items.Count)
+                if (i >= this.itemViews.Count)
                 {
-                    item = this.items[i];
+                    this.itemViews.Add(
+                        new TimeIntervalAnnotationVisualizationObjectViewItem(this, this.StreamVisualizationObject.DisplayData[i]));
                 }
                 else
                 {
-                    item = new TimeIntervalAnnotationVisualizationObjectViewItem(this, this.StreamVisualizationObject.DisplayData[i]);
-                    this.items.Add(item);
+                    this.itemViews[i].Update(this.StreamVisualizationObject.DisplayData[i], this.StreamVisualizationObject.DisplayData[i].TrackIndex, this.StreamIntervalVisualizationObject.TrackCount);
                 }
-
-                item.Update(this.StreamVisualizationObject.DisplayData[i]);
             }
 
             // remove the remaining figures
-            for (int i = this.StreamVisualizationObject.DisplayData.Count; i < this.items.Count; i++)
+            for (int i = this.StreamVisualizationObject.DisplayData.Count; i < this.itemViews.Count; i++)
             {
-                var item = this.items[this.StreamVisualizationObject.DisplayData.Count];
+                var item = this.itemViews[this.StreamVisualizationObject.DisplayData.Count];
                 item.RemoveFromCanvas();
-                this.items.Remove(item);
+                this.itemViews.Remove(item);
+            }
+
+            // Go through the track views and create new ones where necessary
+            for (int i = 0; i < this.StreamVisualizationObject.TrackCount; i++)
+            {
+                if (i >= this.trackViews.Count)
+                {
+                    this.trackViews.Add(
+                        new TimeIntervalAnnotationTrackVisualizationObjectViewItem(this, i, this.StreamIntervalVisualizationObject.TrackCount, this.StreamIntervalVisualizationObject.GetTrackByIndex(i)));
+                }
+                else
+                {
+                    this.trackViews[i].Update(i, this.StreamIntervalVisualizationObject.TrackCount, this.StreamIntervalVisualizationObject.GetTrackByIndex(i));
+                }
+            }
+
+            // remove the remaining figures
+            for (int i = this.StreamVisualizationObject.TrackCount; i < this.trackViews.Count; i++)
+            {
+                var trackView = this.trackViews[this.StreamVisualizationObject.TrackCount];
+                trackView.RemoveFromCanvas();
+                this.trackViews.Remove(trackView);
             }
         }
 
         private static Color ToMediaColor(System.Drawing.Color color)
+            => Color.FromArgb(color.A, color.R, color.G, color.B);
+
+        private void UpdateTrackHighlight()
         {
-            return Color.FromArgb(color.A, color.R, color.G, color.B);
+            if (this.DataContext is TimeIntervalAnnotationVisualizationObject annotationVisualizationObject && annotationVisualizationObject.IsBound)
+            {
+                this.trackHighlight.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x2D, 0x30));
+                this.trackHighlight.Width = this.Canvas.ActualWidth;
+                this.trackHighlight.Height = this.Canvas.ActualHeight / annotationVisualizationObject.TrackCount;
+                (this.trackHighlight.RenderTransform as TranslateTransform).X = 0;
+                (this.trackHighlight.RenderTransform as TranslateTransform).Y = annotationVisualizationObject.TrackUnderMouseIndex * this.Canvas.ActualHeight / annotationVisualizationObject.TrackCount;
+            }
         }
 
-        private void VisualizationObject_TimeIntervalAnnotationEdit(object sender, TimeIntervalAnnotationEditEventArgs e)
+        private void OnVisualizationObjectTimeIntervalAnnotationEdit(object sender, TimeIntervalAnnotationEditEventArgs e)
         {
             // If we were already editing an unrestricted annotation, stop.
             this.EditUnrestrictedAnnotationTextBox.Visibility = Visibility.Collapsed;
@@ -150,44 +237,47 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             if (e.DisplayData != null)
             {
                 // Check if a finite or an unrestricted annotation value is being edited
-                if (e.DisplayData.Definition.SchemaDefinitions[e.TrackId].Schema.IsFiniteAnnotationSchema)
+                if (e.DisplayData.AnnotationSchema.AttributeSchemas[e.AttributeIndex].ValueSchema is IEnumerableAnnotationValueSchema)
                 {
-                    this.EditFiniteAnnotationValue(e.DisplayData, e.TrackId);
+                    this.EditEnumerableAnnotationValue(e.DisplayData, e.AttributeIndex);
                 }
                 else
                 {
-                    this.EditUnrestrictedAnnotationValue(e.DisplayData, e.TrackId);
+                    this.EditAnnotationValue(e.DisplayData, e.AttributeIndex);
                 }
             }
         }
 
-        private void EditFiniteAnnotationValue(TimeIntervalAnnotationDisplayData displayData, int trackId)
+        private void OnVisualizationObjectTimeIntervalAnnotationDrag(object sender, EventArgs e)
         {
-            // Get the schema definition
-            AnnotationSchemaDefinition schemaDefinition = displayData.Definition.SchemaDefinitions[trackId];
+            // If we dragging an annotation, hide the editor
+            this.EditUnrestrictedAnnotationTextBox.Visibility = Visibility.Collapsed;
+        }
+
+        private void EditEnumerableAnnotationValue(TimeIntervalAnnotationDisplayData displayData, int trackId)
+        {
+            // Get the attribute schema
+            var attributeSchema = displayData.AnnotationSchema.AttributeSchemas[trackId];
 
             // Get the collection of possible values
-            Type schemaType = schemaDefinition.Schema.GetType();
-            MethodInfo valuesProperty = schemaType.GetProperty("Values").GetGetMethod();
-            IEnumerable values = (IEnumerable)valuesProperty.Invoke(schemaDefinition.Schema, new object[] { });
+            var attributeSchemaType = attributeSchema.ValueSchema as IEnumerableAnnotationValueSchema;
 
             // Create a new context menu
-            ContextMenu contextMenu = new ContextMenu();
+            var contextMenu = new ContextMenu();
 
             // Create a menuitem for each value, with a command to update the value on the annotation.
-            foreach (object value in values)
+            foreach (var finiteAnnotationValue in attributeSchemaType.GetPossibleAnnotationValues())
             {
-                var metadata = this.GetAnnotationValueMetadata(value, schemaDefinition.Schema);
                 contextMenu.Items.Add(MenuItemHelper.CreateAnnotationMenuItem(
-                    value.ToString(),
-                    metadata.BorderColor,
-                    metadata.FillColor,
-                    new PsiCommand(() => this.StreamVisualizationObject.SetAnnotationValue(displayData.Annotation, schemaDefinition.Name, value))));
+                    finiteAnnotationValue.ValueAsString,
+                    System.Drawing.Color.LightGray,
+                    finiteAnnotationValue.FillColor,
+                    new PsiCommand(() => displayData.SetAttributeValue(attributeSchema.Name, finiteAnnotationValue))));
             }
 
             // Add a handler so that the timeline visualization panel continues to receive mouse move messages
             // while the context menu is displayed, and remove the handler once the context menu closes.
-            MouseEventHandler mouseMoveHandler = new MouseEventHandler(this.FindTimelineVisualizationPanelView().ContextMenuMouseMove);
+            var mouseMoveHandler = new MouseEventHandler(this.FindTimelineVisualizationPanelView().ContextMenuMouseMove);
             contextMenu.AddHandler(MouseMoveEvent, mouseMoveHandler, true);
             contextMenu.Closed += (sender, e) => contextMenu.RemoveHandler(MouseMoveEvent, mouseMoveHandler);
 
@@ -195,28 +285,23 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             contextMenu.IsOpen = true;
         }
 
-        private void EditUnrestrictedAnnotationValue(TimeIntervalAnnotationDisplayData displayData, int trackId)
+        private void EditAnnotationValue(TimeIntervalAnnotationDisplayData displayData, int attributeIndex)
         {
-            // Get the schema definition
-            AnnotationSchemaDefinition schemaDefinition = displayData.Definition.SchemaDefinitions[trackId];
+            // Get the attribute schema
+            var attributeSchema = displayData.AnnotationSchema.AttributeSchemas[attributeIndex];
 
             // Get the current value
-            object value = displayData.Annotation.Data.Values[schemaDefinition.Name];
-
-            // Get the associated metadata
-            AnnotationSchemaValueMetadata schemaMetadata = this.GetAnnotationValueMetadata(value, schemaDefinition.Schema);
+            var attributeValue = displayData.Annotation.AttributeValues[attributeSchema.Name];
 
             // Style the text box to match the schema of the annotation value
-            this.EditUnrestrictedAnnotationTextBox.Foreground = new SolidColorBrush(ToMediaColor(schemaMetadata.TextColor));
-            this.EditUnrestrictedAnnotationTextBox.Background = new SolidColorBrush(ToMediaColor(schemaMetadata.FillColor));
-            this.EditUnrestrictedAnnotationTextBox.BorderBrush = new SolidColorBrush(ToMediaColor(schemaMetadata.BorderColor));
-            this.EditUnrestrictedAnnotationTextBox.BorderThickness = new Thickness(schemaMetadata.BorderWidth);
+            this.EditUnrestrictedAnnotationTextBox.Foreground = new SolidColorBrush(ToMediaColor(attributeValue.TextColor));
+            this.EditUnrestrictedAnnotationTextBox.Background = new SolidColorBrush(ToMediaColor(attributeValue.FillColor));
 
             // The textbox's tag holds context information to allow us to update the value in the display object when
             // the text in the textbox changes. Note that we must set the correct tag before we set the text, otherwise
             // setting the text will cause it to be copied to the last annotation that we edited.
-            this.EditUnrestrictedAnnotationTextBox.Tag = new UnrestrictedAnnotationValueContext(displayData, schemaDefinition.Name);
-            this.EditUnrestrictedAnnotationTextBox.Text = value.ToString();
+            this.EditUnrestrictedAnnotationTextBox.Tag = new UnrestrictedAnnotationValueContext(displayData, attributeSchema.Name);
+            this.EditUnrestrictedAnnotationTextBox.Text = attributeValue.ValueAsString;
 
             // Set the textbox position to exactly cover the annotation value
             var navigatorViewDuration = this.Navigator.ViewRange.Duration.TotalSeconds;
@@ -224,8 +309,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             var labelEnd = Math.Max(0, Math.Min((displayData.EndTime - this.Navigator.ViewRange.StartTime).TotalSeconds, navigatorViewDuration));
 
             var verticalSpace = this.StreamVisualizationObject.Padding / this.ScaleTransform.ScaleY;
-            var lo = (double)(trackId + verticalSpace) / this.StreamVisualizationObject.TrackCount;
-            var hi = (double)(trackId + 1 - verticalSpace) / this.StreamVisualizationObject.TrackCount;
+            var attributeCount = this.StreamVisualizationObject.AttributeCount;
+            var totalTrackCount = attributeCount * this.StreamIntervalVisualizationObject.TrackCount;
+            var lo = (double)(displayData.TrackIndex * attributeCount + attributeIndex + verticalSpace) / totalTrackCount;
+            var hi = (double)(displayData.TrackIndex * attributeCount + attributeIndex + 1 - verticalSpace) / totalTrackCount;
 
             this.EditUnrestrictedAnnotationTextBox.Width = (labelEnd - labelStart) * this.Canvas.ActualWidth / this.Navigator.ViewRange.Duration.TotalSeconds;
             this.EditUnrestrictedAnnotationTextBox.Height = (hi - lo) * this.Canvas.ActualHeight;
@@ -238,29 +325,25 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.EditUnrestrictedAnnotationTextBox.Focus();
         }
 
-        private void EditUnrestrictedAnnotationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void OnEditUnrestrictedAnnotationTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
             if (this.EditUnrestrictedAnnotationTextBox.Tag is UnrestrictedAnnotationValueContext context)
             {
-                context.DisplayData.SetValue(context.ValueName, this.EditUnrestrictedAnnotationTextBox.Text);
+                var attributeSchema = context.DisplayData.AnnotationSchema.GetAttributeSchema(context.AttributeName);
+                var annotationValue = attributeSchema.ValueSchema.CreateAnnotationValue(this.EditUnrestrictedAnnotationTextBox.Text);
+                context.DisplayData.SetAttributeValue(context.AttributeName, annotationValue);
             }
         }
 
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             this.EditUnrestrictedAnnotationTextBox.Visibility = Visibility.Collapsed;
         }
 
-        private AnnotationSchemaValueMetadata GetAnnotationValueMetadata(object value, IAnnotationSchema annotationSchema)
-        {
-            MethodInfo getMetadataProperty = annotationSchema.GetType().GetMethod("GetMetadata");
-            return (AnnotationSchemaValueMetadata)getMetadataProperty.Invoke(annotationSchema, new[] { value });
-        }
-
         private TimelineVisualizationPanelView FindTimelineVisualizationPanelView()
         {
-            DependencyObject timelinePanelView = this.VisualParent;
-            while (!(timelinePanelView is TimelineVisualizationPanelView))
+            var timelinePanelView = this.VisualParent;
+            while (timelinePanelView is not TimelineVisualizationPanelView)
             {
                 timelinePanelView = VisualTreeHelper.GetParent(timelinePanelView);
             }
@@ -268,17 +351,23 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             return timelinePanelView as TimelineVisualizationPanelView;
         }
 
+        private int GetTrackIndexUnderMouseCursor()
+        {
+            var visualizationObject = this.DataContext as TimeIntervalAnnotationVisualizationObject;
+            return (int)(Mouse.GetPosition(this.Canvas).Y * visualizationObject.TrackCount / this.Canvas.ActualHeight);
+        }
+
         private class UnrestrictedAnnotationValueContext
         {
-            public UnrestrictedAnnotationValueContext(TimeIntervalAnnotationDisplayData displayData, string valueName)
+            public UnrestrictedAnnotationValueContext(TimeIntervalAnnotationDisplayData displayData, string attributeName)
             {
                 this.DisplayData = displayData;
-                this.ValueName = valueName;
+                this.AttributeName = attributeName;
             }
 
             public TimeIntervalAnnotationDisplayData DisplayData { get; private set; }
 
-            public string ValueName { get; private set; }
+            public string AttributeName { get; private set; }
         }
     }
 }

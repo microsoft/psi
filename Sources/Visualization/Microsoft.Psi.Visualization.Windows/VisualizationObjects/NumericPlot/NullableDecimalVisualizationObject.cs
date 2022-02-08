@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
 
     /// <summary>
-    /// Implements a visualization object for nullable decimals.
+    /// Implements a visualization object for nullable decimal.
     /// </summary>
     [VisualizationObject("Decimal", typeof(NullableDecimalRangeSummarizer))]
     public class NullableDecimalVisualizationObject : PlotVisualizationObject<decimal?>

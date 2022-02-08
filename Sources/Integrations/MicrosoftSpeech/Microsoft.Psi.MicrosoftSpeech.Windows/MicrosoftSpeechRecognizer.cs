@@ -31,6 +31,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
     /// position offset of the recognized audio as reported by the recognition engine to compute an estimate of the originating time. For
     /// partial hypotheses, we use the engine's current offset into the audio stream to estimate the originating time.
     /// </remarks>
+    [Obsolete("The MicrosoftSpeechRecognizer component has been deprecated. Consider using the SystemSpeechRecognizer component available in Microsoft.Psi.Speech.Windows instead.", false)]
     public sealed class MicrosoftSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
     {
         /// <summary>
@@ -122,7 +123,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// <summary>
         /// Initializes a new instance of the <see cref="MicrosoftSpeechRecognizer"/> class.
         /// </summary>
-        /// <param name="pipeline">The Psi pipeline.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The name of the configuration file.</param>
         public MicrosoftSpeechRecognizer(Pipeline pipeline, string configurationFilename = null)
             : this(
@@ -525,7 +526,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// originating times.
         /// </summary>
         /// <typeparam name="T">The type of the output stream.</typeparam>
-        /// <param name="pipeline">The pipeline in which this component was created.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the stream.</param>
         /// <param name="consistencyCheckGroup">The group in which to create the stream.</param>
         /// <returns>The newly created emitter for the stream.</returns>

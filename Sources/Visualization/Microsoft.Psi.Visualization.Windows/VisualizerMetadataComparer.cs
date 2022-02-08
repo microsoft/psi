@@ -49,7 +49,7 @@ namespace Microsoft.Psi.Visualization
             {
                 return 0;
             }
-            else if (visualizerMetadataType == typeof(object))
+            else if (visualizerMetadataType == typeof(object) || visualizerMetadataType.IsInterface)
             {
                 return int.MaxValue;
             }

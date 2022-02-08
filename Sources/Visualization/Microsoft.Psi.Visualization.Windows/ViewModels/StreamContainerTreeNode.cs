@@ -265,16 +265,20 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [DisplayName("Subsumed Avg. Message Latency (ms)")]
         [Description("The average latency (in milliseconds) of messages in the stream(s) subsumed by the tree node.")]
-        public virtual double SubsumedAverageMessageLatencyMs
-            => this.children.Where(c => c is not DerivedStreamTreeNode).Sum(c => c.SubsumedMessageCount * c.SubsumedAverageMessageLatencyMs) / this.SubsumedMessageCount;
+        public virtual double SubsumedAverageMessageLatencyMs =>
+            this.SubsumedMessageCount > 0 ?
+                this.children.Where(c => c is not DerivedStreamTreeNode && c.SubsumedMessageCount > 0).Sum(c => c.SubsumedMessageCount * c.SubsumedAverageMessageLatencyMs) / this.SubsumedMessageCount :
+                double.NaN;
 
         /// <summary>
         /// Gets the total number of messages in the stream(s) subsumed by the tree node.
         /// </summary>
         [DisplayName("Subsumed Avg. Message Size")]
         [Description("The average size (in bytes) of messages in the stream(s) subsumed by the tree node.")]
-        public virtual double SubsumedAverageMessageSize
-            => this.children.Where(c => c is not DerivedStreamTreeNode).Sum(c => c.SubsumedMessageCount * c.SubsumedAverageMessageSize) / this.SubsumedMessageCount;
+        public virtual double SubsumedAverageMessageSize =>
+            this.SubsumedMessageCount > 0 ?
+                this.children.Where(c => c is not DerivedStreamTreeNode && c.SubsumedMessageCount > 0).Sum(c => c.SubsumedMessageCount * c.SubsumedAverageMessageSize) / this.SubsumedMessageCount :
+                double.NaN;
 
         /// <summary>
         /// Gets the total data size in the stream(s) subsumed by the tree node.
@@ -449,14 +453,32 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 case AuxiliaryStreamInfo.Size:
                     this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatSize(this.SubsumedSize)}]";
                     break;
+                case AuxiliaryStreamInfo.DataThroughputPerHour:
+                    this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatThroughput(this.SubsumedSize / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalHours, "hour")}]";
+                    break;
+                case AuxiliaryStreamInfo.DataThroughputPerMinute:
+                    this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatThroughput(this.SubsumedSize / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalMinutes, "min")}]";
+                    break;
+                case AuxiliaryStreamInfo.DataThroughputPerSecond:
+                    this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatThroughput(this.SubsumedSize / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalSeconds, "sec")}]";
+                    break;
+                case AuxiliaryStreamInfo.MessageCountThroughputPerHour:
+                    this.AuxiliaryInfo = $"[{this.SubsumedMessageCount / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalHours:0.01}]";
+                    break;
+                case AuxiliaryStreamInfo.MessageCountThroughputPerMinute:
+                    this.AuxiliaryInfo = $"[{this.SubsumedMessageCount / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalMinutes:0.01}]";
+                    break;
+                case AuxiliaryStreamInfo.MessageCountThroughputPerSecond:
+                    this.AuxiliaryInfo = $"[{this.SubsumedMessageCount / (this.SubsumedClosedTime - this.SubsumedOpenedTime).TotalSeconds:0.01}]";
+                    break;
                 case AuxiliaryStreamInfo.MessageCount:
                     this.AuxiliaryInfo = this.SubsumedMessageCount == 0 ? "[0]" : $"[{this.SubsumedMessageCount:0,0}]";
                     break;
                 case AuxiliaryStreamInfo.AverageMessageLatencyMs:
-                    this.AuxiliaryInfo = this.SubsumedAverageMessageLatencyMs < 1 ? "<1 ms" : $"{this.SubsumedAverageMessageLatencyMs:0,0 ms}";
+                    this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatLatencyMs(this.SubsumedAverageMessageLatencyMs)}]";
                     break;
                 case AuxiliaryStreamInfo.AverageMessageSize:
-                    this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatSize((long)this.SubsumedAverageMessageSize)}]";
+                    this.AuxiliaryInfo = $"[{SizeFormatHelper.FormatSize(this.SubsumedAverageMessageSize)}]";
                     break;
                 default:
                     break;
@@ -496,6 +518,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     AuxiliaryStreamInfo.AverageMessageSize => "Average Message Size",
                     AuxiliaryStreamInfo.AverageMessageLatencyMs => "Average Message Latency",
                     AuxiliaryStreamInfo.Size => "Size",
+                    AuxiliaryStreamInfo.DataThroughputPerHour => "Throughput (bytes per hour)",
+                    AuxiliaryStreamInfo.DataThroughputPerMinute => "Throughput (bytes per minute)",
+                    AuxiliaryStreamInfo.DataThroughputPerSecond => "Throughput (bytes per second)",
+                    AuxiliaryStreamInfo.MessageCountThroughputPerHour => "Throughput (messages per hour)",
+                    AuxiliaryStreamInfo.MessageCountThroughputPerMinute => "Throughput (messages per minute)",
+                    AuxiliaryStreamInfo.MessageCountThroughputPerSecond => "Throughput (messages per second)",
                     _ => throw new NotImplementedException(),
                 };
 

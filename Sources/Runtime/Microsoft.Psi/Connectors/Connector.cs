@@ -18,8 +18,8 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="from">The source pipeline.</param>
         /// <param name="to">The target pipeline.</param>
-        /// <param name="name">The name of the connector.</param>
-        /// <param name="preserveEnvelope">Whether or not the source message envelopes should be preserved.</param>
+        /// <param name="name">An optional name for the connector.</param>
+        /// <param name="preserveEnvelope">An optional parameter that specifies whether or not the source message envelopes should be preserved.</param>
         public Connector(Pipeline from, Pipeline to, string name = null, bool preserveEnvelope = false)
         {
             this.name = name ?? $"{from.Name}→{to.Name}";
@@ -32,9 +32,9 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Connector{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to create the connector in.</param>
-        /// <param name="name">The name of the connector.</param>
-        /// <param name="preserveEnvelope">Whether or not the source message envelopes should be preserved.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="name">An optional name for the connector.</param>
+        /// <param name="preserveEnvelope">An optional parameter that specifies whether or not the source message envelopes should be preserved.</param>
         public Connector(Pipeline pipeline, string name = null, bool preserveEnvelope = false)
             : this(pipeline, pipeline, name ?? $"Connector-{pipeline.Name}", preserveEnvelope)
         {
@@ -51,9 +51,6 @@ namespace Microsoft.Psi.Components
         public Emitter<T> Out { get; }
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return this.name;
-        }
+        public override string ToString() => this.name;
     }
 }

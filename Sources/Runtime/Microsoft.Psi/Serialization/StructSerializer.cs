@@ -21,6 +21,9 @@ namespace Microsoft.Psi.Serialization
         private CloneDelegate<T> cloneImpl;
         private ClearDelegate<T> clearImpl;
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => null; // depends on the generated implementation
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             var runtimeSchema = TypeSchema.FromType(typeof(T), serializers.RuntimeVersion, this.GetType(), Version);

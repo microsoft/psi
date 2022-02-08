@@ -1147,11 +1147,16 @@ namespace Test.Psi
                     // since the store will be rendered valid when the pipeline is terminated.
                     Directory.CreateDirectory(tempFolder);
 
-                    // copy the store files to the temp folder - we will restore them later
+                    // Copy the store files to the temp folder - we will restore them later.
+                    // The Live marker file cannot be copied because the writer still holds
+                    // an exclusive lock.
                     foreach (var file in Directory.EnumerateFiles(invalidStore.Path))
                     {
                         var fileInfo = new FileInfo(file);
-                        File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
+                        if (!fileInfo.Name.EndsWith(".Live"))
+                        {
+                            File.Copy(file, Path.Combine(tempFolder, fileInfo.Name));
+                        }
                     }
                 }
             }).Write("seq", invalidStore);

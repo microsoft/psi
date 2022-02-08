@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.Serialization;
     using System.Windows;
     using GalaSoft.MvvmLight.Command;
+    using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Navigation;
@@ -25,7 +26,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private string name;
 
         /// <summary>
-        /// Indicated whether the visualization object is visible.
+        /// Indicates whether the visualization object should be visible.
         /// </summary>
         private bool visible = true;
 
@@ -33,6 +34,21 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The visualization panel this visualization object is parented under.
         /// </summary>
         private VisualizationPanel panel;
+
+        /// <summary>
+        /// The positive magnitude of the cursor epsilon (this value can be modified in the properties window).
+        /// </summary>
+        private int cursorEpsilonPosMs;
+
+        /// <summary>
+        /// The negative magnitude of the cursor epsilon (this value can be modified in the properties window).
+        /// </summary>
+        private int cursorEpsilonNegMs;
+
+        /// <summary>
+        /// Gets or sets the epsilon interval around the cursor used when reading data.
+        /// </summary>
+        private RelativeTimeInterval cursorEpsilon;
 
         /// <summary>
         /// The toggle visualization command.
@@ -60,15 +76,83 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the visualization object is visible.
+        /// Gets the type name of the visualization object.
+        /// </summary>
+        [IgnoreDataMember]
+        [DisplayName("Visualizer Type")]
+        [Description("The type of the visualization object.")]
+        public string VisualizerTypeName => TypeSpec.Simplify(this.GetType().Name);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the visualization object should be visible.
         /// </summary>
         [DataMember]
-        [Description("The visibility of the visualization object.")]
+        [Description("Indicates whether the visualization object should be visible.")]
         public bool Visible
         {
             get { return this.visible; }
-            set { this.Set(nameof(this.Visible), ref this.visible, value); }
+
+            set
+            {
+                this.Set(nameof(this.Visible), ref this.visible, value);
+                this.RaisePropertyChanged(nameof(this.IsShown));
+            }
         }
+
+        /// <summary>
+        /// Gets the cursor epsilon.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelativeTimeInterval CursorEpsilon
+        {
+            get => this.cursorEpsilon;
+            private set
+            {
+                this.Set(nameof(this.CursorEpsilon), ref this.cursorEpsilon, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).
+        /// </summary>
+        [DataMember]
+        [DisplayName("Cursor Epsilon Future (ms)")]
+        [Description("The epsilon future duration relative to the cursor (in milliseconds) to consider when finding messages to visualize.")]
+        public int CursorEpsilonPosMs
+        {
+            get { return this.cursorEpsilonPosMs; }
+
+            set
+            {
+                this.cursorEpsilonPosMs = value;
+                this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.cursorEpsilonNegMs), TimeSpan.FromMilliseconds(this.cursorEpsilonPosMs));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).
+        /// </summary>
+        [DataMember]
+        [DisplayName("Cursor Epsilon Past (ms)")]
+        [Description("The epsilon past duration relative to the cursor (in milliseconds) to consider when finding messages to visualize.")]
+        public int CursorEpsilonNegMs
+        {
+            get { return this.cursorEpsilonNegMs; }
+
+            set
+            {
+                this.cursorEpsilonNegMs = value;
+                this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.cursorEpsilonNegMs), TimeSpan.FromMilliseconds(this.cursorEpsilonPosMs));
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the visualization object is shown.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public bool IsShown => this.Visible && this.panel != null && this.panel.IsShown;
 
         /// <summary>
         /// Gets the default DataTemplate that is used within a VisualizationPanel.
@@ -160,7 +244,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.toggleVisibilityCommand == null)
                 {
-                    this.toggleVisibilityCommand = new RelayCommand(() => this.Visible = !this.Visible);
+                    this.toggleVisibilityCommand = new RelayCommand(() => this.Panel.ToggleVisualizationObjectVisibility(this));
                 }
 
                 return this.toggleVisibilityCommand;
@@ -270,6 +354,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="e">The event args for the event.</param>
         protected virtual void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == nameof(VisualizationPanel.Visible))
+            {
+                this.RaisePropertyChanged(nameof(this.IsShown));
+            }
         }
 
         /// <summary>

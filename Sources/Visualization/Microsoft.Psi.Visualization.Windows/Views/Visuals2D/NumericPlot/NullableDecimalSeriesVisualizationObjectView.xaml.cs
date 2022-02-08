@@ -3,8 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
-    using Microsoft.Psi.Visualization.VisualizationObjects;
-
     /// <summary>
     /// Interaction logic for NullableDecimalSeriesVisualizationObjectView.xaml.
     /// </summary>

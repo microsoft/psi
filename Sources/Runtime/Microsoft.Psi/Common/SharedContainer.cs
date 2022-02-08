@@ -74,6 +74,9 @@ namespace Microsoft.Psi
             public const int Version = 2;
             private SerializationHandler<T> handler;
 
+            /// <inheritdoc />
+            public bool? IsClearRequired => false;
+
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 this.handler = serializers.GetHandler<T>();

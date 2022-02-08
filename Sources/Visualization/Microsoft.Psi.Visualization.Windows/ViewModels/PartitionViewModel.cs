@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             // Check if this is a live partition (i.e. it still has a writer attached)
-            this.UpdateLiveStatus();
+            this.UpdateLiveStatus(true);
             if (this.IsLivePartition)
             {
                 this.liveMessageCallback = new LiveMessageReceivedDelegate(this.OnMessageWritten);
@@ -511,7 +511,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             if (this.IsDirty)
             {
-                SaveStoreWindow saveStoreWindow = new SaveStoreWindow(Application.Current.MainWindow, this);
+                var saveStoreWindow = new SaveStoreWindow(Application.Current.MainWindow, this);
                 saveStoreWindow.ShowDialog();
                 switch (saveStoreWindow.UserSelection)
                 {
@@ -562,19 +562,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <summary>
         /// Checks whether the partition has an active writer attached and updates its IsLivePartition property.
         /// </summary>
+        /// <param name="initialCheck">True if the check should be made even if the store is not currently shown as live.</param>
         /// <returns>true if the partition is a live partition, otherwise false.</returns>
-        internal bool UpdateLiveStatus()
+        internal bool UpdateLiveStatus(bool initialCheck = false)
         {
-            try
+            // If a store is not live, then it will never change its status back to live
+            if (this.IsLivePartition || initialCheck)
             {
-                this.IsLivePartition = PsiStoreReader.IsStoreLive(this.StoreName, this.StorePath);
-                return this.IsLivePartition;
+                this.IsLivePartition = PsiStoreMonitor.IsStoreLive(this.StoreName, this.StorePath);
             }
-            catch (AbandonedMutexException)
-            {
-                // This exception will be raised if the writer goes away
-                return false;
-            }
+
+            return this.IsLivePartition;
         }
 
         private async void ExportStore()
@@ -598,11 +596,11 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             // Show the export partition dialog
-            ExportPsiPartitionWindow dlg = new ExportPsiPartitionWindow(this.StoreName + "Exported", this.StorePath, new TimeInterval(cropIntervalLeft, cropIntervalRight), Application.Current.MainWindow);
+            var dlg = new ExportPsiPartitionWindow(this.StoreName + "Exported", this.StorePath, new TimeInterval(cropIntervalLeft, cropIntervalRight), Application.Current.MainWindow);
             if (dlg.ShowDialog() == true)
             {
                 // Create the progress window
-                ProgressWindow progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Cropping Store {this.StoreName}");
+                var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Cropping Store {this.StoreName}");
                 var progress = new Progress<double>(p =>
                 {
                     progressWindow.Progress = p;
@@ -651,7 +649,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private void MonitorLivePartition()
         {
             // Create the reader that will monitor the store
-            PsiStoreReader storeReader = new PsiStoreReader(this.StoreName, this.StorePath, this.OnMetadataUpdate, true);
+            var storeReader = new PsiStoreReader(this.StoreName, this.StorePath, this.OnMetadataUpdate, true);
 
             // Find the current extents of the partition, as of this moment
             (TimeInterval messageTimes, TimeInterval messageOriginatingTimes) = storeReader.GetLiveStoreExtents();
@@ -797,6 +795,21 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 case AuxiliaryPartitionInfo.Size:
                     this.AuxiliaryInfo = this.Partition.Size.HasValue ? SizeFormatHelper.FormatSize(this.Partition.Size.Value) : "?";
                     break;
+                case AuxiliaryPartitionInfo.DataThroughputPerHour:
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.OriginatingTimeInterval.IsEmpty ?
+                        SizeFormatHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.OriginatingTimeInterval.Span.TotalHours, "hour") :
+                        "?";
+                    break;
+                case AuxiliaryPartitionInfo.DataThroughputPerMinute:
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.OriginatingTimeInterval.IsEmpty ?
+                        SizeFormatHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.OriginatingTimeInterval.Span.TotalMinutes, "min") :
+                        "?";
+                    break;
+                case AuxiliaryPartitionInfo.DataThroughputPerSecond:
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.OriginatingTimeInterval.IsEmpty ?
+                        SizeFormatHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.OriginatingTimeInterval.Span.TotalSeconds, "sec") :
+                        "?";
+                    break;
                 case AuxiliaryPartitionInfo.StreamCount:
                     this.AuxiliaryInfo = this.Partition.StreamCount.HasValue ? (this.Partition.StreamCount == 0 ? "0" : $"{this.Partition.StreamCount.Value:0,0.}") : "?";
                     break;
@@ -856,6 +869,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     AuxiliaryPartitionInfo.StartDateTime => "Start DateTime (UTC)",
                     AuxiliaryPartitionInfo.StartDateTimeLocal => "Start DateTime (Local)",
                     AuxiliaryPartitionInfo.Size => "Size",
+                    AuxiliaryPartitionInfo.DataThroughputPerHour => "Throughput (bytes per hour)",
+                    AuxiliaryPartitionInfo.DataThroughputPerMinute => "Throughput (bytes per minute)",
+                    AuxiliaryPartitionInfo.DataThroughputPerSecond => "Throughput (bytes per second)",
                     AuxiliaryPartitionInfo.StreamCount => "Number of Streams",
                     _ => throw new NotImplementedException(),
                 };

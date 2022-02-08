@@ -3,13 +3,15 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
+    using System.Threading.Tasks;
+    using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Imaging;
-    using Microsoft.Psi.Visualization.Extensions;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
     using Windows = System.Windows.Media.Media3D;
 
@@ -25,6 +27,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private int sparsity = 3;
         private Shared<DepthImage> depthImage = null;
         private ICameraIntrinsics intrinsics = null;
+        private Point3D[,] cameraSpaceMapping = null;
         private CoordinateSystem position = null;
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        protected override System.Action<(Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem)> Deallocator => data => data.Item1?.Dispose();
+        protected override Action<(Shared<DepthImage>, ICameraIntrinsics, CoordinateSystem)> Deallocator => data => data.Item1?.Dispose();
 
         /// <inheritdoc/>
         public override void UpdateData()
@@ -86,7 +89,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             this.depthImage = this.CurrentData.Item1?.AddRef();
-            this.intrinsics = this.CurrentData.Item2;
+            if (!Equals(this.intrinsics, this.CurrentData.Item2))
+            {
+                this.intrinsics = this.CurrentData.Item2;
+                this.cameraSpaceMapping = this.intrinsics?.GetPixelToCameraSpaceMapping(true);
+            }
+
             this.position = this.CurrentData.Item3;
 
             this.UpdateVisuals();
@@ -120,28 +128,47 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return;
             }
 
-            var points = new List<Windows.Point3D>();
             int width = this.depthImage.Resource.Width;
             int height = this.depthImage.Resource.Height;
-            int cx = width / 2;
-            int cy = height / 2;
+            var pointsArray = new Windows.Point3D[width, height];
+            var points = new List<Windows.Point3D>();
 
             double scale = 0.001;
-
             unsafe
             {
                 ushort* depthFrame = (ushort*)((byte*)this.depthImage.Resource.ImageData.ToPointer());
 
-                for (int iy = 0; iy < height; iy += this.sparsity)
+                Parallel.For(0, height, iy =>
                 {
+                    var row = iy * width;
+                    var point = Vector<double>.Build.Dense(4);
+                    point[3] = 1;
                     for (int ix = 0; ix < width; ix += this.sparsity)
                     {
-                        int i = (iy * width) + ix;
+                        int i = row + ix;
                         var d = depthFrame[i];
                         if (d != 0)
                         {
-                            var other = this.intrinsics.ToCameraSpace(new Point2D(ix, iy), depthFrame[i] * scale, true);
-                            points.Add(other.TransformBy(this.position).ToPoint3D());
+                            var dscaled = d * scale;
+                            var cameraSpacePoint = this.cameraSpaceMapping[ix, iy];
+                            point[0] = dscaled * cameraSpacePoint.X;
+                            point[1] = dscaled * cameraSpacePoint.Y;
+                            point[2] = dscaled * cameraSpacePoint.Z;
+                            var transformed = this.position.Multiply(point);
+                            pointsArray[ix, iy] = new Windows.Point3D(transformed[0], transformed[1], transformed[2]);
+                        }
+                    }
+                });
+
+                for (int iy = 0; iy < height; iy += this.sparsity)
+                {
+                    var row = iy * width;
+                    for (int ix = 0; ix < width; ix += this.sparsity)
+                    {
+                        int i = row + ix;
+                        if (depthFrame[i] != 0)
+                        {
+                            points.Add(pointsArray[ix, iy]);
                         }
                     }
                 }

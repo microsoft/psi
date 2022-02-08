@@ -84,7 +84,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Element (representing component) created.
         /// </summary>
         /// <remarks>Called upon element construction (first moment component becomes a pipeline element).</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element being created.</param>
         /// <param name="component">Component associated with this pipeline element.</param>
         public void PipelineElementCreate(Pipeline pipeline, PipelineElement element, object component)
@@ -118,7 +118,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Element (representing component) being started.
         /// </summary>
         /// <remarks>Called after scheduling calls to start handler.</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element being started.</param>
         public void PipelineElementStart(Pipeline pipeline, PipelineElement element)
         {
@@ -129,7 +129,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Element (representing component) being stopped.
         /// </summary>
         /// <remarks>Called after scheduling calls to stop handler.</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element being stopped.</param>
         public void PipelineElementStop(Pipeline pipeline, PipelineElement element)
         {
@@ -140,7 +140,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Element (representing component) being finalized.
         /// </summary>
         /// <remarks>Called after scheduling calls to final handler.</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element being finalized.</param>
         public void PipelineElementFinal(Pipeline pipeline, PipelineElement element)
         {
@@ -151,7 +151,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Element (representing component) created.
         /// </summary>
         /// <remarks>Called upon element disposal.</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element being created.</param>
         public void PipelineElementDisposed(Pipeline pipeline, PipelineElement element)
         {
@@ -162,7 +162,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Output (emitter) added to element.
         /// </summary>
         /// <remarks>Called just after element start (or dynamically if added once pipeline running).</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element to which emitter is being added.</param>
         /// <param name="emitter">Emitter being added.</param>
         public void PipelineElementAddEmitter(Pipeline pipeline, PipelineElement element, IEmitter emitter)
@@ -190,7 +190,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Input (receiver) added to element.
         /// </summary>
         /// <remarks>Called just after element start (or dynamically if added once pipeline running).</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element to which receiver is being added.</param>
         /// <param name="receiver">Receiver being added.</param>
         public void PipelineElementAddReceiver(Pipeline pipeline, PipelineElement element, IReceiver receiver)
@@ -203,7 +203,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Input subscribed to input.
         /// </summary>
         /// <remarks>Called just after element start (or dynamically if subscribed once pipeline running).</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element to which receiver belongs.</param>
         /// <param name="receiver">Receiver subscribing to emitter.</param>
         /// <param name="emitter">Emitter to which receiver is subscribing.</param>
@@ -221,7 +221,7 @@ namespace Microsoft.Psi.Diagnostics
         /// Input unsubscribed to input.
         /// </summary>
         /// <remarks>Called upon unsubscribe (only if pipeline running).</remarks>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element to which receiver belongs.</param>
         /// <param name="receiver">Receiver unsubscribing to emitter.</param>
         /// <param name="emitter">Emitter from which receiver is unsubscribing.</param>
@@ -234,7 +234,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <summary>
         /// Get collector of diagnostics message flow statistics for a single receiver.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which the element belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="element">Element to which receiver belongs.</param>
         /// <param name="receiver">Receiver having completed processing.</param>
         public ReceiverCollector GetReceiverDiagnosticsCollector(Pipeline pipeline, PipelineElement element, IReceiver receiver)

@@ -104,7 +104,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void UpdateVisuals()
         {
-            this.intrinsics = this.image?.Resource?.ComputeCameraIntrinsics(this.FocalLengthX, this.FocalLengthY);
+            this.intrinsics = this.image?.Resource?.CreateCameraIntrinsics(this.FocalLengthX, this.FocalLengthY);
             this.cameraView.SetCurrentValue(this.SynthesizeMessage((this.image, this.intrinsics, this.position)));
         }
 

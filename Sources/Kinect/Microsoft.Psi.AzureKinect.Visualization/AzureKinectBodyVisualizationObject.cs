@@ -4,13 +4,15 @@
 namespace Microsoft.Psi.AzureKinect.Visualization
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.Serialization;
-    using System.Windows;
     using System.Windows.Media;
-    using HelixToolkit.Wpf;
+    using MathNet.Spatial.Euclidean;
     using Microsoft.Azure.Kinect.BodyTracking;
     using Microsoft.Psi.AzureKinect;
+    using Microsoft.Psi.Visualization.DataTypes;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
     using Win3D = System.Windows.Media.Media3D;
@@ -21,15 +23,8 @@ namespace Microsoft.Psi.AzureKinect.Visualization
     [VisualizationObject("Azure Kinect Body")]
     public class AzureKinectBodyVisualizationObject : ModelVisual3DVisualizationObject<AzureKinectBody>
     {
-        private readonly UpdatableVisual3DDictionary<JointId, SphereVisual3D> visualJoints;
-        private readonly UpdatableVisual3DDictionary<(JointId ChildJoint, JointId ParentJoint), PipeVisual3D> visualBones;
+        private static readonly Dictionary<(JointId ChildJoint, JointId ParentJoint), bool> AzureKinectBodyGraph = AzureKinectBody.Bones.ToDictionary(j => j, j => true);
 
-        private Color color = Colors.White;
-        private double inferredJointsOpacity = 30;
-        private double boneDiameterMm = 20;
-        private double jointRadiusMm = 15;
-        private bool showBillboard = false;
-        private int polygonResolution = 6;
         private double billboardHeightCm = 100;
 
         /// <summary>
@@ -37,71 +32,62 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         /// </summary>
         public AzureKinectBodyVisualizationObject()
         {
-            this.visualJoints = new UpdatableVisual3DDictionary<JointId, SphereVisual3D>(null);
-            this.visualBones = new UpdatableVisual3DDictionary<(JointId ChildJoint, JointId ParentJoint), PipeVisual3D>(null);
+            this.Skeleton = new SkeletonVisualizationObject<JointId>(
+                nodeVisibilityFunc:
+                    jointType =>
+                    {
+                        var jointState = this.CurrentData.Joints[jointType].Confidence;
+                        var isTracked = jointState == JointConfidenceLevel.High || jointState == JointConfidenceLevel.Medium;
+                        return jointState != JointConfidenceLevel.None && (isTracked || this.Skeleton.InferredJointsOpacity > 0);
+                    },
+                nodeFillFunc:
+                    jointType =>
+                    {
+                        var jointState = this.CurrentData.Joints[jointType].Confidence;
+                        var isTracked = jointState == JointConfidenceLevel.High || jointState == JointConfidenceLevel.Medium;
+                        return isTracked ?
+                            new SolidColorBrush(this.Skeleton.NodeColor) :
+                            new SolidColorBrush(
+                                Color.FromArgb(
+                                    (byte)(Math.Max(0, Math.Min(100, this.Skeleton.InferredJointsOpacity)) * 2.55),
+                                    this.Skeleton.NodeColor.R,
+                                    this.Skeleton.NodeColor.G,
+                                    this.Skeleton.NodeColor.B));
+                    },
+                edgeVisibilityFunc:
+                    bone =>
+                    {
+                        var parentState = this.CurrentData.Joints[bone.Item1].Confidence;
+                        var childState = this.CurrentData.Joints[bone.Item2].Confidence;
+                        var parentIsTracked = parentState == JointConfidenceLevel.High || parentState == JointConfidenceLevel.Medium;
+                        var childIsTracked = childState == JointConfidenceLevel.High || childState == JointConfidenceLevel.Medium;
+                        var isTracked = parentIsTracked && childIsTracked;
+                        return parentState != JointConfidenceLevel.None && childState != JointConfidenceLevel.None && (isTracked || this.Skeleton.InferredJointsOpacity > 0);
+                    },
+                edgeFillFunc:
+                    bone =>
+                    {
+                        var parentState = this.CurrentData.Joints[bone.Item1].Confidence;
+                        var childState = this.CurrentData.Joints[bone.Item2].Confidence;
+                        var parentIsTracked = parentState == JointConfidenceLevel.High || parentState == JointConfidenceLevel.Medium;
+                        var childIsTracked = childState == JointConfidenceLevel.High || childState == JointConfidenceLevel.Medium;
+                        var isTracked = parentIsTracked && childIsTracked;
+                        return isTracked ?
+                            new SolidColorBrush(this.Skeleton.NodeColor) :
+                            new SolidColorBrush(
+                                Color.FromArgb(
+                                    (byte)(Math.Max(0, Math.Min(100, this.Skeleton.InferredJointsOpacity)) * 2.55),
+                                    this.Skeleton.NodeColor.R,
+                                    this.Skeleton.NodeColor.G,
+                                    this.Skeleton.NodeColor.B));
+                    });
 
-            this.Billboard = new BillboardTextVisualizationObject();
+            this.Skeleton.RegisterChildPropertyChangedNotifications(this, nameof(this.Skeleton));
+
+            this.Billboard = new BillboardTextVisualizationObject() { Visible = false };
             this.Billboard.RegisterChildPropertyChangedNotifications(this, nameof(this.Billboard));
 
             this.UpdateVisibility();
-        }
-
-        /// <summary>
-        /// Gets or sets the color.
-        /// </summary>
-        [DataMember]
-        [Description("Color of the body.")]
-        public Color Color
-        {
-            get { return this.color; }
-            set { this.Set(nameof(this.Color), ref this.color, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the inferred joints opacity.
-        /// </summary>
-        [DataMember]
-        [Description("Opacity for rendering inferred joints and bones.")]
-        public double InferredJointsOpacity
-        {
-            get { return this.inferredJointsOpacity; }
-            set { this.Set(nameof(this.InferredJointsOpacity), ref this.inferredJointsOpacity, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the bone diameter.
-        /// </summary>
-        [DataMember]
-        [DisplayName("Bone diameter (mm)")]
-        [Description("Diameter of bones (mm).")]
-        public double BoneDiameterMm
-        {
-            get { return this.boneDiameterMm; }
-            set { this.Set(nameof(this.BoneDiameterMm), ref this.boneDiameterMm, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the joint diameter.
-        /// </summary>
-        [DataMember]
-        [DisplayName("Joint radius (mm)")]
-        [Description("Radius of joints (mm).")]
-        public double JointRadiusMm
-        {
-            get { return this.jointRadiusMm; }
-            set { this.Set(nameof(this.JointRadiusMm), ref this.jointRadiusMm, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to show a billboard with information about the body.
-        /// </summary>
-        [DataMember]
-        [PropertyOrder(0)]
-        [Description("Show a billboard with information about the body.")]
-        public bool ShowBillboard
-        {
-            get { return this.showBillboard; }
-            set { this.Set(nameof(this.ShowBillboard), ref this.showBillboard, value); }
         }
 
         /// <summary>
@@ -118,25 +104,24 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         }
 
         /// <summary>
-        /// Gets the billboard visualization object for the spatial entity.
+        /// Gets the billboard visualization object for the body.
         /// </summary>
         [ExpandableObject]
         [DataMember]
         [PropertyOrder(2)]
-        [DisplayName("Billboard Properties")]
+        [DisplayName("Billboard")]
         [Description("The billboard properties.")]
         public BillboardTextVisualizationObject Billboard { get; private set; }
 
         /// <summary>
-        /// Gets or sets the number of divisions to use when rendering polygons for joints and bones.
+        /// Gets the skeleton visualization object for the body.
         /// </summary>
+        [ExpandableObject]
         [DataMember]
-        [Description("Level of resolution at which to render joint and bone polygons (minimum value is 3).")]
-        public int PolygonResolution
-        {
-            get { return this.polygonResolution; }
-            set { this.Set(nameof(this.PolygonResolution), ref this.polygonResolution, value < 3 ? 3 : value); }
-        }
+        [PropertyOrder(3)]
+        [DisplayName("Skeleton")]
+        [Description("The body's skeleton properties.")]
+        public SkeletonVisualizationObject<JointId> Skeleton { get; private set; }
 
         /// <inheritdoc/>
         public override void UpdateData()
@@ -152,19 +137,7 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         /// <inheritdoc/>
         public override void NotifyPropertyChanged(string propertyName)
         {
-            if (propertyName == nameof(this.Color) ||
-                propertyName == nameof(this.InferredJointsOpacity) ||
-                propertyName == nameof(this.BoneDiameterMm) ||
-                propertyName == nameof(this.JointRadiusMm) ||
-                propertyName == nameof(this.PolygonResolution))
-            {
-                this.UpdateVisuals();
-            }
-            else if (propertyName == nameof(this.ShowBillboard))
-            {
-                this.UpdateBillboardVisibility();
-            }
-            else if (propertyName == nameof(this.BillboardHeightCm))
+            if (propertyName == nameof(this.BillboardHeightCm))
             {
                 this.UpdateBillboard();
             }
@@ -176,106 +149,18 @@ namespace Microsoft.Psi.AzureKinect.Visualization
 
         private void UpdateVisuals()
         {
-            this.visualJoints.BeginUpdate();
-            this.visualBones.BeginUpdate();
+            this.UpdateSkeleton();
+            this.UpdateBillboard();
+        }
 
+        private void UpdateSkeleton()
+        {
             if (this.CurrentData != null)
             {
-                var trackedEntitiesBrush = new SolidColorBrush(this.Color);
-                var untrackedEntitiesBrush = new SolidColorBrush(
-                    Color.FromArgb(
-                        (byte)(Math.Max(0, Math.Min(100, this.InferredJointsOpacity)) * 2.55),
-                        this.Color.R,
-                        this.Color.G,
-                        this.Color.B));
-
-                // update the joints
-                foreach (var jointType in this.CurrentData.Joints.Keys)
-                {
-                    var jointState = this.CurrentData.Joints[jointType].Confidence;
-                    var visualJoint = this.visualJoints[jointType];
-                    visualJoint.BeginEdit();
-                    var isTracked = jointState == JointConfidenceLevel.High || jointState == JointConfidenceLevel.Medium;
-                    var visible = jointState != JointConfidenceLevel.None && (isTracked || this.InferredJointsOpacity > 0);
-
-                    if (visible)
-                    {
-                        var jointPosition = this.CurrentData.Joints[jointType].Pose.Origin;
-
-                        if (visualJoint.Radius != this.JointRadiusMm / 1000.0)
-                        {
-                            visualJoint.Radius = this.JointRadiusMm / 1000.0;
-                        }
-
-                        var fill = isTracked ? trackedEntitiesBrush : untrackedEntitiesBrush;
-                        if (visualJoint.Fill != fill)
-                        {
-                            visualJoint.Fill = fill;
-                        }
-
-                        visualJoint.Transform = new Win3D.TranslateTransform3D(jointPosition.X, jointPosition.Y, jointPosition.Z);
-
-                        visualJoint.PhiDiv = this.PolygonResolution;
-                        visualJoint.ThetaDiv = this.PolygonResolution;
-
-                        visualJoint.Visible = true;
-                    }
-                    else
-                    {
-                        visualJoint.Visible = false;
-                    }
-
-                    visualJoint.EndEdit();
-                }
-
-                // update the bones
-                foreach (var bone in AzureKinectBody.Bones)
-                {
-                    var parentState = this.CurrentData.Joints[bone.ParentJoint].Confidence;
-                    var childState = this.CurrentData.Joints[bone.ChildJoint].Confidence;
-                    var parentIsTracked = parentState == JointConfidenceLevel.High || parentState == JointConfidenceLevel.Medium;
-                    var childIsTracked = childState == JointConfidenceLevel.High || childState == JointConfidenceLevel.Medium;
-                    var isTracked = parentIsTracked && childIsTracked;
-                    var visible = parentState != JointConfidenceLevel.None && childState != JointConfidenceLevel.None && (isTracked || this.InferredJointsOpacity > 0);
-                    var visualBone = this.visualBones[bone];
-                    visualBone.BeginEdit();
-                    if (visible)
-                    {
-                        if (visualBone.Diameter != this.BoneDiameterMm / 1000.0)
-                        {
-                            visualBone.Diameter = this.BoneDiameterMm / 1000.0;
-                        }
-
-                        var joint1Position = this.visualJoints[bone.ParentJoint].Transform.Value;
-                        var joint2Position = this.visualJoints[bone.ChildJoint].Transform.Value;
-
-                        visualBone.Point1 = new Win3D.Point3D(joint1Position.OffsetX, joint1Position.OffsetY, joint1Position.OffsetZ);
-                        visualBone.Point2 = new Win3D.Point3D(joint2Position.OffsetX, joint2Position.OffsetY, joint2Position.OffsetZ);
-
-                        var fill = isTracked ? trackedEntitiesBrush : untrackedEntitiesBrush;
-                        if (visualBone.Fill != fill)
-                        {
-                            visualBone.Fill = fill;
-                        }
-
-                        visualBone.ThetaDiv = this.PolygonResolution;
-
-                        visualBone.Visible = true;
-                    }
-                    else
-                    {
-                        visualBone.Visible = false;
-                    }
-
-                    visualBone.EndEdit();
-                }
-
-                // set billboard position
-                this.UpdateBillboard();
+                var points = this.CurrentData.Joints.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Pose.Origin);
+                var graph = new Graph<JointId, Point3D, bool>(points, AzureKinectBodyGraph);
+                this.Skeleton.SetCurrentValue(this.SynthesizeMessage(graph));
             }
-
-            this.visualJoints.EndUpdate();
-            this.visualBones.EndUpdate();
         }
 
         private void UpdateBillboard()
@@ -291,14 +176,10 @@ namespace Microsoft.Psi.AzureKinect.Visualization
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.visualJoints, this.Visible && this.CurrentData != default);
-            this.UpdateChildVisibility(this.visualBones, this.Visible && this.CurrentData != default);
-            this.UpdateBillboardVisibility();
-        }
+            bool childrenVisible = this.Visible && this.CurrentData != default;
 
-        private void UpdateBillboardVisibility()
-        {
-            this.UpdateChildVisibility(this.Billboard.ModelView, this.Visible && this.CurrentData != default && this.ShowBillboard);
+            this.UpdateChildVisibility(this.Skeleton.ModelView, childrenVisible);
+            this.UpdateChildVisibility(this.Billboard.ModelView, childrenVisible);
         }
     }
 }

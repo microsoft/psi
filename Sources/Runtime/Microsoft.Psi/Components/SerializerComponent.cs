@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="SerializerComponent{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="serializers">Known serializers.</param>
         internal SerializerComponent(Pipeline pipeline, KnownSerializers serializers)
             : base(pipeline)

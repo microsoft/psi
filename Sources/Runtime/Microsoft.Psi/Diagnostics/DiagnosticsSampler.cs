@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <summary>
         /// Initializes a new instance of the <see cref="DiagnosticsSampler"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="collector">Diagnostics collector.</param>
         /// <param name="config">Diagnostics configuration.</param>
         public DiagnosticsSampler(Pipeline pipeline, DiagnosticsCollector collector, DiagnosticsConfiguration config)

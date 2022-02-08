@@ -28,20 +28,30 @@ namespace Microsoft.Psi.Visualization.Views
                 if (visualizationPanel.VisualizationObjects.Count > 0)
                 {
                     var visible = visualizationPanel.VisualizationObjects.Any(vo => vo.Visible);
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(
-                        IconSourcePath.ToggleVisibility,
-                        visible ? "Hide All Visualizers" : "Show All Visualizers",
-                        visualizationPanel.ToggleAllVisualizersVisibilityCommand,
-                        null,
-                        true));
+                    menuItems.Add(
+                        MenuItemHelper.CreateMenuItem(
+                            IconSourcePath.ToggleVisibility,
+                            visible ? "Hide All Visualizers" : "Show All Visualizers",
+                            visualizationPanel.ToggleAllVisualizersVisibilityCommand,
+                            null,
+                            true));
                 }
 
-                menuItems.Add(MenuItemHelper.CreateMenuItem(
-                    IconSourcePath.ClearPanel,
-                    $"Remove All Visualizers",
-                    visualizationPanel.ClearPanelCommand,
-                    null,
-                    visualizationPanel.VisualizationObjects.Count > 0));
+                menuItems.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        IconSourcePath.ClearPanel,
+                        $"Remove All Visualizers",
+                        visualizationPanel.ClearPanelCommand,
+                        null,
+                        visualizationPanel.VisualizationObjects.Count > 0));
+
+                menuItems.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        null,
+                        $"Copy Cursor Times to Clipboard",
+                        visualizationPanel.Navigator.CopyCursorTimeToClipboardCommand,
+                        null,
+                        true));
             }
         }
     }

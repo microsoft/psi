@@ -26,10 +26,10 @@
         <KeyBinding Command="{Binding PlayPauseCommand}" Key="F10" />
         <KeyBinding Command="{Binding ToggleCursorFollowsMouseComand}" Key="F" Modifiers="Alt" />
         <KeyBinding Command="{Binding ClearSelectionCommand}" Key="C" Modifiers="Alt" />
-        <KeyBinding Command="{Binding NudgeRightCommand}" Key="OemPeriod" />
-        <KeyBinding Command="{Binding NudgeLeftCommand}" Key="OemComma" />
-        <KeyBinding Command="{Binding JumpRightCommand}" Key="OemPeriod" Modifiers="Shift" />
-        <KeyBinding Command="{Binding JumpLeftCommand}" Key="OemComma" Modifiers="Shift" />
+        <KeyBinding Command="{Binding NudgeRightCommand}" Key="OemPeriod" Modifiers="Ctrl" />
+        <KeyBinding Command="{Binding NudgeLeftCommand}" Key="OemComma" Modifiers="Ctrl" />
+        <KeyBinding Command="{Binding JumpRightCommand}" Key="OemPeriod" Modifiers="Ctrl+Shift" />
+        <KeyBinding Command="{Binding JumpLeftCommand}" Key="OemComma" Modifiers="Ctrl+Shift" />
     </Window.InputBindings>
 
     <Window.Resources>
@@ -70,6 +70,9 @@
                         <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=dataset-save.png}" Height="16" Margin="4,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <Separator />
+                <MenuItem Header="Auto Save Da_taset" Command="{Binding AutoSaveDatasetsCommand}" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoSaveDatasets}"/>
+                <MenuItem Header="Auto Load Most _Recently Used Dataset" Command="{Binding AutoLoadMRUDatasetOnStartupCommand}" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoLoadMRUDatasetOnStartUp}"/>
                 <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitCommand}" Height="25"/>
             </MenuItem>
@@ -389,6 +392,9 @@
                                         <Button Command="{Binding ClearLayoutCommand}" Margin="4,4,0,4" ToolTip="Clear Layout" AutomationProperties.Name="ClearLayoutButton">
                                             <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=layout-clear.png}"/>
                                         </Button>
+                                        <Button Command="{Binding DeleteLayoutCommand}" Margin="4,4,0,4" ToolTip="Delete Layout" AutomationProperties.Name="DeleteLayoutButton">
+                                            <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=layout-delete.png}"/>
+                                        </Button>
                                         <Separator Margin="4,2,4,2" Background="{StaticResource SeparatorColorBrush}" AutomationProperties.IsOffscreenBehavior="Offscreen"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
@@ -426,22 +432,25 @@
                                                     <DataTemplate DataType="{x:Type vp:TimelineVisualizationPanel}">
                                                         <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-timeline.png}"/>
                                                     </DataTemplate>
-                                                    <DataTemplate DataType="{x:Type vp:XYVisualizationPanel}">
+                                                    <DataTemplate DataType="{x:Type vp:CanvasVisualizationPanel}">
                                                         <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-2d.png}"/>
                                                     </DataTemplate>
+                                                    <DataTemplate DataType="{x:Type vp:XYVisualizationPanel}">
+                                                        <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-xy.png}"/>
+                                                    </DataTemplate>
                                                     <DataTemplate DataType="{x:Type vp:XYZVisualizationPanel}">
-                                                        <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-3d.png}"/>
+                                                        <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-xyz.png}"/>
                                                     </DataTemplate>
                                                     <DataTemplate DataType="{x:Type vp:InstantVisualizationContainer}">
                                                         <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-placeholder.png}"/>
                                                     </DataTemplate>
                                                 </ContentPresenter.Resources>
                                             </ContentPresenter>
-                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0" Opacity="{Binding IsShown, Converter={StaticResource BoolToLayoutsOpacityConverter}}"/>
                                             <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Background="Transparent">
-                                                <Button Height="16" Command="{Binding ToggleAllVisualizersVisibilityCommand}" Background="Transparent" Margin="1,0,1,0">
-                                                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=stream-show-hide.png}"/>
-                                                    <Button.ToolTip>Show / Hide All Visualizers</Button.ToolTip>
+                                                <Button Height="16" Command="{Binding ToggleVisibilityCommand}" Background="Transparent" Margin="1,0,1,0">
+                                                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-showhide-smallbutton.png}"/>
+                                                    <Button.ToolTip>Show / Hide Panel</Button.ToolTip>
                                                     <Button.Style>
                                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                                             <Style.Triggers>
@@ -485,6 +494,8 @@
                                                             <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-remove.png}" Height="16" Margin="4,0,0,0"/>
                                                         </MenuItem.Icon>
                                                     </MenuItem>
+                                                    <Separator/>
+                                                    <MenuItem Header="Show / Hide All Visualizers" Command="{Binding ToggleAllVisualizersVisibilityCommand}" Height="25"/>
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
 
@@ -502,8 +513,24 @@
                                                 <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Image Grid.Column="0" Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-matrix-3.png}"/>
-                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0" Opacity="{Binding IsShown, Converter={StaticResource BoolToLayoutsOpacityConverter}}"/>
                                             <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Background="Transparent">
+                                                <Button Height="16" Command="{Binding ToggleVisibilityCommand}" Background="Transparent" Margin="1,0,1,0">
+                                                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-showhide-smallbutton.png}"/>
+                                                    <Button.ToolTip>Show / Hide Panel</Button.ToolTip>
+                                                    <Button.Style>
+                                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=InstantVisualizationContainerGrid}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding IsMouseOver, ElementName=InstantVisualizationContainerGrid}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
                                                 <Button Height="16" Command="{Binding RemovePanelCommand}" CommandParameter="{Binding .}" Background="Transparent" Margin="1,0,1,0">
                                                     <Button.ToolTip>Remove Instant Visualization Container</Button.ToolTip>
                                                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=remove-smallbutton.png}"/>
@@ -544,11 +571,11 @@
                                                 <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Image Grid.Column="0" Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-placeholder.png}"/>
-                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0" Opacity="{Binding IsShown, Converter={StaticResource BoolToLayoutsOpacityConverter}}"/>
                                             <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Background="Transparent">
                                                 <Button Height="16" Command="{Binding RemovePanelCommand}" CommandParameter="{Binding .}" Background="Transparent" Margin="1,0,1,0">
                                                     <Button.ToolTip>Remove Cell</Button.ToolTip>
-                                                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=remove-smallbutton.png}"/>
+                                                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=remove-panel-smallbutton.png}"/>
                                                     <Button.Style>
                                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                                                             <Style.Triggers>
@@ -577,7 +604,7 @@
                                                 <RowDefinition></RowDefinition>
                                             </Grid.RowDefinitions>
                                             <Image Grid.Column="0" Source="{Binding IconSource}" Opacity="{Binding Visible, Converter={StaticResource BoolToLayoutsOpacityConverter}}"/>
-                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0" Opacity="{Binding Visible, Converter={StaticResource BoolToLayoutsOpacityConverter}}"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="7,0,0,0" Opacity="{Binding IsShown, Converter={StaticResource BoolToLayoutsOpacityConverter}}"/>
                                             <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal" Background="Transparent">
                                                 <Button Height="16" Command="{Binding ToggleVisibilityCommand}" Background="Transparent" Margin="1,0,1,0">
                                                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=stream-show-hide.png}"/>

@@ -118,7 +118,7 @@ namespace Microsoft.Psi.Kinect.Visualization
         }
 
         /// <summary>
-        /// Gets the billboard visualization object for the spatial entity.
+        /// Gets the billboard visualization object for the body.
         /// </summary>
         [ExpandableObject]
         [DataMember]

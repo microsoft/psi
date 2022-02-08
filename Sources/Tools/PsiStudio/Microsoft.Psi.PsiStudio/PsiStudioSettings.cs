@@ -39,6 +39,8 @@ namespace Microsoft.Psi.PsiStudio
             this.ShowTimingRelativeToSelectionStart = false;
             this.CurrentLayoutName = null;
             this.AutoSaveDatasets = false;
+            this.AutoLoadMRUDatasetOnStartUp = false;
+            this.MRUDatasetFilename = null;
             this.AdditionalAssemblies = null;
         }
 
@@ -108,6 +110,16 @@ namespace Microsoft.Psi.PsiStudio
         public bool AutoSaveDatasets { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to automatically load the most recently used dataset upon startup.
+        /// </summary>
+        public bool AutoLoadMRUDatasetOnStartUp { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the most recently used dataset filename.
+        /// </summary>
+        public string MRUDatasetFilename { get; set; }
+
+        /// <summary>
         /// Gets or sets the list of add-in assemblies.
         /// </summary>
         public string AdditionalAssemblies { get; set; }
@@ -126,7 +138,7 @@ namespace Microsoft.Psi.PsiStudio
         public static PsiStudioSettings Load(string settingsFilename)
         {
             // Create the settings instance
-            PsiStudioSettings settings = new PsiStudioSettings();
+            var settings = new PsiStudioSettings();
 
             // Update the settings with those from the file on disk
             settings.LoadFromFile(settingsFilename);
@@ -196,24 +208,21 @@ namespace Microsoft.Psi.PsiStudio
         {
             this.settingsFilename = settingsFilename;
 
-            Type thisType = this.GetType();
-
             // Load the settings XML file if it exists
             if (File.Exists(this.settingsFilename))
             {
                 try
                 {
-                    XmlDocument settingsDocument = new XmlDocument() { XmlResolver = null };
-                    TextReader textReader = new System.IO.StreamReader(this.settingsFilename);
-                    XmlReader reader = XmlReader.Create(textReader, new XmlReaderSettings() { XmlResolver = null });
+                    var settingsDocument = new XmlDocument() { XmlResolver = null };
+                    var textReader = new System.IO.StreamReader(this.settingsFilename);
+                    var reader = XmlReader.Create(textReader, new XmlReaderSettings() { XmlResolver = null });
                     settingsDocument.Load(reader);
 
-                    // Get the list of PsiSettings
-                    PropertyInfo[] properties = thisType.GetProperties();
-                    foreach (PropertyInfo propertyInfo in properties)
+                    // Get the list of settings
+                    foreach (var propertyInfo in typeof(PsiStudioSettings).GetProperties())
                     {
                         // Check if this setting has a value in the settings file
-                        XmlNode node = settingsDocument.DocumentElement.SelectSingleNode(string.Format("/{0}/{1}", thisType.Name, propertyInfo.Name));
+                        var node = settingsDocument.DocumentElement.SelectSingleNode(string.Format("/{0}/{1}", typeof(PsiStudioSettings).Name, propertyInfo.Name));
                         if (node != null)
                         {
                             // Update the setting with the value from the settings file

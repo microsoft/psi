@@ -104,7 +104,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void UpdateVisuals()
         {
-            this.intrinsics = this.depthImage?.Resource?.ComputeCameraIntrinsics(this.FocalLengthX, this.FocalLengthY);
+            this.intrinsics = this.depthImage?.Resource?.CreateCameraIntrinsics(this.FocalLengthX, this.FocalLengthY);
             this.depthCameraViewAsMesh.SetCurrentValue(this.SynthesizeMessage((this.depthImage, this.intrinsics, this.position)));
         }
 

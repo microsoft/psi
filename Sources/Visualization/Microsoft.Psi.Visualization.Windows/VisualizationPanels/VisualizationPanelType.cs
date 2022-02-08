@@ -14,12 +14,17 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         Timeline,
 
         /// <summary>
-        /// 2D visualization panel.
+        /// Canvas 2D visualization panel.
+        /// </summary>
+        Canvas,
+
+        /// <summary>
+        /// 2D visualization panel for XY data.
         /// </summary>
         XY,
 
         /// <summary>
-        /// 3D visualization panel.
+        /// 3D visualization panel for XYZ data.
         /// </summary>
         XYZ,
     }

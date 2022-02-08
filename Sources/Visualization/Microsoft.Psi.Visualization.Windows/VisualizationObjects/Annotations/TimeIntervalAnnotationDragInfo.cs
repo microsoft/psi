@@ -14,37 +14,49 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeIntervalAnnotationDragInfo"/> class.
         /// </summary>
-        /// <param name="leftAnnotationMessage">The message that contains the left annotation being dragged (or null).</param>
-        /// <param name="rightAnnotationMessage">The message that contains the right annotation being dragged (or null).</param>
+        /// <param name="track">The track for the annotation.</param>
+        /// <param name="leftAnnotationSetMessage">The message that contains the left annotation being dragged (or null).</param>
+        /// <param name="rightAnnotationSetMessage">The message that contains the right annotation being dragged (or null).</param>
         /// <param name="minimumTime">The minimum time the edge can be dragged to.</param>
         /// <param name="maximumTime">The maximum time the edge can be dragged to.</param>
-        public TimeIntervalAnnotationDragInfo(Message<TimeIntervalAnnotation>? leftAnnotationMessage, Message<TimeIntervalAnnotation>? rightAnnotationMessage, DateTime minimumTime, DateTime maximumTime)
+        public TimeIntervalAnnotationDragInfo(
+            string track,
+            Message<TimeIntervalAnnotationSet>? leftAnnotationSetMessage,
+            Message<TimeIntervalAnnotationSet>? rightAnnotationSetMessage,
+            DateTime minimumTime,
+            DateTime maximumTime)
         {
-            this.LeftAnnotationMessage = leftAnnotationMessage;
-            this.RightAnnotationMessage = rightAnnotationMessage;
+            this.Track = track;
+            this.LeftAnnotationSetMessage = leftAnnotationSetMessage;
+            this.RightAnnotationSetMessage = rightAnnotationSetMessage;
             this.MinimumTime = minimumTime;
             this.MaximumTime = maximumTime;
         }
 
         /// <summary>
-        /// Gets the message that contains the left annotation.
+        /// Gets the annotation track.
         /// </summary>
-        public Message<TimeIntervalAnnotation>? LeftAnnotationMessage { get; private set; }
+        public string Track { get; private set; }
 
         /// <summary>
-        /// Gets the message that contains the right annotation.
+        /// Gets the annotation set message that contains the left annotation.
         /// </summary>
-        public Message<TimeIntervalAnnotation>? RightAnnotationMessage { get; private set; }
+        public Message<TimeIntervalAnnotationSet>? LeftAnnotationSetMessage { get; private set; }
+
+        /// <summary>
+        /// Gets the annotation set message that contains the right annotation.
+        /// </summary>
+        public Message<TimeIntervalAnnotationSet>? RightAnnotationSetMessage { get; private set; }
 
         /// <summary>
         /// Gets the annotation on the left, or null.
         /// </summary>
-        public TimeIntervalAnnotation LeftAnnotation => this.LeftAnnotationMessage.HasValue ? this.LeftAnnotationMessage.Value.Data : null;
+        public TimeIntervalAnnotation LeftAnnotation => this.LeftAnnotationSetMessage.HasValue ? this.LeftAnnotationSetMessage.Value.Data[this.Track] : null;
 
         /// <summary>
         /// Gets the annotation on the right, or null.
         /// </summary>
-        public TimeIntervalAnnotation RightAnnotation => this.RightAnnotationMessage.HasValue ? this.RightAnnotationMessage.Value.Data : null;
+        public TimeIntervalAnnotation RightAnnotation => this.RightAnnotationSetMessage.HasValue ? this.RightAnnotationSetMessage.Value.Data[this.Track] : null;
 
         /// <summary>
         /// Gets the minimum time that the edge can be dragged to.

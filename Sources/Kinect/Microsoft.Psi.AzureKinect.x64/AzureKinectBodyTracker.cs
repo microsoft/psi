@@ -19,11 +19,11 @@ namespace Microsoft.Psi.AzureKinect
     /// before arriving at the tracker. Unencoded or non-lossy (e.g. PNG) encoding are okay.</remarks>
     public sealed class AzureKinectBodyTracker : ConsumerProducer<(Shared<DepthImage> Depth, Shared<Image> IR), List<AzureKinectBody>>, IDisposable
     {
-        private static readonly object TrackerCreationLock = new object();
+        private static readonly object TrackerCreationLock = new ();
 
         private readonly AzureKinectBodyTrackerConfiguration configuration;
-        private readonly List<AzureKinectBody> currentBodies = new List<AzureKinectBody>();
-        private readonly Capture capture = new Capture();
+        private readonly List<AzureKinectBody> currentBodies = new ();
+        private readonly Capture capture = new ();
 
         private Tracker tracker = null;
         private byte[] depthBytes = null;
@@ -32,7 +32,7 @@ namespace Microsoft.Psi.AzureKinect
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKinectBodyTracker"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to add this component to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">An optional configuration to use for the body tracker.</param>
         public AzureKinectBodyTracker(Pipeline pipeline, AzureKinectBodyTrackerConfiguration configuration = null)
             : base(pipeline)

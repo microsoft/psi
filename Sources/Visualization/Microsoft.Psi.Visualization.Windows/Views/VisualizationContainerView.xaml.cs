@@ -74,7 +74,7 @@ namespace Microsoft.Psi.Visualization.Views
                 // Show the adorner
                 this.dragDropAdorner.Show(e.GetPosition(this.Items), mouseOffset, panelSize, bitmap);
 
-                this.Cursor = Cursors.Hand;
+                this.Cursor = Cursors.ScrollNS;
 
                 e.Handled = true;
             }
@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Visualization.Views
             if (dragOperation == DragDropOperation.ReorderPanel)
             {
                 this.dragDropAdorner.SetPanelLocation(e.GetPosition(this.Items));
-                this.Cursor = Cursors.Hand;
+                this.Cursor = Cursors.ScrollNS;
                 e.Handled = true;
             }
             else if (dragOperation == DragDropOperation.DragDropStream)
@@ -195,9 +195,10 @@ namespace Microsoft.Psi.Visualization.Views
 
         private HitTestFilterBehavior HitTestFilter(DependencyObject dependencyObject)
         {
-            if (dependencyObject is VisualizationPanelView)
+            if (dependencyObject is VisualizationPanelView visualizationPanelView &&
+                (visualizationPanelView.DataContext as VisualizationPanel).IsShown)
             {
-                this.hitTestResult = dependencyObject as VisualizationPanelView;
+                this.hitTestResult = visualizationPanelView;
                 return HitTestFilterBehavior.Stop;
             }
 
@@ -218,39 +219,46 @@ namespace Microsoft.Psi.Visualization.Views
             }
         }
 
-        private int FindPanelMoveIndices(VisualizationPanel droppedPanel, int panelVerticalCenter, out int currentPanelIndex)
+        private int FindPanelMoveIndices(VisualizationPanel droppedPanel, int position, out int currentPanelIndex)
         {
             // Find the index of the panel whose vertical center is closest the panel being dragged's vertical center
-            VisualizationContainer visualizationContainer = droppedPanel.Container;
-            currentPanelIndex = -1;
+            var visualizationContainer = droppedPanel.Container;
+            currentPanelIndex = visualizationContainer.Panels.IndexOf(droppedPanel);
 
-            // Work out which Visualization Panel's vertical center is closest to the vertical center of the panel being dropped
-            double currentVerticalCenter = 0;
-            double minDelta = double.MaxValue;
-            int targetIndex = -1;
-            for (int index = 0; index < visualizationContainer.Panels.Count; index++)
+            // Look through the shown panels and figure out when we are below the previous vertical center by above
+            // the next vertical center
+            double previousVerticalCenter = double.NaN;
+            double currentLocation = double.NaN;
+
+            for (int i = 0; i < visualizationContainer.Panels.Count; i++)
             {
-                VisualizationPanel visualizationPanel = visualizationContainer.Panels[index];
-
-                // If this is the panel we're dropping, we need that info too
-                if (visualizationPanel == droppedPanel)
+                if (visualizationContainer.Panels[i].IsShown)
                 {
-                    currentPanelIndex = index;
-                }
+                    if (double.IsNaN(previousVerticalCenter))
+                    {
+                        currentLocation = visualizationContainer.Panels[i].Height / 2;
+                    }
+                    else
+                    {
+                        currentLocation += visualizationContainer.Panels[i].Height / 2;
 
-                // Is this panel's vertical center closer to our panel's vertical center
-                currentVerticalCenter += visualizationPanel.Height / 2;
-                double deltaY = Math.Abs(panelVerticalCenter - currentVerticalCenter);
-                if (deltaY < minDelta)
-                {
-                    targetIndex = index;
-                    minDelta = deltaY;
-                }
+                        // Now, if we are after the previous location but before the current one
+                        if (position > previousVerticalCenter && position <= currentLocation)
+                        {
+                            // Then we've found the drop position
+                            return currentPanelIndex < i ? i - 1 : i;
+                        }
+                    }
 
-                currentVerticalCenter += visualizationPanel.Height / 2;
+                    // Save the previous vertical center
+                    previousVerticalCenter = currentLocation;
+
+                    // Increment the position
+                    currentLocation += visualizationContainer.Panels[i].Height / 2;
+                }
             }
 
-            return targetIndex;
+            return visualizationContainer.Panels.Count - 1;
         }
 
         private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
@@ -319,11 +327,15 @@ namespace Microsoft.Psi.Visualization.Views
             DependencyObject dependencyObject = result.VisualHit;
             while (dependencyObject != null)
             {
-                // If the object is a context menu item source and not a visualization object view, add it to the collection.
-                // (The context menu items for the visualization object views will be collected later from the panel)
-                if (dependencyObject is IContextMenuItemsSource contextMenuSource && contextMenuSource.ContextMenuItemsSourceType != ContextMenuItemsSourceType.VisualizationObject)
+                // If the dependency object is not a hidden panel
+                if (!(dependencyObject is VisualizationPanelView visualizationPanelView && !(visualizationPanelView.DataContext as VisualizationPanel).IsShown))
                 {
-                    this.contextMenuSources[contextMenuSource.ContextMenuItemsSourceType] = contextMenuSource;
+                    // If the object is a context menu item source and not a visualization object view, add it to the collection.
+                    // (The context menu items for the visualization object views will be collected later from the panel)
+                    if (dependencyObject is IContextMenuItemsSource contextMenuSource && contextMenuSource.ContextMenuItemsSourceType != ContextMenuItemsSourceType.VisualizationObject)
+                    {
+                        this.contextMenuSources[contextMenuSource.ContextMenuItemsSourceType] = contextMenuSource;
+                    }
                 }
 
                 // Optimization: If we're at the visualization container view level,
@@ -362,7 +374,7 @@ namespace Microsoft.Psi.Visualization.Views
             }
 
             // Get the list of context menu items from the context menu items source
-            List<MenuItem> menuItems = new List<MenuItem>();
+            var menuItems = new List<MenuItem>();
             menuItemSource.AppendContextMenuItems(menuItems);
 
             // Add the context menu items to the context menu root.
@@ -373,9 +385,16 @@ namespace Microsoft.Psi.Visualization.Views
                     root.Items.Add(new Separator());
                 }
 
-                foreach (MenuItem menuItem in menuItems)
+                foreach (var menuItem in menuItems)
                 {
-                    root.Items.Add(menuItem);
+                    if (menuItem != null)
+                    {
+                        root.Items.Add(menuItem);
+                    }
+                    else
+                    {
+                        root.Items.Add(new Separator());
+                    }
                 }
             }
         }

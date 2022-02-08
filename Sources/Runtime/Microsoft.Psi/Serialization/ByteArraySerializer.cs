@@ -17,6 +17,9 @@ namespace Microsoft.Psi.Serialization
     {
         private const int Version = 2;
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => false;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             serializers.GetHandler<byte>(); // register element type

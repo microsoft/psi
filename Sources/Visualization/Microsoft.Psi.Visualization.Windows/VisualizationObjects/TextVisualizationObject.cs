@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a visualization object for strings.
     /// </summary>
     [VisualizationObject("Text")]
-    [VisualizationPanelType(VisualizationPanelType.XY)]
+    [VisualizationPanelType(VisualizationPanelType.Canvas)]
     public class TextVisualizationObject : StreamValueVisualizationObject<string>
     {
         /// <inheritdoc />

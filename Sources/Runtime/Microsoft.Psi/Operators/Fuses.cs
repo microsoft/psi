@@ -390,6 +390,66 @@ namespace Microsoft.Psi
         /// </summary>
         /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
         /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <typeparam name="TOut">Type of output stream messages.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Enumeration of secondary streams.</param>
+        /// <param name="interpolator">Interpolator to use when fusing the streams.</param>
+        /// <param name="outputCreator">Mapping function from primary and secondary messages to output.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<TOut> Fuse<TPrimary, TSecondary, TOut>(
+            this IProducer<TPrimary> primary,
+            IEnumerable<IProducer<TSecondary>> secondaries,
+            Interpolator<TSecondary> interpolator,
+            Func<TPrimary, TSecondary[], TOut> outputCreator,
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+        {
+            var fuse = new Fuse<TPrimary, TSecondary, TSecondary, TOut>(
+                primary.Out.Pipeline,
+                interpolator,
+                outputCreator,
+                secondaries.Count(),
+                null);
+
+            primary.PipeTo(fuse.InPrimary, primaryDeliveryPolicy);
+
+            var i = 0;
+            foreach (var input in secondaries)
+            {
+                input.PipeTo(fuse.InSecondaries[i++], secondariesDeliveryPolicy);
+            }
+
+            return fuse;
+        }
+
+        /// <summary>
+        /// Fuses a primary stream with an enumeration of secondary streams based on a specified interpolator.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Enumeration of secondary streams.</param>
+        /// <param name="interpolator">Interpolator to use when fusing the streams.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<(TPrimary, TSecondary[])> Fuse<TPrimary, TSecondary>(
+            this IProducer<TPrimary> primary,
+            IEnumerable<IProducer<TSecondary>> secondaries,
+            Interpolator<TSecondary> interpolator,
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+        {
+            return primary.Fuse(secondaries, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondariesDeliveryPolicy);
+        }
+
+        /// <summary>
+        /// Fuses a primary stream with an enumeration of secondary streams based on a specified interpolator.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
         /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
         /// <typeparam name="TOut">Type of output stream messages.</typeparam>
         /// <param name="primary">Primary stream.</param>
@@ -426,6 +486,75 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Fuses a primary stream with an enumeration of secondary streams based on a specified interpolator.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Enumeration of secondary streams.</param>
+        /// <param name="interpolator">Interpolator to use when fusing the streams.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<(TPrimary, TInterpolation[])> Fuse<TPrimary, TSecondary, TInterpolation>(
+            this IProducer<TPrimary> primary,
+            IEnumerable<IProducer<TSecondary>> secondaries,
+            Interpolator<TSecondary, TInterpolation> interpolator,
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+        {
+            return primary.Fuse(secondaries, interpolator, (p, i) => (p, i), primaryDeliveryPolicy, secondariesDeliveryPolicy);
+        }
+
+        /// <summary>
+        /// Fuses an enumeration of streams into a vector stream, based on a specified interpolator and output creator function.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input stream messages.</typeparam>
+        /// <typeparam name="TOut">The type of output stream messages.</typeparam>
+        /// <param name="inputs">Collection of input streams.</param>
+        /// <param name="interpolator">Interpolator to use when fusing the streams.</param>
+        /// <param name="outputCreator">Mapping function from input to output messages.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy to use for the streams.</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<TOut[]> Fuse<TIn, TOut>(
+            this IEnumerable<IProducer<TIn>> inputs,
+            Interpolator<TIn> interpolator,
+            Func<TIn, TOut> outputCreator,
+            DeliveryPolicy<TIn> deliveryPolicy = null)
+        {
+            var count = inputs.Count();
+            if (count > 1)
+            {
+                var buffer = new TOut[count];
+                return Fuse(
+                    inputs.First(),
+                    inputs.Skip(1),
+                    interpolator,
+                    (m, secondaryArray) =>
+                    {
+                        buffer[0] = outputCreator(m);
+                        for (int i = 1; i < count; i++)
+                        {
+                            buffer[i] = outputCreator(secondaryArray[i - 1]);
+                        }
+
+                        return buffer;
+                    },
+                    deliveryPolicy,
+                    deliveryPolicy);
+            }
+            else if (count == 1)
+            {
+                return inputs.First().Select(x => new[] { outputCreator(x) }, deliveryPolicy);
+            }
+            else
+            {
+                throw new ArgumentException("Vector fuse with empty inputs collection.");
+            }
+        }
+
+        /// <summary>
         /// Fuses an enumeration of streams into a vector stream, based on a specified interpolator.
         /// </summary>
         /// <typeparam name="TIn">Type of input stream messages.</typeparam>
@@ -435,34 +564,10 @@ namespace Microsoft.Psi
         /// <returns>Output stream.</returns>
         public static IProducer<TIn[]> Fuse<TIn>(
             this IEnumerable<IProducer<TIn>> inputs,
-            Interpolator<TIn, TIn> interpolator,
+            Interpolator<TIn> interpolator,
             DeliveryPolicy<TIn> deliveryPolicy = null)
         {
-            var count = inputs.Count();
-            if (count > 1)
-            {
-                var buffer = new TIn[count];
-                return Fuse(
-                    inputs.First(),
-                    inputs.Skip(1),
-                    interpolator,
-                    (m, secondaryArray) =>
-                    {
-                        buffer[0] = m;
-                        Array.Copy(secondaryArray, 0, buffer, 1, count - 1);
-                        return buffer;
-                    },
-                    deliveryPolicy,
-                    deliveryPolicy);
-            }
-            else if (count == 1)
-            {
-                return inputs.First().Select(x => new[] { x }, deliveryPolicy);
-            }
-            else
-            {
-                throw new ArgumentException("Vector fuse with empty inputs collection.");
-            }
+            return inputs.Fuse(interpolator, _ => _, deliveryPolicy);
         }
 
         #endregion Vector fuse operators

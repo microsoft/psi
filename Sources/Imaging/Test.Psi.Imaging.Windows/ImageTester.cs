@@ -11,6 +11,7 @@ namespace Test.Psi.Imaging
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Serialization;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Test.Psi.Common;
 
     [TestClass]
     public class ImageTester
@@ -262,9 +263,10 @@ namespace Test.Psi.Imaging
                 (100, 200, 255, 255, 255),
             };
 
+            var bytesPerPixel = destImage.BitsPerPixel / 8;
             foreach (var (x, y, r, g, b) in expected)
             {
-                var bytes = destImage.ReadBytes(destImage.BitsPerPixel / 8, x * destImage.BitsPerPixel / 8 + y * destImage.Stride);
+                var bytes = destImage.ReadBytes(bytesPerPixel, x * bytesPerPixel + y * destImage.Stride);
                 switch (pixelFormat)
                 {
                     case PixelFormat.BGR_24bpp:
@@ -416,6 +418,75 @@ namespace Test.Psi.Imaging
                 Assert.AreEqual(srcPixel.b, dstPixel.b, 1, $"Mismatch in copied blue color from {srcFormat} [{string.Join(", ", srcSampleBytesForErrorMessage)}] to {dstFormat} [{string.Join(", ", dstSampleBytesForErrorMessage)}]");
                 Assert.AreEqual(srcPixel.a, dstPixel.a, 1, $"Mismatch in copied alpha from {srcFormat} [{string.Join(", ", srcSampleBytesForErrorMessage)}] to {dstFormat} [{string.Join(", ", dstSampleBytesForErrorMessage)}]");
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.Gray_16bpp)]
+
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.BGRA_32bpp)]
+
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.Gray_8bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.Gray_16bpp, PixelFormat.RGBA_64bpp)]
+
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.Gray_16bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.Gray_16bpp)]
+
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.BGRA_32bpp)]
+
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.BGR_24bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.BGRA_32bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.RGB_24bpp, PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp, PixelFormat.RGBA_64bpp)]
+        public void Image_ConvertViaOperator(PixelFormat srcFormat, PixelFormat dstFormat)
+        {
+            using var pipeline = Pipeline.Create("ConvertViaOperator");
+            using var srcImage = ImagePool.GetOrCreate(this.testImage2.Width, this.testImage2.Height, srcFormat);
+            this.testImage2.CopyTo(srcImage.Resource);
+            Generators.Return(pipeline, srcImage).Convert(dstFormat).Do(dstImage =>
+            {
+                using var refImage = srcImage.Resource.Convert(dstFormat);
+                this.AssertAreImagesEqual(refImage, dstImage.Resource);
+            });
+            pipeline.Run();
         }
 
         [TestMethod]
@@ -1048,6 +1119,60 @@ namespace Test.Psi.Imaging
             var encodedDepthTiffImage = testDepthImage.Encode(new DepthImageToTiffStreamEncoder());
             var decodedDepthImage = encodedDepthTiffImage.Decode(new DepthImageFromStreamDecoder());
             this.AssertAreImagesEqual(testDepthImage, decodedDepthImage);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        [DataRow(PixelFormat.BGRA_32bpp)]
+        [DataRow(PixelFormat.BGRX_32bpp)]
+        [DataRow(PixelFormat.BGR_24bpp)]
+        [DataRow(PixelFormat.RGB_24bpp)]
+        [DataRow(PixelFormat.RGBA_64bpp)]
+        [DataRow(PixelFormat.Gray_8bpp)]
+        [DataRow(PixelFormat.Gray_16bpp)]
+        public void Image_SaveAndLoad(PixelFormat pixelFormat)
+        {
+            string filename = $"TestImage_{pixelFormat}.bmp";
+
+            // Create a test image in the specified pixel format
+            using var sourceImage = this.testImage.Convert(pixelFormat);
+
+            try
+            {
+                if (pixelFormat == PixelFormat.Gray_16bpp || pixelFormat == PixelFormat.RGBA_64bpp)
+                {
+                    // Gray_16bpp and RGBA_64bpp are not supported for file operations
+                    Assert.ThrowsException<NotSupportedException>(() => sourceImage.Save(filename));
+                }
+                else
+                {
+                    // Save the image to a file
+                    sourceImage.Save(filename);
+
+                    // Load the image from file and compare
+                    using (var testImage = Image.FromFile(filename))
+                    {
+                        if (pixelFormat == PixelFormat.RGB_24bpp)
+                        {
+                            // RGB_24bpp images are converted to BGR_24bpp before saving
+                            this.AssertAreImagesEqual(sourceImage.Convert(PixelFormat.BGR_24bpp), testImage);
+                        }
+                        else if (pixelFormat == PixelFormat.BGRX_32bpp)
+                        {
+                            // BGRX_32bpp images are converted to BGRA_32bpp before saving
+                            this.AssertAreImagesEqual(sourceImage.Convert(PixelFormat.BGRA_32bpp), testImage);
+                        }
+                        else
+                        {
+                            this.AssertAreImagesEqual(sourceImage, testImage);
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                TestRunner.SafeFileDelete(filename);
+            }
         }
 
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage, double tolerance = 6.0, double percentOutliersAllowed = 0.01)

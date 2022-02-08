@@ -158,7 +158,7 @@ namespace Microsoft.Psi.Audio
                     Array.Copy(buf, this.buffer.Data, length);
 
                     // use the end of the last sample in the packet as the originating time
-                    DateTime originatingTime = this.pipeline.GetCurrentTime().AddSeconds(length / format.AvgBytesPerSec);
+                    DateTime originatingTime = this.pipeline.GetCurrentTime().AddSeconds((double)length / format.AvgBytesPerSec);
 
                     // post the data to the output stream
                     this.audioBuffers.Post(this.buffer, originatingTime);

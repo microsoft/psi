@@ -5,7 +5,7 @@ namespace Microsoft.Psi.Visualization.Navigation
 {
     using System;
     using System.Runtime.Serialization;
-    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Data;
 
     /// <summary>
     /// Represents a time range used by the navigator.
@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Gets the navigator range as a time interval.
         /// </summary>
-        public TimeInterval AsTimeInterval => new TimeInterval(this.StartTime, this.EndTime);
+        public TimeInterval AsTimeInterval => new (this.StartTime, this.EndTime);
 
         /// <summary>
         /// Scrolls the start and end times of the Range.
@@ -69,15 +69,15 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <param name="timespan">The amount of time to scroll the range.</param>
         public void ScrollBy(TimeSpan timespan)
         {
-            this.SetRange(this.StartTime + timespan, this.EndTime + timespan);
+            this.Set(this.StartTime + timespan, this.EndTime + timespan);
         }
 
         /// <summary>
-        /// Sets the range.
+        /// Sets the navigator range based on a specified start and end time.
         /// </summary>
         /// <param name="startTime">Start time of the range.</param>
         /// <param name="endTime">End time of the range.</param>
-        public void SetRange(DateTime startTime, DateTime endTime)
+        public void Set(DateTime startTime, DateTime endTime)
         {
             // Clamp the parameters if start >= endTime. Choose to set endTime to startTime + 1 tick.
             if (startTime >= endTime)
@@ -125,22 +125,22 @@ namespace Microsoft.Psi.Visualization.Navigation
         }
 
         /// <summary>
-        /// Sets the range.
+        /// Sets the navigator range based on a specified start time and duration.
         /// </summary>
         /// <param name="startTime">Start time of the range.</param>
         /// <param name="duration">Duration of the range.</param>
-        public void SetRange(DateTime startTime, TimeSpan duration)
+        public void Set(DateTime startTime, TimeSpan duration)
         {
-            this.SetRange(startTime, startTime + duration);
+            this.Set(startTime, startTime + duration);
         }
 
         /// <summary>
-        /// Sets the range.
+        /// Sets the navigator range to a specified time interval.
         /// </summary>
         /// <param name="timeInterval">Time interval to set the range with.</param>
-        public void SetRange(TimeInterval timeInterval)
+        public void Set(TimeInterval timeInterval)
         {
-            this.SetRange(timeInterval.Left, timeInterval.Right);
+            this.Set(timeInterval.Left, timeInterval.Right);
         }
     }
 }

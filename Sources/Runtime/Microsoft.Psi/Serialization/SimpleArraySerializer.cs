@@ -23,6 +23,9 @@ namespace Microsoft.Psi.Serialization
         private static readonly SerializeDelegate<T[]> SerializeFn = Generator.GenerateSerializeMethod<T[]>(il => Generator.EmitPrimitiveArraySerialize(typeof(T), il));
         private static readonly DeserializeDelegate<T[]> DeserializeFn = Generator.GenerateDeserializeMethod<T[]>(il => Generator.EmitPrimitiveArrayDeserialize(typeof(T), il));
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => false;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             serializers.GetHandler<T>(); // register element type

@@ -14,7 +14,6 @@ namespace Microsoft.Psi.Persistence
     internal unsafe sealed class InfiniteFileWriter : IDisposable
     {
         internal const string FileNameFormat = "{0}_{1:000000}.psi";
-        internal const string ActiveWriterMutexFormat = @"Global\ActiveWriterMutex_{0}_{1}";
         private const string PulseEventFormat = @"Global\PulseEvent_{0}_{1}";
         private readonly object syncRoot = new object();
         private string extentName;
@@ -32,7 +31,6 @@ namespace Microsoft.Psi.Persistence
         private bool disposed = false;
         private EventWaitHandle localWritePulse;
         private Mutex globalWritePulse;
-        private Mutex activeWriterMutex;
         private Queue<MemoryMappedFile> priorExtents;
         private int priorExtentQueueLength;
         private object viewDisposeLock = new object();
@@ -52,7 +50,16 @@ namespace Microsoft.Psi.Persistence
             this.localWritePulse = new EventWaitHandle(false, EventResetMode.ManualReset);
             new Thread(new ThreadStart(() =>
             {
-                this.globalWritePulse = new Mutex(true, PulseEventName(path, fileName));
+                try
+                {
+                    this.globalWritePulse = new Mutex(true, PulseEventName(path, fileName));
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // Some platforms don't allow global mutexes.  In this case
+                    // we can still continue on with a slight perf degradation.
+                }
+
                 try
                 {
                     while (!this.disposed)
@@ -67,12 +74,6 @@ namespace Microsoft.Psi.Persistence
                     // ignore
                 }
             })) { IsBackground = true }.Start();
-            bool isSingleWriter;
-            this.activeWriterMutex = new Mutex(false, ActiveWriterMutexName(path, fileName), out isSingleWriter);
-            if (!isSingleWriter)
-            {
-                throw new IOException("The file is already opened in write mode.");
-            }
 
             this.CreateNewExtent();
         }
@@ -86,24 +87,6 @@ namespace Microsoft.Psi.Persistence
         public int CurrentExtentId => this.fileId - 1;
 
         public int CurrentBlockStart => (int)(this.freePointer - this.startPointer);
-
-        /// <summary>
-        /// Indicates whether the specified file has an active writer.
-        /// </summary>
-        /// <param name="name">Infinite file name.</param>
-        /// <param name="path">Infinite file path.</param>
-        /// <returns>Returns true if there is an active writer to this file.</returns>
-        public static bool IsActive(string name, string path)
-        {
-            Mutex writerActiveMutex;
-            if (!Mutex.TryOpenExisting(InfiniteFileWriter.ActiveWriterMutexName(path, name), out writerActiveMutex))
-            {
-                return false;
-            }
-
-            writerActiveMutex.Dispose();
-            return true;
-        }
 
         public void Dispose()
         {
@@ -122,10 +105,8 @@ namespace Microsoft.Psi.Persistence
             this.localWritePulse.Set();
             this.localWritePulse.Dispose();
             this.localWritePulse = null;
-            this.globalWritePulse.Dispose();
+            this.globalWritePulse?.Dispose();
             this.globalWritePulse = null;
-            this.activeWriterMutex.Dispose();
-            this.activeWriterMutex = null;
 
             // may have already been disposed in CloseCurrent
             this.view?.Dispose();
@@ -229,11 +210,6 @@ namespace Microsoft.Psi.Persistence
         internal static string PulseEventName(string path, string fileName)
         {
             return MakeHandleName(PulseEventFormat, path, fileName);
-        }
-
-        internal static string ActiveWriterMutexName(string path, string fileName)
-        {
-            return MakeHandleName(ActiveWriterMutexFormat, path, fileName);
         }
 
         private static string MakeHandleName(string format, string path, string fileName)

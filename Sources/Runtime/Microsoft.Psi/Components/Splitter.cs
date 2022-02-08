@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Splitter{TIn, TKey}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="outputSelector">Selector function identifying the output.</param>
         public Splitter(Pipeline pipeline, Func<TIn, Envelope, TKey> outputSelector)
         {

@@ -6,7 +6,7 @@ namespace Test.Psi.Visualization
     using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
-    using Microsoft.Psi.Visualization.Collections;
+    using Microsoft.Psi.Visualization;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>

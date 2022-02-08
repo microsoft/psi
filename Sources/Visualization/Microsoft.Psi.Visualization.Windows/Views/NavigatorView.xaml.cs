@@ -19,8 +19,6 @@ namespace Microsoft.Psi.Visualization.Views
     /// </summary>
     public partial class NavigatorView : UserControl
     {
-        private ScaleTransform scaleTransform = new ScaleTransform();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigatorView"/> class.
         /// </summary>
@@ -40,23 +38,6 @@ namespace Microsoft.Psi.Visualization.Views
         {
             base.OnRenderSizeChanged(sizeInfo);
             this.PositionThumbs();
-        }
-
-        private DateTime GetTimeAtMousePointer(MouseEventArgs e)
-        {
-            Point point = e.GetPosition(this.Root);
-            double percent = point.X / this.Root.ActualWidth;
-            var viewRange = this.Navigator.ViewRange;
-            DateTime time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
-
-            // If we're currently snapping to some Visualization Object, adjust the time to the timestamp of the nearest message
-            DateTime? snappedTime = null;
-            if (VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject snapToVisualizationObject)
-            {
-                snappedTime = DataManager.Instance.GetTimeOfNearestMessage(snapToVisualizationObject.StreamSource, time, NearestMessageType.Nearest);
-            }
-
-            return snappedTime ?? time;
         }
 
         private DateTime GetTimeFromPosition(Thumb sender)
@@ -111,7 +92,7 @@ namespace Microsoft.Psi.Visualization.Views
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 var time = this.Navigator.Cursor;
-                this.Navigator.SelectionRange.SetRange(time, this.Navigator.SelectionRange.EndTime >= time ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
+                this.Navigator.SelectionRange.Set(time, this.Navigator.SelectionRange.EndTime >= time ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
                 e.Handled = true;
             }
         }
@@ -121,7 +102,7 @@ namespace Microsoft.Psi.Visualization.Views
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 var time = this.Navigator.Cursor;
-                this.Navigator.SelectionRange.SetRange(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
+                this.Navigator.SelectionRange.Set(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
                 e.Handled = true;
             }
         }
@@ -144,15 +125,15 @@ namespace Microsoft.Psi.Visualization.Views
             DateTime time = this.GetTimeFromPosition(thumb);
             if (thumb == this.ViewRangeThumb)
             {
-                this.Navigator.ViewRange.SetRange(time, time + this.Navigator.ViewRange.Duration);
+                this.Navigator.ViewRange.Set(time, time + this.Navigator.ViewRange.Duration);
             }
             else if (thumb == this.ViewStartThumb)
             {
-                this.Navigator.ViewRange.SetRange(time, this.Navigator.ViewRange.EndTime);
+                this.Navigator.ViewRange.Set(time, this.Navigator.ViewRange.EndTime);
             }
             else if (thumb == this.ViewEndThumb)
             {
-                this.Navigator.ViewRange.SetRange(this.Navigator.ViewRange.StartTime, time);
+                this.Navigator.ViewRange.Set(this.Navigator.ViewRange.StartTime, time);
             }
         }
     }

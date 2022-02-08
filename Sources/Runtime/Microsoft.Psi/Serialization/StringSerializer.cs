@@ -12,6 +12,9 @@ namespace Microsoft.Psi.Serialization
     {
         private const int Version = 0;
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => false;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             return targetSchema ?? TypeSchema.FromType(typeof(string), serializers.RuntimeVersion, this.GetType(), Version);

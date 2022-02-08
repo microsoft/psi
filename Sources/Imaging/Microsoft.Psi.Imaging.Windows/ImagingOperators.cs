@@ -23,12 +23,23 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Encodes an image to a PNG format.
         /// </summary>
-        /// <param name="source">A producer of images to encoder.</param>
+        /// <param name="source">A producer of images to encode.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <returns>A producer that generates the PNG images.</returns>
         public static IProducer<Shared<EncodedImage>> EncodePng(this IProducer<Shared<Image>> source, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
         {
             return source.Encode(new ImageToPngStreamEncoder(), deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Encodes an image to a GZIP format.
+        /// </summary>
+        /// <param name="source">A producer of images to encode.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <returns>A producer that generates the GZipped images.</returns>
+        public static IProducer<Shared<EncodedImage>> EncodeGZip(this IProducer<Shared<Image>> source, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
+        {
+            return source.Encode(new ImageToGZipStreamEncoder(), deliveryPolicy);
         }
 
         /// <summary>

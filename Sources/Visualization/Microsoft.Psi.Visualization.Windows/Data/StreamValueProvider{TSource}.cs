@@ -8,7 +8,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Linq;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
 
@@ -35,7 +34,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// A lock for controlling concurrent access to the index and indexBuffer structures.
         /// </summary>
-        private readonly object indexLock = new object();
+        private readonly object indexLock = new ();
 
         /// <summary>
         /// The index.
@@ -55,7 +54,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// The time range of the index view.
         /// </summary>
-        private NavigatorRange indexViewRange = new NavigatorRange(DateTime.MinValue, DateTime.MinValue);
+        private NavigatorRange indexViewRange = new (DateTime.MinValue, DateTime.MinValue);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamValueProvider{T}"/> class.
@@ -71,6 +70,9 @@ namespace Microsoft.Psi.Visualization.Data
             this.index = new ObservableKeyedCache<DateTime, MessageIndex<TSource>>(null, indexComparer, ie => ie.OriginatingTime);
             this.indexBuffer = new List<MessageIndex<TSource>>(1000);
         }
+
+        /// <inheritdoc/>
+        public override bool HasSubscribers => this.publishers.Count > 0;
 
         /// <summary>
         /// Dispatches read data to clients of this reader. Called by <see cref="DataStoreReader"/> on the UI thread to populate data cache.
@@ -131,7 +133,7 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <inheritdoc/>
-        public void UnregisterStreamValueSubscriber<TTarget>(Guid registrationToken)
+        public void UnregisterStreamValueSubscriber<TTarget>(Guid subscriberId)
         {
             lock (this.publishers)
             {
@@ -139,9 +141,9 @@ namespace Microsoft.Psi.Visualization.Data
                 {
                     foreach (var publisher in epsilonTimeIntervalPublishers)
                     {
-                        if (publisher.HasSubscriber(registrationToken))
+                        if (publisher.HasSubscriber(subscriberId))
                         {
-                            publisher.UnregisterSubscriber(registrationToken);
+                            publisher.UnregisterSubscriber(subscriberId);
                         }
                     }
 
@@ -160,8 +162,7 @@ namespace Microsoft.Psi.Visualization.Data
             // If no publishers remain, remove the index view
             if (!this.publishers.Any())
             {
-                this.indexView = null;
-                this.indexViewRange = new NavigatorRange(DateTime.MinValue, DateTime.MinValue);
+                this.OnNoRemainingSubscribers();
             }
         }
 
@@ -174,7 +175,7 @@ namespace Microsoft.Psi.Visualization.Data
                 // Set a new data index range thats extends to the left and right of the navigator view by the navigator view
                 // duration so that we're not constantly needing to initiate an index read every time the navigator moves.
                 TimeSpan viewDuration = viewRange.Span;
-                this.indexViewRange.SetRange(
+                this.indexViewRange.Set(
                     viewRange.Left > DateTime.MinValue + viewDuration ? viewRange.Left - viewDuration : DateTime.MinValue,
                     viewRange.Right < DateTime.MaxValue - viewDuration ? viewRange.Right + viewDuration : DateTime.MaxValue);
 

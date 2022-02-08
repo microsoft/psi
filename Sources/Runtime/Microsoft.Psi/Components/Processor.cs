@@ -18,17 +18,22 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="TOut">The result type.</typeparam>
     public class Processor<TIn, TOut> : ConsumerProducer<TIn, TOut>
     {
-        private Action<TIn, Envelope, Emitter<TOut>> transform;
+        private readonly Action<TIn, Envelope, Emitter<TOut>> transform;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Processor{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to attach to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="transform">A delegate that processes the input data and potentially publishes a result on the provided <see cref="Emitter{T}"/>.</param>
-        public Processor(Pipeline pipeline, Action<TIn, Envelope, Emitter<TOut>> transform)
+        /// <param name="onClose">An optional action to execute when the input stream closes.</param>
+        public Processor(Pipeline pipeline, Action<TIn, Envelope, Emitter<TOut>> transform, Action<DateTime, Emitter<TOut>> onClose = null)
             : base(pipeline)
         {
             this.transform = transform;
+            if (onClose != null)
+            {
+                this.In.Unsubscribed += closingTime => onClose(closingTime, this.Out);
+            }
         }
 
         /// <summary>

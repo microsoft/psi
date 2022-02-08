@@ -29,6 +29,7 @@ namespace Microsoft.Psi.Onnx
     /// </remarks>
     public class ImageNetModelRunner : ConsumerProducer<Shared<Image>, List<LabeledPrediction>>
     {
+        private readonly ImageNetModelRunnerConfiguration configuration;
         private readonly float[] onnxInputVector = new float[3 * 224 * 224];
         private readonly OnnxModel onnxModel;
         private readonly ImageNetModelOutputParser outputParser;
@@ -45,6 +46,8 @@ namespace Microsoft.Psi.Onnx
         public ImageNetModelRunner(Pipeline pipeline, ImageNetModelRunnerConfiguration configuration)
             : base(pipeline)
         {
+            this.configuration = configuration;
+
             // create an ONNX model based on the supplied ImageNet model runner configuration
             this.onnxModel = new OnnxModel(new OnnxModelConfiguration()
             {
@@ -55,7 +58,7 @@ namespace Microsoft.Psi.Onnx
                 GpuDeviceId = configuration.GpuDeviceId,
             });
 
-            this.outputParser = new ImageNetModelOutputParser(configuration.ImageClassesFilePath, configuration.NumberOfPredictions, configuration.ApplySoftmaxToModelOutput);
+            this.outputParser = new ImageNetModelOutputParser(configuration.ImageClassesFilePath, configuration.ApplySoftmaxToModelOutput);
         }
 
         /// <inheritdoc/>
@@ -76,7 +79,7 @@ namespace Microsoft.Psi.Onnx
             var outputVector = this.onnxModel.GetPrediction(this.onnxInputVector);
 
             // parse the model output into an ordered list of the top-N predictions
-            var results = this.outputParser.GetPredictions(outputVector);
+            var results = this.outputParser.GetTopNLabeledPredictions(outputVector, this.configuration.NumberOfPredictions);
 
             // post the results
             this.Out.Post(results, envelope.OriginatingTime);

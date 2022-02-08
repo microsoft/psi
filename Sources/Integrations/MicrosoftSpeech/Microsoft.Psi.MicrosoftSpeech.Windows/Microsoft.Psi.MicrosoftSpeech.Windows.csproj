@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="CheckVariable">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Provides Windows-specific components for the using the Microsoft.Speech recognition platform.</Description>
     <RootNamespace>Microsoft.Psi.MicrosoftSpeech</RootNamespace>
   </PropertyGroup>

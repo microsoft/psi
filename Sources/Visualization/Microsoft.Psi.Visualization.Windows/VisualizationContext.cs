@@ -10,11 +10,10 @@ namespace Microsoft.Psi.Visualization
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
-    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Navigation;
-    using Microsoft.Psi.Visualization.Tasks;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
@@ -104,20 +103,27 @@ namespace Microsoft.Psi.Visualization
         /// <returns>True if the layout was successfully loaded, otherwise false.</returns>
         public bool OpenLayout(string path, string name)
         {
-            // Clear the current layout
-            this.ClearLayout();
-
             if (!string.IsNullOrWhiteSpace(path))
             {
                 // Load the new layout.  If this operation fails, then null will be returned.
-                VisualizationContainer visualizationContainer = VisualizationContainer.Load(path, name, this.VisualizationContainer);
-                if (visualizationContainer != null)
+                VisualizationContainer newVisualizationContainer = VisualizationContainer.Load(path, name, this.VisualizationContainer);
+                if (newVisualizationContainer != null)
                 {
-                    // Set the new visualization container
-                    this.VisualizationContainer = visualizationContainer;
+                    // NOTE: If we unbind the current VOs before binding the VOs of the new visualization
+                    // container we risk data layer objects being disposed of because they temporarily
+                    // have no subscribers.  To avoid this, we'll bind the VOs in the new visualization
+                    // container before we unbind the VOs from the visualization container that's being
+                    // replaced.  This way we'll ensure the subscriber count never goes to zero for data
+                    // layer objects that are used by both the old and the new visualization container.
 
-                    // Update bindings to the sources
-                    this.VisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
+                    // Bind the visualization objects in the new visualization container to their sources
+                    newVisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
+
+                    // Clear the current visualization container
+                    this.ClearLayout();
+
+                    // Set the new visualization container
+                    this.VisualizationContainer = newVisualizationContainer;
 
                     // And re-read the stream values at cursor (to publish to stream value visualizers)
                     DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
@@ -158,45 +164,12 @@ namespace Microsoft.Psi.Visualization
         public async Task RunDatasetBatchProcessingTaskAsync(DatasetViewModel datasetViewModel, BatchProcessingTaskMetadata batchProcessingTaskMetadata)
         {
             // Initialize the progress reporting window
-            var progressReportWindow = new RunBatchProcessingTaskWindow(
-                Application.Current.MainWindow,
-                batchProcessingTaskMetadata.Name,
-                null,
-                new TimeSpan(datasetViewModel.SessionViewModels.Sum(svm => svm.OriginatingTimeInterval.Span.Ticks)));
+            var viewModel = new RunBatchProcessingTaskWindowViewModel(this.VisualizationContainer, datasetViewModel, batchProcessingTaskMetadata);
+            var progressReportWindow = new RunBatchProcessingTaskWindow(Application.Current.MainWindow, viewModel);
 
-            // Initialize progress reporter for the status window
-            IProgress<(string, double)> progress = new Progress<(string, double)>(tuple =>
+            // show the modal status window, which will be closed once the load dataset operation completes
+            if (progressReportWindow.ShowDialog() == true)
             {
-                progressReportWindow.Progress = tuple.Item2 * 100;
-                progressReportWindow.Target = tuple.Item1;
-                if (tuple.Item2 == 1.0)
-                {
-                    // refresh the store reader connections
-                    DataManager.Instance.Refresh();
-
-                    // close the status window when the task reports completion
-                    progressReportWindow.Close();
-                }
-            });
-
-            try
-            {
-                var task = datasetViewModel.Dataset.CreateDerivedPartitionAsync(
-                    (pipeline, sessionImporter, exporter) => batchProcessingTaskMetadata.MethodInfo.Invoke(null, new object[] { pipeline, sessionImporter, exporter }),
-                    batchProcessingTaskMetadata.OutputPartitionName ?? "Derived",
-                    overwrite: true,
-                    outputStoreName: batchProcessingTaskMetadata.OutputStoreName,
-                    outputStorePath: batchProcessingTaskMetadata.OutputStorePath,
-                    replayDescriptor: batchProcessingTaskMetadata.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
-                    deliveryPolicy: batchProcessingTaskMetadata.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : null,
-                    enableDiagnostics: batchProcessingTaskMetadata.EnableDiagnostics,
-                    progress: progress);
-
-                // show the modal status window, which will be closed once the load dataset operation completes
-                progressReportWindow.ShowDialog();
-
-                await task;
-
                 // update the dataset view model as a new derived partition might have been created.
                 datasetViewModel.Update(datasetViewModel.Dataset);
 
@@ -205,11 +178,12 @@ namespace Microsoft.Psi.Visualization
                 {
                     await datasetViewModel.SaveAsAsync(datasetViewModel.FileName);
                 }
-            }
-            catch (InvalidOperationException)
-            {
-                // This indicates that the window has already been closed in the async task,
-                // which means the operation has already completed, so just ignore and continue.
+
+                // Update bindings to the sources
+                this.VisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
+
+                // And re-read the stream values at cursor (to publish to stream value visualizers)
+                DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
             }
         }
 
@@ -222,41 +196,12 @@ namespace Microsoft.Psi.Visualization
         public async Task RunSessionBatchProcessingTask(SessionViewModel sessionViewModel, BatchProcessingTaskMetadata batchProcessingTaskMetadata)
         {
             // Initialize the progress reporting window
-            var progressReportWindow = new RunBatchProcessingTaskWindow(Application.Current.MainWindow, batchProcessingTaskMetadata.Name, null, sessionViewModel.OriginatingTimeInterval.Span);
+            var viewModel = new RunBatchProcessingTaskWindowViewModel(this.VisualizationContainer, sessionViewModel, batchProcessingTaskMetadata);
+            var progressReportWindow = new RunBatchProcessingTaskWindow(Application.Current.MainWindow, viewModel);
 
-            // Initialize progress reporter for the status window
-            IProgress<(string, double)> progress = new Progress<(string, double)>(tuple =>
+            // show the modal status window, which will be closed once the load dataset operation completes
+            if (progressReportWindow.ShowDialog() == true)
             {
-                progressReportWindow.Progress = tuple.Item2 * 100;
-                progressReportWindow.Target = tuple.Item1;
-                if (tuple.Item2 == 1.0)
-                {
-                    // refresh the store reader connections
-                    DataManager.Instance.Refresh();
-
-                    // close the status window when the task reports completion
-                    progressReportWindow.Close();
-                }
-            });
-
-            try
-            {
-                var task = sessionViewModel.Session.CreateDerivedPartitionAsync(
-                    (pipeline, sessionImporter, exporter) => batchProcessingTaskMetadata.MethodInfo.Invoke(null, new object[] { pipeline, sessionImporter, exporter }),
-                    batchProcessingTaskMetadata.OutputPartitionName ?? "Derived",
-                    overwrite: true,
-                    outputStoreName: batchProcessingTaskMetadata.OutputStoreName,
-                    outputStorePath: batchProcessingTaskMetadata.OutputStorePath,
-                    replayDescriptor: batchProcessingTaskMetadata.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
-                    deliveryPolicy: batchProcessingTaskMetadata.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : null,
-                    enableDiagnostics: batchProcessingTaskMetadata.EnableDiagnostics,
-                    progress: progress);
-
-                // show the modal status window, which will be closed once the load dataset operation completes
-                progressReportWindow.ShowDialog();
-
-                await task;
-
                 // update the session view model as a new derived partition might have been created
                 sessionViewModel.Update(sessionViewModel.Session);
 
@@ -265,11 +210,12 @@ namespace Microsoft.Psi.Visualization
                 {
                     await sessionViewModel.DatasetViewModel.SaveAsAsync(sessionViewModel.DatasetViewModel.FileName);
                 }
-            }
-            catch (InvalidOperationException)
-            {
-                // This indicates that the window has already been closed in the async task,
-                // which means the operation has already completed, so just ignore and continue.
+
+                // Update bindings to the sources
+                this.VisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
+
+                // And re-read the stream values at cursor (to publish to stream value visualizers)
+                DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
             }
         }
 
@@ -354,9 +300,9 @@ namespace Microsoft.Psi.Visualization
         /// <param name="showStatusWindow">Indicates whether to show the status window.</param>
         /// <param name="autoSave">Indicates whether to enable autosave.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
-        public async Task OpenDatasetAsync(string filename, bool showStatusWindow = true, bool autoSave = false)
+        public async Task OpenDatasetAsync(string filename, bool showStatusWindow, bool autoSave)
         {
-            var loadDatasetTask = default(Task);
+            var loadDatasetTask = default(Task<bool>);
             if (showStatusWindow)
             {
                 // Window that will be used to indicate that an open operation is in progress.
@@ -395,17 +341,18 @@ namespace Microsoft.Psi.Visualization
 
             try
             {
-                // await completion of the open dataset task
-                await loadDatasetTask;
+                // Await completion of the open dataset task. The return value indicates whether the dataset was actually opened.
+                if (await loadDatasetTask)
+                {
+                    this.DatasetViewModels.Clear();
+                    this.DatasetViewModels.Add(this.DatasetViewModel);
 
-                this.DatasetViewModels.Clear();
-                this.DatasetViewModels.Add(this.DatasetViewModel);
+                    // Check for live partitions
+                    this.DatasetViewModel.UpdateLivePartitionStatuses();
 
-                // Check for live partitions
-                this.DatasetViewModel.UpdateLivePartitionStatuses();
-
-                // The first session (if there is one) will already have been selected in the dataset, so visualize it.
-                this.DatasetViewModel.VisualizeSession(this.DatasetViewModel.CurrentSessionViewModel);
+                    // The first session (if there is one) will already have been selected in the dataset, so visualize it.
+                    this.DatasetViewModel.VisualizeSession(this.DatasetViewModel.CurrentSessionViewModel);
+                }
             }
             catch (Exception e)
             {
@@ -474,7 +421,7 @@ namespace Microsoft.Psi.Visualization
             this.RequestDisplayObjectProperties?.Invoke(this, new RequestDisplayObjectPropertiesEventArgs(requestingObject));
         }
 
-        private async Task LoadDatasetOrStoreAsync(string filename, IProgress<(string, double)> progress = null, bool autoSave = false)
+        private async Task<bool> LoadDatasetOrStoreAsync(string filename, IProgress<(string, double)> progress = null, bool autoSave = false)
         {
             try
             {
@@ -492,10 +439,35 @@ namespace Microsoft.Psi.Visualization
                     {
                         name = name.Substring(0, Path.GetFileNameWithoutExtension(filename).LastIndexOf('.'));
 
+                        // Determine if the store is currently live
+                        bool isLive = PsiStoreMonitor.IsStoreLive(name, fileInfo.DirectoryName);
+
+                        // Determine if this is a remote store
+                        bool isRemoteStore = this.IsRemoteStore(fileInfo);
+
+                        // Memory mapped files are not updated if the file being mapped is on a remote machine.
+                        // Therefore, if the store is both live and on a remote machine we should decline to load it.
+                        if (isLive && isRemoteStore)
+                        {
+                            // If there's no progress window then the store open operation is happening
+                            // without any UI. Only show the error message if the UI feedback is enabled.
+                            if (progress != null)
+                            {
+                                new MessageBoxWindow(
+                                    Application.Current.MainWindow,
+                                    "Cannot Load Live Remote Store",
+                                    "The store cannot be opened because it resides on a remote machine and is currently live.  When the remote store is no longer live it can then be opened.",
+                                    "Close",
+                                    null).ShowDialog();
+                            }
+
+                            return false;
+                        }
+
                         progress?.Report(("Opening store...", 0));
 
                         // If the store is not closed, and nobody's holding a reference to it, assume it was closed improperly and needs to be repaired.
-                        if (!PsiStore.IsClosed(name, fileInfo.DirectoryName) && !PsiStoreReader.IsStoreLive(name, fileInfo.DirectoryName))
+                        if (!PsiStore.IsClosed(name, fileInfo.DirectoryName) && !isLive)
                         {
                             progress?.Report(("Repairing store...", 0.5));
                             await Task.Run(() => PsiStore.Repair(name, fileInfo.DirectoryName));
@@ -503,7 +475,7 @@ namespace Microsoft.Psi.Visualization
                     }
 
                     progress?.Report(("Loading store...", 0.5));
-                    var readerType = VisualizationContext.Instance.PluginMap.GetStreamReaderType(fileInfo.Extension);
+                    var readerType = this.PluginMap.GetStreamReaderType(fileInfo.Extension);
                     var reader = Psi.Data.StreamReader.Create(name, fileInfo.DirectoryName, readerType);
                     this.DatasetViewModel = await DatasetViewModel.CreateFromStoreAsync(reader);
                 }
@@ -513,6 +485,23 @@ namespace Microsoft.Psi.Visualization
                 // report completion
                 progress?.Report(("Done", 1.0));
             }
+
+            return true;
+        }
+
+        private bool IsRemoteStore(FileInfo fileInfo)
+        {
+            // Determines whether a store is a remote store.  Note that MemoryMappedFiles do not update correctly
+            // with local stores that are being accessed via a UNC path (i.e. a share path), so we'll result that
+            // any store with a UNC path is remote, even if the share path points to the local machine. If the path
+            // is not a UNC path, we still need to check the drive type of the path in case the user has mapped a
+            // network drive.
+            if (new Uri(fileInfo.FullName).IsUnc)
+            {
+                return true;
+            }
+
+            return new DriveInfo(fileInfo.DirectoryName).DriveType == DriveType.Network;
         }
 
         private void OnLiveStatusTimer(object sender, EventArgs e)

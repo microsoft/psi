@@ -115,7 +115,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
             // update the label
             (this.Label.Children[0] as TextBlock).Text = label;
-            this.Label.Width = rectangle.Width * canvasView.ScaleTransform.ScaleX;
+            this.Label.Width = Math.Max(0, rectangle.Width * canvasView.ScaleTransform.ScaleX);
             this.Label.Height = 30;
             this.Label.ToolTip = tooltip;
             this.Label.Visibility = (label == default) ? Visibility.Collapsed : Visibility.Visible;

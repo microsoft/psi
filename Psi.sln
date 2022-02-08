@@ -198,6 +198,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Filters", "Filters", "{E0E7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Filters", "Sources\Filters\Microsoft.Psi.Filters\Microsoft.Psi.Filters.csproj", "{E0621435-AF35-4CFA-BE9E-3781AF6E161F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spatial", "Spatial", "{F36DEF23-4FFF-4237-9104-03CF19036C70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Spatial.Euclidean", "Sources\Spatial\Microsoft.Psi.Spatial.Euclidean\Microsoft.Psi.Spatial.Euclidean.csproj", "{C3114338-AD22-4EBC-85C3-EE06045CDD78}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Spatial.Euclidean.Visualization.Windows", "Sources\Spatial\Microsoft.Psi.Spatial.Euclidean.Visualization.Windows\Microsoft.Psi.Spatial.Euclidean.Visualization.Windows.csproj", "{A1429F96-C7F8-49D8-ADB8-73A1A4DAA70F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MixedReality", "MixedReality", "{32023088-0392-4B48-B2CF-3754B55C6DE9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HoloLens2ResearchMode", "Sources\MixedReality\HoloLens2ResearchMode\HoloLens2ResearchMode.vcxproj", "{F50194C0-9561-40C7-B9CB-B977E3B3D76D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.MixedReality", "Sources\MixedReality\Microsoft.Psi.MixedReality\Microsoft.Psi.MixedReality.csproj", "{3434D5B2-B06F-4356-9E9B-90171CEF482B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.MixedReality.UniversalWindows", "Sources\MixedReality\Microsoft.Psi.MixedReality.UniversalWindows\Microsoft.Psi.MixedReality.UniversalWindows.csproj", "{ECD9E150-8104-4DA3-B807-A6A4392A67C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.MixedReality.Visualization.Windows", "Sources\MixedReality\Microsoft.Psi.MixedReality.Visualization.Windows\Microsoft.Psi.MixedReality.Visualization.Windows.csproj", "{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -436,6 +452,30 @@ Global
 		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0621435-AF35-4CFA-BE9E-3781AF6E161F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3114338-AD22-4EBC-85C3-EE06045CDD78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3114338-AD22-4EBC-85C3-EE06045CDD78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3114338-AD22-4EBC-85C3-EE06045CDD78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3114338-AD22-4EBC-85C3-EE06045CDD78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1429F96-C7F8-49D8-ADB8-73A1A4DAA70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1429F96-C7F8-49D8-ADB8-73A1A4DAA70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1429F96-C7F8-49D8-ADB8-73A1A4DAA70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1429F96-C7F8-49D8-ADB8-73A1A4DAA70F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F50194C0-9561-40C7-B9CB-B977E3B3D76D}.Debug|Any CPU.ActiveCfg = Debug|ARM
+		{F50194C0-9561-40C7-B9CB-B977E3B3D76D}.Debug|Any CPU.Build.0 = Debug|ARM
+		{F50194C0-9561-40C7-B9CB-B977E3B3D76D}.Release|Any CPU.ActiveCfg = Release|ARM
+		{F50194C0-9561-40C7-B9CB-B977E3B3D76D}.Release|Any CPU.Build.0 = Release|ARM
+		{3434D5B2-B06F-4356-9E9B-90171CEF482B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3434D5B2-B06F-4356-9E9B-90171CEF482B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3434D5B2-B06F-4356-9E9B-90171CEF482B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3434D5B2-B06F-4356-9E9B-90171CEF482B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD9E150-8104-4DA3-B807-A6A4392A67C6}.Debug|Any CPU.ActiveCfg = Debug|ARM
+		{ECD9E150-8104-4DA3-B807-A6A4392A67C6}.Debug|Any CPU.Build.0 = Debug|ARM
+		{ECD9E150-8104-4DA3-B807-A6A4392A67C6}.Release|Any CPU.ActiveCfg = Release|ARM
+		{ECD9E150-8104-4DA3-B807-A6A4392A67C6}.Release|Any CPU.Build.0 = Release|ARM
+		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -522,6 +562,14 @@ Global
 		{A0677BEA-ADB1-4950-89E6-89483D621A52} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
 		{E0E7957E-731F-4FDD-83FE-634FFE24862F} = {A0856299-D28A-4513-B964-3FA5290FF160}
 		{E0621435-AF35-4CFA-BE9E-3781AF6E161F} = {E0E7957E-731F-4FDD-83FE-634FFE24862F}
+		{F36DEF23-4FFF-4237-9104-03CF19036C70} = {A0856299-D28A-4513-B964-3FA5290FF160}
+		{C3114338-AD22-4EBC-85C3-EE06045CDD78} = {F36DEF23-4FFF-4237-9104-03CF19036C70}
+		{A1429F96-C7F8-49D8-ADB8-73A1A4DAA70F} = {F36DEF23-4FFF-4237-9104-03CF19036C70}
+		{32023088-0392-4B48-B2CF-3754B55C6DE9} = {A0856299-D28A-4513-B964-3FA5290FF160}
+		{F50194C0-9561-40C7-B9CB-B977E3B3D76D} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
+		{3434D5B2-B06F-4356-9E9B-90171CEF482B} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
+		{ECD9E150-8104-4DA3-B807-A6A4392A67C6} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
+		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

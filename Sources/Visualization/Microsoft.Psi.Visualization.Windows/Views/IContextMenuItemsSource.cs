@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System.Collections.Generic;
-    using System.Windows;
     using System.Windows.Controls;
 
     /// <summary>

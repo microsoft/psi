@@ -26,15 +26,15 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// Checks if a stream value publisher has a specified subscriber.
         /// </summary>
-        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
+        /// <param name="subscriberId">The subscriber id that the target was given when it initially subscribed.</param>
         /// <returns>True if the publisher has the specified subscriber.</returns>
-        bool HasSubscriber(Guid registrationToken);
+        bool HasSubscriber(Guid subscriberId);
 
         /// <summary>
         /// Unregisters a stream value subscriber.
         /// </summary>
-        /// <param name="registrationToken">The registration token that the stream value subscriber was given when it was initially registered.</param>
-        void UnregisterSubscriber(Guid registrationToken);
+        /// <param name="subscriberId">The subscriber id that the stream value subscriber was given when it initially subscribed.</param>
+        void UnregisterSubscriber(Guid subscriberId);
 
         /// <summary>
         /// Pushes data to registered stream value subscribers.

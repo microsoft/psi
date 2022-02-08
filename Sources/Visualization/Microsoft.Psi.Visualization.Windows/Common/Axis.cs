@@ -3,22 +3,18 @@
 
 namespace Microsoft.Psi.Visualization
 {
+    using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
-    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Data;
 
     /// <summary>
     /// Represents an axis for a visualization panel.
     /// </summary>
-    public class Axis : ObservableObject
+    public class Axis : ObservableObject, IEquatable<Axis>
     {
         private const double DefaultMinimum = 0.0d;
         private const double DefaultMaximum = 1.0d;
-
-        /// <summary>
-        /// The compute mode for the axis.
-        /// </summary>
-        private AxisComputeMode axisComputeMode = AxisComputeMode.Auto;
 
         /// <summary>
         /// The maximum value of the axis.
@@ -37,24 +33,7 @@ namespace Microsoft.Psi.Visualization
         /// </summary>
         public Axis()
         {
-            this.AxisComputeMode = AxisComputeMode.Auto;
             this.SetDefaultRange();
-        }
-
-        /// <summary>
-        /// Gets or sets the axis compute mode.
-        /// </summary>
-        [DataMember]
-        [DisplayName("Axis Compute Mode")]
-        [Description("Specifies whether the axis is computed automatically or set manually.")]
-        public AxisComputeMode AxisComputeMode
-        {
-            get { return this.axisComputeMode; }
-
-            set
-            {
-                this.Set(nameof(this.AxisComputeMode), ref this.axisComputeMode, value);
-            }
         }
 
         /// <summary>
@@ -66,9 +45,9 @@ namespace Microsoft.Psi.Visualization
         public double Maximum
         {
             get => this.maximum;
+
             set
             {
-                this.AxisComputeMode = AxisComputeMode.Manual;
                 this.Set(nameof(this.Maximum), ref this.maximum, value);
                 this.RaisePropertyChanged(nameof(this.Range));
             }
@@ -85,7 +64,6 @@ namespace Microsoft.Psi.Visualization
             get => this.minimum;
             set
             {
-                this.AxisComputeMode = AxisComputeMode.Manual;
                 this.Set(nameof(this.Minimum), ref this.minimum, value);
                 this.RaisePropertyChanged(nameof(this.Range));
             }
@@ -96,7 +74,52 @@ namespace Microsoft.Psi.Visualization
         /// </summary>
         [IgnoreDataMember]
         [Browsable(false)]
-        public ValueRange<double> Range => new ValueRange<double>(this.Minimum, this.Maximum);
+        public ValueRange<double> Range => new (this.Minimum, this.Maximum);
+
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="first">The first object to compare.</param>
+        /// <param name="second">The second object to compare.</param>
+        /// <returns>True if the objects are equal, otherwise false.</returns>
+        public static bool operator ==(Axis first, Axis second)
+        {
+            return first.minimum == second.minimum && first.maximum == second.maximum;
+        }
+
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="first">The first object to compare.</param>
+        /// <param name="second">The second object to compare.</param>
+        /// <returns>True if the objects are equal, otherwise false.</returns>
+        public static bool operator !=(Axis first, Axis second)
+        {
+            return !(first == second);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(Axis other)
+        {
+            return this == other;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Axis))
+            {
+                return false;
+            }
+
+            return this == obj as Axis;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return this.minimum.GetHashCode() ^ this.maximum.GetHashCode();
+        }
 
         /// <summary>
         /// Sets the range of the axis.
@@ -107,6 +130,19 @@ namespace Microsoft.Psi.Visualization
         {
             this.minimum = minimum;
             this.maximum = maximum;
+            this.RaisePropertyChanged(nameof(this.Minimum));
+            this.RaisePropertyChanged(nameof(this.Maximum));
+            this.RaisePropertyChanged(nameof(this.Range));
+        }
+
+        /// <summary>
+        /// Moves the upper and lower bound of the range by a specified amount.
+        /// </summary>
+        /// <param name="translateDistance">The distance to move both the minimum and maximim values.</param>
+        public void TranslateRange(double translateDistance)
+        {
+            this.minimum += translateDistance;
+            this.maximum += translateDistance;
             this.RaisePropertyChanged(nameof(this.Minimum));
             this.RaisePropertyChanged(nameof(this.Maximum));
             this.RaisePropertyChanged(nameof(this.Range));

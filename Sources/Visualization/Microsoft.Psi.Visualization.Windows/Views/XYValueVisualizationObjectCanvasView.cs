@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
     using System.ComponentModel;
+    using System.Windows;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -21,6 +22,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public XYValueVisualizationObjectCanvasView()
             : base()
         {
+            this.Padding = new Thickness(0, 0, 0, 0);
         }
 
         /// <summary>
@@ -52,31 +54,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             double oldTranslateX = this.TranslateTransform.X;
             double oldTranslateY = this.TranslateTransform.Y;
 
-            double contentWidth = this.XYValueVisualizationObject.XAxis.Maximum - this.XYValueVisualizationObject.XAxis.Minimum;
-            double contentHeight = this.XYValueVisualizationObject.YAxis.Maximum - this.XYValueVisualizationObject.YAxis.Minimum;
-
-            double contentAspectRatio = contentWidth / contentHeight;
-            double controlAspectRatio = this.ActualWidth / this.ActualHeight;
-
-            if (controlAspectRatio > contentAspectRatio)
+            if (this.XYValueVisualizationObject != null)
             {
-                // control is wider than needed so content will stretch full height
-                var scaleFactor = contentHeight == 0 ? 0 : this.ActualHeight / contentHeight;
-                this.ScaleTransform.ScaleX = scaleFactor;
-                this.ScaleTransform.ScaleY = scaleFactor;
-                double leftoverWidth = this.ActualWidth - (this.ScaleTransform.ScaleX * contentWidth);
-                this.TranslateTransform.X = leftoverWidth / (2 * this.ScaleTransform.ScaleX);
-                this.TranslateTransform.Y = 0;
-            }
-            else
-            {
-                // control is taller than needed so content will stretch full width
-                var scaleFactor = contentWidth == 0 ? 0 : this.ActualWidth / contentWidth;
-                this.ScaleTransform.ScaleX = scaleFactor;
-                this.ScaleTransform.ScaleY = scaleFactor;
-                double leftoverHeight = this.ActualHeight - (this.ScaleTransform.ScaleY * contentHeight);
-                this.TranslateTransform.X = 0;
-                this.TranslateTransform.Y = leftoverHeight / (2 * this.ScaleTransform.ScaleY);
+                double contentWidth = this.XYValueVisualizationObject.XAxis.Maximum - this.XYValueVisualizationObject.XAxis.Minimum;
+                double contentHeight = this.XYValueVisualizationObject.YAxis.Maximum - this.XYValueVisualizationObject.YAxis.Minimum;
+
+                this.ScaleTransform.ScaleX = this.ActualWidth / contentWidth;
+                this.TranslateTransform.X = -this.XYValueVisualizationObject.XAxis.Minimum;
+
+                this.ScaleTransform.ScaleY = this.ActualHeight / contentHeight;
+                this.TranslateTransform.Y = -this.XYValueVisualizationObject.YAxis.Minimum;
             }
 
             return

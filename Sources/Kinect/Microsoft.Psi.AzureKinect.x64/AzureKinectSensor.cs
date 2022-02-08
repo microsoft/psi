@@ -22,7 +22,7 @@ namespace Microsoft.Psi.AzureKinect
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureKinectSensor"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to add this component to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Configuration to use for the sensor.</param>
         /// <param name="defaultDeliveryPolicy">An optional default delivery policy for the subpipeline (defaults is LatestMessage).</param>
         /// <param name="bodyTrackerDeliveryPolicy">An optional delivery policy for sending the depth-and-IR images stream to the body tracker (default is LatestMessage).</param>

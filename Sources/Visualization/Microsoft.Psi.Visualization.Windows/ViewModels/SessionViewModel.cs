@@ -14,11 +14,11 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Windows.Controls;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
-    using Microsoft.Psi.Visualization.Tasks;
 
     /// <summary>
     /// Represents a view model of a session.
@@ -248,22 +248,31 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public void AddPartition()
         {
             var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
-            Win32.OpenFileDialog dlg = new Win32.OpenFileDialog
+            var openFileDialog = new Win32.OpenFileDialog
             {
                 DefaultExt = ".psi",
                 Filter = string.Join("|", formats.Select(f => $"{f.Name}|*{f.Extensions}")),
             };
 
-            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
+            bool? result = openFileDialog.ShowDialog(Application.Current.MainWindow);
             if (result == true)
             {
-                var fileInfo = new FileInfo(dlg.FileName);
+                var fileInfo = new FileInfo(openFileDialog.FileName);
                 var name = fileInfo.Name.Split('.')[0];
                 var path = fileInfo.DirectoryName;
 
                 var readerType = VisualizationContext.Instance.PluginMap.GetStreamReaderType(fileInfo.Extension);
                 var streamReader = Psi.Data.StreamReader.Create(name, path, readerType);
                 this.AddStorePartition(streamReader);
+
+                // Update stream bindings if this is the current session being visualized
+                if (this.IsCurrentSession)
+                {
+                    var visualizationContainer = VisualizationContext.Instance.VisualizationContainer;
+                    var sessionExtents = this.OriginatingTimeInterval;
+                    visualizationContainer.Navigator.DataRange.Set(sessionExtents);
+                    visualizationContainer.UpdateStreamSources(this);
+                }
             }
         }
 
@@ -276,6 +285,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
             this.session.RemovePartition(partitionViewModel.Partition);
             this.internalPartitionViewModels.Remove(partitionViewModel);
             this.DatasetViewModel.UpdateLivePartitionStatuses();
+
+            // Update stream bindings if this is the current session being visualized
+            if (this.IsCurrentSession)
+            {
+                var visualizationContainer = VisualizationContext.Instance.VisualizationContainer;
+                var sessionExtents = this.OriginatingTimeInterval;
+                visualizationContainer.UnbindVisualizationObjectsFromStore(partitionViewModel.StoreName, partitionViewModel.StorePath, partitionViewModel.Name);
+                visualizationContainer.Navigator.DataRange.Set(sessionExtents);
+            }
         }
 
         /// <summary>
@@ -396,6 +414,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 case AuxiliarySessionInfo.Size:
                     this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatSize(this.Session.Size.Value) : "?";
                     break;
+                case AuxiliarySessionInfo.DataThroughputPerHour:
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Session.Size.Value / this.Session.OriginatingTimeInterval.Span.TotalHours, "hour") : "?";
+                    break;
+                case AuxiliarySessionInfo.DataThroughputPerMinute:
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Session.Size.Value / this.Session.OriginatingTimeInterval.Span.TotalMinutes, "min") : "?";
+                    break;
+                case AuxiliarySessionInfo.DataThroughputPerSecond:
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Session.Size.Value / this.Session.OriginatingTimeInterval.Span.TotalSeconds, "sec") : "?";
+                    break;
                 case AuxiliarySessionInfo.StreamCount:
                     this.AuxiliaryInfo = this.Session.StreamCount.HasValue ? (this.Session.StreamCount == 0 ? "0" : $"{this.Session.StreamCount.Value:0,0}") : "?";
                     break;
@@ -412,13 +439,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Add Partition from Existing Store ...", this.AddPartitionCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionRemove, "Remove", this.RemoveSessionCommand));
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, "Visualize", this.VisualizeSessionCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.Visualize, this.VisualizeSessionCommand));
 
             contextMenu.Items.Add(new Separator());
 
             // Add run batch processing task menu
             var runTasksMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Run Batch Processing Task", null);
-            var batchProcessingTasks = VisualizationContext.Instance.PluginMap.GetSessionCompatibleBatchProcessingTasks();
+            var batchProcessingTasks = VisualizationContext.Instance.PluginMap.BatchProcessingTasks;
             runTasksMenuItem.IsEnabled = batchProcessingTasks.Any();
             foreach (var batchProcessingTask in batchProcessingTasks)
             {
@@ -452,6 +479,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     AuxiliarySessionInfo.StartDateTime => "Start DateTime (UTC)",
                     AuxiliarySessionInfo.StartDateTimeLocal => "Start DateTime (Local)",
                     AuxiliarySessionInfo.Size => "Size",
+                    AuxiliarySessionInfo.DataThroughputPerHour => "Throughput (bytes per hour)",
+                    AuxiliarySessionInfo.DataThroughputPerMinute => "Throughput (bytes per minute)",
+                    AuxiliarySessionInfo.DataThroughputPerSecond => "Throughput (bytes per second)",
                     AuxiliarySessionInfo.StreamCount => "Number of Streams",
                     _ => throw new NotImplementedException(),
                 };

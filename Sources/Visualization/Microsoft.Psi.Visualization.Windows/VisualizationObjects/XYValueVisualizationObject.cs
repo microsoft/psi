@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
+    using System.Windows;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
@@ -49,6 +50,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         public Axis YAxis => (this.Panel as XYVisualizationPanel)?.YAxis;
 
+        #pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
+
+        /// <summary>
+        /// Gets the current mouse position within the image (in image pixels).
+        /// </summary>
+        [IgnoreDataMember]
+        [DisplayName("Mouse Position")]
+        [Description("The position of the mouse in the visualization object.")]
+        public string MousePositionString => (this.Panel is XYVisualizationPanel xYVisualizationPanel) ? xYVisualizationPanel.MousePositionString : default;
+
+        #pragma warning restore SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
+
         /// <inheritdoc/>
         [IgnoreDataMember]
         [Browsable(false)]
@@ -77,10 +90,30 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        /// <summary>
+        /// Called when the x value range in a derived class has changed.
+        /// </summary>
+        protected void OnXValueRangeChanged()
+        {
+            this.XValueRangeChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the y value range in a derived class has changed.
+        /// </summary>
+        protected void OnYValueRangeChanged()
+        {
+            this.YValueRangeChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         /// <inheritdoc/>
         protected override void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(XYVisualizationPanel.XAxis))
+            if (e.PropertyName == nameof(XYVisualizationPanel.MousePositionString))
+            {
+                this.RaisePropertyChanged(nameof(this.MousePositionString));
+            }
+            else if (e.PropertyName == nameof(XYVisualizationPanel.XAxis))
             {
                 this.RaisePropertyChanged(nameof(this.XAxis));
             }

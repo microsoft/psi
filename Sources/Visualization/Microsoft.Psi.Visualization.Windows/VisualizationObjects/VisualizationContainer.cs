@@ -14,8 +14,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows;
     using System.Windows.Data;
     using GalaSoft.MvvmLight.Command;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Helpers;
-    using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.Serialization;
     using Microsoft.Psi.Visualization.ViewModels;
@@ -180,7 +180,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Gets or sets the visualization object that the mouse pointer currently snaps to.
         /// </summary>
-        [IgnoreDataMember]
+        [DataMember]
         public VisualizationObject SnapToVisualizationObject
         {
             get { return this.snapToVisualizationObject; }
@@ -241,43 +241,42 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     TypeNameHandling = TypeNameHandling.Auto,
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                     SerializationBinder = new SafeSerializationBinder(),
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 });
 
             System.IO.StreamReader jsonFile = null;
             try
             {
                 jsonFile = File.OpenText(filename);
-                using (var jsonReader = new JsonTextReader(jsonFile))
+                using var jsonReader = new JsonTextReader(jsonFile);
+                jsonFile = null;
+
+                // Get the layout file version
+                double layoutFileVersion = GetLayoutFileVersion(jsonReader);
+
+                // Make sure it's a version we know how to deserialize (currently only version 3.0)
+                if (layoutFileVersion != CurrentVisualizationContainerVersion)
                 {
-                    jsonFile = null;
+                    throw new ApplicationException("The layout could not be loaded because the file is invalid or is an unsupported version.");
+                }
 
-                    // Get the layout file version
-                    double layoutFileVersion = GetLayoutFileVersion(jsonReader);
+                // Find the "Layout" node
+                if (SeekToLayoutElement(jsonReader))
+                {
+                    // Deserialize the visualization container
+                    var visualizationContainer = serializer.Deserialize<VisualizationContainer>(jsonReader);
 
-                    // Make sure it's a version we know how to deserialize (currently only version 3.0)
-                    if (layoutFileVersion != CurrentVisualizationContainerVersion)
+                    // Copy the settings from the current navigator to the new one.
+                    if (currentVisualizationContainer != null)
                     {
-                        throw new ApplicationException("The layout could not be loaded because the file is invalid or is an unsupported version.");
+                        visualizationContainer.Navigator.CopyFrom(currentVisualizationContainer.Navigator);
                     }
 
-                    // Find the "Layout" node
-                    if (SeekToLayoutElement(jsonReader))
-                    {
-                        // Deserialize the visualization container
-                        VisualizationContainer visualizationContainer = serializer.Deserialize<VisualizationContainer>(jsonReader);
-
-                        // Copy the settings from the current navigator to the new one.
-                        if (currentVisualizationContainer != null)
-                        {
-                            visualizationContainer.Navigator.Initialize(currentVisualizationContainer.Navigator);
-                        }
-
-                        return visualizationContainer;
-                    }
-                    else
-                    {
-                        throw new ApplicationException("No Layout element was found in the file");
-                    }
+                    return visualizationContainer;
+                }
+                else
+                {
+                    throw new ApplicationException("No Layout element was found in the file");
                 }
             }
             catch (Exception ex)
@@ -330,6 +329,52 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             this.Panels.Clear();
             this.CurrentPanel = null;
+        }
+
+        /// <summary>
+        /// Toggles the visibility of the indicated panel.
+        /// </summary>
+        /// <param name="panel">The panel for which to toggle visibility.</param>
+        public void TogglePanelVisibility(VisualizationPanel panel)
+        {
+            // If we're about to make the current panel invisible, then set the current panel to null
+            if (panel.Visible && this.CurrentPanel == panel)
+            {
+                this.CurrentPanel = null;
+            }
+
+            // Manage the parent if it's an instant visualization container
+            if (panel.ParentPanel is InstantVisualizationContainer instantVisualizationContainer)
+            {
+                // If the parent container is visible, figure out if we need to toggle it.
+                if (instantVisualizationContainer.Visible)
+                {
+                    // We need to toggle it we're about to make the current panel invisible and
+                    // all the other panels are invisible
+                    if (panel.Visible && instantVisualizationContainer.Panels.All(p => !p.Visible || p == panel))
+                    {
+                        this.TogglePanelVisibility(instantVisualizationContainer);
+                    }
+                }
+                else
+                {
+                    // O/w the parent container is not visible, figure out if we need to toggle it.
+                    // We need to toggle it we're about to make the current panel visible
+                    if (!panel.Visible)
+                    {
+                        this.TogglePanelVisibility(instantVisualizationContainer);
+                    }
+                }
+            }
+
+            // Toggle the visibility
+            panel.Visible = !panel.Visible;
+
+            // if we have no selection, select the last panel
+            if ((this.CurrentPanel == null) && (this.Panels.Count > 0))
+            {
+                this.CurrentPanel = this.Panels.Last();
+            }
         }
 
         /// <summary>
@@ -406,30 +451,29 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     TypeNameHandling = TypeNameHandling.Auto,
                     TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
                     SerializationBinder = new SafeSerializationBinder(),
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 });
 
             StreamWriter jsonFile = null;
             try
             {
                 jsonFile = File.CreateText(filename);
-                using (var jsonWriter = new JsonTextWriter(jsonFile))
-                {
-                    jsonFile = null;
+                using var jsonWriter = new JsonTextWriter(jsonFile);
+                jsonFile = null;
 
-                    // Open the json
-                    jsonWriter.WriteStartObject();
+                // Open the json
+                jsonWriter.WriteStartObject();
 
-                    // Write the layout version
-                    jsonWriter.WritePropertyName(LayoutVersionPropertyName);
-                    jsonWriter.WriteValue(CurrentVisualizationContainerVersion);
+                // Write the layout version
+                jsonWriter.WritePropertyName(LayoutVersionPropertyName);
+                jsonWriter.WriteValue(CurrentVisualizationContainerVersion);
 
-                    // Write the layout
-                    jsonWriter.WritePropertyName(LayoutPropertyName);
-                    serializer.Serialize(jsonWriter, this);
+                // Write the layout
+                jsonWriter.WritePropertyName(LayoutPropertyName);
+                serializer.Serialize(jsonWriter, this);
 
-                    // Close the json
-                    jsonWriter.WriteEndObject();
-                }
+                // Close the json
+                jsonWriter.WriteEndObject();
             }
             finally
             {
@@ -438,24 +482,29 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Update the store bindings with the specified enumeration of partitions.
+        /// Unbinds any visualization objects currently bound to a store.
+        /// </summary>
+        /// <param name="storeName">The name of the store.</param>
+        /// <param name="storePath">The path to the store.</param>
+        /// <param name="partitionName">The partition name of the instance to unbind, or null to unbind all instances.</param>
+        public void UnbindVisualizationObjectsFromStore(string storeName, string storePath, string partitionName)
+        {
+            foreach (var panel in this.Panels)
+            {
+                panel.UnbindVisualizationObjectsFromStore(storeName, storePath, partitionName);
+            }
+        }
+
+        /// <summary>
+        /// Update the stream sources for the visualization objects in this container.
         /// </summary>
         /// <param name="sessionViewModel">The currently active session view model.</param>
         public void UpdateStreamSources(SessionViewModel sessionViewModel)
         {
-            foreach (VisualizationPanel panel in this.Panels)
+            foreach (var panel in this.Panels)
             {
                 // Update the stream sources for the panel
-                UpdateVisualizationPanelStreamSources(panel, sessionViewModel);
-
-                // If the panel is an instant visualization container, then do the same for all the panels that it contains
-                if (panel is IInstantVisualizationContainer instantVisualizationContainer)
-                {
-                    foreach (VisualizationPanel instantVisualizationPanel in instantVisualizationContainer.Panels)
-                    {
-                        UpdateVisualizationPanelStreamSources(instantVisualizationPanel, sessionViewModel);
-                    }
-                }
+                panel.UpdateStreamSources(sessionViewModel);
             }
         }
 
@@ -465,17 +514,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="timeInterval">Time interval to zoom to.</param>
         public void ZoomToRange(TimeInterval timeInterval)
         {
-            this.Navigator.ViewRange.SetRange(timeInterval.Left, timeInterval.Right);
+            this.Navigator.ViewRange.Set(timeInterval.Left, timeInterval.Right);
             this.Navigator.Cursor = timeInterval.Left;
-        }
-
-        private static void UpdateVisualizationPanelStreamSources(VisualizationPanel panel, SessionViewModel sessionViewModel)
-        {
-            foreach (VisualizationObject visualizationObject in panel.VisualizationObjects)
-            {
-                IStreamVisualizationObject streamVisualizationObject = visualizationObject as IStreamVisualizationObject;
-                streamVisualizationObject?.UpdateStreamSource(sessionViewModel);
-            }
         }
 
         private static bool SeekToLayoutElement(JsonTextReader jsonReader)
@@ -521,7 +561,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private static string CreateLayoutLoadErrorText(string layoutName, Exception ex)
         {
-            StringBuilder text = new StringBuilder();
+            var text = new StringBuilder();
             text.AppendLine(string.Format("The layout {0} could not be loaded because of the following errors:", layoutName));
             text.AppendLine();
 

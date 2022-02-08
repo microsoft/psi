@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Creates a new multi-stream JSON store and returns an <see cref="JsonExporter"/> instance which can be used to write streams to this store.
         /// </summary>
-        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="JsonExporter"/>.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the store to create.</param>
         /// <param name="rootPath">The path to use. If null, an in-memory store is created.</param>
         /// <param name="createSubdirectory">Indicates whether to create a numbered subdirectory for each execution of the pipeline.</param>
@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Data.Json
         /// <summary>
         /// Opens a JSON store for read and returns an <see cref="JsonGenerator"/> instance which can be used to inspect the store and open the streams.
         /// </summary>
-        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="JsonGenerator"/>.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides.</param>
         /// <returns>A <see cref="JsonGenerator"/> instance that can be used to open streams and read messages.</returns>

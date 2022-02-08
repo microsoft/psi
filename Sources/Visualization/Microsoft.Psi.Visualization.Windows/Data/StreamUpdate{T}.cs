@@ -3,8 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.Data
 {
-    using System;
-
     /// <summary>
     /// Represents an update to a message in a stream.
     /// </summary>

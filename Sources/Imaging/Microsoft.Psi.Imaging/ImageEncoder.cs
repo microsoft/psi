@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Imaging
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageEncoder"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to add this component to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="encoder">The image encoder to use.</param>
         public ImageEncoder(Pipeline pipeline, IImageToStreamEncoder encoder)
             : base(pipeline)

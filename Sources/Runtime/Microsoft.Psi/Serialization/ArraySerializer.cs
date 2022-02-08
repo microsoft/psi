@@ -16,6 +16,9 @@ namespace Microsoft.Psi.Serialization
 
         private SerializationHandler<T> elementHandler;
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => true;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             var type = typeof(T[]);
@@ -72,7 +75,7 @@ namespace Microsoft.Psi.Serialization
 
         private void PrepareTarget(ref T[] target, int size, SerializationContext context)
         {
-            if (target != null && target.Length > size)
+            if (target != null && target.Length > size && (!this.elementHandler.IsClearRequired.HasValue || this.elementHandler.IsClearRequired.Value))
             {
                 // use a separate context to clear the unused objects, so that we don't corrupt the current context
                 SerializationContext clearContext = new SerializationContext(context.Serializers);

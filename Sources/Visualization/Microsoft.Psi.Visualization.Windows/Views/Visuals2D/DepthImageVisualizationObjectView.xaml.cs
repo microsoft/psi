@@ -3,18 +3,21 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows;
-    using System.Windows.Input;
+    using System.Windows.Controls;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Interaction logic for ImageVisualizationObjectView.xaml.
     /// </summary>
-    public partial class DepthImageVisualizationObjectView : VisualizationObjectView
+    public partial class DepthImageVisualizationObjectView : DepthImageVisualizationObjectViewBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DepthImageVisualizationObjectView"/> class.
@@ -23,6 +26,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             this.InitializeComponent();
             this.DisplayImage = new DisplayImage();
+            this.Canvas = this._DynamicCanvas;
         }
 
         /// <summary>
@@ -35,6 +39,42 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// </summary>
         public DepthImageVisualizationObject DepthImageVisualizationObject =>
             this.VisualizationObject as DepthImageVisualizationObject;
+
+        /// <inheritdoc/>
+        public override void AppendContextMenuItems(List<MenuItem> menuItems)
+        {
+            base.AppendContextMenuItems(menuItems);
+
+            // Add Set Cursor Epsilon menu with sub-menu items
+            var rangeModeMenuItem = MenuItemHelper.CreateMenuItem(
+                string.Empty,
+                "Set Range Mode",
+                null,
+                true);
+
+            rangeModeMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    string.Empty,
+                    DepthImageRangeMode.Auto.ToString(),
+                    new RelayCommand(
+                        () => this.DepthImageVisualizationObject.RangeMode = DepthImageRangeMode.Auto),
+                    true));
+
+            rangeModeMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    string.Empty,
+                    DepthImageRangeMode.Maximum.ToString(),
+                    new RelayCommand(
+                        () => this.DepthImageVisualizationObject.RangeMode = DepthImageRangeMode.Maximum),
+                    true));
+
+            menuItems.Add(rangeModeMenuItem);
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateView()
+        {
+        }
 
         /// <inheritdoc/>
         protected override void OnVisualizationObjectPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -51,21 +91,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 this.ShowCurrentImage();
             }
-        }
-
-        /// <inheritdoc/>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            System.Windows.Point mousePosition = e.GetPosition(this.Image);
-
-            if (this.DepthImageVisualizationObject.CurrentValue != null && this.DepthImageVisualizationObject.CurrentValue.Value.Data != null && this.DepthImageVisualizationObject.CurrentValue.Value.Data.Resource != null)
-            {
-                int x = (int)(mousePosition.X * this.DepthImageVisualizationObject.CurrentValue.Value.Data.Resource.Width / this.Image.ActualWidth);
-                int y = (int)(mousePosition.Y * this.DepthImageVisualizationObject.CurrentValue.Value.Data.Resource.Height / this.Image.ActualHeight);
-                this.DepthImageVisualizationObject.SetMousePosition(new System.Windows.Point(x, y));
-            }
-
-            base.OnMouseMove(e);
         }
 
         private void ShowCurrentImage()
@@ -114,6 +139,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 if (this.Image.Visibility != Visibility.Visible)
                 {
                     this.Image.Visibility = Visibility.Visible;
+                }
+
+                // Update the image size if it's changed
+                if ((this.Image.Width != this.DisplayImage.Image.PixelWidth) || (this.Image.Height != this.DisplayImage.Image.PixelHeight))
+                {
+                    this.Image.Width = this.DisplayImage.Image.PixelWidth;
+                    this.Image.Height = this.DisplayImage.Image.PixelHeight;
                 }
             }
         }

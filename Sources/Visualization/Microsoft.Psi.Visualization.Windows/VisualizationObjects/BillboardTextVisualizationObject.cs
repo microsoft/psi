@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
+    using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Media3D;
     using HelixToolkit.Wpf;
@@ -24,6 +25,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private Color billboardForeColor = Colors.White;
         private double billboardPadding = 5;
         private int billboardOpacity = 100;
+        private double billboardFontSize = 10;
+        private double billboardBorderThickness = 1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BillboardTextVisualizationObject"/> class.
@@ -32,6 +35,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             this.billboard = new BillboardTextVisual3D()
             {
+                FontSize = this.BillboardFontSize,
                 BorderBrush = new SolidColorBrush(this.BillboardBorderColor),
                 Background = new SolidColorBrush(this.BillboardBackgroundColor)
                 {
@@ -39,9 +43,36 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 },
                 Foreground = new SolidColorBrush(this.BillboardForegroundColor),
                 Padding = new System.Windows.Thickness(this.BillboardPadding),
+                BorderThickness = new System.Windows.Thickness(this.BillboardBorderThickness),
             };
 
             this.UpdateVisibility();
+        }
+
+        /// <summary>
+        /// Gets or sets the billboard border thickness.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Billboard Border Thickness")]
+        [Description("The billboard border thickness.")]
+        [PropertyOrder(6)]
+        public double BillboardBorderThickness
+        {
+            get { return this.billboardBorderThickness; }
+            set { this.Set(nameof(this.BillboardBorderThickness), ref this.billboardBorderThickness, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the border color of the billboard.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Billboard Font Size")]
+        [Description("The billboard font size.")]
+        [PropertyOrder(5)]
+        public double BillboardFontSize
+        {
+            get { return this.billboardFontSize; }
+            set { this.Set(nameof(this.BillboardFontSize), ref this.billboardFontSize, value); }
         }
 
         /// <summary>
@@ -146,6 +177,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             else if (propertyName == nameof(this.BillboardPadding))
             {
                 this.billboard.Padding = new System.Windows.Thickness(this.BillboardPadding);
+            }
+            else if (propertyName == nameof(this.BillboardFontSize))
+            {
+                this.billboard.FontSize = this.BillboardFontSize;
+            }
+            else if (propertyName == nameof(this.BillboardBorderThickness))
+            {
+                this.billboard.BorderThickness = new Thickness(this.BillboardBorderThickness);
             }
         }
 

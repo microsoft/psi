@@ -165,7 +165,7 @@ namespace Microsoft.Psi.Persistence
                 this.streamTimeInterval = GetTimeRange(newStreamDescriptors.Values, meta => meta.StreamTimeInterval);
 
                 // clean up if the catalog is closed and we really reached the end
-                if (!this.catalogReader.IsMoreDataExpected() && !this.catalogReader.HasMoreData())
+                if (!PsiStoreMonitor.IsStoreLive(this.name, this.path) && !this.catalogReader.HasMoreData())
                 {
                     this.catalogReader.Dispose();
                     this.catalogReader = null;

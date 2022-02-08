@@ -1,0 +1,61 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<Window x:Class="Microsoft.Psi.Visualization.Windows.GetParameterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:visconv="clr-namespace:Microsoft.Psi.Visualization.Converters"
+        FocusManager.FocusedElement="{Binding ElementName=ParameterTextBox}"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        SizeToContent="WidthAndHeight"
+        Title="{Binding Title}"
+        WindowStartupLocation="CenterOwner" 
+        WindowStyle="SingleBorderWindow"
+        Background="{StaticResource WindowBackgroundBrush}">
+
+    <Window.Resources>
+        <visconv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+    
+    <Grid Grid.IsSharedSizeScope="True" Margin="0,5,0,0">
+        <Grid.Resources>
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="10,2,2,2" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="2,2,10,2" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Width" Value="80" />
+            </Style>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" SharedSizeGroup="LeftColumn" />
+            <ColumnDefinition Width="250" SharedSizeGroup="RightColumn" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Stream Name -->
+        <Label Grid.Row="0" Grid.Column="0" Content="{Binding ParameterName}"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="ParameterTextBox" Text="{Binding ParameterValue, UpdateSourceTrigger=PropertyChanged}" TextChanged="ValidateFormValues" />
+            
+        <!-- Buttons -->
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,2,10,10">
+            <Button Name="OKButton" Click="OKButton_Click" IsDefault="True" Margin="0,5,2,0" IsEnabled="{Binding IsValid}">OK</Button>
+            <Button IsCancel="True" Margin="2,5,0,0">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

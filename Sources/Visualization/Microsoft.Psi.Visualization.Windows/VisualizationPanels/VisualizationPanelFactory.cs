@@ -21,6 +21,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             {
                 case VisualizationPanelType.Timeline:
                     return Activator.CreateInstance<TimelineVisualizationPanel>();
+                case VisualizationPanelType.Canvas:
+                    return Activator.CreateInstance<CanvasVisualizationPanel>();
                 case VisualizationPanelType.XY:
                     return Activator.CreateInstance<XYVisualizationPanel>();
                 case VisualizationPanelType.XYZ:

@@ -20,6 +20,9 @@ namespace Microsoft.Psi.Serialization
         {
         }
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => false;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             var runtimeSchema = TypeSchema.FromType(typeof(T), serializers.RuntimeVersion, this.GetType(), Version);

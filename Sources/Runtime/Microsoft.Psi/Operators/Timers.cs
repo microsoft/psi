@@ -19,7 +19,7 @@ namespace Microsoft.Psi
         /// but if the pipeline slows down, the interval between messages might not appear constant.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">The interval at which to generate messages.</param>
         /// <param name="generatorFn">The function generating the messages.</param>
         /// <returns>A stream of messages of type T.</returns>
@@ -35,7 +35,7 @@ namespace Microsoft.Psi
         /// When the pipeline is in replay mode, the originating times of the messages are derived from the virtual pipeline time,
         /// but if the pipeline slows down, the interval between messages might not appear constant.
         /// </summary>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">The interval at which to generate messages.</param>
         /// <returns>A stream of messages representing time elapsed since the start of the pipeline.</returns>
         public static IProducer<TimeSpan> Timer(Pipeline pipeline, TimeSpan interval)

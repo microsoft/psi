@@ -17,43 +17,42 @@ namespace Test.Psi
         [Timeout(60000)]
         public void JoinClosingSecondary()
         {
-            using (var p = Pipeline.Create())
-            {
-                // primary    0       1       2       3       4       5       6       7       8       9
-                // secondary  0   1   2   3   4   5   6   7   8   9
-                // joined    (0,0)   (1,2)   (2,4)   (3,6)   (4,8)   (5,9)   (6,9)   (7,9)   (8,9)   (9,9)
-                //                                                    ^       ^       ^       ^       ^
-                //                                                    note: normally these would remain unpaired
-                //                                                          until seeing next secondary message
-                var primary = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(100));
-                var secondary = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(50));
-                var joined = primary.Join(secondary, RelativeTimeInterval.Infinite);
-                var results = joined.Select(x => $"{x.Item1},{x.Item2}").ToObservable().ToListObservable();
-                p.Run();
+            using var p = Pipeline.Create();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(new[] { "0,0", "1,2", "2,4", "3,6", "4,8", "5,9", "6,9", "7,9", "8,9", "9,9" }, results));
-            }
+            // primary    0       1       2       3       4       5       6       7       8       9
+            // secondary  0   1   2   3   4   5   6   7   8   9
+            // joined    (0,0)   (1,2)   (2,4)   (3,6)   (4,8)   (5,9)   (6,9)   (7,9)   (8,9)   (9,9)
+            //                                                    ^       ^       ^       ^       ^
+            //                                                    note: normally these would remain unpaired
+            //                                                          until seeing next secondary message
+            var primary = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(100));
+            var secondary = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(50));
+            var joined = primary.Join(secondary, RelativeTimeInterval.Infinite);
+            var results = joined.Select(x => $"{x.Item1},{x.Item2}").ToObservable().ToListObservable();
+            p.Run();
+
+            Assert.IsTrue(Enumerable.SequenceEqual(new[] { "0,0", "1,2", "2,4", "3,6", "4,8", "5,9", "6,9", "7,9", "8,9", "9,9" }, results));
         }
 
         [TestMethod]
         [Timeout(60000)]
         public void DynamicJoinClosingSecondaryOrDefault()
         {
-            using (var p = Pipeline.Create())
-            {
-                // Setup a sequence with a parallel operator, with outputDefaultIfDropped = true, and ensure that
-                // the "outputDefaultIfDropped" is correctly applied while the instance substream exists, but not outside of that existance.
-                // This tests for making sure we are correctly tracking stream closings and the interpolator
-                // in Join is doing the right thing based on the stream closing times.
+            using var p = Pipeline.Create();
 
-                // key           N/A       1       1       1       1       1       1       N/A     N/A     N/A
-                // value         N/A       1       2       3       4       5       6       N/A     N/A     N/A
-                // gamma-result           [1       2       -       4       -       -]
-                // out                     1       2       0       4       0       0
-                var input = Generators.Sequence(
-                    p,
-                    new List<Dictionary<int, int>>()
-                    {
+            // Setup a sequence with a parallel operator, with outputDefaultIfDropped = true, and ensure that
+            // the "outputDefaultIfDropped" is correctly applied while the instance substream exists, but not outside of that existance.
+            // This tests for making sure we are correctly tracking stream closings and the interpolator
+            // in Join is doing the right thing based on the stream closing times.
+
+            // key           N/A       1       1       1       1       1       1       N/A     N/A     N/A
+            // value         N/A       1       2       3       4       5       6       N/A     N/A     N/A
+            // gamma-result           [1       2       -       4       -       -]
+            // out                     1       2       0       4       0       0
+            var input = Generators.Sequence(
+                p,
+                new List<Dictionary<int, int>>()
+                {
                         new Dictionary<int, int>(),
                         new Dictionary<int, int>() { { 1, 1 } },
                         new Dictionary<int, int>() { { 1, 2 } },
@@ -64,32 +63,31 @@ namespace Test.Psi
                         new Dictionary<int, int>(),
                         new Dictionary<int, int>(),
                         new Dictionary<int, int>(),
-                    },
-                    TimeSpan.FromTicks(1));
+                },
+                TimeSpan.FromTicks(1));
 
-                var resultsParallelOrDefault = new List<int>();
-                input.Parallel(s => s.Where(x => x != 3 && x <= 4), outputDefaultIfDropped: true).Do(d =>
+            var resultsParallelOrDefault = new List<int>();
+            input.Parallel(s => s.Where(x => x != 3 && x <= 4), outputDefaultIfDropped: true).Do(d =>
+            {
+                if (d.Count() > 0)
                 {
-                    if (d.Count() > 0)
-                    {
-                        resultsParallelOrDefault.Add(d[1]);
-                    }
-                });
+                    resultsParallelOrDefault.Add(d[1]);
+                }
+            });
 
-                var resultsParallel = new List<int>();
-                input.Parallel(s => s.Where(x => x != 3 && x <= 4)).Do(d =>
+            var resultsParallel = new List<int>();
+            input.Parallel(s => s.Where(x => x != 3 && x <= 4)).Do(d =>
+            {
+                if (d.Count() > 0)
                 {
-                    if (d.Count() > 0)
-                    {
-                        resultsParallel.Add(d[1]);
-                    }
-                });
+                    resultsParallel.Add(d[1]);
+                }
+            });
 
-                p.Run();
+            p.Run();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(resultsParallel, new[] { 1, 2, 4 }));
-                Assert.IsTrue(Enumerable.SequenceEqual(resultsParallelOrDefault, new[] { 1, 2, 0, 4, 0, 0 }));
-            }
+            Assert.IsTrue(Enumerable.SequenceEqual(resultsParallel, new[] { 1, 2, 4 }));
+            Assert.IsTrue(Enumerable.SequenceEqual(resultsParallelOrDefault, new[] { 1, 2, 0, 4, 0, 0 }));
         }
 
         [TestMethod]
@@ -188,69 +186,34 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
-        public void SparseJoin()
-        {
-            var results = new List<Dictionary<string, int>>();
-
-            using (var p = Pipeline.Create())
-            {
-                var sourceA = Generators.Sequence(p, 100, i => i + 1, 30, TimeSpan.FromTicks(10));
-                var sourceB = Generators.Sequence(p, 100, i => i + 1, 10, TimeSpan.FromTicks(30));
-                var sourceC = Generators.Sequence(p, 100, i => i + 1, 3, TimeSpan.FromTicks(100));
-                var keyMapping = sourceA.Select(i => (i % 10 != 0) ? new Dictionary<string, int> { { "zero", 0 }, { "one", 1 } } : new Dictionary<string, int> { { "zero", 0 }, { "two", 2 } });
-
-                Operators
-                    .Join(keyMapping, new[] { sourceA, sourceB, sourceC }, Reproducible.Nearest<int>(TimeSpan.FromTicks(5)))
-                    .Do(t => results.Add(t.DeepClone()));
-                p.Run(new ReplayDescriptor(DateTime.UtcNow, DateTime.MaxValue));
-            }
-
-            Assert.AreEqual(12, results.Count);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 100 }, { "two", 100 } }, results[0]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 103 }, { "one", 101 } }, results[1]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 106 }, { "one", 102 } }, results[2]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 109 }, { "one", 103 } }, results[3]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 110 }, { "two", 101 } }, results[4]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 112 }, { "one", 104 } }, results[5]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 115 }, { "one", 105 } }, results[6]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 118 }, { "one", 106 } }, results[7]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 120 }, { "two", 102 } }, results[8]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 121 }, { "one", 107 } }, results[9]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 124 }, { "one", 108 } }, results[10]);
-            CollectionAssert.AreEqual(new Dictionary<string, int> { { "zero", 127 }, { "one", 109 } }, results[11]);
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
         public void TupleCollapsingJoin()
         {
-            using (var pipeline = Pipeline.Create())
-            {
-                var range = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(10));
-                var sourceA = range.Select(x => $"A{x}");
-                var sourceB = range.Select(x => $"B{x}");
-                var sourceC = range.Select(x => $"C{x}");
-                var sourceD = range.Select(x => $"D{x}");
-                var sourceE = range.Select(x => $"E{x}");
-                var sourceF = range.Select(x => $"F{x}");
-                var sourceG = range.Select(x => $"G{x}");
+            using var pipeline = Pipeline.Create();
+            var range = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(10));
+            var sourceA = range.Select(x => $"A{x}");
+            var sourceB = range.Select(x => $"B{x}");
+            var sourceC = range.Select(x => $"C{x}");
+            var sourceD = range.Select(x => $"D{x}");
+            var sourceE = range.Select(x => $"E{x}");
+            var sourceF = range.Select(x => $"F{x}");
+            var sourceG = range.Select(x => $"G{x}");
 
-                var tuples =
-                    sourceA
-                        .Join(sourceB, Reproducible.Nearest<string>())
-                        .Join(sourceC, Reproducible.Nearest<string>())
-                        .Join(sourceD, Reproducible.Nearest<string>())
-                        .Join(sourceE, Reproducible.Nearest<string>())
-                        .Join(sourceF, Reproducible.Nearest<string>())
-                        .Join(sourceG, Reproducible.Nearest<string>())
-                        .ToObservable().ToListObservable();
-                pipeline.Run();
+            var tuples =
+                sourceA
+                    .Join(sourceB, Reproducible.Nearest<string>())
+                    .Join(sourceC, Reproducible.Nearest<string>())
+                    .Join(sourceD, Reproducible.Nearest<string>())
+                    .Join(sourceE, Reproducible.Nearest<string>())
+                    .Join(sourceF, Reproducible.Nearest<string>())
+                    .Join(sourceG, Reproducible.Nearest<string>())
+                    .ToObservable().ToListObservable();
+            pipeline.Run();
 
-                var results = tuples.AsEnumerable().ToArray();
+            var results = tuples.AsEnumerable().ToArray();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(
-                    new ValueTuple<string, string, string, string, string, string, string>[]
-                    {
+            Assert.IsTrue(Enumerable.SequenceEqual(
+                new ValueTuple<string, string, string, string, string, string, string>[]
+                {
                         ValueTuple.Create("A0", "B0", "C0", "D0", "E0", "F0", "G0"),
                         ValueTuple.Create("A1", "B1", "C1", "D1", "E1", "F1", "G1"),
                         ValueTuple.Create("A2", "B2", "C2", "D2", "E2", "F2", "G2"),
@@ -261,40 +224,38 @@ namespace Test.Psi
                         ValueTuple.Create("A7", "B7", "C7", "D7", "E7", "F7", "G7"),
                         ValueTuple.Create("A8", "B8", "C8", "D8", "E8", "F8", "G8"),
                         ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9"),
-                    },
-                    results));
-            }
+                },
+                results));
         }
 
         [TestMethod]
         [Timeout(60000)]
         public void TupleCollapsingReversedJoin()
         {
-            using (var pipeline = Pipeline.Create())
-            {
-                var range = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(10));
-                var sourceA = range.Select(x => $"A{x}");
-                var sourceB = range.Select(x => $"B{x}");
-                var sourceC = range.Select(x => $"C{x}");
-                var sourceD = range.Select(x => $"D{x}");
-                var sourceE = range.Select(x => $"E{x}");
-                var sourceF = range.Select(x => $"F{x}");
-                var sourceG = range.Select(x => $"G{x}");
+            using var pipeline = Pipeline.Create();
+            var range = Generators.Range(pipeline, 0, 10, TimeSpan.FromMilliseconds(10));
+            var sourceA = range.Select(x => $"A{x}");
+            var sourceB = range.Select(x => $"B{x}");
+            var sourceC = range.Select(x => $"C{x}");
+            var sourceD = range.Select(x => $"D{x}");
+            var sourceE = range.Select(x => $"E{x}");
+            var sourceF = range.Select(x => $"F{x}");
+            var sourceG = range.Select(x => $"G{x}");
 
-                var tuplesFG = sourceF.Join(sourceG);
-                var tuplesEFG = sourceE.Join(tuplesFG);
-                var tuplesDEFG = sourceD.Join(tuplesEFG);
-                var tuplesCDEFG = sourceC.Join(tuplesDEFG);
-                var tuplesBCDEFG = sourceB.Join(tuplesCDEFG);
-                var tuplesABCDEFG = sourceA.Join(tuplesBCDEFG);
-                var tuples = tuplesABCDEFG.ToObservable().ToListObservable();
-                pipeline.Run();
+            var tuplesFG = sourceF.Join(sourceG);
+            var tuplesEFG = sourceE.Join(tuplesFG);
+            var tuplesDEFG = sourceD.Join(tuplesEFG);
+            var tuplesCDEFG = sourceC.Join(tuplesDEFG);
+            var tuplesBCDEFG = sourceB.Join(tuplesCDEFG);
+            var tuplesABCDEFG = sourceA.Join(tuplesBCDEFG);
+            var tuples = tuplesABCDEFG.ToObservable().ToListObservable();
+            pipeline.Run();
 
-                var results = tuples.AsEnumerable().ToArray();
+            var results = tuples.AsEnumerable().ToArray();
 
-                Assert.IsTrue(Enumerable.SequenceEqual(
-                    new ValueTuple<string, string, string, string, string, string, string>[]
-                    {
+            Assert.IsTrue(Enumerable.SequenceEqual(
+                new ValueTuple<string, string, string, string, string, string, string>[]
+                {
                         ValueTuple.Create("A0", "B0", "C0", "D0", "E0", "F0", "G0"),
                         ValueTuple.Create("A1", "B1", "C1", "D1", "E1", "F1", "G1"),
                         ValueTuple.Create("A2", "B2", "C2", "D2", "E2", "F2", "G2"),
@@ -305,9 +266,8 @@ namespace Test.Psi
                         ValueTuple.Create("A7", "B7", "C7", "D7", "E7", "F7", "G7"),
                         ValueTuple.Create("A8", "B8", "C8", "D8", "E8", "F8", "G8"),
                         ValueTuple.Create("A9", "B9", "C9", "D9", "E9", "F9", "G9"),
-                    },
-                    results));
-            }
+                },
+                results));
         }
     }
 }

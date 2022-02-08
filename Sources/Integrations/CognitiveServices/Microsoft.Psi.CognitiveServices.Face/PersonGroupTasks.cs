@@ -6,6 +6,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
     using System;
     using System.Drawing;
     using System.IO;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Imaging;
 
     /// <summary>

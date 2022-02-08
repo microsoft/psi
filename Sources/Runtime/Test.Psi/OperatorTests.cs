@@ -1331,19 +1331,34 @@ namespace Test.Psi
         [Timeout(60000)]
         public void FirstOperator()
         {
-            using (var p = Pipeline.Create())
-            {
-                var source = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(10));
-                var first1 = source.First().ToObservable().ToListObservable();
-                var first5 = source.First(5).ToObservable().ToListObservable();
-                var firstN = source.First(int.MaxValue).ToObservable().ToListObservable();
+            using var p = Pipeline.Create();
+            var source = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(10));
+            var first1 = source.First().ToObservable().ToListObservable();
+            var first5 = source.First(5).ToObservable().ToListObservable();
+            var firstN = source.First(int.MaxValue).ToObservable().ToListObservable();
 
-                p.Run();
+            p.Run();
 
-                CollectionAssert.AreEqual(new[] { 0 }, first1.AsEnumerable().ToArray());
-                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4 }, first5.AsEnumerable().ToArray());
-                CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, firstN.AsEnumerable().ToArray());
-            }
+            CollectionAssert.AreEqual(new[] { 0 }, first1.AsEnumerable().ToArray());
+            CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4 }, first5.AsEnumerable().ToArray());
+            CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, firstN.AsEnumerable().ToArray());
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void LastOperator()
+        {
+            using var p = Pipeline.Create();
+            var source = Generators.Range(p, 0, 10, TimeSpan.FromMilliseconds(10));
+            var last1 = source.Last().ToObservable().ToListObservable();
+            var last5 = source.Last(5).ToObservable().ToListObservable();
+            var lastN = source.Last(int.MaxValue).ToObservable().ToListObservable();
+
+            p.Run();
+
+            CollectionAssert.AreEqual(new[] { 9 }, last1.AsEnumerable().ToArray());
+            CollectionAssert.AreEqual(new[] { 5, 6, 7, 8, 9 }, last5.AsEnumerable().ToArray());
+            CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, lastN.AsEnumerable().ToArray());
         }
 
         private static DateTime SelectMiddleTimestamp(IEnumerable<DateTime> times)

@@ -92,13 +92,21 @@ namespace Microsoft.Psi.Calibration
         public ICameraIntrinsics DepthIntrinsics { get; }
 
         /// <inheritdoc/>
-        public Point2D ToColorSpace(Point3D point3D)
+        public Point2D? GetPixelPosition(Point3D point3D, bool nullIfOutsideFieldOfView = true)
         {
             // First convert the point into camera coordinates.
             var point3DInColorCamera = this.ColorExtrinsics.Transform(point3D);
 
             // Then convert to pixel space.
-            return this.ColorIntrinsics.ToPixelSpace(point3DInColorCamera, true);
+            return this.ColorIntrinsics.GetPixelPosition(point3DInColorCamera, true, nullIfOutsideFieldOfView);
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetPixelPosition(Point3D point3D, out Point2D pixelPosition, bool nullIfOutsideFieldOfView = true)
+        {
+            var point2D = this.GetPixelPosition(point3D, nullIfOutsideFieldOfView);
+            pixelPosition = point2D.HasValue ? point2D.Value : default;
+            return point2D.HasValue;
         }
     }
 }

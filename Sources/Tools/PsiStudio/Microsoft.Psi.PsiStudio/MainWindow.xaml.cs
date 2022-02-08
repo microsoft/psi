@@ -12,6 +12,7 @@ namespace Microsoft.Psi.PsiStudio
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
     using Xceed.Wpf.Toolkit.PropertyGrid;
 
     /// <summary>
@@ -22,7 +23,12 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// The list of object property names that should automatically be expanded in the property browser if they are expandable properties.
         /// </summary>
-        private readonly List<string> autoExpandedProperties = new List<string>() { "XAxis", "YAxis" };
+        private readonly List<string> autoExpandedProperties = new ()
+        {
+            nameof(XYVisualizationPanel.XAxisPropertyBrowser),
+            nameof(XYVisualizationPanel.YAxisPropertyBrowser),
+            nameof(TimelineVisualizationPanel.Threshold),
+        };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -32,12 +38,12 @@ namespace Microsoft.Psi.PsiStudio
             this.InitializeComponent();
 
             // Create the context
-            MainWindowViewModel viewModel = new MainWindowViewModel();
+            var viewModel = new MainWindowViewModel();
 
             // Create the visualization container and set the navigator range to an arbitrary default
             VisualizationContext visualizationContext = VisualizationContext.Instance;
             visualizationContext.VisualizationContainer = new VisualizationContainer();
-            visualizationContext.VisualizationContainer.Navigator.ViewRange.SetRange(DateTime.UtcNow, TimeSpan.FromSeconds(60));
+            visualizationContext.VisualizationContainer.Navigator.ViewRange.Set(DateTime.UtcNow, TimeSpan.FromSeconds(60));
 
             // Set the values for the timing buttons on the navigator
             visualizationContext.VisualizationContainer.Navigator.ShowAbsoluteTiming = viewModel.AppSettings.ShowAbsoluteTiming;

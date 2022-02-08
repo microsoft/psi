@@ -11,10 +11,12 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Controls;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
@@ -28,14 +30,33 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     [DataContract(Namespace = "http://www.microsoft.com/psi")]
     public class TimelineVisualizationPanel : VisualizationPanel
     {
-        private Axis yAxis = new Axis();
+        /// <summary>
+        /// The percentage of the total auto-computed Y axis range that's added
+        /// to the actual Y axis range to prevent values at the minimum of maximum
+        /// of this range from rendering right at the top or bottom edge of the
+        /// timeline panel view.
+        /// </summary>
+        private const double YAxisAutoComputeModePaddingPercent = 10.0d;
+
+        private Axis yAxis = new ();
+        private Axis yAxisPropertyBrowser = new ();
+
+        private TimelinePanelMousePosition mousePosition;
+        private Grid viewport;
+
         private bool showLegend = false;
         private bool showTimeTicks = false;
+        private AxisComputeMode axisComputeMode = AxisComputeMode.Auto;
 
         private RelayCommand clearSelectionCommand;
         private RelayCommand showHideLegendCommand;
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
         private RelayCommand<MouseButtonEventArgs> mouseRightButtonDownCommand;
+        private RelayCommand<MouseEventArgs> mouseMoveCommand;
+        private RelayCommand<RoutedEventArgs> viewportLoadedCommand;
+        private RelayCommand<SizeChangedEventArgs> viewportSizeChangedCommand;
+        private RelayCommand setAutoAxisComputeModeCommand;
+        private TimelineValueThreshold threshold;
 
         private TimelineScroller timelineScroller = null;
 
@@ -47,6 +68,10 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             this.Name = "Timeline Panel";
             this.Height = 70;
             this.yAxis.PropertyChanged += this.OnYAxisPropertyChanged;
+            this.yAxisPropertyBrowser.PropertyChanged += this.YAxisPropertyBrowser_PropertyChanged;
+
+            this.Threshold = new TimelineValueThreshold();
+            this.Threshold.PropertyChanged += this.OnThresholdPropertyChanged;
         }
 
         /// <summary>
@@ -88,6 +113,46 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Gets the mouse right button down command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<RoutedEventArgs> ViewportLoadedCommand
+        {
+            get
+            {
+                if (this.viewportLoadedCommand == null)
+                {
+                    this.viewportLoadedCommand = new RelayCommand<RoutedEventArgs>(
+                        e =>
+                        {
+                            this.viewport = e.Source as Grid;
+                        });
+                }
+
+                return this.viewportLoadedCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the items control size changed command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<SizeChangedEventArgs> ViewportSizeChangedCommand
+        {
+            get
+            {
+                if (this.viewportSizeChangedCommand == null)
+                {
+                    this.viewportSizeChangedCommand = new RelayCommand<SizeChangedEventArgs>(e => this.OnViewportSizeChanged(e));
+                }
+
+                return this.viewportSizeChangedCommand;
+            }
+        }
+
+        /// <summary>
         /// Gets the mouse left button down command.
         /// </summary>
         [Browsable(false)]
@@ -116,8 +181,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
                             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             {
-                                var time = this.Navigator.Cursor;
-                                this.Navigator.SelectionRange.SetRange(time, this.Navigator.SelectionRange.EndTime >= time ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
+                                var cursor = this.Navigator.Cursor;
+                                this.Navigator.SelectionRange.Set(cursor, this.Navigator.SelectionRange.EndTime >= cursor ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
                                 e.Handled = true;
                             }
                         });
@@ -144,7 +209,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             {
                                 var time = this.Navigator.Cursor;
-                                this.Navigator.SelectionRange.SetRange(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
+                                this.Navigator.SelectionRange.Set(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
                                 e.Handled = true;
                             }
                         });
@@ -155,24 +220,137 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
+        /// Gets the mouse move command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<MouseEventArgs> MouseMoveCommand
+        {
+            get
+            {
+                if (this.mouseMoveCommand == null)
+                {
+                    this.mouseMoveCommand = new RelayCommand<MouseEventArgs>(
+                        e =>
+                        {
+                            // Get the current mouse position
+                            Point newMousePosition = e.GetPosition(this.viewport);
+
+                            // Get the current scale factor between the axes logical bounds and the items control size.
+                            double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / this.viewport.ActualHeight;
+
+                            // Set the mouse position in locical/image co-ordinates
+                            this.MousePosition = new TimelinePanelMousePosition(this.GetTimeAtMousePointer(e, false), this.YAxis.Maximum - newMousePosition.Y * scaleY /*+ this.YAxis.Minimum*/);
+                        });
+                }
+
+                return this.mouseMoveCommand;
+            }
+        }
+
+        /// <summary>
+        /// Gets the set auto axis compute mode command for both the X and Y axes.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand SetAutoAxisComputeModeCommand
+        {
+            get
+            {
+                if (this.setAutoAxisComputeModeCommand == null)
+                {
+                    this.setAutoAxisComputeModeCommand = new RelayCommand(() =>
+                    {
+                        this.AxisComputeMode = AxisComputeMode.Auto;
+                    });
+                }
+
+                return this.setAutoAxisComputeModeCommand;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the Y Axis for the panel.
         /// </summary>
+        [Browsable(false)]
         [DataMember]
+        public Axis YAxis
+        {
+            get => this.yAxis;
+            set => this.Set(nameof(this.YAxis), ref this.yAxis, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the Y axis data displayed in the property browser.
+        /// </summary>
+        [IgnoreDataMember]
         [PropertyOrder(2)]
         [DisplayName("Y Axis")]
         [Description("The Y axis for the visualization panel.")]
         [ExpandableObject]
-        public Axis YAxis
+        public Axis YAxisPropertyBrowser
         {
-            get { return this.yAxis; }
-            set { this.Set(nameof(this.YAxis), ref this.yAxis, value); }
+            get => this.yAxisPropertyBrowser;
+
+            set
+            {
+                if (this.yAxisPropertyBrowser.Range != value.Range)
+                {
+                    this.yAxisPropertyBrowser = value;
+                    this.AxisComputeMode = AxisComputeMode.Manual;
+                    this.YAxis.SetRange(value.Minimum, value.Maximum);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the axis compute mode.
+        /// </summary>
+        [DataMember]
+        [PropertyOrder(3)]
+        [DisplayName("Axis Compute Mode")]
+        [Description("Specifies whether the axis is computed automatically or set manually.")]
+        public AxisComputeMode AxisComputeMode
+        {
+            get { return this.axisComputeMode; }
+
+            set
+            {
+                this.Set(nameof(this.AxisComputeMode), ref this.axisComputeMode, value);
+                this.CalculateYAxisRange();
+            }
+        }
+
+        /// <summary>
+        /// Gets a string version of the mouse position.
+        /// </summary>
+        [IgnoreDataMember]
+        [PropertyOrder(4)]
+        [DisplayName("Mouse Position")]
+        [Description("The position of the mouse within the Timeline Visualization panel.")]
+        public string MousePositionString => $"{DateTimeFormatHelper.FormatTime(this.mousePosition.X)}, {this.mousePosition.Y:F}";
+
+        /// <summary>
+        /// Gets or sets the mouse position in the panel.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public TimelinePanelMousePosition MousePosition
+        {
+            get { return this.mousePosition; }
+
+            set
+            {
+                this.Set(nameof(this.MousePosition), ref this.mousePosition, value);
+                this.RaisePropertyChanged(nameof(this.MousePositionString));
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the legend should be shown.
         /// </summary>
         [DataMember]
-        [PropertyOrder(3)]
+        [PropertyOrder(5)]
         [DisplayName("Show Legend")]
         [Description("Show the legend for the visualization panel.")]
         public bool ShowLegend
@@ -185,7 +363,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// Gets or sets a value indicating whether the time ticks should be shown.
         /// </summary>
         [DataMember]
-        [PropertyOrder(4)]
+        [PropertyOrder(6)]
         [DisplayName("Show Time Ticks")]
         [Description("Display an additional timeline along the bottom of the visualization panel.")]
         public bool ShowTimeTicks
@@ -194,6 +372,54 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             set { this.Set(nameof(this.ShowTimeTicks), ref this.showTimeTicks, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the time ticks should be shown.
+        /// </summary>
+        [DataMember]
+        [PropertyOrder(7)]
+        [ExpandableObject]
+        [DisplayName("Threshold Settings")]
+        [Description("Settings related to how values that are above or below a threshold are rendered.")]
+        public TimelineValueThreshold Threshold
+        {
+            get => this.threshold;
+            set => this.Set(nameof(this.Threshold), ref this.threshold, value);
+        }
+
+        /// <summary>
+        /// Gets the height of the low-opacity threshold rectangle.
+        /// </summary>
+        [IgnoreDataMember]
+        [Browsable(false)]
+        public double ThresholdRectangleHeight
+            => this.Threshold.ThresholdType switch
+            {
+                TimelineValueThreshold.TimelineThresholdType.Minimum => (this.YAxis.Maximum - this.Threshold.ThresholdValue) / (this.YAxis.Maximum - this.YAxis.Minimum) * this.Height,
+                TimelineValueThreshold.TimelineThresholdType.Maximum => (this.Threshold.ThresholdValue - this.YAxis.Minimum) / (this.YAxis.Maximum - this.YAxis.Minimum) * this.Height,
+                _ => 0.0d,
+            };
+
+        /// <summary>
+        /// Gets the resulting opacity after applying the low-opacity threshold rectangle.
+        /// </summary>
+        [IgnoreDataMember]
+        [Browsable(false)]
+        public double ThresholdRectangleOpacity => 1.0d - this.Threshold.Opacity;
+
+        /// <summary>
+        /// Gets the vertical alignment of the low-opacity threshold rectangle.
+        /// </summary>
+        [IgnoreDataMember]
+        [Browsable(false)]
+        public VerticalAlignment ThresholdRectangleVerticalAlignment => this.Threshold.ThresholdType == TimelineValueThreshold.TimelineThresholdType.Maximum ? VerticalAlignment.Bottom : VerticalAlignment.Top;
+
+        /// <summary>
+        /// Gets the low-opacity threshold rectangle's visibility.
+        /// </summary>
+        [IgnoreDataMember]
+        [Browsable(false)]
+        public Visibility ThresholdRectangleVisibility => this.Threshold.ThresholdType == TimelineValueThreshold.TimelineThresholdType.None ? Visibility.Collapsed : Visibility.Visible;
+
         /// <inheritdoc />
         public override bool ShowZoomToPanelMenuItem => true;
 
@@ -201,7 +427,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         public override bool CanZoomToPanel => this.VisualizationObjects.Count > 0;
 
         /// <inheritdoc/>
-        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.Timeline };
+        public override List<VisualizationPanelType> CompatiblePanelTypes => new () { VisualizationPanelType.Timeline };
 
         /// <summary>
         /// Gets the time at the mouse pointer, optionally adjusting for visualization object snap.
@@ -244,7 +470,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 // Walk up the visual tree until we either find the
                 // Timeline Scroller or fall off the top of the tree
                 DependencyObject target = sourceElement as DependencyObject;
-                while (target != null && !(target is TimelineScroller))
+                while (target != null && target is not TimelineScroller)
                 {
                     target = VisualTreeHelper.GetParent(target);
                 }
@@ -257,9 +483,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
         /// <inheritdoc />
         protected override DataTemplate CreateDefaultViewTemplate()
-        {
-            return XamlHelper.CreateTemplate(this.GetType(), typeof(TimelineVisualizationPanelView));
-        }
+            => XamlHelper.CreateTemplate(this.GetType(), typeof(TimelineVisualizationPanelView));
 
         /// <inheritdoc/>
         protected override void OnVisualizationObjectYValueRangeChanged(object sender, EventArgs e)
@@ -275,20 +499,39 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <param name="e">The event args for the event.</param>
         protected virtual void OnYAxisPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Axis.AxisComputeMode))
-            {
-                this.CalculateYAxisRange();
-            }
-            else if (e.PropertyName == nameof(Axis.Range))
+            if (e.PropertyName == nameof(Axis.Range))
             {
                 this.RaisePropertyChanged(nameof(this.YAxis));
+                this.RaisePropertyChanged(nameof(this.ThresholdRectangleHeight));
+
+                if (this.yAxis.Range != this.yAxisPropertyBrowser.Range)
+                {
+                    this.YAxisPropertyBrowser.SetRange(this.YAxis.Minimum, this.YAxis.Maximum);
+                }
+            }
+        }
+
+        private void OnViewportSizeChanged(SizeChangedEventArgs e)
+        {
+            this.RaisePropertyChanged(nameof(this.ThresholdRectangleHeight));
+        }
+
+        private void YAxisPropertyBrowser_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Axis.Range) && this.yAxis.Range != this.yAxisPropertyBrowser.Range)
+            {
+                // Switch to manual axis compute mode
+                this.AxisComputeMode = AxisComputeMode.Manual;
+
+                // Set the y axis to match the values in the property browser
+                this.YAxis.SetRange(this.YAxisPropertyBrowser.Minimum, this.YAxisPropertyBrowser.Maximum);
             }
         }
 
         private void CalculateYAxisRange()
         {
             // If the y axis is in auto mode, then recalculate the y axis range
-            if (this.YAxis.AxisComputeMode == AxisComputeMode.Auto)
+            if (this.AxisComputeMode == AxisComputeMode.Auto)
             {
                 // Get the Y value range of all visualization objects that are Y value range providers and have a non-null Y value range
                 var yValueRanges = this.VisualizationObjects
@@ -298,15 +541,52 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                     .Where(vr => vr != null);
 
                 // Set the Y axis range to cover all of the axis ranges of the visualization objects.
-                // If no visualization object reported a range, then use the defualt instead.
+                // If no visualization object reported a range, then use the default instead.
                 if (yValueRanges.Any())
                 {
-                    this.YAxis.SetRange(yValueRanges.Min(ar => ar.Minimum), yValueRanges.Max(ar => ar.Maximum));
+                    double minimum = yValueRanges.Min(ar => ar.Minimum);
+                    double maximum = yValueRanges.Max(ar => ar.Maximum);
+
+                    // Slightly inflate the y axis range so that values right at the edges of the
+                    // range are not rendered up against the top or bottom of the timeline panel view.
+                    double padding = (maximum - minimum) * YAxisAutoComputeModePaddingPercent / 100.0d;
+                    minimum -= padding;
+                    maximum += padding;
+
+                    this.YAxis.SetRange(minimum, maximum);
                 }
                 else
                 {
                     this.YAxis.SetDefaultRange();
                 }
+            }
+        }
+
+        private void OnThresholdPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(TimelineValueThreshold.ThresholdType):
+                    this.RaisePropertyChanged(nameof(this.ThresholdRectangleHeight));
+                    this.RaisePropertyChanged(nameof(this.ThresholdRectangleVerticalAlignment));
+                    this.RaisePropertyChanged(nameof(this.ThresholdRectangleVisibility));
+                    break;
+                case nameof(TimelineValueThreshold.ThresholdValue):
+                    this.RaisePropertyChanged(nameof(this.ThresholdRectangleHeight));
+                    break;
+                case nameof(TimelineValueThreshold.Opacity):
+                    this.RaisePropertyChanged(nameof(this.ThresholdRectangleOpacity));
+                    break;
+            }
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // Ensure axis range in property browser match actual axis range
+            if (this.YAxisPropertyBrowser.Range != this.YAxis.Range)
+            {
+                this.YAxisPropertyBrowser.SetRange(this.YAxis.Range.Minimum, this.YAxis.Range.Maximum);
             }
         }
     }

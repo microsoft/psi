@@ -25,12 +25,15 @@ namespace Microsoft.Psi.Remoting
         private const TransportKind DefaultTransport = TransportKind.NamedPipes;
 
         private readonly int port;
-        private ConcurrentDictionary<Guid, Connection> connections = new ConcurrentDictionary<Guid, Connection>();
-        private ITransport dataTransport;
-        private long maxBytesPerSecond;
-        private double bytesPerSecondSmoothingWindowSeconds;
-        private string name;
-        private string path;
+        private readonly TransportKind transport;
+        private readonly string name;
+        private readonly string path;
+        private readonly long maxBytesPerSecond;
+        private readonly TcpListener metaListener;
+        private readonly ITransport dataTransport;
+        private readonly double bytesPerSecondSmoothingWindowSeconds;
+
+        private ConcurrentDictionary<Guid, Connection> connections = new ();
         private bool disposed = false;
         private Thread metaClientThread;
         private Thread dataClientThread;
@@ -38,20 +41,20 @@ namespace Microsoft.Psi.Remoting
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteExporter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which to attach.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="port">TCP port on which to listen (default 11411).</param>
         /// <param name="transport">Transport kind to use.</param>
         /// <param name="maxBytesPerSecond">Maximum bytes/sec quota (default infinite).</param>
         /// <param name="bytesPerSecondSmoothingWindowSeconds">Smoothing window over which to compute bytes/sec (default 5 sec.).</param>
         public RemoteExporter(Pipeline pipeline, int port = DefaultPort, TransportKind transport = DefaultTransport, long maxBytesPerSecond = long.MaxValue, double bytesPerSecondSmoothingWindowSeconds = 5.0)
-            : this(PsiStore.Create(pipeline, $"RemoteExporter_{Guid.NewGuid().ToString()}", null, true), port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
+            : this(PsiStore.Create(pipeline, $"RemoteExporter_{Guid.NewGuid()}", null, true), port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteExporter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which to attach.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="transport">Transport kind to use.</param>
         /// <param name="maxBytesPerSecond">Maximum bytes/sec quota (default infinite).</param>
         /// <param name="bytesPerSecondSmoothingWindowSeconds">Smoothing window over which to compute bytes/sec (default 5 sec.).</param>
@@ -92,6 +95,9 @@ namespace Microsoft.Psi.Remoting
             : this(exporter.Name, exporter.Path, port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
         {
             this.Exporter = exporter;
+
+            // add this as a node in the exporter so that it gets disposed
+            exporter.GetOrCreateNode(this);
         }
 
         /// <summary>
@@ -106,6 +112,9 @@ namespace Microsoft.Psi.Remoting
             : this(importer.StoreName, importer.StorePath, port, transport, maxBytesPerSecond, bytesPerSecondSmoothingWindowSeconds)
         {
             // used to remote an existing store. this.Exporter remains null
+
+            // add this as a node in the importer so that it gets disposed
+            importer.GetOrCreateNode(this);
         }
 
         private RemoteExporter(string name, string path, int port, TransportKind transport, long maxBytesPerSecond, double bytesPerSecondSmoothingWindowSeconds)
@@ -113,6 +122,8 @@ namespace Microsoft.Psi.Remoting
             this.name = name;
             this.path = path;
             this.port = port;
+            this.transport = transport;
+            this.metaListener = new TcpListener(IPAddress.Any, this.port);
             this.dataTransport = Transport.TransportOfKind(transport);
             this.maxBytesPerSecond = maxBytesPerSecond;
             this.bytesPerSecondSmoothingWindowSeconds = bytesPerSecondSmoothingWindowSeconds;
@@ -122,6 +133,16 @@ namespace Microsoft.Psi.Remoting
             this.dataClientThread = new Thread(new ThreadStart(this.AcceptDataClientsBackground)) { IsBackground = true };
             this.dataClientThread.Start();
         }
+
+        /// <summary>
+        /// Gets the TCP port being used.
+        /// </summary>
+        public int Port => this.port;
+
+        /// <summary>
+        /// Gets the transport being used.
+        /// </summary>
+        public TransportKind TransportKind => this.transport;
 
         /// <summary>
         /// Gets exporter being remoted.
@@ -143,6 +164,7 @@ namespace Microsoft.Psi.Remoting
             this.metaClientThread = null;
             this.dataClientThread = null;
 
+            this.metaListener.Stop();
             this.dataTransport.Dispose();
         }
 
@@ -154,21 +176,9 @@ namespace Microsoft.Psi.Remoting
             }
         }
 
-        private Connection GetConnection(Guid id)
-        {
-            Connection connection;
-            if (!this.connections.TryGetValue(id, out connection))
-            {
-                throw new ArgumentException($"Remoting connection does not exist (ID={id})");
-            }
-
-            return connection;
-        }
-
         private void RemoveConnection(Guid id)
         {
-            Connection ignore;
-            if (!this.connections.TryRemove(id, out ignore))
+            if (!this.connections.TryRemove(id, out _))
             {
                 throw new ArgumentException($"Remoting connection could not be removed (ID={id})");
             }
@@ -176,54 +186,66 @@ namespace Microsoft.Psi.Remoting
 
         private void AcceptMetaClientsBackground()
         {
-            var metaListener = new TcpListener(IPAddress.Any, this.port);
-            metaListener.Start();
-            while (!this.disposed)
+            try
             {
-                var client = metaListener.AcceptTcpClient();
-                Connection connection = null;
-                try
+                this.metaListener.Start();
+                while (!this.disposed)
                 {
-                    connection = new Connection(client, this.dataTransport, this.name, this.path, this.RemoveConnection, this.Exporter, this.maxBytesPerSecond, this.bytesPerSecondSmoothingWindowSeconds);
-                    this.AddConnection(connection);
-                    connection.Connect();
-                    Trace.WriteLine($"RemoteExporter meta client accepted (ID={connection.Id})");
+                    var client = this.metaListener.AcceptTcpClient();
+                    Connection connection = null;
+                    try
+                    {
+                        connection = new Connection(client, this.dataTransport, this.name, this.path, this.RemoveConnection, this.Exporter, this.maxBytesPerSecond, this.bytesPerSecondSmoothingWindowSeconds);
+                        this.AddConnection(connection);
+                        connection.Connect();
+                        Trace.WriteLine($"RemoteExporter meta client accepted (ID={connection.Id})");
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceError($"RemoteExporter meta connection error (Message={ex.Message}, ID={connection?.Id})");
+                        client.Dispose();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Trace.TraceError($"RemoteExporter meta connection error (Message={ex.Message}, ID={connection?.Id})");
-                    client.Dispose();
-                }
+            }
+            catch (SocketException se)
+            {
+                Trace.TraceError($"RemoteExporter meta listener error (Message={se.Message})");
             }
         }
 
         private void AcceptDataClientsBackground()
         {
-            this.dataTransport.StartListening();
-            while (!this.disposed)
+            try
             {
-                var client = this.dataTransport.AcceptClient();
-                var guid = Guid.Empty;
-                try
+                this.dataTransport.StartListening();
+                while (!this.disposed)
                 {
-                    guid = client.ReadSessionId();
-                    Trace.WriteLine($"RemoteExporter data client accepted (ID={guid})");
+                    var client = this.dataTransport.AcceptClient();
+                    var guid = Guid.Empty;
+                    try
+                    {
+                        guid = client.ReadSessionId();
+                        Trace.WriteLine($"RemoteExporter data client accepted (ID={guid})");
 
-                    Connection connection;
-                    if (this.connections.TryGetValue(guid, out connection))
-                    {
-                        connection.JoinBackground(client);
+                        if (this.connections.TryGetValue(guid, out Connection connection))
+                        {
+                            connection.JoinBackground(client);
+                        }
+                        else
+                        {
+                            throw new IOException($"RemoteExporter error: Invalid remoting connection ID: {guid}");
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        throw new IOException($"RemoteExporter error: Invalid remoting connection ID: {guid}");
+                        Trace.TraceError($"RemoteExporter data connection error (Message={ex.Message}, ID={guid})");
+                        client.Dispose();
                     }
                 }
-                catch (Exception ex)
-                {
-                    Trace.TraceError($"RemoteExporter data connection error (Message={ex.Message}, ID={guid})");
-                    client.Dispose();
-                }
+            }
+            catch (SocketException se)
+            {
+                Trace.TraceError($"RemoteExporter data transport error (Message={se.Message})");
             }
         }
 
@@ -264,21 +286,20 @@ namespace Microsoft.Psi.Remoting
             {
                 try
                 {
-                    var buffer = new byte[128];
-                    var length = sizeof(short) + sizeof(long) + sizeof(long); // version, start ticks, end ticks
-                    for (var i = 0; i < length;)
-                    {
-                        i += this.stream.Read(buffer, i, length - i);
-                    }
-
-                    var reader = new BufferReader(buffer);
-
                     // check client version
+                    var buffer = new byte[128];
+                    Transport.Read(buffer, sizeof(short), this.stream);
+                    var reader = new BufferReader(buffer);
                     var version = reader.ReadInt16();
                     if (version != ProtocolVersion)
                     {
                         throw new IOException($"Unsupported remoting protocol version: {version}");
                     }
+
+                    // get replay info
+                    var length = sizeof(long) + sizeof(long); // start ticks, end ticks
+                    Transport.Read(buffer, length, this.stream);
+                    reader.Reset();
 
                     // get replay interval
                     var startTicks = reader.ReadInt64();
@@ -316,7 +337,6 @@ namespace Microsoft.Psi.Remoting
                 double avgBytesPerSec = 0;
                 var lastTime = DateTime.MinValue;
                 var buffer = new byte[0];
-                Envelope envelope;
                 long envelopeSize;
                 unsafe
                 {
@@ -327,7 +347,7 @@ namespace Microsoft.Psi.Remoting
 
                 while (true)
                 {
-                    if (this.storeReader.MoveNext(out envelope))
+                    if (this.storeReader.MoveNext(out Envelope envelope))
                     {
                         var length = this.storeReader.Read(ref buffer);
                         this.exporter.Throttle.Reset();

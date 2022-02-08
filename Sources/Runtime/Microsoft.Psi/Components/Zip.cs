@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Zip{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to which to attach.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         public Zip(Pipeline pipeline)
         {
             this.pipeline = pipeline;

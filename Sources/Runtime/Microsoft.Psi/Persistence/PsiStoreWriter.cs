@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Persistence
     using System.Linq;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Data;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
     /// Implements a writer that can write multiple streams to the same file,
@@ -37,12 +38,19 @@ namespace Microsoft.Psi.Persistence
         private readonly InfiniteFileWriter catalogWriter;
         private readonly InfiniteFileWriter pageIndexWriter;
         private readonly MessageWriter writer;
-        private readonly Dictionary<int, PsiStreamMetadata> metadata = new Dictionary<int, PsiStreamMetadata>();
+        private readonly Dictionary<int, PsiStreamMetadata> metadata = new ();
+        private readonly BufferWriter metadataBuffer = new (128);
+        private readonly BufferWriter indexBuffer = new (24);
         private MessageWriter largeMessageWriter;
-        private BufferWriter metadataBuffer = new BufferWriter(128);
-        private BufferWriter indexBuffer = new BufferWriter(24);
         private int unindexedBytes = IndexPageSize;
         private IndexEntry nextIndexEntry;
+
+        /// <summary>
+        /// This file is opened in exclusive share mode when the exporter is constructed, and is
+        /// deleted when it gets disposed. Other processes can check the live status of the store
+        /// by attempting to also open this file. If that fails, then the store is still live.
+        /// </summary>
+        private FileStream liveMarkerFile;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PsiStoreWriter"/> class.
@@ -64,12 +72,7 @@ namespace Microsoft.Psi.Persistence
                     {
                         var existingIds = Directory.EnumerateDirectories(this.path, this.name + ".????")
                             .Select(d => d.Split('.').Last())
-                            .Where(
-                                n =>
-                                {
-                                    int i;
-                                    return int.TryParse(n, out i);
-                                })
+                            .Where(n => int.TryParse(n, out _))
                             .Select(n => int.Parse(n));
 
                         id = (existingIds.Count() == 0) ? 0 : existingIds.Max() + 1;
@@ -84,12 +87,16 @@ namespace Microsoft.Psi.Persistence
                 }
             }
 
+            // Open the live store marker file in exclusive file share mode.  This will fail
+            // if another process is already writing a store with the same name and path.
+            this.liveMarkerFile = File.Open(PsiStoreMonitor.GetLiveMarkerFileName(this.Name, this.Path), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+
             this.catalogWriter = new InfiniteFileWriter(this.path, PsiStoreCommon.GetCatalogFileName(this.name), CatalogExtentSize);
             this.pageIndexWriter = new InfiniteFileWriter(this.path, PsiStoreCommon.GetIndexFileName(this.name), IndexExtentSize);
             this.writer = new MessageWriter(PsiStoreCommon.GetDataFileName(this.name), this.path);
 
             // write the first index entry
-            this.UpdatePageIndex(0, default(Envelope));
+            this.UpdatePageIndex(0, default);
         }
 
         /// <summary>
@@ -103,6 +110,11 @@ namespace Microsoft.Psi.Persistence
         public string Path => this.path;
 
         /// <summary>
+        /// Gets stream metadata.
+        /// </summary>
+        public IEnumerable<IStreamMetadata> Metadata => this.metadata.Values;
+
+        /// <summary>
         /// Closes the store.
         /// </summary>
         public void Dispose()
@@ -111,17 +123,31 @@ namespace Microsoft.Psi.Persistence
             this.catalogWriter.Dispose();
             this.writer.Dispose();
             this.largeMessageWriter?.Dispose();
+            this.liveMarkerFile?.Dispose();
+
+            // If the live store marker file exists, try to delete it.
+            string liveMarkerFilePath = PsiStoreMonitor.GetLiveMarkerFileName(this.Name, this.Path);
+            if (File.Exists(liveMarkerFilePath))
+            {
+                try
+                {
+                    File.Delete(liveMarkerFilePath);
+                }
+                catch
+                {
+                }
+            }
         }
 
         /// <summary>
         /// Creates a stream to write messages to.
         /// The stream characteristics are extracted from the provided metadata descriptor.
         /// </summary>
-        /// <param name="meta">The metadata describing the stream to open.</param>
+        /// <param name="metadata">The metadata describing the stream to open.</param>
         /// <returns>The complete metadata for the stream just created.</returns>
-        public PsiStreamMetadata OpenStream(PsiStreamMetadata meta)
+        public PsiStreamMetadata OpenStream(PsiStreamMetadata metadata)
         {
-            return this.OpenStream(meta.Id, meta.Name, meta.IsIndexed, meta.TypeName).UpdateSupplementalMetadataFrom(meta);
+            return this.OpenStream(metadata.Id, metadata.Name, metadata.IsIndexed, metadata.TypeName).UpdateSupplementalMetadataFrom(metadata);
         }
 
         /// <summary>
@@ -139,34 +165,34 @@ namespace Microsoft.Psi.Persistence
                 throw new InvalidOperationException($"The stream id {streamId} has already been registered with this writer.");
             }
 
-            var meta = new PsiStreamMetadata(streamName, streamId, typeName);
-            meta.OpenedTime = Time.GetCurrentTime();
-            meta.IsPersisted = true;
-            meta.IsIndexed = indexed;
-            meta.StoreName = this.name;
-            meta.StorePath = this.path;
-            this.metadata[streamId] = meta;
-            this.WriteToCatalog(meta);
+            var psiStreamMetadata = new PsiStreamMetadata(streamName, streamId, typeName)
+            {
+                OpenedTime = Time.GetCurrentTime(),
+                IsPersisted = true,
+                IsIndexed = indexed,
+                StoreName = this.name,
+                StorePath = this.path,
+            };
+            this.metadata[streamId] = psiStreamMetadata;
+            this.WriteToCatalog(psiStreamMetadata);
 
             // make sure we have a large file if needed
             if (indexed)
             {
-                this.largeMessageWriter = this.largeMessageWriter ?? new MessageWriter(PsiStoreCommon.GetLargeDataFileName(this.name), this.path);
+                this.largeMessageWriter ??= new MessageWriter(PsiStoreCommon.GetLargeDataFileName(this.name), this.path);
             }
 
-            return meta;
+            return psiStreamMetadata;
         }
 
         /// <summary>
         /// Attempt to get stream metadata (available once stream has been opened).
         /// </summary>
         /// <param name="streamId">The id of the stream, unique for this store.</param>
-        /// <param name="meta">The metadata for the stream, if it has previously been opened.</param>
+        /// <param name="metadata">The metadata for the stream, if it has previously been opened.</param>
         /// <returns>True if stream metadata if stream has been opened so that metadata is available.</returns>
-        public bool TryGetMetadata(int streamId, out PsiStreamMetadata meta)
-        {
-            return this.metadata.TryGetValue(streamId, out meta);
-        }
+        public bool TryGetMetadata(int streamId, out PsiStreamMetadata metadata) =>
+            this.metadata.TryGetValue(streamId, out metadata);
 
         /// <summary>
         /// Closes the stream and persists the stream statistics.
@@ -217,11 +243,11 @@ namespace Microsoft.Psi.Persistence
         {
             var meta = this.metadata[envelope.SourceId];
             meta.Update(envelope, buffer.RemainingLength);
-            int bytes = 0;
+            int bytes;
             if (meta.IsIndexed)
             {
                 // write the object index entry in the data file and the buffer in the large data file
-                IndexEntry indexEntry = default(IndexEntry);
+                var indexEntry = default(IndexEntry);
                 indexEntry.ExtentId = int.MinValue + this.largeMessageWriter.CurrentExtentId; // negative value indicates an index into the large file
                 indexEntry.Position = this.largeMessageWriter.CurrentMessageStart;
                 indexEntry.CreationTime = envelope.CreationTime;
@@ -247,14 +273,26 @@ namespace Microsoft.Psi.Persistence
         }
 
         /// <summary>
+        /// Writes the runtime info to the catalog.
+        /// </summary>
+        /// <param name="runtimeInfo">The runtime info.</param>
+        internal void WriteToCatalog(RuntimeInfo runtimeInfo) => this.WriteToCatalog((Metadata)runtimeInfo);
+
+        /// <summary>
+        /// Writes the type schema to the catalog.
+        /// </summary>
+        /// <param name="typeSchema">The type schema.</param>
+        internal void WriteToCatalog(TypeSchema typeSchema) => this.WriteToCatalog((Metadata)typeSchema);
+
+        /// <summary>
         /// Writes details about a stream to the stream catalog.
         /// </summary>
-        /// <param name="meta">The stream descriptor to write.</param>
-        internal void WriteToCatalog(Metadata meta)
+        /// <param name="metadata">The stream descriptor to write.</param>
+        private void WriteToCatalog(Metadata metadata)
         {
             lock (this.catalogWriter)
             {
-                meta.Serialize(this.metadataBuffer);
+                metadata.Serialize(this.metadataBuffer);
 
                 this.catalogWriter.Write(this.metadataBuffer);
                 this.catalogWriter.Flush();

@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
     /// Defines depth image ranges to use when pseudo-colorizing the image.
@@ -86,6 +87,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The depth image range.
         /// </summary>
         private DepthImageRangeMode rangeMode = DepthImageRangeMode.Maximum;
+
+        /// <summary>
+        /// The value of the pixel under the cursor.
+        /// </summary>
+        private string pixelValue = string.Empty;
+
+        /// <summary>
+        /// Gets the value of the pixel under the mouse cursor.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Pixel Value")]
+        [Description("The value of the pixel under the mouse cursor.")]
+        public string PixelValue => this.pixelValue;
 
         /// <summary>
         /// Gets or sets a value indicating an invalid depth.
@@ -225,6 +239,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             base.OnPropertyChanged(sender, e);
         }
 
+        /// <inheritdoc/>
+        protected override void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(XYVisualizationPanel.MousePosition))
+            {
+                this.UpdatePixelValue();
+            }
+
+            base.OnPanelPropertyChanged(sender, e);
+        }
+
         /// <summary>
         /// Programmatically sets the range without altering the range compute mode.
         /// </summary>
@@ -234,6 +259,33 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             this.Set(nameof(this.RangeMin), ref this.rangeMin, rangeMin);
             this.Set(nameof(this.RangeMax), ref this.rangeMax, rangeMax);
+        }
+
+        /// <summary>
+        /// Update the pixel value.
+        /// </summary>
+        private void UpdatePixelValue()
+        {
+            this.RaisePropertyChanging(nameof(this.PixelValue));
+
+            if (this.CurrentData != default && this.CurrentData.Resource != default)
+            {
+                var mousePosition = (this.Panel as XYVisualizationPanel).MousePosition;
+                if (this.CurrentData.Resource.TryGetPixel((int)mousePosition.X, (int)mousePosition.Y, out var value))
+                {
+                    this.pixelValue = $"{value}";
+                }
+                else
+                {
+                    this.pixelValue = string.Empty;
+                }
+            }
+            else
+            {
+                this.pixelValue = string.Empty;
+            }
+
+            this.RaisePropertyChanged(nameof(this.PixelValue));
         }
     }
 }

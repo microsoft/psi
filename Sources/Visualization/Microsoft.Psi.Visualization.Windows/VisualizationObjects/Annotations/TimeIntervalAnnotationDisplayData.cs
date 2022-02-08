@@ -6,9 +6,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Annotations;
-    using Microsoft.Psi.Visualization.Base;
-    using Microsoft.Psi.Visualization.Data;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
@@ -16,33 +15,53 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     public class TimeIntervalAnnotationDisplayData : ObservableObject, ICustomTypeDescriptor
     {
-        private TimeIntervalAnnotationVisualizationObject parent;
+        private readonly TimeIntervalAnnotationVisualizationObject parent;
+        private readonly Message<TimeIntervalAnnotationSet> annotationSetMessage;
         private bool isSelected = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeIntervalAnnotationDisplayData"/> class.
         /// </summary>
         /// <param name="parent">The annotations visualization object that owns this display data instance.</param>
-        /// <param name="annotation">The annotation event.</param>
-        /// <param name="definition">The annotation definition.</param>
-        public TimeIntervalAnnotationDisplayData(TimeIntervalAnnotationVisualizationObject parent, Message<TimeIntervalAnnotation> annotation, AnnotationDefinition definition)
+        /// <param name="annotationSetMessage">The annotation set message.</param>
+        /// <param name="track">The track name.</param>
+        /// <param name="trackIndex">The track index.</param>
+        /// <param name="annotationSchema">The annotation schema.</param>
+        public TimeIntervalAnnotationDisplayData(
+            TimeIntervalAnnotationVisualizationObject parent,
+            Message<TimeIntervalAnnotationSet> annotationSetMessage,
+            string track,
+            int trackIndex,
+            AnnotationSchema annotationSchema)
         {
             this.parent = parent;
-            this.Annotation = annotation;
-            this.Definition = definition;
+            this.annotationSetMessage = annotationSetMessage;
+            this.Track = track;
+            this.TrackIndex = trackIndex;
+            this.AnnotationSchema = annotationSchema;
         }
 
         /// <summary>
-        /// Gets the annotation object.
+        /// Gets the annotation.
         /// </summary>
         [Browsable(false)]
-        public Message<TimeIntervalAnnotation> Annotation { get; private set; }
+        public TimeIntervalAnnotation Annotation => this.annotationSetMessage.Data[this.Track];
 
         /// <summary>
-        /// Gets the annotation schema definiton.
+        /// Gets the track name for the annotation.
+        /// </summary>
+        public string Track { get; private set; }
+
+        /// <summary>
+        /// Gets the track index for the annotation.
+        /// </summary>
+        public int TrackIndex { get; private set; }
+
+        /// <summary>
+        /// Gets the annotation schema.
         /// </summary>
         [Browsable(false)]
-        public AnnotationDefinition Definition { get; private set; }
+        public AnnotationSchema AnnotationSchema { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the annotation is the currently selected one.
@@ -55,134 +74,111 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets the annotation type.
+        /// Gets the annotation schema name .
         /// </summary>
         [PropertyOrder(0)]
-        public string AnnotationType => this.Definition.Name;
+        [DisplayName("Annotation Schema")]
+        [Description("The name of the annotation schema")]
+        public string AnnotationSchemaName => this.AnnotationSchema.Name;
 
         /// <summary>
         /// Gets the start time of the annotation.
         /// </summary>
         [PropertyOrder(1)]
-        public DateTime StartTime => this.Annotation.Data.Interval.Left;
+        [DisplayName("Start Time")]
+        public DateTime StartTime => this.Annotation.Interval.Left;
 
         /// <summary>
         /// Gets the end time of the annotation.
         /// </summary>
         [PropertyOrder(2)]
-        public DateTime EndTime => this.Annotation.Data.Interval.Right;
+        [DisplayName("End Time")]
+        public DateTime EndTime => this.Annotation.Interval.Right;
 
         #region ICustomTypeDescriptor
 
         /// <inheritdoc/>
-        public AttributeCollection GetAttributes()
-        {
-            return TypeDescriptor.GetAttributes(this, true);
-        }
+        public AttributeCollection GetAttributes() => TypeDescriptor.GetAttributes(this, true);
 
         /// <inheritdoc/>
-        public string GetClassName()
-        {
-            return TypeDescriptor.GetClassName(this, true);
-        }
+        public string GetClassName() => TypeDescriptor.GetClassName(this, true);
 
         /// <inheritdoc/>
-        public string GetComponentName()
-        {
-            return TypeDescriptor.GetComponentName(this, true);
-        }
+        public string GetComponentName() => TypeDescriptor.GetComponentName(this, true);
 
         /// <inheritdoc/>
-        public TypeConverter GetConverter()
-        {
-            return TypeDescriptor.GetConverter(this, true);
-        }
+        public TypeConverter GetConverter() => TypeDescriptor.GetConverter(this, true);
 
         /// <inheritdoc/>
-        public EventDescriptor GetDefaultEvent()
-        {
-            return TypeDescriptor.GetDefaultEvent(this, true);
-        }
+        public EventDescriptor GetDefaultEvent() => TypeDescriptor.GetDefaultEvent(this, true);
 
         /// <inheritdoc/>
-        public PropertyDescriptor GetDefaultProperty()
-        {
-            return TypeDescriptor.GetDefaultProperty(this, true);
-        }
+        public PropertyDescriptor GetDefaultProperty() => TypeDescriptor.GetDefaultProperty(this, true);
 
         /// <inheritdoc/>
-        public object GetEditor(Type editorBaseType)
-        {
-            return TypeDescriptor.GetEditor(this, editorBaseType, true);
-        }
+        public object GetEditor(Type editorBaseType) => TypeDescriptor.GetEditor(this, editorBaseType, true);
 
         /// <inheritdoc/>
-        public EventDescriptorCollection GetEvents()
-        {
-            return TypeDescriptor.GetEvents(this, true);
-        }
+        public EventDescriptorCollection GetEvents() => TypeDescriptor.GetEvents(this, true);
 
         /// <inheritdoc/>
-        public EventDescriptorCollection GetEvents(Attribute[] attributes)
-        {
-            return TypeDescriptor.GetEvents(this, attributes, true);
-        }
+        public EventDescriptorCollection GetEvents(Attribute[] attributes) => TypeDescriptor.GetEvents(this, attributes, true);
 
         /// <inheritdoc/>
         public PropertyDescriptorCollection GetProperties()
         {
-            List<PropertyDescriptor> propertyDescriptors = new List<PropertyDescriptor>();
+            var propertyDescriptors = new List<PropertyDescriptor>();
 
             // Add the AnnotationType, StartTime, and EndTime properties.
-            PropertyDescriptorCollection pdc = TypeDescriptor.GetProperties(this, true);
-            propertyDescriptors.Add(pdc.Find(nameof(this.AnnotationType), false));
-            propertyDescriptors.Add(pdc.Find(nameof(this.StartTime), false));
-            propertyDescriptors.Add(pdc.Find(nameof(this.EndTime), false));
+            var propertyDescriptorCollection = TypeDescriptor.GetProperties(this, true);
+            propertyDescriptors.Add(propertyDescriptorCollection.Find(nameof(this.AnnotationSchemaName), false));
+            propertyDescriptors.Add(propertyDescriptorCollection.Find(nameof(this.StartTime), false));
+            propertyDescriptors.Add(propertyDescriptorCollection.Find(nameof(this.EndTime), false));
 
             // Then add a property for each value track in the annotation.  All of these
             // properties will use the annotation value editor for editing.
             int propertyOrder = 3;
-            Attribute editorAttribute = new EditorAttribute(typeof(AnnotationValueEditor), typeof(AnnotationValueEditor));
-            foreach (AnnotationSchemaDefinition schemaDefinition in this.Definition.SchemaDefinitions)
+            var editorAttribute = new EditorAttribute(typeof(AnnotationValueEditor), typeof(AnnotationValueEditor));
+            foreach (var attributeSchema in this.AnnotationSchema.AttributeSchemas)
             {
-                propertyDescriptors.Add(new AnnotationPropertyDescriptor(this, schemaDefinition.Name, !this.parent.EnableAnnotationValueEdit, typeof(object), new Attribute[] { new PropertyOrderAttribute(propertyOrder++), editorAttribute }));
+                propertyDescriptors.Add(new AnnotationPropertyDescriptor(
+                    this,
+                    attributeSchema.Name,
+                    !this.parent.AllowEditAnnotationValue,
+                    typeof(object),
+                    new Attribute[] { new PropertyOrderAttribute(propertyOrder++), editorAttribute }));
             }
 
             return new PropertyDescriptorCollection(propertyDescriptors.ToArray());
         }
 
         /// <inheritdoc/>
-        public PropertyDescriptorCollection GetProperties(Attribute[] attributes)
-        {
-            return TypeDescriptor.GetProperties(this, attributes, true);
-        }
+        public PropertyDescriptorCollection GetProperties(Attribute[] attributes) => TypeDescriptor.GetProperties(this, attributes, true);
 
         /// <inheritdoc/>
-        public object GetPropertyOwner(PropertyDescriptor pd)
-        {
-            return this;
-        }
+        public object GetPropertyOwner(PropertyDescriptor pd) => this;
 
         #endregion // ICustomTypeDescriptor
 
         /// <summary>
-        /// Gets a value in the annotation.
+        /// Gets the value for a specified attribute.
         /// </summary>
-        /// <param name="valueName">The name of the value in the annotation to get.</param>
-        /// <returns>The value.</returns>
-        public object GetValue(string valueName)
-        {
-            return this.Annotation.Data.Values[valueName];
-        }
+        /// <param name="attribute">The name of the attribute to get the value for.</param>
+        /// <returns>The value for the specified attribute.</returns>
+        public object GetAttributeValue(string attribute) => this.Annotation.AttributeValues[attribute];
 
         /// <summary>
-        /// Sets a value in the annotation.
+        /// Sets the value for a specified attribute.
         /// </summary>
-        /// <param name="valueName">The name of the value in the annotation to set.</param>
-        /// <param name="value">The new value.</param>
-        public void SetValue(string valueName, object value)
+        /// <param name="attribute">The name of the attribute to set the value for.</param>
+        /// <param name="annotationValue">The new value.</param>
+        public void SetAttributeValue(string attribute, IAnnotationValue annotationValue)
         {
-            this.parent.SetAnnotationValue(this.Annotation, valueName, value);
+            // Update the value in the annotation
+            this.annotationSetMessage.Data[this.Track].AttributeValues[attribute] = annotationValue;
+
+            // Call on the parent visualization object to update the annotations
+            this.parent.UpdateAnnotationSetMessage(this.annotationSetMessage);
         }
     }
 }

@@ -95,6 +95,18 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Sets the depth image data from a byte array.
+        /// </summary>
+        /// <param name="buffer">Byte array containing the image data.</param>
+        /// <param name="offset">The offset in buffer at which to begin copying bytes.</param>
+        /// <param name="count">The maximum number of bytes to copy.</param>
+        public void SetBuffer(byte[] buffer, int offset, int count)
+        {
+            this.stream.Position = 0;
+            this.stream.Write(buffer, offset, count);
+        }
+
+        /// <summary>
         /// Encodes a specified depth image with a specified encoder into the current encoded image.
         /// </summary>
         /// <param name="depthImage">The depth image to encode.</param>

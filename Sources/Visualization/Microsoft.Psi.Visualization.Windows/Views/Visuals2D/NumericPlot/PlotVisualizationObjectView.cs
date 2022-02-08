@@ -298,8 +298,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
 
             var deltaY = maxY - minY;
-            this.ScaleTransform.ScaleY = -this.PlotVisualizationObject.Panel.Height / ((deltaY != 0) ? deltaY * 1.2 : 1.0);
-            this.TranslateTransform.Y = -maxY - (deltaY * 0.1);
+            this.ScaleTransform.ScaleY = -this.PlotVisualizationObject.Panel.Height / deltaY;
+            this.TranslateTransform.Y = -maxY;
             return baseUpdate || oldScaleY != this.ScaleTransform.ScaleY || oldTranslateY != this.TranslateTransform.Y;
         }
 

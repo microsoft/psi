@@ -23,7 +23,7 @@ namespace Microsoft.Psi
         /// Creates a new multi-stream \psi store and returns an <see cref="Exporter"/> instance
         /// which can be used to write streams to this store.
         /// </summary>
-        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="Exporter"/>.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the store to create.</param>
         /// <param name="rootPath">The path to use. If null, an in-memory store is created.</param>
         /// <param name="createSubdirectory">Indicates whether to create a numbered subdirectory for each execution of the pipeline.</param>
@@ -47,7 +47,7 @@ namespace Microsoft.Psi
         /// which can be used to inspect the store and open the streams.
         /// The store metadata is available immediately after this call (before the pipeline is running) via the <see cref="Importer.AvailableStreams"/> property.
         /// </summary>
-        /// <param name="pipeline">The <see cref="Pipeline"/> that owns the <see cref="PsiImporter"/>.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the store to open (the same as the catalog file name).</param>
         /// <param name="rootPath">
         /// The path to the store.
@@ -465,7 +465,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Returns the metadata associated with the specified stream, if the stream is persisted to a \psi store.
         /// </summary>
-        /// <param name="pipeline">The current pipeline.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="streamName">The name of the stream to retrieve metadata about.</param>
         /// <param name="metadata">Upon return, this parameter contains the metadata associated with the stream, or null if the stream is not persisted.</param>
         /// <returns>True if the stream is persisted to a store, false otherwise.</returns>

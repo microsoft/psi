@@ -26,12 +26,12 @@ namespace Microsoft.Psi.Components
         private readonly Pipeline pipeline;
         private readonly Connector<TIn> inConnector;
         private readonly Connector<TOut> outConnector;
-        private readonly Join<Dictionary<TBranchKey, int>, TBranchOut, TBranchOut, TOut> join;
+        private readonly Join<Dictionary<TBranchKey, int>, TBranchOut, TOut> join;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelSparseSelect{TIn, TBranchKey, TBranchIn, TBranchOut, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="splitter">A function that splits the input by generating a dictionary of key-value pairs for each given input message.</param>
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
         /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
@@ -60,9 +60,9 @@ namespace Microsoft.Psi.Components
             var interpolator = outputDefaultIfDropped ? Reproducible.ExactOrDefault(defaultValue) : Reproducible.Exact<TBranchOut>();
 
             var buffer = new Dictionary<TBranchKey, TBranchOut>();
-            this.join = Operators.Join(
-                parallelSparseSplitter.ActiveBranches,
-                Enumerable.Empty<IProducer<TBranchOut>>(),
+
+            this.join = new Join<Dictionary<TBranchKey, int>, TBranchOut, TOut>(
+                parallelSparseSplitter.ActiveBranches.Pipeline,
                 interpolator,
                 (keys, values) =>
                 {
@@ -73,7 +73,11 @@ namespace Microsoft.Psi.Components
                     }
 
                     return outputCreator(buffer);
-                });
+                },
+                0,
+                keys => keys.Select(p => p.Value));
+
+            parallelSparseSplitter.ActiveBranches.PipeTo(this.join.InPrimary);
 
             this.outConnector = this.CreateOutputConnectorTo<TOut>(pipeline, nameof(this.outConnector));
             this.join.PipeTo(this.outConnector);

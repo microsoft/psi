@@ -91,15 +91,31 @@ namespace Microsoft.Psi.Audio
             this.inputBufferSize = (int)(this.bufferLengthInMs * inFormat.AvgBytesPerSec / 1000);
             this.outputBufferSize = (int)(this.bufferLengthInMs * outFormat.AvgBytesPerSec / 1000);
 
+            Exception taskException = null;
+
             // Activate native Media Foundation COM objects on a thread-pool thread to ensure that they are in an MTA
             Task.Run(() =>
             {
-                DeviceUtil.CreateResamplerBuffer(this.inputBufferSize, out this.inputSample, out this.inputBuffer);
-                DeviceUtil.CreateResamplerBuffer(this.outputBufferSize, out this.outputSample, out this.outputBuffer);
+                try
+                {
+                    DeviceUtil.CreateResamplerBuffer(this.inputBufferSize, out this.inputSample, out this.inputBuffer);
+                    DeviceUtil.CreateResamplerBuffer(this.outputBufferSize, out this.outputSample, out this.outputBuffer);
 
-                // Create resampler object
-                this.resampler = DeviceUtil.CreateResampler(inFormat, outFormat);
+                    // Create resampler object
+                    this.resampler = DeviceUtil.CreateResampler(inFormat, outFormat);
+                }
+                catch (Exception e)
+                {
+                    taskException = e;
+                }
             }).Wait();
+
+            // do error checking on the main thread
+            if (taskException != null)
+            {
+                // rethrow exception
+                throw taskException;
+            }
 
             // Set the callback function
             this.dataAvailableCallback = callback;

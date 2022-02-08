@@ -76,11 +76,9 @@ namespace Test.Psi.Kinect
                         mesh.Vertices[count].Color = new Point3D(0.0, 0.0, 0.0);
                         if (depth != 0)
                         {
-                            Point2D pixelCoord;
-
                             // Determine vertex position+color via new calibration
                             Point2D newpt = new Point2D(pt.X, calib.DepthIntrinsics.ImageHeight - pt.Y);
-                            Point3D p = calib.DepthIntrinsics.ToCameraSpace(newpt, depth, true);
+                            Point3D p = calib.DepthIntrinsics.GetCameraSpacePosition(newpt, depth, true);
                             mesh.Vertices[count].Pos = new Point3D(p.X / 1000.0, p.Y / 1000.0, p.Z / 1000.0);
 
                             Vector<double> pos = Vector<double>.Build.Dense(4);
@@ -91,9 +89,7 @@ namespace Test.Psi.Kinect
 
                             pos = calib.ColorExtrinsics * pos;
                             Point3D clrPt = new Point3D(pos[0], pos[1], pos[2]);
-                            pixelCoord = calib.ColorIntrinsics.ToPixelSpace(clrPt, true);
-                            if (pixelCoord.X >= 0 && pixelCoord.X < colorData.Resource.Width &&
-                                pixelCoord.Y >= 0 && pixelCoord.Y < colorData.Resource.Height)
+                            if (calib.ColorIntrinsics.TryGetPixelPosition(clrPt, true, out var pixelCoord))
                             {
                                 byte* pixel = ((byte*)colorData.Resource.ImageData.ToPointer() + ((int)pixelCoord.Y * colorData.Resource.Stride)) + (4 * (int)pixelCoord.X);
                                 mesh.Vertices[count].Color = new Point3D((double)(int)*(pixel + 2), (double)(int)*(pixel + 1), (double)(int)*pixel);

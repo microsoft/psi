@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets the billboard visualization object for the spatial entity.
+        /// Gets the billboard visualization object for the labeled point.
         /// </summary>
         [ExpandableObject]
         [DataMember]

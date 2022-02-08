@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <inheritdoc/>
-        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.XY, VisualizationPanelType.XYZ };
+        public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.Canvas, VisualizationPanelType.XY, VisualizationPanelType.XYZ };
 
         /// <inheritdoc/>
         protected override DataTemplate CreateDefaultViewTemplate()

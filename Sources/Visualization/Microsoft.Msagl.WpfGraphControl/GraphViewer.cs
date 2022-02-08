@@ -595,7 +595,9 @@ namespace Microsoft.Msagl.WpfGraphControl
                     edgeDrawingObj.TargetArrowHeadPath.Stroke = edgeColor;
                     edgeDrawingObj.TargetArrowHeadPath.Fill = edgeColor;
                     edgeDrawingObj.CurvePath.StrokeThickness = e.Attr.LineWidth;
-                    (edgeDrawingObj.VLabel.FrameworkElement as TextBlock).Text = e.LabelText;
+                    var edgeLabelTextBlock = edgeDrawingObj.VLabel.FrameworkElement as TextBlock;
+                    edgeLabelTextBlock.Text = e.LabelText;
+                    edgeLabelTextBlock.Foreground = edgeColor;
                 }
             }
         }

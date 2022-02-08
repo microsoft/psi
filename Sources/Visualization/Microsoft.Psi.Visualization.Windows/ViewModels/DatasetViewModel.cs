@@ -19,7 +19,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
-    using Microsoft.Psi.Visualization.Tasks;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -73,9 +72,24 @@ namespace Microsoft.Psi.Visualization.ViewModels
         StartDateTimeLocal,
 
         /// <summary>
-        /// The size of the session.
+        /// The size of the dataset.
         /// </summary>
         Size,
+
+        /// <summary>
+        /// The bytes-per-hour throughput of the dataset.
+        /// </summary>
+        DataThroughputPerHour,
+
+        /// <summary>
+        /// The bytes-per-minute throughput of the dataset.
+        /// </summary>
+        DataThroughputPerMinute,
+
+        /// <summary>
+        /// The bytes-per-second throughput of the dataset.
+        /// </summary>
+        DataThroughputPerSecond,
 
         /// <summary>
         /// The number of streams.
@@ -134,6 +148,21 @@ namespace Microsoft.Psi.Visualization.ViewModels
         Size,
 
         /// <summary>
+        /// The bytes-per-hour throughput of the session.
+        /// </summary>
+        DataThroughputPerHour,
+
+        /// <summary>
+        /// The bytes-per-minute throughput of the session.
+        /// </summary>
+        DataThroughputPerMinute,
+
+        /// <summary>
+        /// The bytes-per-second throughput of the session.
+        /// </summary>
+        DataThroughputPerSecond,
+
+        /// <summary>
         /// The number of streams.
         /// </summary>
         StreamCount,
@@ -190,6 +219,21 @@ namespace Microsoft.Psi.Visualization.ViewModels
         Size,
 
         /// <summary>
+        /// The bytes-per-hour throughput of the partition.
+        /// </summary>
+        DataThroughputPerHour,
+
+        /// <summary>
+        /// The bytes-per-minute throughput of the partition.
+        /// </summary>
+        DataThroughputPerMinute,
+
+        /// <summary>
+        /// The bytes-per-second throughput of the partition.
+        /// </summary>
+        DataThroughputPerSecond,
+
+        /// <summary>
         /// The number of streams.
         /// </summary>
         StreamCount,
@@ -209,6 +253,36 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// The size of the stream.
         /// </summary>
         Size,
+
+        /// <summary>
+        /// The bytes-per-hour throughput of the stream.
+        /// </summary>
+        DataThroughputPerHour,
+
+        /// <summary>
+        /// The bytes-per-minute throughput of the stream.
+        /// </summary>
+        DataThroughputPerMinute,
+
+        /// <summary>
+        /// The bytes-per-second throughput of the stream.
+        /// </summary>
+        DataThroughputPerSecond,
+
+        /// <summary>
+        /// The messages (per hour) throughput of the stream.
+        /// </summary>
+        MessageCountThroughputPerHour,
+
+        /// <summary>
+        /// The messages (per minute) throughput of the stream.
+        /// </summary>
+        MessageCountThroughputPerMinute,
+
+        /// <summary>
+        /// The messages (per second) throughput of the stream.
+        /// </summary>
+        MessageCountThroughputPerSecond,
 
         /// <summary>
         /// The number of messages.
@@ -431,7 +505,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="autoSave">A value to indicate whether to enable the autosave feature.</param>
         /// <returns>The newly loaded dataset view model.</returns>
         public static DatasetViewModel Load(string filename, bool autoSave = false) =>
-            new DatasetViewModel(Dataset.Load(filename, autoSave))
+            new (Dataset.Load(filename, autoSave))
             {
                 FileName = filename,
             };
@@ -455,7 +529,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="partitionName">The partition name.</param>
         /// <returns>The newly created dataset view model.</returns>
         public static DatasetViewModel CreateFromStore(IStreamReader streamReader, string partitionName = null) =>
-            new DatasetViewModel(Dataset.CreateFromStore(streamReader, partitionName));
+            new (Dataset.CreateFromStore(streamReader, partitionName));
 
         /// <summary>
         /// Asynchronously creates a new dataset from an existing data store.
@@ -534,8 +608,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 TimeInterval sessionExtents = this.CurrentSessionViewModel.OriginatingTimeInterval;
 
                 // Update the navigator with the session extents
-                visualizationContainer.Navigator.DataRange.SetRange(sessionExtents);
-                visualizationContainer.Navigator.ViewRange.SetRange(sessionExtents);
+                visualizationContainer.Navigator.DataRange.Set(sessionExtents);
+                visualizationContainer.Navigator.ViewRange.Set(sessionExtents);
 
                 // Update the bindings on all sessions
                 visualizationContainer.UpdateStreamSources(this.CurrentSessionViewModel);
@@ -568,16 +642,16 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public void CreateSessionFromStore()
         {
             var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
-            Win32.OpenFileDialog dlg = new Win32.OpenFileDialog
+            var openFileDialog = new Win32.OpenFileDialog
             {
                 DefaultExt = ".psi",
                 Filter = string.Join("|", formats.Select(f => $"{f.Name}|*{f.Extensions}")),
             };
 
-            bool? result = dlg.ShowDialog(Application.Current.MainWindow);
+            bool? result = openFileDialog.ShowDialog(Application.Current.MainWindow);
             if (result == true)
             {
-                var fileInfo = new FileInfo(dlg.FileName);
+                var fileInfo = new FileInfo(openFileDialog.FileName);
                 var name = fileInfo.Name.Split('.')[0];
                 var readerType = VisualizationContext.Instance.PluginMap.GetStreamReaderType(fileInfo.Extension);
                 var streamReader = Psi.Data.StreamReader.Create(name, fileInfo.DirectoryName, readerType);
@@ -675,7 +749,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
             // Add run batch processing task menu
             var runTasksMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Run Batch Processing Task", null);
-            var batchProcessingTasks = VisualizationContext.Instance.PluginMap.GetDatasetCompatibleBatchProcessingTasks();
+            var batchProcessingTasks = VisualizationContext.Instance.PluginMap.BatchProcessingTasks;
             runTasksMenuItem.IsEnabled = batchProcessingTasks.Any();
             foreach (var batchProcessingTask in batchProcessingTasks)
             {
@@ -710,6 +784,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     AuxiliaryDatasetInfo.StartDateTime => "Start DateTime (UTC)",
                     AuxiliaryDatasetInfo.StartDateTimeLocal => "Start DateTime (Local)",
                     AuxiliaryDatasetInfo.Size => "Size",
+                    AuxiliaryDatasetInfo.DataThroughputPerHour => "Throughput (bytes per hour)",
+                    AuxiliaryDatasetInfo.DataThroughputPerMinute => "Throughput (bytes per minute)",
+                    AuxiliaryDatasetInfo.DataThroughputPerSecond => "Throughput (bytes per second)",
                     AuxiliaryDatasetInfo.StreamCount => "Number of Streams",
                     _ => throw new NotImplementedException(),
                 };
@@ -765,6 +842,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     break;
                 case AuxiliaryDatasetInfo.StartDateTimeLocal:
                     this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToLocalTime().ToString();
+                    break;
+                case AuxiliaryDatasetInfo.DataThroughputPerHour:
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalHours, "hour") : "?";
+                    break;
+                case AuxiliaryDatasetInfo.DataThroughputPerMinute:
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalMinutes, "min") : "?";
+                    break;
+                case AuxiliaryDatasetInfo.DataThroughputPerSecond:
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalSeconds, "sec") : "?";
                     break;
                 case AuxiliaryDatasetInfo.Size:
                     this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatSize(this.Dataset.Size.Value) : "?";

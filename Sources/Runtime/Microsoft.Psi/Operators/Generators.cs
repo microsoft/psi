@@ -17,7 +17,7 @@ namespace Microsoft.Psi
         /// Generates a finite stream of values published at a regular interval from a user-provided function.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="initialValue">The initial value.</param>
         /// <param name="generateNext">The function that generates a new value based on the previous value.</param>
         /// <param name="count">The number of messages to publish.</param>
@@ -37,7 +37,7 @@ namespace Microsoft.Psi
         /// Generates an infinite stream of values published at a regular interval from a user-provided function.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="initialValue">The initial value.</param>
         /// <param name="generateNext">The function that generates a new value based on the previous value.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
@@ -55,7 +55,7 @@ namespace Microsoft.Psi
         /// Generates a stream of values published at a regular interval from a specified enumerable.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="enumerable">The sequence to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
@@ -73,7 +73,7 @@ namespace Microsoft.Psi
         /// Generates a stream of values from a specified enumerable that provides the values and corresponding originating times.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="enumerable">An enumerable sequence of (data, originating time) pairs.</param>
         /// <param name="startTime">The explicit start time of the data in the enumeration. Supply this parameter when the enumeration contains
         /// data values with absolute originating times (e.g. [value, time] pairs read from a file), and you want to propose a pipeline replay
@@ -91,7 +91,7 @@ namespace Microsoft.Psi
         /// Generates stream containing a single message, and keeps the stream open afterwards.
         /// </summary>
         /// <typeparam name="T">The type of value to publish.</typeparam>
-        /// <param name="pipeline">The pipeline to attach to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="value">The value to publish.</param>
         /// <returns>A stream of values of type T.</returns>
         /// <remarks>The generated stream stays open until the pipeline is shut down.</remarks>
@@ -104,7 +104,7 @@ namespace Microsoft.Psi
         /// Generates stream containing a single message, and closes the stream afterwards.
         /// </summary>
         /// <typeparam name="T">The type of value to publish.</typeparam>
-        /// <param name="pipeline">The pipeline to attach to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="value">The value to publish.</param>
         /// <returns>A stream containing one value of type T.</returns>
         /// <remarks>The generated stream closes after the message is published.</remarks>
@@ -117,7 +117,7 @@ namespace Microsoft.Psi
         /// Generates a finite stream of constant values published at a regular interval.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="value">The value to publish.</param>
         /// <param name="count">The number of messages to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
@@ -136,7 +136,7 @@ namespace Microsoft.Psi
         /// Generates an infinite stream of constant values published at a regular interval.
         /// </summary>
         /// <typeparam name="T">The type of data in the sequence.</typeparam>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="value">The value to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>
         /// <param name="alignmentDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
@@ -152,7 +152,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Generates a stream of a finite range of integer values published at a regular interval.
         /// </summary>
-        /// <param name="pipeline">The pipeline that will run this generator.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="start">The starting value.</param>
         /// <param name="count">The number of messages to publish.</param>
         /// <param name="interval">The desired time interval between consecutive messages. Defaults to 1 tick.</param>

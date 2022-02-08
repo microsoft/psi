@@ -44,6 +44,22 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Gets or sets virtual time offset (delegated to ancestors).
+        /// </summary>
+        internal override TimeSpan VirtualTimeOffset
+        {
+            get
+            {
+                return this.ParentPipeline.VirtualTimeOffset;
+            }
+
+            set
+            {
+                this.ParentPipeline.VirtualTimeOffset = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the parent pipeline.
         /// </summary>
         protected Pipeline ParentPipeline { get => this.parentPipeline; }

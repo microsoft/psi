@@ -527,6 +527,9 @@ namespace Microsoft.Psi.Common
         {
             private const int Version = 1;
 
+            /// <inheritdoc />
+            public bool? IsClearRequired => false;
+
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 serializers.GetHandler<T>(); // register element type

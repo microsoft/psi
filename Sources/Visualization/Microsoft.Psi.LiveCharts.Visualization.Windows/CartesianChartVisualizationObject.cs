@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Visualization.LiveCharts
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
     using global::LiveCharts;
@@ -77,7 +78,7 @@ namespace Microsoft.Psi.Visualization.LiveCharts
     /// for example <see cref="HistogramVisualizationObject"/>.
     /// </para></remarks>
     [VisualizationObject("Cartesian Chart")]
-    [VisualizationPanelType(VisualizationPanelType.XY)]
+    [VisualizationPanelType(VisualizationPanelType.Canvas)]
     public class CartesianChartVisualizationObject<T> : StreamValueVisualizationObject<Dictionary<string, T[]>>
     {
         /// <summary>
@@ -221,87 +222,103 @@ namespace Microsoft.Psi.Visualization.LiveCharts
         /// <inheritdoc/>
         protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e != null && e.PropertyName == nameof(this.CurrentData))
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                if (this.CurrentData != null)
+                if (e != null && e.PropertyName == nameof(this.CurrentData))
                 {
-                    foreach (var kvp in this.CurrentData)
+                    if (this.CurrentData != null)
                     {
-                        var series = this.seriesMapping.ContainsKey(kvp.Key) ?
-                            this.SeriesCollection[this.seriesMapping[kvp.Key]] : this.CreateSeries(kvp.Key);
+                        foreach (var kvp in this.CurrentData)
+                        {
+                            var series = this.seriesMapping.ContainsKey(kvp.Key) ?
+                                this.SeriesCollection[this.seriesMapping[kvp.Key]] : this.CreateSeries(kvp.Key);
 
-                        if (series.Values == null)
-                        {
-                            series.Values = this.ConstructChartValues(kvp.Key);
-                        }
-                        else if (kvp.Value == null)
-                        {
-                            series.Values.Clear();
-                        }
-                        else
-                        {
-                            var min = Math.Min(series.Values.Count, kvp.Value.Length);
-                            for (int i = 0; i < min; i++)
+                            if (series.Values == null)
                             {
-                                var observablePoint = (series.Values as ChartValues<ObservablePoint>)[i];
-                                (observablePoint.X, observablePoint.Y) = this.GetXYValues(kvp.Key, i);
+                                series.Values = this.ConstructChartValues(kvp.Key);
                             }
-
-                            if (series.Values.Count > kvp.Value.Length)
+                            else if (kvp.Value == null)
                             {
-                                while (series.Values.Count > kvp.Value.Length)
+                                series.Values.Clear();
+                            }
+                            else
+                            {
+                                var min = Math.Min(series.Values.Count, kvp.Value.Length);
+                                for (int i = 0; i < min; i++)
                                 {
-                                    series.Values.RemoveAt(kvp.Value.Length);
+                                    var observablePoint = (series.Values as ChartValues<ObservablePoint>)[i];
+                                    (observablePoint.X, observablePoint.Y) = this.GetXYValues(kvp.Key, i);
+                                }
+
+                                if (series.Values.Count > kvp.Value.Length)
+                                {
+                                    while (series.Values.Count > kvp.Value.Length)
+                                    {
+                                        series.Values.RemoveAt(kvp.Value.Length);
+                                    }
+                                }
+                                else if (series.Values.Count < kvp.Value.Length)
+                                {
+                                    for (int i = series.Values.Count; i < kvp.Value.Length; i++)
+                                    {
+                                        (var x, var y) = this.GetXYValues(kvp.Key, i);
+                                        series.Values.Add(new ObservablePoint(x, y));
+                                    }
                                 }
                             }
-                            else if (series.Values.Count < kvp.Value.Length)
+
+                            if (!this.seriesMapping.ContainsKey(kvp.Key))
                             {
-                                for (int i = series.Values.Count; i < kvp.Value.Length; i++)
-                                {
-                                    (var x, var y) = this.GetXYValues(kvp.Key, i);
-                                    series.Values.Add(new ObservablePoint(x, y));
-                                }
+                                this.seriesMapping.Add(kvp.Key, this.SeriesCollection.Count);
+                                this.SeriesCollection.Add(series);
                             }
                         }
 
-                        if (!this.seriesMapping.ContainsKey(kvp.Key))
+                        // remove series that are not present in the data
+                        var unfoundSeries = this.seriesMapping.Keys.Where(s => !this.CurrentData.ContainsKey(s)).ToArray();
+                        var unfoundSeriesView = unfoundSeries.Select(s => this.SeriesCollection[this.seriesMapping[s]]).ToArray();
+
+                        foreach (var series in unfoundSeries)
                         {
-                            this.seriesMapping.Add(kvp.Key, this.SeriesCollection.Count);
-                            this.SeriesCollection.Add(series);
+                            this.seriesMapping.Remove(series);
+                        }
+
+                        foreach (var seriesView in unfoundSeriesView)
+                        {
+                            this.SeriesCollection.Remove(seriesView);
+                        }
+                    }
+                    else
+                    {
+                        if (this.SeriesCollection.Count > 0)
+                        {
+                            this.SeriesCollection = new SeriesCollection();
+                            this.seriesMapping.Clear();
                         }
                     }
                 }
-                else
+                else if (e != null && e.PropertyName == nameof(this.CartesianChartType))
                 {
-                    if (this.SeriesCollection.Count > 0)
+                    if (this.CurrentData != null)
                     {
                         this.SeriesCollection = new SeriesCollection();
                         this.seriesMapping.Clear();
-                    }
-                }
-            }
-            else if (e != null && e.PropertyName == nameof(this.CartesianChartType))
-            {
-                if (this.CurrentData != null)
-                {
-                    this.SeriesCollection = new SeriesCollection();
-                    this.seriesMapping.Clear();
 
-                    foreach (var kvp in this.CurrentData)
-                    {
-                        this.seriesMapping.Add(kvp.Key, this.SeriesCollection.Count);
-                        this.SeriesCollection.Add(this.CreateSeries(kvp.Key));
-                        this.SeriesCollection[this.seriesMapping[kvp.Key]].Values = this.ConstructChartValues(kvp.Key);
+                        foreach (var kvp in this.CurrentData)
+                        {
+                            this.seriesMapping.Add(kvp.Key, this.SeriesCollection.Count);
+                            this.SeriesCollection.Add(this.CreateSeries(kvp.Key));
+                            this.SeriesCollection[this.seriesMapping[kvp.Key]].Values = this.ConstructChartValues(kvp.Key);
+                        }
                     }
                 }
-            }
+            });
 
             base.OnPropertyChanged(sender, e);
         }
 
-        private Series CreateSeries(string title)
-        {
-            return this.CartesianChartType switch
+        private Series CreateSeries(string title) =>
+            this.CartesianChartType switch
             {
                 CartesianChartType.Line => new LineSeries() { Title = title },
                 CartesianChartType.VerticalLine => new VerticalLineSeries() { Title = title },
@@ -313,7 +330,6 @@ namespace Microsoft.Psi.Visualization.LiveCharts
                 CartesianChartType.StackedRow => new StackedRowSeries() { Title = title },
                 _ => throw new Exception(UnknownCartesianChartTypeMessage)
             };
-        }
 
         private ChartValues<ObservablePoint> ConstructChartValues(string seriesName)
         {

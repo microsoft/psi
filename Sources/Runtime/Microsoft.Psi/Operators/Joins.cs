@@ -1362,6 +1362,66 @@ namespace Microsoft.Psi
         /// </summary>
         /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
         /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <typeparam name="TOut">Type of output stream messages.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Enumeration of secondary streams.</param>
+        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
+        /// <param name="outputCreator">Mapping function from primary and secondary messages to output.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<TOut> Join<TPrimary, TSecondary, TOut>(
+            this IProducer<TPrimary> primary,
+            IEnumerable<IProducer<TSecondary>> secondaries,
+            ReproducibleInterpolator<TSecondary> interpolator,
+            Func<TPrimary, TSecondary[], TOut> outputCreator,
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+        {
+            var join = new Join<TPrimary, TSecondary, TOut>(
+                primary.Out.Pipeline,
+                interpolator,
+                outputCreator,
+                secondaries.Count(),
+                null);
+
+            primary.PipeTo(join.InPrimary, primaryDeliveryPolicy);
+
+            var i = 0;
+            foreach (var input in secondaries)
+            {
+                input.PipeTo(join.InSecondaries[i++], secondariesDeliveryPolicy);
+            }
+
+            return join;
+        }
+
+        /// <summary>
+        /// Joins a primary stream with an enumeration of secondary streams based on a specified reproducible interpolator.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Enumeration of secondary streams.</param>
+        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<(TPrimary, TSecondary[])> Join<TPrimary, TSecondary>(
+            this IProducer<TPrimary> primary,
+            IEnumerable<IProducer<TSecondary>> secondaries,
+            ReproducibleInterpolator<TSecondary> interpolator,
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+        {
+            return primary.Join(secondaries, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondariesDeliveryPolicy);
+        }
+
+        /// <summary>
+        /// Joins a primary stream with an enumeration of secondary streams based on a specified reproducible interpolator.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
         /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
         /// <typeparam name="TOut">Type of output stream messages.</typeparam>
         /// <param name="primary">Primary stream.</param>
@@ -1398,6 +1458,75 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Joins a primary stream with an enumeration of secondary streams based on a specified reproducible interpolator.
+        /// </summary>
+        /// <typeparam name="TPrimary">Type of primary stream messages.</typeparam>
+        /// <typeparam name="TSecondary">Type of secondary stream messages.</typeparam>
+        /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
+        /// <param name="primary">Primary stream.</param>
+        /// <param name="secondaries">Enumeration of secondary streams.</param>
+        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
+        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
+        /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<(TPrimary, TInterpolation[])> Join<TPrimary, TSecondary, TInterpolation>(
+            this IProducer<TPrimary> primary,
+            IEnumerable<IProducer<TSecondary>> secondaries,
+            ReproducibleInterpolator<TSecondary, TInterpolation> interpolator,
+            DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+        {
+            return primary.Join(secondaries, interpolator, (p, i) => (p, i), primaryDeliveryPolicy, secondariesDeliveryPolicy);
+        }
+
+        /// <summary>
+        /// Joins an enumeration of streams into a vector stream, based on a specified reproducible interpolator and output creator function.
+        /// </summary>
+        /// <typeparam name="TIn">Type of input stream messages.</typeparam>
+        /// <typeparam name="TOut">The type of output stream messages.</typeparam>
+        /// <param name="inputs">Collection of input streams.</param>
+        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
+        /// <param name="outputCreator">Mapping function from input to output messages.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy to use for the streams.</param>
+        /// <returns>Output stream.</returns>
+        public static IProducer<TOut[]> Join<TIn, TOut>(
+            this IEnumerable<IProducer<TIn>> inputs,
+            ReproducibleInterpolator<TIn> interpolator,
+            Func<TIn, TOut> outputCreator,
+            DeliveryPolicy<TIn> deliveryPolicy = null)
+        {
+            var count = inputs.Count();
+            if (count > 1)
+            {
+                var buffer = new TOut[count];
+                return Join(
+                    inputs.First(),
+                    inputs.Skip(1),
+                    interpolator,
+                    (m, secondaryArray) =>
+                    {
+                        buffer[0] = outputCreator(m);
+                        for (int i = 1; i < count; i++)
+                        {
+                            buffer[i] = outputCreator(secondaryArray[i - 1]);
+                        }
+
+                        return buffer;
+                    },
+                    deliveryPolicy,
+                    deliveryPolicy);
+            }
+            else if (count == 1)
+            {
+                return inputs.First().Select(x => new[] { outputCreator(x) }, deliveryPolicy);
+            }
+            else
+            {
+                throw new ArgumentException("Vector join with empty inputs collection.");
+            }
+        }
+
+        /// <summary>
         /// Joins an enumeration of streams into a vector stream, based on a specified reproducible interpolator.
         /// </summary>
         /// <typeparam name="TIn">Type of input stream messages.</typeparam>
@@ -1410,150 +1539,9 @@ namespace Microsoft.Psi
             ReproducibleInterpolator<TIn> interpolator,
             DeliveryPolicy<TIn> deliveryPolicy = null)
         {
-            var count = inputs.Count();
-            if (count > 1)
-            {
-                var buffer = new TIn[count];
-                return Join(
-                    inputs.First(),
-                    inputs.Skip(1),
-                    interpolator,
-                    (m, secondaryArray) =>
-                    {
-                        buffer[0] = m;
-                        Array.Copy(secondaryArray, 0, buffer, 1, count - 1);
-                        return buffer;
-                    },
-                    deliveryPolicy,
-                    deliveryPolicy);
-            }
-            else if (count == 1)
-            {
-                return inputs.First().Select(x => new[] { x }, deliveryPolicy);
-            }
-            else
-            {
-                throw new ArgumentException("Vector join with empty inputs collection.");
-            }
-        }
-
-        /// <summary>
-        /// Joins a primary stream of integers with an enumeration of secondary streams based on a specified reproducible interpolator.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
-        /// <param name="primary">Primary stream.</param>
-        /// <param name="inputs">Collection of secondary streams.</param>
-        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
-        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
-        /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
-        /// <returns>Output stream.</returns>
-        public static IProducer<TInterpolation[]> Join<TIn, TInterpolation>(
-            this IProducer<int> primary,
-            IEnumerable<IProducer<TIn>> inputs,
-            ReproducibleInterpolator<TIn, TInterpolation> interpolator,
-            DeliveryPolicy<int> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TIn> secondaryDeliveryPolicy = null)
-        {
-            var join = new Join<int, TIn, TInterpolation, TInterpolation[]>(
-                primary.Out.Pipeline,
-                interpolator,
-                (count, values) => values,
-                inputs.Count(),
-                count => Enumerable.Range(0, count));
-
-            primary.PipeTo(join.InPrimary, primaryDeliveryPolicy);
-
-            var i = 0;
-            foreach (var input in inputs)
-            {
-                input.PipeTo(join.InSecondaries[i++], secondaryDeliveryPolicy);
-            }
-
-            return join;
+            return inputs.Join(interpolator, _ => _, deliveryPolicy);
         }
 
         #endregion Vector joins
-
-        #region Sparse vector (dictionary) joins
-
-        /// <summary>
-        /// Sparse vector join.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TKey">Type of key values.</typeparam>
-        /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
-        /// <typeparam name="TOutput">The type of the output.</typeparam>
-        /// <param name="primary">Primary stream.</param>
-        /// <param name="inputs">Collection of secondary streams.</param>
-        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
-        /// <param name="outputCreator">The output creator function.</param>
-        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
-        /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
-        /// <returns>Output stream.</returns>
-        public static Join<Dictionary<TKey, int>, TIn, TInterpolation, TOutput> Join<TIn, TKey, TInterpolation, TOutput>(
-            this IProducer<Dictionary<TKey, int>> primary,
-            IEnumerable<IProducer<TIn>> inputs,
-            ReproducibleInterpolator<TIn, TInterpolation> interpolator,
-            Func<Dictionary<TKey, int>, TInterpolation[], TOutput> outputCreator,
-            DeliveryPolicy<Dictionary<TKey, int>> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TIn> secondaryDeliveryPolicy = null)
-        {
-            var join = new Join<Dictionary<TKey, int>, TIn, TInterpolation, TOutput>(
-                primary.Out.Pipeline,
-                interpolator,
-                outputCreator,
-                inputs.Count(),
-                keys => keys.Select(p => p.Value));
-
-            primary.PipeTo(join.InPrimary, primaryDeliveryPolicy);
-
-            var i = 0;
-            foreach (var input in inputs)
-            {
-                input.PipeTo(join.InSecondaries[i++], secondaryDeliveryPolicy);
-            }
-
-            return join;
-        }
-
-        /// <summary>
-        /// Sparse vector join.
-        /// </summary>
-        /// <typeparam name="TIn">Type of input messages.</typeparam>
-        /// <typeparam name="TKey">Type of key values.</typeparam>
-        /// <typeparam name="TInterpolation">Type of the interpolation result.</typeparam>
-        /// <param name="primary">Primary stream.</param>
-        /// <param name="inputs">Collection of secondary streams.</param>
-        /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
-        /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
-        /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
-        /// <returns>Output stream.</returns>
-        public static Join<Dictionary<TKey, int>, TIn, TInterpolation, Dictionary<TKey, TInterpolation>> Join<TIn, TKey, TInterpolation>(
-            this IProducer<Dictionary<TKey, int>> primary,
-            IEnumerable<IProducer<TIn>> inputs,
-            ReproducibleInterpolator<TIn, TInterpolation> interpolator,
-            DeliveryPolicy<Dictionary<TKey, int>> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TIn> secondaryDeliveryPolicy = null)
-        {
-            var buffer = new Dictionary<TKey, TInterpolation>();
-            return primary.Join(
-                inputs,
-                interpolator,
-                (keys, values) =>
-                {
-                    buffer.Clear();
-                    foreach (var keyPair in keys)
-                    {
-                        buffer[keyPair.Key] = values[keyPair.Value];
-                    }
-
-                    return buffer;
-                },
-                primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
-        }
     }
-
-    #endregion Sparse vector joins
 }

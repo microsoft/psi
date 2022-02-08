@@ -11,66 +11,64 @@ namespace Microsoft.Psi.Remoting
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
     /// Importer for remoting over network transport.
     /// </summary>
     public sealed class RemoteImporter : IDisposable
     {
-        private const long DateTimeNowWindow = 1000;
-
         private readonly Func<string, Importer> importerThunk;
         private readonly long replayEnd;
         private readonly string host;
         private readonly int port;
         private readonly bool allowSequenceRestart;
-        private readonly EventWaitHandle connected = new EventWaitHandle(false, EventResetMode.ManualReset);
+        private readonly EventWaitHandle connected = new (false, EventResetMode.ManualReset);
+
+        private readonly bool replayRemoteLatestStart; // special replayStart of `DateTime.UtcNow` at exporter side
+        private readonly Dictionary<int, int> lastSequenceIdPerStream = new ();
 
         private PsiStoreWriter storeWriter;
-        private bool replayRemoteLatestStart; // special replayStart of `DateTime.UtcNow` at exporter side
         private long replayStart; // advanced upon each message for restart
-        private Dictionary<int, int> lastSequenceIdPerStream = new Dictionary<int, int>();
-        private Thread metaClientThread;
-        private Thread dataClientThread;
         private bool disposed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteImporter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which to attach.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="replay">Time interval to be replayed from remote source.</param>
         /// <param name="host">Remote host name.</param>
         /// <param name="port">TCP port on which to connect (default 11411).</param>
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         public RemoteImporter(Pipeline pipeline, TimeInterval replay, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(name => PsiStore.Open(pipeline, name, null), replay, false, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
+            : this(name => PsiStore.Open(pipeline, name, null), replay, false, host, port, $"RemoteImporter_{Guid.NewGuid()}", null, allowSequenceRestart)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteImporter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which to attach.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="replayEnd">End of time interval to be replayed from remote.</param>
         /// <param name="host">Remote host name.</param>
         /// <param name="port">TCP port on which to connect (default 11411).</param>
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
         public RemoteImporter(Pipeline pipeline, DateTime replayEnd, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(name => PsiStore.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, replayEnd), true, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
+            : this(name => PsiStore.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, replayEnd), true, host, port, $"RemoteImporter_{Guid.NewGuid()}", null, allowSequenceRestart)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteImporter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which to attach.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="host">Remote host name.</param>
         /// <param name="port">TCP port on which to connect (default 11411).</param>
         /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
         /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
         public RemoteImporter(Pipeline pipeline, string host, int port = RemoteExporter.DefaultPort, bool allowSequenceRestart = true)
-            : this(name => PsiStore.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, $"RemoteImporter_{Guid.NewGuid().ToString()}", null, allowSequenceRestart)
+            : this(name => PsiStore.Open(pipeline, name, null), new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, $"RemoteImporter_{Guid.NewGuid()}", null, allowSequenceRestart)
         {
         }
 
@@ -147,8 +145,6 @@ namespace Microsoft.Psi.Remoting
         public void Dispose()
         {
             this.disposed = true;
-            this.metaClientThread = null;
-            this.dataClientThread = null;
 
             this.storeWriter.Dispose();
             this.storeWriter = null;
@@ -167,7 +163,6 @@ namespace Microsoft.Psi.Remoting
             this.connected.Reset();
             var thread = new Thread(new ThreadStart(this.MetaClientBackground)) { IsBackground = true };
             thread.Start();
-            this.metaClientThread = thread; // assign only after successful start in case of abort by data thread
         }
 
         private void MetaClientBackground()
@@ -198,7 +193,7 @@ namespace Microsoft.Psi.Remoting
                 var transport = Transport.TransportOfName(reader.ReadString());
                 transport.ReadTransportParams(reader);
                 guid = new Guid(id);
-                Trace.WriteLine($"RemoteImporter meta client connected (ID={guid})");
+                Trace.WriteLine($"{nameof(RemoteImporter)} meta client connected (ID={guid})");
 
                 // process metadata updates
                 while (!this.disposed)
@@ -219,15 +214,23 @@ namespace Microsoft.Psi.Remoting
                             }
                             catch (Exception ex)
                             {
-                                Trace.TraceError($"RemoteImporter meta update duplicate stream - expected after reconnect (Name={meta.Name}, ID={guid}, Error={ex.Message})");
+                                Trace.TraceError($"{nameof(RemoteImporter)} meta update duplicate stream - expected after reconnect (Name={meta.Name}, ID={guid}, Error={ex.Message})");
                             }
+                        }
+                        else if (meta.Kind == MetadataKind.RuntimeInfo)
+                        {
+                            this.storeWriter.WriteToCatalog((RuntimeInfo)meta);
+                        }
+                        else if (meta.Kind == MetadataKind.TypeSchema)
+                        {
+                            this.storeWriter.WriteToCatalog((TypeSchema)meta);
                         }
                         else
                         {
-                            this.storeWriter.WriteToCatalog(meta);
+                            throw new NotSupportedException("Unknown metadata kind.");
                         }
 
-                        Trace.WriteLine($"RemoteImporter meta update (Name={meta.Name}, ID={guid})");
+                        Trace.WriteLine($"{nameof(RemoteImporter)} meta update (Name={meta.Name}, ID={guid})");
                     }
                     else
                     {
@@ -239,9 +242,13 @@ namespace Microsoft.Psi.Remoting
                     }
                 }
             }
+            catch (ArgumentException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                Trace.WriteLine($"RemoteImporter meta connection error (Message={ex.Message}, ID={guid})");
+                Trace.WriteLine($"{nameof(RemoteImporter)} meta connection error (Message={ex.Message}, ID={guid})");
                 this.StartMetaClient(); // restart
             }
         }
@@ -293,12 +300,11 @@ namespace Microsoft.Psi.Remoting
                 }
                 catch (Exception ex)
                 {
-                    Trace.WriteLine($"RemoteImporter data connection error (Message={ex.Message}, ID={id})");
+                    Trace.WriteLine($"{nameof(RemoteImporter)} data connection error (Message={ex.Message}, ID={id})");
                     dataClient.Dispose();
                 }
             })) { IsBackground = true };
             thread.Start();
-            this.dataClientThread = thread;
         }
     }
 }

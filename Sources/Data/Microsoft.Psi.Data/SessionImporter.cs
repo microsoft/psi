@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Data
     /// </summary>
     public class SessionImporter
     {
-        private Dictionary<string, Importer> importers = new Dictionary<string, Importer>();
+        private readonly Dictionary<string, Importer> importers = new ();
 
         private SessionImporter(Pipeline pipeline, Session session, bool usePerStreamReaders)
         {
@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="streamName">The stream to search for.</param>
         /// <returns>true if any importer contains the named stream; otherwise false.</returns>
-        public bool HasStream(string streamName)
+        public bool Contains(string streamName)
         {
             var all = this.importers.Values.Where(importer => importer.Contains(streamName));
             var count = all.Count();
@@ -114,11 +114,11 @@ namespace Microsoft.Psi.Data
             }
             else if (count > 1)
             {
-                throw new System.Exception($"Underspecified access to session: multiple partitions contain stream {streamName}");
+                throw new Exception($"Underspecified access to session: multiple partitions contain stream {streamName}");
             }
             else
             {
-                throw new System.Exception($"Cannot find {streamName}");
+                throw new Exception($"Cannot find {streamName}");
             }
         }
 

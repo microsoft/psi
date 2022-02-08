@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Components
         private readonly Connector<TIn[]> inConnector;
         private readonly Connector<TOut[]> outConnector;
         private readonly Receiver<TIn[]> splitter;
-        private readonly List<Emitter<TIn>> branches = new List<Emitter<TIn>>();
+        private readonly List<Emitter<TIn>> branches = new ();
         private readonly Join<int, TOut, TOut[]> join;
         private readonly Emitter<int> activeBranchesEmitter;
         private readonly Func<int, IProducer<TIn>, IProducer<TOut>> parallelTransform;
@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelVariableLength{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="action">Function mapping keyed input producers to output producers.</param>
         /// <param name="name">Name for this component (defaults to ParallelVariableLength).</param>
         /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy to be used by this component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
@@ -43,7 +43,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="ParallelVariableLength{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
         /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
         /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
@@ -94,7 +94,7 @@ namespace Microsoft.Psi.Components
                     {
                         var branchResult = this.parallelTransform(i, connectorIn.Out);
                         var connectorOut = new Connector<TOut>(subpipeline, this, $"connectorOut{i}");
-                        branchResult.PipeTo(connectorOut.In, true);
+                        branchResult.PipeTo(connectorOut, true);
                         connectorOut.Out.PipeTo(this.join.AddInput(), true);
                     }
                     else

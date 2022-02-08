@@ -5,29 +5,34 @@ namespace Microsoft.Psi.Visualization.Data
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.Linq;
     using System.Runtime.Serialization;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Represents an object used to read streams.
     /// </summary>
-    /// <typeparam name="T">The type of messages in stream.</typeparam>
+    /// <typeparam name="T">The type of messages in stream AFTER they have been adapted by the data adapter (if applicable).</typeparam>
     public class StreamIntervalProvider<T> : StreamDataProvider<T>, IStreamIntervalProvider
     {
         /// <summary>
         /// The collection of updates that have been performed on the stream since it was last saved.
         /// </summary>
-        private readonly SortedDictionary<DateTime, StreamUpdateWithView<T>> updateList = new SortedDictionary<DateTime, StreamUpdateWithView<T>>();
+        private readonly SortedDictionary<DateTime, StreamUpdateWithView<T>> updateList = new ();
+
+        /// <summary>
+        /// The list of subscribers to this stream interval provider.
+        /// </summary>
+        private readonly List<Guid> subscribers = new ();
 
         /// <summary>
         /// A lock for controlling concurrent access to the data and dataBuffer structures.
         /// </summary>
-        private readonly object dataLock = new object();
+        private readonly object dataLock = new ();
 
         /// <summary>
         /// The data.
@@ -38,6 +43,11 @@ namespace Microsoft.Psi.Visualization.Data
         /// The data buffer.
         /// </summary>
         private readonly List<Message<T>> dataBuffer;
+
+        /// <summary>
+        /// The collection of stream summary managers that summarize data from this stream interval provider.
+        /// </summary>
+        private readonly StreamSummaryManagers streamSummaryManagers = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamIntervalProvider{T}"/> class.
@@ -63,6 +73,9 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a value indicating whether the stream reader has updates that have not yet been committed to disk.
         /// </summary>
         public bool HasUncommittedUpdates => this.updateList.Count > 0;
+
+        /// <inheritdoc/>
+        public override bool HasSubscribers => this.subscribers.Count > 0;
 
         /// <inheritdoc/>
         public override void OpenStream(IStreamReader streamReader)
@@ -103,6 +116,13 @@ namespace Microsoft.Psi.Visualization.Data
                     this.dataBuffer.Clear();
                 }
             }
+
+            this.GetStreamSummaryManagers()
+                .ForEach(streamSummaryManager =>
+                {
+                    // dispatch data for stream summary managers
+                    streamSummaryManager.DispatchData();
+                });
         }
 
         /// <inheritdoc />
@@ -185,6 +205,62 @@ namespace Microsoft.Psi.Visualization.Data
             return (this.data as ObservableKeyedCache<DateTime, Message<TItem>>).GetView(viewMode, startTime, endTime, tailCount, tailRange);
         }
 
+        /// <inheritdoc/>
+        public Guid RegisterStreamIntervalSubscriber(StreamSource streamSource)
+        {
+            Guid subscriberId;
+
+            // If the data is summarized, pass the call to the stream summary manager.
+            if (streamSource.Summarizer != null)
+            {
+                subscriberId = this.GetOrCreateStreamSummaryManager(streamSource).RegisterSubscriber();
+            }
+            else
+            {
+                subscriberId = Guid.NewGuid();
+            }
+
+            // Register with this stream interval provider as well.
+            this.subscribers.Add(subscriberId);
+
+            return subscriberId;
+        }
+
+        /// <inheritdoc/>
+        public void UnregisterStreamIntervalSubscriber(Guid subscriberId)
+        {
+            // Unregister from the stream summary manager first
+            this.GetStreamSummaryManagers().ForEach(ssm => ssm.UnregisterSubscriber(subscriberId));
+
+            // Also unregister locally.
+            lock (this.subscribers)
+            {
+                if (this.subscribers.Contains(subscriberId))
+                {
+                    this.subscribers.Remove(subscriberId);
+                }
+            }
+
+            // Check if we have no more subscribers.
+            if (this.subscribers.Count == 0)
+            {
+                this.OnNoRemainingSubscribers();
+            }
+        }
+
+        /// <inheritdoc/>
+        public ObservableKeyedCache<DateTime, IntervalData<TItem>>.ObservableKeyedView ReadSummary<TItem>(
+            StreamSource streamSource,
+            ObservableKeyedViewMode viewMode,
+            DateTime startTime,
+            DateTime endTime,
+            TimeSpan interval,
+            uint tailCount,
+            Func<DateTime, DateTime> tailRange)
+        {
+            return this.GetStreamSummaryManagerOrDefault(streamSource).ReadSummary<TItem>(streamSource, viewMode, startTime, endTime, interval, tailCount, tailRange);
+        }
+
         /// <summary>
         /// Performs a series of updates to the messages in a stream.
         /// </summary>
@@ -223,11 +299,11 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>A collection of updates to the stream.  If the boolean value is true then the update is an upsert operation, otherwise it's a delete operation.</returns>
         public IEnumerable<(bool, dynamic, DateTime)> GetUncommittedUpdates()
         {
-            List<(bool, dynamic, DateTime)> updates = new List<(bool, dynamic, DateTime)>();
+            var updates = new List<(bool, dynamic, DateTime)>();
 
-            foreach (DateTime originatingTime in this.updateList.Keys)
+            foreach (var originatingTime in this.updateList.Keys)
             {
-                StreamUpdateWithView<T> update = this.updateList[originatingTime];
+                var update = this.updateList[originatingTime];
                 updates.Add((update.UpdateType != StreamUpdateType.Delete, update.Message.Data, originatingTime));
             }
 
@@ -343,6 +419,96 @@ namespace Microsoft.Psi.Visualization.Data
                 {
                     this.Deallocator?.Invoke(item.Data);
                 }
+            }
+        }
+
+        private List<StreamSummaryManager> GetStreamSummaryManagers()
+        {
+            lock (this.streamSummaryManagers)
+            {
+                return this.streamSummaryManagers.ToList();
+            }
+        }
+
+        private StreamSummaryManager GetOrCreateStreamSummaryManager(StreamSource streamSource)
+        {
+            var streamSummaryManager = this.GetStreamSummaryManagerOrDefault(streamSource);
+
+            if (streamSummaryManager == null)
+            {
+                lock (this.streamSummaryManagers)
+                {
+                    streamSummaryManager = new StreamSummaryManager(streamSource);
+                    streamSummaryManager.NoRemainingSubscribers += this.StreamSummaryManager_NoRemainingSubscribers;
+                    this.streamSummaryManagers.Add(streamSummaryManager);
+                }
+            }
+
+            return streamSummaryManager;
+        }
+
+        private StreamSummaryManager GetStreamSummaryManagerOrDefault(StreamSource streamSource)
+        {
+            if (streamSource == null)
+            {
+                throw new ArgumentNullException(nameof(streamSource));
+            }
+
+            if (string.IsNullOrWhiteSpace(streamSource.StoreName))
+            {
+                throw new ArgumentNullException(nameof(streamSource.StoreName));
+            }
+
+            if (string.IsNullOrWhiteSpace(streamSource.StorePath))
+            {
+                throw new ArgumentNullException(nameof(streamSource.StorePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(streamSource.StreamName))
+            {
+                throw new ArgumentNullException(nameof(streamSource.StreamName));
+            }
+
+            var key = Tuple.Create(streamSource.StoreName, streamSource.StorePath, streamSource.StreamName, streamSource.StreamAdapter);
+
+            if (this.streamSummaryManagers.Contains(key))
+            {
+                return this.streamSummaryManagers[key];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void StreamSummaryManager_NoRemainingSubscribers(object sender, EventArgs e)
+        {
+            var streamSummaryManager = sender as StreamSummaryManager;
+
+            // Create the key for the stream summary manager.
+            var key = Tuple.Create(
+                streamSummaryManager.StoreName,
+                streamSummaryManager.StorePath,
+                streamSummaryManager.StreamName,
+                streamSummaryManager.StreamAdapter);
+
+            // If the stream summary manager still has no subscribers, remove it from the collection and dispose of it.
+            lock (this.streamSummaryManagers)
+            {
+                if (this.streamSummaryManagers[key].SubscriberCount == 0)
+                {
+                    this.streamSummaryManagers.Remove(key);
+                    streamSummaryManager.NoRemainingSubscribers -= this.StreamSummaryManager_NoRemainingSubscribers;
+                    streamSummaryManager.Dispose();
+                }
+            }
+        }
+
+        private class StreamSummaryManagers : KeyedCollection<Tuple<string, string, string, IStreamAdapter>, StreamSummaryManager>
+        {
+            protected override Tuple<string, string, string, IStreamAdapter> GetKeyForItem(StreamSummaryManager streamSummaryManager)
+            {
+                return Tuple.Create(streamSummaryManager.StoreName, streamSummaryManager.StorePath, streamSummaryManager.StreamName, streamSummaryManager.StreamAdapter);
             }
         }
     }

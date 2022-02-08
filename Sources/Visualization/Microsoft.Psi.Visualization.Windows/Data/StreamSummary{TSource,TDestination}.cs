@@ -8,7 +8,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Collections.Specialized;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.Psi.Visualization.Collections;
 
     /// <summary>
     /// Represents the summarized data of a stream generated from a specified summarizer type.
@@ -26,7 +25,7 @@ namespace Microsoft.Psi.Visualization.Data
         private readonly Comparer<IntervalData<TDestination>> itemComparer;
         private readonly StreamSource streamSource;
         private readonly uint maxCacheSize;
-        private readonly object bufferLock = new object();
+        private readonly object bufferLock = new ();
 
         private ObservableKeyedCache<DateTime, IntervalData<TDestination>> summaryCache;
         private List<List<IntervalData<TDestination>>> summaryDataBuffer;

@@ -30,30 +30,23 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private RelayCommand<MouseButtonEventArgs> previewMouseRightButtonDownCommand;
         private RelayCommand<MouseButtonEventArgs> mouseRightButtonUpCommand;
 
-        /// <summary>
-        /// The current plan for moving the camera.
-        /// </summary>
         private Dictionary<string, Timeline> cameraAnimation;
-
-        /// <summary>
-        /// The current camera position.
-        /// </summary>
-        private Point3D cameraPosition = new Point3D(15, 15, 15);
-
-        /// <summary>
-        /// The current camera look direction.
-        /// </summary>
-        private Vector3D cameraLookDirection = new Vector3D(-15, -15, -15);
-
-        /// <summary>
-        /// The current camera up direction.
-        /// </summary>
-        private Vector3D cameraUpDirection = new Vector3D(0, 0, 1);
-
-        /// <summary>
-        /// The current camera field of view.
-        /// </summary>
+        private Point3D cameraPosition = new (15, 15, 15);
+        private Vector3D cameraLookDirection = new (-15, -15, -15);
+        private Vector3D cameraUpDirection = new (0, 0, 1);
         private double cameraFieldOfView = 45;
+        private bool rotateAroundMouseDownPoint = true;
+        private bool zoomAroundMouseDownPoint = true;
+        private double rotationSensitivity = 1;
+        private double zoomSensitivity = 1;
+
+        private bool showCameraInfo = false;
+        private bool showCameraTarget = true;
+        private bool showCoordinateSystem = false;
+        private bool showFieldOfView = false;
+        private bool showFrameRate = false;
+        private bool showTriangleCountInfo = false;
+        private bool showViewCube = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XYZVisualizationPanel"/> class.
@@ -147,6 +140,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// Gets or sets the name of the relative width for the panel.
         /// </summary>
         [DataMember]
+        [DisplayName("Relative Width")]
         [Description("The relative width for the panel.")]
         public int RelativeWidth
         {
@@ -159,6 +153,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [PropertyOrder(2)]
+        [DisplayName("Major Distance")]
         [Description("The major distance for the grid.")]
         public double MajorDistance
         {
@@ -171,6 +166,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [PropertyOrder(3)]
+        [DisplayName("Minor Distance")]
         [Description("The minor distance for the grid.")]
         public double MinorDistance
         {
@@ -183,6 +179,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [PropertyOrder(4)]
+        [DisplayName("Thickness")]
         [Description("The thickness of the gridlines.")]
         public double Thickness
         {
@@ -195,6 +192,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [ExpandableObject]
+        [DisplayName("Camera Position")]
         [Description("The view camera position.")]
         public Point3D CameraPosition
         {
@@ -207,6 +205,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [ExpandableObject]
+        [DisplayName("Camera Look Direction")]
         [Description("The view camera look direction.")]
         public Vector3D CameraLookDirection
         {
@@ -219,6 +218,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [ExpandableObject]
+        [DisplayName("Camera Up Direction")]
         [Description("The view camera up direction.")]
         public Vector3D CameraUpDirection
         {
@@ -231,11 +231,144 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [DataMember]
         [ExpandableObject]
+        [DisplayName("Camera Field of View")]
         [Description("The view camera field of view.")]
         public double CameraFieldOfView
         {
             get { return this.cameraFieldOfView; }
             set { this.Set(nameof(this.CameraFieldOfView), ref this.cameraFieldOfView, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to rotate around the mouse down point.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Rotate Around Mouse Point")]
+        [Description("Indicates whether to rotate around the mouse down point.")]
+        public bool RotateAroundMouseDownPoint
+        {
+            get { return this.rotateAroundMouseDownPoint; }
+            set { this.Set(nameof(this.RotateAroundMouseDownPoint), ref this.rotateAroundMouseDownPoint, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to zoom around the mouse down point.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Zoom Around Mouse Point")]
+        [Description("Indicates whether to zoom around the mouse down point.")]
+        public bool ZoomAroundMouseDownPoint
+        {
+            get { return this.zoomAroundMouseDownPoint; }
+            set { this.Set(nameof(this.ZoomAroundMouseDownPoint), ref this.zoomAroundMouseDownPoint, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the rotation sensitivity.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Rotation Sensitivity")]
+        [Description("The rotation sensitivity.")]
+        public double RotationSensitivity
+        {
+            get { return this.rotationSensitivity; }
+            set { this.Set(nameof(this.RotationSensitivity), ref this.rotationSensitivity, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the zoom sensitivity.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Zoom Sensitivity")]
+        [Description("The zoom sensitivity.")]
+        public double ZoomSensitivity
+        {
+            get { return this.zoomSensitivity; }
+            set { this.Set(nameof(this.ZoomSensitivity), ref this.zoomSensitivity, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show camera info.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Camera Info")]
+        [Description("Indicates whether to show camera info.")]
+        public bool ShowCameraInfo
+        {
+            get { return this.showCameraInfo; }
+            set { this.Set(nameof(this.ShowCameraInfo), ref this.showCameraInfo, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the camera target.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Camera Target")]
+        [Description("Indicates whether to show the camera target.")]
+        public bool ShowCameraTarget
+        {
+            get { return this.showCameraTarget; }
+            set { this.Set(nameof(this.ShowCameraTarget), ref this.showCameraTarget, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the coordinate system.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Coordinate System")]
+        [Description("Indicates whether to show the coordinate system.")]
+        public bool ShowCoordinateSystem
+        {
+            get { return this.showCoordinateSystem; }
+            set { this.Set(nameof(this.ShowCoordinateSystem), ref this.showCoordinateSystem, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the field of view.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Field of View")]
+        [Description("Indicates whether to show the field of view.")]
+        public bool ShowFieldOfView
+        {
+            get { return this.showFieldOfView; }
+            set { this.Set(nameof(this.ShowFieldOfView), ref this.showFieldOfView, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the frame rate.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Frame Rate")]
+        [Description("Indicates whether to show the frame rate.")]
+        public bool ShowFrameRate
+        {
+            get { return this.showFrameRate; }
+            set { this.Set(nameof(this.ShowFrameRate), ref this.showFrameRate, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the triangle count info.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Triangle Count")]
+        [Description("Indicates whether to show triangle count info.")]
+        public bool ShowTriangleCountInfo
+        {
+            get { return this.showTriangleCountInfo; }
+            set { this.Set(nameof(this.ShowTriangleCountInfo), ref this.showTriangleCountInfo, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the view cube.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show View Cube")]
+        [Description("Indicates whether to show the view cube.")]
+        public bool ShowViewCube
+        {
+            get { return this.showViewCube; }
+            set { this.Set(nameof(this.ShowViewCube), ref this.showViewCube, value); }
         }
 
         /// <inheritdoc/>

@@ -24,9 +24,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     public abstract class StreamVisualizationObjectCanvasView<TStreamVisualizationObject, TData> : VisualizationObjectView
         where TStreamVisualizationObject : StreamVisualizationObject<TData>, new()
     {
-        private readonly ScaleTransform scaleTransform = new ScaleTransform();
-        private readonly TranslateTransform translateTransform = new TranslateTransform();
-        private readonly TransformGroup transformGroup = new TransformGroup();
+        private readonly ScaleTransform scaleTransform = new ();
+        private readonly TranslateTransform translateTransform = new ();
+        private readonly TransformGroup transformGroup = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamVisualizationObjectCanvasView{TVisualizationObject, TData}"/> class.

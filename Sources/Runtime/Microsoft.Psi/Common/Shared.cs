@@ -115,7 +115,7 @@ namespace Microsoft.Psi
 
             this.inner.Release();
 #if TRACKLEAKS
-            StringBuilder sb = new StringBuilder("\\psi output **********************************************");
+            var sb = new StringBuilder("\\psi output **********************************************");
             sb.AppendLine();
             sb.AppendLine($"A shared resource of type {typeof(T).FullName} was not explicitly released and has been garbage-collected. It should be released by calling Dispose instead.");
             if (this.constructorStackTrace != null)
@@ -175,17 +175,16 @@ namespace Microsoft.Psi
         /// <returns>Shared resource.</returns>
         public Shared<T> AddRef()
         {
-            Shared<T> sh = new Shared<T>();
-            sh.inner = this.inner;
+            var shared = new Shared<T>
+            {
+                inner = this.inner,
+            };
             this.inner.AddRef();
-            return sh;
+            return shared;
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return this.ToString(string.Empty, CultureInfo.CurrentCulture);
-        }
+        public override string ToString() => this.ToString(string.Empty, CultureInfo.CurrentCulture);
 
         /// <inheritdoc/>
         public string ToString(string format, IFormatProvider formatProvider)
@@ -211,6 +210,9 @@ namespace Microsoft.Psi
         {
             public const int Version = 2;
             private SerializationHandler<SharedContainer<T>> handler;
+
+            /// <inheritdoc />
+            public bool? IsClearRequired => true;
 
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {

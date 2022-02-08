@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.MicrosoftSpeech
 {
+    using System;
     using System.Xml.Serialization;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Speech;
@@ -14,6 +15,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
     /// Use this class to configure a new instance of the <see cref="MicrosoftSpeechRecognizer"/> component.
     /// Refer to the properties in this class for more information on the various configuration options.
     /// </remarks>
+    [Obsolete("The MicrosoftSpeechRecognizer component has been deprecated. Consider using the SystemSpeechRecognizer component available in Microsoft.Psi.Speech.Windows instead.", false)]
     public sealed class MicrosoftSpeechRecognizerConfiguration
     {
         /// <summary>

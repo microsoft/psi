@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Visualization.Data
     public class StreamValuePublisher<TSource, TDestination> : IStreamValuePublisher<TSource>
     {
         /// <summary>
-        /// The collection of targets, indexed by the targets' registration token.
+        /// The collection of targets, indexed by the targets' subscriber id.
         /// </summary>
         private readonly Dictionary<Guid, Action<bool, TDestination, DateTime, DateTime>> targets;
 
@@ -45,7 +45,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Registers a subscriber.
         /// </summary>
         /// <param name="target">The target action to call for the subscriber.</param>
-        /// <returns>A registration token that can be user to unregister.</returns>
+        /// <returns>A subscriber id that can be user to unregister.</returns>
         public Guid RegisterSubscriber(Action<bool, TDestination, DateTime, DateTime> target)
         {
             // Add the target to the collection
@@ -58,22 +58,22 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <inheritdoc/>
-        public bool HasSubscriber(Guid registrationToken)
+        public bool HasSubscriber(Guid subscriberId)
         {
             lock (this.targets)
             {
-                return this.targets.ContainsKey(registrationToken);
+                return this.targets.ContainsKey(subscriberId);
             }
         }
 
         /// <inheritdoc/>
-        public void UnregisterSubscriber(Guid registrationToken)
+        public void UnregisterSubscriber(Guid subscriberId)
         {
             lock (this.targets)
             {
-                if (this.targets.ContainsKey(registrationToken))
+                if (this.targets.ContainsKey(subscriberId))
                 {
-                    this.targets.Remove(registrationToken);
+                    this.targets.Remove(subscriberId);
                 }
             }
         }

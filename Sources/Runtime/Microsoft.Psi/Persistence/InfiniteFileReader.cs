@@ -65,16 +65,6 @@ namespace Microsoft.Psi.Persistence
             return true;
         }
 
-        /// <summary>
-        /// Indicates whether more data might be added to this file
-        /// (i.e. the file still has an active writer).
-        /// </summary>
-        /// <returns>Returns true if there is an active writer to this file.</returns>
-        public bool IsMoreDataExpected()
-        {
-            return InfiniteFileWriter.IsActive(this.fileName, this.path);
-        }
-
         public void Dispose()
         {
             this.writePulse.Dispose();
@@ -102,7 +92,7 @@ namespace Microsoft.Psi.Persistence
         /// <summary>
         /// Returns true if we are in the middle of a block or
         /// if we are positioned at the start of the block and the block size prefix is greater than zero.
-        /// If false, use <see cref="IsMoreDataExpected"/> to determine if there could ever be more data
+        /// If false, use <see cref="PsiStoreMonitor.IsStoreLive(string, string)"/> to determine if there could ever be more data
         /// (i.e. if a writer is still active).
         /// </summary>
         /// <returns>True if more data is present, false if no more data is available.</returns>

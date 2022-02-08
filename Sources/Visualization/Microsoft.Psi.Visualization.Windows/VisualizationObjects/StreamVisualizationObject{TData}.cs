@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
-    /// Provides an abstract base class for stream visualization objects.
+    /// Provides a typed abstract base class for stream visualization objects.
     /// </summary>
     /// <typeparam name="TData">The type of the stream data.</typeparam>
     public abstract class StreamVisualizationObject<TData> : VisualizationObject, IStreamVisualizationObject
@@ -31,21 +31,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The source for the stream data, or null if the visualization object is not currently bound to a source.
         /// </summary>
         private StreamSource streamSource = null;
-
-        /// <summary>
-        /// The positive magnitude of the cursor epsilon (this value can be modified in the properties window).
-        /// </summary>
-        private int cursorEpsilonPosMs;
-
-        /// <summary>
-        /// The negative magnitude of the cursor epsilon (this value can be modified in the properties window).
-        /// </summary>
-        private int cursorEpsilonNegMs;
-
-        /// <summary>
-        /// Gets or sets the epsilon interval around the cursor used when reading data.
-        /// </summary>
-        private RelativeTimeInterval cursorEpsilon;
 
         /// <summary>
         /// The current (based on navigation cursor) value of the stream.
@@ -72,40 +57,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).
-        /// </summary>
-        [DataMember]
-        [DisplayName("Cursor Epsilon Future (ms)")]
-        [Description("The epsilon future duration relative to the cursor (in milliseconds) to consider when finding messages to visualize.")]
-        public int CursorEpsilonPosMs
-        {
-            get { return this.cursorEpsilonPosMs; }
-
-            set
-            {
-                this.cursorEpsilonPosMs = value;
-                this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.cursorEpsilonNegMs), TimeSpan.FromMilliseconds(this.cursorEpsilonPosMs));
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).
-        /// </summary>
-        [DataMember]
-        [DisplayName("Cursor Epsilon Past (ms)")]
-        [Description("The epsilon past duration relative to the cursor (in milliseconds) to consider when finding messages to visualize.")]
-        public int CursorEpsilonNegMs
-        {
-            get { return this.cursorEpsilonNegMs; }
-
-            set
-            {
-                this.cursorEpsilonNegMs = value;
-                this.CursorEpsilon = new RelativeTimeInterval(-TimeSpan.FromMilliseconds(this.cursorEpsilonNegMs), TimeSpan.FromMilliseconds(this.cursorEpsilonPosMs));
-            }
-        }
-
-        /// <summary>
         /// Gets the stream name.
         /// </summary>
         [Browsable(true)]
@@ -120,20 +71,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DisplayName("Partition Name")]
         [IgnoreDataMember]
         public string PartitionName => this.StreamBinding?.PartitionName;
-
-        /// <summary>
-        /// Gets the cursor epsilon.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelativeTimeInterval CursorEpsilon
-        {
-            get => this.cursorEpsilon;
-            private set
-            {
-                this.Set(nameof(this.CursorEpsilon), ref this.cursorEpsilon, value);
-            }
-        }
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -347,6 +284,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public bool IsLive => this.StreamSource != null && this.StreamSource.IsLive;
 
         /// <summary>
+        /// Gets or sets the visualization object's subscriber id.  This value is Guid.Empty
+        /// if the visualization object is not currently subscribed to a data provider.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        protected Guid SubscriberId { get; set; } = Guid.Empty;
+
+        /// <summary>
         /// Gets the allocator to use when reading data.
         /// </summary>
         protected virtual Func<TData> Allocator { get; } = null;
@@ -433,51 +378,51 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc />
         public void UpdateStreamSource(SessionViewModel sessionViewModel)
         {
-            // Attempt to rebind to a source
+            // Attempt to create a new stream source in the session
             var newStreamSource = sessionViewModel?.CreateStreamSource(
                 this.streamBinding,
                 () => this.Allocator != null ? this.Allocator() : default,
                 t => this.Deallocator?.Invoke(t));
 
-            // If we're still bound to the same source, then we're done.
-            if (this.StreamSource == newStreamSource)
+            // If the store specified in the stream source has changed,
+            // unbind from the old source and bind to the new source.
+            if (this.StreamSourceStoresDiffer(this.streamSource, newStreamSource))
             {
-                return;
+                this.RaisePropertyChanging(nameof(this.IconSource));
+                this.RaisePropertyChanging(nameof(this.CanSnapToStream));
+
+                // Keep track before unbinding of whether we are snapped to this
+                // stream
+                var wasSnappedToStream = this.IsSnappedToStream;
+
+                // Notify if we're becoming unbound from a stream source
+                if (this.StreamSource != null)
+                {
+                    this.StreamSource.PropertyChanging -= this.StreamSource_PropertyChanging;
+                    this.StreamSource.PropertyChanged -= this.StreamSource_PropertyChanged;
+                    this.StreamSource = null;
+                    this.OnStreamUnbound();
+                }
+
+                // Notify if we're now bound to a new stream source
+                if (newStreamSource != null)
+                {
+                    newStreamSource.PropertyChanging += this.StreamSource_PropertyChanging;
+                    newStreamSource.PropertyChanged += this.StreamSource_PropertyChanged;
+                    this.StreamSource = newStreamSource;
+                    this.OnStreamBound();
+                }
+
+                // If we're not longer snapped to this stream after rebinding but we should
+                // be, re-establish the snap
+                if (wasSnappedToStream && !this.IsSnappedToStream)
+                {
+                    this.ToggleSnapToStream();
+                }
+
+                this.RaisePropertyChanged(nameof(this.IconSource));
+                this.RaisePropertyChanged(nameof(this.CanSnapToStream));
             }
-
-            // Unhook event handlers from current stream source
-            if (this.StreamSource != null)
-            {
-                this.StreamSource.PropertyChanging -= this.StreamSource_PropertyChanging;
-                this.StreamSource.PropertyChanged -= this.StreamSource_PropertyChanged;
-            }
-
-            // Hook event handlers to new stream source
-            if (newStreamSource != null)
-            {
-                newStreamSource.PropertyChanging += this.StreamSource_PropertyChanging;
-                newStreamSource.PropertyChanged += this.StreamSource_PropertyChanged;
-            }
-
-            this.RaisePropertyChanging(nameof(this.IconSource));
-            this.RaisePropertyChanging(nameof(this.CanSnapToStream));
-
-            // Notify if we're becoming unbound from a stream source
-            if (this.StreamSource != null)
-            {
-                this.StreamSource = null;
-                this.OnStreamUnbound();
-            }
-
-            // Notify if we're now bound to a new stream source
-            if (newStreamSource != null)
-            {
-                this.StreamSource = newStreamSource;
-                this.OnStreamBound();
-            }
-
-            this.RaisePropertyChanged(nameof(this.IconSource));
-            this.RaisePropertyChanged(nameof(this.CanSnapToStream));
         }
 
         /// <summary>
@@ -531,6 +476,31 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 this.ToggleSnapToStream();
             }
+        }
+
+        private bool StreamSourceStoresDiffer(StreamSource streamSource1, StreamSource streamSource2)
+        {
+            // Determines if two stream sources both point to the same physical store.
+
+            // If one stream source is null and the other isn't, then the stores differ.
+            if (streamSource1 == null && streamSource2 != null)
+            {
+                return true;
+            }
+
+            if (streamSource1 != null && streamSource2 == null)
+            {
+                return true;
+            }
+
+            // If both sources are null. the the stores don't differ.
+            if (streamSource1 == null && streamSource2 == null)
+            {
+                return false;
+            }
+
+            // The stores differ if either the store name or the store path are different.
+            return (streamSource1.StoreName != streamSource2.StoreName) || (streamSource1.StorePath != streamSource2.StorePath);
         }
 
         private void StreamSource_PropertyChanging(object sender, PropertyChangingEventArgs e)

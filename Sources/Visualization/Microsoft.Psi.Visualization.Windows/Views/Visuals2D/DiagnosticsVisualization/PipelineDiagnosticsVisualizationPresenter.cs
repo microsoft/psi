@@ -48,9 +48,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public string SelectedEdgeDetails => this.model.SelectedEdgeDetails;
 
         /// <summary>
-        /// Gets edge color.
+        /// Gets the alpha to be used for unhighlighted edges.
         /// </summary>
-        public Color HighlightColor { get; private set; }
+        public byte UnhighlightedEdgeAlpha { get; private set; }
 
         /// <summary>
         /// Gets edge color.
@@ -125,11 +125,11 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public void UpdateSettings(PipelineDiagnosticsVisualizationObject visualizationObject)
         {
             // convert colors to MSAGL graph colors
-            static Color ColorFromMediaColor(System.Windows.Media.Color color) => new Color(color.R, color.G, color.B);
+            static Color ColorFromMediaColor(System.Windows.Media.Color color) => new (color.R, color.G, color.B);
 
             this.model.VisualizationObject = visualizationObject;
             this.EdgeColor = ColorFromMediaColor(visualizationObject.EdgeColor);
-            this.HighlightColor = ColorFromMediaColor(visualizationObject.HighlightColor);
+            this.UnhighlightedEdgeAlpha = (byte)(Math.Max(0, Math.Min(100, visualizationObject.HighlightOpacity)) * 255.0 / 100.0);
             this.NodeColor = ColorFromMediaColor(visualizationObject.NodeColor);
             this.SourceNodeColor = ColorFromMediaColor(visualizationObject.SourceNodeColor);
             this.SubpipelineColor = ColorFromMediaColor(visualizationObject.SubpipelineColor);
@@ -188,10 +188,21 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <summary>
         /// Update selected edge.
         /// </summary>
-        /// <param name="receiverDiagnostics">The receiver diagnostics.</param>
-        public void UpdateReceiverDiagnostics(PipelineDiagnostics.ReceiverDiagnostics receiverDiagnostics)
+        /// <param name="edge">The edge to update.</param>
+        public void UpdateReceiverDiagnostics(Edge edge)
         {
-            this.UpdateReceiverDiagnostics(receiverDiagnostics, this.VisualGraph, true);
+            var receiverDiagnostics = this.GetReceiverDiagnostics(edge);
+            if (receiverDiagnostics != null)
+            {
+                this.UpdateReceiverDiagnostics(receiverDiagnostics, this.VisualGraph, true);
+            }
+            else
+            {
+                this.model.SelectedEdgeDetails = string.Empty;
+                this.model.SelectedEdgeId = -1;
+                this.view.Update(true);
+                return;
+            }
         }
 
         /// <summary>
@@ -369,7 +380,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             return this.model.VisualizationObject.Highlight switch
             {
-                PipelineDiagnosticsVisualizationObject.HighlightCondition.None => false,
+                PipelineDiagnosticsVisualizationObject.HighlightCondition.None => true,
                 PipelineDiagnosticsVisualizationObject.HighlightCondition.UnlimitedDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Unlimited)),
                 PipelineDiagnosticsVisualizationObject.HighlightCondition.LatestMessageDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.LatestMessage)),
                 PipelineDiagnosticsVisualizationObject.HighlightCondition.ThrottleDeliveryPolicy => receiverDiagnostics.DeliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Throttle)),
@@ -395,23 +406,26 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private PipelineDiagnostics.ReceiverDiagnostics GetReceiverDiagnostics(Edge edge) =>
             this.DiagnosticsGraph.GetAllReceiverDiagnostics().FirstOrDefault(rd => rd.Id == (int)edge.UserData);
 
-        private void HeatmapStats(Graph graph, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector, bool perNode)
+        private void UpdateColoring(Graph graph)
         {
+            // visualize heatmap
             if (graph.Edges.Count() == 0)
             {
                 return;
             }
 
-            var edgeStats = graph.Edges.Where(e => (int)e.UserData != -1).Select(e => (e, statsSelector(this.GetReceiverDiagnostics(e))));
+            var statsSelector = this.StatsSelector(true);
+            var edgeStats = graph.Edges.Where(e => (int)e.UserData != -1).Select(e => (e, statsSelector != null ? statsSelector(this.GetReceiverDiagnostics(e)) : 0));
             var max = edgeStats.Select(x => x.Item2).Max();
+            var colorNodes = this.model.VisualizationObject.HeatmapStatistics == PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime;
 
-            if (perNode)
+            // Color all nodes
+            foreach (var node in graph.Nodes)
             {
-                // max edge per node
-                foreach (var node in graph.Nodes)
+                var inputs = node.InEdges;
+                if (inputs.Count() > 0)
                 {
-                    var inputs = node.InEdges;
-                    if (inputs.Count() > 0)
+                    if (colorNodes)
                     {
                         var maxStats = node.InEdges.Where(e => (int)e.UserData != -1).Select(e => statsSelector(this.GetReceiverDiagnostics(e))).Max();
                         var color = this.HeatmapColor(max > 0 ? maxStats / max : 0, this.NodeColor);
@@ -419,37 +433,29 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                         node.Attr.FillColor = color;
                         node.Label.FontColor = this.LabelColor(color);
                     }
-                }
-            }
-            else
-            {
-                // per edge
-                foreach (var (edge, stat) in edgeStats)
-                {
-                    edge.Attr.Color = this.HeatmapColor(max > 0 ? stat / max : 0, this.EdgeColor);
-                }
-            }
-        }
-
-        private void VisualizeEdgeColoring(Graph graph)
-        {
-            var selector = this.StatsSelector(true);
-            if (selector != null)
-            {
-                // visualize heatmap
-                var perNode = this.model.VisualizationObject.HeatmapStatistics == PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime;
-                this.HeatmapStats(graph, selector, perNode);
-            }
-
-            // overlay highlights
-            if (this.model.VisualizationObject.Highlight != PipelineDiagnosticsVisualizationObject.HighlightCondition.None)
-            {
-                foreach (var edge in graph.Edges)
-                {
-                    if ((int)edge.UserData != -1 && this.HilightEdge(this.GetReceiverDiagnostics(edge)))
+                    else
                     {
-                        edge.Attr.Color = this.HighlightColor;
+                        node.Attr.Color = this.NodeColor;
+                        node.Attr.FillColor = this.NodeColor;
+                        node.Label.FontColor = this.LabelColor(this.NodeColor);
                     }
+                }
+            }
+
+            // Color the edges
+            foreach (var (edge, stat) in edgeStats)
+            {
+                var edgeColor = this.HeatmapColor(max > 0 ? stat / max : 0, this.EdgeColor);
+                if ((int)edge.UserData != -1 && this.HilightEdge(this.GetReceiverDiagnostics(edge)))
+                {
+                    edge.Attr.Color = edgeColor;
+                    edge.Label.FontColor = edgeColor;
+                }
+                else
+                {
+                    var fadedEdgeColor = new Color(this.UnhighlightedEdgeAlpha, edgeColor.R, edgeColor.G, edgeColor.B);
+                    edge.Attr.Color = fadedEdgeColor;
+                    edge.Label.FontColor = fadedEdgeColor;
                 }
             }
         }
@@ -470,7 +476,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             vis.Label.FontColor = this.LabelColor(fillColor);
             vis.Attr.Color = fillColor;
             vis.Attr.FillColor = fillColor;
-            if (vis.LabelText == "Join")
+            if (vis.LabelText == "Join" || vis.LabelText == "Fuse")
             {
                 this.SetJoinVisualAttributes(vis, node.Name);
             }
@@ -490,12 +496,17 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             return $"     {emitterName}{arrow}{receiverName}{stats}{deliveryPolicyName}     "; // extra padding to allow for stats changes without re-layout
         }
 
-        private Edge BuildVisualEdge(Node source, Node target, string emitterName, string receiverName, int receiverId, string stats, string deliveryPolicyName, Style style)
+        private Edge BuildVisualEdge(Node source, Node target, string emitterName, string receiverName, int receiverId, string stats, string deliveryPolicyName, bool crossPipelines)
         {
+            static bool IsLossy(string deliveryPolicyName)
+                => deliveryPolicyName != DeliveryPolicy.Unlimited.Name &&
+                   deliveryPolicyName != DeliveryPolicy.SynchronousOrThrottle.Name &&
+                   deliveryPolicyName != DeliveryPolicy.Throttle.Name;
+
             var edge = new Edge(source, target, ConnectionToGraph.Connected);
             edge.Attr.Color = this.EdgeColor;
             edge.Attr.LineWidth = this.model.VisualizationObject.EdgeLineThickness;
-            edge.Attr.AddStyle(style);
+            edge.Attr.AddStyle(crossPipelines ? Style.Dashed : (this.model.VisualizationObject.ShowLossyDeliveryPoliciesAsDotted && IsLossy(deliveryPolicyName) ? Style.Dotted : Style.Solid));
             edge.LabelText = this.BuildVisualEdgeLabelText(emitterName, receiverName, stats, deliveryPolicyName);
             edge.Label.FontColor = this.LabelColorLight;
             edge.Label.UserData = edge;
@@ -506,7 +517,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private Edge BuildVisualEdge(Node source, Node target, PipelineDiagnostics.ReceiverDiagnostics input, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector)
         {
             var stats = statsSelector != null ? $" ({statsSelector(input):0.#})" : string.Empty;
-            return this.BuildVisualEdge(source, target, input.Source.Name, input.ReceiverName, input.Id, stats, input.DeliveryPolicyName, Style.Solid);
+            return this.BuildVisualEdge(source, target, input.Source.Name, input.ReceiverName, input.Id, stats, input.DeliveryPolicyName, false);
         }
 
         private bool AddVisualEdge(Node source, Node target, PipelineDiagnostics.ReceiverDiagnostics input, Graph graph, Func<PipelineDiagnostics.ReceiverDiagnostics, double> statsSelector)
@@ -690,7 +701,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                         if (subpipelineIdToPipelineDiagnostics.ContainsKey(targetPipeline.Id))
                         {
                             var targetNode = graph.FindNode($"n{subpipelineNodes[targetPipeline.Id].Id}");
-                            graph.AddPrecalculatedEdge(this.BuildVisualEdge(connector, targetNode, n.Name, bridgedPipeline.Name, -1, string.Empty, string.Empty, Style.Dotted));
+                            graph.AddPrecalculatedEdge(this.BuildVisualEdge(connector, targetNode, n.Name, bridgedPipeline.Name, -1, string.Empty, string.Empty, true));
                             break;
                         }
 
@@ -726,7 +737,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     {
                         var sourceNode = graph.FindNode($"n{sourceCurrentLevelId}");
                         var targetNode = graph.FindNode($"n{targetCurrentLevelId}");
-                        graph.AddPrecalculatedEdge(this.BuildVisualEdge(sourceNode, targetNode, string.Empty, descendantConnector.Name, -1, string.Empty, string.Empty, Style.Dotted));
+                        graph.AddPrecalculatedEdge(this.BuildVisualEdge(sourceNode, targetNode, string.Empty, descendantConnector.Name, -1, string.Empty, string.Empty, true));
                     }
                 }
             }
@@ -760,7 +771,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 this.model.SelectedEdgeDetails = string.Empty;
             }
 
-            this.VisualizeEdgeColoring(graph);
+            this.UpdateColoring(graph);
             return graph;
         }
     }

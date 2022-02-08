@@ -24,14 +24,14 @@ namespace Microsoft.Psi.Visualization.Windows
         /// Initializes a new instance of the <see cref="CreateAnnotationStreamWindow"/> class.
         /// </summary>
         /// <param name="availablePartitions">The list of partitions that the annotation stream may be created in.</param>
-        /// <param name="availableAnnotationDefinitions">The list of available annotation definitions the user may choose from.</param>
+        /// <param name="availableAnnotationSchemas">The list of available annotation schemas the user may choose from.</param>
         /// <param name="owner">The window that wons this window.</param>
-        public CreateAnnotationStreamWindow(IEnumerable<PartitionViewModel> availablePartitions, List<AnnotationDefinition> availableAnnotationDefinitions, Window owner)
+        public CreateAnnotationStreamWindow(IEnumerable<PartitionViewModel> availablePartitions, List<AnnotationSchema> availableAnnotationSchemas, Window owner)
         {
             this.InitializeComponent();
 
             this.AvailablePartitions = availablePartitions.Where(p => p.IsPsiPartition && !p.IsLivePartition).ToArray();
-            this.AvailableAnnotationDefinitions = availableAnnotationDefinitions;
+            this.AvailableAnnotationSchemas = availableAnnotationSchemas;
 
             this.Owner = owner;
             this.DataContext = this;
@@ -76,14 +76,14 @@ namespace Microsoft.Psi.Visualization.Windows
         public string PartitionWarningMessage { get; private set; }
 
         /// <summary>
-        /// Gets the list of available annotation definitions.
+        /// Gets the list of available annotation schemas.
         /// </summary>
-        public List<AnnotationDefinition> AvailableAnnotationDefinitions { get; private set; }
+        public List<AnnotationSchema> AvailableAnnotationSchemas { get; private set; }
 
         /// <summary>
-        /// Gets the annotation schema.
+        /// Gets the selected annotation schema.
         /// </summary>
-        public AnnotationDefinition SelectedAnnotationDefinition => this.AnnotationDefinitionComboBox.SelectedItem as AnnotationDefinition;
+        public AnnotationSchema SelectedAnnotationSchema => this.AnnotationSchemaComboBox.SelectedItem as AnnotationSchema;
 
         /// <summary>
         /// Gets the stream name.
@@ -141,18 +141,18 @@ namespace Microsoft.Psi.Visualization.Windows
 
         private void StorePathButton_Click(object sender, RoutedEventArgs e)
         {
-            using (FolderBrowserDialog dlg = new FolderBrowserDialog())
+            using var dlg = new FolderBrowserDialog()
             {
-                dlg.Description = "Please select a folder.";
-                dlg.RootFolder = Environment.SpecialFolder.MyComputer;
-                dlg.SelectedPath = string.IsNullOrWhiteSpace(this.StorePathTextBox.Text) ? string.Empty : this.StorePathTextBox.Text;
-                dlg.ShowNewFolderButton = true;
+                Description = "Please select a folder.",
+                RootFolder = Environment.SpecialFolder.MyComputer,
+                SelectedPath = string.IsNullOrWhiteSpace(this.StorePathTextBox.Text) ? string.Empty : this.StorePathTextBox.Text,
+                ShowNewFolderButton = true,
+            };
 
-                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    this.StorePathTextBox.Text = dlg.SelectedPath;
-                    this.Validate();
-                }
+            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.StorePathTextBox.Text = dlg.SelectedPath;
+                this.Validate();
             }
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.Psi.Visualization.Windows
                 this.IsValid =
                     !string.IsNullOrWhiteSpace(this.StreamName) &&
                     !string.IsNullOrWhiteSpace(this.ExistingPartitionName) &&
-                    this.SelectedAnnotationDefinition != default;
+                    this.SelectedAnnotationSchema != default;
             }
             else
             {

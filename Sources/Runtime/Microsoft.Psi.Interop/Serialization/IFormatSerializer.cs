@@ -16,6 +16,6 @@ namespace Microsoft.Psi.Interop.Serialization
         /// <param name="message">Message of any type.</param>
         /// <param name="originatingTime">Originating time of message.</param>
         /// <returns>Serialized bytes, index and count.</returns>
-        (byte[], int, int) SerializeMessage(dynamic message, DateTime originatingTime);
+        (byte[] Bytes, int Index, int Count) SerializeMessage(dynamic message, DateTime originatingTime);
     }
 }

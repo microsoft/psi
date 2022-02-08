@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.Data
 {
     using System;
-    using Microsoft.Psi.Visualization.Collections;
 
     /// <summary>
     /// Represents the summarized data of a stream generated from a specified summarizer type.

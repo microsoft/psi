@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.Data
 {
     using System;
-    using Microsoft.Psi.Visualization.Collections;
 
     /// <summary>
     /// Represents a stream update with an attached view of the cache.  The view covers only the stream update itself and exists to

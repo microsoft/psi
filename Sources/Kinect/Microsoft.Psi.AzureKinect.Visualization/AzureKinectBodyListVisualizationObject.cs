@@ -11,7 +11,7 @@ namespace Microsoft.Psi.AzureKinect.Visualization
     /// Implements a visualization object for a list of Azure Kinect bodies.
     /// </summary>
     [VisualizationObject("Azure Kinect Bodies")]
-    public class AzureKinectBodyListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<AzureKinectBodyVisualizationObject, AzureKinectBody, List<AzureKinectBody>>
+    public class AzureKinectBodyListVisualizationObject : ModelVisual3DListVisualizationObject<AzureKinectBodyVisualizationObject, AzureKinectBody>
     {
     }
 }

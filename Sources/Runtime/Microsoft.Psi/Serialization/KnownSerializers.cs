@@ -216,7 +216,7 @@ namespace Microsoft.Psi.Serialization
         /// <param name="cloningFlags">Optional flags that control the cloning behavior for this type.</param>
         public void Register(Type type, string contractName, CloningFlags cloningFlags = CloningFlags.None)
         {
-            contractName = contractName ?? TypeSchema.GetContractName(type, this.runtimeVersion);
+            contractName ??= TypeSchema.GetContractName(type, this.runtimeVersion);
             if (this.knownTypes.TryGetValue(contractName, out Type existingType) && existingType != type)
             {
                 throw new SerializationException($"Cannot register type {type.AssemblyQualifiedName} under the contract name {contractName} because the type {existingType.AssemblyQualifiedName} is already registered under the same name.");
@@ -317,7 +317,7 @@ namespace Microsoft.Psi.Serialization
                 return;
             }
 
-            if (schema.IsPartial && this.schemasById.TryGetValue(id, out TypeSchema otherSchema))
+            if (schema.IsPartial && this.schemasById.TryGetValue(id, out _))
             {
                 // schema is already registered
                 return;
@@ -448,14 +448,13 @@ namespace Microsoft.Psi.Serialization
             SerializationHandler handler = null;
             var type = typeof(T);
             ISerializer<T> serializer = null;
-            TypeSchema schema = null;
 
             if (!this.knownNames.TryGetValue(type, out string name))
             {
                 name = TypeSchema.GetContractName(type, this.runtimeVersion);
             }
 
-            if (!this.schemas.TryGetValue(name, out schema))
+            if (!this.schemas.TryGetValue(name, out TypeSchema schema))
             {
                 // try to match to an existing schema without assembly/version info
                 string typeName = TypeResolutionHelper.RemoveAssemblyName(type.AssemblyQualifiedName);
@@ -540,9 +539,8 @@ namespace Microsoft.Psi.Serialization
         private ISerializer<T> CreateSerializer<T>()
         {
             var type = typeof(T);
-            Type serializerType;
 
-            if (this.serializers.TryGetValue(type, out serializerType))
+            if (this.serializers.TryGetValue(type, out Type serializerType))
             {
                 return (ISerializer<T>)Activator.CreateInstance(serializerType);
             }

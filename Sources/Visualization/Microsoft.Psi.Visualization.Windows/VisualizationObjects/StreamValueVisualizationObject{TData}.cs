@@ -14,12 +14,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     public abstract class StreamValueVisualizationObject<TData> : StreamVisualizationObject<TData>
     {
         /// <summary>
-        /// The registration token returned when this value visualization object registered
-        /// with the data manager to receive notifications when the current data has changed.
-        /// </summary>
-        private Guid registrationToken = Guid.Empty;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="StreamValueVisualizationObject{TData}"/> class.
         /// </summary>
         public StreamValueVisualizationObject()
@@ -34,13 +28,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(this.CursorEpsilon))
             {
                 // If we're bound to a stream, notify the data manager about the new value
-                if (this.StreamSource != null && this.registrationToken != Guid.Empty)
+                if (this.StreamSource != null && this.SubscriberId != Guid.Empty)
                 {
                     // Un-register
-                    DataManager.Instance.UnregisterStreamValueSubscriber<TData>(this.registrationToken);
+                    DataManager.Instance.UnregisterStreamValueSubscriber<TData>(this.SubscriberId);
 
                     // And re-register with the new cursor epsilon
-                    this.registrationToken = DataManager.Instance.RegisterStreamValueSubscriber<TData>(
+                    this.SubscriberId = DataManager.Instance.RegisterStreamValueSubscriber<TData>(
                         this.StreamSource,
                         this.CursorEpsilon,
                         this.OnValueReceived,
@@ -56,7 +50,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected override void OnStreamBound()
         {
             // Register the stream value visualization object with the data manager
-            this.registrationToken = DataManager.Instance.RegisterStreamValueSubscriber<TData>(
+            this.SubscriberId = DataManager.Instance.RegisterStreamValueSubscriber<TData>(
                 this.StreamSource,
                 this.CursorEpsilon,
                 this.OnValueReceived,
@@ -69,10 +63,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected override void OnStreamUnbound()
         {
             // Unregister the stream value visualization object from the data manager
-            if (this.registrationToken != Guid.Empty)
+            if (this.SubscriberId != Guid.Empty)
             {
-                DataManager.Instance.UnregisterStreamValueSubscriber<TData>(this.registrationToken);
-                this.registrationToken = Guid.Empty;
+                DataManager.Instance.UnregisterStreamValueSubscriber<TData>(this.SubscriberId);
+                this.SubscriberId = Guid.Empty;
                 this.SetCurrentValue(null);
             }
 

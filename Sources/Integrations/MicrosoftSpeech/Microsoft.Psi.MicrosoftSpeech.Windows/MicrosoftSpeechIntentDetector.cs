@@ -22,6 +22,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
     /// - Click <a href="http://go.microsoft.com/fwlink/?LinkID=223568">here</a> to download the Microsoft Speech Platform runtime.
     /// - Click <a href="http://go.microsoft.com/fwlink/?LinkID=223569">here</a> to download the Microsoft Speech Platform language pack.
     /// </remarks>
+    [Obsolete("The MicrosoftSpeechRecognizer component has been deprecated. Consider using the SystemSpeechRecognizer component available in Microsoft.Psi.Speech.Windows instead.", false)]
     public sealed class MicrosoftSpeechIntentDetector : ConsumerProducer<string, IntentData>, ISourceComponent, IDisposable
     {
         /// <summary>
@@ -61,7 +62,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// <summary>
         /// Initializes a new instance of the <see cref="MicrosoftSpeechIntentDetector"/> class.
         /// </summary>
-        /// <param name="pipeline">The Psi pipeline.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The name of the configuration file.</param>
         public MicrosoftSpeechIntentDetector(Pipeline pipeline, string configurationFilename = null)
             : this(

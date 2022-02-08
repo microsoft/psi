@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
     using System;
-    using System.Windows.Media;
 
     /// <summary>
     /// Represents a visualization panel type attribute.

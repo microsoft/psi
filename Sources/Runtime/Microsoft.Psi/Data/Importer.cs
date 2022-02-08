@@ -209,7 +209,7 @@ namespace Microsoft.Psi.Data
         private class StreamImporter : ISourceComponent, IDisposable
         {
             private readonly IStreamReader streamReader;
-            private readonly Dictionary<string, object> streams = new Dictionary<string, object>();
+            private readonly Dictionary<string, object> streams = new ();
             private readonly Pipeline pipeline;
             private readonly KeyValueStore configurationStore;
             private readonly Receiver<bool> loopBack;

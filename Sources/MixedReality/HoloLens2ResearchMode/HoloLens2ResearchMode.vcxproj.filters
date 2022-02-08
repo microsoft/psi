@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>accd3aa8-1ba0-4223-9bbe-0c431709210b</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="ResearchModeCameraSensor.cpp" />
+    <ClCompile Include="ResearchModeSensorDepthFrame.cpp" />
+    <ClCompile Include="ResearchModeSensorVlcFrame.cpp" />
+    <ClCompile Include="ResearchModeAccelFrame.cpp" />
+    <ClCompile Include="ResearchModeImuSensor.cpp" />
+    <ClCompile Include="ResearchModeGyroFrame.cpp" />
+    <ClCompile Include="ResearchModeMagFrame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="ResearchModeApi.h" />
+    <ClInclude Include="ResearchModeCameraSensor.h" />
+    <ClInclude Include="ResearchModeSensorDepthFrame.h" />
+    <ClInclude Include="ResearchModeSensorVlcFrame.h" />
+    <ClInclude Include="ResearchModeAccelFrame.h" />
+    <ClInclude Include="ResearchModeImuSensor.h" />
+    <ClInclude Include="ResearchModeGyroFrame.h" />
+    <ClInclude Include="ResearchModeMagFrame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="ResearchModeSensorDevice.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HoloLens2ResearchMode.def" />
+    <None Include="$(MSBuildThisFileDirectory)\LICENSE.txt" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PropertySheet.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.md" />
+  </ItemGroup>
+</Project>

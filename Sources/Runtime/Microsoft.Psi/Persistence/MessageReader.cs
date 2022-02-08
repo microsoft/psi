@@ -41,8 +41,6 @@ namespace Microsoft.Psi.Persistence
 
         public int CurrentMessageStart => this.fileReader.CurrentBlockStart;
 
-        public bool IsMoreDataExpected() => this.fileReader.IsMoreDataExpected();
-
         public void Seek(int extentId, int position)
         {
             this.fileReader.Seek(extentId, position);

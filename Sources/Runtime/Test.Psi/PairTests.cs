@@ -20,8 +20,8 @@ namespace Test.Psi
             using (var pipeline = Pipeline.Create())
             {
                 Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
-                var primary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Delay(TimeSpan.FromMilliseconds(100));
                 var secondary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1));
+                var primary = secondary.Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary).ToObservable().ToListObservable();
                 var fused = primary.Fuse(secondary, Available.Last<int>()).ToObservable().ToListObservable();
                 pipeline.Run();
@@ -42,7 +42,7 @@ namespace Test.Psi
             {
                 Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1));
-                var secondary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Delay(TimeSpan.FromMilliseconds(100));
+                var secondary = primary.Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary).ToObservable().ToListObservable();
                 var fused = primary.Fuse(secondary, Available.Last<int>()).ToObservable().ToListObservable();
                 pipeline.Run();
@@ -63,7 +63,7 @@ namespace Test.Psi
             {
                 Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1));
-                var secondary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Delay(TimeSpan.FromMilliseconds(100));
+                var secondary = primary.Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary, 42).ToObservable().ToListObservable();
                 var fused = primary.Fuse(secondary, Available.LastOrDefault(42)).ToObservable().ToListObservable();
                 pipeline.Run();
@@ -83,8 +83,8 @@ namespace Test.Psi
             using (var pipeline = Pipeline.Create())
             {
                 Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
-                var primary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Delay(TimeSpan.FromMilliseconds(100));
                 var secondary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1));
+                var primary = secondary.Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary, (p, s) => p * 10 + s).ToObservable().ToListObservable();
                 var fused = primary.Fuse(secondary, Available.Last<int>(), (p, s) => p * 10 + s).ToObservable().ToListObservable();
                 pipeline.Run();
@@ -105,7 +105,7 @@ namespace Test.Psi
             {
                 Generators.Range(pipeline, 0, 2, TimeSpan.FromSeconds(1)); // hold pipeline open
                 var primary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1));
-                var secondary = Generators.Range(pipeline, 0, 5, TimeSpan.FromTicks(1)).Delay(TimeSpan.FromMilliseconds(100));
+                var secondary = primary.Delay(TimeSpan.FromMilliseconds(100));
                 var paired = primary.Pair(secondary, (p, s) => p * 10 + s, 7).ToObservable().ToListObservable();
                 var fused = primary.Fuse(secondary, Available.LastOrDefault(7), (p, s) => p * 10 + s).ToObservable().ToListObservable();
                 pipeline.Run();

@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Interop.Transport
         private readonly string address;
         private readonly IFormatDeserializer deserializer;
         private readonly Pipeline pipeline;
-        private readonly bool useReceivedTimes;
+        private readonly bool useSourceOriginatingTimes;
 
         private SubscriberSocket socket;
         private NetMQPoller poller;
@@ -28,15 +28,15 @@ namespace Microsoft.Psi.Interop.Transport
         /// <summary>
         /// Initializes a new instance of the <see cref="NetMQSource{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="topic">Topic name.</param>
         /// <param name="address">Connection string.</param>
         /// <param name="deserializer">Format deserializer with which messages are deserialized.</param>
-        /// <param name="useReceivedTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
-        public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useReceivedTimes = true)
+        /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
+        public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true)
         {
             this.pipeline = pipeline;
-            this.useReceivedTimes = useReceivedTimes;
+            this.useSourceOriginatingTimes = useSourceOriginatingTimes;
             this.topic = topic;
             this.address = address;
             this.deserializer = deserializer;
@@ -106,7 +106,7 @@ namespace Microsoft.Psi.Interop.Transport
                 }
 
                 var (message, originatingTime) = this.deserializer.DeserializeMessage(frames[1], 0, frames[1].Length);
-                this.Out.Post(message, this.useReceivedTimes ? originatingTime : this.pipeline.GetCurrentTime());
+                this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
         }
     }

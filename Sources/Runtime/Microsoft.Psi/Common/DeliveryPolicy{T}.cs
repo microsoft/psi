@@ -82,7 +82,7 @@ namespace Microsoft.Psi
         public static implicit operator DeliveryPolicy<T>(DeliveryPolicy policy)
         {
             return policy == null ? null : new DeliveryPolicy<T>(
-                DeliveryPolicy.DefaultInitialQueueSize,
+                policy.InitialQueueSize,
                 policy.MaximumQueueSize,
                 policy.MaximumLatency,
                 policy.ThrottleWhenFull,

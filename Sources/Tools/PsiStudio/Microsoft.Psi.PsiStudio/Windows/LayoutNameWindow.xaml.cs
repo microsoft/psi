@@ -42,7 +42,19 @@ namespace Microsoft.Psi.PsiStudio.Windows
             // Check that a layout with the same name does not already exist
             if (File.Exists(Path.Combine(this.layoutsPath, this.LayoutName)))
             {
-                new MessageBoxWindow(this.Owner, "Layout already exists", $"A layout named {this.LayoutNameTextBox.Text} cannot be created because a layout with that name already exists", "Close", null).ShowDialog();
+                var result = new MessageBoxWindow(
+                    this.Owner,
+                    "Layout already exists",
+                    $"A layout named {this.LayoutNameTextBox.Text} already exists. Do you want to overwrite it?",
+                    "Yes",
+                    "Cancel").ShowDialog();
+
+                if (result == true)
+                {
+                    this.DialogResult = true;
+                    e.Handled = true;
+                }
+
                 return;
             }
 

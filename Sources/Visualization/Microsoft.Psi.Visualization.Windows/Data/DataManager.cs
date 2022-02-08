@@ -5,14 +5,12 @@ namespace Microsoft.Psi.Visualization.Data
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
-    using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Windows;
 
@@ -25,21 +23,19 @@ namespace Microsoft.Psi.Visualization.Data
         /// <summary>
         /// The singleton instance of the <see cref="DataManager"/>.
         /// </summary>
-        public static readonly DataManager Instance = new DataManager();
-
-        private readonly StreamSummaryManagers streamSummaryManagers = new StreamSummaryManagers();
+        public static readonly DataManager Instance = new ();
 
         /// <summary>
         /// The lock used to control access to readAndPublishStreamValueDateTime.
         /// </summary>
-        private readonly object readAndPublishStreamValueDateTimeLock = new object();
+        private readonly object readAndPublishStreamValueDateTimeLock = new ();
 
         private readonly DispatcherTimer dataDispatchTimer;
 
         /// <summary>
         /// The collection of data store readers.  The keys are a tuple of store name and store path.
         /// </summary>
-        private Dictionary<(string storeName, string storePath), DataStoreReader> dataStoreReaders = new Dictionary<(string storeName, string storePath), DataStoreReader>();
+        private Dictionary<(string storeName, string storePath), DataStoreReader> dataStoreReaders = new ();
 
         /// <summary>
         /// The task that identifies the current operation for reading and publishing stream values,
@@ -97,7 +93,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="epsilonInterval">The epsilon interval to use when retrieving stream values.</param>
         /// <param name="target">The target method to call when new data is available.</param>
         /// <param name="cacheInterval">The time interval to cache.</param>
-        /// <returns>A registration token that can be used to unregister the stream value subscriber.</returns>
+        /// <returns>A subscriber id that can be used to unregister the stream value subscriber.</returns>
         /// <remarks>
         /// The target action is called when new data becomes available. The data object passed is only
         /// valid for the duration of the target action; as a result, if the stream value subscriber needs
@@ -121,22 +117,22 @@ namespace Microsoft.Psi.Visualization.Data
             var streamValueProvider = (IStreamValueProvider)genericMethod.Invoke(dataStoreReader, new object[] { streamSource });
 
             // Register the stream value subscriber
-            var registrationToken = streamValueProvider.RegisterStreamValueSubscriber(streamSource.StreamAdapter, epsilonInterval, target);
+            var subscriberId = streamValueProvider.RegisterStreamValueSubscriber(streamSource.StreamAdapter, epsilonInterval, target);
 
             // Set the cache interval
             streamValueProvider.SetCacheInterval(cacheInterval);
 
-            return registrationToken;
+            return subscriberId;
         }
 
         /// <summary>
         /// Unregisters a stream value subscriber.
         /// </summary>
         /// <typeparam name="TData">The type of data expected by the stream value subscriber.</typeparam>
-        /// <param name="registrationToken">The registration token that the subscriber was assigned when it was initially registered.</param>
-        public void UnregisterStreamValueSubscriber<TData>(Guid registrationToken) =>
+        /// <param name="subscriberId">The subscriber id that the subscriber was assigned when it was initially registered.</param>
+        public void UnregisterStreamValueSubscriber<TData>(Guid subscriberId) =>
             this.GetDataStoreReaders()
-                .ForEach(dataStoreReader => dataStoreReader.UnregisterStreamValueSubscriber<TData>(registrationToken));
+                .ForEach(dataStoreReader => dataStoreReader.UnregisterStreamValueSubscriber<TData>(subscriberId));
 
         /// <summary>
         /// Reads and publishes a stream value to all stream value subscribers based on the
@@ -217,22 +213,22 @@ namespace Microsoft.Psi.Visualization.Data
                 .ReadStream<T>(ObservableKeyedViewMode.TailRange, DateTime.MinValue, DateTime.MaxValue, 0, tailRange);
 
         /// <summary>
-        /// Registers a consumer of summary data.
+        /// Registers a subscriber of stream interval data.
         /// </summary>
-        /// <param name="streamSource">A stream source that indicates the store and stream summary data that the client consumes.</param>
-        /// <returns>A unique consumer id that should be provided when the consumer unregisters from the stream summary manager.</returns>
-        public Guid RegisterSummaryDataConsumer(StreamSource streamSource) =>
-            this.GetOrCreateStreamSummaryManager(streamSource)
-                .RegisterConsumer();
+        /// <typeparam name="T">The message data type.</typeparam>
+        /// <param name="streamSource">A stream source that indicates the store and stream data that the client consumes.</param>
+        /// <returns>A unique subscriber id that should be provided when the subscriber unregisters.</returns>
+        public Guid RegisterStreamIntervalSubscriber<T>(StreamSource streamSource) =>
+            this.GetOrCreateStreamIntervalProvider<T>(streamSource)
+                .RegisterStreamIntervalSubscriber(streamSource);
 
         /// <summary>
-        /// Unregisters a consumer of summary data.
+        /// Unregisters a subscriber of stream interval data.
         /// </summary>
-        /// <param name="consumerId">The id that was returned to the consumer when it registered as a summary data consumer.</param>
-        public void UnregisterSummaryDataConsumer(Guid consumerId) =>
-            this.GetStreamSummaryManagers()
-                .First(ssm => ssm.ContainsConsumer(consumerId))
-                .UnregisterConsumer(consumerId);
+        /// <param name="subscriberId">The id that was returned to the subscriber when it registered as a stream interval subscriber.</param>
+        public void UnregisterStreamIntervalSubscriber(Guid subscriberId) =>
+            this.GetDataStoreReaders()
+                .ForEach(dsr => dsr.UnregisterStreamIntervalSubscriber(subscriberId));
 
         /// <summary>
         /// Gets a view over the specified time range of the cached summary data.
@@ -248,7 +244,7 @@ namespace Microsoft.Psi.Visualization.Data
             DateTime startTime,
             DateTime endTime,
             TimeSpan summaryInterval) =>
-            this.GetOrCreateStreamSummaryManager(streamSource)
+            this.GetOrCreateStreamIntervalProvider<T>(streamSource)
                 .ReadSummary<T>(streamSource, ObservableKeyedViewMode.Fixed, startTime, endTime, summaryInterval, 0, null);
 
         /// <summary>
@@ -263,7 +259,7 @@ namespace Microsoft.Psi.Visualization.Data
             StreamSource streamSource,
             TimeSpan summaryInterval,
             uint tailCount) =>
-            this.GetOrCreateStreamSummaryManager(streamSource)
+            this.GetOrCreateStreamIntervalProvider<T>(streamSource)
                 .ReadSummary<T>(streamSource, ObservableKeyedViewMode.TailCount, DateTime.MinValue, DateTime.MaxValue, summaryInterval, tailCount, null);
 
         /// <summary>
@@ -278,7 +274,7 @@ namespace Microsoft.Psi.Visualization.Data
             StreamSource streamSource,
             TimeSpan summaryInterval,
             Func<DateTime, DateTime> tailRange) =>
-            this.GetOrCreateStreamSummaryManager(streamSource)
+            this.GetOrCreateStreamIntervalProvider<T>(streamSource)
                 .ReadSummary<T>(streamSource, ObservableKeyedViewMode.TailRange, DateTime.MinValue, DateTime.MaxValue, summaryInterval, 0, tailRange);
 
         /// <summary>
@@ -318,8 +314,9 @@ namespace Microsoft.Psi.Visualization.Data
                 throw new InvalidOperationException("StreamSources that use either a StreamAdapter or a Summarizer are not permitted to update streams.");
             }
 
-            var dataStoreReader = this.GetDataStoreReaderOrDefault(streamSource.StoreName, streamSource.StorePath);
-            dataStoreReader.UpdateStream(streamSource, updates);
+            // Call update stream on the datastore reader
+            this.GetDataStoreReaderOrDefault(streamSource.StoreName, streamSource.StorePath)
+                .UpdateStream(streamSource, updates);
 
             // Notify listeners that the store and stream are now dirty
             this.DataStoreStatusChanged?.Invoke(this, new DataStoreStatusChangedEventArgs(streamSource.StoreName, true, streamSource.StreamName));
@@ -341,38 +338,17 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Closes all readers on a store to allow the store to be moved or updated.
-        /// </summary>
-        /// <param name="storeName">The name of the store to close.</param>
-        /// <param name="storePath">The path to the store to close.</param>
-        public void CloseStore(string storeName, string storePath)
-        {
-            var dataStoreReader = this.GetDataStoreReaderOrDefault(storeName, storePath);
-            dataStoreReader.Dispose();
-            this.RemoveDataStoreReader(storeName, storePath);
-        }
-
-        /// <summary>
-        /// Refreshes all the existing stores.
-        /// </summary>
-        public void Refresh()
-        {
-            foreach ((var storeName, var storePath) in this.GetDataStoreReaders().Select(dataStoreReader => (dataStoreReader.StoreName, dataStoreReader.StorePath)))
-            {
-                this.CloseStore(storeName, storePath);
-            }
-        }
-
-        /// <summary>
         /// Gets the time of the nearest message to a specified time, on a specified stream.
         /// </summary>
         /// <param name="streamSource">The stream source specifying the stream of interest.</param>
         /// <param name="time">The time to find the nearest message to.</param>
         /// <param name="nearestMessageType">The type of nearest message to find.</param>
         /// <returns>The time of the nearest message, if one is found or null otherwise.</returns>
-        public DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestMessageType nearestMessageType) =>
-            this.GetOrCreateDataStoreReader(streamSource)
-                .GetTimeOfNearestMessage(streamSource, time, nearestMessageType);
+        public DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestMessageType nearestMessageType)
+        {
+            return streamSource != null ? this.GetOrCreateDataStoreReader(streamSource)
+                .GetTimeOfNearestMessage(streamSource, time, nearestMessageType) : null;
+        }
 
         /// <summary>
         /// Runs a task to read and publish stream values.
@@ -460,13 +436,6 @@ namespace Microsoft.Psi.Visualization.Data
                     // dispatch data for data stream readers
                     dataStoreReader.DispatchData();
                 });
-
-            this.GetStreamSummaryManagers()
-                .ForEach(streamSummaryManager =>
-                {
-                    // dispatch data for stream summary managers
-                    streamSummaryManager.DispatchData();
-                });
         }
 
         private List<DataStoreReader> GetDataStoreReaders()
@@ -500,6 +469,7 @@ namespace Microsoft.Psi.Visualization.Data
                 lock (this.dataStoreReaders)
                 {
                     dataStoreReader = new DataStoreReader(storeName, storePath, streamReaderType);
+                    dataStoreReader.NoRemainingSubscribers += this.DataStoreReader_NoRemainingSubscribers;
                     dataStoreReader.StreamReadError += this.DataStoreReader_StreamReadError;
                     this.dataStoreReaders.Add((storeName, storePath), dataStoreReader);
                 }
@@ -527,14 +497,21 @@ namespace Microsoft.Psi.Visualization.Data
             this.GetOrCreateDataStoreReader(streamSource)
                 .GetOrCreateStreamIntervalProvider<T>(streamSource);
 
-        private void RemoveDataStoreReader(string storeName, string storePath)
+        private void DataStoreReader_NoRemainingSubscribers(object sender, EventArgs e)
         {
-            var key = (storeName, storePath);
+            var dataStoreReader = sender as DataStoreReader;
 
             lock (this.dataStoreReaders)
             {
-                this.dataStoreReaders[key].StreamReadError -= this.DataStoreReader_StreamReadError;
-                this.dataStoreReaders.Remove(key);
+                // If the data store reader has no more subscribers, remove it from the collection.
+                if (!dataStoreReader.HasSubscribers)
+                {
+                    var key = (dataStoreReader.StoreName, dataStoreReader.StorePath);
+                    this.dataStoreReaders.Remove(key);
+                    dataStoreReader.NoRemainingSubscribers -= this.DataStoreReader_NoRemainingSubscribers;
+                    dataStoreReader.StreamReadError -= this.DataStoreReader_StreamReadError;
+                    dataStoreReader.Dispose();
+                }
             }
         }
 
@@ -542,107 +519,6 @@ namespace Microsoft.Psi.Visualization.Data
         {
             // Alert the visualization objects that the stream is unreadable.
             this.StreamReadError?.Invoke(this, e);
-        }
-
-        private List<StreamSummaryManager> GetStreamSummaryManagers()
-        {
-            lock (this.streamSummaryManagers)
-            {
-                return this.streamSummaryManagers.ToList();
-            }
-        }
-
-        private StreamSummaryManager GetOrCreateStreamSummaryManager(StreamSource streamSource)
-        {
-            var streamSummaryManager = this.GetStreamSummaryManagerOrDefault(streamSource);
-
-            if (streamSummaryManager == null)
-            {
-                lock (this.streamSummaryManagers)
-                {
-                    streamSummaryManager = new StreamSummaryManager(streamSource);
-                    streamSummaryManager.NoRemainingConsumers += this.StreamSummaryManager_NoRemainingConsumers;
-                    this.streamSummaryManagers.Add(streamSummaryManager);
-                }
-            }
-
-            return streamSummaryManager;
-        }
-
-        private StreamSummaryManager GetStreamSummaryManagerOrDefault(StreamSource streamSource)
-        {
-            if (streamSource == null)
-            {
-                throw new ArgumentNullException(nameof(streamSource));
-            }
-
-            if (string.IsNullOrWhiteSpace(streamSource.StoreName))
-            {
-                throw new ArgumentNullException(nameof(streamSource.StoreName));
-            }
-
-            if (string.IsNullOrWhiteSpace(streamSource.StorePath))
-            {
-                throw new ArgumentNullException(nameof(streamSource.StorePath));
-            }
-
-            if (string.IsNullOrWhiteSpace(streamSource.StreamName))
-            {
-                throw new ArgumentNullException(nameof(streamSource.StreamName));
-            }
-
-            var key = Tuple.Create(streamSource.StoreName, streamSource.StorePath, streamSource.StreamName, streamSource.StreamAdapter);
-
-            if (this.streamSummaryManagers.Contains(key))
-            {
-                return this.streamSummaryManagers[key];
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        private void StreamSummaryManager_NoRemainingConsumers(object sender, EventArgs e)
-        {
-            // If there's no remaining consumers on a stream summary manager, run a task to wait a short
-            // while and then check if there's still no consumers before removing it from the collection.
-            Task.Run(() => this.CheckNoRemainingStreamSummaryManagerConsumers(sender as StreamSummaryManager));
-        }
-
-        private void CheckNoRemainingStreamSummaryManagerConsumers(StreamSummaryManager streamSummaryManager)
-        {
-            // When we switch layouts the old and new layouts may both reference visualization objects that have the same stream source, but the visualization
-            // object in the old layout needs to unregister as a consumer from the stream summary manager before the visualization object in the new layout
-            // registers as a listener. In order to avoid disposing of a stream summary manager and all of its cached data, and then immediately having
-            // to create it all again when the visualization object in the new layout registers as a listener, we instead wait a short while after the last
-            // listener has unregistered before removing and disposing of the stream summary manager.
-            Thread.Sleep(2000);
-
-            // Create the key for the stream summary manager.
-            var key = Tuple.Create(
-                streamSummaryManager.StoreName,
-                streamSummaryManager.StorePath,
-                streamSummaryManager.StreamName,
-                streamSummaryManager.StreamAdapter);
-
-            // If the stream summary manager still has no consumers, remove it from the collection and dispose of it.
-            lock (this.streamSummaryManagers)
-            {
-                if (this.streamSummaryManagers[key].ConsumerCount == 0)
-                {
-                    this.streamSummaryManagers.Remove(key);
-                    streamSummaryManager.Dispose();
-                }
-            }
-        }
-
-        private class StreamSummaryManagers : KeyedCollection<Tuple<string, string, string, IStreamAdapter>, StreamSummaryManager>
-        {
-            protected override Tuple<string, string, string, IStreamAdapter> GetKeyForItem(StreamSummaryManager streamSummaryManager)
-            {
-                return Tuple.Create(streamSummaryManager.StoreName, streamSummaryManager.StorePath, streamSummaryManager.StreamName, streamSummaryManager.StreamAdapter);
-            }
         }
     }
 }

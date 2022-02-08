@@ -41,9 +41,20 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
+            <!-- Threshold rectangle -->
+            <Rectangle
+                StrokeThickness="0"
+                Fill="{Binding BackgroundColor, Converter={StaticResource ColorToSolidColorBrushConverter}}"
+                Margin="0"
+                Height="{Binding ThresholdRectangleHeight}"
+                Opacity="{Binding ThresholdRectangleOpacity}"
+                VerticalAlignment="{Binding ThresholdRectangleVerticalAlignment}"
+                Visibility="{Binding ThresholdRectangleVisibility}"/>
+
             <views:TimelineView DataContext="{Binding Navigator}" SelectionRegionBrush="{StaticResource SelectionRegionBrush}" ShowTicks="{Binding ElementName=Root, Path=DataContext.ShowTimeTicks}"/>
 
             <DataGrid
+                AutomationProperties.Name="Legend"
                 ItemsSource="{Binding VisualizationObjects}"
                 Visibility="{Binding ShowLegend, Converter={StaticResource BoolToVisibilityConverter}}"
                 Background="{x:Null}"
@@ -110,14 +121,15 @@
             </Border>
 
             <Button 
-                Command="{Binding RemovePanelCommand}"
-                Background="{StaticResource DarkBackgroundBrush}"
+                Command="{Binding ToggleVisibilityCommand}"
+                Background="{Binding BackgroundColor, Converter={StaticResource ColorToSolidColorBrushConverter}}"
                 Height="16"
                 Width="16"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Right"
-                Margin="4,4,4,4">
-                <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=close-panel.png}"/>
+                ToolTip="Hide panel"
+                Margin="4,4,22,4">
+                <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=panel-showhide-smallbutton-faded.png}"/>
                 <Button.Style>
                     <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                         <Style.Triggers>
@@ -131,6 +143,45 @@
                     </Style>
                 </Button.Style>
             </Button>
+
+            <Button 
+                Command="{Binding RemovePanelCommand}"
+                Background="{Binding BackgroundColor, Converter={StaticResource ColorToSolidColorBrushConverter}}"
+                Height="16"
+                Width="16"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                ToolTip="Remove panel"
+                Margin="4,4,4,4">
+                <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=remove-smallbutton-faded.png}"/>
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Root}" Value="True">
+                                <Setter Property="Visibility" Value="Visible" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Root}" Value="False">
+                                <Setter Property="Visibility" Value="Hidden" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Border Name="ReorderThumb" Width="15" Cursor="ScrollNS" VerticalAlignment="Stretch" HorizontalAlignment="Left" MouseMove="ReorderThumb_MouseMove" Background="{StaticResource CursorBrush}">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ReorderThumb}" Value="False">
+                                <Setter Property="Opacity" Value="0"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=ReorderThumb}" Value="True">
+                                <Setter Property="Opacity" Value="100"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
 
             <Thumb Height="3" Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Opacity="0">
                 <i:Interaction.Triggers>
@@ -148,6 +199,15 @@
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseRightButtonDown">
                 <cmd:EventToCommand Command="{Binding Path=MouseRightButtonDownCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="MouseMove">
+                <cmd:EventToCommand Command="{Binding Path=MouseMoveCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="Loaded">
+                <cmd:EventToCommand Command="{Binding Path=ViewportLoadedCommand}" PassEventArgsToCommand="True" />
+            </i:EventTrigger>
+            <i:EventTrigger EventName="SizeChanged">
+                <cmd:EventToCommand Command="{Binding Path=ViewportSizeChangedCommand}" PassEventArgsToCommand="True" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>

@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Data
         private readonly PsiStoreWriter writer;
         private readonly Merger<Message<BufferReader>, string> merger;
         private readonly Pipeline pipeline;
-        private readonly ManualResetEvent throttle = new ManualResetEvent(true);
+        private readonly ManualResetEvent throttle = new (true);
         private readonly KnownSerializers serializers;
 
         /// <summary>
@@ -75,6 +75,11 @@ namespace Microsoft.Psi.Data
         /// Gets the path to the store being written to if the store is persisted to disk, or null if the store is volatile.
         /// </summary>
         public string Path => this.writer.Path;
+
+        /// <summary>
+        /// Gets stream metadata.
+        /// </summary>
+        public IEnumerable<IStreamMetadata> Metadata => this.writer.Metadata;
 
         /// <summary>
         /// Gets the set of types that this Importer can deserialize.
@@ -219,16 +224,16 @@ namespace Microsoft.Psi.Data
             this.WriteToStorage(source, name, metadata.IsIndexed, deliveryPolicy).UpdateSupplementalMetadataFrom(metadata);
         }
 
-        internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata meta, DeliveryPolicy<Message<BufferReader>> deliveryPolicy = null)
+        internal void Write(Emitter<Message<BufferReader>> source, PsiStreamMetadata metadata, DeliveryPolicy<Message<BufferReader>> deliveryPolicy = null)
         {
-            var mergeInput = this.merger.Add(meta.Name); // this checks for duplicates
+            var mergeInput = this.merger.Add(metadata.Name); // this checks for duplicates
 
             var connector = this.CreateInputConnectorFrom<Message<BufferReader>>(source.Pipeline, null);
             source.PipeTo(connector);
-            source.Name ??= meta.Name;
-            connector.Out.Name = meta.Name;
+            source.Name ??= metadata.Name;
+            connector.Out.Name = metadata.Name;
 
-            this.writer.OpenStream(meta);
+            this.writer.OpenStream(metadata);
 
             // defaults to lossless delivery policy unless otherwise specified
             connector.PipeTo(mergeInput, true, deliveryPolicy ?? DeliveryPolicy.Unlimited);

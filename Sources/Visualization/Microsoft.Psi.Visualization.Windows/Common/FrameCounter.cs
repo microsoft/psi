@@ -4,14 +4,14 @@
 namespace Microsoft.Psi.Visualization
 {
     using System.Diagnostics;
-    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Data;
 
     /// <summary>
     /// Represents a frame counter (FPS).
     /// </summary>
     public class FrameCounter : ObservableObject
     {
-        private Stopwatch stopwatch = new Stopwatch();
+        private readonly Stopwatch stopwatch = new ();
         private long lastTicks;
         private float averageTicksPerFrame;
         private int rate;

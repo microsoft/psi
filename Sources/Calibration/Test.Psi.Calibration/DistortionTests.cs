@@ -66,6 +66,7 @@ namespace Test.Psi.Calibration
             unsafe
             {
                 byte* row = (byte*)img.ImageData.ToPointer();
+                var bytesPerPixel = img.BitsPerPixel / 8;
                 for (int i = 0; i < img.Height; i++)
                 {
                     byte* col = row;
@@ -84,7 +85,7 @@ namespace Test.Psi.Calibration
                             col[2] = (byte)(255.0f * (1.0f - (float)i / (float)img.Height));
                         }
 
-                        col += img.BitsPerPixel / 8;
+                        col += bytesPerPixel;
                     }
 
                     row += img.Stride;
@@ -158,6 +159,8 @@ namespace Test.Psi.Calibration
             unsafe
             {
                 byte* dstrow = (byte*)distortedImage.ImageData.ToPointer();
+                var imgBytesPerPixel = img.BitsPerPixel / 8;
+                var distortedImageBytesPerPixel = distortedImage.BitsPerPixel / 8;
                 for (int i = 0; i < distortedImage.Height; i++)
                 {
                     byte* dstcol = dstrow;
@@ -168,19 +171,19 @@ namespace Test.Psi.Calibration
                             ((float)i - ci.PrincipalPoint.Y) / ci.FocalLengthXY.Y);
 
                         Point2D undistortedPoint;
-                        bool converged = ci.UndistortPoint(pixelCoord, out undistortedPoint);
+                        bool converged = ci.TryUndistortPoint(pixelCoord, out undistortedPoint);
 
                         int px = (int)(undistortedPoint.X * ci.FocalLengthXY.X + ci.PrincipalPoint.X);
                         int py = (int)(undistortedPoint.Y * ci.FocalLengthXY.Y + ci.PrincipalPoint.Y);
                         if (converged && px >= 0 && px < img.Width && py >= 0 && py < img.Height)
                         {
-                            byte* src = (byte*)img.ImageData.ToPointer() + py * img.Stride + px * img.BitsPerPixel / 8;
+                            byte* src = (byte*)img.ImageData.ToPointer() + py * img.Stride + px * imgBytesPerPixel;
                             dstcol[0] = src[0];
                             dstcol[1] = src[1];
                             dstcol[2] = src[2];
                         }
 
-                        dstcol += distortedImage.BitsPerPixel / 8;
+                        dstcol += distortedImageBytesPerPixel;
                     }
 
                     dstrow += distortedImage.Stride;
@@ -197,6 +200,8 @@ namespace Test.Psi.Calibration
                 double err = 0.0;
                 int numPts = 0;
                 byte* dstrow = (byte*)undistortedImage.ImageData.ToPointer();
+                var imgBytesPerPixel = img.BitsPerPixel / 8;
+                var undistortedImageBytesPerPixel = undistortedImage.BitsPerPixel / 8;
                 for (int i = 0; i < undistortedImage.Height; i++)
                 {
                     byte* dstcol = dstrow;
@@ -206,18 +211,18 @@ namespace Test.Psi.Calibration
                             ((float)j - ci.PrincipalPoint.X) / ci.FocalLengthXY.X,
                             ((float)i - ci.PrincipalPoint.Y) / ci.FocalLengthXY.Y);
                         MathNet.Spatial.Euclidean.Point2D distortedPixelCoord, undistortedPixelCoord;
-                        ci.DistortPoint(pixelCoord, out distortedPixelCoord);
-                        bool converged = ci.UndistortPoint(distortedPixelCoord, out undistortedPixelCoord);
+                        ci.TryDistortPoint(pixelCoord, out distortedPixelCoord);
+                        bool converged = ci.TryUndistortPoint(distortedPixelCoord, out undistortedPixelCoord);
 
                         int px = (int)(undistortedPixelCoord.X * ci.FocalLengthXY.X + ci.PrincipalPoint.X);
                         int py = (int)(undistortedPixelCoord.Y * ci.FocalLengthXY.Y + ci.PrincipalPoint.Y);
                         if (converged && px >= 0 && px < img.Width && py >= 0 && py < img.Height)
                         {
-                            byte* src = (byte*)img.ImageData.ToPointer() + py * img.Stride + px * img.BitsPerPixel / 8;
+                            byte* src = (byte*)img.ImageData.ToPointer() + py * img.Stride + px * imgBytesPerPixel;
                             dstcol[0] = src[0];
                             dstcol[1] = src[1];
                             dstcol[2] = src[2];
-                            byte* src2 = (byte*)img.ImageData.ToPointer() + i * img.Stride + j * img.BitsPerPixel / 8;
+                            byte* src2 = (byte*)img.ImageData.ToPointer() + i * img.Stride + j * imgBytesPerPixel;
                             double dx = (double)src2[0] - (double)src[0];
                             double dy = (double)src2[1] - (double)src[1];
                             double dz = (double)src2[2] - (double)src[2];
@@ -225,7 +230,7 @@ namespace Test.Psi.Calibration
                             numPts++;
                         }
 
-                        dstcol += undistortedImage.BitsPerPixel / 8;
+                        dstcol += undistortedImageBytesPerPixel;
                     }
 
                     dstrow += undistortedImage.Stride;

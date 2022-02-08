@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Merger{TIn, TKey}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="action">Action invoked for each key/message.</param>
         public Merger(Pipeline pipeline, Action<TKey, Message<TIn>> action)
         {

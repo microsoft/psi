@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Aggregator{TState, TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="init">Initial state.</param>
         /// <param name="aggregator">Aggregation function.</param>
         public Aggregator(Pipeline pipeline, TState init, Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator)

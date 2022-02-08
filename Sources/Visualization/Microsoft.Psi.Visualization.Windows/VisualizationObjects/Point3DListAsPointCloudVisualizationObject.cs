@@ -20,6 +20,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private Color color = Colors.Gray;
         private double pointSize = 1.0;
+        private string numberOfPoints = "N/A";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Point3DListAsPointCloudVisualizationObject"/> class.
@@ -57,9 +58,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             set { this.Set(nameof(this.PointSize), ref this.pointSize, value); }
         }
 
+        /// <summary>
+        /// Gets the number of points in the point-cloud.
+        /// </summary>
+        [IgnoreDataMember]
+        [Browsable(true)]
+        [DisplayName("Number of points")]
+        [Description("The number of points in the current point cloud.")]
+        public string NumberOfPoints
+        {
+            get => this.numberOfPoints;
+            private set => this.Set(nameof(this.NumberOfPoints), ref this.numberOfPoints, value);
+        }
+
         /// <inheritdoc/>
         public override void UpdateData()
         {
+            this.NumberOfPoints = this.CurrentData != null ? this.CurrentData.Count.ToString() : "N/A";
             this.UpdateVisuals();
             this.UpdateVisibility();
         }

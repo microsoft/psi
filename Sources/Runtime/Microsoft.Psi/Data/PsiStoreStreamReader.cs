@@ -17,10 +17,10 @@ namespace Microsoft.Psi.Data
     /// </summary>
     public sealed class PsiStoreStreamReader : IStreamReader
     {
-        private readonly Dictionary<int, List<Delegate>> targets = new Dictionary<int, List<Delegate>>();
-        private readonly Dictionary<int, List<Action<SerializationException>>> errorHandlers = new Dictionary<int, List<Action<SerializationException>>>();
-        private readonly Dictionary<int, Action<BufferReader, Envelope>> outputs = new Dictionary<int, Action<BufferReader, Envelope>>();
-        private readonly Dictionary<int, Action<IndexEntry, Envelope>> indexOutputs = new Dictionary<int, Action<IndexEntry, Envelope>>();
+        private readonly Dictionary<int, List<Delegate>> targets = new ();
+        private readonly Dictionary<int, List<Action<SerializationException>>> errorHandlers = new ();
+        private readonly Dictionary<int, Action<BufferReader, Envelope>> outputs = new ();
+        private readonly Dictionary<int, Action<IndexEntry, Envelope>> indexOutputs = new ();
 
         private SerializationContext context;
         private byte[] buffer;
@@ -113,7 +113,7 @@ namespace Microsoft.Psi.Data
         /// <inheritdoc />
         public bool IsLive()
         {
-            return this.PsiStoreReader.IsMoreDataExpected();
+            return PsiStoreMonitor.IsStoreLive(this.Name, this.Path);
         }
 
         /// <inheritdoc />
@@ -178,7 +178,7 @@ namespace Microsoft.Psi.Data
         {
             var result = true;
             this.PsiStoreReader.Seek(descriptor.Interval, true);
-            while (result || this.PsiStoreReader.IsMoreDataExpected())
+            while (result || this.IsLive())
             {
                 if (cancelationToken.IsCancellationRequested)
                 {

@@ -7,18 +7,18 @@ namespace Microsoft.Psi.Visualization
     using System.Windows;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Imaging;
-    using Microsoft.Psi.Visualization.Base;
 
     /// <summary>
     /// Represents an displayable image based on a <see cref="Microsoft.Psi.Imaging.Image"/>.
     /// </summary>
     public class DisplayImage : ObservableObject
     {
-        private readonly object imageLock = new object();
+        private readonly object imageLock = new ();
         private Shared<Image> psiImage;
-        private FrameCounter renderedFrames = new FrameCounter();
-        private FrameCounter receivedFrames = new FrameCounter();
+        private FrameCounter renderedFrames = new ();
+        private FrameCounter receivedFrames = new ();
         private WriteableBitmap image;
         private string resolution;
 

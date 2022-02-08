@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Interop.Format
         /// <summary>
         /// Gets singleton instance.
         /// </summary>
-        public static MessagePackFormat Instance { get; } = new MessagePackFormat();
+        public static MessagePackFormat Instance { get; } = new ();
 
         /// <inheritdoc />
         public (byte[], int, int) SerializeMessage(dynamic message, DateTime originatingTime)
@@ -82,7 +82,7 @@ namespace Microsoft.Psi.Interop.Format
                 var dict = expando as IDictionary<string, dynamic>;
                 foreach (var kv in value as IDictionary<object, object>)
                 {
-                    dict[kv.Key as string] = this.NormalizeValue(kv.Value); // potentially recursively
+                    dict[kv.Key.ToString()] = this.NormalizeValue(kv.Value); // potentially recursively
                 }
 
                 return expando;

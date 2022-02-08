@@ -18,3 +18,7 @@ Streams in any of these formats may be persisted to or read from disk, or may be
 
 The [PsiStoreTool](../../Tools/PsiStoreTool/Readme.md) exposes the above facilities as a command-line tool. It may be used to explore available streams in a store, convert [to other formats (MessagePack, JSON, CSV)](../../Runtime/Microsoft.Psi.Interop/Format/Readme.md)
 and [persist to disk or send over a message queue](../../Runtime/Microsoft.Psi.Interop/Transport/Readme.md) for consumption by other platforms and languages.
+
+## Rendezvous
+
+The [rendezvous system](Rendezvous/Readme.md) maintains and relays information about \psi streams available on the network, allowing a distributed system to negotiate remoting connections.

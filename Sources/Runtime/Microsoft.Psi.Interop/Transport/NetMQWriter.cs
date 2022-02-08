@@ -4,6 +4,8 @@
 namespace Microsoft.Psi.Interop.Transport
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Psi.Interop.Serialization;
     using NetMQ;
     using NetMQ.Sockets;
@@ -15,21 +17,36 @@ namespace Microsoft.Psi.Interop.Transport
     {
         private readonly Pipeline pipeline;
         private readonly IFormatSerializer serializer;
+        private readonly Dictionary<string, Type> topics = new ();
 
         private PublisherSocket socket;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NetMQWriter"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="address">Connection string.</param>
         /// <param name="serializer">Format serializer with which messages are serialized.</param>
         public NetMQWriter(Pipeline pipeline, string address, IFormatSerializer serializer)
         {
             this.pipeline = pipeline;
+            this.Address = address;
             this.serializer = serializer;
             this.socket = new PublisherSocket();
             pipeline.PipelineRun += (s, e) => this.socket.Bind(address);
+        }
+
+        /// <summary>
+        /// Gets the connection address string.
+        /// </summary>
+        public string Address { get; private set; }
+
+        /// <summary>
+        /// Gets the topic names and types being published.
+        /// </summary>
+        public IEnumerable<(string Name, Type Type)> Topics
+        {
+            get { return this.topics.Select(x => (x.Key, x.Value)); }
         }
 
         /// <summary>
@@ -40,6 +57,7 @@ namespace Microsoft.Psi.Interop.Transport
         /// <returns>Receiver to which to pipe messages.</returns>
         public Receiver<T> AddTopic<T>(string topic)
         {
+            this.topics.Add(topic, typeof(T));
             return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, topic), topic);
         }
 

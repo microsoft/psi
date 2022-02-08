@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Fuse{TPrimary, TSecondary, TInterpolation, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interpolator">Interpolator to use when joining the streams.</param>
         /// <param name="outputCreator">Mapping function from messages to output.</param>
         /// <param name="secondaryCount">Number of secondary streams.</param>

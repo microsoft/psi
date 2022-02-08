@@ -6,14 +6,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows;
-    using System.Windows.Input;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Interaction logic for ImageVisualizationObjectView.xaml.
     /// </summary>
-    public partial class ImageVisualizationObjectView : VisualizationObjectView
+    public partial class ImageVisualizationObjectView : ImageVisualizationObjectViewBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageVisualizationObjectView"/> class.
@@ -22,6 +21,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             this.InitializeComponent();
             this.DisplayImage = new DisplayImage();
+            this.Canvas = this._DynamicCanvas;
         }
 
         /// <summary>
@@ -41,21 +41,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 this.ShowCurrentImage();
             }
+
+            base.OnVisualizationObjectPropertyChanged(sender, e);
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseMove(MouseEventArgs e)
+        protected override void UpdateView()
         {
-            System.Windows.Point mousePosition = e.GetPosition(this.Image);
-
-            if (this.ImageVisualizationObject.CurrentValue != null && this.ImageVisualizationObject.CurrentValue.Value.Data != null && this.ImageVisualizationObject.CurrentValue.Value.Data.Resource != null)
-            {
-                int x = (int)(mousePosition.X * this.ImageVisualizationObject.CurrentValue.Value.Data.Resource.Width / this.Image.ActualWidth);
-                int y = (int)(mousePosition.Y * this.ImageVisualizationObject.CurrentValue.Value.Data.Resource.Height / this.Image.ActualHeight);
-                this.ImageVisualizationObject.SetMousePosition(new System.Windows.Point(x, y));
-            }
-
-            base.OnMouseMove(e);
         }
 
         private void ShowCurrentImage()
@@ -87,6 +79,14 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 {
                     this.Image.Visibility = Visibility.Visible;
                 }
+            }
+
+            // Update the image size if it's changed
+            if ((this.DisplayImage.Image != null) &&
+                ((this.Image.Width != this.DisplayImage.Image.PixelWidth) || (this.Image.Height != this.DisplayImage.Image.PixelHeight)))
+            {
+                this.Image.Width = this.DisplayImage.Image.PixelWidth;
+                this.Image.Height = this.DisplayImage.Image.PixelHeight;
             }
         }
     }

@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.Kinect.Visualization
 {
-    using System.Collections.Generic;
     using Microsoft.Psi.Kinect;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -11,7 +10,7 @@ namespace Microsoft.Psi.Kinect.Visualization
     /// Represents a visualization object for Azure Kinect bodies.
     /// </summary>
     [VisualizationObject("Kinect Bodies")]
-    public class KinectBodyListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<KinectBodyVisualizationObject, KinectBody, List<KinectBody>>
+    public class KinectBodyListVisualizationObject : ModelVisual3DListVisualizationObject<KinectBodyVisualizationObject, KinectBody>
     {
     }
 }

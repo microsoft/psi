@@ -283,12 +283,6 @@ namespace Microsoft {
                 {
                     switch (pixelFormat)
                     {
-                    case NativePixelFormat_Undefined:
-                    case NativePixelFormat_Gray_8bpp:
-                    case NativePixelFormat_Gray_16bpp:
-                    case NativePixelFormat_RGBA_64bpp:
-                        hr = E_NOTIMPL;
-                        break;
                     case NativePixelFormat_BGRA_32bpp:
                     case NativePixelFormat_BGRX_32bpp:
                         if (bufferLength != imageWidth * imageHeight * 4)
@@ -301,6 +295,14 @@ namespace Microsoft {
                         {
                             hr = E_UNEXPECTED;
                         }
+                        break;
+                    case NativePixelFormat_Undefined:
+                    case NativePixelFormat_Gray_8bpp:
+                    case NativePixelFormat_Gray_16bpp:
+                    case NativePixelFormat_RGBA_64bpp:
+                    default:
+                        hr = E_NOTIMPL;
+                        break;
                     }
                     IFS(CopyImageDataToMediaBuffer(imageData, pixelFormat, rawBuffer));
                     (void)buffer->Unlock();

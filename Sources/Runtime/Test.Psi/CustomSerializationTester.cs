@@ -63,6 +63,8 @@ namespace Test.Psi
         {
             public int Version => throw new NotSupportedException();
 
+            public bool? IsClearRequired => false;
+
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 return null;

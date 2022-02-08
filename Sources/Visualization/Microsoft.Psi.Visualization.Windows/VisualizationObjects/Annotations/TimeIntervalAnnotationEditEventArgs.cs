@@ -14,11 +14,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Initializes a new instance of the <see cref="TimeIntervalAnnotationEditEventArgs"/> class.
         /// </summary>
         /// <param name="displayData">The annotation display object to edit.</param>
-        /// <param name="trackId">The id of the track in the display data to edit.</param>
-        public TimeIntervalAnnotationEditEventArgs(TimeIntervalAnnotationDisplayData displayData, int trackId)
+        /// <param name="attributeIndex">The index of the attribute to edit.</param>
+        public TimeIntervalAnnotationEditEventArgs(TimeIntervalAnnotationDisplayData displayData, int attributeIndex)
         {
             this.DisplayData = displayData;
-            this.TrackId = trackId;
+            this.AttributeIndex = attributeIndex;
         }
 
         /// <summary>
@@ -27,8 +27,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public TimeIntervalAnnotationDisplayData DisplayData { get; private set; }
 
         /// <summary>
-        /// Gets the ID of the track in the annotation to edit.
+        /// Gets the index of the attribute to edit.
         /// </summary>
-        public int TrackId { get; private set; }
+        public int AttributeIndex { get; private set; }
     }
 }

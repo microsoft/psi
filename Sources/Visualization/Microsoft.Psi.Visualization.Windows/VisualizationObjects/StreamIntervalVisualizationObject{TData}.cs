@@ -7,9 +7,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
+    using System.Reflection;
     using System.Runtime.Serialization;
     using System.Windows.Media;
-    using Microsoft.Psi.Visualization.Collections;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Navigation;
 
@@ -19,10 +19,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <typeparam name="TData">The type of the stream data.</typeparam>
     public abstract class StreamIntervalVisualizationObject<TData> : StreamVisualizationObject<TData>
     {
-        private long samplingTicks;
+        private (DateTime StartTime, DateTime EndTime) timeInterval;
         private string legendFormat = string.Empty;
-        private TimeSpan viewDuration;
-        private Guid summaryDataConsumerId = Guid.Empty;
 
         /// <summary>
         /// The data read from the stream.
@@ -113,25 +111,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets the sampling ticks.
-        /// </summary>
-        [Browsable(false)]
-        [DataMember]
-        public long SamplingTicks
-        {
-            get => this.samplingTicks;
-            set
-            {
-                if (value > 0)
-                {
-                    value = 1L << (int)Math.Log(value, 2);
-                }
-
-                this.Set(nameof(this.SamplingTicks), ref this.samplingTicks, value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a format specifier string used in displaying the live legend value.
         /// </summary>
         [DataMember]
@@ -154,16 +133,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         protected bool IsUsingSummarization => this.StreamBinding.SummarizerType != null;
 
+        /// <summary>
+        /// Gets the time interval of stream messages required for visualization.
+        /// </summary>
+        /// <returns>The time interval of stream messages required for visualization.</returns>
+        protected virtual (DateTime StartTime, DateTime EndTime) GetTimeInterval() => (this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime);
+
         /// <inheritdoc/>
         protected override void OnCursorModeChanged(object sender, CursorModeChangedEventArgs cursorModeChangedEventArgs)
         {
-            // If we changed from or to live mode, and we're currently bound to a datasource, then refresh the data or summaries
-            if (this.IsBound && cursorModeChangedEventArgs.OriginalValue != cursorModeChangedEventArgs.NewValue)
+            // If we changed from or to live mode, then refresh the data
+            if ((cursorModeChangedEventArgs.OriginalValue != cursorModeChangedEventArgs.NewValue) &&
+                ((cursorModeChangedEventArgs.OriginalValue == CursorMode.Live) || (cursorModeChangedEventArgs.NewValue == CursorMode.Live)))
             {
-                if ((cursorModeChangedEventArgs.OriginalValue == CursorMode.Live) || (cursorModeChangedEventArgs.NewValue == CursorMode.Live))
-                {
-                    this.RefreshData();
-                }
+                this.RefreshData();
             }
 
             base.OnCursorModeChanged(sender, cursorModeChangedEventArgs);
@@ -174,18 +157,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnStreamBound();
 
-            // Register as a summary data consumer
-            if (this.IsUsingSummarization)
+            // Check that we're not already subscribed to any data provider.
+            if (this.SubscriberId != Guid.Empty)
             {
-                if (this.summaryDataConsumerId != Guid.Empty)
-                {
-                    throw new InvalidOperationException("An attempt was made to register as a summary data consumer while already having an existing summary data consumer id.");
-                }
-
-                this.summaryDataConsumerId = DataManager.Instance.RegisterSummaryDataConsumer(this.StreamSource);
+                throw new InvalidOperationException("An attempt was made to register as a stream interval data subscriber while already having an existing subscriber id.");
             }
 
+            // Construct the typed method for registering as a stream interval subscriber
+            var method = typeof(DataManager).GetMethod(nameof(DataManager.RegisterStreamIntervalSubscriber), BindingFlags.Public | BindingFlags.Instance);
+
+            // The data type of cache items in the provider will be either the type of the
+            // summarized data (if using summarization) or the type of the adapted messages.
+            var cacheDataType = this.IsUsingSummarization ? this.StreamBinding.Summarizer.SourceType : typeof(TData);
+            var genericMethod = method.MakeGenericMethod(cacheDataType);
+
+            // Register the stream interval provider
+            this.SubscriberId = (Guid)genericMethod.Invoke(DataManager.Instance, new object[] { this.StreamSource });
+
+            // Register for view range changed events which will cause us to make a new read request
             this.Navigator.ViewRange.RangeChanged += this.OnViewRangeChanged;
+
+            // Initially, make a read request using the current view range.
             this.OnViewRangeChanged(
                 this.Navigator.ViewRange,
                 new NavigatorTimeRangeChangedEventArgs(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime, this.Navigator.ViewRange.EndTime));
@@ -196,17 +188,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnStreamUnbound();
 
-            // Unregister as a summary data consumer
-            if (this.IsUsingSummarization)
+            // Unregister as a time interval subscriber
+            if (this.SubscriberId == Guid.Empty)
             {
-                if (this.summaryDataConsumerId == Guid.Empty)
-                {
-                    throw new InvalidOperationException("An attempt was made to unregister as a summary data consumer without having a valid summary data consumer id.");
-                }
-
-                DataManager.Instance.UnregisterSummaryDataConsumer(this.summaryDataConsumerId);
-                this.summaryDataConsumerId = Guid.Empty;
+                throw new InvalidOperationException("An attempt was made to unregister as a stream interval data subscriber without having a valid subscriber id.");
             }
+
+            DataManager.Instance.UnregisterStreamIntervalSubscriber(this.SubscriberId);
+            this.SubscriberId = Guid.Empty;
 
             this.Navigator.ViewRange.RangeChanged -= this.OnViewRangeChanged;
 
@@ -339,11 +328,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         protected override void OnPanelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            // If the panel changes width
             if (e.PropertyName == nameof(this.Panel.Width))
             {
+                // And if we are summarizing
                 if (this.StreamBinding?.SummarizerType != null)
                 {
-                    this.SamplingTicks = (long)(this.viewDuration.Ticks / this.Panel.Width);
+                    // Then refresh the data as the sampling rate for summarization will be different
                     this.RefreshData();
                 }
             }
@@ -351,9 +342,35 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             base.OnPanelPropertyChanged(sender, e);
         }
 
-        private void OnViewRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
+        /// <summary>
+        /// Implements a response to a notification that the view range has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnViewRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
         {
-            this.RefreshData();
+            var newTimeInterval = this.GetTimeInterval();
+
+            // If in live mode
+            if (this.Navigator.CursorMode == CursorMode.Live)
+            {
+                // Then we need to refresh if the new time interval has a different duration
+                if ((newTimeInterval.EndTime - newTimeInterval.StartTime) != (this.timeInterval.EndTime - this.timeInterval.StartTime))
+                {
+                    this.timeInterval = newTimeInterval;
+                    this.RefreshData();
+                }
+            }
+            else
+            {
+                // O/w we need to refresh if the time interval is different or if data is not
+                // available (stream was not bound)
+                if ((newTimeInterval != this.timeInterval) || (this.Data == null))
+                {
+                    this.timeInterval = newTimeInterval;
+                    this.RefreshData();
+                }
+            }
         }
 
         private void RefreshData()
@@ -363,39 +380,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (this.Navigator.CursorMode == CursorMode.Live)
                 {
-                    if (this.viewDuration != this.Navigator.ViewRange.Duration)
-                    {
-                        this.viewDuration = this.Navigator.ViewRange.Duration;
-
-                        if (this.IsUsingSummarization)
-                        {
-                            // If performing summarization, recompute the sampling tick interval (i.e. summarization interval)
-                            // whenever the view range duration has changed.
-                            this.SamplingTicks = (long)(this.viewDuration.Ticks / this.Panel.Width);
-                            this.SummaryData = DataManager.Instance.ReadSummary<TData>(
-                                this.StreamSource,
-                                TimeSpan.FromTicks(this.SamplingTicks),
-                                last => last - this.viewDuration);
-                        }
-                        else
-                        {
-                            // Not summarizing, so read data directly from the stream
-                            this.Data = DataManager.Instance.ReadStream<TData>(this.StreamSource, last => last - this.viewDuration);
-                        }
-                    }
-                }
-                else
-                {
-                    this.viewDuration = this.Navigator.ViewRange.Duration;
-
                     if (this.IsUsingSummarization)
                     {
                         // If performing summarization, recompute the sampling tick interval (i.e. summarization interval)
                         // whenever the view range duration has changed.
-                        this.SamplingTicks = (long)(this.viewDuration.Ticks / this.Panel.Width);
-
-                        var startTime = this.Navigator.ViewRange.StartTime;
-                        var endTime = this.Navigator.ViewRange.EndTime;
+                        this.SummaryData = DataManager.Instance.ReadSummary<TData>(
+                            this.StreamSource,
+                            TimeSpan.FromTicks(this.GetSamplingTicks()),
+                            last => last - (this.timeInterval.EndTime - this.timeInterval.StartTime));
+                    }
+                    else
+                    {
+                        // Not summarizing, so read data directly from the stream
+                        this.Data = DataManager.Instance.ReadStream<TData>(this.StreamSource, last => last - (this.timeInterval.EndTime - this.timeInterval.StartTime));
+                    }
+                }
+                else
+                {
+                    if (this.IsUsingSummarization)
+                    {
+                        var startTime = this.timeInterval.StartTime;
+                        var endTime = this.timeInterval.EndTime;
 
                         // Attempt to read a little extra data outside the view range so that the end
                         // points appear to connect to the next/previous values. This is flawed as we
@@ -408,15 +413,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                             this.StreamSource,
                             startTime > DateTime.MinValue + extra ? startTime - extra : startTime,
                             endTime < DateTime.MaxValue - extra ? endTime + extra : endTime,
-                            TimeSpan.FromTicks(this.SamplingTicks));
+                            TimeSpan.FromTicks(this.GetSamplingTicks()));
                     }
                     else
                     {
                         // Not summarizing, so read data directly from the stream - note that end time is exclusive, so adding one tick to ensure any message at EndTime is included
                         this.Data = DataManager.Instance.ReadStream<TData>(
                             this.StreamSource,
-                            this.Navigator.ViewRange.StartTime,
-                            this.Navigator.ViewRange.EndTime.AddTicks(1));
+                            this.timeInterval.StartTime,
+                            this.timeInterval.EndTime.AddTicks(1));
                     }
                 }
             }
@@ -436,5 +441,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             this.OnSummaryDataCollectionChanged(e);
         }
+
+        private long GetSamplingTicks() => 1L << (int)Math.Log((long)((this.timeInterval.EndTime - this.timeInterval.StartTime).Ticks / this.Panel.Width), 2);
     }
 }

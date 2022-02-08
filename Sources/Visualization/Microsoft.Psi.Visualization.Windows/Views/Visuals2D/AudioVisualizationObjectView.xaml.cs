@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
     using System.Collections.Generic;
-    using System.Windows;
     using System.Windows.Controls;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;

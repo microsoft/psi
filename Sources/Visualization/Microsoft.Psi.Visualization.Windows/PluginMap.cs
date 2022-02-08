@@ -13,7 +13,6 @@ namespace Microsoft.Psi.Visualization
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Summarizers;
-    using Microsoft.Psi.Visualization.Tasks;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.Windows;
 
@@ -32,19 +31,19 @@ namespace Microsoft.Psi.Visualization
         };
 
         // The list of summarizers that were found during discovery.
-        private readonly Dictionary<Type, SummarizerMetadata> summarizers = new Dictionary<Type, SummarizerMetadata>();
+        private readonly Dictionary<Type, SummarizerMetadata> summarizers = new ();
 
         // The list of stream adapters that were found during discovery.
-        private readonly List<StreamAdapterMetadata> streamAdapters = new List<StreamAdapterMetadata>();
+        private readonly List<StreamAdapterMetadata> streamAdapters = new ();
 
         // The list of batch processing tasks that were found during discovery.
-        private readonly List<BatchProcessingTaskMetadata> batchProcessingTasks = new List<BatchProcessingTaskMetadata>();
+        private readonly List<BatchProcessingTaskMetadata> batchProcessingTasks = new ();
 
         // The list of visualization objects that were found during discovery.
-        private readonly List<VisualizerMetadata> visualizers = new List<VisualizerMetadata>();
+        private readonly List<VisualizerMetadata> visualizers = new ();
 
         // This list of stream readers that were found during discovery.
-        private readonly List<(string Name, string Extension, Type ReaderType)> streamReaders = new List<(string Name, string Extension, Type ReaderType)>();
+        private readonly List<(string Name, string Extension, Type ReaderType)> streamReaders = new ();
 
         /// <summary>
         /// Gets a value indicating whether or not Initialize() has been called.
@@ -55,6 +54,11 @@ namespace Microsoft.Psi.Visualization
         /// Gets the set of available visualizers.
         /// </summary>
         public IReadOnlyList<VisualizerMetadata> Visualizers => this.visualizers.AsReadOnly();
+
+        /// <summary>
+        /// Gets the set of available batch processing tasks.
+        /// </summary>
+        public IReadOnlyList<BatchProcessingTaskMetadata> BatchProcessingTasks => this.batchProcessingTasks.AsReadOnly();
 
         private IEnumerable<(string Name, string Extension, Type ReaderType)> StreamReaders
         {
@@ -88,60 +92,6 @@ namespace Microsoft.Psi.Visualization
         }
 
         /// <summary>
-        /// Gets the available collection of batch processing tasks that can run on a dataset.
-        /// </summary>
-        /// <returns>The collection of batch processing task metadata objects.</returns>
-        /// <remarks>Currently only batch processing tasks that have parameters for pipeline, sessionimporter
-        /// and exporter, in that order, can be executed on a dataset.</remarks>
-        public IEnumerable<BatchProcessingTaskMetadata> GetDatasetCompatibleBatchProcessingTasks()
-        {
-            return this.batchProcessingTasks.Where(bpt =>
-            {
-                var parameters = bpt.MethodInfo.GetParameters();
-                return parameters.Length == 3 &&
-                    parameters[0].ParameterType == typeof(Pipeline) &&
-                    parameters[1].ParameterType == typeof(SessionImporter) &&
-                    parameters[2].ParameterType == typeof(Exporter);
-            });
-        }
-
-        /// <summary>
-        /// Gets the available collection of batch processing tasks that can run on a session.
-        /// </summary>
-        /// <returns>The collection of batch processing task metadata objects.</returns>
-        /// <remarks>Currently only batch processing tasks that have parameters for pipeline, sessionimporter
-        /// and exporter, in that order, can be executed on a session.</remarks>
-        public IEnumerable<BatchProcessingTaskMetadata> GetSessionCompatibleBatchProcessingTasks()
-        {
-            return this.batchProcessingTasks.Where(bpt =>
-            {
-                var parameters = bpt.MethodInfo.GetParameters();
-                return parameters.Length == 3 &&
-                    parameters[0].ParameterType == typeof(Pipeline) &&
-                    parameters[1].ParameterType == typeof(SessionImporter) &&
-                    parameters[2].ParameterType == typeof(Exporter);
-            });
-        }
-
-        /// <summary>
-        /// Gets the available collection of batch processing tasks that can run on a partition.
-        /// </summary>
-        /// <returns>The collection of batch processing task metadata objects.</returns>
-        /// <remarks>Currently only batch processing tasks that have parameters for pipeline, importer
-        /// and exporter, in that order, can be executed on a partition.</remarks>
-        public IEnumerable<BatchProcessingTaskMetadata> GetPartitionCompatibleBatchProcessingTasks()
-        {
-            return this.batchProcessingTasks.Where(bpt =>
-            {
-                var parameters = bpt.MethodInfo.GetParameters();
-                return parameters.Length == 3 &&
-                    parameters[0].ParameterType == typeof(Pipeline) &&
-                    parameters[1].ParameterType == typeof(Importer) &&
-                    parameters[2].ParameterType == typeof(Exporter);
-            });
-        }
-
-        /// <summary>
         /// Gets file info for known stream readers.
         /// </summary>
         /// <returns>Sequence of stream reader file info.</returns>
@@ -167,7 +117,7 @@ namespace Microsoft.Psi.Visualization
             // Create the log writer
             using (FileStream fileStream = File.Create(loadLogFilename))
             {
-                using VisualizationLogWriter logWriter = new VisualizationLogWriter(fileStream);
+                using var logWriter = new VisualizationLogWriter(fileStream);
 
                 // Log preamble
                 logWriter.WriteLine("Loading PsiStudio Plugins ({0})", DateTime.UtcNow.ToString("G"));
@@ -189,10 +139,10 @@ namespace Microsoft.Psi.Visualization
                 foreach (string assemblyPath in assemblies)
                 {
                     // Get the list of types in the assembly
-                    Type[] types = this.GetTypesFromAssembly(assemblyPath, logWriter);
+                    var types = this.GetTypesFromAssembly(assemblyPath, logWriter);
 
                     // Look for attributes denoting visualization objects, summarizers, and stream adapters.
-                    foreach (Type type in types)
+                    foreach (var type in types)
                     {
                         if (type.GetCustomAttribute<VisualizationObjectAttribute>() != null)
                         {
@@ -216,12 +166,29 @@ namespace Microsoft.Psi.Visualization
                             this.AddStreamReader(streamReaderAttribute, type, logWriter, assemblyPath);
                         }
 
-                        // Look throught the static public method for batch processing task methods
+                        // Check if the type derives from BatchProcessingTask and has a batch processing task
+                        // attribute specified
+                        if (type.IsBatchProcessingTaskType())
+                        {
+                            foreach (var attr in type.GetCustomAttributes(typeof(BatchProcessingTaskAttribute)))
+                            {
+                                this.AddBatchProcessingTask(type, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath);
+                            }
+                        }
+
+                        // Look through the static public method for batch processing task methods
                         foreach (var method in type.GetMethods(BindingFlags.Static | BindingFlags.Public))
                         {
-                            foreach (var attr in method.GetCustomAttributes(typeof(BatchProcessingTaskAttribute)))
+                            var parameters = method.GetParameters();
+                            if (parameters.Length == 3 &&
+                                parameters[0].ParameterType == typeof(Pipeline) &&
+                                parameters[1].ParameterType == typeof(SessionImporter) &&
+                                parameters[2].ParameterType == typeof(Exporter))
                             {
-                                this.AddBatchProcessingTask(type, method, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath);
+                                foreach (var attr in method.GetCustomAttributes(typeof(BatchProcessingTaskAttribute)))
+                                {
+                                    this.AddBatchProcessingTask(method, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath);
+                                }
                             }
                         }
                     }
@@ -244,14 +211,14 @@ namespace Microsoft.Psi.Visualization
             // If there were any errors while loading the visualizers etc, inform the user and allow him to view the log.
             if (hasErrors)
             {
-                MessageBoxWindow dlg = new MessageBoxWindow(
+                var messageBoxWindow = new MessageBoxWindow(
                     Application.Current.MainWindow,
                     "Plugins Load Errors",
                     "One or more plugins were not loaded because they contained errors.\r\n\r\nWould you like to see the log?",
                     "Yes",
                     "No");
 
-                if (dlg.ShowDialog() == true)
+                if (messageBoxWindow.ShowDialog() == true)
                 {
                     // Display the log file in the default application for text files.
                     Process.Start(loadLogFilename);
@@ -324,10 +291,28 @@ namespace Microsoft.Psi.Visualization
             }
         }
 
-        private void AddBatchProcessingTask(Type batchProcessingTaskType, MethodInfo methodInfo, BatchProcessingTaskAttribute attribute, VisualizationLogWriter logWriter, string assemblyPath)
+        private void AddBatchProcessingTask(
+            Type batchProcessingTaskType,
+            BatchProcessingTaskAttribute batchProcessingTaskAttribute,
+            VisualizationLogWriter logWriter,
+            string assemblyPath)
         {
-            logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", attribute.Name, assemblyPath);
-            var batchProcessingTaskMetadata = BatchProcessingTaskMetadata.Create(batchProcessingTaskType, methodInfo, attribute);
+            logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", batchProcessingTaskAttribute.Name, assemblyPath);
+            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingTaskType, batchProcessingTaskAttribute);
+            if (batchProcessingTaskMetadata != null)
+            {
+                this.batchProcessingTasks.Add(batchProcessingTaskMetadata);
+            }
+        }
+
+        private void AddBatchProcessingTask(
+            MethodInfo batchProcessingMethodInfo,
+            BatchProcessingTaskAttribute batchProcessingTaskAttribute,
+            VisualizationLogWriter logWriter,
+            string assemblyPath)
+        {
+            logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", batchProcessingTaskAttribute.Name, assemblyPath);
+            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingMethodInfo, batchProcessingTaskAttribute);
             if (batchProcessingTaskMetadata != null)
             {
                 this.batchProcessingTasks.Add(batchProcessingTaskMetadata);

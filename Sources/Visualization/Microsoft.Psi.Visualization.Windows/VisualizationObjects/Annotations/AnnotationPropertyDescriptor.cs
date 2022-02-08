@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     {
         private readonly TimeIntervalAnnotationDisplayData annotationDisplayData;
         private readonly Type propertyType;
-        private bool isReadOnly;
+        private readonly bool isReadOnly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnotationPropertyDescriptor"/> class.
@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         public override object GetValue(object component)
         {
-            return this.annotationDisplayData.GetValue(this.Name);
+            return this.annotationDisplayData.GetAttributeValue(this.Name);
         }
 
         /// <inheritdoc/>
@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         public override void SetValue(object component, object value)
         {
-            this.annotationDisplayData.SetValue(this.Name, value);
+            this.annotationDisplayData.SetAttributeValue(this.Name, (IAnnotationValue)value);
         }
 
         /// <inheritdoc/>

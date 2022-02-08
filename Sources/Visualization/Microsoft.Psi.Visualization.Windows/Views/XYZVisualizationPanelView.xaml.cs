@@ -7,8 +7,11 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Media.Animation;
     using System.Windows.Media.Media3D;
+    using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
@@ -36,6 +39,79 @@ namespace Microsoft.Psi.Visualization.Views
         /// Gets the visualization panel.
         /// </summary>
         protected XYZVisualizationPanel VisualizationPanel => this.DataContext as XYZVisualizationPanel;
+
+        /// <inheritdoc/>
+        public override void AppendContextMenuItems(List<MenuItem> menuItems)
+        {
+            // Add Set Cursor Epsilon menu with sub-menu items
+            var setCursorEpsilonMenuItem = MenuItemHelper.CreateMenuItem(
+                string.Empty,
+                "Set Cursor Epsilon (on All Visualizers)",
+                null,
+                this.VisualizationPanel.VisualizationObjects.Count > 0);
+
+            setCursorEpsilonMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Infinite Past",
+                    new RelayCommand(
+                        () =>
+                        {
+                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
+                            {
+                                visualizationObject.CursorEpsilonNegMs = int.MaxValue;
+                                visualizationObject.CursorEpsilonPosMs = 0;
+                            }
+                        }),
+                    true));
+            setCursorEpsilonMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Last 5 seconds",
+                    new RelayCommand(
+                        () =>
+                        {
+                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
+                            {
+                                visualizationObject.CursorEpsilonNegMs = 5000;
+                                visualizationObject.CursorEpsilonPosMs = 0;
+                            }
+                        }),
+                    true));
+            setCursorEpsilonMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Last 1 second",
+                    new RelayCommand(
+                        () =>
+                        {
+                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
+                            {
+                                visualizationObject.CursorEpsilonNegMs = 1000;
+                                visualizationObject.CursorEpsilonPosMs = 0;
+                            }
+                        }),
+                    true));
+            setCursorEpsilonMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Last 50 milliseconds",
+                    new RelayCommand(
+                        () =>
+                        {
+                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
+                            {
+                                visualizationObject.CursorEpsilonNegMs = 50;
+                                visualizationObject.CursorEpsilonPosMs = 0;
+                            }
+                        }),
+                    true));
+
+            menuItems.Add(setCursorEpsilonMenuItem);
+            menuItems.Add(null);
+
+            base.AppendContextMenuItems(menuItems);
+        }
 
         private void AddVisualForVisualizationObject(VisualizationObject visualizationObject)
         {

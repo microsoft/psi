@@ -57,7 +57,7 @@
             VerticalAlignment="Top"
             HorizontalAlignment="Right"
             Margin="4,4,4,4">
-            <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=close-panel.png}"/>
+            <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=remove-smallbutton-faded.png}"/>
             <Button.Style>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Style.Triggers>

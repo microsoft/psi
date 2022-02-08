@@ -27,15 +27,15 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="streamAdapter">The stream adapter used to convert the raw stream data to the type required by the subscriber.</param>
         /// <param name="epsilonTimeInterval">The epsilon interval to use when retrieving stream values.</param>
         /// <param name="callback">The method to call to deliver data to the stream value subscriber.</param>
-        /// <returns>A registration token which can be used to unregister the subscriber.</returns>
+        /// <returns>A subscriber id which can be used to unregister the subscriber.</returns>
         Guid RegisterStreamValueSubscriber<TData>(IStreamAdapter streamAdapter, RelativeTimeInterval epsilonTimeInterval, Action<bool, TData, DateTime, DateTime> callback);
 
         /// <summary>
         /// Unregisters a stream value subscriber.
         /// </summary>
         /// <typeparam name="TData">The type of data expected by the stream value subscriber.</typeparam>
-        /// <param name="registrationToken">The registration token that the subscriber was given when it was initially registered.</param>
-        void UnregisterStreamValueSubscriber<TData>(Guid registrationToken);
+        /// <param name="subscriberId">The subscriber id that the subscriber was given when it was initially registered.</param>
+        void UnregisterStreamValueSubscriber<TData>(Guid subscriberId);
 
         /// <summary>
         /// Reads data from the stream at the specified time and publishes it to all registered stream value subscribers.

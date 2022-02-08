@@ -22,6 +22,11 @@ namespace Microsoft.Psi.Serialization
     public interface ISerializer<T>
     {
         /// <summary>
+        /// Gets a value indicating whether cached instances must be cleared (null if statically unknown).
+        /// </summary>
+        bool? IsClearRequired { get; }
+
+        /// <summary>
         /// Initializes the serializer with the type schema and target object schema to use.
         /// </summary>
         /// <param name="serializers">The set of serialization handlers.</param>

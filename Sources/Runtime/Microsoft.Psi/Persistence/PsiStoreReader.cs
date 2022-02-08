@@ -116,29 +116,6 @@ namespace Microsoft.Psi.Persistence
         public RuntimeInfo RuntimeVersion => this.metadataCache.Resource.RuntimeVersion;
 
         /// <summary>
-        /// Indicates whether the specified data store has an active writer.
-        /// </summary>
-        /// <param name="storeName">The store name.</param>
-        /// <param name="storePath">The store path.</param>
-        /// <returns>Returns true if there is an active data file writer to this store.</returns>
-        public static bool IsStoreLive(string storeName, string storePath)
-        {
-            if (!Mutex.TryOpenExisting(InfiniteFileWriter.ActiveWriterMutexName(storePath, PsiStoreCommon.GetCatalogFileName(storeName)), out Mutex writerActiveMutex))
-            {
-                return false;
-            }
-
-            writerActiveMutex.Dispose();
-            return true;
-        }
-
-        /// <summary>
-        /// Indicates whether this store is still being written to by an active writer.
-        /// </summary>
-        /// <returns>True if an active writer is still writing to this store, false otherwise.</returns>
-        public bool IsMoreDataExpected() => this.messageReader.IsMoreDataExpected();
-
-        /// <summary>
         /// Opens the specified stream for reading.
         /// </summary>
         /// <param name="name">The name of the stream to open.</param>
@@ -323,7 +300,7 @@ namespace Microsoft.Psi.Persistence
                 var hasData = this.AutoOpenAllStreams ? this.messageReader.MoveNext() : this.messageReader.MoveNext(this.enabledStreams);
                 if (!hasData)
                 {
-                    if (!this.messageReader.IsMoreDataExpected())
+                    if (!PsiStoreMonitor.IsStoreLive(this.Name, this.Path))
                     {
                         return false;
                     }

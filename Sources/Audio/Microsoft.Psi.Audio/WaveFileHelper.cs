@@ -63,8 +63,18 @@ namespace Microsoft.Psi.Audio
         /// <returns>The number of byte of wave data that follow.</returns>
         public static long ReadWaveDataLength(BinaryReader br)
         {
-            if (Encoding.UTF8.GetString(BitConverter.GetBytes(br.ReadInt32())) != "data")
+            var name = Encoding.UTF8.GetString(BitConverter.GetBytes(br.ReadInt32()));
+            if (name != "data")
             {
+                if (name == "fact" || name == "LIST")
+                {
+                    // Some formats (e.g. IEEE float) contain fact and LIST chunks (which we skip).
+                    // see fhe "fact Chunk" section of the spec: http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
+                    // "IEEE float data (introduced after the Rev. 3 documention) need a fact"
+                    br.ReadBytes((int)br.ReadUInt32()); // skip
+                    return ReadWaveDataLength(br);
+                }
+
                 throw new FormatException("Data header missing");
             }
 

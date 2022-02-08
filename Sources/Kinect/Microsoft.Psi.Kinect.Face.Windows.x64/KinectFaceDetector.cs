@@ -30,7 +30,7 @@ namespace Microsoft.Psi.Kinect.Face
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectFaceDetector"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline this sensor is a part of.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="kinectSensor">Psi Kinect device from which we get our associated bodies.</param>
         /// <param name="configuration">Configuration to use.</param>
         public KinectFaceDetector(Pipeline pipeline, KinectSensor kinectSensor, KinectFaceDetectorConfiguration configuration = null)
@@ -203,7 +203,7 @@ namespace Microsoft.Psi.Kinect.Face
             /// Initializes a new instance of the <see cref="KinectBodyReceiver"/> class.
             /// Defines an internal receiver for receiving the KinectBody from our associated Kinect sensor.
             /// </summary>
-            /// <param name="pipeline">Pipeline sensor is running in.</param>
+            /// <param name="pipeline">The pipeline to add the component to.</param>
             /// <param name="faceDetector">Our parent face detector.</param>
             public KinectBodyReceiver(Pipeline pipeline, KinectFaceDetector faceDetector)
             {

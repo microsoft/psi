@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private Shared<Image> image = null;
         private CoordinateSystem position = null;
         private ICameraIntrinsics intrinsics = null;
-        private int imageTransparency = 50;
+        private int imageOpacity = 50;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpatialCameraViewVisualizationObject"/> class.
@@ -90,12 +90,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets the image transparency.
         /// </summary>
         [DataMember]
-        [DisplayName("Image Transparency (%)")]
-        [Description("The transparency level (percentage) for the image.")]
-        public int ImageTransparency
+        [DisplayName("Image Opacity (%)")]
+        [Description("The opacity level (percentage) for the image.")]
+        public int ImageOpacity
         {
-            get { return this.imageTransparency; }
-            set { this.Set(nameof(this.ImageTransparency), ref this.imageTransparency, value); }
+            get { return this.imageOpacity; }
+            set { this.Set(nameof(this.ImageOpacity), ref this.imageOpacity, value); }
         }
 
         /// <inheritdoc/>
@@ -120,7 +120,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <inheritdoc/>
         public override void NotifyPropertyChanged(string propertyName)
         {
-            if (propertyName == nameof(this.ImageTransparency))
+            if (propertyName == nameof(this.ImageOpacity))
             {
                 this.UpdateImageContents();
             }
@@ -156,7 +156,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 this.displayImage.UpdateImage(this.image);
 
                 // Render the display image
-                var material = new Win3D.DiffuseMaterial(new ImageBrush(this.displayImage.Image) { Opacity = this.ImageTransparency * 0.01 });
+                var material = new Win3D.DiffuseMaterial(new ImageBrush(this.displayImage.Image) { Opacity = this.ImageOpacity * 0.01 });
                 this.imageModelVisual.Material = material;
                 this.imageModelVisual.BackMaterial = material;
             }

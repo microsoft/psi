@@ -5,10 +5,9 @@ namespace Microsoft.Psi.Visualization
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Reflection;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Adapters;
-    using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
@@ -184,6 +183,15 @@ namespace Microsoft.Psi.Visualization
         {
             var newMetadata = this.DeepClone();
             newMetadata.StreamAdapterType = streamAdapterType;
+
+            // Change the command menu name to visualize as if it's not already that.
+            if (streamAdapterType != null &&
+                newMetadata.CommandText.StartsWith(ContextMenuName.Visualize) &&
+                !newMetadata.CommandText.StartsWith(ContextMenuName.VisualizeAs))
+            {
+                newMetadata.CommandText = ContextMenuName.VisualizeAs + newMetadata.CommandText.Substring(ContextMenuName.Visualize.Length);
+            }
+
             return newMetadata;
         }
 
@@ -196,8 +204,8 @@ namespace Microsoft.Psi.Visualization
             StreamAdapterMetadata adapterMetadata)
         {
             var commandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
-                $"Visualize {visualizationObjectAttribute.CommandText}" :
-                $"Visualize as {visualizationObjectAttribute.CommandText}";
+                $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText}" :
+                $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText}";
 
             metadatas.Add(new VisualizerMetadata(
                 dataType,
@@ -212,8 +220,8 @@ namespace Microsoft.Psi.Visualization
                 visualizationObjectAttribute.IsUniversalVisualizer));
 
             var inNewPanelCommandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
-                $"Visualize {visualizationObjectAttribute.CommandText} in New Panel" :
-                $"Visualize as {visualizationObjectAttribute.CommandText} in New Panel";
+                $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText} in New Panel" :
+                $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText} in New Panel";
 
             metadatas.Add(new VisualizerMetadata(
                 dataType,

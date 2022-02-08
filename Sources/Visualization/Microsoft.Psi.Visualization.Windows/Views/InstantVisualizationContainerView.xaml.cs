@@ -73,11 +73,15 @@ namespace Microsoft.Psi.Visualization.Views
             DependencyObject dependencyObject = result.VisualHit;
             while (dependencyObject != null)
             {
-                if (dependencyObject is IContextMenuItemsSource contextMenuItemsSource && contextMenuItemsSource.ContextMenuItemsSourceType == ContextMenuItemsSourceType.VisualizationPanel)
+                // If the dependency object is not a hidden panel
+                if (!(dependencyObject is VisualizationPanelView visualizationPanelView && !(visualizationPanelView.DataContext as VisualizationPanel).IsShown))
                 {
-                    // Get the visualization panel related to the visualization panel view
-                    this.mouseOverVisualizationPanel = (contextMenuItemsSource as VisualizationPanelView).DataContext as VisualizationPanel;
-                    return HitTestResultBehavior.Stop;
+                    if (dependencyObject is IContextMenuItemsSource contextMenuItemsSource && contextMenuItemsSource.ContextMenuItemsSourceType == ContextMenuItemsSourceType.VisualizationPanel)
+                    {
+                        // Get the visualization panel related to the visualization panel view
+                        this.mouseOverVisualizationPanel = (contextMenuItemsSource as VisualizationPanelView).DataContext as VisualizationPanel;
+                        return HitTestResultBehavior.Stop;
+                    }
                 }
 
                 dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
@@ -127,27 +131,38 @@ namespace Microsoft.Psi.Visualization.Views
 
                 foreach (var panel in instantVisualizationContainer.Panels)
                 {
-                    if (panel is XYVisualizationPanel visualizationPanelXY)
+                    if (panel.Visible)
                     {
-                        totalWidth += visualizationPanelXY.RelativeWidth;
-                    }
-                    else if (panel is XYZVisualizationPanel visualizationPanelXYZ)
-                    {
-                        totalWidth += visualizationPanelXYZ.RelativeWidth;
-                    }
-                    else if (panel is InstantVisualizationPlaceholderPanel instantVisualizationPlaceholderPanel)
-                    {
-                        totalWidth += instantVisualizationPlaceholderPanel.RelativeWidth;
-                    }
-                    else
-                    {
-                        throw new Exception("Encountered an unsupported panel type.");
+                        if (panel is CanvasVisualizationPanel visualizationPanelCanvas)
+                        {
+                            totalWidth += visualizationPanelCanvas.RelativeWidth;
+                        }
+                        else if (panel is XYVisualizationPanel visualizationPanelXY)
+                        {
+                            totalWidth += visualizationPanelXY.RelativeWidth;
+                        }
+                        else if (panel is XYZVisualizationPanel visualizationPanelXYZ)
+                        {
+                            totalWidth += visualizationPanelXYZ.RelativeWidth;
+                        }
+                        else if (panel is InstantVisualizationPlaceholderPanel instantVisualizationPlaceholderPanel)
+                        {
+                            totalWidth += instantVisualizationPlaceholderPanel.RelativeWidth;
+                        }
+                        else
+                        {
+                            throw new Exception("Encountered an unsupported panel type.");
+                        }
                     }
                 }
 
                 foreach (var panel in instantVisualizationContainer.Panels)
                 {
-                    if (panel is XYVisualizationPanel visualizationPanelXY)
+                    if (panel is CanvasVisualizationPanel visualizationPanelCanvas)
+                    {
+                        visualizationPanelCanvas.Width = visualizationPanelCanvas.RelativeWidth * this.ActualWidth / totalWidth;
+                    }
+                    else if (panel is XYVisualizationPanel visualizationPanelXY)
                     {
                         visualizationPanelXY.Width = visualizationPanelXY.RelativeWidth * this.ActualWidth / totalWidth;
                     }
@@ -167,19 +182,20 @@ namespace Microsoft.Psi.Visualization.Views
             }
         }
 
-        private void Root_MouseMove(object sender, MouseEventArgs e)
+        private void ReorderThumb_MouseMove(object sender, MouseEventArgs e)
         {
             // If the user has the Left Mouse button pressed, and we're not near the bottom edge
             // of the panel (where resizing occurs), then initiate a Drag & Drop reorder operation
-            Point mousePosition = e.GetPosition(this);
+            var mousePosition = e.GetPosition(this);
+
             if (e.LeftButton == MouseButtonState.Pressed && !DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
             {
-                DataObject data = new DataObject();
+                var data = new DataObject();
                 data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.ReorderPanel);
                 data.SetData(DragDropDataName.VisualizationPanel, this.VisualizationPanel);
                 data.SetData(DragDropDataName.MouseOffsetFromTop, mousePosition.Y);
                 data.SetData(DragDropDataName.PanelSize, new Size?(new Size(this.ActualWidth, this.ActualHeight)));
-                RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                var renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
                 renderTargetBitmap.Render(this);
                 data.SetImage(renderTargetBitmap);
 

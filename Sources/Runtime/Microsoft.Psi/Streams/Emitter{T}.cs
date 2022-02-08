@@ -23,12 +23,12 @@ namespace Microsoft.Psi
         private readonly object owner;
         private readonly Pipeline pipeline;
         private readonly int id;
-        private readonly List<ClosedHandler> closedHandlers = new List<ClosedHandler>();
+        private readonly List<ClosedHandler> closedHandlers = new ();
         private readonly ValidateMessageHandler messageValidator;
-        private readonly object receiversLock = new object();
+        private readonly object receiversLock = new ();
+        private readonly SynchronizationLock syncContext;
         private string name;
         private int nextSeqId;
-        private SynchronizationLock syncContext;
         private Envelope lastEnvelope;
         private volatile Receiver<T>[] receivers = new Receiver<T>[0];
         private IPerfCounterCollection<EmitterCounters> counters;
@@ -128,7 +128,7 @@ namespace Microsoft.Psi
             {
                 var e = this.CreateEnvelope(originatingTime);
                 e.SequenceId = int.MaxValue; // special "closing" ID
-                this.Deliver(new Message<T>(default(T), e));
+                this.Deliver(new Message<T>(default, e));
 
                 lock (this.receiversLock)
                 {
@@ -235,12 +235,30 @@ namespace Microsoft.Psi
             // make sure the data is consistent
             if (e.SequenceId <= this.lastEnvelope.SequenceId)
             {
-                throw new InvalidOperationException($"Attempted to post a message with a sequence ID that is out of order: {this.Name}\nThis may be caused by simultaneous calls to Emitter.Post() from multiple threads.");
+                throw new InvalidOperationException(
+                    $"Attempted to post a message with a sequence ID that is out of order.\n" +
+                    $"This may be caused by simultaneous calls to Emitter.Post() from multiple threads.\n" +
+                    $"Emitter: {this.Name}\n" +
+                    $"Current message sequence ID: {e.SequenceId}\n" +
+                    $"Previous message sequence ID: {this.lastEnvelope.SequenceId}\n");
             }
 
-            if (e.OriginatingTime <= this.lastEnvelope.OriginatingTime || e.CreationTime < this.lastEnvelope.CreationTime)
+            if (e.OriginatingTime <= this.lastEnvelope.OriginatingTime)
             {
-                throw new InvalidOperationException($"Attempted to post a message without strictly increasing originating time or that is out of order in wall-clock time: {this.Name}");
+                throw new InvalidOperationException(
+                    $"Attempted to post a message without strictly increasing originating times.\n" +
+                    $"Emitter: {this.Name}\n" +
+                    $"Current message originating time: {e.OriginatingTime.TimeOfDay}\n" +
+                    $"Previous message originating time: {this.lastEnvelope.OriginatingTime.TimeOfDay}\n");
+            }
+
+            if (e.CreationTime < this.lastEnvelope.CreationTime)
+            {
+                throw new InvalidOperationException(
+                    $"Attempted to post a message that is out of order in wall-clock time.\n" +
+                    $"Emitter: {this.Name}\n" +
+                    $"Current message creation time: {e.CreationTime.TimeOfDay}\n" +
+                    $"Previous message creation time: {this.lastEnvelope.CreationTime.TimeOfDay}\n");
             }
 
             // additional message validation checks

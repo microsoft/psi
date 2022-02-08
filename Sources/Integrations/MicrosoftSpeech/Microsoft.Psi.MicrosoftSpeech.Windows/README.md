@@ -1,5 +1,7 @@
 ﻿# Microsoft Speech Component
 
+**[NOTE: This component has been deprecated as of \\psi release 0.16. Existing users should migrate to the SystemSpeechRecognizer component available in the Microsoft.Psi.Speech.Windows project.]**
+
 This project builds the integration component for speech recognition based on the Microsoft Speech Platform.
 
 In order to build this project, the [Microsoft Speech Platform SDK v11.0](http://go.microsoft.com/fwlink/?LinkID=223570) must be installed on your machine. Note that only the 64-bit version of the SDK is currently supported. Additionally, you will need to set an environment variable named `MsSpeechSdkDir` that points to the location in which you installed the SDK. The path should be the root of the SDK folder which contains the Assembly directory. By default, this is `C:\Program Files\Microsoft SDKs\Speech\v11.0`

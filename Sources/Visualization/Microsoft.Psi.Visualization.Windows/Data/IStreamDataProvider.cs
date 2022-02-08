@@ -14,6 +14,11 @@ namespace Microsoft.Psi.Visualization.Data
     public interface IStreamDataProvider : IDisposable
     {
         /// <summary>
+        /// Event that fires when a stream data provider has no more subscribers and can be removed.
+        /// </summary>
+        public event EventHandler NoRemainingSubscribers;
+
+        /// <summary>
         /// Gets a list of outstanding read requests.
         /// </summary>
         IReadOnlyList<ReadRequest> ReadRequests { get; }
@@ -22,6 +27,11 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets the stream name.
         /// </summary>
         string StreamName { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the stream data provider currently has any subscribers.
+        /// </summary>
+        public bool HasSubscribers { get; }
 
         /// <summary>
         /// Gets the time of the nearest message to a specified time.

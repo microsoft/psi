@@ -14,24 +14,18 @@ namespace Microsoft.Psi
     /// these interpolators might introduce extra delays as they might have to wait for enough messages on the
     /// secondary stream to prove that the interpolation result is correct, irrespective of any other messages
     /// that might arrive later.</remarks>
-    public abstract class ReproducibleInterpolator<T> : ReproducibleInterpolator<T, T>
+    public abstract class ReproducibleInterpolator<T> : Interpolator<T>
     {
         /// <summary>
         /// Implicitly convert relative time intervals to the equivalent of a reproducible nearest match within that window.
         /// </summary>
         /// <param name="window">Window within which to match messages.</param>
-        public static implicit operator ReproducibleInterpolator<T>(RelativeTimeInterval window)
-        {
-            return Reproducible.Nearest<T>(window);
-        }
+        public static implicit operator ReproducibleInterpolator<T>(RelativeTimeInterval window) => Reproducible.Nearest<T>(window);
 
         /// <summary>
         /// Implicitly convert timespan to the equivalent of a reproducible nearest match with that tolerance.
         /// </summary>
         /// <param name="tolerance">Relative window tolerance within which to match messages.</param>
-        public static implicit operator ReproducibleInterpolator<T>(TimeSpan tolerance)
-        {
-            return Reproducible.Nearest<T>(tolerance);
-        }
+        public static implicit operator ReproducibleInterpolator<T>(TimeSpan tolerance) => Reproducible.Nearest<T>(tolerance);
     }
 }

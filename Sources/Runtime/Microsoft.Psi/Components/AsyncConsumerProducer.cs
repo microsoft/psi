@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncConsumerProducer{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         public AsyncConsumerProducer(Pipeline pipeline)
         {
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));

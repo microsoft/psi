@@ -20,7 +20,7 @@ namespace Microsoft.Psi.Visualization.Views
     /// </summary>
     public partial class TimelineVisualizationPanelView : VisualizationPanelView
     {
-        private Point lastMousePosition = new Point(0, 0);
+        private Point lastMousePosition = new (0, 0);
         private DragOperation currentDragOperation = DragOperation.None;
 
         /// <summary>
@@ -54,6 +54,15 @@ namespace Microsoft.Psi.Visualization.Views
                         IconSourcePath.Legend,
                         timelineVisualizationPanel.ShowLegend ? $"Hide Legend" : $"Show Legend",
                         timelineVisualizationPanel.ShowHideLegendCommand));
+
+                menuItems.Add(MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Auto-Fit Axes",
+                    this.VisualizationPanel.SetAutoAxisComputeModeCommand,
+                    null,
+                    this.VisualizationPanel.AxisComputeMode == AxisComputeMode.Manual));
+
+                menuItems.Add(null);
             }
 
             base.AppendContextMenuItems(menuItems);
@@ -100,7 +109,7 @@ namespace Microsoft.Psi.Visualization.Views
                 switch (this.currentDragOperation)
                 {
                     case DragOperation.None:
-                        this.BeginDragOperation(mousePosition);
+                        this.BeginDragOperation();
                         break;
                     case DragOperation.TimelineScroll:
                         this.DoDragTimeline(mousePosition);
@@ -114,41 +123,36 @@ namespace Microsoft.Psi.Visualization.Views
             }
 
             this.lastMousePosition = mousePosition;
-            e.Handled = true;
         }
 
-        private void BeginDragOperation(Point mousePosition)
+        private void ReorderThumb_MouseMove(object sender, MouseEventArgs e)
         {
-            // If the mouse moved mostly horizontally, then we'll begin a timeline scroll
-            // operation, otherwise we'll begin a Visualization Panel reorder operation
-            if (this.IsHorizontalDrag(mousePosition))
+            // If the user has the Left Mouse button pressed, and we're not near the bottom edge
+            // of the panel (where resizing occurs), then initiate a Drag & Drop reorder operation
+            var mousePosition = e.GetPosition(this);
+
+            if (e.LeftButton == MouseButtonState.Pressed && !DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
             {
-                // Only drag the timeline if the navigator is currently paused
-                if (VisualizationContext.Instance.VisualizationContainer.Navigator.CursorMode == CursorMode.Manual)
-                {
-                    this.currentDragOperation = DragOperation.TimelineScroll;
-                    this.Cursor = Cursors.Hand;
-                }
+                var data = new DataObject();
+                data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.ReorderPanel);
+                data.SetData(DragDropDataName.VisualizationPanel, this.VisualizationPanel);
+                data.SetData(DragDropDataName.MouseOffsetFromTop, mousePosition.Y);
+                data.SetData(DragDropDataName.PanelSize, new Size?(new Size(this.ActualWidth, this.ActualHeight)));
+                var renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
+                renderTargetBitmap.Render(this);
+                data.SetImage(renderTargetBitmap);
+
+                DragDrop.DoDragDrop(this, data, DragDropEffects.Move);
             }
-            else
+        }
+
+        private void BeginDragOperation()
+        {
+            // Only drag the timeline if the navigator is currently paused
+            if (VisualizationContext.Instance.VisualizationContainer.Navigator.CursorMode == CursorMode.Manual)
             {
-                if (!DragDropHelper.MouseNearPanelBottomEdge(mousePosition, this.ActualHeight))
-                {
-                    this.currentDragOperation = DragOperation.PanelReorder;
-
-                    DataObject data = new DataObject();
-                    data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.ReorderPanel);
-                    data.SetData(DragDropDataName.VisualizationPanel, this.VisualizationPanel);
-                    data.SetData(DragDropDataName.VisualizationPanelView, this);
-                    data.SetData(DragDropDataName.MouseOffsetFromTop, mousePosition.Y);
-                    data.SetData(DragDropDataName.PanelSize, new Size?(new Size(this.ActualWidth, this.ActualHeight)));
-                    RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-                    renderTargetBitmap.Render(this);
-                    data.SetImage(renderTargetBitmap);
-
-                    DragDrop.DoDragDrop(this, data, DragDropEffects.Move);
-                    this.Cursor = Cursors.Hand;
-                }
+                this.currentDragOperation = DragOperation.TimelineScroll;
+                this.Cursor = Cursors.Hand;
             }
         }
 
@@ -161,14 +165,6 @@ namespace Microsoft.Psi.Visualization.Views
 
             // Scroll the view
             viewRange.ScrollBy(-timeMoved);
-        }
-
-        private bool IsHorizontalDrag(Point mousePosition)
-        {
-            // Users will most likely be wanting to scroll the panel horizontally much more often
-            // than they'll re-order the panels, so only call this a Vertical drag if the Y mouse
-            // movement is at least 3 times the X mouse movement.
-            return 3 * Math.Abs(mousePosition.X - this.lastMousePosition.X) > Math.Abs(mousePosition.Y - this.lastMousePosition.Y);
         }
     }
 }

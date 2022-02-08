@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeIndexWindow{TInput, TOutput}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="relativeIndexInterval">The relative index interval over which to gather messages.</param>
         /// <param name="selector">Select output message from collected window of input messages.</param>
         public RelativeIndexWindow(Pipeline pipeline, IntInterval relativeIndexInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector)

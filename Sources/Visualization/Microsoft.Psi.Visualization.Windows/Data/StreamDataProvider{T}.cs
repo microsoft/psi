@@ -13,7 +13,10 @@ namespace Microsoft.Psi.Visualization.Data
     /// <summary>
     /// Represents an object used to read streams.
     /// </summary>
-    /// <typeparam name="T">The type of messages in stream.</typeparam>
+    /// <typeparam name="T">NOTE: Due to the differing ways that the derived classes <see cref="StreamValueProvider{T}"/> and <see cref="StreamIntervalProvider{T}"/>
+    /// deal with data coming from the store, the type T also differs. StreamValueProvider reads raw messages from the stream, then adapts it (if applicable), so T is
+    /// the type of messages in the stream.  StreamIntervalProvider on the other hand uses its internal message cache that represents messages that have been
+    /// read from the store and then adapted (if applicable), so in this case T represents the type of messages after they have passed through the data adapter.</typeparam>
     public abstract class StreamDataProvider<T> : IStreamDataProvider
     {
         /// <summary>
@@ -31,6 +34,9 @@ namespace Microsoft.Psi.Visualization.Data
             this.ReadRequests = new ReadOnlyCollection<ReadRequest>(this.ReadRequestsInternal);
         }
 
+        /// <inheritdoc/>
+        public event EventHandler NoRemainingSubscribers;
+
         /// <summary>
         /// Event that fires when a stream is unable to be read from.
         /// </summary>
@@ -45,6 +51,9 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets the stream name.
         /// </summary>
         public string StreamName { get; private set; }
+
+        /// <inheritdoc/>
+        public abstract bool HasSubscribers { get; }
 
         /// <summary>
         /// Gets the internal list of read requests.
@@ -94,6 +103,14 @@ namespace Microsoft.Psi.Visualization.Data
 
         /// <inheritdoc/>
         public abstract DateTime? GetTimeOfNearestMessage(DateTime time, NearestMessageType snappingBehavior);
+
+        /// <summary>
+        /// Called by a derived class when it no longer has any subscribers.
+        /// </summary>
+        protected void OnNoRemainingSubscribers()
+        {
+            this.NoRemainingSubscribers?.Invoke(this, EventArgs.Empty);
+        }
 
         /// <summary>
         /// Called when a read error arises.

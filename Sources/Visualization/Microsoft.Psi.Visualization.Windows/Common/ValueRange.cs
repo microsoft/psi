@@ -29,5 +29,54 @@ namespace Microsoft.Psi.Visualization
         /// Gets the maximum value of the range.
         /// </summary>
         public T Maximum { get; private set; }
+
+        /// <summary>
+        /// Equality comparer. Returns true if the two ranges have the same start and end, false otherwise.
+        /// </summary>
+        /// <param name="first">The first value to compare.</param>
+        /// <param name="second">The second value to compare.</param>
+        /// <returns>True if the two ranges have the same start and end, false otherwise.</returns>
+        public static bool operator ==(ValueRange<T> first, ValueRange<T> second)
+        {
+            if (first is null && second is null)
+            {
+                return true;
+            }
+
+            if (first is null || second is null)
+            {
+                return false;
+            }
+
+            return first.Minimum.Equals(second.Minimum) && first.Maximum.Equals(second.Maximum);
+        }
+
+        /// <summary>
+        /// Inequality comparer. Returns true if the two ranges have a different start and/or end, false otherwise.
+        /// </summary>
+        /// <param name="first">The first value to compare.</param>
+        /// <param name="second">The second value to compare.</param>
+        /// <returns>True if the two ranges have a different start and/or end, false otherwise.</returns>
+        public static bool operator !=(ValueRange<T> first, ValueRange<T> second)
+        {
+            return !(first == second);
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            if (obj is ValueRange<T>)
+            {
+                return this == (ValueRange<T>)obj;
+            }
+
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return this.Minimum.GetHashCode() ^ this.Maximum.GetHashCode();
+        }
     }
 }

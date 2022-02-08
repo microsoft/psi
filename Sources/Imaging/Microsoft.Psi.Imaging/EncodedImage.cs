@@ -55,6 +55,11 @@ namespace Microsoft.Psi.Imaging
         public PixelFormat PixelFormat => this.pixelFormat;
 
         /// <summary>
+        /// Gets the size of the encoded image in bytes.
+        /// </summary>
+        public int Size => this.stream != null ? (int)this.stream.Length : 0;
+
+        /// <summary>
         /// Releases the image.
         /// </summary>
         public void Dispose()
@@ -86,6 +91,18 @@ namespace Microsoft.Psi.Imaging
         public byte[] GetBuffer()
         {
             return this.stream.GetBuffer();
+        }
+
+        /// <summary>
+        /// Sets the image data to byte array.
+        /// </summary>
+        /// <param name="buffer">Byte array containing the image data.</param>
+        /// <param name="offset">The offset in buffer at which to begin copying bytes.</param>
+        /// <param name="count">The maximum number of bytes to copy.</param>
+        public void SetBuffer(byte[] buffer, int offset, int count)
+        {
+            this.stream.SetLength(0);
+            this.stream.Write(buffer, offset, count);
         }
 
         /// <summary>

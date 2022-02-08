@@ -5,7 +5,7 @@ namespace Microsoft.Psi.Visualization.Data
 {
     using System;
     using System.ComponentModel;
-    using Microsoft.Psi.Visualization.Base;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.ViewModels;
 
     /// <summary>

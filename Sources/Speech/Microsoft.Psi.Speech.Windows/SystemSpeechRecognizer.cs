@@ -496,7 +496,7 @@ namespace Microsoft.Psi.Speech
         /// originating times.
         /// </summary>
         /// <typeparam name="T">The type of the output stream.</typeparam>
-        /// <param name="pipeline">The pipeline in which this component was created.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="name">The name of the stream.</param>
         /// <param name="consistencyCheckGroup">The group in which to create the stream.</param>
         /// <returns>The newly created emitter for the stream.</returns>

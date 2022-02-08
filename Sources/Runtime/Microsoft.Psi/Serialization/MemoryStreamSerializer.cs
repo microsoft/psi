@@ -15,6 +15,9 @@ namespace Microsoft.Psi.Serialization
         private const int SchemaVersion = 3;
         private ISerializer<MemoryStream> innerSerializer;
 
+        /// <inheritdoc />
+        public bool? IsClearRequired => false;
+
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
             if (targetSchema?.Version <= 2)
@@ -73,6 +76,9 @@ namespace Microsoft.Psi.Serialization
         /// </remarks>
         private class MemoryStreamSerializerImpl : ISerializer<MemoryStream>
         {
+            /// <inheritdoc />
+            public bool? IsClearRequired => false;
+
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 var schemaMembers = new[] { new TypeMemberSchema("buffer", typeof(byte[]).AssemblyQualifiedName, true) };

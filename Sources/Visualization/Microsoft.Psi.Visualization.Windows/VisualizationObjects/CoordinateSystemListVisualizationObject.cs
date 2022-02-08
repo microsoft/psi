@@ -3,14 +3,13 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
-    using System.Collections.Generic;
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
     /// Implements a visualization object that can display lists of coordinate systems.
     /// </summary>
     [VisualizationObject("Coordinate Systems")]
-    public class CoordinateSystemListVisualizationObject : ModelVisual3DVisualizationObjectEnumerable<CoordinateSystemVisualizationObject, CoordinateSystem, List<CoordinateSystem>>
+    public class CoordinateSystemListVisualizationObject : ModelVisual3DListVisualizationObject<CoordinateSystemVisualizationObject, CoordinateSystem>
     {
     }
 }

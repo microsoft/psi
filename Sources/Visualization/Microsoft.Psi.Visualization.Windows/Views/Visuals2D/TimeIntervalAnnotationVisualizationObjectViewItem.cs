@@ -6,12 +6,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Media;
     using System.Windows.Shapes;
-    using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -22,6 +20,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private readonly TimeIntervalAnnotationVisualizationObjectView parent;
         private readonly List<Path> figures;
         private readonly List<Grid> labels;
+        private readonly Path borderPath;
         private readonly TimeIntervalAnnotationDisplayData annotationDisplayData;
         private bool isSelected = false;
 
@@ -39,9 +38,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.figures = new List<Path>();
             this.labels = new List<Grid>();
 
-            foreach (AnnotationSchemaDefinition schemaDefinition in annotationDisplayData.Definition.SchemaDefinitions)
+            foreach (var attributeSchema in annotationDisplayData.AnnotationSchema.AttributeSchemas)
             {
-                PathFigure annotationElementFigure = new PathFigure()
+                var annotationElementFigure = new PathFigure()
                 {
                     StartPoint = new Point(0, 0),
                     IsClosed = true,
@@ -52,18 +51,18 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 annotationElementFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
                 annotationElementFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
 
-                PathGeometry pathGeometry = new PathGeometry() { Transform = this.parent.TransformGroup };
+                var pathGeometry = new PathGeometry() { Transform = this.parent.TransformGroup };
                 pathGeometry.Figures.Add(annotationElementFigure);
-                Path path = new Path() { Data = pathGeometry };
+                var path = new Path() { Data = pathGeometry };
                 this.figures.Add(path);
 
-                Grid labelGrid = new Grid
+                var labelGrid = new Grid
                 {
                     RenderTransform = new TranslateTransform(),
                     IsHitTestVisible = false,
                 };
 
-                TextBlock textBlock = new TextBlock()
+                var textBlock = new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center,
@@ -75,28 +74,49 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 labelGrid.Children.Add(textBlock);
                 this.labels.Add(labelGrid);
 
-                // Get the current value
-                object value = annotationDisplayData.Annotation.Data.Values[schemaDefinition.Name];
-
-                // Get the metadata associtaed with the value
-                AnnotationSchemaValueMetadata schemaMetadata = this.GetAnnotationValueMetadata(value, schemaDefinition.Schema);
-
                 // Set the colors etc
-                path.Stroke = this.parent.GetBrush(schemaMetadata.BorderColor);
-                path.StrokeThickness = schemaMetadata.BorderWidth;
-                path.Fill = this.parent.GetBrush(schemaMetadata.FillColor);
-                textBlock.Foreground = this.parent.GetBrush(schemaMetadata.TextColor);
+                var annotationValue = annotationDisplayData.Annotation.AttributeValues[attributeSchema.Name];
+                path.Fill = this.parent.GetBrush(annotationValue.FillColor);
+                textBlock.Foreground = this.parent.GetBrush(annotationValue.TextColor);
             }
 
-            foreach (Path figure in this.figures)
+            var borderElementFigure = new PathFigure()
             {
-                this.parent.Canvas.Children.Add(figure);
+                StartPoint = new Point(0, 0),
+                IsClosed = true,
+                IsFilled = true,
+            };
+
+            borderElementFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
+            borderElementFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
+            borderElementFigure.Segments.Add(new LineSegment(new Point(0, 0), true));
+
+            var borderPathGeometry = new PathGeometry() { Transform = this.parent.TransformGroup };
+            borderPathGeometry.Figures.Add(borderElementFigure);
+
+            this.borderPath = new Path()
+            {
+                Data = borderPathGeometry,
+                Stroke = new SolidColorBrush(Colors.Gray),
+                StrokeThickness = 2,
+            };
+
+            // Insert the figure and labels in the parent canvas, but at the beginning, starting
+            // from index 1. At index 0 we have the track highlight child. Inserting from index
+            // 1 ensures that the track label items remain towards the tail of the list of canvas
+            // children, making sure they stay on top in z-order.
+            int index = 2;
+            foreach (var figure in this.figures)
+            {
+                this.parent.Canvas.Children.Insert(index++, figure);
             }
 
-            foreach (Grid label in this.labels)
+            foreach (var label in this.labels)
             {
-                this.parent.Canvas.Children.Add(label);
+                this.parent.Canvas.Children.Insert(index++, label);
             }
+
+            this.parent.Canvas.Children.Insert(index++, this.borderPath);
         }
 
         /// <summary>
@@ -131,55 +151,61 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// Update the view item from the given data.
         /// </summary>
         /// <param name="annotationDisplayData">The data to update the item from.</param>
-        internal void Update(TimeIntervalAnnotationDisplayData annotationDisplayData)
+        /// <param name="trackIndex">The track index to display the item on.</param>
+        /// <param name="trackCount">The track count.</param>
+        internal void Update(TimeIntervalAnnotationDisplayData annotationDisplayData, int trackIndex, int trackCount)
         {
             var verticalSpace = this.parent.StreamVisualizationObject.Padding / this.parent.ScaleTransform.ScaleY;
             var start = (annotationDisplayData.StartTime - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
             var end = (annotationDisplayData.EndTime - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
 
-            for (int index = 0; index < annotationDisplayData.Definition.SchemaDefinitions.Count; index++)
+            // update the label
+            var navigatorViewDuration = this.parent.Navigator.ViewRange.Duration.TotalSeconds;
+            var labelStart = Math.Min(navigatorViewDuration, Math.Max((annotationDisplayData.StartTime - this.parent.Navigator.ViewRange.StartTime).TotalSeconds, 0));
+            var labelEnd = Math.Max(0, Math.Min((annotationDisplayData.EndTime - this.parent.Navigator.ViewRange.StartTime).TotalSeconds, navigatorViewDuration));
+
+            var attributeCount = this.parent.StreamVisualizationObject.AttributeCount;
+            var totalTrackCount = attributeCount * trackCount;
+
+            for (int attributeIndex = 0; attributeIndex < annotationDisplayData.AnnotationSchema.AttributeSchemas.Count; attributeIndex++)
             {
-                // Get the schema definition
-                AnnotationSchemaDefinition schemaDefinition = annotationDisplayData.Definition.SchemaDefinitions[index];
+                // Get the attribute schema
+                var attributeSchema = annotationDisplayData.AnnotationSchema.AttributeSchemas[attributeIndex];
 
                 // Get the current value
-                object value = annotationDisplayData.Annotation.Data.Values[schemaDefinition.Name];
-
-                // Get the associated metadata
-                AnnotationSchemaValueMetadata schemaMetadata = this.GetAnnotationValueMetadata(value, schemaDefinition.Schema);
+                var annotationValue = annotationDisplayData.Annotation.AttributeValues[attributeSchema.Name];
 
                 // Set the colors etc
-                this.figures[index].Stroke = this.parent.GetBrush(schemaMetadata.BorderColor);
-                this.figures[index].StrokeThickness = schemaMetadata.BorderWidth;
-                this.figures[index].Fill = this.parent.GetBrush(schemaMetadata.FillColor);
+                this.figures[attributeIndex].Fill = this.parent.GetBrush(annotationValue.FillColor);
 
-                var lo = (double)(index + verticalSpace) / this.parent.StreamVisualizationObject.TrackCount;
-                var hi = (double)(index + 1 - verticalSpace) / this.parent.StreamVisualizationObject.TrackCount;
+                var lo = (double)(trackIndex * attributeCount + attributeIndex + verticalSpace) / totalTrackCount;
+                var hi = (double)(trackIndex * attributeCount + attributeIndex + 1 - verticalSpace) / totalTrackCount;
 
-                PathFigure annotationElementFigure = (this.figures[index].Data as PathGeometry).Figures[0];
+                var annotationElementFigure = (this.figures[attributeIndex].Data as PathGeometry).Figures[0];
                 annotationElementFigure.StartPoint = new Point(start, lo);
                 (annotationElementFigure.Segments[0] as LineSegment).Point = new Point(end, lo);
                 (annotationElementFigure.Segments[1] as LineSegment).Point = new Point(end, hi);
                 (annotationElementFigure.Segments[2] as LineSegment).Point = new Point(start, hi);
 
-                // update the label
-                var navigatorViewDuration = this.parent.Navigator.ViewRange.Duration.TotalSeconds;
-                var labelStart = Math.Min(navigatorViewDuration, Math.Max((annotationDisplayData.StartTime - this.parent.Navigator.ViewRange.StartTime).TotalSeconds, 0));
-                var labelEnd = Math.Max(0, Math.Min((annotationDisplayData.EndTime - this.parent.Navigator.ViewRange.StartTime).TotalSeconds, navigatorViewDuration));
-
-                Grid labelGrid = this.labels[index];
-                (labelGrid.Children[0] as TextBlock).Text = value?.ToString();
+                var labelGrid = this.labels[attributeIndex];
+                (labelGrid.Children[0] as TextBlock).Text = annotationValue.ValueAsString;
                 (labelGrid.Children[0] as TextBlock).FontSize = this.parent.StreamVisualizationObject.FontSize;
-                if (schemaDefinition.Schema.IsFiniteAnnotationSchema)
-                {
-                    (labelGrid.Children[0] as TextBlock).Foreground = this.parent.GetBrush(schemaMetadata.TextColor);
-                }
+                (labelGrid.Children[0] as TextBlock).Foreground = this.parent.GetBrush(annotationValue.TextColor);
 
                 labelGrid.Width = (labelEnd - labelStart) * this.parent.Canvas.ActualWidth / this.parent.Navigator.ViewRange.Duration.TotalSeconds;
                 labelGrid.Height = (hi - lo) * this.parent.Canvas.ActualHeight;
                 (labelGrid.RenderTransform as TranslateTransform).X = labelStart * this.parent.Canvas.ActualWidth / this.parent.Navigator.ViewRange.Duration.TotalSeconds;
                 (labelGrid.RenderTransform as TranslateTransform).Y = lo * this.parent.Canvas.ActualHeight;
             }
+
+            var borderLo = (double)(trackIndex * attributeCount + 0 + verticalSpace) / totalTrackCount;
+            var borderHi = (double)(trackIndex * attributeCount + attributeCount - verticalSpace) / totalTrackCount;
+
+            var borderFigure = (this.borderPath.Data as PathGeometry).Figures[0];
+            borderFigure.StartPoint = new Point(start, borderLo);
+            (borderFigure.Segments[0] as LineSegment).Point = new Point(end, borderLo);
+            (borderFigure.Segments[1] as LineSegment).Point = new Point(end, borderHi);
+            (borderFigure.Segments[2] as LineSegment).Point = new Point(start, borderHi);
         }
 
         /// <summary>
@@ -196,6 +222,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 this.parent.Canvas.Children.Remove(label);
             }
+
+            this.parent.Canvas.Children.Remove(this.borderPath);
         }
 
         private void AnnotationDisplayData_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -204,12 +232,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 this.IsSelected = this.annotationDisplayData.IsSelected;
             }
-        }
-
-        private AnnotationSchemaValueMetadata GetAnnotationValueMetadata(object value, IAnnotationSchema annotationSchema)
-        {
-            MethodInfo getMetadataProperty = annotationSchema.GetType().GetMethod("GetMetadata");
-            return (AnnotationSchemaValueMetadata)getMetadataProperty.Invoke(annotationSchema, new[] { value });
         }
     }
 }

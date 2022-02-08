@@ -3,8 +3,6 @@
 
 namespace Microsoft.Psi.Audio
 {
-    using Microsoft.Psi.Audio;
-
     /// <summary>
     /// Stream operators and extension methods for Microsoft.Psi.Audio.Windows.
     /// </summary>

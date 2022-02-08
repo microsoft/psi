@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Psi.Visualization.Collections;
 
     /// <summary>
     /// Represents a collection of stream summary caches, each at a different zoom level, for a single stream in a store.
@@ -14,9 +13,9 @@ namespace Microsoft.Psi.Visualization.Data
     public class StreamSummaryManager : IDisposable
     {
         private const uint DefaultCacheCapacity = 16384;
-        private Dictionary<TimeSpan, IStreamSummary> summaryCaches;
-        private List<Guid> consumers;
-        private StreamSource streamSource;
+        private readonly Dictionary<TimeSpan, IStreamSummary> summaryCaches;
+        private readonly List<Guid> subscribers;
+        private readonly StreamSource streamSource;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamSummaryManager"/> class.
@@ -24,20 +23,15 @@ namespace Microsoft.Psi.Visualization.Data
         /// <param name="streamSource">A stream source that specifies the store and stream that will be summarized.</param>
         public StreamSummaryManager(StreamSource streamSource)
         {
-            if (streamSource == null)
-            {
-                throw new ArgumentNullException(nameof(streamSource));
-            }
-
-            this.streamSource = streamSource;
+            this.streamSource = streamSource ?? throw new ArgumentNullException(nameof(streamSource));
             this.summaryCaches = new Dictionary<TimeSpan, IStreamSummary>();
-            this.consumers = new List<Guid>();
+            this.subscribers = new List<Guid>();
         }
 
         /// <summary>
-        /// Occurs when the stream summary manager has no remaining consumers and can be disposed of.
+        /// Occurs when the stream summary manager has no remaining subscribers and can be disposed of.
         /// </summary>
-        public event EventHandler NoRemainingConsumers;
+        public event EventHandler NoRemainingSubscribers;
 
         /// <summary>
         /// Gets the store name to summarize.
@@ -60,9 +54,9 @@ namespace Microsoft.Psi.Visualization.Data
         public IStreamAdapter StreamAdapter => this.streamSource.StreamAdapter;
 
         /// <summary>
-        /// Gets the number of consumers of this stream summary manager.
+        /// Gets the number of subscribers to this stream summary manager.
         /// </summary>
-        public int ConsumerCount => this.consumers.Count;
+        public int SubscriberCount => this.subscribers.Count;
 
         /// <summary>
         /// Gets the maximum summary interval.
@@ -70,54 +64,40 @@ namespace Microsoft.Psi.Visualization.Data
         protected TimeSpan MaxSummaryInterval => (this.summaryCaches.Count > 0) ? this.summaryCaches.Values.Max(s => s.Interval) : TimeSpan.Zero;
 
         /// <summary>
-        /// Registers a new consumer of the stream summary manager.
+        /// Registers a new subscriber of the stream summary manager.
         /// </summary>
-        /// <returns>A unique consumer id that must provided by the consumer when it unregisters from this stream summary manager.</returns>
-        public Guid RegisterConsumer()
+        /// <returns>A unique subscriber id that must provided by the subscriber when it unregisters from this stream summary manager.</returns>
+        public Guid RegisterSubscriber()
         {
-            Guid consumerId = Guid.NewGuid();
+            Guid subscriberId = Guid.NewGuid();
 
-            lock (this.consumers)
+            lock (this.subscribers)
             {
-                this.consumers.Add(consumerId);
+                this.subscribers.Add(subscriberId);
             }
 
-            return consumerId;
+            return subscriberId;
         }
 
         /// <summary>
-        /// Unregisters a consumer from the stream summary manager.
+        /// Unregisters a subscriber from the stream summary manager.
         /// </summary>
-        /// <param name="consumerId">The consumer id that was returned to the consumer when it registered.</param>
-        public void UnregisterConsumer(Guid consumerId)
+        /// <param name="subscriberId">The subscriber id that was returned to the subscriber when it registered.</param>
+        public void UnregisterSubscriber(Guid subscriberId)
         {
-            lock (this.consumers)
+            lock (this.subscribers)
             {
-                if (this.consumers.Contains(consumerId))
+                if (this.subscribers.Contains(subscriberId))
                 {
-                    this.consumers.Remove(consumerId);
-                }
-                else
-                {
-                    throw new InvalidOperationException("An attempt was made to unregister from a stream summary manager consumer using an invalid consumer id.");
+                    this.subscribers.Remove(subscriberId);
                 }
             }
 
-            // If there's no remaining consumers, raise an event to allow DataManager to remove this summary manager from its collection.
-            if (!this.consumers.Any())
+            // If there's no remaining subscribers, raise an event to allow DataManager to remove this summary manager from its collection.
+            if (!this.subscribers.Any())
             {
-                this.NoRemainingConsumers?.Invoke(this, EventArgs.Empty);
+                this.NoRemainingSubscribers?.Invoke(this, EventArgs.Empty);
             }
-        }
-
-        /// <summary>
-        /// Determines whether a stream summary manager provides data for a consumer.
-        /// </summary>
-        /// <param name="consumerId">The id of the consumer.</param>
-        /// <returns>True if the stream summary manager contains the consumer, otherwise false.</returns>
-        public bool ContainsConsumer(Guid consumerId)
-        {
-            return this.consumers.Contains(consumerId);
         }
 
         /// <summary>
@@ -172,6 +152,11 @@ namespace Microsoft.Psi.Visualization.Data
 
         /// <inheritdoc/>
         public void Dispose()
+        {
+            this.ClearSummaryCaches();
+        }
+
+        private void ClearSummaryCaches()
         {
             lock (this.summaryCaches)
             {
@@ -266,13 +251,7 @@ namespace Microsoft.Psi.Visualization.Data
                     .MakeGenericType(streamSource.Summarizer.SourceType, streamSource.Summarizer.DestinationType)
                     .GetConstructor(new Type[] { typeof(StreamSource), typeof(TimeSpan), typeof(uint) })
                     .Invoke(new object[] { streamSource, interval, DefaultCacheCapacity }) as IStreamSummary;
-
-                if (summaryCache == null)
-                {
-                    throw new InvalidOperationException("Unable to create instance of summary cache");
-                }
-
-                this.summaryCaches[interval] = summaryCache;
+                this.summaryCaches[interval] = summaryCache ?? throw new InvalidOperationException("Unable to create instance of summary cache");
             }
 
             return summaryCache;

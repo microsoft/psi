@@ -17,13 +17,9 @@ namespace Microsoft.Psi.Persistence
         private const int DefaultRetentionQueueLength64 = 6;
         private const int DefaultRetentionQueueLength32 = 0;
         private InfiniteFileWriter fileWriter;
-        private string name;
-        private string path;
 
         public MessageWriter(string name, string path, int extentSize = 0)
         {
-            this.name = name;
-            this.path = path;
             if (extentSize == 0)
             {
                 extentSize = Environment.Is64BitProcess ? DefaultExtentCapacity64 : DefaultExtentCapacity32;

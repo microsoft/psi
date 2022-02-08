@@ -234,6 +234,11 @@ namespace Microsoft.Psi
         /// </summary>
         public TimeSpan ProgressReportInterval { get; set; } = TimeSpan.FromMilliseconds(500);
 
+        /// <summary>
+        /// Gets or sets virtual time offset.
+        /// </summary>
+        internal virtual TimeSpan VirtualTimeOffset { get; set; } = TimeSpan.Zero;
+
         internal bool IsInitial => this.state == State.Initial;
 
         internal bool IsStarting => this.state == State.Starting;
@@ -907,8 +912,8 @@ namespace Microsoft.Psi
                 // this is the main pipeline (subpipelines inherit the parent clock)
                 clock =
                     this.replayDescriptor.Interval.Left != DateTime.MinValue ?
-                    new Clock(this.replayDescriptor.Start) :
-                    new Clock(default(TimeSpan));
+                    new Clock(this.replayDescriptor.Start + this.VirtualTimeOffset) :
+                    new Clock(this.VirtualTimeOffset);
 
                 // start the scheduler
                 this.scheduler.Start(clock, this.replayDescriptor.EnforceReplayClock);

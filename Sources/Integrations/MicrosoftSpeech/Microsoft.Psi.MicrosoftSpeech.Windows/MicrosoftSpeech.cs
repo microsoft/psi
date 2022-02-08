@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.MicrosoftSpeech
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using Microsoft.Psi.Language;
@@ -11,6 +12,7 @@ namespace Microsoft.Psi.MicrosoftSpeech
     /// <summary>
     /// Static helper methods.
     /// </summary>
+    [Obsolete("The MicrosoftSpeechRecognizer component has been deprecated. Consider using the SystemSpeechRecognizer component available in Microsoft.Psi.Speech.Windows instead.", false)]
     public static class MicrosoftSpeech
     {
         /// <summary>

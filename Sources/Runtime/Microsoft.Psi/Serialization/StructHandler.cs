@@ -24,6 +24,10 @@ namespace Microsoft.Psi.Serialization
             : base(contractName, id)
         {
             this.innerSerializer = innerSerializer;
+            if (innerSerializer != null && innerSerializer.IsClearRequired.HasValue)
+            {
+                this.IsClearRequired = innerSerializer.IsClearRequired.Value;
+            }
 
             if (typeof(T).IsByRef)
             {

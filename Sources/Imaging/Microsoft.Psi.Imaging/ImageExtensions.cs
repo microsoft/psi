@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Imaging
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     /// <summary>
@@ -339,7 +340,7 @@ namespace Microsoft.Psi.Imaging
         {
             int scaledWidth = (int)Math.Abs(image.Width * scaleX);
             int scaledHeight = (int)Math.Abs(image.Height * scaleY);
-            Image destImage = new Image(scaledWidth, scaledHeight, image.PixelFormat);
+            var destImage = new Image(scaledWidth, scaledHeight, image.PixelFormat);
             image.Resize(destImage, scaledWidth, scaledHeight, mode);
             return destImage;
         }
@@ -481,7 +482,7 @@ namespace Microsoft.Psi.Imaging
                 }
             }
 
-            errorMetrics.AvgError /= (double)(image1.Width * image1.Height);
+            errorMetrics.AvgError /= (double)image1.Width * image1.Height;
             errorMetrics.MaxError = Math.Sqrt(errorMetrics.MaxError);
 
             return errorMetrics.NumberOutliers <= percentOutliersAllowed * image1.Width * image1.Height;
@@ -531,9 +532,9 @@ namespace Microsoft.Psi.Imaging
             if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
-                using Image tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
                 image.CopyTo(tmpImage);
-                using Image resizedImage = new Image((int)newWidth, (int)newHeight, PixelFormat.BGR_24bpp);
+                using var resizedImage = new Image((int)newWidth, (int)newHeight, PixelFormat.BGR_24bpp);
                 tmpImage.Resize(resizedImage, newWidth, newHeight, mode);
                 destImage.CopyFrom(resizedImage);
                 return;
@@ -588,7 +589,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>Returns a new image resized to the specified width/height.</returns>
         public static Image Resize(this Image image, int finalWidth, int finalHeight, SamplingMode samplingMode = SamplingMode.Bilinear)
         {
-            Image destImage = new Image(finalWidth, finalHeight, image.PixelFormat);
+            var destImage = new Image(finalWidth, finalHeight, image.PixelFormat);
             image.Resize(destImage, finalWidth, finalHeight, samplingMode);
             return destImage;
         }
@@ -603,12 +604,8 @@ namespace Microsoft.Psi.Imaging
         /// <returns>Rotated image.</returns>
         public static Image Rotate(this Image image, float angleInDegrees, SamplingMode mode, RotationFitMode fit = RotationFitMode.Tight)
         {
-            int rotatedWidth;
-            int rotatedHeight;
-            float originx;
-            float originy;
-            DetermineRotatedWidthHeight(image.Width, image.Height, angleInDegrees, fit, out rotatedWidth, out rotatedHeight, out originx, out originy);
-            Image rotatedImage = new Image(rotatedWidth, rotatedHeight, image.PixelFormat);
+            DetermineRotatedWidthHeight(image.Width, image.Height, angleInDegrees, fit, out int rotatedWidth, out int rotatedHeight, out _, out _);
+            var rotatedImage = new Image(rotatedWidth, rotatedHeight, image.PixelFormat);
             image.Rotate(rotatedImage, angleInDegrees, mode, fit);
             return rotatedImage;
         }
@@ -635,10 +632,7 @@ namespace Microsoft.Psi.Imaging
                     "Convert to a supported format such as 8bpp grayscale or 24/32bpp color first.");
             }
 
-            int rotatedWidth;
-            int rotatedHeight;
-            float originx, originy;
-            DetermineRotatedWidthHeight(image.Width, image.Height, angleInDegrees, fit, out rotatedWidth, out rotatedHeight, out originx, out originy);
+            DetermineRotatedWidthHeight(image.Width, image.Height, angleInDegrees, fit, out int rotatedWidth, out int rotatedHeight, out float originx, out float originy);
 
             if (rotatedWidth != destImage.Width || rotatedHeight != destImage.Height)
             {
@@ -657,9 +651,9 @@ namespace Microsoft.Psi.Imaging
             if (image.PixelFormat == PixelFormat.Gray_8bpp || image.PixelFormat == PixelFormat.RGB_24bpp)
             {
                 int stride = 4 * ((image.Width * 3 + 3) / 2); // Rounding to nearest word boundary
-                using Image tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
+                using var tmpImage = new Image(image.Width, image.Height, stride, PixelFormat.BGR_24bpp);
                 image.CopyTo(tmpImage);
-                using Image rotatedImage = new Image(rotatedWidth, rotatedHeight, PixelFormat.BGR_24bpp);
+                using var rotatedImage = new Image(rotatedWidth, rotatedHeight, PixelFormat.BGR_24bpp);
                 tmpImage.Rotate(rotatedImage, angleInDegrees, mode, fit);
                 destImage.CopyFrom(rotatedImage);
                 return;
@@ -711,57 +705,93 @@ namespace Microsoft.Psi.Imaging
         /// <param name="top">The top of the region to crop.</param>
         /// <param name="width">The width of the region to crop.</param>
         /// <param name="height">The height of the region to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
         /// <returns>The cropped image.</returns>
-        public static Image Crop(this Image image, int left, int top, int width, int height)
+        public static Image Crop(this Image image, int left, int top, int width, int height, bool clip = false) =>
+            image.Crop(new Rectangle(left, top, width, height), clip);
+
+        /// <summary>
+        /// Creates a copy of the image cropped to the specified rectangle.
+        /// </summary>
+        /// <param name="image">Image to crop.</param>
+        /// <param name="rectangle">The rectangle to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the rectangle (by default false).</param>
+        /// <returns>The cropped image.</returns>
+        public static Image Crop(this Image image, Rectangle rectangle, bool clip = false)
         {
-            Image croppedImage = new Image(width, height, image.PixelFormat);
-            image.Crop(croppedImage, left, top, width, height);
-            return croppedImage;
+            var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, image.Width, image.Height) : rectangle;
+            if (actualRectangle.IsEmpty)
+            {
+                return null;
+            }
+            else
+            {
+                var croppedImage = new Image(actualRectangle.Width, actualRectangle.Height, image.PixelFormat);
+                image.Crop(croppedImage, actualRectangle, clip: false);
+                return croppedImage;
+            }
         }
+
+        /// <summary>
+        /// Creates a copy of the image cropped to the specified rectangle.
+        /// </summary>
+        /// <param name="image">Image to crop.</param>
+        /// <param name="croppedImage">Destination image that cropped area is copied to.</param>
+        /// <param name="left">The left of the rectangle to crop.</param>
+        /// <param name="top">The top of the rectangle to crop.</param>
+        /// <param name="width">The width of the rectangle to crop.</param>
+        /// <param name="height">The height of the rectangle to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
+        public static void Crop(this Image image, Image croppedImage, int left, int top, int width, int height, bool clip = false) =>
+            image.Crop(croppedImage, new Rectangle(left, top, width, height), clip);
 
         /// <summary>
         /// Creates a copy of the image cropped to the specified dimensions.
         /// </summary>
         /// <param name="image">Image to crop.</param>
         /// <param name="croppedImage">Destination image that cropped area is copied to.</param>
-        /// <param name="left">The left of the region to crop.</param>
-        /// <param name="top">The top of the region to crop.</param>
-        /// <param name="width">The width of the region to crop.</param>
-        /// <param name="height">The height of the region to crop.</param>
-        /// <returns>The cropped image.</returns>
-        public static Image Crop(this Image image, Image croppedImage, int left, int top, int width, int height)
+        /// <param name="rectangle">The rectangle to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
+        public static void Crop(this Image image, Image croppedImage, Rectangle rectangle, bool clip = false)
         {
             if (croppedImage.PixelFormat != image.PixelFormat)
             {
                 throw new ArgumentOutOfRangeException("croppedImage.PixelFormat", "destination image pixel format doesn't match source image pixel format");
             }
 
-            if (croppedImage.Width < width)
+            var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, image.Width, image.Height) : rectangle;
+
+            if (actualRectangle.IsEmpty)
+            {
+                return;
+            }
+
+            if (croppedImage.Width < actualRectangle.Width)
             {
                 throw new ArgumentOutOfRangeException("croppedImage.Width", "destination image width is too small");
             }
 
-            if (croppedImage.Height < height)
+            if (croppedImage.Height < actualRectangle.Height)
             {
                 throw new ArgumentOutOfRangeException("croppedImage.Height", "destination image height is too small");
             }
 
-            if ((left < 0) || (left >= image.Width))
+            if ((actualRectangle.Left < 0) || (actualRectangle.Left >= image.Width))
             {
                 throw new ArgumentOutOfRangeException("left", "left is out of range");
             }
 
-            if ((top < 0) || (top >= image.Height))
+            if ((actualRectangle.Top < 0) || (actualRectangle.Top >= image.Height))
             {
                 throw new ArgumentOutOfRangeException("top", "top is out of range");
             }
 
-            if ((width < 0) || ((left + width) > image.Width))
+            if ((actualRectangle.Width < 0) || ((actualRectangle.Left + actualRectangle.Width) > image.Width))
             {
                 throw new ArgumentOutOfRangeException("width", "width is out of range");
             }
 
-            if ((height < 0) || ((top + height) > image.Height))
+            if ((actualRectangle.Height < 0) || ((actualRectangle.Top + actualRectangle.Height) > image.Height))
             {
                 throw new ArgumentOutOfRangeException("height", "height is out of range");
             }
@@ -773,14 +803,14 @@ namespace Microsoft.Psi.Imaging
                 int bytesPerPixel = image.BitsPerPixel / 8;
 
                 // Compute the number of bytes in each line of the crop region
-                int copyLength = width * bytesPerPixel;
+                int copyLength = actualRectangle.Width * bytesPerPixel;
 
                 // Start at top-left of region to crop
-                byte* src = (byte*)image.ImageData.ToPointer() + (top * image.Stride) + (left * bytesPerPixel);
+                byte* src = (byte*)image.ImageData.ToPointer() + (actualRectangle.Top * image.Stride) + (actualRectangle.Left * bytesPerPixel);
                 byte* dst = (byte*)croppedImage.ImageData.ToPointer();
 
                 // Copy line by line
-                for (int i = 0; i < height; i++)
+                for (int i = 0; i < actualRectangle.Height; i++)
                 {
                     Buffer.MemoryCopy(src, dst, copyLength, copyLength);
 
@@ -788,92 +818,120 @@ namespace Microsoft.Psi.Imaging
                     dst += croppedImage.Stride;
                 }
             }
-
-            return croppedImage;
         }
 
         /// <summary>
         /// Creates a copy of the depth image cropped to the specified dimensions.
         /// </summary>
-        /// <param name="image">Depth image to crop.</param>
+        /// <param name="depthImage">Depth image to crop.</param>
         /// <param name="left">The left of the region to crop.</param>
         /// <param name="top">The top of the region to crop.</param>
         /// <param name="width">The width of the region to crop.</param>
         /// <param name="height">The height of the region to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
         /// <returns>The cropped depth image.</returns>
-        public static DepthImage Crop(this DepthImage image, int left, int top, int width, int height)
+        public static DepthImage Crop(this DepthImage depthImage, int left, int top, int width, int height, bool clip = false) =>
+            depthImage.Crop(new Rectangle(left, top, width, height), clip);
+
+        /// <summary>
+        /// Creates a copy of the depth image cropped to the specified rectangle.
+        /// </summary>
+        /// <param name="depthImage">Depth image to crop.</param>
+        /// <param name="rectangle">The rectangle region to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the rectangle to the image boundaries (by default false).</param>
+        /// <returns>The cropped depth image.</returns>
+        public static DepthImage Crop(this DepthImage depthImage, Rectangle rectangle, bool clip = false)
         {
-            DepthImage croppedImage = new DepthImage(width, height, image.Stride);
-            image.Crop(croppedImage, left, top, width, height);
-            return croppedImage;
+            var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, depthImage.Width, depthImage.Height) : rectangle;
+            var croppedDepthImage = new DepthImage(actualRectangle.Width, actualRectangle.Height, depthImage.Stride);
+            depthImage.Crop(croppedDepthImage, actualRectangle, clip: false);
+            return croppedDepthImage;
         }
 
         /// <summary>
-        /// Creates a copy of the image cropped to the specified dimensions.
+        /// Creates a copy of the depth image cropped to the specified dimensions.
         /// </summary>
-        /// <param name="image">Image to crop.</param>
-        /// <param name="croppedImage">Destination image that cropped area is copied to.</param>
+        /// <param name="depthImage">Image to crop.</param>
+        /// <param name="croppedDepthImage">Destination image that cropped area is copied to.</param>
         /// <param name="left">The left of the region to crop.</param>
         /// <param name="top">The top of the region to crop.</param>
         /// <param name="width">The width of the region to crop.</param>
         /// <param name="height">The height of the region to crop.</param>
-        public static void Crop(this DepthImage image, DepthImage croppedImage, int left, int top, int width, int height)
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
+        public static void Crop(this DepthImage depthImage, DepthImage croppedDepthImage, int left, int top, int width, int height, bool clip = false) =>
+            depthImage.Crop(croppedDepthImage, new Rectangle(left, top, width, height), clip);
+
+        /// <summary>
+        /// Creates a copy of the depth image cropped to the specified rectangle.
+        /// </summary>
+        /// <param name="depthImage">Image to crop.</param>
+        /// <param name="croppedDepthImage">Destination image that cropped area is copied to.</param>
+        /// <param name="rectangle">The rectangle region to crop.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the rectangle to the image boundaries (by default false).</param>
+        public static void Crop(this DepthImage depthImage, DepthImage croppedDepthImage, Rectangle rectangle, bool clip = false)
         {
-            if (croppedImage.PixelFormat != image.PixelFormat)
+            if (croppedDepthImage.PixelFormat != depthImage.PixelFormat)
             {
-                throw new ArgumentOutOfRangeException("croppedImage.PixelFormat", "destination image pixel format doesn't match source image pixel format");
+                throw new ArgumentOutOfRangeException($"{nameof(croppedDepthImage)}.PixelFormat", "destination image pixel format doesn't match source image pixel format");
             }
 
-            if (croppedImage.Width < width)
+            var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, depthImage.Width, depthImage.Height) : rectangle;
+
+            if (actualRectangle.IsEmpty)
             {
-                throw new ArgumentOutOfRangeException("croppedImage.Width", "destination image width is too small");
+                return;
             }
 
-            if (croppedImage.Height < height)
+            if (croppedDepthImage.Width < actualRectangle.Width)
             {
-                throw new ArgumentOutOfRangeException("croppedImage.Height", "destination image height is too small");
+                throw new ArgumentOutOfRangeException($"{nameof(croppedDepthImage)}.Width", "destination image width is too small");
             }
 
-            if ((left < 0) || (left > (image.Width - 1)))
+            if (croppedDepthImage.Height < actualRectangle.Height)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(croppedDepthImage)}.Height", "destination image height is too small");
+            }
+
+            if ((actualRectangle.Left < 0) || (actualRectangle.Left >= depthImage.Width))
             {
                 throw new ArgumentOutOfRangeException("left", "left is out of range");
             }
 
-            if ((top < 0) || (top > (image.Height - 1)))
+            if ((actualRectangle.Top < 0) || (actualRectangle.Top >= depthImage.Height))
             {
                 throw new ArgumentOutOfRangeException("top", "top is out of range");
             }
 
-            if ((width < 0) || ((left + width) > image.Width))
+            if ((actualRectangle.Width < 0) || ((actualRectangle.Left + actualRectangle.Width) > depthImage.Width))
             {
                 throw new ArgumentOutOfRangeException("width", "width is out of range");
             }
 
-            if ((height < 0) || ((top + height) > image.Height))
+            if ((actualRectangle.Height < 0) || ((actualRectangle.Top + actualRectangle.Height) > depthImage.Height))
             {
                 throw new ArgumentOutOfRangeException("height", "height is out of range");
             }
 
             // Cropped image will be returned as a new image - original (this) image is not modified
-            System.Diagnostics.Debug.Assert(croppedImage.ImageData != IntPtr.Zero, "Unexpected empty image");
+            System.Diagnostics.Debug.Assert(croppedDepthImage.ImageData != IntPtr.Zero, "Unexpected empty image");
             unsafe
             {
-                int bytesPerPixel = image.BitsPerPixel / 8;
+                int bytesPerPixel = depthImage.BitsPerPixel / 8;
 
                 // Compute the number of bytes in each line of the crop region
-                int copyLength = width * bytesPerPixel;
+                int copyLength = actualRectangle.Width * bytesPerPixel;
 
                 // Start at top-left of region to crop
-                byte* src = (byte*)image.ImageData.ToPointer() + (top * image.Stride) + (left * bytesPerPixel);
-                byte* dst = (byte*)croppedImage.ImageData.ToPointer();
+                byte* src = (byte*)depthImage.ImageData.ToPointer() + (actualRectangle.Top * depthImage.Stride) + (actualRectangle.Left * bytesPerPixel);
+                byte* dst = (byte*)croppedDepthImage.ImageData.ToPointer();
 
                 // Copy line by line
-                for (int i = 0; i < height; i++)
+                for (int i = 0; i < actualRectangle.Height; i++)
                 {
                     Buffer.MemoryCopy(src, dst, copyLength, copyLength);
 
-                    src += image.Stride;
-                    dst += croppedImage.Stride;
+                    src += depthImage.Stride;
+                    dst += croppedDepthImage.Stride;
                 }
             }
         }
@@ -1063,8 +1121,8 @@ namespace Microsoft.Psi.Imaging
         /// <returns>A color with the average RGB values of the region.</returns>
         public static Color AverageColor(this Image image, int left, int top, int width, int height)
         {
-            var colorF = image.AverageColorF(left, top, width, height);
-            return Color.FromArgb((byte)Math.Round(255 * colorF.R), (byte)Math.Round(255 * colorF.G), (byte)Math.Round(255 * colorF.B));
+            var (r, g, b) = image.AverageColorF(left, top, width, height);
+            return Color.FromArgb((byte)Math.Round(255 * r), (byte)Math.Round(255 * g), (byte)Math.Round(255 * b));
         }
 
         /// <summary>
@@ -1115,6 +1173,7 @@ namespace Microsoft.Psi.Imaging
             unsafe
             {
                 byte* ptrFirstPixel = (byte*)image.ImageData.ToPointer();
+                var bytesPerPixel = image.BitsPerPixel / 8;
 
                 for (var y = top; y < (top + height); y++)
                 {
@@ -1122,7 +1181,7 @@ namespace Microsoft.Psi.Imaging
 
                     for (var x = left; x < (left + width); x++)
                     {
-                        byte* ptrCurrentPixel = ptrCurrentRow + x * image.BitsPerPixel / 8;
+                        byte* ptrCurrentPixel = ptrCurrentRow + x * bytesPerPixel;
 
                         switch (image.PixelFormat)
                         {
@@ -1338,7 +1397,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="color">Color to use when drawing text. Optional.</param>
         /// <param name="font">Name of font to use. Optional.</param>
         /// <param name="fontSize">Size of font. Optional.</param>
-        public static void DrawText(this Image image, string str, Point p0, Color color = default(Color), string font = "Arial", float fontSize = 24.0f)
+        public static void DrawText(this Image image, string str, Point p0, Color color = default, string font = "Arial", float fontSize = 24.0f)
         {
             if (image.PixelFormat == PixelFormat.Gray_16bpp || image.PixelFormat == PixelFormat.RGBA_64bpp)
             {
@@ -1369,9 +1428,9 @@ namespace Microsoft.Psi.Imaging
             font ??= "Arial";
             using Bitmap bm = image.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
-            using Font drawFont = new Font(font, fontSize);
-            using SolidBrush drawBrush = new SolidBrush(color);
-            using StringFormat drawFormat = new StringFormat();
+            using var drawFont = new Font(font, fontSize);
+            using var drawBrush = new SolidBrush(color);
+            using var drawFormat = new StringFormat();
             drawFormat.FormatFlags = 0;
             graphics.DrawString(str, drawFont, drawBrush, p0.X, p0.Y, drawFormat);
         }
@@ -1417,10 +1476,10 @@ namespace Microsoft.Psi.Imaging
             font ??= "Arial";
             using Bitmap bm = image.ToBitmap(false);
             using var graphics = Graphics.FromImage(bm);
-            using Font drawFont = new Font(font, fontSize);
-            using SolidBrush textBrush = new SolidBrush(textColor);
-            using SolidBrush backgroundBrush = new SolidBrush(backgroundColor);
-            using StringFormat drawFormat = new StringFormat();
+            using var drawFont = new Font(font, fontSize);
+            using var textBrush = new SolidBrush(textColor);
+            using var backgroundBrush = new SolidBrush(backgroundColor);
+            using var drawFormat = new StringFormat();
             drawFormat.FormatFlags = 0;
 
             SizeF textSize = graphics.MeasureString(str, drawFont);
@@ -1537,7 +1596,7 @@ namespace Microsoft.Psi.Imaging
                 throw new System.Exception(Image.ExceptionDescriptionSourceDestImageMismatch);
             }
 
-            Rectangle srcRect = new Rectangle(0, 0, srcImage.Width - 1, srcImage.Height - 1);
+            var srcRect = new Rectangle(0, 0, srcImage.Width - 1, srcImage.Height - 1);
             srcImage.CopyTo(srcRect, destImage, new Point(0, 0), maskImage);
         }
 
@@ -1576,11 +1635,6 @@ namespace Microsoft.Psi.Imaging
             if (destImage.PixelFormat != srcImage.PixelFormat)
             {
                 throw new ArgumentOutOfRangeException("destImage.PixelFormat", "destination image pixel format doesn't match source image pixel format");
-            }
-
-            if (srcImage.Width != destImage.Width || srcImage.Height != destImage.Height)
-            {
-                throw new System.Exception(Image.ExceptionDescriptionSourceDestImageMismatch);
             }
 
             srcImage.CopyTo(srcRect, destImage, destTopLeftPoint, null);
@@ -1658,9 +1712,9 @@ namespace Microsoft.Psi.Imaging
 
             PixelFormat srcFormat = srcImage.PixelFormat;
             PixelFormat dstFormat = destImage.PixelFormat;
-            System.IntPtr sourceBuffer = srcImage.ImageData;
-            System.IntPtr destBuffer = destImage.ImageData;
-            System.IntPtr maskBuffer = (maskImage != null) ? maskImage.ImageData : System.IntPtr.Zero;
+            var sourceBuffer = srcImage.ImageData;
+            var destBuffer = destImage.ImageData;
+            var maskBuffer = (maskImage != null) ? maskImage.ImageData : IntPtr.Zero;
             unsafe
             {
                 int srcBytesPerPixel = srcFormat.GetBytesPerPixel();
@@ -1815,7 +1869,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>Returns an new image with the inverted results.</returns>
         public static Image Invert(this Image srcImage)
         {
-            Image invertedImage = new Image(srcImage.Width, srcImage.Height, srcImage.PixelFormat);
+            var invertedImage = new Image(srcImage.Width, srcImage.Height, srcImage.PixelFormat);
             srcImage.Invert(invertedImage);
             return invertedImage;
         }
@@ -1834,7 +1888,7 @@ namespace Microsoft.Psi.Imaging
 
             if (srcImage.Width != destImage.Width || srcImage.Height != destImage.Height)
             {
-                throw new System.Exception(Image.ExceptionDescriptionSourceDestImageMismatch);
+                throw new Exception(Image.ExceptionDescriptionSourceDestImageMismatch);
             }
 
             unsafe
@@ -1903,72 +1957,51 @@ namespace Microsoft.Psi.Imaging
         /// <param name="clr">Color to clear to.</param>
         public static void Clear(this Image image, Color clr)
         {
-            unsafe
+            void ClearFast(byte b)
             {
-                int srcBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
-                byte* srcRow = (byte*)image.ImageData.ToPointer();
-                for (int i = 0; i < image.Height; i++)
+                unsafe
                 {
-                    byte* srcCol = srcRow;
-                    for (int j = 0; j < image.Width; j++)
-                    {
-                        switch (image.PixelFormat)
-                        {
-                            case PixelFormat.Gray_8bpp:
-                                srcCol[0] = Operators.Rgb2Gray(clr.R, clr.G, clr.B);
-                                break;
-
-                            case PixelFormat.Gray_16bpp:
-                                ((ushort*)srcCol)[0] = Operators.Rgb2Gray(
-                                    (ushort)((clr.R << 8) | clr.R),
-                                    (ushort)((clr.G << 8) | clr.G),
-                                    (ushort)((clr.B << 8) | clr.B));
-                                break;
-
-                            case PixelFormat.BGR_24bpp:
-                                srcCol[0] = clr.B;
-                                srcCol[1] = clr.G;
-                                srcCol[2] = clr.R;
-                                break;
-
-                            case PixelFormat.BGRX_32bpp:
-                                srcCol[0] = clr.B;
-                                srcCol[1] = clr.G;
-                                srcCol[2] = clr.R;
-                                srcCol[3] = 255;
-                                break;
-
-                            case PixelFormat.BGRA_32bpp:
-                                srcCol[0] = clr.B;
-                                srcCol[1] = clr.G;
-                                srcCol[2] = clr.R;
-                                srcCol[3] = clr.A;
-                                break;
-
-                            case PixelFormat.RGB_24bpp:
-                                srcCol[0] = clr.R;
-                                srcCol[1] = clr.G;
-                                srcCol[2] = clr.B;
-                                break;
-
-                            case PixelFormat.RGBA_64bpp:
-                                ((ushort*)srcCol)[0] = (ushort)((clr.R << 8) | clr.R);
-                                ((ushort*)srcCol)[1] = (ushort)((clr.G << 8) | clr.G);
-                                ((ushort*)srcCol)[2] = (ushort)((clr.B << 8) | clr.B);
-                                ((ushort*)srcCol)[3] = (ushort)((clr.A << 8) | clr.A);
-                                break;
-
-                            case PixelFormat.Undefined:
-                            default:
-                                throw new ArgumentException(Image.ExceptionDescriptionUnexpectedPixelFormat);
-                        }
-
-                        srcCol += srcBytesPerPixel;
-                    }
-
-                    srcRow += image.Stride;
+                    Unsafe.InitBlockUnaligned(image.ImageData.ToPointer(), b, (uint)image.Size);
                 }
             }
+
+            switch (image.PixelFormat)
+            {
+                case PixelFormat.Gray_8bpp:
+                case PixelFormat.Gray_16bpp:
+                    ClearFast(Rgb2Gray(clr.R, clr.G, clr.B));
+                    return;
+
+                case PixelFormat.BGR_24bpp:
+                    if (clr.R == clr.G && clr.G == clr.B)
+                    {
+                        ClearFast(clr.R);
+                        return;
+                    }
+
+                    break;
+
+                case PixelFormat.BGRX_32bpp:
+                    if (clr.R == clr.G && clr.G == clr.B && clr.B == 255)
+                    {
+                        ClearFast(255);
+                        return;
+                    }
+
+                    break;
+
+                case PixelFormat.BGRA_32bpp:
+                case PixelFormat.RGBA_64bpp:
+                    if (clr.R == clr.G && clr.G == clr.B && clr.B == clr.A)
+                    {
+                        ClearFast(clr.R);
+                        return;
+                    }
+
+                    break;
+            }
+
+            ClearSlow(image, clr);
         }
 
         /// <summary>
@@ -1979,7 +2012,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>Returns a new grayscale image containing the color from the specified channel in the original source image.</returns>
         public static Image ExtractChannel(this Image image, int channel)
         {
-            Image destImage = new Image(image.Width, image.Height, PixelFormat.Gray_8bpp);
+            var destImage = new Image(image.Width, image.Height, PixelFormat.Gray_8bpp);
             image.ExtractChannel(destImage, channel);
             return destImage;
         }
@@ -2038,6 +2071,122 @@ namespace Microsoft.Psi.Imaging
                 }
             }
         }
+
+        /// <summary>
+        /// Clears each color component in an image to the specified color.
+        /// </summary>
+        /// <param name="image">Image to clear.</param>
+        /// <param name="clr">Color to clear to.</param>
+        private static void ClearSlow(Image image, Color clr)
+        {
+            unsafe
+            {
+                switch (image.PixelFormat)
+                {
+                    case PixelFormat.BGR_24bpp:
+                        int srcBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
+                        byte* srcRow = (byte*)image.ImageData.ToPointer();
+                        for (int i = 0; i < image.Height; i++)
+                        {
+                            byte* srcCol = srcRow;
+                            for (int j = 0; j < image.Width; j++)
+                            {
+                                srcCol[0] = clr.B;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.R;
+                                srcCol += srcBytesPerPixel;
+                            }
+
+                            srcRow += image.Stride;
+                        }
+
+                        break;
+
+                    case PixelFormat.BGRX_32bpp:
+                        srcBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
+                        srcRow = (byte*)image.ImageData.ToPointer();
+                        for (int i = 0; i < image.Height; i++)
+                        {
+                            byte* srcCol = srcRow;
+                            for (int j = 0; j < image.Width; j++)
+                            {
+                                srcCol[0] = clr.B;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.R;
+                                srcCol[3] = 255;
+                                srcCol += srcBytesPerPixel;
+                            }
+
+                            srcRow += image.Stride;
+                        }
+
+                        break;
+
+                    case PixelFormat.BGRA_32bpp:
+                        srcBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
+                        srcRow = (byte*)image.ImageData.ToPointer();
+                        for (int i = 0; i < image.Height; i++)
+                        {
+                            byte* srcCol = srcRow;
+                            for (int j = 0; j < image.Width; j++)
+                            {
+                                srcCol[0] = clr.B;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.R;
+                                srcCol[3] = clr.A;
+                                srcCol += srcBytesPerPixel;
+                            }
+
+                            srcRow += image.Stride;
+                        }
+
+                        break;
+
+                    case PixelFormat.RGB_24bpp:
+                        srcBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
+                        srcRow = (byte*)image.ImageData.ToPointer();
+                        for (int i = 0; i < image.Height; i++)
+                        {
+                            byte* srcCol = srcRow;
+                            for (int j = 0; j < image.Width; j++)
+                            {
+                                srcCol[0] = clr.R;
+                                srcCol[1] = clr.G;
+                                srcCol[2] = clr.B;
+                                srcCol += srcBytesPerPixel;
+                            }
+
+                            srcRow += image.Stride;
+                        }
+
+                        break;
+
+                    case PixelFormat.RGBA_64bpp:
+                        srcBytesPerPixel = image.PixelFormat.GetBytesPerPixel();
+                        srcRow = (byte*)image.ImageData.ToPointer();
+                        for (int i = 0; i < image.Height; i++)
+                        {
+                            byte* srcCol = srcRow;
+                            for (int j = 0; j < image.Width; j++)
+                            {
+                                ((ushort*)srcCol)[0] = (ushort)((clr.R << 8) | clr.R);
+                                ((ushort*)srcCol)[1] = (ushort)((clr.G << 8) | clr.G);
+                                ((ushort*)srcCol)[2] = (ushort)((clr.B << 8) | clr.B);
+                                ((ushort*)srcCol)[3] = (ushort)((clr.A << 8) | clr.A);
+                                srcCol += srcBytesPerPixel;
+                            }
+
+                            srcRow += image.Stride;
+                        }
+
+                        break;
+
+                    case PixelFormat.Undefined:
+                    default:
+                        throw new ArgumentException(Image.ExceptionDescriptionUnexpectedPixelFormat);
+                }
+            }
+        }
     }
 
     /// <summary>
@@ -2055,7 +2204,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>The thresholded image.</returns>
         public static Image Threshold(this Image image, int threshold, int maxvalue, Threshold type)
         {
-            Image thresholdedImage = new Image(image.Width, image.Height, image.PixelFormat);
+            var thresholdedImage = new Image(image.Width, image.Height, image.PixelFormat);
             image.Threshold(thresholdedImage, threshold, maxvalue, type);
             return thresholdedImage;
         }
@@ -2240,7 +2389,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>Difference image.</returns>
         public static Image AbsDiff(this Image imageA, Image imageB)
         {
-            Image diffImage = new Image(imageA.Width, imageA.Height, imageA.PixelFormat);
+            var diffImage = new Image(imageA.Width, imageA.Height, imageA.PixelFormat);
             imageA.AbsDiff(imageB, diffImage);
             return diffImage;
         }
@@ -2346,6 +2495,149 @@ namespace Microsoft.Psi.Imaging
                     dstRow += destImage.Stride;
                 }
             }
+        }
+
+        /// <summary>
+        /// Convolves an image with a specified kernel.
+        /// </summary>
+        /// <param name="image">The source image.</param>
+        /// <param name="kernel">The kernel to convolve the image with.</param>
+        /// <returns>An image contained the convolution results.</returns>
+        public static Image Convolve(this Image image, int[,] kernel)
+        {
+            var destination = new Image(image.Width, image.Height, image.PixelFormat);
+            image.Convolve(destination, kernel);
+            return destination;
+        }
+
+        /// <summary>
+        /// Convolves an image with a specified kernel into a specified destination image.
+        /// </summary>
+        /// <param name="image">The source image.</param>
+        /// <param name="destination">The destination image.</param>
+        /// <param name="kernel">The kernel to convolve the image with.</param>
+        public static void Convolve(this Image image, Image destination, int[,] kernel)
+        {
+            if (image.PixelFormat != destination.PixelFormat)
+            {
+                throw new ArgumentOutOfRangeException("destination.PixelFormat", "Destination image pixel format doesn't match source image pixel format.");
+            }
+
+            if (image.PixelFormat != PixelFormat.Gray_8bpp &&
+                image.PixelFormat != PixelFormat.Gray_16bpp)
+            {
+                throw new NotSupportedException($"Currently the {nameof(Convolve)} operator only supports grayscale formats.");
+            }
+
+            if (image.Width != destination.Width || image.Height != destination.Height)
+            {
+                throw new ArgumentException("Images sizes/types don't match");
+            }
+
+            int kernelHeightHalf = kernel.GetLength(0) / 2;
+            int kernelWidthHalf = kernel.GetLength(1) / 2;
+
+            unsafe
+            {
+                int bytesPerPixel = image.PixelFormat.GetBytesPerPixel();
+                byte* srcStart = (byte*)image.ImageData.ToPointer();
+                byte* dst = (byte*)destination.ImageData.ToPointer();
+                for (int i = 0; i < image.Height; i++)
+                {
+                    byte* dstCol = dst;
+                    for (int j = 0; j < image.Width; j++)
+                    {
+                        var accumulator = 0;
+                        var count = 0;
+                        for (int ki = 0; ki < kernel.GetLength(0); ki++)
+                        {
+                            var row = i - kernelHeightHalf + ki;
+                            if ((row >= 0) && (row < image.Height))
+                            {
+                                var srcRow = srcStart + image.Stride * row;
+                                for (int kj = 0; kj < kernel.GetLength(1); kj++)
+                                {
+                                    var col = j - kernelWidthHalf + kj;
+                                    if ((col >= 0) && (col < image.Width))
+                                    {
+                                        var srcCol = srcRow + col * bytesPerPixel;
+                                        switch (image.PixelFormat)
+                                        {
+                                            case PixelFormat.Gray_8bpp:
+                                                accumulator += srcCol[0] * kernel[ki, kj];
+                                                count += 1;
+                                                break;
+                                            case PixelFormat.Gray_16bpp:
+                                                accumulator += ((ushort*)srcCol)[0] * kernel[ki, kj];
+                                                count += 1;
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        switch (destination.PixelFormat)
+                        {
+                            case PixelFormat.Gray_16bpp:
+                                ((ushort*)dstCol)[0] = (ushort)(accumulator / count);
+                                break;
+                            case PixelFormat.Gray_8bpp:
+                                dstCol[0] = (byte)(accumulator / count);
+                                break;
+                        }
+
+                        dstCol += bytesPerPixel;
+                    }
+
+                    dst += destination.Stride;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clips a rectangle based on the size of an image.
+        /// </summary>
+        /// <param name="rectangle">The rectangle to clip.</param>
+        /// <param name="imageWidth">The image width.</param>
+        /// <param name="imageHeight">The image height.</param>
+        /// <returns>The clipped rectangle.</returns>
+        internal static Rectangle GetImageSizeClippedRectangle(Rectangle rectangle, int imageWidth, int imageHeight)
+        {
+            if ((rectangle.Left >= imageWidth) ||
+                (rectangle.Top >= imageHeight) ||
+                (rectangle.Width < 0) ||
+                (rectangle.Height < 0))
+            {
+                return Rectangle.Empty;
+            }
+
+            var actualLeft = rectangle.Left;
+            var actualRight = rectangle.Left + rectangle.Width;
+            var actualTop = rectangle.Top;
+            var actualBottom = rectangle.Top + rectangle.Height;
+
+            if (actualLeft < 0)
+            {
+                actualLeft = 0;
+            }
+
+            if (actualTop < 0)
+            {
+                actualTop = 0;
+            }
+
+            if (actualRight > imageWidth)
+            {
+                actualRight = imageWidth;
+            }
+
+            if (actualBottom > imageHeight)
+            {
+                actualBottom = imageHeight;
+            }
+
+            return new Rectangle(actualLeft, actualTop, actualRight - actualLeft, actualBottom - actualTop);
         }
     }
 }

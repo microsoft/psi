@@ -4,9 +4,9 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
-    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.IO;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Serialization;
 
@@ -121,6 +121,46 @@ namespace Microsoft.Psi.Imaging
             }
 
             return image;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Image"/> from the specified file.
+        /// </summary>
+        /// <param name="filename">The name of the file from which to create the <see cref="Image"/>.</param>
+        /// <returns>A new <see cref="Image"/> created from the specified file.</returns>
+        public static Image FromFile(string filename)
+        {
+            // Create the Bitmap using Image.FromStream instead of FromFile as FromFile does not release the file handle.
+            // Though the remarks in the doc https://docs.microsoft.com/en-us/dotnet/api/system.drawing.image.fromstream
+            // state that the stream must be kept open for the lifetime of the image, we effectively create a copy of the
+            // image data in the call to FromBitmap, so it is safe to dispose the FileStream upon exiting this method.
+            using var fileStream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            return FromBitmap((Bitmap)Bitmap.FromStream(fileStream));
+        }
+
+        /// <summary>
+        /// Saves this <see cref="Image"/> to the specified file.
+        /// </summary>
+        /// <param name="filename">The name of the file to which to save the <see cref="Image"/>.</param>
+        public void Save(string filename)
+        {
+            if (this.PixelFormat == PixelFormat.Gray_16bpp || this.PixelFormat == PixelFormat.RGBA_64bpp)
+            {
+                throw new NotSupportedException($"Saving {this.PixelFormat} images is not currently supported. Convert to a supported format such as 8bpp grayscale or 24/32bpp color prior to saving.");
+            }
+
+            // There is no equivalent system pixel format for RGB_24bpp, so convert to BGR_24bpp then save
+            if (this.PixelFormat == PixelFormat.RGB_24bpp)
+            {
+                int stride = 4 * ((this.Width * 3 + 3) / 2); // Rounding to nearest word boundary
+                using var tmpImage = new Image(this.Width, this.Height, stride, PixelFormat.BGR_24bpp);
+                this.CopyTo(tmpImage);
+                tmpImage.Save(filename);
+            }
+            else
+            {
+                this.ToBitmap().Save(filename);
+            }
         }
 
         /// <summary>

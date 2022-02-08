@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to attach to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="enumerator">A lazy enumerator of data.</param>
         /// <param name="interval">The interval used to increment time on each generated message.</param>
         /// <param name="alignDateTime">If non-null, this parameter specifies a time to align the generator messages with. If the parameter
@@ -38,7 +38,7 @@ namespace Microsoft.Psi.Components
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">The pipeline to attach to.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="enumerator">A lazy enumerator of data.</param>
         /// <param name="startTime">The explicit start time of the data in the enumeration. Supply this parameter when the enumeration contains
         /// data values with absolute originating times (e.g. [value, time] pairs read from a file), and you want to propose a pipeline replay

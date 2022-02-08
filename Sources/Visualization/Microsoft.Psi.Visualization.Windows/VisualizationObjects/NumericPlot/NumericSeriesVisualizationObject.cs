@@ -12,13 +12,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     internal static class NumericSeriesVisualizationObject
     {
-        private static readonly Dictionary<Type, Type> NumericTypeToSeriesVisualizationObjectType = new Dictionary<Type, Type>()
+        private static readonly Dictionary<Type, Type> NumericTypeToSeriesVisualizationObjectType = new ()
         {
+            { typeof(bool), typeof(BoolSeriesVisualizationObject) },
             { typeof(decimal), typeof(DecimalSeriesVisualizationObject) },
             { typeof(double), typeof(DoubleSeriesVisualizationObject) },
             { typeof(float), typeof(FloatSeriesVisualizationObject) },
             { typeof(int), typeof(IntSeriesVisualizationObject) },
             { typeof(long), typeof(LongSeriesVisualizationObject) },
+            { typeof(bool?), typeof(NullableBoolSeriesVisualizationObject) },
             { typeof(decimal?), typeof(NullableDecimalSeriesVisualizationObject) },
             { typeof(double?), typeof(NullableDoubleSeriesVisualizationObject) },
             { typeof(float?), typeof(NullableFloatSeriesVisualizationObject) },

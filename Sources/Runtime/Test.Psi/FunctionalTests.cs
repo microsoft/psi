@@ -406,6 +406,8 @@ namespace Test.Psi
         {
             public int Version => 1;
 
+            public bool? IsClearRequired => false;
+
             public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
             {
                 return null;

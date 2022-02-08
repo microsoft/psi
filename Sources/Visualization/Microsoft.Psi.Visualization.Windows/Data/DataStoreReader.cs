@@ -49,9 +49,19 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
+        /// Event that fires when a data store reader has no more subscribers and can be removed.
+        /// </summary>
+        public event EventHandler NoRemainingSubscribers;
+
+        /// <summary>
         /// Event that fires when a stream is unable to be read from.
         /// </summary>
         public event EventHandler<StreamReadErrorEventArgs> StreamReadError;
+
+        /// <summary>
+        /// Gets a value indicating whether the data store reader has any subscribers.
+        /// </summary>
+        public bool HasSubscribers => this.streamDataProviders.Count > 0;
 
         /// <summary>
         /// Gets the store name.
@@ -122,6 +132,7 @@ namespace Microsoft.Psi.Visualization.Data
             if (streamIntervalProvider == null)
             {
                 streamIntervalProvider = new StreamIntervalProvider<T>(streamSource);
+                streamIntervalProvider.NoRemainingSubscribers += this.StreamDataProvider_NoRemainingSubscribers;
                 (streamIntervalProvider as StreamDataProvider<T>).StreamReadError += this.OnStreamReadError;
                 lock (this.streamDataProviders)
                 {
@@ -145,6 +156,7 @@ namespace Microsoft.Psi.Visualization.Data
             if (streamValueProvider == null)
             {
                 streamValueProvider = new StreamValueProvider<T>(streamSource);
+                streamValueProvider.NoRemainingSubscribers += this.StreamDataProvider_NoRemainingSubscribers;
                 (streamValueProvider as StreamDataProvider<T>).StreamReadError += this.OnStreamReadError;
                 lock (this.streamDataProviders)
                 {
@@ -156,13 +168,21 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
+        /// Unregisters a subscriber to interval data.
+        /// </summary>
+        /// <param name="subscriberId">The subscriber id token that was returned to the subscriber when it initially subscribed.</param>
+        internal void UnregisterStreamIntervalSubscriber(Guid subscriberId) =>
+            this.GetStreamIntervalProviders()
+                .ForEach(sip => sip.UnregisterStreamIntervalSubscriber(subscriberId));
+
+        /// <summary>
         /// Unregisters a stream value subscriber.
         /// </summary>
         /// <typeparam name="TData">The type of data expected by the stream value subscriber.</typeparam>
-        /// <param name="registrationToken">The registration token that the target was given when it was initially registered.</param>
-        internal void UnregisterStreamValueSubscriber<TData>(Guid registrationToken) =>
+        /// <param name="subscriberId">The subscriber id that the target was given when it was initially registered.</param>
+        internal void UnregisterStreamValueSubscriber<TData>(Guid subscriberId) =>
             this.GetStreamValueProviders()
-                .ForEach(svp => svp.UnregisterStreamValueSubscriber<TData>(registrationToken));
+                .ForEach(svp => svp.UnregisterStreamValueSubscriber<TData>(subscriberId));
 
         /// <summary>
         /// Sets the caching interval for all stream value providers in the data store reader.
@@ -407,6 +427,27 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>The stream value provider.</returns>
         private IStreamValueProvider GetStreamValueProviderOrDefault(string streamName) =>
             this.GetStreamValueProviders().FirstOrDefault(sc => sc.StreamName == streamName);
+
+        private void StreamDataProvider_NoRemainingSubscribers(object sender, EventArgs e)
+        {
+            var streamDataProvider = sender as IStreamDataProvider;
+
+            lock (this.streamDataProviders)
+            {
+                if (this.streamDataProviders.Contains(streamDataProvider) && !streamDataProvider.HasSubscribers)
+                {
+                    this.streamDataProviders.Remove(streamDataProvider);
+                    streamDataProvider.NoRemainingSubscribers -= this.StreamDataProvider_NoRemainingSubscribers;
+                    streamDataProvider.Dispose();
+                }
+            }
+
+            // If we have no more stream data providers, notify the data manager
+            if (this.streamDataProviders.Count == 0)
+            {
+                this.NoRemainingSubscribers?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         private void OnStreamReadError(object sender, StreamReadErrorEventArgs e)
         {

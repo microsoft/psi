@@ -61,9 +61,29 @@ namespace Microsoft.Psi.Imaging
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="sharedImageAllocator">Optional image allocator for creating new shared image.</param>
         /// <returns>The resulting stream.</returns>
-        public static IProducer<Shared<Image>> ToPixelFormat(this IProducer<Shared<Image>> source, PixelFormat pixelFormat, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        public static IProducer<Shared<Image>> Convert(this IProducer<Shared<Image>> source, PixelFormat pixelFormat, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
         {
-            return source.PipeTo(new ToPixelFormat(source.Out.Pipeline, pixelFormat, sharedImageAllocator), deliveryPolicy);
+            sharedImageAllocator ??= (width, height, pixelFormat) => ImagePool.GetOrCreate(width, height, pixelFormat);
+            return source.Process<Shared<Image>, Shared<Image>>(
+                (sharedImage, envelope, emitter) =>
+                {
+                    // if the image is null, post null
+                    if (sharedImage == null)
+                    {
+                        emitter.Post(null, envelope.OriginatingTime);
+                    }
+                    else if (pixelFormat == sharedImage.Resource.PixelFormat)
+                    {
+                        // o/w if image is already in the requested format, shortcut the conversion
+                        emitter.Post(sharedImage, envelope.OriginatingTime);
+                    }
+                    else
+                    {
+                        using var image = sharedImageAllocator(sharedImage.Resource.Width, sharedImage.Resource.Height, pixelFormat);
+                        sharedImage.Resource.CopyTo(image.Resource);
+                        emitter.Post(image, envelope.OriginatingTime);
+                    }
+                }, deliveryPolicy);
         }
 
         /// <summary>
@@ -81,50 +101,148 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Crops a shared depth image using the specified rectangle.
+        /// Crops a shared image using the specified rectangle.
         /// </summary>
-        /// <param name="source">Source of image and rectangle samples.</param>
+        /// <param name="source">Source of image and rectangle messages.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
         /// <returns>Returns a producer generating new cropped image samples.</returns>
-        public static IProducer<Shared<Image>> Crop(this IProducer<(Shared<Image>, Rectangle)> source, DeliveryPolicy<(Shared<Image>, Rectangle)> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        public static IProducer<Shared<Image>> Crop(
+            this IProducer<(Shared<Image>, Rectangle)> source,
+            bool clip = false,
+            DeliveryPolicy<(Shared<Image>, Rectangle)> deliveryPolicy = null,
+            Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
         {
             sharedImageAllocator ??= ImagePool.GetOrCreate;
             return source.Process<(Shared<Image>, Rectangle), Shared<Image>>(
                 (tupleOfSharedImageAndRectangle, envelope, emitter) =>
                 {
-                    using var croppedSharedImage = sharedImageAllocator(tupleOfSharedImageAndRectangle.Item2.Width, tupleOfSharedImageAndRectangle.Item2.Height, tupleOfSharedImageAndRectangle.Item1.Resource.PixelFormat);
-                    tupleOfSharedImageAndRectangle.Item1.Resource.Crop(
-                        croppedSharedImage.Resource,
-                        tupleOfSharedImageAndRectangle.Item2.Left,
-                        tupleOfSharedImageAndRectangle.Item2.Top,
-                        tupleOfSharedImageAndRectangle.Item2.Width,
-                        tupleOfSharedImageAndRectangle.Item2.Height);
-                    emitter.Post(croppedSharedImage, envelope.OriginatingTime);
+                    (var sharedImage, var rectangle) = tupleOfSharedImageAndRectangle;
+                    var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, sharedImage.Resource.Width, sharedImage.Resource.Height) : rectangle;
+                    if (actualRectangle.IsEmpty)
+                    {
+                        emitter.Post(null, envelope.OriginatingTime);
+                    }
+                    else
+                    {
+                        using var croppedSharedImage = sharedImageAllocator(actualRectangle.Width, actualRectangle.Height, sharedImage.Resource.PixelFormat);
+                        sharedImage.Resource.Crop(croppedSharedImage.Resource, actualRectangle, clip: false);
+                        emitter.Post(croppedSharedImage, envelope.OriginatingTime);
+                    }
                 }, deliveryPolicy);
         }
 
         /// <summary>
-        /// Crops a shared image using the specified rectangle.
+        /// Crops a shared image using the specified nullable rectangle. When no rectangle is specified, produces a null image.
         /// </summary>
-        /// <param name="source">Source of image and rectangle samples.</param>
+        /// <param name="source">Source of image and rectangle messages.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
+        /// <returns>Returns a producer generating new cropped image samples.</returns>
+        public static IProducer<Shared<Image>> Crop(
+            this IProducer<(Shared<Image>, Rectangle?)> source,
+            bool clip = false,
+            DeliveryPolicy<(Shared<Image>, Rectangle?)> deliveryPolicy = null,
+            Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        {
+            sharedImageAllocator ??= ImagePool.GetOrCreate;
+            return source.Process<(Shared<Image>, Rectangle?), Shared<Image>>(
+                (tupleOfSharedImageAndRectangle, envelope, emitter) =>
+                {
+                    (var sharedImage, var rectangle) = tupleOfSharedImageAndRectangle;
+                    if (rectangle.HasValue)
+                    {
+                        var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle.Value, sharedImage.Resource.Width, sharedImage.Resource.Height) : rectangle.Value;
+                        if (actualRectangle.IsEmpty)
+                        {
+                            emitter.Post(null, envelope.OriginatingTime);
+                        }
+                        else
+                        {
+                            using var croppedSharedImage = sharedImageAllocator(actualRectangle.Width, actualRectangle.Height, sharedImage.Resource.PixelFormat);
+                            sharedImage.Resource.Crop(croppedSharedImage.Resource, actualRectangle, clip: false);
+                            emitter.Post(croppedSharedImage, envelope.OriginatingTime);
+                        }
+                    }
+                    else
+                    {
+                        emitter.Post(null, envelope.OriginatingTime);
+                    }
+                }, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Crops a shared depth image using the specified rectangle.
+        /// </summary>
+        /// <param name="source">Source of depth image and rectangle messages.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
         /// <param name="sharedDepthImageAllocator">Optional image allocator to create new shared depth image.</param>
         /// <returns>Returns a producer generating new cropped image samples.</returns>
-        public static IProducer<Shared<DepthImage>> Crop(this IProducer<(Shared<DepthImage>, Rectangle)> source, DeliveryPolicy<(Shared<DepthImage>, Rectangle)> deliveryPolicy = null, Func<int, int, Shared<DepthImage>> sharedDepthImageAllocator = null)
+        public static IProducer<Shared<DepthImage>> Crop(
+            this IProducer<(Shared<DepthImage>, Rectangle)> source,
+            bool clip = false,
+            DeliveryPolicy<(Shared<DepthImage>, Rectangle)> deliveryPolicy = null,
+            Func<int, int, Shared<DepthImage>> sharedDepthImageAllocator = null)
         {
             sharedDepthImageAllocator ??= DepthImagePool.GetOrCreate;
             return source.Process<(Shared<DepthImage>, Rectangle), Shared<DepthImage>>(
-                (tupleOfSharedImageAndRectangle, envelope, emitter) =>
+                (tupleOfSharedDepthImageAndRectangle, envelope, emitter) =>
                 {
-                    using var croppedSharedImage = sharedDepthImageAllocator(tupleOfSharedImageAndRectangle.Item2.Width, tupleOfSharedImageAndRectangle.Item2.Height);
-                    tupleOfSharedImageAndRectangle.Item1.Resource.Crop(
-                        croppedSharedImage.Resource,
-                        tupleOfSharedImageAndRectangle.Item2.Left,
-                        tupleOfSharedImageAndRectangle.Item2.Top,
-                        tupleOfSharedImageAndRectangle.Item2.Width,
-                        tupleOfSharedImageAndRectangle.Item2.Height);
-                    emitter.Post(croppedSharedImage, envelope.OriginatingTime);
+                    (var sharedDepthImage, var rectangle) = tupleOfSharedDepthImageAndRectangle;
+                    var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, sharedDepthImage.Resource.Width, sharedDepthImage.Resource.Height) : rectangle;
+                    if (actualRectangle.IsEmpty)
+                    {
+                        emitter.Post(null, envelope.OriginatingTime);
+                    }
+                    else
+                    {
+                        using var croppedSharedDepthImage = sharedDepthImageAllocator(actualRectangle.Width, actualRectangle.Height);
+                        sharedDepthImage.Resource.Crop(croppedSharedDepthImage.Resource, actualRectangle, clip: false);
+                        emitter.Post(croppedSharedDepthImage, envelope.OriginatingTime);
+                    }
+                }, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Crops a shared depth image using the specified nullable rectangle. When no rectangle is specified, produces a null image.
+        /// </summary>
+        /// <param name="source">Source of depth image and rectangle messages.</param>
+        /// <param name="clip">An optional parameter indicating whether to clip the region (by default false).</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedDepthImageAllocator">Optional image allocator to create new shared depth image.</param>
+        /// <returns>Returns a producer generating new cropped image samples.</returns>
+        public static IProducer<Shared<DepthImage>> Crop(
+            this IProducer<(Shared<DepthImage>, Rectangle?)> source,
+            bool clip = false,
+            DeliveryPolicy<(Shared<DepthImage>, Rectangle?)> deliveryPolicy = null,
+            Func<int, int, Shared<DepthImage>> sharedDepthImageAllocator = null)
+        {
+            sharedDepthImageAllocator ??= DepthImagePool.GetOrCreate;
+            return source.Process<(Shared<DepthImage>, Rectangle?), Shared<DepthImage>>(
+                (tupleOfSharedDepthImageAndRectangle, envelope, emitter) =>
+                {
+                    (var sharedDepthImage, var rectangle) = tupleOfSharedDepthImageAndRectangle;
+                    if (rectangle.HasValue)
+                    {
+                        var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle.Value, sharedDepthImage.Resource.Width, sharedDepthImage.Resource.Height) : rectangle.Value;
+                        if (actualRectangle.IsEmpty)
+                        {
+                            emitter.Post(null, envelope.OriginatingTime);
+                        }
+                        else
+                        {
+                            using var croppedSharedDepthImage = sharedDepthImageAllocator(actualRectangle.Width, actualRectangle.Height);
+                            sharedDepthImage.Resource.Crop(croppedSharedDepthImage.Resource, actualRectangle, clip: false);
+                            emitter.Post(croppedSharedDepthImage, envelope.OriginatingTime);
+                        }
+                    }
+                    else
+                    {
+                        emitter.Post(null, envelope.OriginatingTime);
+                    }
                 }, deliveryPolicy);
         }
 
@@ -154,18 +272,6 @@ namespace Microsoft.Psi.Imaging
                     sharedDepthImage.Resource.PseudoColorize(colorizedImage.Resource, range, invalidValue, invalidAsTransparent);
                     emitter.Post(colorizedImage, envelope.OriginatingTime);
                 }, deliveryPolicy);
-        }
-
-        /// <summary>
-        /// Converts a shared image to grayscale.
-        /// </summary>
-        /// <param name="source">Image producer to use as source images.</param>
-        /// <param name="deliveryPolicy">An optional delivery policy.</param>
-        /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
-        /// <returns>Producers of grayscale images.</returns>
-        public static IProducer<Shared<Image>> ToGray(this IProducer<Shared<Image>> source, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
-        {
-            return source.ToPixelFormat(PixelFormat.Gray_8bpp, deliveryPolicy, sharedImageAllocator);
         }
 
         /// <summary>
@@ -538,6 +644,33 @@ namespace Microsoft.Psi.Imaging
                     using var thresholdSharedImage = sharedImageAllocator(sharedSourceImage.Resource.Width, sharedSourceImage.Resource.Height, sharedSourceImage.Resource.PixelFormat);
                     sharedSourceImage.Resource.Threshold(thresholdSharedImage.Resource, threshold, maxvalue, thresholdType);
                     emitter.Post(thresholdSharedImage, envelope.OriginatingTime);
+                }, deliveryPolicy);
+        }
+
+        /// <summary>
+        /// Convolves the image with a specified kernel.
+        /// </summary>
+        /// <param name="image">The stream of images.</param>
+        /// <param name="kernel">The kernel to use.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedImageAllocator">Optional image allocator to create new shared image.</param>
+        /// <returns>A stream containing the results of the convolution.</returns>
+        public static IProducer<Shared<Image>> Convolve(this IProducer<Shared<Image>> image, int[,] kernel, DeliveryPolicy<Shared<Image>> deliveryPolicy = null, Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
+        {
+            sharedImageAllocator ??= ImagePool.GetOrCreate;
+            return image.Process<Shared<Image>, Shared<Image>>(
+                (sharedSourceImage, envelope, emitter) =>
+                {
+                    if (sharedSourceImage == null)
+                    {
+                        emitter.Post(null, envelope.OriginatingTime);
+                    }
+                    else
+                    {
+                        using var destinationImage = sharedImageAllocator(sharedSourceImage.Resource.Width, sharedSourceImage.Resource.Height, sharedSourceImage.Resource.PixelFormat);
+                        sharedSourceImage.Resource.Convolve(destinationImage.Resource, kernel);
+                        emitter.Post(destinationImage, envelope.OriginatingTime);
+                    }
                 }, deliveryPolicy);
         }
 

@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Interop.Transport
         /// <summary>
         /// Initializes a new instance of the <see cref="FileSource{T}"/> class.
         /// </summary>
-        /// <param name="pipeline">Pipeline to which this component belongs.</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">File name to which to persist.</param>
         /// <param name="deserializer">Format serializer with which messages are deserialized.</param>
         public FileSource(Pipeline pipeline, string filename, IPersistentFormatDeserializer deserializer)
