@@ -92,6 +92,8 @@ A more in-depth description of the framework is available in [this technical rep
 
 The codebase is currently in beta and various aspects of the framework are under active development. There are probably still bugs in the code and we may make breaking API changes. 
 
+While the Platform for Situated Intelligence source code and the `Microsoft.Psi.*` NuGet packages are available under an MIT license, our code and NuGet packages have dependencies on other NuGet packages. If you build an application using Platform for Situated Intelligence, please check the licensing requirements for all referenced NuGet packages in your solution.
+
 # License
 
 Platform for Situated Intelligence is available under an [MIT License](LICENSE.txt). See also [Third Party Notices](ThirdPartyNotices.txt).
