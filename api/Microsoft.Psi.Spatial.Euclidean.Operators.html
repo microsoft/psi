@@ -1,0 +1,763 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Operators
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Operators
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators">
+  
+  
+  <h1 id="Microsoft_Psi_Spatial_Euclidean_Operators" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators" class="text-break">Class Operators
+  </h1>
+  <div class="markdown level0 summary"><p>Implements operators for processing spatial image types.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Operators</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Spatial.Euclidean.dll</h6>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Operators : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Images/Operators.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D})">Decode(IProducer&lt;EncodedDepthImageRectangle3D&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageRectangle3D&gt;)</h4>
+  <div class="markdown level1 summary"><p>Decodes an encoded depth image image rectangle using a specified depth image decoder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;DepthImageRectangle3D&gt; Decode(this IProducer&lt;EncodedDepthImageRectangle3D&gt; source, IDepthImageFromStreamDecoder decoder, DeliveryPolicy&lt;EncodedDepthImageRectangle3D&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D.html">EncodedDepthImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of encoded depth image rectangles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></td>
+        <td><span class="parametername">decoder</span></td>
+        <td><p>The depth image decoder to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D.html">EncodedDepthImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D.html">DepthImageRectangle3D</a>&gt;</td>
+        <td><p>A stream of decoded depth image rectangles.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Images/Operators.cs/#L67">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__Microsoft_Psi_Imaging_IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},Microsoft.Psi.Imaging.IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D})">Decode(IProducer&lt;EncodedImageRectangle3D&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageRectangle3D&gt;)</h4>
+  <div class="markdown level1 summary"><p>Decodes an encoded image image rectangle using a specified image decoder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageRectangle3D&gt; Decode(this IProducer&lt;EncodedImageRectangle3D&gt; source, IImageFromStreamDecoder decoder, DeliveryPolicy&lt;EncodedImageRectangle3D&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D.html">EncodedImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of encoded image rectangles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a></td>
+        <td><span class="parametername">decoder</span></td>
+        <td><p>The image decoder to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D.html">EncodedImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D.html">ImageRectangle3D</a>&gt;</td>
+        <td><p>A stream of decoded image rectangles.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Images/Operators.cs/#L44">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},Microsoft.Psi.Imaging.IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D})">Encode(IProducer&lt;DepthImageRectangle3D&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageRectangle3D&gt;)</h4>
+  <div class="markdown level1 summary"><p>Encodes a depth image rectangle using a specified depth image encoder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;EncodedDepthImageRectangle3D&gt; Encode(this IProducer&lt;DepthImageRectangle3D&gt; source, IDepthImageToStreamEncoder encoder, DeliveryPolicy&lt;DepthImageRectangle3D&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D.html">DepthImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of depth image rectangles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></td>
+        <td><span class="parametername">encoder</span></td>
+        <td><p>The depth image encoder to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D.html">DepthImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D.html">EncodedDepthImageRectangle3D</a>&gt;</td>
+        <td><p>A stream of encoded depth image rectangles.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Images/Operators.cs/#L21">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__Microsoft_Psi_Imaging_IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},Microsoft.Psi.Imaging.IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D})">Encode(IProducer&lt;ImageRectangle3D&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageRectangle3D&gt;)</h4>
+  <div class="markdown level1 summary"><p>Encodes an image rectangle using a specified image encoder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;EncodedImageRectangle3D&gt; Encode(this IProducer&lt;ImageRectangle3D&gt; source, IImageToStreamEncoder encoder, DeliveryPolicy&lt;ImageRectangle3D&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D.html">ImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of image rectangles.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></td>
+        <td><span class="parametername">encoder</span></td>
+        <td><p>The image encoder to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D.html">ImageRectangle3D</a>&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D.html">EncodedImageRectangle3D</a>&gt;</td>
+        <td><p>A stream of encoded image rectangles.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D_IProducer_CoordinateSystem__DeliveryPolicy_CoordinateSystem__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D(IProducer{CoordinateSystem},DeliveryPolicy{CoordinateSystem})">GetLinearVelocity3D(IProducer&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;CoordinateSystem&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the linear velocity of a coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;LinearVelocity3D?&gt; GetLinearVelocity3D(this IProducer&lt;CoordinateSystem&gt; source, DeliveryPolicy&lt;CoordinateSystem&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of coordinate systems.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy parameter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a>&gt;&gt;</td>
+        <td><p>A stream containing the linear velocity of the specified point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D__1_IProducer___0__Func___0_System_Nullable_Point3D___DeliveryPolicy___0__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D``1(IProducer{``0},Func{``0,System.Nullable{Point3D}},DeliveryPolicy{``0})">GetLinearVelocity3D&lt;T&gt;(IProducer&lt;T&gt;, Func&lt;T, Nullable&lt;Point3D&gt;&gt;, DeliveryPolicy&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Computes the linear velocity of an object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;LinearVelocity3D?&gt; GetLinearVelocity3D&lt;T&gt;(this IProducer&lt;T&gt; source, Func&lt;T, Point3D?&gt; getLocation, DeliveryPolicy&lt;T&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of points.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;&gt;</td>
+        <td><span class="parametername">getLocation</span></td>
+        <td><p>A function that specifies the location of the object.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;T&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy parameter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a>&gt;&gt;</td>
+        <td><p>A stream containing the linear velocity of the specified point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of the object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L102">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_UnitVector3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix(UnitVector3D)">ToRotationMatrix(UnitVector3D)</h4>
+  <div class="markdown level1 summary"><p>Gets a rotation matrix corresponding to a forward vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix&lt;double&gt; ToRotationMatrix(this UnitVector3D forward)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">forward</span></td>
+        <td><p>The specified forward vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The corresponding rotation matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_UnitVector3D__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The X axis of the matrix will correspond to the specified forward vector.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_Vector3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix(Vector3D)">ToRotationMatrix(Vector3D)</h4>
+  <div class="markdown level1 summary"><p>Gets a rotation matrix corresponding to a forward vector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix&lt;double&gt; ToRotationMatrix(this Vector3D forward)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector3D</span></td>
+        <td><span class="parametername">forward</span></td>
+        <td><p>The specified forward vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>The corresponding rotation matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_Vector3D__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The X axis of the matrix will correspond to the specified forward vector.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L48">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_CoordinateSystem_Microsoft_Psi_Spatial_Euclidean_Box3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform(CoordinateSystem,Microsoft.Psi.Spatial.Euclidean.Box3D)">Transform(CoordinateSystem, Box3D)</h4>
+  <div class="markdown level1 summary"><p>Transforms a box by a coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Box3D Transform(this CoordinateSystem coordinateSystem, Box3D box3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">box3D</span></td>
+        <td><p>The box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><p>The transformed box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L21">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_CoordinateSystem_Microsoft_Psi_Spatial_Euclidean_PointCloud3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform(CoordinateSystem,Microsoft.Psi.Spatial.Euclidean.PointCloud3D)">Transform(CoordinateSystem, PointCloud3D)</h4>
+  <div class="markdown level1 summary"><p>Transforms a point cloud by a coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PointCloud3D Transform(this CoordinateSystem coordinateSystem, PointCloud3D pointCloud3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><span class="parametername">pointCloud3D</span></td>
+        <td><p>The point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The transformed point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L30">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_CoordinateSystem_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform(CoordinateSystem,Microsoft.Psi.Spatial.Euclidean.Rectangle3D)">Transform(CoordinateSystem, Rectangle3D)</h4>
+  <div class="markdown level1 summary"><p>Transforms a rectangle by a coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Rectangle3D Transform(this CoordinateSystem coordinateSystem, Rectangle3D rectangle3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><span class="parametername">rectangle3D</span></td>
+        <td><p>The rectangle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><p>The transformed rectangle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

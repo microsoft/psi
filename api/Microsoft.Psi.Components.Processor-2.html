@@ -147,16 +147,16 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L29">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Processor_2__ctor_" data-uid="Microsoft.Psi.Components.Processor`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Processor_2__ctor_Microsoft_Psi_Pipeline_Action__0_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter__1___" data-uid="Microsoft.Psi.Components.Processor`2.#ctor(Microsoft.Psi.Pipeline,Action{`0,Microsoft.Psi.Envelope,Microsoft.Psi.Emitter{`1}})">Processor(Pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Processor_2__ctor_Microsoft_Psi_Pipeline_Action__0_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter__1___Action_DateTime_Microsoft_Psi_Emitter__1___" data-uid="Microsoft.Psi.Components.Processor`2.#ctor(Microsoft.Psi.Pipeline,Action{`0,Microsoft.Psi.Envelope,Microsoft.Psi.Emitter{`1}},Action{DateTime,Microsoft.Psi.Emitter{`1}})">Processor(Pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt;, Action&lt;DateTime, Emitter&lt;TOut&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Processor-2.html">Processor&lt;TIn, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Processor(Pipeline pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt; transform)</code></pre>
+    <pre><code class="lang-csharp hljs">public Processor(Pipeline pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt; transform, Action&lt;DateTime, Emitter&lt;TOut&gt;&gt; onClose = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -171,7 +171,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
         <td><span class="parametername">pipeline</span></td>
-        <td><p>The pipeline to attach to.</p>
+        <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
       <tr>
@@ -180,13 +180,19 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
         <td><p>A delegate that processes the input data and potentially publishes a result on the provided <a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter&lt;T&gt;</a>.</p>
 </td>
       </tr>
+      <tr>
+        <td><span class="xref">Action</span>&lt;<span class="xref">DateTime</span>, <a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;TOut&gt;&gt;</td>
+        <td><span class="parametername">onClose</span></td>
+        <td><p>An optional action to execute when the input stream closes.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Processor_2_Receive_" data-uid="Microsoft.Psi.Components.Processor`2.Receive*"></a>
   <h4 id="Microsoft_Psi_Components_Processor_2_Receive__0_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Components.Processor`2.Receive(`0,Microsoft.Psi.Envelope)">Receive(TIn, Envelope)</h4>

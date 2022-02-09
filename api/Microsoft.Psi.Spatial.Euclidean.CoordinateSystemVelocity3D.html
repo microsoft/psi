@@ -1,0 +1,711 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct CoordinateSystemVelocity3D
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct CoordinateSystemVelocity3D
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D">
+  
+  
+  <h1 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D" class="text-break">Struct CoordinateSystemVelocity3D
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a coordinate system velocity from a particular starting pose,
+composing both a linear and angular velocity.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Spatial.Euclidean.dll</h6>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct CoordinateSystemVelocity3D : IEquatable&lt;CoordinateSystemVelocity3D&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L71">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_CoordinateSystem_CoordinateSystem_TimeSpan_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor(CoordinateSystem,CoordinateSystem,TimeSpan)">CoordinateSystemVelocity3D(CoordinateSystem, CoordinateSystem, TimeSpan)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CoordinateSystemVelocity3D(CoordinateSystem originCoordinateSystem, CoordinateSystem destinationCoordinateSystem, TimeSpan time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">originCoordinateSystem</span></td>
+        <td><p>The origin coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">destinationCoordinateSystem</span></td>
+        <td><p>A destination coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">TimeSpan</span></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The time it took to reach the destination coordinate system.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L55">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_CoordinateSystem_UnitVector3D_System_Double_UnitVector3D_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor(CoordinateSystem,UnitVector3D,System.Double,UnitVector3D,System.Double)">CoordinateSystemVelocity3D(CoordinateSystem, UnitVector3D, Double, UnitVector3D, Double)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CoordinateSystemVelocity3D(CoordinateSystem originCoordinateSystem, UnitVector3D angularAxis, double angularSpeed, UnitVector3D linearDirection, double linearSpeed)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">originCoordinateSystem</span></td>
+        <td><p>The origin coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">angularAxis</span></td>
+        <td><p>The axis of angular velocity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">angularSpeed</span></td>
+        <td><p>The angular speed around the axis.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">linearDirection</span></td>
+        <td><p>The direction of linear velocity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">linearSpeed</span></td>
+        <td><p>The linear speed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L37">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_CoordinateSystem_Vector3D_Vector3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor(CoordinateSystem,Vector3D,Vector3D)">CoordinateSystemVelocity3D(CoordinateSystem, Vector3D, Vector3D)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CoordinateSystemVelocity3D(CoordinateSystem originCoordinateSystem, Vector3D axisAngleVector, Vector3D linearVector)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">originCoordinateSystem</span></td>
+        <td><p>The origin coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector3D</span></td>
+        <td><span class="parametername">axisAngleVector</span></td>
+        <td><p>The axis-angle representation of angular velocity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector3D</span></td>
+        <td><span class="parametername">linearVector</span></td>
+        <td><p>The linear velocity vector.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L24">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_AxisAngleVector" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.AxisAngleVector">AxisAngleVector</h4>
+  <div class="markdown level1 summary"><p>The axis of angular velocity, along with the radians/time speed (length of the vector).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Vector3D AxisAngleVector</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L29">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_LinearVector" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.LinearVector">LinearVector</h4>
+  <div class="markdown level1 summary"><p>The linear velocity vector. Describes the direction of motion as well as the speed (length of the vector).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Vector3D LinearVector</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L19">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_OriginCoordinateSystem" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.OriginCoordinateSystem">OriginCoordinateSystem</h4>
+  <div class="markdown level1 summary"><p>The origin coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly CoordinateSystem OriginCoordinateSystem</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L128">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_ComputeDestination_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.ComputeDestination*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_ComputeDestination_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.ComputeDestination(System.Double)">ComputeDestination(Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the destination coordinate system, if this velocity is followed for a given amount of time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CoordinateSystem ComputeDestination(double time)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">time</span></td>
+        <td><p>The span of time to compute over.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><p>The destination coordinate system.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_ComputeDestination_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The unit of time should be the same as assumed for the linear and angular velocity vector (e.g., seconds).</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L102">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals(Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D)">Equals(CoordinateSystemVelocity3D)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(CoordinateSystemVelocity3D other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_System_Object_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L120">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetAngularVelocity_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetAngularVelocity*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetAngularVelocity" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetAngularVelocity">GetAngularVelocity()</h4>
+  <div class="markdown level1 summary"><p>Get the angular velocity component of this coordinate system velocity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AngularVelocity3D GetAngularVelocity()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.html">AngularVelocity3D</a></td>
+        <td><p>The angular velocity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L108">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetHashCode_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetHashCode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetHashCode" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L114">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetLinearVelocity_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetLinearVelocity*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetLinearVelocity" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetLinearVelocity">GetLinearVelocity()</h4>
+  <div class="markdown level1 summary"><p>Get the linear velocity component of this coordinate system velocity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LinearVelocity3D GetLinearVelocity()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a></td>
+        <td><p>The linear velocity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L91">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Equality_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Equality*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Equality_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Equality(Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D,Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D)">Equality(CoordinateSystemVelocity3D, CoordinateSystemVelocity3D)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether the specified velocities are the same.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(CoordinateSystemVelocity3D left, CoordinateSystemVelocity3D right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The first velocity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The second velocity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the velocities are the same; otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Inequality_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Inequality*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Inequality_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Inequality(Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D,Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D)">Inequality(CoordinateSystemVelocity3D, CoordinateSystemVelocity3D)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether the specified velocities are different.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(CoordinateSystemVelocity3D left, CoordinateSystemVelocity3D right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The first velocity.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The second velocity.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the velocities are different; otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L14" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

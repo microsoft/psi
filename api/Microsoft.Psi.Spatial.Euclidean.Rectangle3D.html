@@ -1,0 +1,835 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct Rectangle3D
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct Rectangle3D
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D">
+  
+  
+  <h1 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D" class="text-break">Struct Rectangle3D
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a 2-dimensional rectangle embedded in 3D space.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Spatial.Euclidean.dll</h6>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct Rectangle3D : IEquatable&lt;Rectangle3D&gt;</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The rectangle is characterized by its four corner points.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L66">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D__ctor_Point3D_UnitVector3D_UnitVector3D_System_Double_System_Double_System_Double_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.#ctor(Point3D,UnitVector3D,UnitVector3D,System.Double,System.Double,System.Double,System.Double)">Rectangle3D(Point3D, UnitVector3D, UnitVector3D, Double, Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rectangle3D(Point3D origin, UnitVector3D widthAxis, UnitVector3D heightAxis, double left, double bottom, double width, double height)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">origin</span></td>
+        <td><p>The origin of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">widthAxis</span></td>
+        <td><p>The horizontal width axis of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">heightAxis</span></td>
+        <td><p>The vertical height axis of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The left edge of the rectangle (relative to origin along the width axis).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">bottom</span></td>
+        <td><p>The bottom edge of the rectangle (relative to origin along the height axis).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">width</span></td>
+        <td><p>The width of the rectangle (must be positive).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">height</span></td>
+        <td><p>The height of the rectangle (must be positive).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D__ctor_Point3D_UnitVector3D_UnitVector3D_System_Double_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The edges of the rectangle are aligned to the specified width and height axes, which must be perpendicular.</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L26">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_BottomLeft" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.BottomLeft">BottomLeft</h4>
+  <div class="markdown level1 summary"><p>Gets the bottom-left corner of the rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Point3D BottomLeft</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L36">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_BottomRight" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.BottomRight">BottomRight</h4>
+  <div class="markdown level1 summary"><p>Gets the bottom-right corner of the rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Point3D BottomRight</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L51">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Height" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Height">Height</h4>
+  <div class="markdown level1 summary"><p>Gets the height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly double Height</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L41">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_IsDegenerate" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.IsDegenerate">IsDegenerate</h4>
+  <div class="markdown level1 summary"><p>Gets whether or not this rectangle is degenerate (0-length width or height).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly bool IsDegenerate</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L21">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_TopLeft" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.TopLeft">TopLeft</h4>
+  <div class="markdown level1 summary"><p>Gets the top-left corner of the rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Point3D TopLeft</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L31">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_TopRight" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.TopRight">TopRight</h4>
+  <div class="markdown level1 summary"><p>Gets the top-right corner of the rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Point3D TopRight</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L46">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Width" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Width">Width</h4>
+  <div class="markdown level1 summary"><p>Gets the width.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly double Width</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L182">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Contains_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Contains*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Contains_Point3D_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Contains(Point3D,System.Double)">Contains(Point3D, Double)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the rectangle contains a specified point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(Point3D point3D, double tolerance = 1E-10)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point3D</span></td>
+        <td><p>The point.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>An optional tolerance to account for floating point errors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the rectangle contains the specified point, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L216">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Equals*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Equals_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Equals(Microsoft.Psi.Spatial.Euclidean.Rectangle3D)">Equals(Rectangle3D)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Rectangle3D other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L223">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Equals*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Equals_System_Object_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L124">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetCenter_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetCenter*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetCenter" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetCenter">GetCenter()</h4>
+  <div class="markdown level1 summary"><p>Gets the center of the 3D rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Point3D GetCenter()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><p>The center point of the rectangle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L134">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetCorners_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetCorners*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetCorners" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetCorners">GetCorners()</h4>
+  <div class="markdown level1 summary"><p>Gets the corners of the rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Point3D&gt; GetCorners()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>An enumeration containing the rectangle corners.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L226">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetHashCode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetHashCode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetHashCode" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L173">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetPlane_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetPlane*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_GetPlane" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.GetPlane">GetPlane()</h4>
+  <div class="markdown level1 summary"><p>Gets the <see cref="!:Plane"></see> in which the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a> lies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Plane GetPlane()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Plane</span></td>
+        <td><p>The <see cref="!:Plane"></see> in which the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a> lies.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L148">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_IntersectionWith_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.IntersectionWith*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_IntersectionWith_Ray3D_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.IntersectionWith(Ray3D,System.Double)">IntersectionWith(Ray3D, Double)</h4>
+  <div class="markdown level1 summary"><p>Computes the intersection between a 3D ray and this planar rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Point3D? IntersectionWith(Ray3D ray3D, double tolerance = 1E-10)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Ray3D</span></td>
+        <td><span class="parametername">ray3D</span></td>
+        <td><p>The 3D ray.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">tolerance</span></td>
+        <td><p>An optional tolerance to account for floating point errors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>The intersection point, if one exists.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L110">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_op_Equality_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.op_Equality*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_op_Equality_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.op_Equality(Microsoft.Psi.Spatial.Euclidean.Rectangle3D,Microsoft.Psi.Spatial.Euclidean.Rectangle3D)">Equality(Rectangle3D, Rectangle3D)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether the specified rectangles are the same.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle3D left, Rectangle3D right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The first rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The second rectangle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the rectangles are the same; otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_op_Inequality_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.op_Inequality*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Rectangle3D_op_Inequality_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.op_Inequality(Microsoft.Psi.Spatial.Euclidean.Rectangle3D,Microsoft.Psi.Spatial.Euclidean.Rectangle3D)">Inequality(Rectangle3D, Rectangle3D)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether the specified rectangles are different.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle3D left, Rectangle3D right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The first rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The second rectangle.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the rectangles are different; otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Rectangle3D.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1161 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Struct Box3D
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Struct Box3D
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D">
+  
+  
+  <h1 id="Microsoft_Psi_Spatial_Euclidean_Box3D" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D" class="text-break">Struct Box3D
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a 3D rectangular box.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IEquatable</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a>&gt;</div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Spatial.Euclidean.dll</h6>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Box3D_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public struct Box3D : IEquatable&lt;Box3D&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_Microsoft_Psi_Spatial_Euclidean_Bounds3D_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.#ctor(Microsoft.Psi.Spatial.Euclidean.Bounds3D,CoordinateSystem)">Box3D(Bounds3D, CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Box3D(Bounds3D bounds, CoordinateSystem pose = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Bounds3D.html">Bounds3D</a></td>
+        <td><span class="parametername">bounds</span></td>
+        <td><p>The bounds for the box.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">pose</span></td>
+        <td><p>An optional pose for the box (by default, at origin).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_Point3D_UnitVector3D_UnitVector3D_UnitVector3D_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.#ctor(Point3D,UnitVector3D,UnitVector3D,UnitVector3D,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">Box3D(Point3D, UnitVector3D, UnitVector3D, UnitVector3D, Double, Double, Double, Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Box3D(Point3D origin, UnitVector3D xAxis, UnitVector3D yAxis, UnitVector3D zAxis, double x1, double x2, double y1, double y2, double z1, double z2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">origin</span></td>
+        <td><p>The origin of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">xAxis</span></td>
+        <td><p>The x-axis of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">yAxis</span></td>
+        <td><p>The y-axis of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td><span class="parametername">zAxis</span></td>
+        <td><p>The z-axis of the rectangle.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x1</span></td>
+        <td><p>The x-offset of the first diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x2</span></td>
+        <td><p>The x-offset of the second diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y1</span></td>
+        <td><p>The y-offset of the first diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y2</span></td>
+        <td><p>The y-offset of the second diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">z1</span></td>
+        <td><p>The z-offset of the first diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">z2</span></td>
+        <td><p>The z-offset of the second diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_Point3D_UnitVector3D_UnitVector3D_UnitVector3D_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The box is defined by two opposite corners whose offsets are specified relative to its origin.
+The edges of the box are aligned to the specified x, y and z axes.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L76">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,CoordinateSystem)">Box3D(Double, Double, Double, Double, Double, Double, CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> struct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Box3D(double x1, double x2, double y1, double y2, double z1, double z2, CoordinateSystem pose = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x1</span></td>
+        <td><p>The x-offset of the first diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">x2</span></td>
+        <td><p>The x-offset of the second diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y1</span></td>
+        <td><p>The y-offset of the first diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">y2</span></td>
+        <td><p>The y-offset of the second diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">z1</span></td>
+        <td><p>The z-offset of the first diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">z2</span></td>
+        <td><p>The z-offset of the second diagonal corner of the box relative to its origin.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">pose</span></td>
+        <td><p>An optional pose for the box (by default, at origin).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Box3D__ctor_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_CoordinateSystem__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The box is defined by two opposite corners whose offsets are specified relative to its origin.
+The edges of the box are aligned to the x, y and z axes of its coordinate system.</p>
+</div>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L60">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_Bounds" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Bounds">Bounds</h4>
+  <div class="markdown level1 summary"><p>The bounds for the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Bounds3D Bounds</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Bounds3D.html">Bounds3D</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L55">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_Pose" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Pose">Pose</h4>
+  <div class="markdown level1 summary"><p>The pose of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly CoordinateSystem Pose</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L138">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_Center_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Center*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_Center" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Center">Center</h4>
+  <div class="markdown level1 summary"><p>Gets the geometric center of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Point3D Center { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L159">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_IsDegenerate_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.IsDegenerate*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_IsDegenerate" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.IsDegenerate">IsDegenerate</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the box is degenerate
+(i.e. one or more of its edges has zero length).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDegenerate { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L143">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_LengthX_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.LengthX*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_LengthX" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.LengthX">LengthX</h4>
+  <div class="markdown level1 summary"><p>Gets the length of the box along its x-axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LengthX { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L148">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_LengthY_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.LengthY*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_LengthY" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.LengthY">LengthY</h4>
+  <div class="markdown level1 summary"><p>Gets the length of the box along its y-axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LengthY { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L153">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_LengthZ_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.LengthZ*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_LengthZ" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.LengthZ">LengthZ</h4>
+  <div class="markdown level1 summary"><p>Gets the length of the box along its z-axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LengthZ { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_Origin_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Origin*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_Origin" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Origin">Origin</h4>
+  <div class="markdown level1 summary"><p>Gets the origin of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Point3D Origin { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L123">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_XAxis_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.XAxis*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_XAxis" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.XAxis">XAxis</h4>
+  <div class="markdown level1 summary"><p>Gets the x-axis of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnitVector3D XAxis { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L128">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_YAxis_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.YAxis*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_YAxis" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.YAxis">YAxis</h4>
+  <div class="markdown level1 summary"><p>Gets the y-axis of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnitVector3D YAxis { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L133">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_ZAxis_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.ZAxis*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_ZAxis" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.ZAxis">ZAxis</h4>
+  <div class="markdown level1 summary"><p>Gets the z-axis of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public UnitVector3D ZAxis { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">UnitVector3D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L192">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_ContainsPoint_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.ContainsPoint*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_ContainsPoint_Point3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.ContainsPoint(Point3D)">ContainsPoint(Point3D)</h4>
+  <div class="markdown level1 summary"><p>Determines whether the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> contains a point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ContainsPoint(Point3D point)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>The point to check.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if this <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> contains the point, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L226">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Equals*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_Equals_Microsoft_Psi_Spatial_Euclidean_Box3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Equals(Microsoft.Psi.Spatial.Euclidean.Box3D)">Equals(Box3D)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Box3D other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L230">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Equals*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_Equals_System_Object_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L181">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetCorners_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetCorners*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetCorners" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetCorners">GetCorners()</h4>
+  <div class="markdown level1 summary"><p>Gets the corner points of the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Point3D&gt; GetCorners()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>An enumeration containing the corner points for the box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L256">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetFacet_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetFacet*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetFacet_Microsoft_Psi_Spatial_Euclidean_Box3DFacet_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetFacet(Microsoft.Psi.Spatial.Euclidean.Box3DFacet)">GetFacet(Box3DFacet)</h4>
+  <div class="markdown level1 summary"><p>Returns a <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a> representing the specified facet of this <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rectangle3D GetFacet(Box3DFacet facet)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3DFacet.html">Box3DFacet</a></td>
+        <td><span class="parametername">facet</span></td>
+        <td><p>The requested facet.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a></td>
+        <td><p>The <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a> representing the requested facet.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L241">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetFacets_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetFacets*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetFacets" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetFacets">GetFacets()</h4>
+  <div class="markdown level1 summary"><p>Returns the facets for the box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Rectangle3D&gt; GetFacets()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Rectangle3D.html">Rectangle3D</a>&gt;</td>
+        <td><p>An enumeration containing the facets for the box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L234">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetHashCode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetHashCode*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_GetHashCode" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_IntersectionWith_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.IntersectionWith*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_IntersectionWith_Ray3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.IntersectionWith(Ray3D)">IntersectionWith(Ray3D)</h4>
+  <div class="markdown level1 summary"><p>Computes the intersection point between a 3D ray and this box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Point3D? IntersectionWith(Ray3D ray3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Ray3D</span></td>
+        <td><span class="parametername">ray3D</span></td>
+        <td><p>The 3D ray.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>The intersection point, if one exists.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L354">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_ToCenteredBox3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.ToCenteredBox3D*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_ToCenteredBox3D" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.ToCenteredBox3D">ToCenteredBox3D()</h4>
+  <div class="markdown level1 summary"><p>Convert <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> to canonical form with origin in the center.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Box3D ToCenteredBox3D()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><p><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a> in with origin in the center.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L347">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_TransformBy_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.TransformBy*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_TransformBy_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.TransformBy(CoordinateSystem)">TransformBy(CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Transforms the box by a coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Box3D TransformBy(CoordinateSystem coordinateSystem)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The coordinate system to transform the box by.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><p>The transformed box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="operators">Operators
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L167">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_op_Equality_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.op_Equality*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_op_Equality_Microsoft_Psi_Spatial_Euclidean_Box3D_Microsoft_Psi_Spatial_Euclidean_Box3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.op_Equality(Microsoft.Psi.Spatial.Euclidean.Box3D,Microsoft.Psi.Spatial.Euclidean.Box3D)">Equality(Box3D, Box3D)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether the specified boxes are the same.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Box3D left, Box3D right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The first box.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The second box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the boxes are the same; otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L175">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Box3D_op_Inequality_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.op_Inequality*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Box3D_op_Inequality_Microsoft_Psi_Spatial_Euclidean_Box3D_Microsoft_Psi_Spatial_Euclidean_Box3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Box3D.op_Inequality(Microsoft.Psi.Spatial.Euclidean.Box3D,Microsoft.Psi.Spatial.Euclidean.Box3D)">Inequality(Box3D, Box3D)</h4>
+  <div class="markdown level1 summary"><p>Returns a value indicating whether the specified boxes are different.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Box3D left, Box3D right)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">left</span></td>
+        <td><p>The first box.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">right</span></td>
+        <td><p>The second box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the boxes are different; otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IEquatable&lt;&gt;</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Box3D.cs/#L50" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

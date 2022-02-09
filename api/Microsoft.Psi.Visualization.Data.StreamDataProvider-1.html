@@ -90,7 +90,7 @@
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">StreamDataProvider&lt;T&gt;</span></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamIntervalProvider-1.html">StreamIntervalProvider&lt;T&gt;</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamIntervalProvider-1.html">StreamIntervalProvider</a>&lt;T&gt;</div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -100,25 +100,25 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
@@ -138,7 +138,10 @@
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>The type of messages in stream.</p>
+        <td><p>NOTE: Due to the differing ways that the derived classes <span class="xref">Microsoft.Psi.Visualization.Data.StreamValueProvider`1</span> and <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamIntervalProvider-1.html">StreamIntervalProvider&lt;T&gt;</a>
+deal with data coming from the store, the type T also differs. StreamValueProvider reads raw messages from the stream, then adapts it (if applicable), so T is
+the type of messages in the stream.  StreamIntervalProvider on the other hand uses its internal message cache that represents messages that have been
+read from the store and then adapted (if applicable), so in this case T represents the type of messages after they have passed through the data adapter.</p>
 </td>
       </tr>
     </tbody>
@@ -147,7 +150,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L23">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1__ctor_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1__ctor_Microsoft_Psi_Visualization_Data_StreamSource_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.#ctor(Microsoft.Psi.Visualization.Data.StreamSource)">StreamDataProvider(StreamSource)</h4>
@@ -180,7 +183,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L57">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Allocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Allocator*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Allocator" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Allocator">Allocator</h4>
@@ -208,7 +211,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Deallocator_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Deallocator*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Deallocator" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Deallocator">Deallocator</h4>
@@ -236,7 +239,35 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L67">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L56">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_HasSubscribers_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.HasSubscribers*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_HasSubscribers" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.HasSubscribers">HasSubscribers</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the stream data provider currently has any subscribers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract bool HasSubscribers { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_IsStopped_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.IsStopped*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_IsStopped" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.IsStopped">IsStopped</h4>
@@ -264,7 +295,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_ReadRequests_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.ReadRequests*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_ReadRequests" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.ReadRequests">ReadRequests</h4>
@@ -292,7 +323,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L52">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_ReadRequestsInternal_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.ReadRequestsInternal*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_ReadRequestsInternal" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.ReadRequestsInternal">ReadRequestsInternal</h4>
@@ -320,7 +351,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_StreamName_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.StreamName*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_StreamName" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.StreamName">StreamName</h4>
@@ -350,7 +381,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L87">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_DispatchData_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.DispatchData*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_DispatchData" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.DispatchData">DispatchData()</h4>
@@ -363,7 +394,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L99">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Dispose_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Dispose*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Dispose" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Dispose">Dispose()</h4>
@@ -375,7 +406,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L96">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L105">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_GetTimeOfNearestMessage_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.GetTimeOfNearestMessage*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_GetTimeOfNearestMessage_System_DateTime_Microsoft_Psi_Visualization_Helpers_NearestMessageType_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.GetTimeOfNearestMessage(System.DateTime,Microsoft.Psi.Visualization.Helpers.NearestMessageType)">GetTimeOfNearestMessage(DateTime, NearestMessageType)</h4>
@@ -427,7 +458,20 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L110">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_OnNoRemainingSubscribers_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.OnNoRemainingSubscribers*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_OnNoRemainingSubscribers" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.OnNoRemainingSubscribers">OnNoRemainingSubscribers()</h4>
+  <div class="markdown level1 summary"><p>Called by a derived class when it no longer has any subscribers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnNoRemainingSubscribers()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L119">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_OnReadError_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.OnReadError*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_OnReadError_System_Runtime_Serialization_SerializationException_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.OnReadError(System.Runtime.Serialization.SerializationException)">OnReadError(SerializationException)</h4>
@@ -458,7 +502,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L102">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_OpenStream_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.OpenStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_OpenStream_Microsoft_Psi_Data_IStreamReader_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.OpenStream(Microsoft.Psi.Data.IStreamReader)">OpenStream(IStreamReader)</h4>
@@ -489,7 +533,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L78">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_RemoveReadRequest_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.RemoveReadRequest*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_RemoveReadRequest_System_DateTime_System_DateTime_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.RemoveReadRequest(System.DateTime,System.DateTime)">RemoveReadRequest(DateTime, DateTime)</h4>
@@ -526,7 +570,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L72">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Stop_" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Stop*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_Stop" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.Stop">Stop()</h4>
@@ -541,7 +585,34 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L37">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L38">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_NoRemainingSubscribers" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.NoRemainingSubscribers">NoRemainingSubscribers</h4>
+  <div class="markdown level1 summary"><p>Event that fires when a stream data provider has no more subscribers and can be removed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler NoRemainingSubscribers</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler">EventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L43">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamDataProvider_1_StreamReadError" data-uid="Microsoft.Psi.Visualization.Data.StreamDataProvider`1.StreamReadError">StreamReadError</h4>
   <div class="markdown level1 summary"><p>Event that fires when a stream is unable to be read from.</p>
@@ -591,7 +662,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamDataProvider{T}.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

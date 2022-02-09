@@ -97,11 +97,188 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class ReceiverDiagnostics : object</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L420">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics__ctor_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics__ctor_System_Int32_System_String_System_String_System_String_System_Boolean_System_Double_System_Double_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_Microsoft_Psi_Diagnostics_PipelineDiagnostics_PipelineElementDiagnostics_Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.#ctor(System.Int32,System.String,System.String,System.String,System.Boolean,System.Double,System.Double,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElementDiagnostics,Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics)">ReceiverDiagnostics(Int32, String, String, String, Boolean, Double, Double, Int32, Int32, Int32, Int32, Int32, Int32, Double, Double, Double, Double, Double, Double, Double, Double, Double, Double, PipelineDiagnostics.PipelineElementDiagnostics, PipelineDiagnostics.EmitterDiagnostics)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.html">PipelineDiagnostics.ReceiverDiagnostics</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReceiverDiagnostics(int id, string receiverName, string deliveryPolicyName, string typeName, bool receiverIsThrottled, double lastDeliveryQueueSize, double avgDeliveryQueueSize, int totalMessageEmittedCount, int windowMessageEmittedCount, int totalMessageProcessedCount, int windowMessageProcessedCount, int totalMessageDroppedCount, int windowMessageDroppedCount, double lastMessageCreatedLatency, double avgMessageCreatedLatency, double lastMessageEmittedLatency, double avgMessageEmittedLatency, double lastMessageReceivedLatency, double avgMessageReceivedLatency, double lastMessageProcessTime, double avgMessageProcessTime, double lastMessageSize, double avgMessageSize, PipelineDiagnostics.PipelineElementDiagnostics pipelineElement, PipelineDiagnostics.EmitterDiagnostics source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>Receiver ID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">receiverName</span></td>
+        <td><p>Receiver name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">deliveryPolicyName</span></td>
+        <td><p>Name of delivery policy used by receiver.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">typeName</span></td>
+        <td><p>Receiver type name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">receiverIsThrottled</span></td>
+        <td><p>Whether receiver is throttled.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lastDeliveryQueueSize</span></td>
+        <td><p>Delivery queue size at last message.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">avgDeliveryQueueSize</span></td>
+        <td><p>Average delivery queue size.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">totalMessageEmittedCount</span></td>
+        <td><p>Total count of emitted messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">windowMessageEmittedCount</span></td>
+        <td><p>Count of emitted messages in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">totalMessageProcessedCount</span></td>
+        <td><p>Total count of processed messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">windowMessageProcessedCount</span></td>
+        <td><p>Count of processed messages in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">totalMessageDroppedCount</span></td>
+        <td><p>Total count of dropped messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">windowMessageDroppedCount</span></td>
+        <td><p>Count of dropped messages in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lastMessageCreatedLatency</span></td>
+        <td><p>Latency with which the last message was created.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">avgMessageCreatedLatency</span></td>
+        <td><p>Average message created latency in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lastMessageEmittedLatency</span></td>
+        <td><p>Latency with which the last message was emitted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">avgMessageEmittedLatency</span></td>
+        <td><p>Average message emitted latency in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lastMessageReceivedLatency</span></td>
+        <td><p>Latency with which the last message was received.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">avgMessageReceivedLatency</span></td>
+        <td><p>Average message received latency in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lastMessageProcessTime</span></td>
+        <td><p>Receiver processing time for the last message.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">avgMessageProcessTime</span></td>
+        <td><p>Average receiver processing time in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">lastMessageSize</span></td>
+        <td><p>Message size for the last message.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">avgMessageSize</span></td>
+        <td><p>Average message size over in last averaging time window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElementDiagnostics.html">PipelineDiagnostics.PipelineElementDiagnostics</a></td>
+        <td><span class="parametername">pipelineElement</span></td>
+        <td><p>Pipeline element to which emitter belongs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.html">PipelineDiagnostics.EmitterDiagnostics</a></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Receiver's source emitter.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L384">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L556">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgDeliveryQueueSize_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgDeliveryQueueSize*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgDeliveryQueueSize" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgDeliveryQueueSize">AvgDeliveryQueueSize</h4>
@@ -129,7 +306,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L424">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L596">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageCreatedLatency_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageCreatedLatency*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageCreatedLatency" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageCreatedLatency">AvgMessageCreatedLatency</h4>
@@ -157,7 +334,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L434">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L606">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageEmittedLatency_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageEmittedLatency*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageEmittedLatency" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageEmittedLatency">AvgMessageEmittedLatency</h4>
@@ -185,7 +362,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L454">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L626">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageProcessTime_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageProcessTime*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageProcessTime" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageProcessTime">AvgMessageProcessTime</h4>
@@ -213,7 +390,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L444">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L616">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageReceivedLatency_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageReceivedLatency*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageReceivedLatency" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageReceivedLatency">AvgMessageReceivedLatency</h4>
@@ -241,7 +418,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L464">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L636">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageSize_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageSize*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_AvgMessageSize" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.AvgMessageSize">AvgMessageSize</h4>
@@ -269,7 +446,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L364">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L536">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_DeliveryPolicyName_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.DeliveryPolicyName*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_DeliveryPolicyName" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.DeliveryPolicyName">DeliveryPolicyName</h4>
@@ -297,7 +474,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L354">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L526">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_Id_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.Id*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_Id" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.Id">Id</h4>
@@ -325,7 +502,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L379">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L551">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastDeliveryQueueSize_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastDeliveryQueueSize*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastDeliveryQueueSize" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastDeliveryQueueSize">LastDeliveryQueueSize</h4>
@@ -353,7 +530,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L419">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L591">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageCreatedLatency_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageCreatedLatency*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageCreatedLatency" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageCreatedLatency">LastMessageCreatedLatency</h4>
@@ -381,7 +558,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L429">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L601">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageEmittedLatency_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageEmittedLatency*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageEmittedLatency" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageEmittedLatency">LastMessageEmittedLatency</h4>
@@ -409,7 +586,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L449">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L621">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageProcessTime_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageProcessTime*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageProcessTime" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageProcessTime">LastMessageProcessTime</h4>
@@ -437,7 +614,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L439">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L611">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageReceivedLatency_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageReceivedLatency*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageReceivedLatency" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageReceivedLatency">LastMessageReceivedLatency</h4>
@@ -465,7 +642,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L459">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L631">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageSize_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageSize*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_LastMessageSize" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.LastMessageSize">LastMessageSize</h4>
@@ -493,16 +670,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L469">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L641">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_PipelineElement_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.PipelineElement*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_PipelineElement" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.PipelineElement">PipelineElement</h4>
-  <div class="markdown level1 summary"><p>Gets pipeline element to which emitter belongs.</p>
+  <div class="markdown level1 summary"><p>Gets or sets pipeline element to which emitter belongs.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.PipelineElementDiagnostics PipelineElement { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.PipelineElementDiagnostics PipelineElement { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -521,7 +698,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L374">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L546">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_ReceiverIsThrottled_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.ReceiverIsThrottled*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_ReceiverIsThrottled" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.ReceiverIsThrottled">ReceiverIsThrottled</h4>
@@ -549,7 +726,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L359">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L531">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_ReceiverName_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.ReceiverName*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_ReceiverName" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.ReceiverName">ReceiverName</h4>
@@ -577,16 +754,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L474">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L646">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_Source_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.Source*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_Source" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.Source">Source</h4>
-  <div class="markdown level1 summary"><p>Gets receiver's source emitter.</p>
+  <div class="markdown level1 summary"><p>Gets or sets receiver's source emitter.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.EmitterDiagnostics Source { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.EmitterDiagnostics Source { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -605,7 +782,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L409">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L581">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TotalMessageDroppedCount_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedCount*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TotalMessageDroppedCount" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedCount">TotalMessageDroppedCount</h4>
@@ -633,7 +810,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L389">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L561">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TotalMessageEmittedCount_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TotalMessageEmittedCount*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TotalMessageEmittedCount" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TotalMessageEmittedCount">TotalMessageEmittedCount</h4>
@@ -661,7 +838,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L399">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L571">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TotalMessageProcessedCount_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedCount*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TotalMessageProcessedCount" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedCount">TotalMessageProcessedCount</h4>
@@ -689,11 +866,11 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L369">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L541">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TypeName_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TypeName*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_TypeName" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.TypeName">TypeName</h4>
-  <div class="markdown level1 summary"><p>Gets receiver type.</p>
+  <div class="markdown level1 summary"><p>Gets receiver type name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -717,7 +894,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L414">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L586">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_WindowMessageDroppedCount_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedCount*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_WindowMessageDroppedCount" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedCount">WindowMessageDroppedCount</h4>
@@ -745,7 +922,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L394">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L566">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_WindowMessageEmittedCount_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.WindowMessageEmittedCount*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_WindowMessageEmittedCount" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.WindowMessageEmittedCount">WindowMessageEmittedCount</h4>
@@ -773,7 +950,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L404">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L576">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_WindowMessageProcessedCount_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedCount*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics_WindowMessageProcessedCount" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedCount">WindowMessageProcessedCount</h4>
@@ -817,7 +994,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L300" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L390" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

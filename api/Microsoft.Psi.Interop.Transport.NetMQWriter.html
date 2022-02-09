@@ -102,7 +102,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter__ctor_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.#ctor*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter__ctor_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_Interop_Serialization_IFormatSerializer_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.#ctor(Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.Interop.Serialization.IFormatSerializer)">NetMQWriter(Pipeline, String, IFormatSerializer)</h4>
@@ -126,7 +126,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
         <td><span class="parametername">pipeline</span></td>
-        <td><p>Pipeline to which this component belongs.</p>
+        <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
       <tr>
@@ -143,11 +143,69 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L42">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_Address_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Address*"></a>
+  <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_Address" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Address">Address</h4>
+  <div class="markdown level1 summary"><p>Gets the connection address string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Address { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L47">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_Topics_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Topics*"></a>
+  <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_Topics" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Topics">Topics</h4>
+  <div class="markdown level1 summary"><p>Gets the topic names and types being published.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;(string Name, Type Type)&gt; Topics { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <span class="xref">Type</span>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L41">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L58">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_AddTopic_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.AddTopic*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_AddTopic__1_System_String_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.AddTopic``1(System.String)">AddTopic&lt;T&gt;(String)</h4>
@@ -210,7 +268,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L65">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_Dispose_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Dispose*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_Dispose" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Dispose">Dispose()</h4>
@@ -221,6 +279,9 @@
     <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Operators.html#Microsoft_Psi_Interop_Rendezvous_Operators_ToRendezvousEndpoint_Microsoft_Psi_Interop_Transport_NetMQWriter_">Operators.ToRendezvousEndpoint(NetMQWriter)</a>
+  </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
   </div>
@@ -238,7 +299,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -111,11 +111,41 @@
   <h5 id="Microsoft_Psi_Serialization_ISerializer_1_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Implementers should delegate as much as possible to the default serializers via the static Serializer class.</p>
 </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L27">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_ISerializer_1_IsClearRequired_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.IsClearRequired*"></a>
+  <h4 id="Microsoft_Psi_Serialization_ISerializer_1_IsClearRequired" data-uid="Microsoft.Psi.Serialization.ISerializer`1.IsClearRequired">IsClearRequired</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether cached instances must be cleared (null if statically unknown).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool? IsClearRequired { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L95">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_Clear_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Clear*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_Clear__0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Clear(`0@,Microsoft.Psi.Serialization.SerializationContext)">Clear(ref T, SerializationContext)</h4>
@@ -153,7 +183,7 @@ The method is expected to call Serializer.Clear on all reference-type fields.</p
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L66">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_Clone_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Clone*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_Clone__0__0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Clone(`0,`0@,Microsoft.Psi.Serialization.SerializationContext)">Clone(T, ref T, SerializationContext)</h4>
@@ -196,7 +226,7 @@ The method is expected to call Serializer.Clear on all reference-type fields.</p
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_Deserialize_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Deserialize*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_Deserialize_Microsoft_Psi_Common_BufferReader__0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Deserialize(Microsoft.Psi.Common.BufferReader,`0@,Microsoft.Psi.Serialization.SerializationContext)">Deserialize(BufferReader, ref T, SerializationContext)</h4>
@@ -239,7 +269,7 @@ The method is expected to call Serializer.Clear on all reference-type fields.</p
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_Initialize_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Initialize*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_Initialize_Microsoft_Psi_Serialization_KnownSerializers_Microsoft_Psi_Serialization_TypeSchema_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Initialize(Microsoft.Psi.Serialization.KnownSerializers,Microsoft.Psi.Serialization.TypeSchema)">Initialize(KnownSerializers, TypeSchema)</h4>
@@ -302,7 +332,7 @@ using <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html#Microsof
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_PrepareCloningTarget_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.PrepareCloningTarget*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_PrepareCloningTarget__0__0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.PrepareCloningTarget(`0,`0@,Microsoft.Psi.Serialization.SerializationContext)">PrepareCloningTarget(T, ref T, SerializationContext)</h4>
@@ -345,7 +375,7 @@ using <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html#Microsof
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_PrepareDeserializationTarget_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.PrepareDeserializationTarget*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_PrepareDeserializationTarget_Microsoft_Psi_Common_BufferReader__0__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.PrepareDeserializationTarget(Microsoft.Psi.Common.BufferReader,`0@,Microsoft.Psi.Serialization.SerializationContext)">PrepareDeserializationTarget(BufferReader, ref T, SerializationContext)</h4>
@@ -388,7 +418,7 @@ using <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html#Microsof
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/ISerializer.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_ISerializer_1_Serialize_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Serialize*"></a>
   <h4 id="Microsoft_Psi_Serialization_ISerializer_1_Serialize_Microsoft_Psi_Common_BufferWriter__0_Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Serialization.ISerializer`1.Serialize(Microsoft.Psi.Common.BufferWriter,`0,Microsoft.Psi.Serialization.SerializationContext)">Serialize(BufferWriter, T, SerializationContext)</h4>

@@ -4040,7 +4040,7 @@ output value and all subsequent output values will be NaN.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Connectors.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Connectors.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_BridgeTo_" data-uid="Microsoft.Psi.Operators.BridgeTo*"></a>
   <h4 id="Microsoft_Psi_Operators_BridgeTo__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.BridgeTo``1(Microsoft.Psi.IProducer{``0},Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.DeliveryPolicy{``0})">BridgeTo&lt;T&gt;(IProducer&lt;T&gt;, Pipeline, String, DeliveryPolicy&lt;T&gt;)</h4>
@@ -4409,7 +4409,7 @@ output value and all subsequent output values will be NaN.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Connectors.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Connectors.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_CreateConnector_" data-uid="Microsoft.Psi.Operators.CreateConnector*"></a>
   <h4 id="Microsoft_Psi_Operators_CreateConnector__1_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Operators.CreateConnector``1(Microsoft.Psi.Pipeline,System.String)">CreateConnector&lt;T&gt;(Pipeline, String)</h4>
@@ -4479,11 +4479,11 @@ This allows the owning component to apply stream operators to this input.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Time.cs/#L46">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Time.cs/#L54">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Delay_" data-uid="Microsoft.Psi.Operators.Delay*"></a>
   <h4 id="Microsoft_Psi_Operators_Delay__1_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Delay``1(Microsoft.Psi.IProducer{``0},TimeSpan,Microsoft.Psi.DeliveryPolicy{``0})">Delay&lt;T&gt;(IProducer&lt;T&gt;, TimeSpan, DeliveryPolicy&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Delay messages by given time span.</p>
+  <div class="markdown level1 summary"><p>Delays the delivery of messages by a given time span.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -4503,13 +4503,13 @@ This allows the owning component to apply stream operators to this input.</p>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
         <td><span class="parametername">source</span></td>
-        <td><p>Source stream.</p>
+        <td><p>The source stream.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">TimeSpan</span></td>
         <td><span class="parametername">delay</span></td>
-        <td><p>Time span by which to delay.</p>
+        <td><p>The time span by which to delay the messages.</p>
 </td>
       </tr>
       <tr>
@@ -4531,7 +4531,7 @@ This allows the owning component to apply stream operators to this input.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
-        <td><p>Output stream.</p>
+        <td><p>The output stream.</p>
 </td>
       </tr>
     </tbody>
@@ -4547,11 +4547,19 @@ This allows the owning component to apply stream operators to this input.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of source/output messages.</p>
+        <td><p>The type of the source/output messages.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_Operators_Delay__1_Microsoft_Psi_IProducer___0__TimeSpan_Microsoft_Psi_DeliveryPolicy___0___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This operator delays the delivery of messages on the source stream by a fixed amount of time
+ahead of the creation time of the source messages. This ensures that the messages are not
+delivered to the downstream receiver(s) until the pipeline clock has advanced to at least
+the delayed time. The observed delay may be slightly larger than the specified time span to
+account for latencies at the emitters and receivers. The originating times of the source
+messages are preserved.</p>
+</div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Statistical.cs/#L3725">View Source</a>
@@ -5264,7 +5272,7 @@ This allows the owning component to apply stream operators to this input.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L68">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L64">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_First_" data-uid="Microsoft.Psi.Operators.First*"></a>
   <h4 id="Microsoft_Psi_Operators_First__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.First``1(Microsoft.Psi.IProducer{``0},Microsoft.Psi.DeliveryPolicy{``0})">First&lt;T&gt;(IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</h4>
@@ -5310,7 +5318,7 @@ This allows the owning component to apply stream operators to this input.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
-        <td><p>Output stream.</p>
+        <td><p>An output stream containing only the first message.</p>
 </td>
       </tr>
     </tbody>
@@ -5333,7 +5341,7 @@ This allows the owning component to apply stream operators to this input.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L54">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_First_" data-uid="Microsoft.Psi.Operators.First*"></a>
   <h4 id="Microsoft_Psi_Operators_First__1_Microsoft_Psi_IProducer___0__System_Int32_Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.First``1(Microsoft.Psi.IProducer{``0},System.Int32,Microsoft.Psi.DeliveryPolicy{``0})">First&lt;T&gt;(IProducer&lt;T&gt;, Int32, DeliveryPolicy&lt;T&gt;)</h4>
@@ -5482,16 +5490,16 @@ This allows the owning component to apply stream operators to this input.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L436">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L565">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Fuse_" data-uid="Microsoft.Psi.Operators.Fuse*"></a>
-  <h4 id="Microsoft_Psi_Operators_Fuse__1_IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_Interpolator___0___0__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Fuse``1(IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.Interpolator{``0,``0},Microsoft.Psi.DeliveryPolicy{``0})">Fuse&lt;TIn&gt;(IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, Interpolator&lt;TIn, TIn&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
+  <h4 id="Microsoft_Psi_Operators_Fuse__1_IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_Interpolator___0__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Fuse``1(IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.Interpolator{``0},Microsoft.Psi.DeliveryPolicy{``0})">Fuse&lt;TIn&gt;(IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, Interpolator&lt;TIn&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
   <div class="markdown level1 summary"><p>Fuses an enumeration of streams into a vector stream, based on a specified interpolator.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;TIn[]&gt; Fuse&lt;TIn&gt;(this IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, Interpolator&lt;TIn, TIn&gt; interpolator, DeliveryPolicy&lt;TIn&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TIn[]&gt; Fuse&lt;TIn&gt;(this IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, Interpolator&lt;TIn&gt; interpolator, DeliveryPolicy&lt;TIn&gt; deliveryPolicy = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -5510,7 +5518,7 @@ This allows the owning component to apply stream operators to this input.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Interpolator-2.html">Interpolator</a>&lt;TIn, TIn&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Interpolator-1.html">Interpolator</a>&lt;TIn&gt;</td>
         <td><span class="parametername">interpolator</span></td>
         <td><p>Interpolator to use when fusing the streams.</p>
 </td>
@@ -5551,6 +5559,384 @@ This allows the owning component to apply stream operators to this input.</p>
       <tr>
         <td><span class="parametername">TIn</span></td>
         <td><p>Type of input stream messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L520">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Fuse_" data-uid="Microsoft.Psi.Operators.Fuse*"></a>
+  <h4 id="Microsoft_Psi_Operators_Fuse__2_IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_Interpolator___0__Func___0___1__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Fuse``2(IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.Interpolator{``0},Func{``0,``1},Microsoft.Psi.DeliveryPolicy{``0})">Fuse&lt;TIn, TOut&gt;(IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, Interpolator&lt;TIn&gt;, Func&lt;TIn, TOut&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
+  <div class="markdown level1 summary"><p>Fuses an enumeration of streams into a vector stream, based on a specified interpolator and output creator function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TOut[]&gt; Fuse&lt;TIn, TOut&gt;(this IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, Interpolator&lt;TIn&gt; interpolator, Func&lt;TIn, TOut&gt; outputCreator, DeliveryPolicy&lt;TIn&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;&gt;</td>
+        <td><span class="parametername">inputs</span></td>
+        <td><p>Collection of input streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interpolator-1.html">Interpolator</a>&lt;TIn&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Interpolator to use when fusing the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TIn, TOut&gt;</td>
+        <td><span class="parametername">outputCreator</span></td>
+        <td><p>Mapping function from input to output messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TIn&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy to use for the streams.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TOut[]&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td><p>Type of input stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td><p>The type of output stream messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L438">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Fuse_" data-uid="Microsoft.Psi.Operators.Fuse*"></a>
+  <h4 id="Microsoft_Psi_Operators_Fuse__2_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_Interpolator___1__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Fuse``2(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.Interpolator{``1},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Fuse&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, Interpolator&lt;TSecondary&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
+  <div class="markdown level1 summary"><p>Fuses a primary stream with an enumeration of secondary streams based on a specified interpolator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;(TPrimary, TSecondary[])&gt; Fuse&lt;TPrimary, TSecondary&gt;(this IProducer&lt;TPrimary&gt; primary, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt; secondaries, Interpolator&lt;TSecondary&gt; interpolator, DeliveryPolicy&lt;TPrimary&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TSecondary&gt; secondariesDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primary</span></td>
+        <td><p>Primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TSecondary&gt;&gt;</td>
+        <td><span class="parametername">secondaries</span></td>
+        <td><p>Enumeration of secondary streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interpolator-1.html">Interpolator</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Interpolator to use when fusing the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primaryDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">secondariesDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the secondary stream(s).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;TPrimary, TSecondary[]&gt;&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TPrimary</span></td>
+        <td><p>Type of primary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecondary</span></td>
+        <td><p>Type of secondary stream messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L500">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Fuse_" data-uid="Microsoft.Psi.Operators.Fuse*"></a>
+  <h4 id="Microsoft_Psi_Operators_Fuse__3_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_Interpolator___1___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Fuse``3(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.Interpolator{``1,``2},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Fuse&lt;TPrimary, TSecondary, TInterpolation&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, Interpolator&lt;TSecondary, TInterpolation&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
+  <div class="markdown level1 summary"><p>Fuses a primary stream with an enumeration of secondary streams based on a specified interpolator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;(TPrimary, TInterpolation[])&gt; Fuse&lt;TPrimary, TSecondary, TInterpolation&gt;(this IProducer&lt;TPrimary&gt; primary, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt; secondaries, Interpolator&lt;TSecondary, TInterpolation&gt; interpolator, DeliveryPolicy&lt;TPrimary&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TSecondary&gt; secondariesDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primary</span></td>
+        <td><p>Primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TSecondary&gt;&gt;</td>
+        <td><span class="parametername">secondaries</span></td>
+        <td><p>Enumeration of secondary streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interpolator-2.html">Interpolator</a>&lt;TSecondary, TInterpolation&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Interpolator to use when fusing the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primaryDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">secondariesDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the secondary stream(s).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;TPrimary, TInterpolation[]&gt;&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TPrimary</span></td>
+        <td><p>Type of primary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecondary</span></td>
+        <td><p>Type of secondary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TInterpolation</span></td>
+        <td><p>Type of the interpolation result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L401">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Fuse_" data-uid="Microsoft.Psi.Operators.Fuse*"></a>
+  <h4 id="Microsoft_Psi_Operators_Fuse__3_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_Interpolator___1__Func___0___1_____2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Fuse``3(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.Interpolator{``1},Func{``0,``1[],``2},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Fuse&lt;TPrimary, TSecondary, TOut&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, Interpolator&lt;TSecondary&gt;, Func&lt;TPrimary, TSecondary[], TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
+  <div class="markdown level1 summary"><p>Fuses a primary stream with an enumeration of secondary streams based on a specified interpolator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TOut&gt; Fuse&lt;TPrimary, TSecondary, TOut&gt;(this IProducer&lt;TPrimary&gt; primary, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt; secondaries, Interpolator&lt;TSecondary&gt; interpolator, Func&lt;TPrimary, TSecondary[], TOut&gt; outputCreator, DeliveryPolicy&lt;TPrimary&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TSecondary&gt; secondariesDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primary</span></td>
+        <td><p>Primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TSecondary&gt;&gt;</td>
+        <td><span class="parametername">secondaries</span></td>
+        <td><p>Enumeration of secondary streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interpolator-1.html">Interpolator</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Interpolator to use when fusing the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TPrimary, TSecondary[], TOut&gt;</td>
+        <td><span class="parametername">outputCreator</span></td>
+        <td><p>Mapping function from primary and secondary messages to output.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primaryDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">secondariesDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the secondary stream(s).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TOut&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TPrimary</span></td>
+        <td><p>Type of primary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecondary</span></td>
+        <td><p>Type of secondary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td><p>Type of output stream messages.</p>
 </td>
       </tr>
     </tbody>
@@ -5751,7 +6137,7 @@ This allows the owning component to apply stream operators to this input.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L402">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Fuses.cs/#L462">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Fuse_" data-uid="Microsoft.Psi.Operators.Fuse*"></a>
   <h4 id="Microsoft_Psi_Operators_Fuse__4_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_Interpolator___1___2__Func___0___2_____3__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Fuse``4(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.Interpolator{``1,``2},Func{``0,``2[],``3},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Fuse&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, Interpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation[], TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
@@ -7305,7 +7691,7 @@ given by a clock stream.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1408">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1537">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
   <h4 id="Microsoft_Psi_Operators_Join__1_IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_ReproducibleInterpolator___0__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Join``1(IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.ReproducibleInterpolator{``0},Microsoft.Psi.DeliveryPolicy{``0})">Join&lt;TIn&gt;(IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, ReproducibleInterpolator&lt;TIn&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
@@ -7374,6 +7760,184 @@ given by a clock stream.</p>
       <tr>
         <td><span class="parametername">TIn</span></td>
         <td><p>Type of input stream messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1492">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
+  <h4 id="Microsoft_Psi_Operators_Join__2_IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_ReproducibleInterpolator___0__Func___0___1__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Join``2(IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.ReproducibleInterpolator{``0},Func{``0,``1},Microsoft.Psi.DeliveryPolicy{``0})">Join&lt;TIn, TOut&gt;(IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, ReproducibleInterpolator&lt;TIn&gt;, Func&lt;TIn, TOut&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
+  <div class="markdown level1 summary"><p>Joins an enumeration of streams into a vector stream, based on a specified reproducible interpolator and output creator function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TOut[]&gt; Join&lt;TIn, TOut&gt;(this IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, ReproducibleInterpolator&lt;TIn&gt; interpolator, Func&lt;TIn, TOut&gt; outputCreator, DeliveryPolicy&lt;TIn&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;&gt;</td>
+        <td><span class="parametername">inputs</span></td>
+        <td><p>Collection of input streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-1.html">ReproducibleInterpolator</a>&lt;TIn&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Reproducible interpolator to use when joining the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TIn, TOut&gt;</td>
+        <td><span class="parametername">outputCreator</span></td>
+        <td><p>Mapping function from input to output messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TIn&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy to use for the streams.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TOut[]&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TIn</span></td>
+        <td><p>Type of input stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td><p>The type of output stream messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1410">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
+  <h4 id="Microsoft_Psi_Operators_Join__2_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_ReproducibleInterpolator___1__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Join``2(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.ReproducibleInterpolator{``1},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Join&lt;TPrimary, TSecondary&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, ReproducibleInterpolator&lt;TSecondary&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
+  <div class="markdown level1 summary"><p>Joins a primary stream with an enumeration of secondary streams based on a specified reproducible interpolator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;(TPrimary, TSecondary[])&gt; Join&lt;TPrimary, TSecondary&gt;(this IProducer&lt;TPrimary&gt; primary, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt; secondaries, ReproducibleInterpolator&lt;TSecondary&gt; interpolator, DeliveryPolicy&lt;TPrimary&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TSecondary&gt; secondariesDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primary</span></td>
+        <td><p>Primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TSecondary&gt;&gt;</td>
+        <td><span class="parametername">secondaries</span></td>
+        <td><p>Enumeration of secondary streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-1.html">ReproducibleInterpolator</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Reproducible interpolator to use when joining the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primaryDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">secondariesDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the secondary stream(s).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;TPrimary, TSecondary[]&gt;&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TPrimary</span></td>
+        <td><p>Type of primary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecondary</span></td>
+        <td><p>Type of secondary stream messages.</p>
 </td>
       </tr>
     </tbody>
@@ -7751,16 +8315,16 @@ given by a clock stream.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1451">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1472">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
-  <h4 id="Microsoft_Psi_Operators_Join__2_Microsoft_Psi_IProducer_System_Int32__IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_ReproducibleInterpolator___0___1__Microsoft_Psi_DeliveryPolicy_System_Int32__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Join``2(Microsoft.Psi.IProducer{System.Int32},IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.ReproducibleInterpolator{``0,``1},Microsoft.Psi.DeliveryPolicy{System.Int32},Microsoft.Psi.DeliveryPolicy{``0})">Join&lt;TIn, TInterpolation&gt;(IProducer&lt;Int32&gt;, IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, ReproducibleInterpolator&lt;TIn, TInterpolation&gt;, DeliveryPolicy&lt;Int32&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
-  <div class="markdown level1 summary"><p>Joins a primary stream of integers with an enumeration of secondary streams based on a specified reproducible interpolator.</p>
+  <h4 id="Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_ReproducibleInterpolator___1___2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Join``3(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.ReproducibleInterpolator{``1,``2},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Join&lt;TPrimary, TSecondary, TInterpolation&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, ReproducibleInterpolator&lt;TSecondary, TInterpolation&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
+  <div class="markdown level1 summary"><p>Joins a primary stream with an enumeration of secondary streams based on a specified reproducible interpolator.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;TInterpolation[]&gt; Join&lt;TIn, TInterpolation&gt;(this IProducer&lt;int&gt; primary, IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, ReproducibleInterpolator&lt;TIn, TInterpolation&gt; interpolator, DeliveryPolicy&lt;int&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TIn&gt; secondaryDeliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;(TPrimary, TInterpolation[])&gt; Join&lt;TPrimary, TSecondary, TInterpolation&gt;(this IProducer&lt;TPrimary&gt; primary, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt; secondaries, ReproducibleInterpolator&lt;TSecondary, TInterpolation&gt; interpolator, DeliveryPolicy&lt;TPrimary&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TSecondary&gt; secondariesDeliveryPolicy = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -7773,32 +8337,32 @@ given by a clock stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TPrimary&gt;</td>
         <td><span class="parametername">primary</span></td>
         <td><p>Primary stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;&gt;</td>
-        <td><span class="parametername">inputs</span></td>
-        <td><p>Collection of secondary streams.</p>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TSecondary&gt;&gt;</td>
+        <td><span class="parametername">secondaries</span></td>
+        <td><p>Enumeration of secondary streams.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TIn, TInterpolation&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TSecondary, TInterpolation&gt;</td>
         <td><span class="parametername">interpolator</span></td>
         <td><p>Reproducible interpolator to use when joining the streams.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TPrimary&gt;</td>
         <td><span class="parametername">primaryDeliveryPolicy</span></td>
         <td><p>An optional delivery policy for the primary stream.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TIn&gt;</td>
-        <td><span class="parametername">secondaryDeliveryPolicy</span></td>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">secondariesDeliveryPolicy</span></td>
         <td><p>An optional delivery policy for the secondary stream(s).</p>
 </td>
       </tr>
@@ -7814,7 +8378,7 @@ given by a clock stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TInterpolation[]&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;TPrimary, TInterpolation[]&gt;&gt;</td>
         <td><p>Output stream.</p>
 </td>
       </tr>
@@ -7830,13 +8394,121 @@ given by a clock stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TIn</span></td>
-        <td><p>Type of input messages.</p>
+        <td><span class="parametername">TPrimary</span></td>
+        <td><p>Type of primary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecondary</span></td>
+        <td><p>Type of secondary stream messages.</p>
 </td>
       </tr>
       <tr>
         <td><span class="parametername">TInterpolation</span></td>
         <td><p>Type of the interpolation result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1373">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
+  <h4 id="Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_ReproducibleInterpolator___1__Func___0___1_____2__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Join``3(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.ReproducibleInterpolator{``1},Func{``0,``1[],``2},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Join&lt;TPrimary, TSecondary, TOut&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, ReproducibleInterpolator&lt;TSecondary&gt;, Func&lt;TPrimary, TSecondary[], TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
+  <div class="markdown level1 summary"><p>Joins a primary stream with an enumeration of secondary streams based on a specified reproducible interpolator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TOut&gt; Join&lt;TPrimary, TSecondary, TOut&gt;(this IProducer&lt;TPrimary&gt; primary, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt; secondaries, ReproducibleInterpolator&lt;TSecondary&gt; interpolator, Func&lt;TPrimary, TSecondary[], TOut&gt; outputCreator, DeliveryPolicy&lt;TPrimary&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TSecondary&gt; secondariesDeliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primary</span></td>
+        <td><p>Primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TSecondary&gt;&gt;</td>
+        <td><span class="parametername">secondaries</span></td>
+        <td><p>Enumeration of secondary streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-1.html">ReproducibleInterpolator</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">interpolator</span></td>
+        <td><p>Reproducible interpolator to use when joining the streams.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TPrimary, TSecondary[], TOut&gt;</td>
+        <td><span class="parametername">outputCreator</span></td>
+        <td><p>Mapping function from primary and secondary messages to output.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TPrimary&gt;</td>
+        <td><span class="parametername">primaryDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the primary stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TSecondary&gt;</td>
+        <td><span class="parametername">secondariesDeliveryPolicy</span></td>
+        <td><p>An optional delivery policy for the secondary stream(s).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TOut&gt;</td>
+        <td><p>Output stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TPrimary</span></td>
+        <td><p>Type of primary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TSecondary</span></td>
+        <td><p>Type of secondary stream messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TOut</span></td>
+        <td><p>Type of output stream messages.</p>
 </td>
       </tr>
     </tbody>
@@ -8337,103 +9009,6 @@ given by a clock stream.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1532">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
-  <h4 id="Microsoft_Psi_Operators_Join__3_Microsoft_Psi_IProducer_Dictionary___1_System_Int32___IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_ReproducibleInterpolator___0___2__Microsoft_Psi_DeliveryPolicy_Dictionary___1_System_Int32___Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Join``3(Microsoft.Psi.IProducer{Dictionary{``1,System.Int32}},IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.ReproducibleInterpolator{``0,``2},Microsoft.Psi.DeliveryPolicy{Dictionary{``1,System.Int32}},Microsoft.Psi.DeliveryPolicy{``0})">Join&lt;TIn, TKey, TInterpolation&gt;(IProducer&lt;Dictionary&lt;TKey, Int32&gt;&gt;, IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, ReproducibleInterpolator&lt;TIn, TInterpolation&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, Int32&gt;&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sparse vector join.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Join&lt;Dictionary&lt;TKey, int&gt;, TIn, TInterpolation, Dictionary&lt;TKey, TInterpolation&gt;&gt; Join&lt;TIn, TKey, TInterpolation&gt;(this IProducer&lt;Dictionary&lt;TKey, int&gt;&gt; primary, IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, ReproducibleInterpolator&lt;TIn, TInterpolation&gt; interpolator, DeliveryPolicy&lt;Dictionary&lt;TKey, int&gt;&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TIn&gt; secondaryDeliveryPolicy = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
-        <td><span class="parametername">primary</span></td>
-        <td><p>Primary stream.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;&gt;</td>
-        <td><span class="parametername">inputs</span></td>
-        <td><p>Collection of secondary streams.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TIn, TInterpolation&gt;</td>
-        <td><span class="parametername">interpolator</span></td>
-        <td><p>Reproducible interpolator to use when joining the streams.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
-        <td><span class="parametername">primaryDeliveryPolicy</span></td>
-        <td><p>An optional delivery policy for the primary stream.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TIn&gt;</td>
-        <td><span class="parametername">secondaryDeliveryPolicy</span></td>
-        <td><p>An optional delivery policy for the secondary stream(s).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Components.Join-4.html">Join</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, TIn, TInterpolation, <span class="xref">Dictionary</span>&lt;TKey, TInterpolation&gt;&gt;</td>
-        <td><p>Output stream.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TIn</span></td>
-        <td><p>Type of input messages.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TKey</span></td>
-        <td><p>Type of key values.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TInterpolation</span></td>
-        <td><p>Type of the interpolation result.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L183">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
@@ -8825,7 +9400,7 @@ given by a clock stream.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1374">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1434">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
   <h4 id="Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__IEnumerable_Microsoft_Psi_IProducer___1___Microsoft_Psi_ReproducibleInterpolator___1___2__Func___0___2_____3__Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy___1__" data-uid="Microsoft.Psi.Operators.Join``4(Microsoft.Psi.IProducer{``0},IEnumerable{Microsoft.Psi.IProducer{``1}},Microsoft.Psi.ReproducibleInterpolator{``1,``2},Func{``0,``2[],``3},Microsoft.Psi.DeliveryPolicy{``0},Microsoft.Psi.DeliveryPolicy{``1})">Join&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;(IProducer&lt;TPrimary&gt;, IEnumerable&lt;IProducer&lt;TSecondary&gt;&gt;, ReproducibleInterpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation[], TOut&gt;, DeliveryPolicy&lt;TPrimary&gt;, DeliveryPolicy&lt;TSecondary&gt;)</h4>
@@ -9342,114 +9917,6 @@ given by a clock stream.</p>
   <h5 id="Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer___0__Microsoft_Psi_IProducer_System_ValueTuple___1___2___3___TimeSpan_Microsoft_Psi_DeliveryPolicy___0__Microsoft_Psi_DeliveryPolicy_System_ValueTuple___1___2___3____remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Uses the <a class="xref" href="Microsoft.Psi.Reproducible.html#Microsoft_Psi_Reproducible_Nearest__1_Microsoft_Psi_RelativeTimeInterval_">Nearest&lt;T&gt;(RelativeTimeInterval)</a> interpolator.</p>
 </div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L1494">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Operators_Join_" data-uid="Microsoft.Psi.Operators.Join*"></a>
-  <h4 id="Microsoft_Psi_Operators_Join__4_Microsoft_Psi_IProducer_Dictionary___1_System_Int32___IEnumerable_Microsoft_Psi_IProducer___0___Microsoft_Psi_ReproducibleInterpolator___0___2__Func_Dictionary___1_System_Int32____2_____3__Microsoft_Psi_DeliveryPolicy_Dictionary___1_System_Int32___Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Join``4(Microsoft.Psi.IProducer{Dictionary{``1,System.Int32}},IEnumerable{Microsoft.Psi.IProducer{``0}},Microsoft.Psi.ReproducibleInterpolator{``0,``2},Func{Dictionary{``1,System.Int32},``2[],``3},Microsoft.Psi.DeliveryPolicy{Dictionary{``1,System.Int32}},Microsoft.Psi.DeliveryPolicy{``0})">Join&lt;TIn, TKey, TInterpolation, TOutput&gt;(IProducer&lt;Dictionary&lt;TKey, Int32&gt;&gt;, IEnumerable&lt;IProducer&lt;TIn&gt;&gt;, ReproducibleInterpolator&lt;TIn, TInterpolation&gt;, Func&lt;Dictionary&lt;TKey, Int32&gt;, TInterpolation[], TOutput&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, Int32&gt;&gt;, DeliveryPolicy&lt;TIn&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sparse vector join.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Join&lt;Dictionary&lt;TKey, int&gt;, TIn, TInterpolation, TOutput&gt; Join&lt;TIn, TKey, TInterpolation, TOutput&gt;(this IProducer&lt;Dictionary&lt;TKey, int&gt;&gt; primary, IEnumerable&lt;IProducer&lt;TIn&gt;&gt; inputs, ReproducibleInterpolator&lt;TIn, TInterpolation&gt; interpolator, Func&lt;Dictionary&lt;TKey, int&gt;, TInterpolation[], TOutput&gt; outputCreator, DeliveryPolicy&lt;Dictionary&lt;TKey, int&gt;&gt; primaryDeliveryPolicy = null, DeliveryPolicy&lt;TIn&gt; secondaryDeliveryPolicy = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
-        <td><span class="parametername">primary</span></td>
-        <td><p>Primary stream.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;TIn&gt;&gt;</td>
-        <td><span class="parametername">inputs</span></td>
-        <td><p>Collection of secondary streams.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TIn, TInterpolation&gt;</td>
-        <td><span class="parametername">interpolator</span></td>
-        <td><p>Reproducible interpolator to use when joining the streams.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Func</span>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, TInterpolation[], TOutput&gt;</td>
-        <td><span class="parametername">outputCreator</span></td>
-        <td><p>The output creator function.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;&gt;</td>
-        <td><span class="parametername">primaryDeliveryPolicy</span></td>
-        <td><p>An optional delivery policy for the primary stream.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;TIn&gt;</td>
-        <td><span class="parametername">secondaryDeliveryPolicy</span></td>
-        <td><p>An optional delivery policy for the secondary stream(s).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Components.Join-4.html">Join</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;, TIn, TInterpolation, TOutput&gt;</td>
-        <td><p>Output stream.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="typeParameters">Type Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="parametername">TIn</span></td>
-        <td><p>Type of input messages.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TKey</span></td>
-        <td><p>Type of key values.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TInterpolation</span></td>
-        <td><p>Type of the interpolation result.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="parametername">TOutput</span></td>
-        <td><p>The type of the output.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Joins.cs/#L298">View Source</a>
@@ -12564,6 +13031,150 @@ given by a clock stream.</p>
   <h5 id="Microsoft_Psi_Operators_Join__7_Microsoft_Psi_IProducer_System_ValueTuple___0___1___2___3___4___5___Microsoft_Psi_IProducer___6__TimeSpan_Microsoft_Psi_DeliveryPolicy_System_ValueTuple___0___1___2___3___4___5___Microsoft_Psi_DeliveryPolicy___6___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Uses the <a class="xref" href="Microsoft.Psi.Reproducible.html#Microsoft_Psi_Reproducible_Nearest__1_Microsoft_Psi_RelativeTimeInterval_">Nearest&lt;T&gt;(RelativeTimeInterval)</a> interpolator.</p>
 </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Last_" data-uid="Microsoft.Psi.Operators.Last*"></a>
+  <h4 id="Microsoft_Psi_Operators_Last__1_Microsoft_Psi_IProducer___0__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Last``1(Microsoft.Psi.IProducer{``0},Microsoft.Psi.DeliveryPolicy{``0})">Last&lt;T&gt;(IProducer&lt;T&gt;, DeliveryPolicy&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Filter stream to the last message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Last&lt;T&gt;(this IProducer&lt;T&gt; source, DeliveryPolicy&lt;T&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Source stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;T&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
+        <td><p>An output stream containing only the last message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of source/output messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L75">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Operators_Last_" data-uid="Microsoft.Psi.Operators.Last*"></a>
+  <h4 id="Microsoft_Psi_Operators_Last__1_Microsoft_Psi_IProducer___0__System_Int32_Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Last``1(Microsoft.Psi.IProducer{``0},System.Int32,Microsoft.Psi.DeliveryPolicy{``0})">Last&lt;T&gt;(IProducer&lt;T&gt;, Int32, DeliveryPolicy&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Filter stream to the last n messages.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Last&lt;T&gt;(this IProducer&lt;T&gt; source, int count, DeliveryPolicy&lt;T&gt; deliveryPolicy = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Source stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The number of messages to filter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;T&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</td>
+        <td><p>An output stream containing only the last message.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of source/output messages.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Time.cs/#L33">View Source</a>
@@ -24860,14 +25471,14 @@ output stream.</p>
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Connectors.cs/#L22">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_PipeTo_" data-uid="Microsoft.Psi.Operators.PipeTo*"></a>
-  <h4 id="Microsoft_Psi_Operators_PipeTo__2_Microsoft_Psi_IProducer___0____1_Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.PipeTo``2(Microsoft.Psi.IProducer{``0},``1,Microsoft.Psi.DeliveryPolicy{``0})">PipeTo&lt;TIn, TC&gt;(IProducer&lt;TIn&gt;, TC, DeliveryPolicy&lt;TIn&gt;)</h4>
-  <div class="markdown level1 summary"><p>Connects a stream producer to a stream consumer. As a result, all messages in the stream will be routed to the consumer for processing.</p>
+  <h4 id="Microsoft_Psi_Operators_PipeTo__2_Microsoft_Psi_IProducer___0____1_Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.PipeTo``2(Microsoft.Psi.IProducer{``0},``1,Microsoft.Psi.DeliveryPolicy{``0})">PipeTo&lt;TIn, TConsumer&gt;(IProducer&lt;TIn&gt;, TConsumer, DeliveryPolicy&lt;TIn&gt;)</h4>
+  <div class="markdown level1 summary"><p>Connects a stream producer to a stream consumer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static TC PipeTo&lt;TIn, TC&gt;(this IProducer&lt;TIn&gt; source, TC consumer, DeliveryPolicy&lt;TIn&gt; deliveryPolicy = null)
-    where TC : IConsumer&lt;TIn&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public static TConsumer PipeTo&lt;TIn, TConsumer&gt;(this IProducer&lt;TIn&gt; source, TConsumer consumer, DeliveryPolicy&lt;TIn&gt; deliveryPolicy = null)
+    where TConsumer : IConsumer&lt;TIn&gt;</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -24886,7 +25497,7 @@ output stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">TC</span></td>
+        <td><span class="xref">TConsumer</span></td>
         <td><span class="parametername">consumer</span></td>
         <td><p>The consumer (subscriber).</p>
 </td>
@@ -24909,8 +25520,8 @@ output stream.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TC</span></td>
-        <td><p>Consumer (subscriber).</p>
+        <td><span class="xref">TConsumer</span></td>
+        <td><p>The consumer that was passed as input.</p>
 </td>
       </tr>
     </tbody>
@@ -24930,8 +25541,8 @@ output stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="parametername">TC</span></td>
-        <td><p>The type of consumer.</p>
+        <td><span class="parametername">TConsumer</span></td>
+        <td><p>The type of the consumer.</p>
 </td>
       </tr>
     </tbody>
@@ -33001,7 +33612,7 @@ subsequent output values will be NaN.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L21">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Pickers.cs/#L23">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_Where_" data-uid="Microsoft.Psi.Operators.Where*"></a>
   <h4 id="Microsoft_Psi_Operators_Where__1_Microsoft_Psi_IProducer___0__Func___0_Microsoft_Psi_Envelope_System_Boolean__Microsoft_Psi_DeliveryPolicy___0__" data-uid="Microsoft.Psi.Operators.Where``1(Microsoft.Psi.IProducer{``0},Func{``0,Microsoft.Psi.Envelope,System.Boolean},Microsoft.Psi.DeliveryPolicy{``0})">Where&lt;T&gt;(IProducer&lt;T&gt;, Func&lt;T, Envelope, Boolean&gt;, DeliveryPolicy&lt;T&gt;)</h4>

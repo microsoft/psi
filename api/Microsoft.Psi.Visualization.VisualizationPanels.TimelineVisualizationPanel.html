@@ -89,20 +89,22 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
     <div class="level4"><span class="xref">TimelineVisualizationPanel</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibilityCommand">VisualizationPanel.ToggleAllVisualizersVisibilityCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleVisibilityCommand">VisualizationPanel.ToggleVisibilityCommand</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_RemovePanelCommand">VisualizationPanel.RemovePanelCommand</a>
@@ -117,6 +119,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Name">VisualizationPanel.Name</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Visible">VisualizationPanel.Visible</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Height">VisualizationPanel.Height</a>
     </div>
     <div>
@@ -124,6 +129,9 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Width">VisualizationPanel.Width</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_IsShown">VisualizationPanel.IsShown</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Container">VisualizationPanel.Container</a>
@@ -165,7 +173,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Clear">VisualizationPanel.Clear()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibility">VisualizationPanel.ToggleAllVisualizersVisibility()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizationObjectsVisibility">VisualizationPanel.ToggleAllVisualizationObjectsVisibility()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleVisualizationObjectVisibility_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.ToggleVisualizationObjectVisibility(VisualizationObject)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_SendToBack_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.SendToBack(VisualizationObject)</a>
@@ -174,7 +185,16 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_SetParentContainer_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_">VisualizationPanel.SetParentContainer(VisualizationContainer)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_SetParentPanel_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_">VisualizationPanel.SetParentPanel(VisualizationPanel)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_GetDerivedStreamVisualizationObjects">VisualizationPanel.GetDerivedStreamVisualizationObjects()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_UnbindVisualizationObjectsFromStore_System_String_System_String_System_String_">VisualizationPanel.UnbindVisualizationObjectsFromStore(String, String, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_UpdateStreamSources_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">VisualizationPanel.UpdateStreamSources(SessionViewModel)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToString">VisualizationPanel.ToString()</a>
@@ -192,43 +212,28 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnContainerPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationPanel.OnContainerPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnParentPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationPanel.OnParentPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.html">Microsoft.Psi.Visualization.VisualizationPanels</a></h6>
@@ -236,13 +241,13 @@
   <h5 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[DataContract(Namespace = &quot;http://www.microsoft.com/psi&quot;)]
-public class TimelineVisualizationPanel : VisualizationPanel, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+public class TimelineVisualizationPanel : VisualizationPanel, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.#ctor">TimelineVisualizationPanel()</h4>
@@ -257,7 +262,36 @@ public class TimelineVisualizationPanel : VisualizationPanel, INotifyPropertyCha
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L201">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L309">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_AxisComputeMode_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.AxisComputeMode*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_AxisComputeMode" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.AxisComputeMode">AxisComputeMode</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the axis compute mode.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public AxisComputeMode AxisComputeMode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.AxisComputeMode.html">AxisComputeMode</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L427">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_CanZoomToPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.CanZoomToPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_CanZoomToPanel" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.CanZoomToPanel">CanZoomToPanel</h4>
@@ -287,7 +321,7 @@ public class TimelineVisualizationPanel : VisualizationPanel, INotifyPropertyCha
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CanZoomToPanel">VisualizationPanel.CanZoomToPanel</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L98">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ClearSelectionCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ClearSelectionCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ClearSelectionCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ClearSelectionCommand">ClearSelectionCommand</h4>
@@ -317,7 +351,7 @@ public RelayCommand ClearSelectionCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L204">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L430">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_CompatiblePanelTypes_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.CompatiblePanelTypes*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_CompatiblePanelTypes" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.CompatiblePanelTypes">CompatiblePanelTypes</h4>
@@ -347,7 +381,7 @@ public RelayCommand ClearSelectionCommand { get; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CompatiblePanelTypes">VisualizationPanel.CompatiblePanelTypes</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L158">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MouseLeftButtonDownCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MouseLeftButtonDownCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MouseLeftButtonDownCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MouseLeftButtonDownCommand">MouseLeftButtonDownCommand</h4>
@@ -379,7 +413,96 @@ public override RelayCommand&lt;MouseButtonEventArgs&gt; MouseLeftButtonDownComm
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_MouseLeftButtonDownCommand">VisualizationPanel.MouseLeftButtonDownCommand</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L133">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L225">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MouseMoveCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MouseMoveCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MouseMoveCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MouseMoveCommand">MouseMoveCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the mouse move command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand&lt;MouseEventArgs&gt; MouseMoveCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.input.mouseeventargs">MouseEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L336">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MousePosition_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MousePosition*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MousePosition" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MousePosition">MousePosition</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the mouse position in the panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public TimelinePanelMousePosition MousePosition { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Common.TimelinePanelMousePosition.html">TimelinePanelMousePosition</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L327">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MousePositionString_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MousePositionString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MousePositionString" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MousePositionString">MousePositionString</h4>
+  <div class="markdown level1 summary"><p>Gets a string version of the mouse position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public string MousePositionString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L198">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MouseRightButtonDownCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MouseRightButtonDownCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_MouseRightButtonDownCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.MouseRightButtonDownCommand">MouseRightButtonDownCommand</h4>
@@ -409,7 +532,37 @@ public RelayCommand&lt;MouseButtonEventArgs&gt; MouseRightButtonDownCommand { ge
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L55">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L254">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_SetAutoAxisComputeModeCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.SetAutoAxisComputeModeCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_SetAutoAxisComputeModeCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.SetAutoAxisComputeModeCommand">SetAutoAxisComputeModeCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the set auto axis compute mode command for both the X and Y axes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand SetAutoAxisComputeModeCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L80">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowHideLegendCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowHideLegendCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowHideLegendCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowHideLegendCommand">ShowHideLegendCommand</h4>
@@ -439,7 +592,7 @@ public RelayCommand ShowHideLegendCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L174">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L352">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowLegend_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowLegend*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowLegend" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowLegend">ShowLegend</h4>
@@ -468,7 +621,7 @@ public bool ShowLegend { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L187">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L365">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowTimeTicks_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowTimeTicks*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowTimeTicks" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowTimeTicks">ShowTimeTicks</h4>
@@ -497,7 +650,7 @@ public bool ShowTimeTicks { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L198">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L424">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowZoomToPanelMenuItem_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowZoomToPanelMenuItem*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ShowZoomToPanelMenuItem" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ShowZoomToPanelMenuItem">ShowZoomToPanelMenuItem</h4>
@@ -527,7 +680,216 @@ public bool ShowTimeTicks { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ShowZoomToPanelMenuItem">VisualizationPanel.ShowZoomToPanelMenuItem</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L160">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L378">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_Threshold_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.Threshold*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_Threshold" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.Threshold">Threshold</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the time ticks should be shown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public TimelineValueThreshold Threshold { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.TimelineValueThreshold.html">TimelineValueThreshold</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L392">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleHeight_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleHeight*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleHeight" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleHeight">ThresholdRectangleHeight</h4>
+  <div class="markdown level1 summary"><p>Gets the height of the low-opacity threshold rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+[Browsable(false)]
+public double ThresholdRectangleHeight { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L405">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleOpacity_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleOpacity*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleOpacity" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleOpacity">ThresholdRectangleOpacity</h4>
+  <div class="markdown level1 summary"><p>Gets the resulting opacity after applying the low-opacity threshold rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+[Browsable(false)]
+public double ThresholdRectangleOpacity { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L412">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleVerticalAlignment_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleVerticalAlignment*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleVerticalAlignment" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleVerticalAlignment">ThresholdRectangleVerticalAlignment</h4>
+  <div class="markdown level1 summary"><p>Gets the vertical alignment of the low-opacity threshold rectangle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+[Browsable(false)]
+public VerticalAlignment ThresholdRectangleVerticalAlignment { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.verticalalignment">VerticalAlignment</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L419">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleVisibility_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleVisibility*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ThresholdRectangleVisibility" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ThresholdRectangleVisibility">ThresholdRectangleVisibility</h4>
+  <div class="markdown level1 summary"><p>Gets the low-opacity threshold rectangle's visibility.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+[Browsable(false)]
+public Visibility ThresholdRectangleVisibility { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.visibility">Visibility</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ViewportLoadedCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ViewportLoadedCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ViewportLoadedCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ViewportLoadedCommand">ViewportLoadedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the mouse right button down command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand&lt;RoutedEventArgs&gt; ViewportLoadedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.routedeventargs">RoutedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L140">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ViewportSizeChangedCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ViewportSizeChangedCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_ViewportSizeChangedCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.ViewportSizeChangedCommand">ViewportSizeChangedCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the items control size changed command.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelayCommand&lt;SizeChangedEventArgs&gt; ViewportSizeChangedCommand { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.sizechangedeventargs">SizeChangedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L275">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_YAxis_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.YAxis*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_YAxis" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.YAxis">YAxis</h4>
@@ -536,8 +898,38 @@ public bool ShowTimeTicks { get; set; }</code></pre>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[DataMember]
 public Axis YAxis { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Axis.html">Axis</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L286">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_YAxisPropertyBrowser_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.YAxisPropertyBrowser*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_YAxisPropertyBrowser" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.YAxisPropertyBrowser">YAxisPropertyBrowser</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the Y axis data displayed in the property browser.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -558,7 +950,7 @@ public Axis YAxis { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L259">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L485">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_CreateDefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.CreateDefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_CreateDefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.CreateDefaultViewTemplate">CreateDefaultViewTemplate()</h4>
@@ -589,7 +981,7 @@ public Axis YAxis { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CreateDefaultViewTemplate">VisualizationPanel.CreateDefaultViewTemplate()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L212">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L438">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_GetTimeAtMousePointer_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.GetTimeAtMousePointer*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_GetTimeAtMousePointer_System_Windows_Input_MouseEventArgs_System_Boolean_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.GetTimeAtMousePointer(System.Windows.Input.MouseEventArgs,System.Boolean)">GetTimeAtMousePointer(MouseEventArgs, Boolean)</h4>
@@ -642,7 +1034,7 @@ public Axis YAxis { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L240">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L466">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_GetTimelineScroller_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.GetTimelineScroller*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_GetTimelineScroller_System_Object_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.GetTimelineScroller(System.Object)">GetTimelineScroller(Object)</h4>
@@ -689,7 +1081,7 @@ public Axis YAxis { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L265">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L489">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_OnVisualizationObjectYValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.OnVisualizationObjectYValueRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_OnVisualizationObjectYValueRangeChanged_System_Object_System_EventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.OnVisualizationObjectYValueRangeChanged(System.Object,System.EventArgs)">OnVisualizationObjectYValueRangeChanged(Object, EventArgs)</h4>
@@ -728,7 +1120,7 @@ public Axis YAxis { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnVisualizationObjectYValueRangeChanged_System_Object_System_EventArgs_">VisualizationPanel.OnVisualizationObjectYValueRangeChanged(Object, EventArgs)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L276">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L500">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_OnYAxisPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.OnYAxisPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_TimelineVisualizationPanel_OnYAxisPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.TimelineVisualizationPanel.OnYAxisPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnYAxisPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -765,10 +1157,7 @@ public Axis YAxis { get; set; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -788,7 +1177,7 @@ public Axis YAxis { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L28" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/TimelineVisualizationPanel.cs/#L30" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

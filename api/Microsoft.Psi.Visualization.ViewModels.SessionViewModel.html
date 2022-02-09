@@ -89,14 +89,13 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><span class="xref">SessionViewModel</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -107,44 +106,26 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SessionViewModel : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class SessionViewModel : ObservableTreeNodeObject, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -734,7 +715,7 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L305">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L323">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_CreateStreamSource_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.CreateStreamSource*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_CreateStreamSource_Microsoft_Psi_Visualization_Data_StreamBinding_System_Func_System_Object__System_Action_System_Object__" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.CreateStreamSource(Microsoft.Psi.Visualization.Data.StreamBinding,System.Func{System.Object},System.Action{System.Object})">CreateStreamSource(StreamBinding, Func&lt;Object&gt;, Action&lt;Object&gt;)</h4>
@@ -793,7 +774,7 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L316">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L334">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FindStreamTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FindStreamTreeNode*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_FindStreamTreeNode_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.FindStreamTreeNode(System.String,System.String)">FindStreamTreeNode(String, String)</h4>
@@ -846,7 +827,7 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L274">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L283">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemovePartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemovePartition*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemovePartition_Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemovePartition(Microsoft.Psi.Visualization.ViewModels.PartitionViewModel)">RemovePartition(PartitionViewModel)</h4>
@@ -877,7 +858,7 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L284">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L302">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemoveSession_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemoveSession*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_RemoveSession" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.RemoveSession">RemoveSession()</h4>
@@ -890,7 +871,7 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L322">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L340">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ToString_" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ToString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_SessionViewModel_ToString" data-uid="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.ToString">ToString()</h4>
@@ -915,8 +896,6 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/SessionViewModel.cs/#L203">View Source</a>
@@ -950,10 +929,7 @@ public RelayCommand VisualizeSessionCommand { get; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

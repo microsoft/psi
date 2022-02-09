@@ -101,11 +101,74 @@
   <div class="markdown level0 remarks"><p>This is a summarized snapshot of the graph with aggregated message statistics which is posted to the
 diagnostics stream. It has a much smaller memory footprint compared with PipelineDiagnosticsInternal.</p>
 </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L29">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics__ctor_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics__ctor_System_Int32_System_String_System_Boolean_Microsoft_Psi_Diagnostics_PipelineDiagnostics_Microsoft_Psi_Diagnostics_PipelineDiagnostics___Microsoft_Psi_Diagnostics_PipelineDiagnostics_PipelineElementDiagnostics___" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.#ctor(System.Int32,System.String,System.Boolean,Microsoft.Psi.Diagnostics.PipelineDiagnostics,Microsoft.Psi.Diagnostics.PipelineDiagnostics[],Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElementDiagnostics[])">PipelineDiagnostics(Int32, String, Boolean, PipelineDiagnostics, PipelineDiagnostics[], PipelineDiagnostics.PipelineElementDiagnostics[])</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.html">PipelineDiagnostics</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics(int id, string name, bool isPipelineRunning, PipelineDiagnostics parentPipelineDiagnostics, PipelineDiagnostics[] subpipelineDiagnostics, PipelineDiagnostics.PipelineElementDiagnostics[] pipelineElements)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>Pipeline ID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Pipeline name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">isPipelineRunning</span></td>
+        <td><p>Whether the pipeline is running (after started, before stopped).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.html">PipelineDiagnostics</a></td>
+        <td><span class="parametername">parentPipelineDiagnostics</span></td>
+        <td><p>Parent pipeline of this pipeline (it any).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.html">PipelineDiagnostics</a>[]</td>
+        <td><span class="parametername">subpipelineDiagnostics</span></td>
+        <td><p>Subpipelines of this pipeline.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElementDiagnostics.html">PipelineDiagnostics.PipelineElementDiagnostics</a>[]</td>
+        <td><span class="parametername">pipelineElements</span></td>
+        <td><p>Elements in this pipeline.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_AncestorPipelines_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.AncestorPipelines*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_AncestorPipelines" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.AncestorPipelines">AncestorPipelines</h4>
@@ -133,7 +196,7 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L123">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_DescendantPipelines_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.DescendantPipelines*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_DescendantPipelines" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.DescendantPipelines">DescendantPipelines</h4>
@@ -161,7 +224,7 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L52">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L77">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_Id_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.Id*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_Id" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.Id">Id</h4>
@@ -189,7 +252,7 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_IsPipelineRunning_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.IsPipelineRunning*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_IsPipelineRunning" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.IsPipelineRunning">IsPipelineRunning</h4>
@@ -217,7 +280,7 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L57">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L82">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_Name_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.Name*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_Name" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.Name">Name</h4>
@@ -245,16 +308,16 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L72">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L97">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ParentPipelineDiagnostics_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ParentPipelineDiagnostics*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_ParentPipelineDiagnostics" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ParentPipelineDiagnostics">ParentPipelineDiagnostics</h4>
-  <div class="markdown level1 summary"><p>Gets parent pipeline of this pipeline (it any).</p>
+  <div class="markdown level1 summary"><p>Gets or sets parent pipeline of this pipeline (it any).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics ParentPipelineDiagnostics { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics ParentPipelineDiagnostics { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -273,16 +336,16 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L67">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L92">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_PipelineElements_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElements*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_PipelineElements" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElements">PipelineElements</h4>
-  <div class="markdown level1 summary"><p>Gets elements in this pipeline.</p>
+  <div class="markdown level1 summary"><p>Gets or sets elements in this pipeline.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.PipelineElementDiagnostics[] PipelineElements { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.PipelineElementDiagnostics[] PipelineElements { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -301,16 +364,16 @@ diagnostics stream. It has a much smaller memory footprint compared with Pipelin
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L102">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_SubpipelineDiagnostics_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.SubpipelineDiagnostics*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_SubpipelineDiagnostics" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.SubpipelineDiagnostics">SubpipelineDiagnostics</h4>
-  <div class="markdown level1 summary"><p>Gets subpipelines of this pipeline.</p>
+  <div class="markdown level1 summary"><p>Gets or sets subpipelines of this pipeline.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics[] SubpipelineDiagnostics { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics[] SubpipelineDiagnostics { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">

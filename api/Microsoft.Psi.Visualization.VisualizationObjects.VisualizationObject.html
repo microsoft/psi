@@ -89,15 +89,14 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><span class="xref">VisualizationObject</span></div>
       <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject&lt;TData&gt;</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -108,50 +107,32 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class VisualizationObject : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class VisualizationObject : ObservableTreeNodeObject, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.#ctor">VisualizationObject()</h4>
@@ -166,7 +147,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L120">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L204">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CanSnapToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CanSnapToStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CanSnapToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CanSnapToStream">CanSnapToStream</h4>
@@ -196,7 +177,7 @@ public virtual bool CanSnapToStream { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L83">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L167">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Container*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Container">Container</h4>
@@ -226,7 +207,7 @@ public VisualizationContainer Container { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L173">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L257">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ContractResolver*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ContractResolver" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ContractResolver">ContractResolver</h4>
@@ -256,7 +237,95 @@ protected virtual IContractResolver ContractResolver { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L105">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilon_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CursorEpsilon*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilon" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CursorEpsilon">CursorEpsilon</h4>
+  <div class="markdown level1 summary"><p>Gets the cursor epsilon.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public RelativeTimeInterval CursorEpsilon { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.RelativeTimeInterval.html">RelativeTimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L136">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonNegMs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CursorEpsilonNegMs*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonNegMs" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CursorEpsilonNegMs">CursorEpsilonNegMs</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public int CursorEpsilonNegMs { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L119">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonPosMs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CursorEpsilonPosMs*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonPosMs" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.CursorEpsilonPosMs">CursorEpsilonPosMs</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the radius of the cursor epsilon. (This value is exposed in the Properties UI).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public int CursorEpsilonPosMs { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L160">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.DefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.DefaultViewTemplate">DefaultViewTemplate</h4>
@@ -286,7 +355,7 @@ public abstract DataTemplate DefaultViewTemplate { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L113">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L197">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IconSource_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IconSource*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IconSource" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IconSource">IconSource</h4>
@@ -316,7 +385,7 @@ public virtual string IconSource { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L134">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L218">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsAudioStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsAudioStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsAudioStream">IsAudioStream</h4>
@@ -346,7 +415,7 @@ public virtual bool IsAudioStream { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L148">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L232">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsConnected*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsConnected" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsConnected">IsConnected</h4>
@@ -376,7 +445,37 @@ public bool IsConnected { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L127">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L153">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsShown_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsShown*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsShown" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsShown">IsShown</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the visualization object is shown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+[IgnoreDataMember]
+public bool IsShown { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L211">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsSnappedToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsSnappedToStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsSnappedToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.IsSnappedToStream">IsSnappedToStream</h4>
@@ -406,7 +505,7 @@ public virtual bool IsSnappedToStream { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L70">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Name*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Name">Name</h4>
@@ -435,7 +534,7 @@ public string Name { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L106">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L190">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Navigator*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Navigator" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Navigator">Navigator</h4>
@@ -465,7 +564,7 @@ public Navigator Navigator { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L174">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Panel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Panel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Panel">Panel</h4>
@@ -495,7 +594,7 @@ public VisualizationPanel Panel { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L141">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L225">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ShowZoomToStreamMenuItem_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ShowZoomToStreamMenuItem*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ShowZoomToStreamMenuItem" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ShowZoomToStreamMenuItem">ShowZoomToStreamMenuItem</h4>
@@ -525,7 +624,7 @@ public virtual bool ShowZoomToStreamMenuItem { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L155">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L239">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleVisibilityCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToggleVisibilityCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleVisibilityCommand" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToggleVisibilityCommand">ToggleVisibilityCommand</h4>
@@ -555,11 +654,11 @@ public RelayCommand ToggleVisibilityCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L89">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Visible*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.Visible">Visible</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the visualization object is visible.</p>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the visualization object should be visible.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -582,11 +681,40 @@ public bool Visible { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_VisualizerTypeName_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.VisualizerTypeName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_VisualizerTypeName" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.VisualizerTypeName">VisualizerTypeName</h4>
+  <div class="markdown level1 summary"><p>Gets the type name of the visualization object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public string VisualizerTypeName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L278">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L366">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnAddToPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnAddToPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnAddToPanel">OnAddToPanel()</h4>
@@ -599,7 +727,7 @@ public bool Visible { get; set; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L226">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L310">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorChanged(System.Object,Microsoft.Psi.Visualization.Navigation.NavigatorTimeChangedEventArgs)">OnCursorChanged(Object, NavigatorTimeChangedEventArgs)</h4>
@@ -636,7 +764,7 @@ public bool Visible { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L235">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L319">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorModeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnCursorModeChanged(System.Object,Microsoft.Psi.Visualization.Navigation.CursorModeChangedEventArgs)">OnCursorModeChanged(Object, CursorModeChangedEventArgs)</h4>
@@ -673,7 +801,7 @@ public bool Visible { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L271">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L355">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPanelPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPanelPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -710,7 +838,7 @@ public bool Visible { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L262">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L346">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanging_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPanelPropertyChanging*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPanelPropertyChanging(System.Object,System.ComponentModel.PropertyChangingEventArgs)">OnPanelPropertyChanging(Object, PropertyChangingEventArgs)</h4>
@@ -747,7 +875,7 @@ public bool Visible { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L253">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L337">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -784,7 +912,7 @@ public bool Visible { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L244">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L328">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanging*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPropertyChanging_System_Object_System_ComponentModel_PropertyChangingEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnPropertyChanging(System.Object,System.ComponentModel.PropertyChangingEventArgs)">OnPropertyChanging(Object, PropertyChangingEventArgs)</h4>
@@ -821,7 +949,7 @@ public bool Visible { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L289">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L377">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnRemoveFromPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnRemoveFromPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnRemoveFromPanel" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.OnRemoveFromPanel">OnRemoveFromPanel()</h4>
@@ -834,7 +962,7 @@ public bool Visible { get; set; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L180">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L264">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleSnapToStream_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToggleSnapToStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToggleSnapToStream" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToggleSnapToStream">ToggleSnapToStream()</h4>
@@ -847,7 +975,7 @@ public bool Visible { get; set; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L185">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L269">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToString*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_ToString" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.ToString">ToString()</h4>
@@ -872,14 +1000,9 @@ public bool Visible { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -899,7 +1022,7 @@ public bool Visible { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L20" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationObject.cs/#L21" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

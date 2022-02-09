@@ -89,10 +89,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_NoRemainingSubscribers">IStreamDataProvider.NoRemainingSubscribers</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_ReadRequests">IStreamDataProvider.ReadRequests</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_StreamName">IStreamDataProvider.StreamName</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_HasSubscribers">IStreamDataProvider.HasSubscribers</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_GetTimeOfNearestMessage_System_DateTime_Microsoft_Psi_Visualization_Helpers_NearestMessageType_">IStreamDataProvider.GetTimeOfNearestMessage(DateTime, NearestMessageType)</a>
@@ -110,7 +116,7 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html#Microsoft_Psi_Visualization_Data_IStreamDataProvider_Stop">IStreamDataProvider.Stop()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#System_IDisposable_Dispose">IDisposable.Dispose()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable.dispose#system-idisposable-dispose">IDisposable.Dispose()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
@@ -221,7 +227,7 @@ method allows the stream value provider to be notified when the interval of inte
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
-        <td><p>A registration token which can be used to unregister the subscriber.</p>
+        <td><p>A subscriber id which can be used to unregister the subscriber.</p>
 </td>
       </tr>
     </tbody>
@@ -284,7 +290,7 @@ method allows the stream value provider to be notified when the interval of inte
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void UnregisterStreamValueSubscriber&lt;TData&gt;(Guid registrationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">void UnregisterStreamValueSubscriber&lt;TData&gt;(Guid subscriberId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -298,8 +304,8 @@ method allows the stream value provider to be notified when the interval of inte
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
-        <td><span class="parametername">registrationToken</span></td>
-        <td><p>The registration token that the subscriber was given when it was initially registered.</p>
+        <td><span class="parametername">subscriberId</span></td>
+        <td><p>The subscriber id that the subscriber was given when it was initially registered.</p>
 </td>
       </tr>
     </tbody>

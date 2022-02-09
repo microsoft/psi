@@ -266,16 +266,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/IDepthDeviceCalibrationInfo.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/IDepthDeviceCalibrationInfo.cs/#L49">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_ToColorSpace_" data-uid="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.ToColorSpace*"></a>
-  <h4 id="Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_ToColorSpace_Point3D_" data-uid="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.ToColorSpace(Point3D)">ToColorSpace(Point3D)</h4>
+  <a id="Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_GetPixelPosition_" data-uid="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.GetPixelPosition*"></a>
+  <h4 id="Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_GetPixelPosition_Point3D_System_Boolean_" data-uid="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.GetPixelPosition(Point3D,System.Boolean)">GetPixelPosition(Point3D, Boolean)</h4>
   <div class="markdown level1 summary"><p>Converts a 3D point from depth camera coordinates into color image coordinates.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Point2D ToColorSpace(Point3D point3D)</code></pre>
+    <pre><code class="lang-csharp hljs">Point2D? GetPixelPosition(Point3D point3D, bool nullIfOutsideFieldOfView = true)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -293,6 +293,12 @@
         <td><p>The 3D point in depth camera coordinates.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">nullIfOutsideFieldOfView</span></td>
+        <td><p>Optional flag indicating whether to return null if point is outside the field of view (default true).</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -305,8 +311,67 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Point2D</span></td>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point2D</span>&gt;</td>
         <td><p>The 2D point in color image space.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/IDepthDeviceCalibrationInfo.cs/#L58">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_TryGetPixelPosition_" data-uid="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.TryGetPixelPosition*"></a>
+  <h4 id="Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_TryGetPixelPosition_Point3D_Point2D__System_Boolean_" data-uid="Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo.TryGetPixelPosition(Point3D,Point2D@,System.Boolean)">TryGetPixelPosition(Point3D, out Point2D, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Converts a 3D point from depth camera coordinates into color image coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryGetPixelPosition(Point3D point3D, out Point2D pixelPosition, bool nullIfOutsideFieldOfView = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point3D</span></td>
+        <td><p>The 3D point in depth camera coordinates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">pixelPosition</span></td>
+        <td><p>Output point containing the pixel position.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">nullIfOutsideFieldOfView</span></td>
+        <td><p>Optional flag indicating whether to return null if point is outside the field of view (default true).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if <code data-dev-comment-type="paramref" class="paramref">pixelPosition</code> is within field of view, otherwise false.</p>
 </td>
       </tr>
     </tbody>

@@ -92,13 +92,13 @@ coordinates).</p>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Calibration.dll</h6>
   <h5 id="Microsoft_Psi_Calibration_ICameraIntrinsics_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface ICameraIntrinsics</code></pre>
+    <pre><code class="lang-csharp hljs">public interface ICameraIntrinsics : IEquatable&lt;ICameraIntrinsics&gt;</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L60">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ClosedFormDistorts_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ClosedFormDistorts*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ClosedFormDistorts" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ClosedFormDistorts">ClosedFormDistorts</h4>
@@ -130,7 +130,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L40">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLength_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLength*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLength" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLength">FocalLength</h4>
@@ -158,7 +158,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLengthXY_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLengthXY*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_FocalLengthXY" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.FocalLengthXY">FocalLengthXY</h4>
@@ -186,7 +186,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L70">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageHeight_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageHeight*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageHeight" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageHeight">ImageHeight</h4>
@@ -214,7 +214,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L64">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L65">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageWidth_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageWidth*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ImageWidth" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ImageWidth">ImageWidth</h4>
@@ -242,7 +242,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L25">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_InvTransform_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.InvTransform*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_InvTransform" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.InvTransform">InvTransform</h4>
@@ -270,7 +270,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_PrincipalPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.PrincipalPoint*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_PrincipalPoint" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.PrincipalPoint">PrincipalPoint</h4>
@@ -298,7 +298,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_RadialDistortion_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.RadialDistortion*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_RadialDistortion" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.RadialDistortion">RadialDistortion</h4>
@@ -326,7 +326,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L35">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L36">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_TangentialDistortion_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TangentialDistortion*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_TangentialDistortion" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TangentialDistortion">TangentialDistortion</h4>
@@ -354,7 +354,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L20">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L21">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_Transform_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.Transform*"></a>
   <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_Transform" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.Transform">Transform</h4>
@@ -385,80 +385,16 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L107">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L98">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_DistortPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.DistortPoint*"></a>
-  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_DistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.DistortPoint(Point2D,Point2D@)">DistortPoint(Point2D, out Point2D)</h4>
-  <div class="markdown level1 summary"><p>Applies the distortion model to a point in the camera post-projection coordinates.</p>
-<p>The undistortion is defined by the following equations:
-Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd
-Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd
-where:
-Xd,Yd - distorted point's coordinates
-Xu,Yu - undistorted point's coordinates
-K0,K1 - radial distortion coefficients
-T0,T1 - tangential distortion coefficients
-r - sqrt(Xd<em>Xd+Yd</em>Yd)</p>
-<p>Newton's method is used to find the inverse of this. That is
-Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_GetCameraSpacePosition_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.GetCameraSpacePosition*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_GetCameraSpacePosition_Point2D_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.GetCameraSpacePosition(Point2D,System.Double,System.Boolean)">GetCameraSpacePosition(Point2D, Double, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets the corresponding 3D camera space position at a given depth along a specified pixel.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool DistortPoint(Point2D undistortedPt, out Point2D distortedPt)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Point2D</span></td>
-        <td><span class="parametername">undistortedPt</span></td>
-        <td><p>The undistorted point in camera post-projection coordinates.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Point2D</span></td>
-        <td><span class="parametername">distortedPt</span></td>
-        <td><p>The distorted point.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><p>True if 'distortedPt' contains the distorted point, or false if the algorithm did not converge.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L86">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToCameraSpace_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToCameraSpace*"></a>
-  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToCameraSpace_Point2D_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToCameraSpace(Point2D,System.Double,System.Boolean)">ToCameraSpace(Point2D, Double, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Unprojects a point from pixel space into 3D space.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Point3D ToCameraSpace(Point2D point2D, double depth, bool undistort)</code></pre>
+    <pre><code class="lang-csharp hljs">Point3D GetCameraSpacePosition(Point2D point2D, double depth, bool undistort)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -473,13 +409,13 @@ Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
       <tr>
         <td><span class="xref">Point2D</span></td>
         <td><span class="parametername">point2D</span></td>
-        <td><p>Point in pixel space.</p>
+        <td><p>The pixel position.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depth</span></td>
-        <td><p>Depth at pixel.</p>
+        <td><p>The depth along the specified pixel position.</p>
 </td>
       </tr>
       <tr>
@@ -508,16 +444,16 @@ Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L79">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToPixelSpace_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToPixelSpace*"></a>
-  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_ToPixelSpace_Point3D_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.ToPixelSpace(Point3D,System.Boolean)">ToPixelSpace(Point3D, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Projects a 3D point into the pixel space.</p>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_GetPixelPosition_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.GetPixelPosition*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_GetPixelPosition_Point3D_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.GetPixelPosition(Point3D,System.Boolean,System.Boolean)">GetPixelPosition(Point3D, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets the corresponding pixel position for a point in 3D space.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Point2D ToPixelSpace(Point3D point3D, bool distort)</code></pre>
+    <pre><code class="lang-csharp hljs">Point2D? GetPixelPosition(Point3D point3D, bool distort, bool nullIfOutsideFieldOfView = true)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -541,6 +477,12 @@ Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
         <td><p>Indicates whether to apply distortion.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">nullIfOutsideFieldOfView</span></td>
+        <td><p>Optional flag indicating whether to return null if point is outside the field of view (default true).</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -553,19 +495,69 @@ Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Point2D</span></td>
-        <td><p>Point in pixel space.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point2D</span>&gt;</td>
+        <td><p>Point containing the pixel position.</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L125">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L109">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_UndistortPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.UndistortPoint*"></a>
-  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_UndistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.UndistortPoint(Point2D,Point2D@)">UndistortPoint(Point2D, out Point2D)</h4>
-  <div class="markdown level1 summary"><p>Applies the camera's radial and tangential undistortion to the specified (distorted) point.</p>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_GetPixelToCameraSpaceMapping_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.GetPixelToCameraSpaceMapping*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_GetPixelToCameraSpaceMapping_System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.GetPixelToCameraSpaceMapping(System.Boolean)">GetPixelToCameraSpaceMapping(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets a mapping matrix that can be used to transform pixels into 3D space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Point3D[, ] GetPixelToCameraSpaceMapping(bool undistort)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">undistort</span></td>
+        <td><p>Indicates whether to apply undistortion.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span>[,]</td>
+        <td><p>A matrix of 3D points that can be used to transform depth values at a specified pixel
+into 3D space. To use this matrix simply piecewise multiply the depth value by the X
+Y and Z dimensions of the <see cref="!:Point3D"></see> in the matrix at the location indexed
+by the pixel.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L130">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_TryDistortPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TryDistortPoint*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_TryDistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TryDistortPoint(Point2D,Point2D@)">TryDistortPoint(Point2D, out Point2D)</h4>
+  <div class="markdown level1 summary"><p>Applies the distortion model to a point in the camera post-projection coordinates.</p>
 <p>The undistortion is defined by the following equations:
 Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd
 Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd
@@ -573,12 +565,15 @@ where:
 Xd,Yd - distorted point's coordinates
 Xu,Yu - undistorted point's coordinates
 K0,K1 - radial distortion coefficients
-T0,T1 - tangential distortion coefficients.</p>
+T0,T1 - tangential distortion coefficients
+r - sqrt(Xd<em>Xd+Yd</em>Yd)</p>
+<p>Newton's method is used to find the inverse of this. That is
+Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool UndistortPoint(Point2D distortedPt, out Point2D undistortedPt)</code></pre>
+    <pre><code class="lang-csharp hljs">bool TryDistortPoint(Point2D undistortedPoint, out Point2D distortedPoint)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -592,13 +587,139 @@ T0,T1 - tangential distortion coefficients.</p>
     <tbody>
       <tr>
         <td><span class="xref">Point2D</span></td>
-        <td><span class="parametername">distortedPt</span></td>
+        <td><span class="parametername">undistortedPoint</span></td>
+        <td><p>The undistorted point in camera post-projection coordinates.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">distortedPoint</span></td>
+        <td><p>The distorted point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if <code data-dev-comment-type="paramref" class="paramref">distortedPoint</code> contains the distorted point, or false if the algorithm did not converge.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_TryGetPixelPosition_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TryGetPixelPosition*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_TryGetPixelPosition_Point3D_System_Boolean_Point2D__System_Boolean_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TryGetPixelPosition(Point3D,System.Boolean,Point2D@,System.Boolean)">TryGetPixelPosition(Point3D, Boolean, out Point2D, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Gets the corresponding pixel position for a point in 3D space.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryGetPixelPosition(Point3D point3D, bool distort, out Point2D pixelPosition, bool nullIfOutsideFieldOfView = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point3D</span></td>
+        <td><p>Point in 3D space, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">distort</span></td>
+        <td><p>Indicates whether to apply distortion.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">pixelPosition</span></td>
+        <td><p>Output point containing the pixel position.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">nullIfOutsideFieldOfView</span></td>
+        <td><p>Optional flag indicating whether to return null if point is outside the field of view (default true).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if <code data-dev-comment-type="paramref" class="paramref">pixelPosition</code> is within field of view, otherwise false.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L148">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_ICameraIntrinsics_TryUndistortPoint_" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TryUndistortPoint*"></a>
+  <h4 id="Microsoft_Psi_Calibration_ICameraIntrinsics_TryUndistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.ICameraIntrinsics.TryUndistortPoint(Point2D,Point2D@)">TryUndistortPoint(Point2D, out Point2D)</h4>
+  <div class="markdown level1 summary"><p>Applies the camera's radial and tangential undistortion to the specified (distorted) point.</p>
+<p>The undistortion is defined by the following equations:
+Xu = Xd (1 + K0 * r^2 + K1 * r^4) + T1 * (r^2 + 2Xd^2) + T0 * 2 * XdYd
+Yu = Yd (1 + K0 * r^2 + K1 * r^4) + T0 * (r^2 + 2Yd^2) + T1 * 2 * XdYd
+where:
+Xd,Yd - distorted point's coordinates
+Xu,Yu - undistorted point's coordinates
+K0,K1 - radial distortion coefficients
+T0,T1 - tangential distortion coefficients.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryUndistortPoint(Point2D distortedPoint, out Point2D undistortedPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">distortedPoint</span></td>
         <td><p>Distorted point in camera post-projection coordinates.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">Point2D</span></td>
-        <td><span class="parametername">undistortedPt</span></td>
+        <td><span class="parametername">undistortedPoint</span></td>
         <td><p>Returns the undistorted point in camera post-projection coordinates.</p>
 </td>
       </tr>
@@ -615,7 +736,7 @@ T0,T1 - tangential distortion coefficients.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><p>True if 'undistortedPoint' contains the undistorted point, or false if the algorithm did not converge.</p>
+        <td><p>True if <code data-dev-comment-type="paramref" class="paramref">undistortedPoint</code> contains the undistorted point, or false if the algorithm did not converge.</p>
 </td>
       </tr>
     </tbody>
@@ -638,7 +759,7 @@ T0,T1 - tangential distortion coefficients.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ICameraIntrinsics.cs/#L15" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

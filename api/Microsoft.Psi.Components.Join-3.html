@@ -90,8 +90,7 @@
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Components.Fuse-4.html">Fuse</a>&lt;TPrimary, TSecondary, TSecondary, TOut&gt;</div>
-    <div class="level2"><a class="xref" href="Microsoft.Psi.Components.Join-4.html">Join</a>&lt;TPrimary, TSecondary, TSecondary, TOut&gt;</div>
-    <div class="level3"><span class="xref">Join&lt;TPrimary, TSecondary, TOut&gt;</span></div>
+    <div class="level2"><span class="xref">Join&lt;TPrimary, TSecondary, TOut&gt;</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -116,7 +115,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
   <h5 id="Microsoft_Psi_Components_Join_3_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Join&lt;TPrimary, TSecondary, TOut&gt; : Join&lt;TPrimary, TSecondary, TSecondary, TOut&gt;, IProducer&lt;TOut&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class Join&lt;TPrimary, TSecondary, TOut&gt; : Fuse&lt;TPrimary, TSecondary, TSecondary, TOut&gt;, IProducer&lt;TOut&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -151,13 +150,13 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Join{TPrimary,TSecondary,TOut}.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Join_3__ctor_" data-uid="Microsoft.Psi.Components.Join`3.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Join_3__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_ReproducibleInterpolator__1__1__Func__0__1____2__System_Int32_Func__0_IEnumerable_System_Int32___" data-uid="Microsoft.Psi.Components.Join`3.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.ReproducibleInterpolator{`1,`1},Func{`0,`1[],`2},System.Int32,Func{`0,IEnumerable{System.Int32}})">Join(Pipeline, ReproducibleInterpolator&lt;TSecondary, TSecondary&gt;, Func&lt;TPrimary, TSecondary[], TOut&gt;, Int32, Func&lt;TPrimary, IEnumerable&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Join_3__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_ReproducibleInterpolator__1__Func__0__1____2__System_Int32_Func__0_IEnumerable_System_Int32___" data-uid="Microsoft.Psi.Components.Join`3.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.ReproducibleInterpolator{`1},Func{`0,`1[],`2},System.Int32,Func{`0,IEnumerable{System.Int32}})">Join(Pipeline, ReproducibleInterpolator&lt;TSecondary&gt;, Func&lt;TPrimary, TSecondary[], TOut&gt;, Int32, Func&lt;TPrimary, IEnumerable&lt;Int32&gt;&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Join-3.html">Join&lt;TPrimary, TSecondary, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Join(Pipeline pipeline, ReproducibleInterpolator&lt;TSecondary, TSecondary&gt; interpolator, Func&lt;TPrimary, TSecondary[], TOut&gt; outputCreator, int secondaryCount = 1, Func&lt;TPrimary, IEnumerable&lt;int&gt;&gt; secondarySelector = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public Join(Pipeline pipeline, ReproducibleInterpolator&lt;TSecondary&gt; interpolator, Func&lt;TPrimary, TSecondary[], TOut&gt; outputCreator, int secondaryCount = 1, Func&lt;TPrimary, IEnumerable&lt;int&gt;&gt; secondarySelector = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -172,11 +171,11 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
         <td><span class="parametername">pipeline</span></td>
-        <td><p>Pipeline to which this component belongs.</p>
+        <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TSecondary, TSecondary&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-1.html">ReproducibleInterpolator</a>&lt;TSecondary&gt;</td>
         <td><span class="parametername">interpolator</span></td>
         <td><p>Reproducible interpolator to use when joining the streams.</p>
 </td>

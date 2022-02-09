@@ -102,7 +102,7 @@ while cataloging and indexing them.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L53">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter__ctor_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.#ctor*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter__ctor_System_String_System_String_System_Boolean_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.#ctor(System.String,System.String,System.Boolean)">PsiStoreWriter(String, String, Boolean)</h4>
@@ -147,7 +147,7 @@ while cataloging and indexing them.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L22">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L23">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_CatalogExtentSize" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CatalogExtentSize">CatalogExtentSize</h4>
   <div class="markdown level1 summary"><p>The size of a catalog file extent.</p>
@@ -174,7 +174,7 @@ while cataloging and indexing them.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L28">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_IndexExtentSize" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.IndexExtentSize">IndexExtentSize</h4>
   <div class="markdown level1 summary"><p>The size of the index file extent.</p>
@@ -201,7 +201,7 @@ while cataloging and indexing them.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L34">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_IndexPageSize" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.IndexPageSize">IndexPageSize</h4>
   <div class="markdown level1 summary"><p>The frequency (in bytes) of index entries.
@@ -231,7 +231,35 @@ Consecutive index entries point to locations that are at least this many bytes a
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L115">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Persistence_PsiStoreWriter_Metadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Metadata*"></a>
+  <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_Metadata" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Metadata">Metadata</h4>
+  <div class="markdown level1 summary"><p>Gets stream metadata.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IStreamMetadata&gt; Metadata { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.IStreamMetadata.html">IStreamMetadata</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L105">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_Name_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Name*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_Name" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Name">Name</h4>
@@ -259,7 +287,7 @@ Consecutive index entries point to locations that are at least this many bytes a
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L103">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L110">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_Path_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Path*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_Path" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Path">Path</h4>
@@ -289,7 +317,7 @@ Consecutive index entries point to locations that are at least this many bytes a
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L191">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L217">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseAllStreams_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseAllStreams*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseAllStreams_DateTime_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseAllStreams(DateTime)">CloseAllStreams(DateTime)</h4>
@@ -320,7 +348,7 @@ Consecutive index entries point to locations that are at least this many bytes a
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L176">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L202">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseStream*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_CloseStream_System_Int32_DateTime_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.CloseStream(System.Int32,DateTime)">CloseStream(Int32, DateTime)</h4>
@@ -357,7 +385,7 @@ Consecutive index entries point to locations that are at least this many bytes a
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L108">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_Dispose_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Dispose*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_Dispose" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Dispose">Dispose()</h4>
@@ -370,7 +398,7 @@ Consecutive index entries point to locations that are at least this many bytes a
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L203">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L229">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_InitializeStreamOpenedTimes_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.InitializeStreamOpenedTimes*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_InitializeStreamOpenedTimes_DateTime_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.InitializeStreamOpenedTimes(DateTime)">InitializeStreamOpenedTimes(DateTime)</h4>
@@ -401,7 +429,7 @@ Consecutive index entries point to locations that are at least this many bytes a
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L122">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L148">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_Microsoft_Psi_PsiStreamMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream(Microsoft.Psi.PsiStreamMetadata)">OpenStream(PsiStreamMetadata)</h4>
@@ -411,7 +439,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PsiStreamMetadata OpenStream(PsiStreamMetadata meta)</code></pre>
+    <pre><code class="lang-csharp hljs">public PsiStreamMetadata OpenStream(PsiStreamMetadata metadata)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -425,7 +453,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
-        <td><span class="parametername">meta</span></td>
+        <td><span class="parametername">metadata</span></td>
         <td><p>The metadata describing the stream to open.</p>
 </td>
       </tr>
@@ -449,7 +477,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L135">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L161">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_OpenStream_System_Int32_System_String_System_Boolean_System_String_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.OpenStream(System.Int32,System.String,System.Boolean,System.String)">OpenStream(Int32, String, Boolean, String)</h4>
@@ -514,7 +542,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L166">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L194">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_TryGetMetadata_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.TryGetMetadata*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_TryGetMetadata_System_Int32_Microsoft_Psi_PsiStreamMetadata__" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.TryGetMetadata(System.Int32,Microsoft.Psi.PsiStreamMetadata@)">TryGetMetadata(Int32, out PsiStreamMetadata)</h4>
@@ -523,7 +551,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TryGetMetadata(int streamId, out PsiStreamMetadata meta)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool TryGetMetadata(int streamId, out PsiStreamMetadata metadata)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -543,7 +571,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></td>
-        <td><span class="parametername">meta</span></td>
+        <td><span class="parametername">metadata</span></td>
         <td><p>The metadata for the stream, if it has previously been opened.</p>
 </td>
       </tr>
@@ -567,7 +595,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L216">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L242">View Source</a>
   </span>
   <a id="Microsoft_Psi_Persistence_PsiStoreWriter_Write_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Write*"></a>
   <h4 id="Microsoft_Psi_Persistence_PsiStoreWriter_Write_Microsoft_Psi_Common_BufferReader_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Persistence.PsiStoreWriter.Write(Microsoft.Psi.Common.BufferReader,Microsoft.Psi.Envelope)">Write(BufferReader, Envelope)</h4>
@@ -620,7 +648,7 @@ The stream characteristics are extracted from the provided metadata descriptor.<
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Persistence/PsiStoreWriter.cs/#L18" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

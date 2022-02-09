@@ -1,0 +1,834 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PointCloud3D
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PointCloud3D
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D">
+  
+  
+  <h1 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D" class="text-break">Class PointCloud3D
+  </h1>
+  <div class="markdown level0 summary"><p>Represents a point cloud in 3D space.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">PointCloud3D</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Spatial.Euclidean.dll</h6>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class PointCloud3D : IEnumerable&lt;Point3D&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L30">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D__ctor_IEnumerable_Point3D__" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.#ctor(IEnumerable{Point3D})">PointCloud3D(IEnumerable&lt;Point3D&gt;)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PointCloud3D(IEnumerable&lt;Point3D&gt; points)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><span class="parametername">points</span></td>
+        <td><p>The set of points.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L22">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_Empty" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.Empty">Empty</h4>
+  <div class="markdown level1 summary"><p>Gets the empty point cloud.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly PointCloud3D Empty</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_IsEmpty_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.IsEmpty*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_IsEmpty" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.IsEmpty">IsEmpty</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the point cloud is empty.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsEmpty { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L75">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_NumberOfPoints_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.NumberOfPoints*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_NumberOfPoints" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.NumberOfPoints">NumberOfPoints</h4>
+  <div class="markdown level1 summary"><p>Gets the number of points in the point cloud.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NumberOfPoints { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L259">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_ClosestPointTo_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.ClosestPointTo*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_ClosestPointTo_Ray3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.ClosestPointTo(Ray3D)">ClosestPointTo(Ray3D)</h4>
+  <div class="markdown level1 summary"><p>Gets the closest point in the cloud to a specified <see cref="!:Ray3D"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Point3D? ClosestPointTo(Ray3D ray3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Ray3D</span></td>
+        <td><span class="parametername">ray3D</span></td>
+        <td><p>The ray to compute the closest point to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>The closest point in the cloud to the specified ray.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_ClosestPointTo_Ray3D__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If multiple points are at the minimum distance, the method returns the
+first of these (in the order the points appear in the cloud).</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L220">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_DistanceTo_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.DistanceTo*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_DistanceTo_Ray3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.DistanceTo(Ray3D)">DistanceTo(Ray3D)</h4>
+  <div class="markdown level1 summary"><p>Computes the distance from every point in the cloud to a specified <see cref="!:Ray3D"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vector&lt;double&gt; DistanceTo(Ray3D ray3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Ray3D</span></td>
+        <td><span class="parametername">ray3D</span></td>
+        <td><p>The <see cref="!:Ray3D"></see> to compute the distance to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><p>A vector containing distances from every point in the cloud to the <see cref="!:Ray3D"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L112">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Calibration_ICameraIntrinsics_System_Double_System_Int32_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Calibration.ICameraIntrinsics,System.Double,System.Int32,System.Boolean,System.Boolean)">FromDepthImage(DepthImage, ICameraIntrinsics, Double, Int32, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Create a point cloud from a depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PointCloud3D FromDepthImage(DepthImage depthImage, ICameraIntrinsics depthCameraIntrinsics, double scalingFactor = null, int sparsity = 1, bool undistort = true, bool robustPointsOnly = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">depthImage</span></td>
+        <td><p>The depth image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
+        <td><span class="parametername">depthCameraIntrinsics</span></td>
+        <td><p>The depth camera intrinsics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scalingFactor</span></td>
+        <td><p>An optional parameter representing a scale factor to apply to the depth values (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sparsity</span></td>
+        <td><p>An optional parameter to specify how sparsely to sample pixels (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">undistort</span></td>
+        <td><p>An optional parameter that specifies whether to undistort when projecting through the intrinsics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">robustPointsOnly</span></td>
+        <td><p>An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The corresponding point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L124">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_Microsoft_Psi_Imaging_DepthImage_Point3D_0__0___System_Double_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage(Microsoft.Psi.Imaging.DepthImage,Point3D[0:,0:],System.Double,System.Int32,System.Boolean)">FromDepthImage(DepthImage, Point3D[,], Double, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Create a point cloud from a depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PointCloud3D FromDepthImage(DepthImage depthImage, Point3D[, ] cameraSpaceMapping, double scalingFactor = null, int sparsity = 1, bool robustPointsOnly = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">depthImage</span></td>
+        <td><p>The depth image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point3D</span>[,]</td>
+        <td><span class="parametername">cameraSpaceMapping</span></td>
+        <td><p>A camera space mapping matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scalingFactor</span></td>
+        <td><p>An optional parameter representing a scale factor to apply to the depth values (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sparsity</span></td>
+        <td><p>An optional parameter to specify how sparsely to sample pixels (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">robustPointsOnly</span></td>
+        <td><p>An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The corresponding point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_Shared_Microsoft_Psi_Imaging_DepthImage__Microsoft_Psi_Calibration_ICameraIntrinsics_System_Double_System_Int32_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage(Shared{Microsoft.Psi.Imaging.DepthImage},Microsoft.Psi.Calibration.ICameraIntrinsics,System.Double,System.Int32,System.Boolean,System.Boolean)">FromDepthImage(Shared&lt;DepthImage&gt;, ICameraIntrinsics, Double, Int32, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Create a point cloud from a shared depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PointCloud3D FromDepthImage(Shared&lt;DepthImage&gt; depthImage, ICameraIntrinsics depthCameraIntrinsics, double scaleFactor = null, int sparsity = 1, bool undistort = true, bool robustPointsOnly = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;</td>
+        <td><span class="parametername">depthImage</span></td>
+        <td><p>The depth image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
+        <td><span class="parametername">depthCameraIntrinsics</span></td>
+        <td><p>The depth camera intrinsics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scaleFactor</span></td>
+        <td><p>An optional parameter representing a scale factor to apply to the depth values.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sparsity</span></td>
+        <td><p>An optional parameter to specify how sparsely to sample pixels (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">undistort</span></td>
+        <td><p>An optional parameter that specifies whether to undistort when projecting through the intrinsics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">robustPointsOnly</span></td>
+        <td><p>An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The corresponding point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_FromDepthImage_Shared_Microsoft_Psi_Imaging_DepthImage__Point3D_0__0___System_Double_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.FromDepthImage(Shared{Microsoft.Psi.Imaging.DepthImage},Point3D[0:,0:],System.Double,System.Int32,System.Boolean)">FromDepthImage(Shared&lt;DepthImage&gt;, Point3D[,], Double, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Create a point cloud from a shared depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PointCloud3D FromDepthImage(Shared&lt;DepthImage&gt; depthImage, Point3D[, ] cameraSpaceMapping, double scalingFactor = null, int sparsity = 1, bool robustPointsOnly = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;</td>
+        <td><span class="parametername">depthImage</span></td>
+        <td><p>The depth image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point3D</span>[,]</td>
+        <td><span class="parametername">cameraSpaceMapping</span></td>
+        <td><p>A camera space mapping matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scalingFactor</span></td>
+        <td><p>An optional parameter representing a scale factor to apply to the depth values (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">sparsity</span></td>
+        <td><p>An optional parameter to specify how sparsely to sample pixels (by default 1).</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">robustPointsOnly</span></td>
+        <td><p>An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The corresponding point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L286">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_IntersectionWith_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.IntersectionWith*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_IntersectionWith_Microsoft_Psi_Spatial_Euclidean_Box3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.IntersectionWith(Microsoft.Psi.Spatial.Euclidean.Box3D)">IntersectionWith(Box3D)</h4>
+  <div class="markdown level1 summary"><p>Gets the intersection between the point cloud and a specified 3D box.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PointCloud3D IntersectionWith(Box3D box3D)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Box3D.html">Box3D</a></td>
+        <td><span class="parametername">box3D</span></td>
+        <td><p>The specify 3D box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>A point cloud that falls within the specified 3D box.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L326">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_Multiply_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.Multiply*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_Multiply_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.Multiply(System.Double)">Multiply(Double)</h4>
+  <div class="markdown level1 summary"><p>Scales the point cloud by a specified value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PointCloud3D Multiply(double scalar)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scalar</span></td>
+        <td><p>The value to scale the point cloud by.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The scaled point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L333">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_ToList_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.ToList*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_ToList" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.ToList">ToList()</h4>
+  <div class="markdown level1 summary"><p>Converts the point cloud to a list of <see cref="!:Point3D"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Point3D&gt; ToList()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><p>The list of <see cref="!:Point3D"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L318">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_TransformBy_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.TransformBy*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_PointCloud3D_TransformBy_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.TransformBy(CoordinateSystem)">TransformBy(CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Transforms the point cloud by a coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PointCloud3D TransformBy(CoordinateSystem coordinateSystem)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The coordinate system to transform the point cloud by.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.PointCloud3D.html">PointCloud3D</a></td>
+        <td><p>The transformed point cloud.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/PointCloud3D.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

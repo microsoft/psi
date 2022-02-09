@@ -1,0 +1,823 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class Operators
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class Operators
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.MixedReality.Operators">
+  
+  
+  <h1 id="Microsoft_Psi_MixedReality_Operators" data-uid="Microsoft.Psi.MixedReality.Operators" class="text-break">Class Operators
+  </h1>
+  <div class="markdown level0 summary"><p>Implements operators.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">Operators</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class Operators : object</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ChangeBasisHoloLensToPsi_" data-uid="Microsoft.Psi.MixedReality.Operators.ChangeBasisHoloLensToPsi*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ChangeBasisHoloLensToPsi_DenseMatrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ChangeBasisHoloLensToPsi(DenseMatrix)">ChangeBasisHoloLensToPsi(DenseMatrix)</h4>
+  <div class="markdown level1 summary"><p>Compute a change of basis for the given matrix. From HoloLens basis to \psi basis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DenseMatrix ChangeBasisHoloLensToPsi(this DenseMatrix holoLensMatrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DenseMatrix</span></td>
+        <td><span class="parametername">holoLensMatrix</span></td>
+        <td><p>The given matrix in HoloLens basis.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DenseMatrix</span></td>
+        <td><p>The converted matrix with \psi basis.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ChangeBasisHoloLensToPsi_DenseMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L45">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ChangeBasisPsiToHoloLens_" data-uid="Microsoft.Psi.MixedReality.Operators.ChangeBasisPsiToHoloLens*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ChangeBasisPsiToHoloLens_DenseMatrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ChangeBasisPsiToHoloLens(DenseMatrix)">ChangeBasisPsiToHoloLens(DenseMatrix)</h4>
+  <div class="markdown level1 summary"><p>Compute a change of basis for the given matrix. From \psi basis to HoloLens basis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DenseMatrix ChangeBasisPsiToHoloLens(this DenseMatrix psiMatrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DenseMatrix</span></td>
+        <td><span class="parametername">psiMatrix</span></td>
+        <td><p>The given matrix in \psi basis.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DenseMatrix</span></td>
+        <td><p>The converted matrix with HoloLens basis.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ChangeBasisPsiToHoloLens_DenseMatrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L260">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_SelectManyImuSamples_" data-uid="Microsoft.Psi.MixedReality.Operators.SelectManyImuSamples*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_SelectManyImuSamples_IProducer_System_ValueTuple_Vector3D_DateTime_____" data-uid="Microsoft.Psi.MixedReality.Operators.SelectManyImuSamples(IProducer{System.ValueTuple{Vector3D,DateTime}[]})">SelectManyImuSamples(IProducer&lt;(Vector3D Sample, DateTime OriginatingTime)[]&gt;)</h4>
+  <div class="markdown level1 summary"><p>Convert stream of frames of IMU samples to flattened stream of samples within.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Vector3D&gt; SelectManyImuSamples(this IProducer&lt;(Vector3D Sample, DateTime OriginatingTime)[]&gt; source)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<span class="xref">Vector3D</span>, <span class="xref">DateTime</span>&gt;[]&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Stream of IMU frames.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<span class="xref">Vector3D</span>&gt;</td>
+        <td><p>Stream of IMU samples.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L127">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToMathNetMatrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ToMathNetMatrix*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToMathNetMatrix_Matrix4x4_" data-uid="Microsoft.Psi.MixedReality.Operators.ToMathNetMatrix(Matrix4x4)">ToMathNetMatrix(Matrix4x4)</h4>
+  <div class="markdown level1 summary"><p>Converts a <see cref="!:Matrix4x4"></see> to a <see cref="!:DenseMatrix"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static DenseMatrix ToMathNetMatrix(this Matrix4x4 systemNumericsMatrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix4x4</span></td>
+        <td><span class="parametername">systemNumericsMatrix</span></td>
+        <td><p>The System.Numerics matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DenseMatrix</span></td>
+        <td><p>The MathNet dense matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L215">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToPoint3D_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPoint3D*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToPoint3D_Vec3_System_Boolean_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPoint3D(Vec3,System.Boolean)">ToPoint3D(Vec3, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Convert <see cref="!:Vec3"></see> to <see cref="!:Point3D"></see>, changing the basis from HoloLens to \psi.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Point3D ToPoint3D(this Vec3 vec3, bool transformStereoKitToWorld = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vec3</span></td>
+        <td><span class="parametername">vec3</span></td>
+        <td><p><see cref="!:Vec3"></see> to be converted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">transformStereoKitToWorld</span></td>
+        <td><p>If true, transform from StereoKit coordinates to world coordinates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><p><see cref="!:Point3D"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToPoint3D_Vec3_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L241">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToPoint3D_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPoint3D*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToPoint3D_Vector3_System_Boolean_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPoint3D(Vector3,System.Boolean)">ToPoint3D(Vector3, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Convert <see cref="!:Vector3"></see> to <see cref="!:Point3D"></see>, changing the basis from HoloLens to \psi.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Point3D ToPoint3D(this Vector3 vector3, bool transformStereoKitToWorld = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vector3</span></td>
+        <td><span class="parametername">vector3</span></td>
+        <td><p><see cref="!:Vector3"></see> to be converted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">transformStereoKitToWorld</span></td>
+        <td><p>If true, transform from StereoKit coordinates to world coordinates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><p><see cref="!:Point3D"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToPoint3D_Vector3_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L82">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToPsiCoordinateSystem_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPsiCoordinateSystem*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToPsiCoordinateSystem_Pose_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPsiCoordinateSystem(Pose)">ToPsiCoordinateSystem(Pose)</h4>
+  <div class="markdown level1 summary"><p>Converts a StereoKit <see cref="!:Pose"></see> to a \psi <see cref="!:CoordinateSystem"></see>,
+changing basis from HoloLens to \psi and transforming from StereoKit coordinates to world coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CoordinateSystem ToPsiCoordinateSystem(this Pose pose)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Pose</span></td>
+        <td><span class="parametername">pose</span></td>
+        <td><p>The StereoKit <see cref="!:Pose"></see> to be converted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><p>The <see cref="!:CoordinateSystem"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToPsiCoordinateSystem_Pose__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToPsiCoordinateSystem_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPsiCoordinateSystem*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToPsiCoordinateSystem_StereoKit_Matrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ToPsiCoordinateSystem(StereoKit.Matrix)">ToPsiCoordinateSystem(StereoKit.Matrix)</h4>
+  <div class="markdown level1 summary"><p>Converts a <see cref="!:StereoKit.Matrix"></see> pose to a \psi <see cref="!:CoordinateSystem"></see>,
+changing basis from HoloLens to \psi and transforming from StereoKit coordinates to world coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CoordinateSystem ToPsiCoordinateSystem(this StereoKit.Matrix stereoKitMatrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">StereoKit.Matrix</span></td>
+        <td><span class="parametername">stereoKitMatrix</span></td>
+        <td><p>The <see cref="!:StereoKit.Matrix"></see> to be converted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><p>The <see cref="!:CoordinateSystem"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToPsiCoordinateSystem_StereoKit_Matrix__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L252">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToStereoKitColor_" data-uid="Microsoft.Psi.MixedReality.Operators.ToStereoKitColor*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToStereoKitColor_System_Drawing_Color_" data-uid="Microsoft.Psi.MixedReality.Operators.ToStereoKitColor(System.Drawing.Color)">ToStereoKitColor(System.Drawing.Color)</h4>
+  <div class="markdown level1 summary"><p>Converts a specified <see cref="!:System.Drawing.Color"></see> to a <see cref="!:StereoKit.Color"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StereoKit.Color ToStereoKitColor(this System.Drawing.Color color)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.drawing.color">Color</a></td>
+        <td><span class="parametername">color</span></td>
+        <td><p>The <see cref="!:System.Drawing.Color"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">StereoKit.Color</span></td>
+        <td><p>The corresponding <see cref="!:StereoKit.Color"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToStereoKitMatrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ToStereoKitMatrix*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToStereoKitMatrix_CoordinateSystem_" data-uid="Microsoft.Psi.MixedReality.Operators.ToStereoKitMatrix(CoordinateSystem)">ToStereoKitMatrix(CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Converts a <see cref="!:CoordinateSystem"></see> pose to a <see cref="!:StereoKit.Matrix"></see> pose,
+changing basis from \psi to HoloLens and transforming from world coordinates to StereoKit coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static StereoKit.Matrix ToStereoKitMatrix(this CoordinateSystem coordinateSystem)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The <see cref="!:CoordinateSystem"></see> pose to be converted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">StereoKit.Matrix</span></td>
+        <td><p>The <see cref="!:StereoKit.Matrix"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToStereoKitMatrix_CoordinateSystem__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L117">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToStereoKitPose_" data-uid="Microsoft.Psi.MixedReality.Operators.ToStereoKitPose*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToStereoKitPose_CoordinateSystem_" data-uid="Microsoft.Psi.MixedReality.Operators.ToStereoKitPose(CoordinateSystem)">ToStereoKitPose(CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Converts a <see cref="!:CoordinateSystem"></see> pose to a StereoKit <see cref="!:Pose"></see>,
+changing basis from \psi to HoloLens and transforming from world coordinates to StereoKit coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Pose ToStereoKitPose(this CoordinateSystem coordinateSystem)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The <see cref="!:CoordinateSystem"></see> pose to be converted.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Pose</span></td>
+        <td><p>The <see cref="!:Pose"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToStereoKitPose_CoordinateSystem__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L158">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToSystemNumericsMatrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ToSystemNumericsMatrix*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToSystemNumericsMatrix_DenseMatrix_" data-uid="Microsoft.Psi.MixedReality.Operators.ToSystemNumericsMatrix(DenseMatrix)">ToSystemNumericsMatrix(DenseMatrix)</h4>
+  <div class="markdown level1 summary"><p>Converts a <see cref="!:DenseMatrix"></see> to a <see cref="!:Matrix4x4"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Matrix4x4 ToSystemNumericsMatrix(this DenseMatrix mathNetMatrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">DenseMatrix</span></td>
+        <td><span class="parametername">mathNetMatrix</span></td>
+        <td><p>The MathNet dense matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix4x4</span></td>
+        <td><p>The System.Numerics matrix.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L192">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Operators_ToVec3_" data-uid="Microsoft.Psi.MixedReality.Operators.ToVec3*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Operators_ToVec3_Point3D_System_Boolean_" data-uid="Microsoft.Psi.MixedReality.Operators.ToVec3(Point3D,System.Boolean)">ToVec3(Point3D, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Convert <see cref="!:Point3D"></see> to <see cref="!:Vec3"></see>, changing the basis from \psi to HoloLens.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 ToVec3(this Point3D point3d, bool transformWorldToStereoKit = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point3d</span></td>
+        <td><p><see cref="!:Point3D"></see> to be converted.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">transformWorldToStereoKit</span></td>
+        <td><p>If true, transform from world coordinates to StereoKit coordinates.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Vec3</span></td>
+        <td><p><see cref="!:Vec3"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_Operators_ToVec3_Point3D_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
+&quot;StereoKit coordinates&quot; means &quot;in relation to the pose of the headset at startup&quot;.
+&quot;World coordinates&quot; means &quot;in relation to the world spatial anchor&quot;.</p>
+</div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Operators.cs/#L17" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

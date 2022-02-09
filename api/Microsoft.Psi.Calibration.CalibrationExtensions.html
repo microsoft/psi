@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Calibration_CalibrationExtensions" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions" class="text-break">Class CalibrationExtensions
   </h1>
-  <div class="markdown level0 summary"><p>Provides various helper and extension methods for dealing with calibration objects, camera intrinsics, rotations, etc.</p>
+  <div class="markdown level0 summary"><p>Provides various helper and extension methods for calibrating cameras, dealing with calibration objects, camera intrinsics, rotations, etc.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -101,7 +101,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L134">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L260">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CalibrationExtensions_AxisAngleToMatrix_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.AxisAngleToMatrix*"></a>
   <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_AxisAngleToMatrix_Vector_System_Double__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.AxisAngleToMatrix(Vector{System.Double})">AxisAngleToMatrix(Vector&lt;Double&gt;)</h4>
@@ -153,17 +153,203 @@ where the angle is represented by the length (L2-norm) of the vector.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L33">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics(Microsoft.Psi.Imaging.ImageBase,System.Double,System.Double)">ComputeCameraIntrinsics(ImageBase, Double, Double)</h4>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_CalibrateCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CalibrateCameraIntrinsics*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_CalibrateCameraIntrinsics_List_Point3D__List_Point2D__Matrix_System_Double__Vector_System_Double__Matrix_System_Double___Vector_System_Double___System_Boolean_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CalibrateCameraIntrinsics(List{Point3D},List{Point2D},Matrix{System.Double},Vector{System.Double},Matrix{System.Double}@,Vector{System.Double}@,System.Boolean)">CalibrateCameraIntrinsics(List&lt;Point3D&gt;, List&lt;Point2D&gt;, Matrix&lt;Double&gt;, Vector&lt;Double&gt;, out Matrix&lt;Double&gt;, out Vector&lt;Double&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Estimate a camera's camera matrix and distortion coefficients, given a set of image points and
+corresponding 3d camera points. The underlying calibration procedure utilizes Levenberg Marquardt
+optimization to produce these estimates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double CalibrateCameraIntrinsics(List&lt;Point3D&gt; cameraPoints, List&lt;Point2D&gt; imagePoints, Matrix&lt;double&gt; initialCameraMatrix, Vector&lt;double&gt; initialDistortionCoefficients, out Matrix&lt;double&gt; cameraMatrix, out Vector&lt;double&gt; distortionCoefficients, bool silent = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><span class="parametername">cameraPoints</span></td>
+        <td><p>3d positions of the points in camera coordinates.
+These points are <em>not</em> yet in the typically assumed \psi basis (X=Forward, Y=Left, Z=Up).
+Instead, we assume that X and Y correspond to directions in the image plane, and Z corresponds to depth in the plane.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">Point2D</span>&gt;</td>
+        <td><span class="parametername">imagePoints</span></td>
+        <td><p>2d positions of the points in the image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">initialCameraMatrix</span></td>
+        <td><p>Initial estimate of the camera matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">initialDistortionCoefficients</span></td>
+        <td><p>Initial estimate of distortion coefficients.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">cameraMatrix</span></td>
+        <td><p>Estimated output camera matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">distortionCoefficients</span></td>
+        <td><p>Estimated output distortion coefficients.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">silent</span></td>
+        <td><p>If false, print debugging information to the console.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The RMS (root mean squared) error of this computation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_CalibrateCameraIntrinsicsAndExtrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CalibrateCameraIntrinsicsAndExtrinsics*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_CalibrateCameraIntrinsicsAndExtrinsics_List_Point3D__List_Point2D__Matrix_System_Double__Vector_System_Double__Matrix_System_Double___Vector_System_Double___Vector_System_Double___Vector_System_Double___System_Boolean_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CalibrateCameraIntrinsicsAndExtrinsics(List{Point3D},List{Point2D},Matrix{System.Double},Vector{System.Double},Matrix{System.Double}@,Vector{System.Double}@,Vector{System.Double}@,Vector{System.Double}@,System.Boolean)">CalibrateCameraIntrinsicsAndExtrinsics(List&lt;Point3D&gt;, List&lt;Point2D&gt;, Matrix&lt;Double&gt;, Vector&lt;Double&gt;, out Matrix&lt;Double&gt;, out Vector&lt;Double&gt;, out Vector&lt;Double&gt;, out Vector&lt;Double&gt;, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Estimate a camera's intrinsics (camera matrix + distortion coefficients) and extrinsics (rotation + translation)
+given a set of image points and corresponding 3d world points. The underlying calibration procedure utilizes
+Levenberg Marquardt optimization to produce these estimates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static double CalibrateCameraIntrinsicsAndExtrinsics(List&lt;Point3D&gt; worldPoints, List&lt;Point2D&gt; imagePoints, Matrix&lt;double&gt; initialCameraMatrix, Vector&lt;double&gt; initialDistortionCoefficients, out Matrix&lt;double&gt; cameraMatrix, out Vector&lt;double&gt; distortionCoefficients, out Vector&lt;double&gt; rotation, out Vector&lt;double&gt; translation, bool silent = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">Point3D</span>&gt;</td>
+        <td><span class="parametername">worldPoints</span></td>
+        <td><p>3d positions of the points in world coordinates.
+These points are <em>not</em> yet in the typically assumed \psi basis (X=Forward, Y=Left, Z=Up).
+Instead, we assume that X and Y correspond to directions in the image plane, and Z corresponds to depth in the plane.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">List</span>&lt;<span class="xref">Point2D</span>&gt;</td>
+        <td><span class="parametername">imagePoints</span></td>
+        <td><p>2d positions of the points in the image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">initialCameraMatrix</span></td>
+        <td><p>Initial estimate of the camera matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">initialDistortionCoefficients</span></td>
+        <td><p>Initial estimate of distortion coefficients.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">cameraMatrix</span></td>
+        <td><p>Estimated output camera matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">distortionCoefficients</span></td>
+        <td><p>Estimated output distortion coefficients.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">rotation</span></td>
+        <td><p>Estimated camera rotation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">translation</span></td>
+        <td><p>Estimated camera translation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">silent</span></td>
+        <td><p>If false, print debugging information to the console.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><p>The RMS (root mean squared) error of this computation.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L176">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CreateCameraIntrinsics*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CreateCameraIntrinsics(Microsoft.Psi.Imaging.ImageBase,System.Double,System.Double)">CreateCameraIntrinsics(ImageBase, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Construct a new <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a> object
 computed from an image (width and height) and focal length.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ICameraIntrinsics ComputeCameraIntrinsics(this ImageBase image, double focalLengthX, double focalLengthY)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ICameraIntrinsics CreateCameraIntrinsics(this ImageBase image, double focalLengthX, double focalLengthY)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -213,17 +399,17 @@ computed from an image (width and height) and focal length.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L153">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ComputeCameraIntrinsics_System_Int32_System_Int32_System_Double_System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ComputeCameraIntrinsics(System.Int32,System.Int32,System.Double,System.Double)">ComputeCameraIntrinsics(Int32, Int32, Double, Double)</h4>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CreateCameraIntrinsics*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_System_Int32_System_Int32_System_Double_System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.CreateCameraIntrinsics(System.Int32,System.Int32,System.Double,System.Double)">CreateCameraIntrinsics(Int32, Int32, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Construct a new <a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a> object
 computed from image width/height and focal length.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static ICameraIntrinsics ComputeCameraIntrinsics(int imageWidth, int imageHeight, double focalLengthX, double focalLengthY)</code></pre>
+    <pre><code class="lang-csharp hljs">public static ICameraIntrinsics CreateCameraIntrinsics(int imageWidth, int imageHeight, double focalLengthX, double focalLengthY)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -279,7 +465,7 @@ computed from image width/height and focal length.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L99">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L225">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CalibrationExtensions_IntersectLineWithDepthMesh_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.IntersectLineWithDepthMesh*"></a>
   <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_IntersectLineWithDepthMesh_Microsoft_Psi_Calibration_ICameraIntrinsics_Line3D_Microsoft_Psi_Imaging_DepthImage_System_Double_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.IntersectLineWithDepthMesh(Microsoft.Psi.Calibration.ICameraIntrinsics,Line3D,Microsoft.Psi.Imaging.DepthImage,System.Double,System.Double,System.Boolean)">IntersectLineWithDepthMesh(ICameraIntrinsics, Line3D, DepthImage, Double, Double, Boolean)</h4>
@@ -356,16 +542,16 @@ computed from image width/height and focal length.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L179">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L306">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CalibrationExtensions_MatrixToAxisAngle_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.MatrixToAxisAngle*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_MatrixToAxisAngle_Matrix_System_Double__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.MatrixToAxisAngle(Matrix{System.Double})">MatrixToAxisAngle(Matrix&lt;Double&gt;)</h4>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_MatrixToAxisAngle_Matrix_System_Double__System_Double_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.MatrixToAxisAngle(Matrix{System.Double},System.Double)">MatrixToAxisAngle(Matrix&lt;Double&gt;, Double)</h4>
   <div class="markdown level1 summary"><p>Convert a rotation matrix to axis-angle representation (a unit vector scaled by the angular distance to rotate).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Vector&lt;double&gt; MatrixToAxisAngle(Matrix&lt;double&gt; m)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Vector&lt;double&gt; MatrixToAxisAngle(Matrix&lt;double&gt; m, double epsilon = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -381,6 +567,12 @@ computed from image width/height and focal length.</p>
         <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">m</span></td>
         <td><p>Input rotation matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">epsilon</span></td>
+        <td><p>An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation.</p>
 </td>
       </tr>
     </tbody>
@@ -403,7 +595,58 @@ computed from image width/height and focal length.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L81">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L409">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Calibration_CalibrationExtensions_Project_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.Project*"></a>
+  <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_Project_Matrix_System_Double__Vector_System_Double__Point3D_Point2D__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.Project(Matrix{System.Double},Vector{System.Double},Point3D,Point2D@)">Project(Matrix&lt;Double&gt;, Vector&lt;Double&gt;, Point3D, out Point2D)</h4>
+  <div class="markdown level1 summary"><p>Project a 3D point (x, y, z) into a camera space (u, v) given the camera matrix and distortion coefficients.
+The 3D point is <em>not</em> yet in the typically assumed \psi basis (X=Forward, Y=Left, Z=Up).
+Instead, X and Y correspond to the image plane X and Y directions, with Z as depth.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Project(Matrix&lt;double&gt; cameraMatrix, Vector&lt;double&gt; distCoeffs, Point3D point, out Point2D projectedPoint)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">cameraMatrix</span></td>
+        <td><p>The camera matrix.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="parametername">distCoeffs</span></td>
+        <td><p>The distortion coefficients of the camera.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point3D</span></td>
+        <td><span class="parametername">point</span></td>
+        <td><p>Input 3D point (X and Y correspond to image dimensions, with Z as depth).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Point2D</span></td>
+        <td><span class="parametername">projectedPoint</span></td>
+        <td><p>Projected 2D point (output).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L207">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectTo3D_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectTo3D*"></a>
   <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectTo3D_Microsoft_Psi_IProducer_System_ValueTuple_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__List_Point2D__Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo___Microsoft_Psi_DeliveryPolicy_System_ValueTuple_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__List_Point2D__Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo___" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectTo3D(Microsoft.Psi.IProducer{System.ValueTuple{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage},List{Point2D},Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo}},Microsoft.Psi.DeliveryPolicy{System.ValueTuple{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage},List{Point2D},Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo}})">ProjectTo3D(IProducer&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo)&gt;, DeliveryPolicy&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo)&gt;)</h4>
@@ -456,7 +699,7 @@ computed from image width/height and focal length.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CalibrationExtensions.cs/#L188">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectToCameraSpace_" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectToCameraSpace*"></a>
   <h4 id="Microsoft_Psi_Calibration_CalibrationExtensions_ProjectToCameraSpace_Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo_Point2D_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__" data-uid="Microsoft.Psi.Calibration.CalibrationExtensions.ProjectToCameraSpace(Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo,Point2D,Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage})">ProjectToCameraSpace(IDepthDeviceCalibrationInfo, Point2D, Shared&lt;DepthImage&gt;)</h4>

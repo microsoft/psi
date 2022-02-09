@@ -89,7 +89,7 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><span class="xref">StreamContainerTreeNode</span></div>
       <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DerivedStreamContainerTreeNode.html">DerivedStreamContainerTreeNode</a></div>
@@ -97,8 +97,7 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -109,44 +108,26 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class StreamContainerTreeNode : ObservableTreeNodeObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class StreamContainerTreeNode : ObservableTreeNodeObject, INotifyPropertyChanging</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This class also acts as the base class for the hierarchy of stream tree nodes.
@@ -436,7 +417,7 @@ public virtual string IconSource { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L338">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L342">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_InternalChildren_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.InternalChildren*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_InternalChildren" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.InternalChildren">InternalChildren</h4>
@@ -638,7 +619,7 @@ public SessionViewModel SessionViewModel { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L274">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L276">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedAverageMessageSize_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedAverageMessageSize*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedAverageMessageSize" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedAverageMessageSize">SubsumedAverageMessageSize</h4>
@@ -695,7 +676,7 @@ public virtual DateTime SubsumedClosedTime { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L298">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L302">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedClosedTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedClosedTimeString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedClosedTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedClosedTimeString">SubsumedClosedTimeString</h4>
@@ -752,7 +733,7 @@ public virtual DateTime SubsumedFirstMessageCreationTime { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L314">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L318">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageCreationTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedFirstMessageCreationTimeString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageCreationTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedFirstMessageCreationTimeString">SubsumedFirstMessageCreationTimeString</h4>
@@ -809,7 +790,7 @@ public virtual DateTime SubsumedFirstMessageOriginatingTime { get; }</code></pre
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L306">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L310">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedFirstMessageOriginatingTimeString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedFirstMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedFirstMessageOriginatingTimeString">SubsumedFirstMessageOriginatingTimeString</h4>
@@ -866,7 +847,7 @@ public virtual DateTime SubsumedLastMessageCreationTime { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L330">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L334">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageCreationTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedLastMessageCreationTimeString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageCreationTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedLastMessageCreationTimeString">SubsumedLastMessageCreationTimeString</h4>
@@ -923,7 +904,7 @@ public virtual DateTime SubsumedLastMessageOriginatingTime { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L322">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L326">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageOriginatingTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedLastMessageOriginatingTimeString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedLastMessageOriginatingTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedLastMessageOriginatingTimeString">SubsumedLastMessageOriginatingTimeString</h4>
@@ -1008,7 +989,7 @@ public virtual DateTime SubsumedOpenedTime { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L290">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L294">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedOpenedTimeString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedOpenedTimeString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedOpenedTimeString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedOpenedTimeString">SubsumedOpenedTimeString</h4>
@@ -1065,7 +1046,7 @@ public virtual TimeInterval SubsumedOriginatingTimeInterval { get; }</code></pre
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L282">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L286">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedSize_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedSize*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SubsumedSize" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SubsumedSize">SubsumedSize</h4>
@@ -1153,7 +1134,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L353">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L357">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AddChildTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.AddChildTreeNode*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AddChildTreeNode_Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.AddChildTreeNode(Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode)">AddChildTreeNode(StreamContainerTreeNode)</h4>
@@ -1184,7 +1165,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L346">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L350">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AddStreamTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.AddStreamTreeNode*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_AddStreamTreeNode_Microsoft_Psi_IStreamMetadata_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.AddStreamTreeNode(Microsoft.Psi.IStreamMetadata)">AddStreamTreeNode(IStreamMetadata)</h4>
@@ -1231,7 +1212,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L396">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L400">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_CollapseAll_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.CollapseAll*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_CollapseAll" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.CollapseAll">CollapseAll()</h4>
@@ -1244,7 +1225,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L383">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L387">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ExpandAll_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.ExpandAll*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ExpandAll" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.ExpandAll">ExpandAll()</h4>
@@ -1270,7 +1251,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L377">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L381">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_FindStreamContainerTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.FindStreamContainerTreeNode*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_FindStreamContainerTreeNode_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.FindStreamContainerTreeNode(System.String)">FindStreamContainerTreeNode(String)</h4>
@@ -1317,7 +1298,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L369">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L373">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_FindStreamTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.FindStreamTreeNode*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_FindStreamTreeNode_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.FindStreamTreeNode(System.String)">FindStreamTreeNode(String)</h4>
@@ -1364,7 +1345,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L427">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L431">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_OnDatasetViewModelPropertyChanged_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.OnDatasetViewModelPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_OnDatasetViewModelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.OnDatasetViewModelPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnDatasetViewModelPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -1401,7 +1382,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L414">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L418">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_OnPartitionViewModelPropertyChanged_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.OnPartitionViewModelPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_OnPartitionViewModelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.OnPartitionViewModelPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnPartitionViewModelPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -1438,7 +1419,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L470">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L492">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenu_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.PopulateContextMenu*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenu_System_Windows_Controls_ContextMenu_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.PopulateContextMenu(System.Windows.Controls.ContextMenu)">PopulateContextMenu(ContextMenu)</h4>
@@ -1469,7 +1450,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L517">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L545">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenuWithExpandAndCollapseAll_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.PopulateContextMenuWithExpandAndCollapseAll*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenuWithExpandAndCollapseAll_System_Windows_Controls_ContextMenu_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.PopulateContextMenuWithExpandAndCollapseAll(System.Windows.Controls.ContextMenu)">PopulateContextMenuWithExpandAndCollapseAll(ContextMenu)</h4>
@@ -1500,7 +1481,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L480">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L502">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenuWithShowStreamInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.PopulateContextMenuWithShowStreamInfo*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_PopulateContextMenuWithShowStreamInfo_System_Windows_Controls_ContextMenu_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.PopulateContextMenuWithShowStreamInfo(System.Windows.Controls.ContextMenu)">PopulateContextMenuWithShowStreamInfo(ContextMenu)</h4>
@@ -1531,7 +1512,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L361">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L365">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SelectTreeNode_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SelectTreeNode*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_SelectTreeNode_System_String_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.SelectTreeNode(System.String)">SelectTreeNode(String)</h4>
@@ -1578,7 +1559,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L407">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L411">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ToString_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.ToString*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_ToString" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.ToString">ToString()</h4>
@@ -1603,11 +1584,9 @@ public virtual double UiElementOpacity { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L442">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/StreamContainerTreeNode.cs/#L446">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_UpdateAuxiliaryInfo_" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.UpdateAuxiliaryInfo*"></a>
   <h4 id="Microsoft_Psi_Visualization_ViewModels_StreamContainerTreeNode_UpdateAuxiliaryInfo" data-uid="Microsoft.Psi.Visualization.ViewModels.StreamContainerTreeNode.UpdateAuxiliaryInfo">UpdateAuxiliaryInfo()</h4>
@@ -1620,10 +1599,7 @@ public virtual double UiElementOpacity { get; }</code></pre>
   </div>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

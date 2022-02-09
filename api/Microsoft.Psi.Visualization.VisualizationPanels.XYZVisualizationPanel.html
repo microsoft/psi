@@ -89,20 +89,22 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
     <div class="level4"><span class="xref">XYZVisualizationPanel</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibilityCommand">VisualizationPanel.ToggleAllVisualizersVisibilityCommand</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleVisibilityCommand">VisualizationPanel.ToggleVisibilityCommand</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_RemovePanelCommand">VisualizationPanel.RemovePanelCommand</a>
@@ -120,6 +122,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Name">VisualizationPanel.Name</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Visible">VisualizationPanel.Visible</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Height">VisualizationPanel.Height</a>
     </div>
     <div>
@@ -127,6 +132,9 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Width">VisualizationPanel.Width</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_IsShown">VisualizationPanel.IsShown</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Container">VisualizationPanel.Container</a>
@@ -174,7 +182,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_Clear">VisualizationPanel.Clear()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibility">VisualizationPanel.ToggleAllVisualizersVisibility()</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizationObjectsVisibility">VisualizationPanel.ToggleAllVisualizationObjectsVisibility()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleVisualizationObjectVisibility_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.ToggleVisualizationObjectVisibility(VisualizationObject)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_SendToBack_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.SendToBack(VisualizationObject)</a>
@@ -183,7 +194,16 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_SetParentContainer_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_">VisualizationPanel.SetParentContainer(VisualizationContainer)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_SetParentPanel_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_">VisualizationPanel.SetParentPanel(VisualizationPanel)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_GetDerivedStreamVisualizationObjects">VisualizationPanel.GetDerivedStreamVisualizationObjects()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_UnbindVisualizationObjectsFromStore_System_String_System_String_System_String_">VisualizationPanel.UnbindVisualizationObjectsFromStore(String, String, String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_UpdateStreamSources_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_">VisualizationPanel.UpdateStreamSources(SessionViewModel)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToString">VisualizationPanel.ToString()</a>
@@ -204,56 +224,41 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnContainerPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationPanel.OnContainerPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnParentPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationPanel.OnParentPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeExpanded">ObservableTreeNodeObject.IsTreeNodeExpanded</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.html">Microsoft.Psi.Visualization.VisualizationPanels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class XYZVisualizationPanel : VisualizationPanel, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class XYZVisualizationPanel : VisualizationPanel, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L54">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.#ctor">XYZVisualizationPanel()</h4>
@@ -268,7 +273,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L138">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L131">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraAnimation_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraAnimation*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraAnimation" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraAnimation">CameraAnimation</h4>
@@ -327,7 +332,7 @@ public double CameraFieldOfView { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L208">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L206">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraLookDirection_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraLookDirection*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraLookDirection" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraLookDirection">CameraLookDirection</h4>
@@ -356,7 +361,7 @@ public Vector3D CameraLookDirection { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L196">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L193">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraPosition_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraPosition*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraPosition" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraPosition">CameraPosition</h4>
@@ -385,7 +390,7 @@ public Point3D CameraPosition { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L220">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L219">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraUpDirection_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraUpDirection*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraUpDirection" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraUpDirection">CameraUpDirection</h4>
@@ -414,7 +419,7 @@ public Vector3D CameraUpDirection { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L242">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L375">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CompatiblePanelTypes_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CompatiblePanelTypes*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CompatiblePanelTypes" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CompatiblePanelTypes">CompatiblePanelTypes</h4>
@@ -444,7 +449,7 @@ public Vector3D CameraUpDirection { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CompatiblePanelTypes">VisualizationPanel.CompatiblePanelTypes</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L160">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L154">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_MajorDistance_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.MajorDistance*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_MajorDistance" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.MajorDistance">MajorDistance</h4>
@@ -473,7 +478,7 @@ public double MajorDistance { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L172">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L167">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_MinorDistance_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.MinorDistance*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_MinorDistance" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.MinorDistance">MinorDistance</h4>
@@ -502,7 +507,7 @@ public double MinorDistance { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L110">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L103">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_MouseRightButtonUpCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.MouseRightButtonUpCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_MouseRightButtonUpCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.MouseRightButtonUpCommand">MouseRightButtonUpCommand</h4>
@@ -532,7 +537,7 @@ public virtual RelayCommand&lt;MouseButtonEventArgs&gt; MouseRightButtonUpComman
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L67">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_PreviewMouseRightButtonDownCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.PreviewMouseRightButtonDownCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_PreviewMouseRightButtonDownCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.PreviewMouseRightButtonDownCommand">PreviewMouseRightButtonDownCommand</h4>
@@ -562,7 +567,7 @@ public virtual RelayCommand&lt;MouseButtonEventArgs&gt; PreviewMouseRightButtonD
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L149">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L142">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_RelativeWidth_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.RelativeWidth*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_RelativeWidth" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.RelativeWidth">RelativeWidth</h4>
@@ -591,7 +596,268 @@ public int RelativeWidth { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L184">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L245">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_RotateAroundMouseDownPoint_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.RotateAroundMouseDownPoint*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_RotateAroundMouseDownPoint" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.RotateAroundMouseDownPoint">RotateAroundMouseDownPoint</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to rotate around the mouse down point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool RotateAroundMouseDownPoint { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L269">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_RotationSensitivity_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.RotationSensitivity*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_RotationSensitivity" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.RotationSensitivity">RotationSensitivity</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the rotation sensitivity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double RotationSensitivity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L293">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowCameraInfo_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowCameraInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowCameraInfo" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowCameraInfo">ShowCameraInfo</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show camera info.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowCameraInfo { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L305">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowCameraTarget_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowCameraTarget*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowCameraTarget" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowCameraTarget">ShowCameraTarget</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the camera target.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowCameraTarget { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L317">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowCoordinateSystem_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowCoordinateSystem*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowCoordinateSystem" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowCoordinateSystem">ShowCoordinateSystem</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the coordinate system.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowCoordinateSystem { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L329">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowFieldOfView_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowFieldOfView*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowFieldOfView" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowFieldOfView">ShowFieldOfView</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the field of view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowFieldOfView { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L341">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowFrameRate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowFrameRate*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowFrameRate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowFrameRate">ShowFrameRate</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the frame rate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowFrameRate { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L353">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowTriangleCountInfo_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowTriangleCountInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowTriangleCountInfo" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowTriangleCountInfo">ShowTriangleCountInfo</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the triangle count info.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowTriangleCountInfo { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L365">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowViewCube_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowViewCube*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ShowViewCube" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ShowViewCube">ShowViewCube</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the view cube.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ShowViewCube { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L180">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_Thickness_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.Thickness*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_Thickness" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.Thickness">Thickness</h4>
@@ -618,11 +884,69 @@ public double Thickness { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L257">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ZoomAroundMouseDownPoint_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ZoomAroundMouseDownPoint*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ZoomAroundMouseDownPoint" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ZoomAroundMouseDownPoint">ZoomAroundMouseDownPoint</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to zoom around the mouse down point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public bool ZoomAroundMouseDownPoint { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L281">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ZoomSensitivity_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ZoomSensitivity*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_ZoomSensitivity" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.ZoomSensitivity">ZoomSensitivity</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the zoom sensitivity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double ZoomSensitivity { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L253">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L386">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CreateDefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CreateDefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CreateDefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CreateDefaultViewTemplate">CreateDefaultViewTemplate()</h4>
@@ -653,7 +977,7 @@ public double Thickness { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CreateDefaultViewTemplate">VisualizationPanel.CreateDefaultViewTemplate()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L247">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L380">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_NotifyCameraAnimationCompleted_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.NotifyCameraAnimationCompleted*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_NotifyCameraAnimationCompleted" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.NotifyCameraAnimationCompleted">NotifyCameraAnimationCompleted()</h4>
@@ -668,7 +992,7 @@ public double Thickness { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYZVisualizationPanel.cs/#L62">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYZVisualizationPanel_CameraAnimationCompleted" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYZVisualizationPanel.CameraAnimationCompleted">CameraAnimationCompleted</h4>
   <div class="markdown level1 summary"><p>Gets the camera animation completed event.</p>
@@ -695,10 +1019,7 @@ public double Thickness { get; set; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

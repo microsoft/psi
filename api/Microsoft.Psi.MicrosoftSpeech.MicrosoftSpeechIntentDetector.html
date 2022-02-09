@@ -116,7 +116,8 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.MicrosoftSpeech.Windows.dll</h6>
   <h5 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class MicrosoftSpeechIntentDetector : ConsumerProducer&lt;string, IntentData&gt;, IConsumerProducer&lt;string, IntentData&gt;, IConsumer&lt;string&gt;, IProducer&lt;IntentData&gt;, ISourceComponent, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;The MicrosoftSpeechRecognizer component has been deprecated. Consider using the SystemSpeechRecognizer component available in Microsoft.Psi.Speech.Windows instead.&quot;, false)]
+public sealed class MicrosoftSpeechIntentDetector : ConsumerProducer&lt;string, IntentData&gt;, IConsumerProducer&lt;string, IntentData&gt;, IConsumer&lt;string&gt;, IProducer&lt;IntentData&gt;, ISourceComponent, IDisposable</code></pre>
   </div>
   <h5 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Separate download and installation of the Microsoft Speech Platform runtime and language pack are required in order to use this component.</p>
@@ -129,7 +130,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetectorConfiguration_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetectorConfiguration)">MicrosoftSpeechIntentDetector(Pipeline, MicrosoftSpeechIntentDetectorConfiguration)</h4>
@@ -166,7 +167,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L66">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L67">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.#ctor(Microsoft.Psi.Pipeline,System.String)">MicrosoftSpeechIntentDetector(Pipeline, String)</h4>
@@ -190,7 +191,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
         <td><span class="parametername">pipeline</span></td>
-        <td><p>The Psi pipeline.</p>
+        <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
       <tr>
@@ -205,7 +206,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L86">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_LoadGrammarCompleted_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.LoadGrammarCompleted*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_LoadGrammarCompleted" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.LoadGrammarCompleted">LoadGrammarCompleted</h4>
@@ -233,7 +234,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L81">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L82">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammarNames_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammarNames*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammarNames" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammarNames">ReceiveGrammarNames</h4>
@@ -261,7 +262,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L77">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammars*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_ReceiveGrammars" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.ReceiveGrammars">ReceiveGrammars</h4>
@@ -291,7 +292,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L123">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L124">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_DisableAllGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.DisableAllGrammars*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_DisableAllGrammars" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.DisableAllGrammars">DisableAllGrammars()</h4>
@@ -304,7 +305,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L132">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L133">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Dispose_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Dispose*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Dispose" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Dispose">Dispose()</h4>
@@ -316,7 +317,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L112">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L113">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_EnableGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.EnableGrammars*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_EnableGrammars_Microsoft_Psi_Message_System_String____" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.EnableGrammars(Microsoft.Psi.Message{System.String[]})">EnableGrammars(Message&lt;String[]&gt;)</h4>
@@ -347,7 +348,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L163">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L164">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Receive_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Receive*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Receive_System_String_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Receive(System.String,Microsoft.Psi.Envelope)">Receive(String, Envelope)</h4>
@@ -387,7 +388,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   <div><span class="xref">Microsoft.Psi.Components.ConsumerProducer&lt;System.String, Microsoft.Psi.Language.IntentData&gt;.Receive(System.String, Microsoft.Psi.Envelope)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L98">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_SetGrammars_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.SetGrammars*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_SetGrammars_Microsoft_Psi_Message_System_Collections_Generic_IEnumerable_System_String___" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.SetGrammars(Microsoft.Psi.Message{System.Collections.Generic.IEnumerable{System.String}})">SetGrammars(Message&lt;IEnumerable&lt;String&gt;&gt;)</h4>
@@ -418,7 +419,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L150">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L151">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Start_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Start*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Start_System_Action_System_DateTime__" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Start(System.Action{System.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -447,7 +448,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L157">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/MicrosoftSpeech/Microsoft.Psi.MicrosoftSpeech.Windows/MicrosoftSpeechIntentDetector.cs/#L158">View Source</a>
   </span>
   <a id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Stop_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Stop*"></a>
   <h4 id="Microsoft_Psi_MicrosoftSpeech_MicrosoftSpeechIntentDetector_Stop_System_DateTime_System_Action_" data-uid="Microsoft.Psi.MicrosoftSpeech.MicrosoftSpeechIntentDetector.Stop(System.DateTime,System.Action)">Stop(DateTime, Action)</h4>

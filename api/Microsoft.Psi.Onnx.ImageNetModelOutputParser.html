@@ -102,16 +102,16 @@ a set of image classification results.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelOutputParser.cs/#L32">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelOutputParser.cs/#L35">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_ImageNetModelOutputParser__ctor_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser__ctor_System_String_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.#ctor(System.String,System.Int32,System.Boolean)">ImageNetModelOutputParser(String, Int32, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser__ctor_System_String_System_Boolean_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.#ctor(System.String,System.Boolean)">ImageNetModelOutputParser(String, Boolean)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Onnx.ImageNetModelOutputParser.html">ImageNetModelOutputParser</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImageNetModelOutputParser(string imageClassesFile, int maxPredictions, bool applySoftmax)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImageNetModelOutputParser(string imageClassesFile, bool applySoftmax)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -130,12 +130,6 @@ a set of image classification results.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">maxPredictions</span></td>
-        <td><p>The maximum number of predictions to return.</p>
-</td>
-      </tr>
-      <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">applySoftmax</span></td>
         <td><p>Whether the softmax function should be applied to the raw model output.</p>
@@ -143,24 +137,53 @@ a set of image classification results.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser__ctor_System_String_System_Int32_System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser__ctor_System_String_System_Boolean__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The file referenced by <code data-dev-comment-type="paramref" class="paramref">imageClassesFile</code> may be downloaded from the following location:
 <a href="https://github.com/onnx/models/raw/8d50e3f598e6d5c67c7c7253e5a203a26e731a1b/vision/classification/synset.txt">https://github.com/onnx/models/raw/8d50e3f598e6d5c67c7c7253e5a203a26e731a1b/vision/classification/synset.txt</a>.</p>
 </div>
-  <h3 id="methods">Methods
+  <h3 id="fields">Fields
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelOutputParser.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelOutputParser.cs/#L21">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_GetPredictions_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.GetPredictions*"></a>
-  <h4 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_GetPredictions_System_Single___" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.GetPredictions(System.Single[])">GetPredictions(Single[])</h4>
-  <div class="markdown level1 summary"><p>Gets the predictions from the model output.</p>
+  <h4 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_ClassesCount" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.ClassesCount">ClassesCount</h4>
+  <div class="markdown level1 summary"><p>Gets the classes count.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;LabeledPrediction&gt; GetPredictions(float[] modelOutput)</code></pre>
+    <pre><code class="lang-csharp hljs">public static readonly int ClassesCount</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelOutputParser.cs/#L51">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_GetLabeledPredictions_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.GetLabeledPredictions*"></a>
+  <h4 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_GetLabeledPredictions_System_Single___" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.GetLabeledPredictions(System.Single[])">GetLabeledPredictions(Single[])</h4>
+  <div class="markdown level1 summary"><p>Gets the list of predictions from the model output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;LabeledPrediction&gt; GetLabeledPredictions(float[] modelOutput)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -176,6 +199,59 @@ a set of image classification results.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
         <td><span class="parametername">modelOutput</span></td>
         <td><p>The model output vector of class probabilities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">List</span>&lt;<a class="xref" href="Microsoft.Psi.Onnx.LabeledPrediction.html">LabeledPrediction</a>&gt;</td>
+        <td><p>The unsorted list of predictions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelOutputParser.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_GetTopNLabeledPredictions_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.GetTopNLabeledPredictions*"></a>
+  <h4 id="Microsoft_Psi_Onnx_ImageNetModelOutputParser_GetTopNLabeledPredictions_System_Single___System_Int32_" data-uid="Microsoft.Psi.Onnx.ImageNetModelOutputParser.GetTopNLabeledPredictions(System.Single[],System.Int32)">GetTopNLabeledPredictions(Single[], Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the top-N predictions from the model output.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;LabeledPrediction&gt; GetTopNLabeledPredictions(float[] modelOutput, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
+        <td><span class="parametername">modelOutput</span></td>
+        <td><p>The model output vector of class probabilities.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The number of top-predictions to return.</p>
 </td>
       </tr>
     </tbody>

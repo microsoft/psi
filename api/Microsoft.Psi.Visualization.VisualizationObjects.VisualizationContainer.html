@@ -89,58 +89,36 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><span class="xref">VisualizationContainer</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class VisualizationContainer : ObservableObject, INotifyPropertyChanged, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class VisualizationContainer : ObservableObject, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -344,7 +322,7 @@ public ObservableCollection&lt;VisualizationPanel&gt; Panels { get; }</code></pr
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+    <pre><code class="lang-csharp hljs">[DataMember]
 public VisualizationObject SnapToVisualizationObject { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
@@ -426,7 +404,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L300">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L299">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_AddPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.AddPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_AddPanel_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_System_Boolean_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.AddPanel(Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel,System.Boolean)">AddPanel(VisualizationPanel, Boolean)</h4>
@@ -463,7 +441,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L324">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L323">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Clear_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Clear*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Clear" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Clear">Clear()</h4>
@@ -476,7 +454,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L381">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L426">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_GetDerivedStreamVisualizationObjects_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.GetDerivedStreamVisualizationObjects*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_GetDerivedStreamVisualizationObjects" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.GetDerivedStreamVisualizationObjects">GetDerivedStreamVisualizationObjects()</h4>
@@ -564,7 +542,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L339">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L384">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_RemovePanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.RemovePanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_RemovePanel_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.RemovePanel(Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel)">RemovePanel(VisualizationPanel)</h4>
@@ -595,7 +573,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L397">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L442">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Save_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Save*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Save_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.Save(System.String)">Save(String)</h4>
@@ -626,11 +604,85 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L444">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L338">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_TogglePanelVisibility_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.TogglePanelVisibility*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_TogglePanelVisibility_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.TogglePanelVisibility(Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel)">TogglePanelVisibility(VisualizationPanel)</h4>
+  <div class="markdown level1 summary"><p>Toggles the visibility of the indicated panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TogglePanelVisibility(VisualizationPanel panel)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></td>
+        <td><span class="parametername">panel</span></td>
+        <td><p>The panel for which to toggle visibility.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L490">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_UnbindVisualizationObjectsFromStore_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.UnbindVisualizationObjectsFromStore*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_UnbindVisualizationObjectsFromStore_System_String_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.UnbindVisualizationObjectsFromStore(System.String,System.String,System.String)">UnbindVisualizationObjectsFromStore(String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Unbinds any visualization objects currently bound to a store.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnbindVisualizationObjectsFromStore(string storeName, string storePath, string partitionName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storeName</span></td>
+        <td><p>The name of the store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">storePath</span></td>
+        <td><p>The path to the store.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">partitionName</span></td>
+        <td><p>The partition name of the instance to unbind, or null to unbind all instances.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L502">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_UpdateStreamSources_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.UpdateStreamSources*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_UpdateStreamSources_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.UpdateStreamSources(Microsoft.Psi.Visualization.ViewModels.SessionViewModel)">UpdateStreamSources(SessionViewModel)</h4>
-  <div class="markdown level1 summary"><p>Update the store bindings with the specified enumeration of partitions.</p>
+  <div class="markdown level1 summary"><p>Update the stream sources for the visualization objects in this container.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -657,7 +709,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L466">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/VisualizationContainer.cs/#L515">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToRange_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToRange*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_ZoomToRange_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer.ZoomToRange(Microsoft.Psi.TimeInterval)">ZoomToRange(TimeInterval)</h4>
@@ -688,10 +740,7 @@ public RelayCommand ZoomToSessionExtentsCommand { get; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

@@ -181,7 +181,7 @@ before publishing it to a stream value subscriber.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool HasSubscriber(Guid registrationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">bool HasSubscriber(Guid subscriberId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -195,8 +195,8 @@ before publishing it to a stream value subscriber.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
-        <td><span class="parametername">registrationToken</span></td>
-        <td><p>The registration token that the target was given when it was initially registered.</p>
+        <td><span class="parametername">subscriberId</span></td>
+        <td><p>The subscriber id that the target was given when it initially subscribed.</p>
 </td>
       </tr>
     </tbody>
@@ -277,7 +277,7 @@ before publishing it to a stream value subscriber.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void UnregisterSubscriber(Guid registrationToken)</code></pre>
+    <pre><code class="lang-csharp hljs">void UnregisterSubscriber(Guid subscriberId)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -291,8 +291,8 @@ before publishing it to a stream value subscriber.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.guid">Guid</a></td>
-        <td><span class="parametername">registrationToken</span></td>
-        <td><p>The registration token that the stream value subscriber was given when it was initially registered.</p>
+        <td><span class="parametername">subscriberId</span></td>
+        <td><p>The subscriber id that the stream value subscriber was given when it initially subscribed.</p>
 </td>
       </tr>
     </tbody>

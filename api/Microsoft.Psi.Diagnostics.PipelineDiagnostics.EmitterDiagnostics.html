@@ -97,11 +97,68 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class EmitterDiagnostics : object</code></pre>
   </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L327">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics__ctor_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.#ctor*"></a>
+  <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics__ctor_System_Int32_System_String_System_String_Microsoft_Psi_Diagnostics_PipelineDiagnostics_PipelineElementDiagnostics_Microsoft_Psi_Diagnostics_PipelineDiagnostics_ReceiverDiagnostics___" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.#ctor(System.Int32,System.String,System.String,Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElementDiagnostics,Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics[])">EmitterDiagnostics(Int32, String, String, PipelineDiagnostics.PipelineElementDiagnostics, PipelineDiagnostics.ReceiverDiagnostics[])</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.html">PipelineDiagnostics.EmitterDiagnostics</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EmitterDiagnostics(int id, string name, string type, PipelineDiagnostics.PipelineElementDiagnostics pipelineElement, PipelineDiagnostics.ReceiverDiagnostics[] targets)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">id</span></td>
+        <td><p>Emitter ID.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Emitter name.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">type</span></td>
+        <td><p>Emitter type.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.PipelineElementDiagnostics.html">PipelineDiagnostics.PipelineElementDiagnostics</a></td>
+        <td><span class="parametername">pipelineElement</span></td>
+        <td><p>Pipeline element to which emitter belongs.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Diagnostics.PipelineDiagnostics.ReceiverDiagnostics.html">PipelineDiagnostics.ReceiverDiagnostics</a>[]</td>
+        <td><span class="parametername">targets</span></td>
+        <td><p>Emitter target receivers.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L274">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L364">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Id_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Id*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Id" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Id">Id</h4>
@@ -129,7 +186,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L279">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L369">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Name_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Name*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Name" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Name">Name</h4>
@@ -157,16 +214,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L289">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L379">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_PipelineElement_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.PipelineElement*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_PipelineElement" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.PipelineElement">PipelineElement</h4>
-  <div class="markdown level1 summary"><p>Gets pipeline element to which emitter belongs.</p>
+  <div class="markdown level1 summary"><p>Gets or sets pipeline element to which emitter belongs.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.PipelineElementDiagnostics PipelineElement { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.PipelineElementDiagnostics PipelineElement { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,16 +242,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L294">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L384">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Targets_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Targets*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Targets" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Targets">Targets</h4>
-  <div class="markdown level1 summary"><p>Gets emitter target receivers.</p>
+  <div class="markdown level1 summary"><p>Gets or sets emitter target receivers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.ReceiverDiagnostics[] Targets { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public PipelineDiagnostics.ReceiverDiagnostics[] Targets { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -213,7 +270,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L284">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L374">View Source</a>
   </span>
   <a id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Type_" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Type*"></a>
   <h4 id="Microsoft_Psi_Diagnostics_PipelineDiagnostics_EmitterDiagnostics_Type" data-uid="Microsoft.Psi.Diagnostics.PipelineDiagnostics.EmitterDiagnostics.Type">Type</h4>
@@ -257,7 +314,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L249" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Diagnostics/PipelineDiagnostics.cs/#L317" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

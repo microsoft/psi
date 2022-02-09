@@ -98,25 +98,25 @@
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs.empty">EventArgs.Empty</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString">Object.ToString()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
@@ -138,7 +138,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeIntervalAnnotationEditEventArgs(TimeIntervalAnnotationDisplayData displayData, int trackId)</code></pre>
+    <pre><code class="lang-csharp hljs">public TimeIntervalAnnotationEditEventArgs(TimeIntervalAnnotationDisplayData displayData, int attributeIndex)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -158,14 +158,42 @@
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">trackId</span></td>
-        <td><p>The id of the track in the display data to edit.</p>
+        <td><span class="parametername">attributeIndex</span></td>
+        <td><p>The index of the attribute to edit.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationEditEventArgs.cs/#L32">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationEditEventArgs_AttributeIndex_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.AttributeIndex*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationEditEventArgs_AttributeIndex" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.AttributeIndex">AttributeIndex</h4>
+  <div class="markdown level1 summary"><p>Gets the index of the attribute to edit.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int AttributeIndex { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationEditEventArgs.cs/#L27">View Source</a>
@@ -190,34 +218,6 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.html">TimeIntervalAnnotationDisplayData</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationEditEventArgs.cs/#L32">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationEditEventArgs_TrackId_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.TrackId*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationEditEventArgs_TrackId" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.TrackId">TrackId</h4>
-  <div class="markdown level1 summary"><p>Gets the ID of the track in the annotation to edit.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int TrackId { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>

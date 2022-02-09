@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L37">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset__ctor_" data-uid="Microsoft.Psi.Data.Dataset.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_Dataset__ctor_System_String_" data-uid="Microsoft.Psi.Data.Dataset.#ctor(System.String)">Dataset(String)</h4>
+  <h4 id="Microsoft_Psi_Data_Dataset__ctor_System_String_System_String_System_Boolean_" data-uid="Microsoft.Psi.Data.Dataset.#ctor(System.String,System.String,System.Boolean)">Dataset(String, String, Boolean)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Dataset(string name = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public Dataset(string name = null, string filename = &quot;&quot;, bool autoSave = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -126,6 +126,18 @@
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>The name of the new dataset. Default is <a class="xref" href="Microsoft.Psi.Data.Dataset.html#Microsoft_Psi_Data_Dataset_DefaultName">DefaultName</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>An optional filename that indicates the location to save the dataset.<a class="xref" href="Microsoft.Psi.Data.Dataset.html#Microsoft_Psi_Data_Dataset_DefaultName">DefaultName</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">autoSave</span></td>
+        <td><p>Whether the dataset automatically autosave changes if a path is given (optional, default is false).</p>
 </td>
       </tr>
     </tbody>
@@ -163,7 +175,91 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L43">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L77">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_AutoSave_" data-uid="Microsoft.Psi.Data.Dataset.AutoSave*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_AutoSave" data-uid="Microsoft.Psi.Data.Dataset.AutoSave">AutoSave</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether autosave is enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AutoSave { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L72">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_Filename_" data-uid="Microsoft.Psi.Data.Dataset.Filename*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_Filename" data-uid="Microsoft.Psi.Data.Dataset.Filename">Filename</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the current save path of this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Filename { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L82">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_HasUnsavedChanges_" data-uid="Microsoft.Psi.Data.Dataset.HasUnsavedChanges*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_HasUnsavedChanges" data-uid="Microsoft.Psi.Data.Dataset.HasUnsavedChanges">HasUnsavedChanges</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether changes to this dataset have been saved.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasUnsavedChanges { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L58">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Name_" data-uid="Microsoft.Psi.Data.Dataset.Name*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Name" data-uid="Microsoft.Psi.Data.Dataset.Name">Name</h4>
@@ -191,7 +287,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Dataset.OriginatingTimeInterval*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_OriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Dataset.OriginatingTimeInterval">OriginatingTimeInterval</h4>
@@ -219,7 +315,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Sessions_" data-uid="Microsoft.Psi.Data.Dataset.Sessions*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Sessions" data-uid="Microsoft.Psi.Data.Dataset.Sessions">Sessions</h4>
@@ -247,7 +343,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L97">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Size_" data-uid="Microsoft.Psi.Data.Dataset.Size*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Size" data-uid="Microsoft.Psi.Data.Dataset.Size">Size</h4>
@@ -275,7 +371,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L64">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L102">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_StreamCount_" data-uid="Microsoft.Psi.Data.Dataset.StreamCount*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_StreamCount" data-uid="Microsoft.Psi.Data.Dataset.StreamCount">StreamCount</h4>
@@ -305,7 +401,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L181">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L241">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_AddSessionFromStore_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionFromStore*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_AddSessionFromStore_Microsoft_Psi_Data_IStreamReader_System_String_System_String_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionFromStore(Microsoft.Psi.Data.IStreamReader,System.String,System.String)">AddSessionFromStore(IStreamReader, String, String)</h4>
@@ -364,7 +460,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L409">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L469">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_AddSessionsFromPsiStores_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionsFromPsiStores*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_AddSessionsFromPsiStores_System_String_System_String_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionsFromPsiStores(System.String,System.String)">AddSessionsFromPsiStores(String, String)</h4>
@@ -401,7 +497,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L137">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L181">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Append_" data-uid="Microsoft.Psi.Data.Dataset.Append*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Append_Microsoft_Psi_Data_Dataset_" data-uid="Microsoft.Psi.Data.Dataset.Append(Microsoft.Psi.Data.Dataset)">Append(Dataset)</h4>
@@ -432,7 +528,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L195">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L255">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_ComputeDerived_" data-uid="Microsoft.Psi.Data.Dataset.ComputeDerived*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_ComputeDerived__1_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter___0__" data-uid="Microsoft.Psi.Data.Dataset.ComputeDerived``1(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,``0})">ComputeDerived&lt;TResult&gt;(Action&lt;Pipeline, SessionImporter, TResult&gt;)</h4>
@@ -496,7 +592,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L279">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L339">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter__System_String_System_Boolean_System_String_Func_Microsoft_Psi_Data_Session_System_String__Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter},System.String,System.Boolean,System.String,Func{Microsoft.Psi.Data.Session,System.String},Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt;, String, Boolean, String, Func&lt;Session, String&gt;, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -597,7 +693,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L239">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L299">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter__System_String_System_Boolean_System_String_System_String_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter},System.String,System.Boolean,System.String,System.String,Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt;, String, Boolean, String, String, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -698,7 +794,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L364">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L424">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync__1_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter___0____0_System_String_System_Boolean_System_String_Func_Microsoft_Psi_Data_Session_System_String__Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync``1(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter,``0},``0,System.String,System.Boolean,System.String,Func{Microsoft.Psi.Data.Session,System.String},Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt;, TParameter, String, Boolean, String, Func&lt;Session, String&gt;, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -821,7 +917,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L321">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L381">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync__1_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter___0____0_System_String_System_Boolean_System_String_System_String_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync``1(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter,``0},``0,System.String,System.Boolean,System.String,System.String,Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt;, TParameter, String, Boolean, String, String, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -944,7 +1040,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L147">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateFromStore_" data-uid="Microsoft.Psi.Data.Dataset.CreateFromStore*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateFromStore_Microsoft_Psi_Data_IStreamReader_System_String_System_String_" data-uid="Microsoft.Psi.Data.Dataset.CreateFromStore(Microsoft.Psi.Data.IStreamReader,System.String,System.String)">CreateFromStore(IStreamReader, String, String)</h4>
@@ -1003,7 +1099,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L117">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L159">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateSession_" data-uid="Microsoft.Psi.Data.Dataset.CreateSession*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateSession_System_String_" data-uid="Microsoft.Psi.Data.Dataset.CreateSession(System.String)">CreateSession(String)</h4>
@@ -1050,16 +1146,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L80">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L119">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Load_" data-uid="Microsoft.Psi.Data.Dataset.Load*"></a>
-  <h4 id="Microsoft_Psi_Data_Dataset_Load_System_String_" data-uid="Microsoft.Psi.Data.Dataset.Load(System.String)">Load(String)</h4>
+  <h4 id="Microsoft_Psi_Data_Dataset_Load_System_String_System_Boolean_" data-uid="Microsoft.Psi.Data.Dataset.Load(System.String,System.Boolean)">Load(String, Boolean)</h4>
   <div class="markdown level1 summary"><p>Loads a dataset from the specified file.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Dataset Load(string filename)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Dataset Load(string filename, bool autoSave = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1075,6 +1171,12 @@
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
         <td><p>The name of the file that contains the dataset to be loaded.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">autoSave</span></td>
+        <td><p>A value to indicate whether to enable autosave (optional, default is false).</p>
 </td>
       </tr>
     </tbody>
@@ -1097,7 +1199,20 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L128">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L480">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_OnDatasetChanged_" data-uid="Microsoft.Psi.Data.Dataset.OnDatasetChanged*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_OnDatasetChanged" data-uid="Microsoft.Psi.Data.Dataset.OnDatasetChanged">OnDatasetChanged()</h4>
+  <div class="markdown level1 summary"><p>Method called when structure of the dataset changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void OnDatasetChanged()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L171">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_RemoveSession_" data-uid="Microsoft.Psi.Data.Dataset.RemoveSession*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_RemoveSession_Microsoft_Psi_Data_Session_" data-uid="Microsoft.Psi.Data.Dataset.RemoveSession(Microsoft.Psi.Data.Session)">RemoveSession(Session)</h4>
@@ -1128,16 +1243,29 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L155">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L209">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Save_" data-uid="Microsoft.Psi.Data.Dataset.Save*"></a>
-  <h4 id="Microsoft_Psi_Data_Dataset_Save_System_String_System_Boolean_" data-uid="Microsoft.Psi.Data.Dataset.Save(System.String,System.Boolean)">Save(String, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Saves this dataset to the specified file.</p>
+  <h4 id="Microsoft_Psi_Data_Dataset_Save" data-uid="Microsoft.Psi.Data.Dataset.Save">Save()</h4>
+  <div class="markdown level1 summary"><p>Saves this dataset.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Save(string filename, bool useRelativePaths = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Save()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_SaveAs_" data-uid="Microsoft.Psi.Data.Dataset.SaveAs*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_SaveAs_System_String_" data-uid="Microsoft.Psi.Data.Dataset.SaveAs(System.String)">SaveAs(String)</h4>
+  <div class="markdown level1 summary"><p>Saves this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SaveAs(string filename)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1152,14 +1280,37 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
-        <td><p>The name of the file to save this dataset into.</p>
+        <td><p>The filename that indicates the location to save the dataset.</p>
 </td>
       </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L53">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Data_Dataset_DatasetChanged" data-uid="Microsoft.Psi.Data.Dataset.DatasetChanged">DatasetChanged</h4>
+  <div class="markdown level1 summary"><p>Event raise when the dataset's structure changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler DatasetChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">useRelativePaths</span></td>
-        <td><p>Indicates whether to use full or relative store paths.</p>
-</td>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">EventHandler</span></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

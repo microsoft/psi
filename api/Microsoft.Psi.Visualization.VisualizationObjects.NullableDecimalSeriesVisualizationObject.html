@@ -89,7 +89,7 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
     <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.decimal">Decimal</a>&gt;&gt;&gt;</div>
@@ -99,8 +99,7 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a></div>
   </div>
@@ -126,6 +125,9 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_RangeWidth">PlotSeriesVisualizationObject&lt;String, Nullable&lt;Decimal&gt;&gt;.RangeWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_MousePositionString">PlotSeriesVisualizationObject&lt;String, Nullable&lt;Decimal&gt;&gt;.MousePositionString</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject-2.html#Microsoft_Psi_Visualization_VisualizationObjects_PlotSeriesVisualizationObject_2_YAxis">PlotSeriesVisualizationObject&lt;String, Nullable&lt;Decimal&gt;&gt;.YAxis</a>
@@ -170,13 +172,13 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendValue">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.LegendValue</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_SamplingTicks">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.SamplingTicks</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_LegendFormat">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.LegendFormat</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_IsUsingSummarization">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.IsUsingSummarization</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_GetTimeInterval">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.GetTimeInterval()</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnCursorModeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_CursorModeChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnCursorModeChanged(Object, CursorModeChangedEventArgs)</a>
@@ -194,7 +196,7 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_Collections_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnSummaryDataChanged_Microsoft_Psi_Visualization_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_Microsoft_Psi_Visualization_ObservableKeyedCache_System_DateTime_Microsoft_Psi_Visualization_Data_IntervalData__0___ObservableKeyedView_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnSummaryDataChanged(ObservableKeyedCache.ObservableKeyedView&lt;&gt;, ObservableKeyedCache.ObservableKeyedView&lt;&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnDataCollectionChanged_System_Collections_Specialized_NotifyCollectionChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnDataCollectionChanged(NotifyCollectionChangedEventArgs)</a>
@@ -209,19 +211,13 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.CursorEpsilonPosMs</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.CursorEpsilonNegMs</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamIntervalVisualizationObject_1_OnViewRangeChanged_System_Object_Microsoft_Psi_Visualization_Navigation_NavigatorTimeRangeChangedEventArgs_">StreamIntervalVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.OnViewRangeChanged(Object, NavigatorTimeRangeChangedEventArgs)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.StreamName</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.PartitionName</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.CursorEpsilon</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.CanSnapToStream</a>
@@ -287,6 +283,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.IsLive</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SubscriberId">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.SubscriberId</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;Dictionary&lt;String, Nullable&lt;Decimal&gt;&gt;&gt;.Allocator</a>
     </div>
     <div>
@@ -314,7 +313,22 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_VisualizerTypeName">VisualizationObject.VisualizerTypeName</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible">VisualizationObject.Visible</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilon">VisualizationObject.CursorEpsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonPosMs">VisualizationObject.CursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonNegMs">VisualizationObject.CursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsShown">VisualizationObject.IsShown</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Container">VisualizationObject.Container</a>
@@ -386,37 +400,19 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
@@ -424,7 +420,7 @@
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_NullableDecimalSeriesVisualizationObject_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[VisualizationObject(&quot;Decimal Series&quot;, typeof(NullableDecimalSeriesRangeSummarizer), &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/stream.png&quot;, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/panel-stream.png&quot;, &quot;%StreamName%&quot;, false)]
-public class NullableDecimalSeriesVisualizationObject : PlotSeriesVisualizationObject&lt;string, decimal?&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, IYValueRangeProvider</code></pre>
+public class NullableDecimalSeriesVisualizationObject : PlotSeriesVisualizationObject&lt;string, decimal?&gt;, INotifyPropertyChanging, IStreamVisualizationObject, IYValueRangeProvider</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
@@ -560,10 +556,7 @@ public override DataTemplate DefaultViewTemplate { get; }</code></pre>
   <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.PlotSeriesVisualizationObject&lt;System.String, System.Nullable&lt;System.Decimal&gt;&gt;.GetStringValue(System.Nullable&lt;System.Decimal&gt;)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>

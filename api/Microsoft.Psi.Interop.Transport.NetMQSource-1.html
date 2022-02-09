@@ -132,7 +132,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useReceivedTimes = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,7 +147,7 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></td>
         <td><span class="parametername">pipeline</span></td>
-        <td><p>Pipeline to which this component belongs.</p>
+        <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
       <tr>
@@ -170,7 +170,7 @@
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">useReceivedTimes</span></td>
+        <td><span class="parametername">useSourceOriginatingTimes</span></td>
         <td><p>Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</p>
 </td>
       </tr>

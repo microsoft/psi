@@ -83,41 +83,34 @@
   
   <h1 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation" class="text-break">Class TimeIntervalAnnotation
   </h1>
-  <div class="markdown level0 summary"><p>Represents an instance of a time interval annotation.</p>
+  <div class="markdown level0 summary"><p>Represents a time interval annotation.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.Annotations.Annotation.html">Annotation</a></div>
-    <div class="level2"><span class="xref">TimeIntervalAnnotation</span></div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.Annotations.Annotation.html#Microsoft_Psi_Data_Annotations_Annotation_Values">Annotation.Values</a>
-    </div>
+    <div class="level1"><span class="xref">TimeIntervalAnnotation</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.Annotations.html">Microsoft.Psi.Data.Annotations</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Data.dll</h6>
   <h5 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TimeIntervalAnnotation : Annotation</code></pre>
+    <pre><code class="lang-csharp hljs">public class TimeIntervalAnnotation : object</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/TimeIntervalAnnotation.cs/#L18">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/TimeIntervalAnnotation.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation__ctor_" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation__ctor_Microsoft_Psi_TimeInterval_Dictionary_System_String_System_Object__" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.#ctor(Microsoft.Psi.TimeInterval,Dictionary{System.String,System.Object})">TimeIntervalAnnotation(TimeInterval, Dictionary&lt;String, Object&gt;)</h4>
+  <h4 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation__ctor_Microsoft_Psi_TimeInterval_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue__" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.#ctor(Microsoft.Psi.TimeInterval,System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue})">TimeIntervalAnnotation(TimeInterval, String, Dictionary&lt;String, IAnnotationValue&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.html">TimeIntervalAnnotation</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeIntervalAnnotation(TimeInterval interval, Dictionary&lt;string, object&gt; values)</code></pre>
+    <pre><code class="lang-csharp hljs">public TimeIntervalAnnotation(TimeInterval interval, string track, Dictionary&lt;string, IAnnotationValue&gt; attributeValues)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -136,9 +129,15 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>&gt;</td>
-        <td><span class="parametername">values</span></td>
-        <td><p>The list of values for the annotation.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">track</span></td>
+        <td><p>The name of the annotation track.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a>&gt;</td>
+        <td><span class="parametername">attributeValues</span></td>
+        <td><p>The set of attribute values for the annotation.</p>
 </td>
       </tr>
     </tbody>
@@ -147,7 +146,35 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/TimeIntervalAnnotation.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/TimeIntervalAnnotation.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_AttributeValues_" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.AttributeValues*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_AttributeValues" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.AttributeValues">AttributeValues</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the collection of values in the annotation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, IAnnotationValue&gt; AttributeValues { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/TimeIntervalAnnotation.cs/#L29">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_Interval_" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.Interval*"></a>
   <h4 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_Interval" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.Interval">Interval</h4>
@@ -169,6 +196,34 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/TimeIntervalAnnotation.cs/#L34">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_Track_" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.Track*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_Track" data-uid="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.Track">Track</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the track of the this annotation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Track { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>

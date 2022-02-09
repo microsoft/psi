@@ -269,7 +269,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L119">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L131">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_Decode_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Decode*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_Decode_Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Decode(Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder)">Decode(IDepthImageFromStreamDecoder)</h4>
@@ -329,7 +329,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L103">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L115">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_EncodeFrom_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.EncodeFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_EncodeFrom_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.EncodeFrom(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Imaging.IDepthImageToStreamEncoder)">EncodeFrom(DepthImage, IDepthImageToStreamEncoder)</h4>
@@ -392,6 +392,49 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
         <td><p>Byte array containing the image data.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L103">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_EncodedDepthImage_SetBuffer_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.SetBuffer*"></a>
+  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_SetBuffer_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.SetBuffer(System.Byte[],System.Int32,System.Int32)">SetBuffer(Byte[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Sets the depth image data from a byte array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetBuffer(byte[] buffer, int offset, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">buffer</span></td>
+        <td><p>Byte array containing the image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The offset in buffer at which to begin copying bytes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The maximum number of bytes to copy.</p>
 </td>
       </tr>
     </tbody>

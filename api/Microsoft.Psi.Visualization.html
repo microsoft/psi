@@ -108,6 +108,32 @@
       <h4><a class="xref" href="Microsoft.Psi.Visualization.IconSourcePath.html">IconSourcePath</a></h4>
       <section><p>The paths to Icon Sources.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.ObservableDataCollection-1.html">ObservableDataCollection&lt;T&gt;</a></h4>
+      <section><p>The purpose of ObservableDataCollection is to optimize exposing non-bindable lists to XAML binding. It does this in two ways:</p>
+<ol>
+<li>It surfaces as an ObservableCollection which minimizes item removals and resets.</li>
+<li>It wraps non IPropertyChangeNotify objects so that they can be updated wholesale (via indirection in a ObservableDataItem) so that updates don't cause a collection change to force bindings to update.</li>
+</ol>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.ObservableDataItem-1.html">ObservableDataItem&lt;T&gt;</a></h4>
+      <section><p>Object with a data field that notifies listeners when changed.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.ObservableKeyedCache-2.html">ObservableKeyedCache&lt;TKey, TItem&gt;</a></h4>
+      <section><p>Represents a dynamic data cache whose keys are embedded in the values and provides
+notifications when items get added, removed, or when the whole list is refreshed.</p>
+<p>The cache supports views onto the data. These views support changes to the underlying data
+and being updated by the underlying data.</p>
+<p>In future versions the underlying data will be to be released if there is no view present
+for a given data range.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache&lt;TKey, TItem&gt;.ObservableKeyedView</a></h4>
+      <section><p>Represents a dynamic data collection whose keys are embedded in the values and provides
+notifications when items get added, removed, or when the whole list is refreshed.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.ObservableSortedCollection-1.html">ObservableSortedCollection&lt;T&gt;</a></h4>
+      <section><p>Represents a dynamic data collection whose keys are embedded in the values and provides
+notifications when items get added, removed, or when the whole list is refreshed.</p>
+</section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.PluginMap.html">PluginMap</a></h4>
       <section><p>Represents mappings for known visualizers, adapters, summarizers and stream readers.</p>
 </section>
@@ -116,6 +142,10 @@
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.RequestDisplayObjectPropertiesEventArgs.html">RequestDisplayObjectPropertiesEventArgs</a></h4>
       <section><p>Represents the event args passed by the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationContext.html#Microsoft_Psi_Visualization_VisualizationContext_RequestDisplayObjectProperties">RequestDisplayObjectProperties</a> event.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.TimelineValueThreshold.html">TimelineValueThreshold</a></h4>
+      <section><p>Represents a threshold in a timeline panel above or below
+which the data is rendered with a different opacity.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.ValueRange-1.html">ValueRange&lt;T&gt;</a></h4>
       <section><p>Represents a value range.</p>
@@ -160,6 +190,12 @@ for a given data type.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Visualization.MarkerStyle.html">MarkerStyle</a></h4>
       <section><p>Defines various line styles.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.ObservableKeyedViewMode.html">ObservableKeyedViewMode</a></h4>
+      <section><p>Defines modes for the <a class="xref" href="Microsoft.Psi.Visualization.ObservableKeyedCache-2.ObservableKeyedView.html">ObservableKeyedCache&lt;TKey, TItem&gt;.ObservableKeyedView</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Visualization.TimelineValueThreshold.TimelineThresholdType.html">TimelineValueThreshold.TimelineThresholdType</a></h4>
+      <section><p>Defines the types of threshold display that are available.</p>
 </section>
 </article>
           </div>

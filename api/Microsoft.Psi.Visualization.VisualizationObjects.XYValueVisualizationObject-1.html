@@ -89,18 +89,18 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
     <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;TData&gt;</div>
     <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html">StreamValueVisualizationObject</a>&lt;TData&gt;</div>
     <div class="level6"><span class="xref">XYValueVisualizationObject&lt;TData&gt;</span></div>
+      <div class="level7"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObjectBase-1.html">ImageVisualizationObjectBase&lt;TData&gt;</a></div>
       <div class="level7"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.XYValueEnumerableVisualizationObject-2.html">XYValueEnumerableVisualizationObject&lt;TItem, TEnumerable&gt;</a></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.IXValueRangeProvider.html">IXValueRangeProvider</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.IYValueRangeProvider.html">IYValueRangeProvider</a></div>
@@ -117,19 +117,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamValueVisualizationObject_1_OnStreamUnbound">StreamValueVisualizationObject&lt;TData&gt;.OnStreamUnbound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;TData&gt;.CursorEpsilonPosMs</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;TData&gt;.CursorEpsilonNegMs</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;TData&gt;.StreamName</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;TData&gt;.PartitionName</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;TData&gt;.CursorEpsilon</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;TData&gt;.CanSnapToStream</a>
@@ -195,6 +186,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;TData&gt;.IsLive</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SubscriberId">StreamVisualizationObject&lt;TData&gt;.SubscriberId</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;TData&gt;.Allocator</a>
     </div>
     <div>
@@ -222,7 +216,22 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_VisualizerTypeName">VisualizationObject.VisualizerTypeName</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible">VisualizationObject.Visible</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilon">VisualizationObject.CursorEpsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonPosMs">VisualizationObject.CursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonNegMs">VisualizationObject.CursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsShown">VisualizationObject.IsShown</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate">VisualizationObject.DefaultViewTemplate</a>
@@ -270,37 +279,19 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
@@ -308,7 +299,7 @@
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[VisualizationPanelType(VisualizationPanelType.XY)]
-public abstract class XYValueVisualizationObject&lt;TData&gt; : StreamValueVisualizationObject&lt;TData&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, IXValueRangeProvider, IYValueRangeProvider</code></pre>
+public abstract class XYValueVisualizationObject&lt;TData&gt; : StreamValueVisualizationObject&lt;TData&gt;, INotifyPropertyChanging, IStreamVisualizationObject, IXValueRangeProvider, IYValueRangeProvider</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -330,7 +321,36 @@ public abstract class XYValueVisualizationObject&lt;TData&gt; : StreamValueVisua
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L41">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L58">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_MousePositionString_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.MousePositionString*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_MousePositionString" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.MousePositionString">MousePositionString</h4>
+  <div class="markdown level1 summary"><p>Gets the current mouse position within the image (in image pixels).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public string MousePositionString { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L42">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_XAxis_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.XAxis*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_XAxis" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.XAxis">XAxis</h4>
@@ -360,7 +380,7 @@ public Axis XAxis { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L53">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_XValueRange_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.XValueRange*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_XValueRange" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.XValueRange">XValueRange</h4>
@@ -390,7 +410,7 @@ public virtual ValueRange&lt;double&gt; XValueRange { get; protected set; }</cod
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L49">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_YAxis_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.YAxis*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_YAxis" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.YAxis">YAxis</h4>
@@ -420,7 +440,7 @@ public Axis YAxis { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L67">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L80">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_YValueRange_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.YValueRange*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_YValueRange" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.YValueRange">YValueRange</h4>
@@ -452,7 +472,7 @@ public virtual ValueRange&lt;double&gt; YValueRange { get; protected set; }</cod
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L81">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L110">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_OnPanelPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.OnPanelPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.OnPanelPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -489,11 +509,37 @@ public virtual ValueRange&lt;double&gt; YValueRange { get; protected set; }</cod
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_OnPanelPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_">VisualizationObject.OnPanelPropertyChanged(Object, PropertyChangedEventArgs)</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L96">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_OnXValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.OnXValueRangeChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_OnXValueRangeChanged" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.OnXValueRangeChanged">OnXValueRangeChanged()</h4>
+  <div class="markdown level1 summary"><p>Called when the x value range in a derived class has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnXValueRangeChanged()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L104">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_OnYValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.OnYValueRangeChanged*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_OnYValueRangeChanged" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.OnYValueRangeChanged">OnYValueRangeChanged()</h4>
+  <div class="markdown level1 summary"><p>Called when the y value range in a derived class has changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected void OnYValueRangeChanged()</code></pre>
+  </div>
   <h3 id="events">Events
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L34">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_XValueRangeChanged" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.XValueRangeChanged">XValueRangeChanged</h4>
   <div class="markdown level1 summary"><p>Fires when the X value range has changed.</p>
@@ -520,7 +566,7 @@ public virtual ValueRange&lt;double&gt; YValueRange { get; protected set; }</cod
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L37">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_XYValueVisualizationObject_1_YValueRangeChanged" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.XYValueVisualizationObject`1.YValueRangeChanged">YValueRangeChanged</h4>
   <div class="markdown level1 summary"><p>Fires when the Y value range has changed.</p>
@@ -547,10 +593,7 @@ public virtual ValueRange&lt;double&gt; YValueRange { get; protected set; }</cod
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
@@ -579,7 +622,7 @@ public virtual ValueRange&lt;double&gt; YValueRange { get; protected set; }</cod
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L15" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/XYValueVisualizationObject.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

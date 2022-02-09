@@ -89,7 +89,7 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html">ObservableObject</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
     <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.tuple-2">Tuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.media3d.point3d">Point3D</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;&gt;</div>
@@ -100,8 +100,7 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">INotifyPropertyChanging</a></div>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.I3DVisualizationObject.html">I3DVisualizationObject</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IModelVisual3DVisualizationObject.html">IModelVisual3DVisualizationObject</a></div>
@@ -109,6 +108,9 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_DataUpdateMilliseconds">ModelVisual3DVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.DataUpdateMilliseconds</a>
+    </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_ModelVisual3DVisualizationObject_1_ModelView">ModelVisual3DVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.ModelView</a>
     </div>
@@ -197,19 +199,10 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamValueVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamValueVisualizationObject_1_OnStreamUnbound">StreamValueVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.OnStreamUnbound()</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonPosMs">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.CursorEpsilonPosMs</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilonNegMs">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.CursorEpsilonNegMs</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_StreamName">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.StreamName</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_PartitionName">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.PartitionName</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CursorEpsilon">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.CursorEpsilon</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_CanSnapToStream">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.CanSnapToStream</a>
@@ -275,6 +268,9 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_IsLive">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.IsLive</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_SubscriberId">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.SubscriberId</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html#Microsoft_Psi_Visualization_VisualizationObjects_StreamVisualizationObject_1_Allocator">StreamVisualizationObject&lt;Tuple&lt;Point3D, String&gt;&gt;.Allocator</a>
     </div>
     <div>
@@ -302,7 +298,22 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Name">VisualizationObject.Name</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_VisualizerTypeName">VisualizationObject.VisualizerTypeName</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_Visible">VisualizationObject.Visible</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilon">VisualizationObject.CursorEpsilon</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonPosMs">VisualizationObject.CursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_CursorEpsilonNegMs">VisualizationObject.CursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_IsShown">VisualizationObject.IsShown</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html#Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_DefaultViewTemplate">VisualizationObject.DefaultViewTemplate</a>
@@ -377,37 +388,19 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableObject.html#Microsoft_Psi_Visualization_Base_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_System_Object_">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#System_Object_ReferenceEquals_System_Object_System_Object_">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone">Object.MemberwiseClone()</a>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
@@ -415,13 +408,13 @@
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[VisualizationObject(&quot;3D Text Billboard&quot;, null, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/stream.png&quot;, &quot;pack://application:,,,/Microsoft.Psi.Visualization.Windows;component/Icons/panel-stream.png&quot;, &quot;%StreamName%&quot;, false)]
-public class BillboardTextVisualizationObject : ModelVisual3DVisualizationObject&lt;Tuple&lt;Point3D, string&gt;&gt;, INotifyPropertyChanged, INotifyPropertyChanging, IStreamVisualizationObject, I3DVisualizationObject, IModelVisual3DVisualizationObject, ICustomTypeDescriptor</code></pre>
+public class BillboardTextVisualizationObject : ModelVisual3DVisualizationObject&lt;Tuple&lt;Point3D, string&gt;&gt;, INotifyPropertyChanging, IStreamVisualizationObject, I3DVisualizationObject, IModelVisual3DVisualizationObject, ICustomTypeDescriptor</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.#ctor">BillboardTextVisualizationObject()</h4>
@@ -436,7 +429,7 @@ public class BillboardTextVisualizationObject : ModelVisual3DVisualizationObject
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardBackgroundColor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardBackgroundColor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardBackgroundColor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardBackgroundColor">BillboardBackgroundColor</h4>
@@ -465,7 +458,7 @@ public Color BillboardBackgroundColor { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardBorderColor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardBorderColor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardBorderColor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardBorderColor">BillboardBorderColor</h4>
@@ -494,7 +487,65 @@ public Color BillboardBorderColor { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L55">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardBorderThickness_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardBorderThickness*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardBorderThickness" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardBorderThickness">BillboardBorderThickness</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the billboard border thickness.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double BillboardBorderThickness { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardFontSize_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardFontSize*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardFontSize" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardFontSize">BillboardFontSize</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the border color of the billboard.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public double BillboardFontSize { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L133">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardForegroundColor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardForegroundColor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardForegroundColor" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardForegroundColor">BillboardForegroundColor</h4>
@@ -523,7 +574,7 @@ public Color BillboardForegroundColor { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardOpacity_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardOpacity*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardOpacity" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardOpacity">BillboardOpacity</h4>
@@ -552,7 +603,7 @@ public int BillboardOpacity { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L63">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L94">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardPadding_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardPadding*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_BillboardPadding" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.BillboardPadding">BillboardPadding</h4>
@@ -583,7 +634,7 @@ public double BillboardPadding { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L125">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L156">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_NotifyPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.NotifyPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_NotifyPropertyChanged_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.NotifyPropertyChanged(System.String)">NotifyPropertyChanged(String)</h4>
@@ -616,7 +667,7 @@ public double BillboardPadding { get; set; }</code></pre>
   <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt;System.Tuple&lt;System.Windows.Media.Media3D.Point3D, System.String&gt;&gt;.NotifyPropertyChanged(System.String)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L113">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L144">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_UpdateData_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.UpdateData*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_BillboardTextVisualizationObject_UpdateData" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.BillboardTextVisualizationObject.UpdateData">UpdateData()</h4>
@@ -631,10 +682,7 @@ public double BillboardPadding { get; set; }</code></pre>
   <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.ModelVisual3DVisualizationObject&lt;System.Tuple&lt;System.Windows.Media.Media3D.Point3D, System.String&gt;&gt;.UpdateData()</span></div>
   <h3 id="implements">Implements</h3>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">System.ComponentModel.INotifyPropertyChanged</a>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanging">System.ComponentModel.INotifyPropertyChanging</a>
+      <span class="xref">INotifyPropertyChanging</span>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a>
@@ -666,7 +714,7 @@ public double BillboardPadding { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/BillboardTextVisualizationObject.cs/#L18" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
