@@ -48,10 +48,11 @@ namespace Microsoft.Psi.Visualization.Views
                 menuItems.Add(
                     MenuItemHelper.CreateMenuItem(
                         null,
-                        $"Copy Cursor Times to Clipboard",
+                        $"Copy Cursor Time to Clipboard",
                         visualizationPanel.Navigator.CopyCursorTimeToClipboardCommand,
                         null,
-                        true));
+                        true,
+                        visualizationPanel.Navigator.Cursor));
             }
         }
     }

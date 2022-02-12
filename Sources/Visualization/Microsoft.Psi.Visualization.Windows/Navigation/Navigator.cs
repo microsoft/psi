@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         // True if the timeline cursor should follow the mouse cursor when in manual navigation mode, otherwise false
         private bool cursorFollowsMouse = true;
 
-        private RelayCommand copyCursorTimeToClipboardCommand;
+        private RelayCommand<DateTime> copyCursorTimeToClipboardCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
@@ -105,8 +105,8 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand CopyCursorTimeToClipboardCommand
-            => this.copyCursorTimeToClipboardCommand ??= new RelayCommand(() => Clipboard.SetText(this.Cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
+        public RelayCommand<DateTime> CopyCursorTimeToClipboardCommand
+            => this.copyCursorTimeToClipboardCommand ??= new RelayCommand<DateTime>(cursor => Clipboard.SetText(cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
 
         /// <summary>
         /// Gets or the cursor mode.
