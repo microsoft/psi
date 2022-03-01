@@ -47,7 +47,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                         <cmd:EventToCommand Command="{Binding Path=MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>

@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnPropertyChanged(sender, e);
 
-            if (e.PropertyName == nameof(this.CurrentValue))
+            if (e.PropertyName == nameof(this.CurrentValue) || e.PropertyName == nameof(this.FormatString))
             {
                 this.FormattedData = this.CurrentData?.ToString(this.FormatString, CultureInfo.CurrentCulture);
             }
