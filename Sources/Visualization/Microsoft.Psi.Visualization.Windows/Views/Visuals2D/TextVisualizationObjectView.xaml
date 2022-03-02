@@ -25,9 +25,9 @@
             <TextBlock Text="{Binding Name}" FontWeight="Bold"></TextBlock>
         </Border>
         <Border Grid.Row="1" Padding="5,2,0,0">
-            <ScrollViewer>
-                <TextBlock Text="{Binding Path=CurrentValue.Data}"/>
-            </ScrollViewer>
+            <Grid>
+                <TextBox Text="{Binding Path=CurrentValue.Data, Mode=OneWay}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+            </Grid>
         </Border>
     </Grid>
 </vv:VisualizationObjectView>
