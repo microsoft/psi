@@ -277,7 +277,7 @@ namespace Microsoft.Psi.Visualization.Views
             // Run a hit test at the mouse cursor
             VisualTreeHelper.HitTest(
                 this,
-                null,
+                new HitTestFilterCallback(this.ContestMenuHitTestFilter),
                 new HitTestResultCallback(this.ContextMenuHitTestResult),
                 new PointHitTestParameters(Mouse.GetPosition(this)));
 
@@ -319,6 +319,17 @@ namespace Microsoft.Psi.Visualization.Views
             {
                 this.AddContextMenuItems(panelViewSource, false);
             }
+        }
+
+        // Filter to exclude invisible UI elements from hit test
+        private HitTestFilterBehavior ContestMenuHitTestFilter(DependencyObject dependencyObject)
+        {
+            if (dependencyObject is UIElement element && !element.IsVisible)
+            {
+                return HitTestFilterBehavior.ContinueSkipSelfAndChildren;
+            }
+
+            return HitTestFilterBehavior.Continue;
         }
 
         // Return the result of the hit test to the callback.

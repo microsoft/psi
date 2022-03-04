@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
     public class IFormattableVisualizationObject : StreamValueVisualizationObject<IFormattable>
     {
-        private int margin = 10;
+        private Thickness margin = new (5, 0, 0, 0);
         private string formatString = default;
         private string formattedData = default;
 
@@ -32,8 +32,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [DataMember]
         [DisplayName("Margin")]
-        [Description("The margin in pixels.")]
-        public int Margin
+        [Description("The left, top, right and bottom margin in pixels.")]
+        public Thickness Margin
         {
             get { return this.margin; }
             set { this.Set(nameof(this.Margin), ref this.margin, value); }

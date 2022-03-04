@@ -26,7 +26,7 @@
         </Border>
         <Border Grid.Row="1" Padding="5,2,0,0">
             <Grid>
-                <TextBox Text="{Binding Path=CurrentValue.Data, Mode=OneWay}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
+                <TextBox Text="{Binding Path=CurrentValue.Data, Mode=OneWay}" Margin="{Binding Margin}" IsReadOnly="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
             </Grid>
         </Border>
     </Grid>
