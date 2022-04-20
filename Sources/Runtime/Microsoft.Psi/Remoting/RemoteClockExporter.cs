@@ -15,8 +15,12 @@ namespace Microsoft.Psi.Remoting
     /// </summary>
     public class RemoteClockExporter : IDisposable
     {
+        /// <summary>
+        /// Default TCP port used to communicate with <see cref="RemoteClockImporter"/>.
+        /// </summary>
+        public const int DefaultPort = 11511;
+
         internal const short ProtocolVersion = 0;
-        internal const int DefaultPort = 11511;
 
         private TcpListener listener;
         private bool isDisposing;

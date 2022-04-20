@@ -14,8 +14,9 @@ namespace Microsoft.Psi.RealSense.Windows
     /// </summary>
     public class RealSenseSensor : ISourceComponent, IDisposable
     {
+        private readonly Pipeline pipeline;
+        private readonly string name;
         private bool shutdown;
-        private Pipeline pipeline;
         private RealSenseDevice device;
         private Thread thread;
 
@@ -23,8 +24,10 @@ namespace Microsoft.Psi.RealSense.Windows
         /// Initializes a new instance of the <see cref="RealSenseSensor"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public RealSenseSensor(Pipeline pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public RealSenseSensor(Pipeline pipeline, string name = nameof(RealSenseSensor))
         {
+            this.name = name;
             this.shutdown = false;
             this.ColorImage = pipeline.CreateEmitter<Shared<Image>>(this, "ColorImage");
             this.DepthImage = pipeline.CreateEmitter<Shared<DepthImage>>(this, "DepthImage");
@@ -85,16 +88,19 @@ namespace Microsoft.Psi.RealSense.Windows
             notifyCompleted();
         }
 
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
+
         private void ThreadProc()
         {
-            Imaging.PixelFormat pixelFormat = Imaging.PixelFormat.BGR_24bpp;
+            Imaging.PixelFormat pixelFormat = PixelFormat.BGR_24bpp;
             switch (this.device.GetColorBpp())
             {
                 case 24:
-                    pixelFormat = Imaging.PixelFormat.BGR_24bpp;
+                    pixelFormat = PixelFormat.BGR_24bpp;
                     break;
                 case 32:
-                    pixelFormat = Imaging.PixelFormat.BGRX_32bpp;
+                    pixelFormat = PixelFormat.BGRX_32bpp;
                     break;
                 default:
                     throw new NotSupportedException("Expected 24bpp or 32bpp image.");
@@ -105,16 +111,20 @@ namespace Microsoft.Psi.RealSense.Windows
             switch (this.device.GetDepthBpp())
             {
                 case 16:
-                    pixelFormat = Imaging.PixelFormat.Gray_16bpp;
+                    pixelFormat = PixelFormat.Gray_16bpp;
                     break;
                 case 8:
-                    pixelFormat = Imaging.PixelFormat.Gray_8bpp;
+                    pixelFormat = PixelFormat.Gray_8bpp;
                     break;
                 default:
                     throw new NotSupportedException("Expected 8bpp or 16bpp image.");
             }
 
-            var depthImage = DepthImagePool.GetOrCreate((int)this.device.GetDepthWidth(), (int)this.device.GetDepthHeight());
+            var depthImage = DepthImagePool.GetOrCreate(
+                (int)this.device.GetDepthWidth(),
+                (int)this.device.GetDepthHeight(),
+                DepthValueSemantics.DistanceToPlane,
+                0.001);
             uint depthImageSize = this.device.GetDepthHeight() * this.device.GetDepthStride();
             while (!this.shutdown)
             {

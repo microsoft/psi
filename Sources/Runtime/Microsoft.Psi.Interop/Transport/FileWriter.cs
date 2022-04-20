@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Interop.Transport
     /// <typeparam name="T">Message type.</typeparam>
     public class FileWriter<T> : IConsumer<T>, IDisposable
     {
+        private readonly string name;
         private FileStream file;
         private bool first = true;
         private dynamic state;
@@ -23,8 +24,10 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">File name to which to persist.</param>
         /// <param name="serializer">Format serializer with which messages are serialized.</param>
-        public FileWriter(Pipeline pipeline, string filename, IPersistentFormatSerializer serializer)
+        /// <param name="name">An optional name for the component.</param>
+        public FileWriter(Pipeline pipeline, string filename, IPersistentFormatSerializer serializer, string name = nameof(FileWriter<T>))
         {
+            this.name = name;
             this.file = File.Create(filename);
             this.In = pipeline.CreateReceiver<T>(this, (m, e) => this.WriteRecord(m, e, serializer), nameof(this.In));
             this.In.Unsubscribed += _ => serializer.PersistFooter(this.file, this.state);
@@ -42,6 +45,9 @@ namespace Microsoft.Psi.Interop.Transport
                 this.file = null;
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void WriteRecord(T message, Envelope envelope, IPersistentFormatSerializer serializer)
         {

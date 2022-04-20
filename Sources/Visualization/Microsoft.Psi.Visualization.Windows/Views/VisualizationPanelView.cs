@@ -45,14 +45,38 @@ namespace Microsoft.Psi.Visualization.Views
                         null,
                         visualizationPanel.VisualizationObjects.Count > 0));
 
+                // Add copy to clipboard menu with sub-menu items
+                var copyToClipboardMenuItem = MenuItemHelper.CreateMenuItem(
+                    string.Empty,
+                    "Copy to Clipboard",
+                    null);
+
+                copyToClipboardMenuItem.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        null,
+                        "Cursor Time",
+                        visualizationPanel.Navigator.CopyToClipboardCommand,
+                        null,
+                        true,
+                        visualizationPanel.Navigator.Cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
+                copyToClipboardMenuItem.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        null,
+                        "Session Name & Cursor Time",
+                        visualizationPanel.Navigator.CopyToClipboardCommand,
+                        null,
+                        VisualizationContext.Instance.DatasetViewModel?.CurrentSessionViewModel != null,
+                        VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel.Name.ToString() + "@" + visualizationPanel.Navigator.Cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
+
+                menuItems.Add(copyToClipboardMenuItem);
+
                 menuItems.Add(
                     MenuItemHelper.CreateMenuItem(
                         null,
-                        $"Copy Cursor Time to Clipboard",
-                        visualizationPanel.Navigator.CopyCursorTimeToClipboardCommand,
+                        $"Go To Time ...",
+                        visualizationPanel.Container.GoToTimeCommand,
                         null,
-                        true,
-                        visualizationPanel.Navigator.Cursor));
+                        true));
             }
         }
     }

@@ -89,6 +89,7 @@ namespace Test.Psi
             Array intArray = new[] { 0, 3 };
             ICollection stringArray = new[] { "three", "four" };
             IEqualityComparer enumComparer = EqualityComparer<DayOfWeek>.Default;
+            Dictionary<string, int> dictionary = new Dictionary<string, int> { { "one", 1 }, { "two", 2 } };
 
             using (var p = Pipeline.Create())
             {
@@ -112,6 +113,7 @@ namespace Test.Psi
                 Generators.Return(p, intArray).Write("intArray", store);
                 Generators.Return(p, stringArray).Write("stringArray", store);
                 Generators.Return(p, enumComparer).Write("enumComparer", store);
+                Generators.Return(p, dictionary).Write("dictionary", store);
 
                 p.Run();
             }
@@ -150,6 +152,7 @@ namespace Test.Psi
             Array intArray = null;
             ICollection stringArray = null;
             IEqualityComparer enumComparer = null;
+            Dictionary<string, int> dictionary = null;
 
             using (var p = Pipeline.Create())
             {
@@ -174,6 +177,7 @@ namespace Test.Psi
                 store.OpenStream<Array>("intArray").Do(x => intArray = x.DeepClone());
                 store.OpenStream<ICollection>("stringArray").Do(x => stringArray = x.DeepClone());
                 store.OpenStream<IEqualityComparer>("enumComparer").Do(x => enumComparer = x.DeepClone());
+                store.OpenStream<Dictionary<string, int>>("dictionary").Do(x => dictionary = x.DeepClone());
                 p.Run();
             }
 
@@ -198,6 +202,9 @@ namespace Test.Psi
             CollectionAssert.AreEqual(new[] { 0, 3 }, intArray);
             CollectionAssert.AreEqual(new[] { "three", "four" }, stringArray);
             Assert.IsTrue(enumComparer.Equals(DayOfWeek.Friday, DayOfWeek.Friday));
+            Assert.AreEqual(2, dictionary.Count);
+            Assert.AreEqual(1, dictionary["one"]);
+            Assert.AreEqual(2, dictionary["two"]);
         }
 
         public class TypeMembers
@@ -221,6 +228,7 @@ namespace Test.Psi
             public Array IntArray;
             public ICollection StringArray;
             public IEqualityComparer EnumComparer;
+            public Dictionary<string, int> Dictionary;
         }
 
         /// <summary>
@@ -255,6 +263,7 @@ namespace Test.Psi
                     IntArray = new[] { 0, 3 },
                     StringArray = new[] { "three", "four" },
                     EnumComparer = EqualityComparer<DayOfWeek>.Default,
+                    Dictionary = new Dictionary<string, int> { { "one", 1 }, { "two", 2 } },
                 };
 
                 var store = PsiStore.Create(p, "Store2", this.testPath);
@@ -305,6 +314,9 @@ namespace Test.Psi
             CollectionAssert.AreEqual(new[] { 782, 33 }, result.ValueTuple.Item2);
             CollectionAssert.AreEqual(new[] { "three", "four" }, result.StringArray);
             Assert.IsTrue(result.EnumComparer.Equals(DayOfWeek.Friday, DayOfWeek.Friday));
+            Assert.AreEqual(2, result.Dictionary.Count);
+            Assert.AreEqual(1, result.Dictionary["one"]);
+            Assert.AreEqual(2, result.Dictionary["two"]);
         }
 
         private void ExecuteTest(string testPath, string testMethod)

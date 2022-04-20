@@ -4,56 +4,49 @@
 namespace Microsoft.Psi.Imaging
 {
     using System.IO;
-    using System.IO.Compression;
-    using System.Windows;
-    using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Implements an image decoder.
     /// </summary>
     public class ImageFromStreamDecoder : IImageFromStreamDecoder
     {
+        private static readonly ImageFromGZipStreamDecoder GzipDecoder = new ();
+        private static readonly ImageFromNV12StreamDecoder Nv12Decoder = new ();
+        private static readonly ImageFromBitmapStreamDecoder BitmapDecoder = new ();
+
         /// <inheritdoc/>
         public void DecodeFromStream(Stream stream, Image image)
         {
-            // GZip indentified by 1f8b header (see section 2.3.1 of RFC 1952 https://www.ietf.org/rfc/rfc1952.txt)
-            if (stream.Length >= 2 && stream.ReadByte() == 0x1f && stream.ReadByte() == 0x8b)
+            if (GzipDecoder.HasGZipHeader(stream))
             {
-                // decode GZip
-                stream.Position = 0; // advanced by if (... stream.ReadByte() ...) above
-                var size = image.Stride * image.Height;
-                using var decompressor = new GZipStream(stream, CompressionMode.Decompress);
-                unsafe
-                {
-                    decompressor.CopyTo(new UnmanagedMemoryStream((byte*)image.ImageData.ToPointer(), size, size, FileAccess.ReadWrite));
-                }
+                GzipDecoder.DecodeFromStream(stream, image);
+                return;
             }
-            else
+
+            if (Nv12Decoder.HasNV12Header(stream))
             {
-                // decode JPEG, PNG, ...
-                stream.Position = 0; // advanced by if (... stream.ReadByte() ...) above
-                var decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-                BitmapSource bitmapSource = decoder.Frames[0];
-                var fmt = bitmapSource.Format.ToPixelFormat();
-                if (fmt != image.PixelFormat)
-                {
-                    using var img = Microsoft.Psi.Imaging.ImagePool.GetOrCreate(image.Width, image.Height, fmt);
-                    bitmapSource.CopyPixels(Int32Rect.Empty, img.Resource.ImageData, img.Resource.Stride * img.Resource.Height, img.Resource.Stride);
-                    img.Resource.CopyTo(image);
-                }
-                else
-                {
-                    bitmapSource.CopyPixels(Int32Rect.Empty, image.ImageData, image.Stride * image.Height, image.Stride);
-                }
+                Nv12Decoder.DecodeFromStream(stream, image);
+                return;
             }
+
+            // default to decode JPEG, PNG, ...
+            BitmapDecoder.DecodeFromStream(stream, image);
         }
 
         /// <inheritdoc/>
         public PixelFormat GetPixelFormat(Stream stream)
         {
-            var decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            BitmapSource bitmapSource = decoder.Frames[0];
-            return bitmapSource.Format.ToPixelFormat();
+            if (GzipDecoder.HasGZipHeader(stream))
+            {
+                return GzipDecoder.GetPixelFormat(stream);
+            }
+
+            if (Nv12Decoder.HasNV12Header(stream))
+            {
+                return Nv12Decoder.GetPixelFormat(stream);
+            }
+
+            return BitmapDecoder.GetPixelFormat(stream);
         }
     }
 }

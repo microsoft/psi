@@ -47,7 +47,10 @@ namespace Microsoft.Psi.Imaging
             if (this.encoder != null)
             {
                 using var sharedEncodedDepthImage = EncodedDepthImagePool.GetOrCreate(
-                    depthImage.Width, depthImage.Height);
+                    depthImage.Width,
+                    depthImage.Height,
+                    depthImage.DepthValueSemantics,
+                    depthImage.DepthValueToMetersScaleFactor);
                 sharedEncodedDepthImage.Resource.EncodeFrom(depthImage, this.encoder);
                 Serializer.Serialize(writer, sharedEncodedDepthImage, context);
             }
@@ -62,7 +65,11 @@ namespace Microsoft.Psi.Imaging
         {
             Shared<EncodedDepthImage> sharedEncodedDepthImage = null;
             Serializer.Deserialize(reader, ref sharedEncodedDepthImage, context);
-            using var sharedDepthImage = DepthImagePool.GetOrCreate(sharedEncodedDepthImage.Resource.Width, sharedEncodedDepthImage.Resource.Height);
+            using var sharedDepthImage = DepthImagePool.GetOrCreate(
+                sharedEncodedDepthImage.Resource.Width,
+                sharedEncodedDepthImage.Resource.Height,
+                sharedEncodedDepthImage.Resource.DepthValueSemantics,
+                sharedEncodedDepthImage.Resource.DepthValueToMetersScaleFactor);
             sharedDepthImage.Resource.DecodeFrom(sharedEncodedDepthImage.Resource, this.decoder);
             depthImage = sharedDepthImage.Resource.DeepClone();
             sharedEncodedDepthImage.Dispose();

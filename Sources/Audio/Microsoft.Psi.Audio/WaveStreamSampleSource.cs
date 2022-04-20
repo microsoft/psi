@@ -18,6 +18,7 @@ namespace Microsoft.Psi.Audio
     public class WaveStreamSampleSource : IConsumerProducer<bool, AudioBuffer>
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly AudioBuffer[] audioData;
 
         /// <summary>
@@ -25,9 +26,11 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="stream">Audio stream in WAVE format (48KHz, 1-channel, IEEE Float).</param>
-        public WaveStreamSampleSource(Pipeline pipeline, Stream stream)
+        /// <param name="name">An optional name for this component.</param>
+        public WaveStreamSampleSource(Pipeline pipeline, Stream stream, string name = nameof(WaveStreamSampleSource))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.In = pipeline.CreateReceiver<bool>(this, this.Play, nameof(this.In));
             this.Out = pipeline.CreateEmitter<AudioBuffer>(this, nameof(this.Out));
 

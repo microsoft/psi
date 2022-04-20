@@ -4,31 +4,49 @@
 namespace Microsoft.Psi.Imaging
 {
     using System.IO;
-    using System.Runtime.InteropServices;
-    using SkiaSharp;
 
     /// <summary>
     /// Implements an image decoder.
     /// </summary>
     public class ImageFromStreamDecoder : IImageFromStreamDecoder
     {
+        private static readonly ImageFromGZipStreamDecoder GzipDecoder = new ();
+        private static readonly ImageFromNV12StreamDecoder Nv12Decoder = new ();
+        private static readonly ImageFromBitmapStreamDecoder BitmapDecoder = new ();
+
         /// <inheritdoc/>
         public void DecodeFromStream(Stream stream, Image image)
         {
-            var decoded = SKBitmap.Decode(stream);
-            Marshal.Copy(decoded.Bytes, 0, image.ImageData, decoded.ByteCount);
+            if (GzipDecoder.HasGZipHeader(stream))
+            {
+                GzipDecoder.DecodeFromStream(stream, image);
+                return;
+            }
+
+            if (Nv12Decoder.HasNV12Header(stream))
+            {
+                Nv12Decoder.DecodeFromStream(stream, image);
+                return;
+            }
+
+            // default to decode JPEG, PNG, ...
+            BitmapDecoder.DecodeFromStream(stream, image);
         }
 
         /// <inheritdoc/>
         public PixelFormat GetPixelFormat(Stream stream)
         {
-            var decoded = SKBitmap.Decode(stream);
-            return decoded.ColorType switch
+            if (GzipDecoder.HasGZipHeader(stream))
             {
-                SKColorType.Bgra8888 => PixelFormat.BGRA_32bpp,
-                SKColorType.Gray8 => PixelFormat.Gray_8bpp,
-                _ => PixelFormat.Undefined,
-            };
+                return GzipDecoder.GetPixelFormat(stream);
+            }
+
+            if (Nv12Decoder.HasNV12Header(stream))
+            {
+                return Nv12Decoder.GetPixelFormat(stream);
+            }
+
+            return BitmapDecoder.GetPixelFormat(stream);
         }
     }
 }

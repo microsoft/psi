@@ -21,8 +21,9 @@ namespace Microsoft.Psi.Calibration
         /// Initializes a new instance of the <see cref="ProjectTo3D"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public ProjectTo3D(Pipeline pipeline)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public ProjectTo3D(Pipeline pipeline, string name = nameof(ProjectTo3D))
+            : base(pipeline, name)
         {
         }
 

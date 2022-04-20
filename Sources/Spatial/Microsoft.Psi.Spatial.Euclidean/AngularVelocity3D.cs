@@ -58,7 +58,8 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="originRotation">The origin of rotation.</param>
         /// <param name="destinationRotation">A destination rotation.</param>
         /// <param name="time">The time it took to reach the destination rotation.</param>
-        public AngularVelocity3D(Matrix<double> originRotation, Matrix<double> destinationRotation, TimeSpan time)
+        /// <param name="angleEpsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</param>
+        public AngularVelocity3D(Matrix<double> originRotation, Matrix<double> destinationRotation, TimeSpan time, double angleEpsilon = 0.01 * Math.PI / 180)
         {
             if (originRotation.RowCount != 3 ||
                 originRotation.ColumnCount != 3 ||
@@ -69,7 +70,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
             }
 
             this.OriginRotation = originRotation;
-            var axisAngleDistance = Vector3D.OfVector(MatrixToAxisAngle(destinationRotation * originRotation.Inverse()));
+            var axisAngleDistance = Vector3D.OfVector(MatrixToAxisAngle(destinationRotation * originRotation.Inverse(), angleEpsilon));
             var angularSpeed = axisAngleDistance.Length / time.TotalSeconds;
             this.AxisAngleVector = angularSpeed == 0 ? default : axisAngleDistance.Normalize().ScaleBy(angularSpeed);
         }
@@ -80,8 +81,13 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="originCoordinateSystem">The origin coordinate system.</param>
         /// <param name="destinationCoordinateSystem">The destination coordinate system.</param>
         /// <param name="time">The time it took to reach the destination coordinate system.</param>
-        public AngularVelocity3D(CoordinateSystem originCoordinateSystem, CoordinateSystem destinationCoordinateSystem, TimeSpan time)
-            : this(originCoordinateSystem.GetRotationSubMatrix(), destinationCoordinateSystem.GetRotationSubMatrix(), time)
+        /// <param name="angleEpsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</param>
+        public AngularVelocity3D(
+            CoordinateSystem originCoordinateSystem,
+            CoordinateSystem destinationCoordinateSystem,
+            TimeSpan time,
+            double angleEpsilon = 0.01 * Math.PI / 180)
+            : this(originCoordinateSystem.GetRotationSubMatrix(), destinationCoordinateSystem.GetRotationSubMatrix(), time, angleEpsilon)
         {
         }
 

@@ -25,11 +25,10 @@ namespace Microsoft.Psi
         /// <param name="source">The source stream.</param>
         /// <param name="condition">Predicate condition while which values will be enumerated (otherwise infinite).</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Enumerable with elements from the source stream.</returns>
-        public static IEnumerable<T> ToEnumerable<T>(this IProducer<T> source, Func<T, bool> condition = null, DeliveryPolicy<T> deliveryPolicy = null)
-        {
-            return new StreamEnumerable<T>(source, condition, deliveryPolicy);
-        }
+        public static IEnumerable<T> ToEnumerable<T>(this IProducer<T> source, Func<T, bool> condition = null, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(ToEnumerable))
+            => new StreamEnumerable<T>(source, condition, deliveryPolicy, name);
 
         /// <summary>
         /// Enumerable stream class.
@@ -45,7 +44,8 @@ namespace Microsoft.Psi
             /// <param name="source">The source stream to enumerate.</param>
             /// <param name="predicate">Predicate (filter) function.</param>
             /// <param name="deliveryPolicy">An optional delivery policy.</param>
-            public StreamEnumerable(IProducer<T> source, Func<T, bool> predicate = null, DeliveryPolicy<T> deliveryPolicy = null)
+            /// <param name="name">An optional name for this operator.</param>
+            public StreamEnumerable(IProducer<T> source, Func<T, bool> predicate = null, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(StreamEnumerable<T>))
             {
                 this.enumerator = new StreamEnumerator(predicate ?? (_ => true));
 
@@ -55,7 +55,8 @@ namespace Microsoft.Psi
                     {
                         this.enumerator.Queue.Enqueue(d.DeepClone());
                         this.enumerator.Enqueued.Set();
-                    });
+                    },
+                    name: name);
 
                 source.PipeTo(processor, deliveryPolicy);
                 processor.In.Unsubscribed += _ => this.enumerator.Closed.Set();
@@ -82,8 +83,8 @@ namespace Microsoft.Psi
             private class StreamEnumerator : IEnumerator, IEnumerator<T>
             {
                 private readonly Func<T, bool> predicate;
+                private readonly WaitHandle[] queueUpdated;
                 private T current;
-                private WaitHandle[] queueUpdated;
 
                 public StreamEnumerator(Func<T, bool> predicate)
                 {

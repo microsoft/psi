@@ -6,11 +6,9 @@ namespace Microsoft.Psi.PsiStudio
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Reflection;
     using System.Windows;
     using System.Xml;
     using System.Xml.Serialization;
-    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>

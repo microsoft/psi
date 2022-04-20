@@ -34,10 +34,20 @@ namespace Microsoft.Psi.CognitiveServices.Speech
     /// <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech/">Microsoft Cognitive Services Bing Speech API</a>.
     /// </remarks>
     [Obsolete("The Bing Speech service will be retired soon. Please use the AzureSpeechRecognizer instead.", false)]
-    public sealed class BingSpeechRecognizer : AsyncConsumerProducer<ValueTuple<AudioBuffer, bool>, IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
+    public sealed class BingSpeechRecognizer : AsyncConsumerProducer<(AudioBuffer, bool), IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
     {
         // For canceling any pending recognition tasks before disposal
-        private readonly CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource cancellationTokenSource = new ();
+
+        /// <summary>
+        /// The last originating time that was recorded for each output stream.
+        /// </summary>
+        private readonly Dictionary<int, DateTime> lastPostedOriginatingTimes;
+
+        /// <summary>
+        /// Queue of current audio buffers for the pending recognition task.
+        /// </summary>
+        private readonly ConcurrentQueue<(AudioBuffer, bool)> currentQueue = new ();
 
         /// <summary>
         /// The client that communicates with the cloud speech recognition service.
@@ -67,7 +77,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <summary>
         /// The time interval of the last detected speech segment.
         /// </summary>
-        private TimeInterval lastVADSpeechTimeInterval = new TimeInterval(DateTime.UtcNow, DateTime.UtcNow);
+        private TimeInterval lastVADSpeechTimeInterval = new (DateTime.UtcNow, DateTime.UtcNow);
 
         /// <summary>
         /// The originating time of the most recently received audio packet.
@@ -75,19 +85,9 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         private DateTime lastAudioOriginatingTime;
 
         /// <summary>
-        /// The last originating time that was recorded for each output stream.
-        /// </summary>
-        private Dictionary<int, DateTime> lastPostedOriginatingTimes;
-
-        /// <summary>
         /// A flag indicating whether the last audio packet received contained speech.
         /// </summary>
         private bool lastAudioContainedSpeech = false;
-
-        /// <summary>
-        /// Queue of current audio buffers for the pending recognition task.
-        /// </summary>
-        private ConcurrentQueue<ValueTuple<AudioBuffer, bool>> currentQueue = new ConcurrentQueue<ValueTuple<AudioBuffer, bool>>();
 
         /// <summary>
         /// Last contiguous audio buffer collected pending recognition.
@@ -109,8 +109,9 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public BingSpeechRecognizer(Pipeline pipeline, BingSpeechRecognizerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public BingSpeechRecognizer(Pipeline pipeline, BingSpeechRecognizerConfiguration configuration, string name = nameof(BingSpeechRecognizer))
+            : base(pipeline, name)
         {
             this.Configuration = configuration ?? new BingSpeechRecognizerConfiguration();
             this.PartialRecognitionResults = pipeline.CreateEmitter<IStreamingSpeechRecognitionResult>(this, nameof(this.PartialRecognitionResults));
@@ -203,7 +204,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         /// <param name="data">A message containing the combined VAD signal and audio data.</param>
         /// <param name="e">The message envelope.</param>
         /// <returns>The <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected override async Task ReceiveAsync(ValueTuple<AudioBuffer, bool> data, Envelope e)
+        protected override async Task ReceiveAsync((AudioBuffer, bool) data, Envelope e)
         {
             byte[] audioData = data.Item1.Data;
             bool hasSpeech = data.Item2;
@@ -246,20 +247,20 @@ namespace Microsoft.Psi.CognitiveServices.Speech
                 this.lastVADSpeechTimeInterval = new TimeInterval(this.lastVADSpeechStartTime, this.lastVADSpeechEndTime);
 
                 // Allocate a buffer large enough to hold the buffered audio
-                BufferWriter bw = new BufferWriter(this.currentQueue.Sum(b => b.Item1.Length));
+                var bufferWriter = new BufferWriter(this.currentQueue.Sum(b => b.Item1.Length));
 
                 // Get the audio associated with the recognized text from the current queue.
-                ValueTuple<AudioBuffer, bool> buffer;
+                (AudioBuffer, bool) buffer;
                 while (this.currentQueue.TryDequeue(out buffer))
                 {
-                    bw.Write(buffer.Item1.Data);
+                    bufferWriter.Write(buffer.Item1.Data);
 
                     // We are done with this buffer so enqueue it for recycling
                     this.In.Recycle(buffer);
                 }
 
                 // Save the buffered audio
-                this.lastAudioBuffer = bw.Buffer;
+                this.lastAudioBuffer = bufferWriter.Buffer;
 
                 // Call EndAudio to signal that this is the last packet
                 await this.speechRecognitionClient.SendEndAudioAsync(this.cancellationTokenSource.Token);

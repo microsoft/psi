@@ -51,9 +51,6 @@ namespace Microsoft.Psi.Components
         public Emitter<Message<T>> Out { get; }
 
         /// <inheritdoc />
-        public override string ToString()
-        {
-            return this.name;
-        }
+        public override string ToString() => this.name;
     }
 }

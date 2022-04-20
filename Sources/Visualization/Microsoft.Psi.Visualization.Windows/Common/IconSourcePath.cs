@@ -34,6 +34,11 @@ namespace Microsoft.Psi.Visualization
         public const string PartitionAdd = IconPrefix + "partition-add.png";
 
         /// <summary>
+        /// Add multiple partitions.
+        /// </summary>
+        public const string PartitionAddMultiple = IconPrefix + "partition-add-multiple.png";
+
+        /// <summary>
         /// Create partition.
         /// </summary>
         public const string PartitionCreate = IconPrefix + "partition-create.png";
@@ -74,9 +79,19 @@ namespace Microsoft.Psi.Visualization
         public const string SessionCreate = IconPrefix + "session-create.png";
 
         /// <summary>
-        /// Create session from store.
+        /// Add session from store.
         /// </summary>
-        public const string SessionCreateFromStore = IconPrefix + "session-from-store.png";
+        public const string SessionAddFromStore = IconPrefix + "session-from-store.png";
+
+        /// <summary>
+        /// Add session from folder.
+        /// </summary>
+        public const string SessionAddFromFolder = IconPrefix + "session-from-folder.png";
+
+        /// <summary>
+        /// Add multiple sessions from folder.
+        /// </summary>
+        public const string MultipleSessionsAddFromFolder = IconPrefix + "multiple-sessions-from-folder.png";
 
         /// <summary>
         /// Close dataset.
@@ -259,6 +274,16 @@ namespace Microsoft.Psi.Visualization
         public const string ZoomToSelection = IconPrefix + "zoom-to-selection.png";
 
         /// <summary>
+        /// Move selection left.
+        /// </summary>
+        public const string MoveSelectionLeft = IconPrefix + "move-selection-left.png";
+
+        /// <summary>
+        /// Move selection right.
+        /// </summary>
+        public const string MoveSelectionRight = IconPrefix + "move-selection-right.png";
+
+        /// <summary>
         /// Clear selection.
         /// </summary>
         public const string ClearSelection = IconPrefix + "selection-remove.png";
@@ -312,5 +337,10 @@ namespace Microsoft.Psi.Visualization
         /// Toggle visibility.
         /// </summary>
         public const string ToggleVisibility = IconPrefix + "stream-show-hide.png";
+
+        /// <summary>
+        /// Go to time button.
+        /// </summary>
+        public const string GoToTime = IconPrefix + "go-to-time.png";
     }
 }

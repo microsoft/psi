@@ -21,8 +21,9 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="serializers">Known serializers.</param>
-        internal SerializerComponent(Pipeline pipeline, KnownSerializers serializers)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        internal SerializerComponent(Pipeline pipeline, KnownSerializers serializers, string name = nameof(SerializerComponent<T>))
+            : base(pipeline, name)
         {
             this.context = new SerializationContext(serializers);
             this.handler = serializers.GetHandler<T>();

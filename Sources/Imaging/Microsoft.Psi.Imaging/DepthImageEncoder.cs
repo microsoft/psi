@@ -18,8 +18,9 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="encoder">The depth image encoder to use.</param>
-        public DepthImageEncoder(Pipeline pipeline, IDepthImageToStreamEncoder encoder)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public DepthImageEncoder(Pipeline pipeline, IDepthImageToStreamEncoder encoder, string name = null)
+            : base(pipeline, name ?? $"{nameof(DepthImageEncoder)}({encoder.Description})")
         {
             this.encoder = encoder;
         }
@@ -28,7 +29,10 @@ namespace Microsoft.Psi.Imaging
         protected override void Receive(Shared<DepthImage> sharedDepthImage, Envelope e)
         {
             using var sharedEncodedDepthImage = EncodedDepthImagePool.GetOrCreate(
-                sharedDepthImage.Resource.Width, sharedDepthImage.Resource.Height);
+                sharedDepthImage.Resource.Width,
+                sharedDepthImage.Resource.Height,
+                sharedDepthImage.Resource.DepthValueSemantics,
+                sharedDepthImage.Resource.DepthValueToMetersScaleFactor);
             sharedEncodedDepthImage.Resource.EncodeFrom(sharedDepthImage.Resource, this.encoder);
             this.Out.Post(sharedEncodedDepthImage, e.OriginatingTime);
         }

@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile></DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningsAsErrors />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile></DocumentationFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.9.1" />
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
+    <ProjectReference Include="..\..\..\Calibration\Microsoft.Psi.Calibration\Microsoft.Psi.Calibration.csproj" />
+    <ProjectReference Include="..\..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
+    <ProjectReference Include="..\..\..\MixedReality\Microsoft.Psi.MixedReality\Microsoft.Psi.MixedReality.csproj" />
+    <ProjectReference Include="..\..\..\Runtime\Microsoft.Psi.Interop\Microsoft.Psi.Interop.csproj" />
+    <ProjectReference Include="..\..\..\Spatial\Microsoft.Psi.Spatial.Euclidean\Microsoft.Psi.Spatial.Euclidean.csproj" />
+  </ItemGroup>
+
+</Project>
+

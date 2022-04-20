@@ -18,6 +18,7 @@ namespace Microsoft.Psi.Components
     public class ParallelSparseSplitter<TIn, TBranchKey, TBranchIn, TBranchOut> : IConsumer<TIn>
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly Dictionary<TBranchKey, Emitter<TBranchIn>> branches = new Dictionary<TBranchKey, Emitter<TBranchIn>>();
         private readonly Dictionary<TBranchKey, int> keyToBranchMapping = new Dictionary<TBranchKey, int>();
         private readonly Func<TIn, Dictionary<TBranchKey, TBranchIn>> splitterFunction;
@@ -36,14 +37,17 @@ namespace Microsoft.Psi.Components
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key.</param>
         /// <param name="connectToJoin">Action that connects the results of a parallel branch back to join.</param>
+        /// <param name="name">An optional name for the component.</param>
         public ParallelSparseSplitter(
             Pipeline pipeline,
             Func<TIn, Dictionary<TBranchKey, TBranchIn>> splitter,
             Func<TBranchKey, IProducer<TBranchIn>, IProducer<TBranchOut>> transform,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy,
-            Action<IProducer<TBranchOut>> connectToJoin)
+            Action<IProducer<TBranchOut>> connectToJoin,
+            string name = nameof(ParallelSparseSplitter<TIn, TBranchKey, TBranchIn, TBranchOut>))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.splitterFunction = splitter;
             this.parallelTransform = transform;
             this.branchTerminationPolicy = branchTerminationPolicy ?? BranchTerminationPolicy<TBranchKey, TBranchIn>.WhenKeyNotPresent();
@@ -80,6 +84,9 @@ namespace Microsoft.Psi.Components
         /// Gets the active branches emitter.
         /// </summary>
         public Emitter<Dictionary<TBranchKey, int>> ActiveBranches { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Receive(TIn input, Envelope e)
         {

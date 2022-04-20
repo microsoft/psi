@@ -33,7 +33,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// </summary>
         public StreamVisualizationObjectCanvasView()
         {
-            this.DataContextChanged += this.OnDataContextChanged;
             this.SizeChanged += this.OnSizeChanged;
 
             this.transformGroup.Children.Add(this.translateTransform);

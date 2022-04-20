@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Data.Json
     using Newtonsoft.Json.Linq;
 
     /// <summary>
-    /// Defines a component that plays back data from a JSON store.
+    /// Component that plays back data from a JSON store.
     /// </summary>
     public class JsonGenerator : Generator, IDisposable
     {
@@ -23,10 +23,11 @@ namespace Microsoft.Psi.Data.Json
         /// Initializes a new instance of the <see cref="JsonGenerator"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
-        /// <param name="path">The directory in which the main persisted file resides.</param>
-        public JsonGenerator(Pipeline pipeline, string name, string path)
-            : this(pipeline, new JsonStoreReader(name, path))
+        /// <param name="storeName">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="storePath">The directory in which the main persisted file resides.</param>
+        /// <param name="name">An optional name for the component.</param>
+        public JsonGenerator(Pipeline pipeline, string storeName, string storePath, string name = nameof(JsonGenerator))
+            : this(pipeline, new JsonStoreReader(storeName, storePath), name)
         {
         }
 
@@ -35,8 +36,9 @@ namespace Microsoft.Psi.Data.Json
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="reader">The underlying store reader.</param>
-        protected JsonGenerator(Pipeline pipeline, JsonStoreReader reader)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        protected JsonGenerator(Pipeline pipeline, JsonStoreReader reader, string name = nameof(JsonGenerator))
+            : base(pipeline, name: name)
         {
             this.pipeline = pipeline;
             this.reader = reader;

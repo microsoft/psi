@@ -15,8 +15,9 @@ namespace Microsoft.Psi.MixedReality
         /// Initializes a new instance of the <see cref="Magnetometer"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public Magnetometer(Pipeline pipeline)
-            : base(pipeline, ResearchModeSensorType.ImuMag)
+        /// <param name="name">An optional name for the component.</param>
+        public Magnetometer(Pipeline pipeline, string name = nameof(Magnetometer))
+            : base(pipeline, ResearchModeSensorType.ImuMag, name)
         {
         }
 

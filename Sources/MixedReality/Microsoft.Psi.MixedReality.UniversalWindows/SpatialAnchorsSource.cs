@@ -20,8 +20,9 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">The configuration for the component.</param>
-        public SpatialAnchorsSource(Pipeline pipeline, TimeSpan interval)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public SpatialAnchorsSource(Pipeline pipeline, TimeSpan interval, string name = nameof(SpatialAnchorsSource))
+            : base(pipeline, name: name)
         {
             this.interval = interval;
             this.Out = pipeline.CreateEmitter<Dictionary<string, CoordinateSystem>>(this, nameof(this.Out));

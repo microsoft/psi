@@ -40,8 +40,9 @@ namespace Microsoft.Psi.Media
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of media file to play</param>
         /// <param name="format">Output format for images</param>
-        public FFMPEGMediaSource(Pipeline pipeline, string filename, PixelFormat format = PixelFormat.BGRX_32bpp)
-           : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public FFMPEGMediaSource(Pipeline pipeline, string filename, PixelFormat format = PixelFormat.BGRX_32bpp, string name = nameof(FFMPEGMediaSource))
+           : base(pipeline, name: name)
         {
             FileInfo info = new FileInfo(filename);
             pipeline.ProposeReplayTime(new TimeInterval(info.CreationTime, DateTime.MaxValue), new TimeInterval(info.CreationTime, DateTime.MaxValue));

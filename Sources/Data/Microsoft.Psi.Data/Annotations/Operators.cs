@@ -20,15 +20,42 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="source">The source stream.</param>
         /// <param name="annotationConstructor">A function that, given a key, produces a track name and set of attribute values for the annotation.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A time interval annotation stream.</returns>
         public static IProducer<TimeIntervalAnnotationSet> ToTimeIntervalAnnotations<TKey>(
             this IProducer<Dictionary<TKey, bool>> source,
             Func<TKey, (string Track, Dictionary<string, IAnnotationValue> AttributeValues)> annotationConstructor,
-            DeliveryPolicy<Dictionary<TKey, bool>> deliveryPolicy = null)
+            DeliveryPolicy<Dictionary<TKey, bool>> deliveryPolicy = null,
+            string name = nameof(ToTimeIntervalAnnotations))
+            => source.ToTimeIntervalAnnotations(
+                dict => dict.Where(kvp => kvp.Value).ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
+                (k, _) =>
+                {
+                    var (track, attributeValues) = annotationConstructor(k);
+                    return (true, track, attributeValues);
+                },
+                deliveryPolicy,
+                name);
+
+        /// <summary>
+        /// Converts a stream of dictionaries with boolean values into a corresponding stream of time interval annotations.
+        /// </summary>
+        /// <typeparam name="TKey">The type of key in the source stream.</typeparam>
+        /// <param name="source">The source stream.</param>
+        /// <param name="annotationConstructor">A function that, given a key, produces a value indicating whether to create an annotation, a track name and set of attribute values for the annotation.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
+        /// <returns>A time interval annotation stream.</returns>
+        public static IProducer<TimeIntervalAnnotationSet> ToTimeIntervalAnnotations<TKey>(
+            this IProducer<Dictionary<TKey, bool>> source,
+            Func<TKey, (bool Create, string Track, Dictionary<string, IAnnotationValue> AttributeValues)> annotationConstructor,
+            DeliveryPolicy<Dictionary<TKey, bool>> deliveryPolicy = null,
+            string name = nameof(ToTimeIntervalAnnotations))
             => source.ToTimeIntervalAnnotations(
                 dict => dict.Where(kvp => kvp.Value).ToDictionary(kvp => kvp.Key, kvp => kvp.Value),
                 (k, _) => annotationConstructor(k),
-                deliveryPolicy);
+                deliveryPolicy,
+                name);
 
         /// <summary>
         /// Converts a stream of dictionaries into a corresponding stream of time interval annotations.
@@ -38,15 +65,43 @@ namespace Microsoft.Psi.Data.Annotations
         /// <param name="source">The source stream.</param>
         /// <param name="annotationConstructor">A function that, given a key and value, produces a track name and set of attribute values for the annotation.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A time interval annotation stream.</returns>
         public static IProducer<TimeIntervalAnnotationSet> ToTimeIntervalAnnotations<TKey, TValue>(
             this IProducer<Dictionary<TKey, TValue>> source,
             Func<TKey, TValue, (string Track, Dictionary<string, IAnnotationValue> AttributeValues)> annotationConstructor,
-            DeliveryPolicy<Dictionary<TKey, TValue>> deliveryPolicy = null)
+            DeliveryPolicy<Dictionary<TKey, TValue>> deliveryPolicy = null,
+            string name = nameof(ToTimeIntervalAnnotations))
+            => source.ToTimeIntervalAnnotations(
+                _ => _,
+                (k, v) =>
+                {
+                    var (track, attributeValues) = annotationConstructor(k, v);
+                    return (true, track, attributeValues);
+                },
+                deliveryPolicy,
+                name);
+
+        /// <summary>
+        /// Converts a stream of dictionaries into a corresponding stream of time interval annotations.
+        /// </summary>
+        /// <typeparam name="TKey">The type of key in the source stream.</typeparam>
+        /// <typeparam name="TValue">The type of values in the source stream.</typeparam>
+        /// <param name="source">The source stream.</param>
+        /// <param name="annotationConstructor">A function that, given a key and value, produces a value indicating whether to create an annotation, a track name and set of attribute values for the annotation.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
+        /// <returns>A time interval annotation stream.</returns>
+        public static IProducer<TimeIntervalAnnotationSet> ToTimeIntervalAnnotations<TKey, TValue>(
+            this IProducer<Dictionary<TKey, TValue>> source,
+            Func<TKey, TValue, (bool Create, string Track, Dictionary<string, IAnnotationValue> AttributeValues)> annotationConstructor,
+            DeliveryPolicy<Dictionary<TKey, TValue>> deliveryPolicy = null,
+            string name = nameof(ToTimeIntervalAnnotations))
             => source.ToTimeIntervalAnnotations(
                 _ => _,
                 annotationConstructor,
-                deliveryPolicy);
+                deliveryPolicy,
+                name);
 
         /// <summary>
         /// Converts a stream into a corresponding stream of time interval annotations.
@@ -56,14 +111,16 @@ namespace Microsoft.Psi.Data.Annotations
         /// <typeparam name="TValue">The type of values in the source stream.</typeparam>
         /// <param name="source">The source stream.</param>
         /// <param name="selector">A function that, given an input message produces a dictionary of key-values that generates the annotation set.</param>
-        /// <param name="annotationConstructor">A function that, given a key and value, produces a track name and set of attribute values for the annotation.</param>
+        /// <param name="annotationConstructor">A function that, given a key and value, produces a value indicating whether to create an annotation, a track name, and set of attribute values for the annotation.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A time interval annotation stream.</returns>
         private static IProducer<TimeIntervalAnnotationSet> ToTimeIntervalAnnotations<TInput, TKey, TValue>(
             this IProducer<TInput> source,
             Func<TInput, Dictionary<TKey, TValue>> selector,
-            Func<TKey, TValue, (string Track, Dictionary<string, IAnnotationValue> AttributeValues)> annotationConstructor,
-            DeliveryPolicy<TInput> deliveryPolicy = null)
+            Func<TKey, TValue, (bool Create, string Track, Dictionary<string, IAnnotationValue> AttributeValues)> annotationConstructor,
+            DeliveryPolicy<TInput> deliveryPolicy = null,
+            string name = nameof(ToTimeIntervalAnnotations))
         {
             var intervals = new Dictionary<TKey, (TimeInterval TimeInterval, TValue Value)>();
 
@@ -96,15 +153,18 @@ namespace Microsoft.Psi.Data.Annotations
                         {
                             // In this case we need to post the object
                             removeKeys.Add(key);
-                            (var annotationTrack, var attributeValues) = annotationConstructor(key, intervals[key].Value);
-                            var annotation = new TimeIntervalAnnotation(intervals[key].TimeInterval, annotationTrack, attributeValues);
-                            if (timeIntervalAnnotationSet == null)
+                            (var create, var annotationTrack, var attributeValues) = annotationConstructor(key, intervals[key].Value);
+                            if (create)
                             {
-                                timeIntervalAnnotationSet = new TimeIntervalAnnotationSet(annotation);
-                            }
-                            else
-                            {
-                                timeIntervalAnnotationSet.AddAnnotation(annotation);
+                                var annotation = new TimeIntervalAnnotation(intervals[key].TimeInterval, annotationTrack, attributeValues);
+                                if (timeIntervalAnnotationSet == null)
+                                {
+                                    timeIntervalAnnotationSet = new TimeIntervalAnnotationSet(annotation);
+                                }
+                                else
+                                {
+                                    timeIntervalAnnotationSet.AddAnnotation(annotation);
+                                }
                             }
                         }
                     }
@@ -133,22 +193,29 @@ namespace Microsoft.Psi.Data.Annotations
                             var newInterval = new TimeInterval(intervals[key].TimeInterval.Left, closingTime);
 
                             // Append to the annotation set
-                            (var annotationTrack, var attributeValues) = annotationConstructor(key, intervals[key].Value);
-                            var annotation = new TimeIntervalAnnotation(newInterval, annotationTrack, attributeValues);
-                            if (timeIntervalAnnotationSet == null)
+                            (var create, var annotationTrack, var attributeValues) = annotationConstructor(key, intervals[key].Value);
+                            if (create)
                             {
-                                timeIntervalAnnotationSet = new TimeIntervalAnnotationSet(annotation);
-                            }
-                            else
-                            {
-                                timeIntervalAnnotationSet.AddAnnotation(annotation);
+                                var annotation = new TimeIntervalAnnotation(newInterval, annotationTrack, attributeValues);
+                                if (timeIntervalAnnotationSet == null)
+                                {
+                                    timeIntervalAnnotationSet = new TimeIntervalAnnotationSet(annotation);
+                                }
+                                else
+                                {
+                                    timeIntervalAnnotationSet.AddAnnotation(annotation);
+                                }
                             }
                         }
 
                         // Post the value
-                        emitter.Post(timeIntervalAnnotationSet, closingTime);
+                        if (timeIntervalAnnotationSet != null)
+                        {
+                            emitter.Post(timeIntervalAnnotationSet, closingTime);
+                        }
                     }
-                });
+                },
+                name: name);
 
             return source.PipeTo(processor, deliveryPolicy);
         }

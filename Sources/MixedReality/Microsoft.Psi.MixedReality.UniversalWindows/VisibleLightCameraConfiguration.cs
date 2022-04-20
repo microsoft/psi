@@ -9,43 +9,56 @@ namespace Microsoft.Psi.MixedReality
     /// <summary>
     /// Configuration for the <see cref="VisibleLightCamera"/> component.
     /// </summary>
-    public class VisibleLightCameraConfiguration
+    public class VisibleLightCameraConfiguration : ResearchModeCameraConfiguration
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the calibration settings are emitted.
+        /// Initializes a new instance of the <see cref="VisibleLightCameraConfiguration"/> class.
         /// </summary>
-        public bool OutputCalibration { get; set; } = true;
+        public VisibleLightCameraConfiguration()
+        {
+            this.VisibleLightSensorType = ResearchModeSensorType.LeftFront;
+        }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the original map of points for calibration are emitted.
-        /// </summary>
-        public bool OutputCalibrationMap { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets the minimum interval between posting calibration map messages.
-        /// </summary>
-        public TimeSpan OutputCalibrationMapInterval { get; set; } = TimeSpan.FromSeconds(20);
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the camera pose stream is emitted.
-        /// </summary>
-        public bool OutputPose { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the grayscale image stream is emitted.
+        /// Gets or sets a value indicating whether the component emits grayscale images.
         /// </summary>
         public bool OutputImage { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the sensor selection.
+        /// Gets or sets a value indicating whether the component emits grayscale image camera views.
         /// </summary>
-        /// <remarks>Valid values are: LeftFront, LeftLeft, RightFront, RightRight.</remarks>
-        public ResearchModeSensorType Mode { get; set; } = ResearchModeSensorType.LeftFront;
+        public bool OutputImageCameraView { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the minumum inter-frame interval.
+        /// Gets or sets the visible light sensor type.
         /// </summary>
-        /// <remarks>This value can be user to reduce the emitting framerate of the visible light camera.</remarks>
-        public TimeSpan MinInterframeInterval { get; set; } = TimeSpan.Zero;
+        public ResearchModeSensorType VisibleLightSensorType
+        {
+            get => this.SensorType;
+            set
+            {
+                if (value != ResearchModeSensorType.LeftLeft &&
+                    value != ResearchModeSensorType.LeftFront &&
+                    value != ResearchModeSensorType.RightFront &&
+                    value != ResearchModeSensorType.RightRight)
+                {
+                    throw new ArgumentException($"{value} mode is not valid for {nameof(VisibleLightCameraConfiguration)}.{nameof(this.VisibleLightSensorType)}.");
+                }
+
+                this.SensorType = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        internal override bool RequiresCalibrationPointsMap()
+            => this.OutputCalibrationPointsMap || this.OutputCameraIntrinsics || this.OutputImageCameraView;
+
+        /// <inheritdoc/>
+        internal override bool RequiresCameraIntrinsics()
+            => this.OutputCameraIntrinsics || this.OutputImageCameraView;
+
+        /// <inheritdoc/>
+        internal override bool RequiresPose()
+            => this.OutputPose || this.OutputImageCameraView;
     }
 }

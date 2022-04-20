@@ -12,6 +12,9 @@ namespace Microsoft.Psi.Imaging
     public class ImageToGZipStreamEncoder : IImageToStreamEncoder
     {
         /// <inheritdoc/>
+        public string Description => "GZip";
+
+        /// <inheritdoc/>
         public void EncodeToStream(Image image, Stream stream)
         {
             unsafe

@@ -497,6 +497,17 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Enumerates all stores under a given path.
+        /// </summary>
+        /// <param name="rootPath">The root path to search.</param>
+        /// <param name="recursively">A value indicating whether to search recursively.</param>
+        /// <returns>An enumeration of names and paths to stores found.</returns>
+        public static IEnumerable<(string Name, string Path)> EnumerateStores(string rootPath, bool recursively = true)
+        {
+            return PsiStoreCommon.EnumerateStores(rootPath, recursively).Select(store => (store.Name, store.Path));
+        }
+
+        /// <summary>
         /// Delete a \psi store.
         /// </summary>
         /// <param name="store">The name and path of the store to delete.</param>

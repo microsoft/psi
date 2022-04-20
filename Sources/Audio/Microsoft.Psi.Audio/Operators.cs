@@ -21,11 +21,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream containing the input audio.</param>
         /// <param name="frameSizeInBytes">The output frame size in bytes.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream containing the reframed audio.</returns>
-        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, int frameSizeInBytes, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
-        {
-            return source.PipeTo(new Reframe(source.Out.Pipeline, frameSizeInBytes), deliveryPolicy);
-        }
+        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, int frameSizeInBytes, DeliveryPolicy<AudioBuffer> deliveryPolicy = null, string name = nameof(Reframe))
+            => source.PipeTo(new Reframe(source.Out.Pipeline, frameSizeInBytes, name), deliveryPolicy);
 
         /// <summary>
         /// Reframes the bytes in an <see cref="AudioBuffer"/> stream, producing a new <see cref="AudioBuffer"/>
@@ -34,22 +33,20 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream containing the input audio.</param>
         /// <param name="frameDuration">The output frame duration.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream containing the reframed audio.</returns>
-        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, TimeSpan frameDuration, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
-        {
-            return source.PipeTo(new Reframe(source.Out.Pipeline, frameDuration), deliveryPolicy);
-        }
+        public static IProducer<AudioBuffer> Reframe(this IProducer<AudioBuffer> source, TimeSpan frameDuration, DeliveryPolicy<AudioBuffer> deliveryPolicy = null, string name = nameof(Reframe))
+            => source.PipeTo(new Reframe(source.Out.Pipeline, frameDuration, name), deliveryPolicy);
 
         /// <summary>
         /// Transforms an <see cref="AudioBuffer"/> stream to a stream of byte arrays containing the raw audio.
         /// </summary>
         /// <param name="source">A stream of audio buffers.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of byte arrays containing the raw audio.</returns>
-        public static IProducer<byte[]> ToByteArray(this IProducer<AudioBuffer> source, DeliveryPolicy<AudioBuffer> deliveryPolicy = null)
-        {
-            return source.Select(x => x.Data, deliveryPolicy);
-        }
+        public static IProducer<byte[]> ToByteArray(this IProducer<AudioBuffer> source, DeliveryPolicy<AudioBuffer> deliveryPolicy = null, string name = nameof(ToByteArray))
+            => source.Select(x => x.Data, deliveryPolicy, name);
 
         /// <summary>
         /// Transforms a stream of byte arrays containing raw audio to an <see cref="AudioBuffer"/> stream.
@@ -57,11 +54,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream of raw audio byte arrays.</param>
         /// <param name="audioFormat">The audio format of the raw audio contained within the byte arrays.</param>
         /// /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of audio buffers.</returns>
-        public static IProducer<AudioBuffer> ToAudioBuffer(this IProducer<byte[]> source, WaveFormat audioFormat, DeliveryPolicy<byte[]> deliveryPolicy = null)
-        {
-            return source.Select(x => new AudioBuffer(x, audioFormat), deliveryPolicy);
-        }
+        public static IProducer<AudioBuffer> ToAudioBuffer(this IProducer<byte[]> source, WaveFormat audioFormat, DeliveryPolicy<byte[]> deliveryPolicy = null, string name = nameof(ToAudioBuffer))
+            => source.Select(x => new AudioBuffer(x, audioFormat), deliveryPolicy, name);
 
         /// <summary>
         /// The frame shift operator.
@@ -71,11 +67,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="frameShiftInBytes">The number of bytes by which to shift the data.</param>
         /// <param name="bytesPerSec">The sampling frequency in bytes per second.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream containing the frame-shifted data.</returns>
-        public static IProducer<byte[]> FrameShift(this IProducer<byte[]> source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, DeliveryPolicy<byte[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new FrameShift(source.Out.Pipeline, frameSizeInBytes, frameShiftInBytes, bytesPerSec), deliveryPolicy);
-        }
+        public static IProducer<byte[]> FrameShift(this IProducer<byte[]> source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, DeliveryPolicy<byte[]> deliveryPolicy = null, string name = nameof(FrameShift))
+            => source.PipeTo(new FrameShift(source.Out.Pipeline, frameSizeInBytes, frameShiftInBytes, bytesPerSec, name), deliveryPolicy);
 
         /// <summary>
         /// Converts a stream of audio data to a stream of floating point values.
@@ -83,11 +78,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream containing the input audio data.</param>
         /// <param name="format">The audio format of the input audio.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of floating point audio sample values.</returns>
-        public static IProducer<float[]> ToFloat(this IProducer<byte[]> source, WaveFormat format, DeliveryPolicy<byte[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new ToFloat(source.Out.Pipeline, format), deliveryPolicy);
-        }
+        public static IProducer<float[]> ToFloat(this IProducer<byte[]> source, WaveFormat format, DeliveryPolicy<byte[]> deliveryPolicy = null, string name = nameof(ToFloat))
+            => source.PipeTo(new ToFloat(source.Out.Pipeline, format, name), deliveryPolicy);
 
         /// <summary>
         /// Applies dithering to input sample values.
@@ -96,11 +90,12 @@ namespace Microsoft.Psi.Audio
         /// <param name="scaleFactor">The scale factor of the dither.</param>
         /// <param name="randomSeed">An initial random seed value.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of floating point sample values with dithering.</returns>
-        public static IProducer<float[]> Dither(this IProducer<float[]> source, float scaleFactor, int randomSeed = 0, DeliveryPolicy<float[]> deliveryPolicy = null)
+        public static IProducer<float[]> Dither(this IProducer<float[]> source, float scaleFactor, int randomSeed = 0, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(Dither))
         {
             float[] dithered = null;
-            Random random = new Random(randomSeed);
+            var random = new Random(randomSeed);
             return source.Select(
                 values =>
                 {
@@ -116,7 +111,8 @@ namespace Microsoft.Psi.Audio
 
                     return dithered;
                 },
-                deliveryPolicy);
+                deliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -125,11 +121,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="source">A stream of floating point input sample values.</param>
         /// <param name="kernelLength">The Hanning window length.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of floating point sample values with Hanning window applied.</returns>
-        public static IProducer<float[]> HanningWindow(this IProducer<float[]> source, int kernelLength, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.Select<float[], float[]>(new HanningWindow(kernelLength).Apply, deliveryPolicy);
-        }
+        public static IProducer<float[]> HanningWindow(this IProducer<float[]> source, int kernelLength, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(HanningWindow))
+            => source.Select<float[], float[]>(new HanningWindow(kernelLength).Apply, deliveryPolicy, name);
 
         /// <summary>
         /// Performs a Fast Fourier Transform on input sample buffers.
@@ -138,44 +133,40 @@ namespace Microsoft.Psi.Audio
         /// <param name="fftSize">The FFT size.</param>
         /// <param name="inputSize">The window size.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>A stream of FFTs of the input sample buffers.</returns>
-        public static IProducer<float[]> FFT(this IProducer<float[]> source, int fftSize, int inputSize, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new FFT(source.Out.Pipeline, fftSize, inputSize), deliveryPolicy);
-        }
+        public static IProducer<float[]> FFT(this IProducer<float[]> source, int fftSize, int inputSize, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(FFT))
+            => source.PipeTo(new FFT(source.Out.Pipeline, fftSize, inputSize, name), deliveryPolicy);
 
         /// <summary>
         /// Converts a stream of FFTs to FFT power spectra.
         /// </summary>
         /// <param name="source">A stream of FFTs.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of FFT power spectra.</returns>
-        public static IProducer<float[]> FFTPower(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new FFTPower(source.Out.Pipeline), deliveryPolicy);
-        }
+        public static IProducer<float[]> FFTPower(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(FFTPower))
+            => source.PipeTo(new FFTPower(source.Out.Pipeline, name), deliveryPolicy);
 
         /// <summary>
         /// Computes the log energy of a stream of input samples in the time domain.
         /// </summary>
         /// <param name="source">A stream of floating point input sample values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of log energy values for the input samples.</returns>
-        public static IProducer<float> LogEnergy(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new LogEnergy(source.Out.Pipeline), deliveryPolicy);
-        }
+        public static IProducer<float> LogEnergy(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(LogEnergy))
+            => source.PipeTo(new LogEnergy(source.Out.Pipeline, name), deliveryPolicy);
 
         /// <summary>
         /// Computes the zero-crossing rate of input samples.
         /// </summary>
         /// <param name="source">A stream of floating point input sample values.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of zero-crossing rates for the input samples.</returns>
-        public static IProducer<float> ZeroCrossingRate(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new ZeroCrossingRate(source.Out.Pipeline), deliveryPolicy);
-        }
+        public static IProducer<float> ZeroCrossingRate(this IProducer<float[]> source, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(ZeroCrossingRate))
+            => source.PipeTo(new ZeroCrossingRate(source.Out.Pipeline, name), deliveryPolicy);
 
         /// <summary>
         /// Computes the frequency domain energy from the FFT power spectra.
@@ -184,11 +175,10 @@ namespace Microsoft.Psi.Audio
         /// <param name="start">The index of the starting frequency of the band.</param>
         /// <param name="end">The index of the ending frequency of the band.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of frequency domain energy values.</returns>
-        public static IProducer<float> FrequencyDomainEnergy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new FrequencyDomainEnergy(source.Out.Pipeline, start, end), deliveryPolicy);
-        }
+        public static IProducer<float> FrequencyDomainEnergy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(FrequencyDomainEnergy))
+            => source.PipeTo(new FrequencyDomainEnergy(source.Out.Pipeline, start, end, name), deliveryPolicy);
 
         /// <summary>
         /// Computes the spectral entropy within a frequency band.
@@ -197,10 +187,9 @@ namespace Microsoft.Psi.Audio
         /// <param name="start">The starting frequency of the band.</param>
         /// <param name="end">The ending frequency of the band.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of spectral entropy values.</returns>
-        public static IProducer<float> SpectralEntropy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null)
-        {
-            return source.PipeTo(new SpectralEntropy(source.Out.Pipeline, start, end), deliveryPolicy);
-        }
+        public static IProducer<float> SpectralEntropy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(SpectralEntropy))
+            => source.PipeTo(new SpectralEntropy(source.Out.Pipeline, start, end, name), deliveryPolicy);
     }
 }

@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Remoting
     public class RemoteClockImporter : IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly string host;
         private readonly int port;
         private readonly TcpClient client;
@@ -27,9 +28,11 @@ namespace Microsoft.Psi.Remoting
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="host">The host name of the remote clock exporter/server.</param>
         /// <param name="port">The port on which to connect.</param>
-        public RemoteClockImporter(Pipeline pipeline, string host, int port = RemoteClockExporter.DefaultPort)
+        /// <param name="name">An optional name for the component.</param>
+        public RemoteClockImporter(Pipeline pipeline, string host, int port = RemoteClockExporter.DefaultPort, string name = nameof(RemoteClockImporter))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.client = new TcpClient();
             this.host = host;
             this.port = port;
@@ -57,6 +60,9 @@ namespace Microsoft.Psi.Remoting
             this.client.Close();
             this.connected.Dispose();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void SynchronizeLocalPipelineClock()
         {

@@ -4,6 +4,7 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>Microsoft.Psi.Spatial.Euclidean.Visualization</RootNamespace>
     <Description>Provides visualization objects and adapters for various types defined in Microsoft.Psi.Spatial.Euclidean.</Description>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

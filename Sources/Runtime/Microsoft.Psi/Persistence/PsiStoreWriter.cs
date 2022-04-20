@@ -41,16 +41,17 @@ namespace Microsoft.Psi.Persistence
         private readonly Dictionary<int, PsiStreamMetadata> metadata = new ();
         private readonly BufferWriter metadataBuffer = new (128);
         private readonly BufferWriter indexBuffer = new (24);
-        private MessageWriter largeMessageWriter;
-        private int unindexedBytes = IndexPageSize;
-        private IndexEntry nextIndexEntry;
 
         /// <summary>
         /// This file is opened in exclusive share mode when the exporter is constructed, and is
         /// deleted when it gets disposed. Other processes can check the live status of the store
         /// by attempting to also open this file. If that fails, then the store is still live.
         /// </summary>
-        private FileStream liveMarkerFile;
+        private readonly FileStream liveMarkerFile;
+
+        private MessageWriter largeMessageWriter;
+        private int unindexedBytes = IndexPageSize;
+        private IndexEntry nextIndexEntry;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PsiStoreWriter"/> class.
@@ -146,34 +147,33 @@ namespace Microsoft.Psi.Persistence
         /// <param name="metadata">The metadata describing the stream to open.</param>
         /// <returns>The complete metadata for the stream just created.</returns>
         public PsiStreamMetadata OpenStream(PsiStreamMetadata metadata)
-        {
-            return this.OpenStream(metadata.Id, metadata.Name, metadata.IsIndexed, metadata.TypeName).UpdateSupplementalMetadataFrom(metadata);
-        }
+            => this.OpenStream(metadata.Id, metadata.Name, metadata.IsIndexed, metadata.TypeName, metadata.OpenedTime).UpdateSupplementalMetadataFrom(metadata);
 
         /// <summary>
         /// Creates a stream to write messages to.
         /// </summary>
-        /// <param name="streamId">The id of the stream, unique for this store. All messages with this stream id will be written to this stream.</param>
-        /// <param name="streamName">The name of the stream. This name can be later used to open the stream for reading.</param>
+        /// <param name="id">The id of the stream, unique for this store. All messages with this stream id will be written to this stream.</param>
+        /// <param name="name">The name of the stream. This name can be later used to open the stream for reading.</param>
         /// <param name="indexed">Indicates whether the stream is indexed or not. Indexed streams have a small index entry in the main data file and the actual message body in a large data file.</param>
         /// <param name="typeName">A name identifying the type of the messages in this stream. This is usually a fully-qualified type name or a data contract name, but can be anything that the caller wants.</param>
+        /// <param name="streamOpenedTime">The opened time for the stream.</param>
         /// <returns>The complete metadata for the stream just created.</returns>
-        public PsiStreamMetadata OpenStream(int streamId, string streamName, bool indexed, string typeName)
+        public PsiStreamMetadata OpenStream(int id, string name, bool indexed, string typeName, DateTime streamOpenedTime)
         {
-            if (this.metadata.ContainsKey(streamId))
+            if (this.metadata.ContainsKey(id))
             {
-                throw new InvalidOperationException($"The stream id {streamId} has already been registered with this writer.");
+                throw new InvalidOperationException($"The stream id {id} has already been registered with this writer.");
             }
 
-            var psiStreamMetadata = new PsiStreamMetadata(streamName, streamId, typeName)
+            var psiStreamMetadata = new PsiStreamMetadata(name, id, typeName)
             {
-                OpenedTime = Time.GetCurrentTime(),
+                OpenedTime = streamOpenedTime,
                 IsPersisted = true,
                 IsIndexed = indexed,
                 StoreName = this.name,
                 StorePath = this.path,
             };
-            this.metadata[streamId] = psiStreamMetadata;
+            this.metadata[id] = psiStreamMetadata;
             this.WriteToCatalog(psiStreamMetadata);
 
             // make sure we have a large file if needed
@@ -204,7 +204,18 @@ namespace Microsoft.Psi.Persistence
             var meta = this.metadata[streamId];
             if (!meta.IsClosed)
             {
-                meta.ClosedTime = meta.OpenedTime <= originatingTime ? originatingTime : meta.OpenedTime;
+                // When a store is being rewritten (e.g. to crop, repair, etc.) the OpenedTime can
+                // be after the closing originatingTime originally stored. Originating times remain
+                // in the timeframe of the original store, while Opened/ClosedTimes in the rewritten
+                // store reflect the wall-clock time at which each stream was rewritten.
+                // Technically, the rewritten streams are opened, written, and closed in quick
+                // succession, but we record an interval at least large enough to envelope the
+                // originating time interval. However, a stream with zero or one message will still
+                // show an empty interval (ClosedTime = OpenedTime).
+                meta.ClosedTime =
+                    meta.OpenedTime <= originatingTime ? // opened before/at closing time?
+                    originatingTime : // using closing time
+                    meta.OpenedTime + meta.MessageOriginatingTimeInterval.Span; // o/w assume closed after span of messages
                 meta.IsClosed = true;
                 this.WriteToCatalog(meta);
             }
@@ -231,6 +242,7 @@ namespace Microsoft.Psi.Persistence
             foreach (var meta in this.metadata.Values)
             {
                 meta.OpenedTime = originatingTime;
+                this.WriteToCatalog(meta);
             }
         }
 
@@ -283,6 +295,12 @@ namespace Microsoft.Psi.Persistence
         /// </summary>
         /// <param name="typeSchema">The type schema.</param>
         internal void WriteToCatalog(TypeSchema typeSchema) => this.WriteToCatalog((Metadata)typeSchema);
+
+        /// <summary>
+        /// Writes the psi stream metadata to the catalog.
+        /// </summary>
+        /// <param name="typeSchema">The psi stream metadata schema.</param>
+        internal void WriteToCatalog(PsiStreamMetadata typeSchema) => this.WriteToCatalog((Metadata)typeSchema);
 
         /// <summary>
         /// Writes details about a stream to the stream catalog.

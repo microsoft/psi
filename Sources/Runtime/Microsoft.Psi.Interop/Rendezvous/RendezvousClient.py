@@ -6,7 +6,7 @@ from enum import IntEnum
 
 # Client which connects to a RendezvousServer and relays rendezvous information.
 class RendezvousClient:
-    PROTOCOL_VERSION = 1
+    PROTOCOL_VERSION = 2
 
     def __init__(self, host, port = 13331):
         self.serverAddress = (host, port)
@@ -83,9 +83,10 @@ class RendezvousClient:
                  'port': port,
                  'streams': [] }
 
-    def createProcess(name, endpoints):
+    def createProcess(name, endpoints, version):
         return { 'name': name,
-                 'endpoints': endpoints }
+                 'endpoints': endpoints,
+                 'version': version }
 
     def start(self, processAddedCallback = None, processRemovedCallback = None):
         self.socket.connect(self.serverAddress)
@@ -112,6 +113,7 @@ class RendezvousClient:
     def addProcess(self, process):
         self.__sendByte(1) # add process
         self.__sendString(process['name'])
+        self.__sendString(process['version'])
         self.__sendInt(len(process['endpoints']))
         for e in process['endpoints']:
             self.__sendByte(e['endpoint'])
@@ -174,11 +176,12 @@ class RendezvousClient:
 
     def __readProcess(self):
         name = self.__readString()
+        version = self.__readString()
         numEndpoints = self.__readInt()
         endpoints = []
         for _ in range(numEndpoints):
             endpoints.append(self.__readEndpoint())
-        return RendezvousClient.createProcess(name, endpoints)
+        return RendezvousClient.createProcess(name, endpoints, version)
 
     rendezvous = {}
 

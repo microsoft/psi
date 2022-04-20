@@ -18,11 +18,10 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of messages for the source stream.</typeparam>
         /// <param name="stream">The source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Observable with elements from the source stream.</returns>
-        public static IObservable<T> ToObservable<T>(this IProducer<T> stream, DeliveryPolicy<T> deliveryPolicy = null)
-        {
-            return new StreamObservable<T>(stream, deliveryPolicy);
-        }
+        public static IObservable<T> ToObservable<T>(this IProducer<T> stream, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(ToObservable))
+            => new StreamObservable<T>(stream, deliveryPolicy, name);
 
         /// <summary>
         /// Observable stream class.
@@ -30,14 +29,15 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of stream messages.</typeparam>
         public class StreamObservable<T> : IObservable<T>
         {
-            private ConcurrentDictionary<IObserver<T>, IObserver<T>> observers = new ConcurrentDictionary<IObserver<T>, IObserver<T>>();
+            private readonly ConcurrentDictionary<IObserver<T>, IObserver<T>> observers = new ();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="StreamObservable{T}"/> class.
             /// </summary>
             /// <param name="stream">The source stream to observe.</param>
             /// <param name="deliveryPolicy">An optional delivery policy.</param>
-            public StreamObservable(IProducer<T> stream, DeliveryPolicy<T> deliveryPolicy = null)
+            /// <param name="name">An optional name for this stream operator.</param>
+            public StreamObservable(IProducer<T> stream, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(StreamObservable<T>))
             {
                 var processor = new Processor<T, T>(
                     stream.Out.Pipeline,
@@ -49,7 +49,8 @@ namespace Microsoft.Psi
                         }
 
                         s.Post(d, e.OriginatingTime);
-                    });
+                    },
+                    name: name);
 
                 stream.Out.PipeTo(processor, deliveryPolicy);
 
@@ -76,8 +77,8 @@ namespace Microsoft.Psi
 
             private class Unsubscriber : IDisposable
             {
-                private StreamObservable<T> observable;
-                private IObserver<T> observer;
+                private readonly StreamObservable<T> observable;
+                private readonly IObserver<T> observer;
 
                 public Unsubscriber(StreamObservable<T> observable, IObserver<T> observer)
                 {

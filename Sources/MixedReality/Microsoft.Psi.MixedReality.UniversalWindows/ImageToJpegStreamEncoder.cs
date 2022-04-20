@@ -15,6 +15,7 @@ namespace Microsoft.Psi.MixedReality
     public class ImageToJpegStreamEncoder : IImageToStreamEncoder
     {
         private readonly BitmapPropertySet propertySet;
+        private readonly double imageQuality;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageToJpegStreamEncoder"/> class.
@@ -22,9 +23,13 @@ namespace Microsoft.Psi.MixedReality
         /// <param name="imageQuality">Optional image quality (0.0 - 1.0, default 1.0).</param>
         public ImageToJpegStreamEncoder(double imageQuality = 1.0)
         {
-            this.propertySet = new BitmapPropertySet();
+            this.imageQuality = imageQuality;
+            this.propertySet = new ();
             this.propertySet.Add("ImageQuality", new BitmapTypedValue(imageQuality, Windows.Foundation.PropertyType.Single));
         }
+
+        /// <inheritdoc/>
+        public string Description => $"Jpeg({this.imageQuality:0.00})";
 
         /// <inheritdoc/>
         public void EncodeToStream(Image image, Stream stream)

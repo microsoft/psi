@@ -11,6 +11,11 @@ namespace Microsoft.Psi.Imaging
     public interface IDepthImageToStreamEncoder
     {
         /// <summary>
+        /// Gets the description of the depth image stream encoder.
+        /// </summary>
+        public string Description { get; }
+
+        /// <summary>
         /// Encodes a depth image into a stream.
         /// </summary>
         /// <param name="depthImage">Depth image to be encoded.</param>

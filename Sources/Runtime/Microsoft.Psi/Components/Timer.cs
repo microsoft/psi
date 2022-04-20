@@ -13,6 +13,7 @@ namespace Microsoft.Psi.Components
     public abstract class Timer : ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
 
         /// <summary>
         /// The interval on which to publish messages.
@@ -55,9 +56,11 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="timerInterval">The timer firing interval, in ms.</param>
-        public Timer(Pipeline pipeline, uint timerInterval)
+        /// <param name="name">An optional name for the component.</param>
+        public Timer(Pipeline pipeline, uint timerInterval, string name = nameof(Timer))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.timerInterval = TimeSpan.FromMilliseconds(timerInterval);
         }
 
@@ -100,6 +103,9 @@ namespace Microsoft.Psi.Components
             this.StopTimer();
             notifyCompleted();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         /// <summary>
         /// Called by the timer. Override to publish actual messages.

@@ -33,7 +33,7 @@ namespace Microsoft.Psi.Onnx
 
             // The schemaDefinition is a ML.NET construct that allows us to specify the form
             // of the inputs. In this case we construct a schema definition programmatically
-            // to reflect that the input is a vector of floats, of the size specified in the
+            // to reflect that the input is a vector of floats, of the sizes specified in the
             // configuration
             this.schemaDefinition = SchemaDefinition.Create(typeof(OnnxInputVector));
             this.schemaDefinition[nameof(OnnxInputVector.Vector)].ColumnType = new VectorDataViewType(NumberDataViewType.Single, this.configuration.InputVectorSize);
@@ -46,7 +46,9 @@ namespace Microsoft.Psi.Onnx
                     modelFile: configuration.ModelFileName,
                     outputColumnNames: new[] { configuration.OutputVectorName },
                     inputColumnNames: new[] { configuration.InputVectorName },
-                    gpuDeviceId: configuration.GpuDeviceId);
+                    shapeDictionary: configuration.ShapeDictionary,
+                    gpuDeviceId: configuration.GpuDeviceId,
+                    fallbackToCpu: false);
             this.onnxTransformer = scoringEstimator.Fit(onnxEmptyInputDataView);
         }
 

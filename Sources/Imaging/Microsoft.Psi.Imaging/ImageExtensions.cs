@@ -489,6 +489,28 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Compares two depth images to see if they are identical (within some specified tolerance).
+        /// </summary>
+        /// <param name="depthImage1">First image in comparison.</param>
+        /// <param name="depthImage2">Second image in comparison.</param>
+        /// <param name="tolerance">Maximum allowable distance between pixels in Grayscale space.</param>
+        /// <param name="percentOutliersAllowed">Percetange of pixels allowed to be outside tolerance.</param>
+        /// <param name="errorMetrics">Error metrics across all pixels.</param>
+        /// <returns>True if images are considered identical. False otherwise.</returns>
+        public static bool Compare(this DepthImage depthImage1, DepthImage depthImage2, double tolerance, double percentOutliersAllowed, ref ImageError errorMetrics)
+        {
+            if (depthImage1.DepthValueSemantics != depthImage2.DepthValueSemantics ||
+                depthImage1.DepthValueToMetersScaleFactor != depthImage2.DepthValueToMetersScaleFactor)
+            {
+                return false;
+            }
+            else
+            {
+                return Compare(depthImage1 as ImageBase, depthImage2 as ImageBase, tolerance, percentOutliersAllowed, ref errorMetrics);
+            }
+        }
+
+        /// <summary>
         /// Resizes an image by the specified scale factors using the specified sampling mode.
         /// </summary>
         /// <param name="image">Image to resize.</param>
@@ -843,7 +865,7 @@ namespace Microsoft.Psi.Imaging
         public static DepthImage Crop(this DepthImage depthImage, Rectangle rectangle, bool clip = false)
         {
             var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, depthImage.Width, depthImage.Height) : rectangle;
-            var croppedDepthImage = new DepthImage(actualRectangle.Width, actualRectangle.Height, depthImage.Stride);
+            var croppedDepthImage = new DepthImage(actualRectangle.Width, actualRectangle.Height, depthImage.Stride, depthImage.DepthValueSemantics, depthImage.DepthValueToMetersScaleFactor);
             depthImage.Crop(croppedDepthImage, actualRectangle, clip: false);
             return croppedDepthImage;
         }
@@ -873,6 +895,16 @@ namespace Microsoft.Psi.Imaging
             if (croppedDepthImage.PixelFormat != depthImage.PixelFormat)
             {
                 throw new ArgumentOutOfRangeException($"{nameof(croppedDepthImage)}.PixelFormat", "destination image pixel format doesn't match source image pixel format");
+            }
+
+            if (croppedDepthImage.DepthValueSemantics != depthImage.DepthValueSemantics)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(croppedDepthImage)}.DepthValueSemantics", "destination image depth value semantics doesn't match source depth value semantics.");
+            }
+
+            if (croppedDepthImage.DepthValueToMetersScaleFactor != depthImage.DepthValueToMetersScaleFactor)
+            {
+                throw new ArgumentOutOfRangeException($"{nameof(croppedDepthImage)}.DepthValueToMetersScaleFactor", "destination image depth value scale factor doesn't match source depth value scale factor.");
             }
 
             var actualRectangle = clip ? GetImageSizeClippedRectangle(rectangle, depthImage.Width, depthImage.Height) : rectangle;

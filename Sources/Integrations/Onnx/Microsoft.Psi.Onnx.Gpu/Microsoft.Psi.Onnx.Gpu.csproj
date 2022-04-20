@@ -32,8 +32,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.ML.OnnxRuntime.Gpu" Version="1.4.0" />
-    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="1.5.1" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime.Gpu" Version="1.11.0" />
+    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="1.7.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>

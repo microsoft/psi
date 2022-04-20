@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2"
+  IgnorableNamespaces="uap mp uap2">
+
+  <Identity
+    Name="0e0b1c4d-d6a2-4761-8a1e-8fb7b914a071"
+    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, C=US"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="0e0b1c4d-d6a2-4761-8a1e-8fb7b914a071" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>HoloLensCaptureApp</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\Logo\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="HoloLensCaptureApp.App">
+      <uap:VisualElements
+        DisplayName="HoloLensCaptureApp"
+        Square150x150Logo="Assets\Logo\Square150x150Logo.png"
+        Square44x44Logo="Assets\Logo\Square44x44Logo.png"
+        Description="HoloLensCaptureApp"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Logo\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="config">
+            <uap:DisplayName>HoloLensCaptureApp Configuration</uap:DisplayName>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.txt</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClientServer"/>
+    <Capability Name="privateNetworkClientServer"/>
+    <uap2:Capability Name="spatialPerception"/>
+    <uap:Capability Name="documentsLibrary" />
+    <DeviceCapability Name="gazeInput"/>
+    <DeviceCapability Name="microphone"/>
+    <DeviceCapability Name="webcam"/>
+    <DeviceCapability Name="backgroundSpatialPerception"/>
+  </Capabilities>
+</Package>

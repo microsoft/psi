@@ -12,12 +12,17 @@ namespace Microsoft.Psi.MixedReality
     /// </summary>
     public abstract class StereoKitComponent : IStepper
     {
+        private readonly string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StereoKitComponent"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public StereoKitComponent(Pipeline pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public StereoKitComponent(Pipeline pipeline, string name = nameof(StereoKitComponent))
         {
+            this.name = name;
+
             // Defer call to SK.AddStepper(this) to PipelineRun to ensure derived classes have finished construction!
             // Otherwise IStepper.Initialize() could get called before this object is fully constructed.
             pipeline.PipelineRun += (_, _) =>
@@ -50,5 +55,8 @@ namespace Microsoft.Psi.MixedReality
         public virtual void Shutdown()
         {
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
     }
 }

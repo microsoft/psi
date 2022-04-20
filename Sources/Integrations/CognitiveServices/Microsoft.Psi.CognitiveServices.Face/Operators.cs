@@ -17,6 +17,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <param name="source">The source stream of images.</param>
         /// <param name="configuration">The face recognizer configuration.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream of messages containing detected faces and candidate identities of each person in the image.</returns>
         /// <remarks>
         /// A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
@@ -24,11 +25,11 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// passed to the operator via the configuration. For more information, and to see how to create person groups, see the full direct API for.
         /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
         /// </remarks>
-        public static IProducer<IList<IList<(string Name, double Confidence)>>> RecognizeFace(this IProducer<Shared<Image>> source, FaceRecognizerConfiguration configuration, DeliveryPolicy<Shared<Image>> deliveryPolicy = null)
-        {
-            var faceRecognizer = new FaceRecognizer(source.Out.Pipeline, configuration);
-            source.PipeTo(faceRecognizer, deliveryPolicy);
-            return faceRecognizer.Out;
-        }
+        public static IProducer<IList<IList<(string Name, double Confidence)>>> RecognizeFace(
+            this IProducer<Shared<Image>> source,
+            FaceRecognizerConfiguration configuration,
+            DeliveryPolicy<Shared<Image>> deliveryPolicy = null,
+            string name = nameof(RecognizeFace))
+            => source.PipeTo(new FaceRecognizer(source.Out.Pipeline, configuration, name), deliveryPolicy);
     }
 }

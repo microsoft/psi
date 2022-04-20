@@ -34,11 +34,12 @@ namespace Microsoft.Psi.Onnx
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <remarks>The configuration parameter specifies the model filename, the
         /// name of the input and output vectors in that ONNX model, as well as
         /// the input vector size.</remarks>
-        public OnnxModelRunner(Pipeline pipeline, OnnxModelConfiguration configuration)
-            : base(pipeline)
+        public OnnxModelRunner(Pipeline pipeline, OnnxModelConfiguration configuration, string name = nameof(OnnxModelRunner))
+            : base(pipeline, name)
         {
             this.inputVectorSize = configuration.InputVectorSize;
             this.onnxModel = new OnnxModel(configuration);

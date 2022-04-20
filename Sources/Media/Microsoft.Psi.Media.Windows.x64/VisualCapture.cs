@@ -29,8 +29,9 @@ namespace Microsoft.Psi.Media
         /// <param name="visual">Windows Media Visual to stream.</param>
         /// <param name="pixelWidth">Pixel width at which to render the visual.</param>
         /// <param name="pixelHeight">Pixel height at which to render the visual.</param>
-        public VisualCapture(Pipeline pipeline, TimeSpan interval, Visual visual, int pixelWidth, int pixelHeight)
-            : base(pipeline, true)
+        /// <param name="name">An optional name for the component.</param>
+        public VisualCapture(Pipeline pipeline, TimeSpan interval, Visual visual, int pixelWidth, int pixelHeight, string name = nameof(VisualCapture))
+            : base(pipeline, true, name)
         {
             this.interval = interval;
             this.visual = visual;
@@ -45,8 +46,9 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Configuration values for the visual capture component.</param>
-        public VisualCapture(Pipeline pipeline, VisualCaptureConfiguration configuration)
-            : this(pipeline, configuration.Interval, configuration.Visual, configuration.PixelWidth, configuration.PixelHeight)
+        /// <param name="name">An optional name for the component.</param>
+        public VisualCapture(Pipeline pipeline, VisualCaptureConfiguration configuration, string name = nameof(VisualCapture))
+            : this(pipeline, configuration.Interval, configuration.Visual, configuration.PixelWidth, configuration.PixelHeight, name)
         {
         }
 

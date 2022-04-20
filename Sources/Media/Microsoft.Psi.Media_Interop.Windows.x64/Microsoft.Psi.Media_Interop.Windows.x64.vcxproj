@@ -16,7 +16,7 @@
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>VideoCapture</RootNamespace>
     <ProjectName>Microsoft.Psi.Media_Interop.Windows.x64</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(FFMPEGDir)'!=''">
     <FFMpegLibs>$(FFMPEGDir)\lib\avdevice.lib;$(FFMPEGDir)\lib\avfilter.lib;$(FFMPEGDir)\lib\postproc.lib;$(FFMPEGDir)\lib\swresample.lib;$(FFMPEGDir)\lib\avcodec.lib;$(FFMPEGDir)\lib\avformat.lib;$(FFMPEGDir)\lib\avutil.lib;$(FFMPEGDir)\lib\swscale.lib</FFMpegLibs>

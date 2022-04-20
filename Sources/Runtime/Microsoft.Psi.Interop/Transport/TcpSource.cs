@@ -18,10 +18,10 @@ namespace Microsoft.Psi.Interop.Transport
     /// <typeparam name="T">The type of the messages.</typeparam>
     public class TcpSource<T> : IProducer<T>, ISourceComponent, IDisposable
     {
-        private static readonly bool IsDisposableT = typeof(IDisposable).IsAssignableFrom(typeof(T));
         private readonly Pipeline pipeline;
         private readonly string address;
         private readonly int port;
+        private readonly Action<T> deallocator;
         private readonly string name;
         private readonly TcpClient client;
         private readonly IFormatDeserializer deserializer;
@@ -38,15 +38,31 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="address">The address of the remote server.</param>
         /// <param name="port">The port on which to connect.</param>
         /// <param name="deserializer">The deserializer to use to deserialize messages.</param>
+        /// <param name="deallocator">An optional deallocator for the data.</param>
         /// <param name="useSourceOriginatingTimes">An optional parameter indicating whether to use originating times from the source received over the network or to re-timestamp with the current pipeline time upon receiving.</param>
-        /// <param name="name">An optional name for the TCP source.</param>
-        public TcpSource(Pipeline pipeline, string address, int port, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = null)
+        /// <param name="name">An optional name for the component.</param>
+        public TcpSource(
+            Pipeline pipeline,
+            string address,
+            int port,
+            IFormatDeserializer deserializer,
+            Action<T> deallocator = null,
+            bool useSourceOriginatingTimes = true,
+            string name = nameof(TcpSource<T>))
         {
             this.pipeline = pipeline;
             this.client = new TcpClient();
             this.address = address;
             this.port = port;
             this.deserializer = deserializer;
+            this.deallocator = deallocator ?? (d =>
+            {
+                if (d is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            });
+
             this.useSourceOriginatingTimes = useSourceOriginatingTimes;
             this.name = name;
             this.Out = pipeline.CreateEmitter<T>(this, nameof(this.Out));
@@ -79,7 +95,7 @@ namespace Microsoft.Psi.Interop.Transport
         }
 
         /// <inheritdoc/>
-        public override string ToString() => this.name ?? base.ToString();
+        public override string ToString() => this.name;
 
         /// <summary>
         /// Reads a data frame into the frame buffer. Will re-allocate the frame buffer if necessary.
@@ -140,12 +156,7 @@ namespace Microsoft.Psi.Interop.Transport
                     lastTimestamp = timestamp, (message, timestamp) = this.ReadNextFrame(reader))
                 {
                     this.Out.Post(message, timestamp);
-
-                    if (IsDisposableT)
-                    {
-                        // message is deep-cloned on Post, so dispose it if IDisposable
-                        ((IDisposable)message).Dispose();
-                    }
+                    this.deallocator(message);
                 }
             }
             catch

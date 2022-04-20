@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Views
     /// <summary>
     /// Interaction logic for XYVisualizationPanelView.xaml.
     /// </summary>
-    public partial class XYVisualizationPanelView : VisualizationPanelView
+    public partial class XYVisualizationPanelView : InstantVisualizationPanelView
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="XYVisualizationPanelView"/> class.
@@ -36,74 +36,6 @@ namespace Microsoft.Psi.Visualization.Views
                 this.VisualizationPanel.SetAutoAxisComputeModeCommand,
                 null,
                 this.VisualizationPanel.AxisComputeMode == AxisComputeMode.Manual));
-
-            // Add Set Cursor Epsilon menu with sub-menu items
-            menuItems.Add(null);
-            var setCursorEpsilonMenuItem = MenuItemHelper.CreateMenuItem(
-                string.Empty,
-                "Set Cursor Epsilon (on All Visualizers)",
-                null,
-                this.VisualizationPanel.VisualizationObjects.Count > 0);
-
-            setCursorEpsilonMenuItem.Items.Add(
-                MenuItemHelper.CreateMenuItem(
-                    null,
-                    "Infinite Past",
-                    new RelayCommand(
-                        () =>
-                        {
-                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
-                            {
-                                visualizationObject.CursorEpsilonNegMs = int.MaxValue;
-                                visualizationObject.CursorEpsilonPosMs = 0;
-                            }
-                        }),
-                    true));
-            setCursorEpsilonMenuItem.Items.Add(
-                MenuItemHelper.CreateMenuItem(
-                    null,
-                    "Last 5 seconds",
-                    new RelayCommand(
-                        () =>
-                        {
-                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
-                            {
-                                visualizationObject.CursorEpsilonNegMs = 5000;
-                                visualizationObject.CursorEpsilonPosMs = 0;
-                            }
-                        }),
-                    true));
-            setCursorEpsilonMenuItem.Items.Add(
-                MenuItemHelper.CreateMenuItem(
-                    null,
-                    "Last 1 second",
-                    new RelayCommand(
-                        () =>
-                        {
-                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
-                            {
-                                visualizationObject.CursorEpsilonNegMs = 1000;
-                                visualizationObject.CursorEpsilonPosMs = 0;
-                            }
-                        }),
-                    true));
-            setCursorEpsilonMenuItem.Items.Add(
-                MenuItemHelper.CreateMenuItem(
-                    null,
-                    "Last 50 milliseconds",
-                    new RelayCommand(
-                        () =>
-                        {
-                            foreach (var visualizationObject in this.VisualizationPanel.VisualizationObjects)
-                            {
-                                visualizationObject.CursorEpsilonNegMs = 50;
-                                visualizationObject.CursorEpsilonPosMs = 0;
-                            }
-                        }),
-                    true));
-
-            menuItems.Add(setCursorEpsilonMenuItem);
-            menuItems.Add(null);
 
             base.AppendContextMenuItems(menuItems);
         }

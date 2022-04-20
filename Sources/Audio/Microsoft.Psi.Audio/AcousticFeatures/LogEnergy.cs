@@ -25,8 +25,9 @@ namespace Microsoft.Psi.Audio
         /// Initializes a new instance of the <see cref="LogEnergy"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public LogEnergy(Pipeline pipeline)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public LogEnergy(Pipeline pipeline, string name = nameof(LogEnergy))
+            : base(pipeline, name)
         {
         }
 

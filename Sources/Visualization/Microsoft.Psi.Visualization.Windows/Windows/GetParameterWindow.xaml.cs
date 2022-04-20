@@ -14,22 +14,25 @@ namespace Microsoft.Psi.Visualization.Windows
     {
         private readonly Func<string, (bool IsValid, string Error)> validator;
         private bool isValid = false;
+        private string errorMessage = string.Empty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetParameterWindow"/> class.
         /// </summary>
         /// <param name="owner">The window that owns this window.</param>
+        /// <param name="windowTitle">The title of the window.</param>
         /// <param name="parameterName">The initial store name to display.</param>
         /// <param name="initialParameterValue">The initial store path to display.</param>
         /// <param name="validator">An optional validator function.</param>
-        public GetParameterWindow(Window owner, string parameterName, string initialParameterValue, Func<string, (bool IsValid, string Error)> validator = null)
+        public GetParameterWindow(Window owner, string windowTitle, string parameterName, string initialParameterValue, Func<string, (bool IsValid, string Error)> validator = null)
         {
             this.InitializeComponent();
 
+            this.Title = windowTitle;
             this.Owner = owner;
             this.DataContext = this;
 
-            this.ParameterName = parameterName;
+            this.ParameterLabel.Content = parameterName + ":";
             this.ParameterValue = initialParameterValue;
             this.validator = validator ?? (value => (true, null));
 
@@ -40,11 +43,6 @@ namespace Microsoft.Psi.Visualization.Windows
         /// Occurs when a property has changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Gets or sets the parameter name.
-        /// </summary>
-        public string ParameterName { get; set; }
 
         /// <summary>
         /// Gets or sets the parameter value.
@@ -70,6 +68,25 @@ namespace Microsoft.Psi.Visualization.Windows
             }
         }
 
+        /// <summary>
+        /// Gets or sets the error message.
+        /// </summary>
+        public string ErrorMessage
+        {
+            get => this.errorMessage;
+            set
+            {
+                if (this.errorMessage != value)
+                {
+                    this.errorMessage = value;
+                    if (this.PropertyChanged != null)
+                    {
+                        this.PropertyChanged.Invoke(this, new PropertyChangedEventArgs(nameof(this.ErrorMessage)));
+                    }
+                }
+            }
+        }
+
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
@@ -85,7 +102,9 @@ namespace Microsoft.Psi.Visualization.Windows
 
         private void Validate()
         {
-            this.IsValid = this.validator(this.ParameterValue).Item1;
+            (var isValid, var errorMessage) = this.validator(this.ParameterValue);
+            this.IsValid = isValid;
+            this.ErrorMessage = string.IsNullOrEmpty(this.ParameterValue) ? string.Empty : errorMessage;
         }
     }
 }

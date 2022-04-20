@@ -28,6 +28,7 @@ namespace Microsoft.Psi.Components
         private readonly Receiver<int> loopBackIn;
         private readonly Emitter<int> loopBackOut;
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly PipelineElement node;
         private readonly bool isInfiniteSource;
         private bool stopped;
@@ -42,12 +43,14 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
         /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
-        public Generator(Pipeline pipeline, bool isInfiniteSource = false)
+        /// <param name="name">An optional name for the generator.</param>
+        public Generator(Pipeline pipeline, bool isInfiniteSource = false, string name = nameof(Generator))
         {
             this.loopBackOut = pipeline.CreateEmitter<int>(this, nameof(this.loopBackOut));
             this.loopBackIn = pipeline.CreateReceiver<int>(this, this.Next, nameof(this.loopBackIn));
             this.loopBackOut.PipeTo(this.loopBackIn, DeliveryPolicy.Unlimited);
             this.pipeline = pipeline;
+            this.name = name;
             this.node = pipeline.GetOrCreateNode(this);
             this.isInfiniteSource = isInfiniteSource;
         }
@@ -98,6 +101,9 @@ namespace Microsoft.Psi.Components
                 this.notifyCompleted();
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         /// <summary>
         /// Function that gets called to produce more data once the pipeline is ready to consume it.

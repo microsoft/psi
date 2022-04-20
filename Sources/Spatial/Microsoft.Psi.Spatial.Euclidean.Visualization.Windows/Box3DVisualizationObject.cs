@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a 3D box visualization object.
     /// </summary>
     [VisualizationObject("3D box")]
-    public class Box3DVisualizationObject : ModelVisual3DVisualizationObject<Box3D?>
+    public class Box3DVisualizationObject : ModelVisual3DVisualizationObject<Box3D>
     {
         // Edge properties
         private Color edgeColor = Colors.White;
@@ -146,10 +146,10 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         /// <inheritdoc/>
         public override void UpdateData()
         {
-            if (this.CurrentData.HasValue)
+            if (this.CurrentData != null)
             {
                 // Update the edge locations.
-                var box = this.CurrentData.Value;
+                var box = this.CurrentData;
                 var p0 = (box.Origin + box.XAxis.ScaleBy(box.Bounds.Min.X) + box.YAxis.ScaleBy(box.Bounds.Min.Y) + box.ZAxis.ScaleBy(box.Bounds.Min.Z)).ToPoint3D();
                 var p1 = (box.Origin + box.XAxis.ScaleBy(box.Bounds.Max.X) + box.YAxis.ScaleBy(box.Bounds.Min.Y) + box.ZAxis.ScaleBy(box.Bounds.Min.Z)).ToPoint3D();
                 var p2 = (box.Origin + box.XAxis.ScaleBy(box.Bounds.Max.X) + box.YAxis.ScaleBy(box.Bounds.Max.Y) + box.ZAxis.ScaleBy(box.Bounds.Min.Z)).ToPoint3D();
@@ -175,7 +175,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
                 // Update the facets.
                 for (int i = 0; i < this.facets.Length; i++)
                 {
-                    var rectangle = this.CurrentData.Value.GetFacet((Box3DFacet)Enum.GetValues(typeof(Box3DFacet)).GetValue(i));
+                    var rectangle = box.GetFacet((Box3DFacet)Enum.GetValues(typeof(Box3DFacet)).GetValue(i));
                     this.facets[i].MeshGeometry.Positions[0] = rectangle.TopLeft.ToPoint3D();
                     this.facets[i].MeshGeometry.Positions[1] = rectangle.TopRight.ToPoint3D();
                     this.facets[i].MeshGeometry.Positions[2] = rectangle.BottomRight.ToPoint3D();
@@ -288,12 +288,12 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         {
             foreach (var line in this.edges)
             {
-                this.UpdateChildVisibility(line, this.Visible && this.EdgeVisible && this.CurrentData.HasValue);
+                this.UpdateChildVisibility(line, this.Visible && this.EdgeVisible && this.CurrentData != null);
             }
 
             foreach (var facet in this.facets)
             {
-                this.UpdateChildVisibility(facet, this.Visible && this.FacetVisible && this.CurrentData.HasValue);
+                this.UpdateChildVisibility(facet, this.Visible && this.FacetVisible && this.CurrentData != null);
             }
         }
 

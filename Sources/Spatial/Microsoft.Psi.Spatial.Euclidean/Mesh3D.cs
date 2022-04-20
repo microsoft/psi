@@ -30,5 +30,11 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// Gets mesh triangle indices.
         /// </summary>
         public uint[] TriangleIndices { get; private set; }
+
+        /// <summary>
+        /// Converts the mesh vertices to a point cloud.
+        /// </summary>
+        /// <returns>A <see cref="PointCloud3D"/> for the mesh vertices.</returns>
+        public PointCloud3D ToPointCloud3D() => new (this.Vertices);
     }
 }

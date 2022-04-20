@@ -73,8 +73,9 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public SystemSpeechRecognizer(Pipeline pipeline, SystemSpeechRecognizerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemSpeechRecognizer(Pipeline pipeline, SystemSpeechRecognizerConfiguration configuration, string name = nameof(SystemSpeechRecognizer))
+            : base(pipeline, name)
         {
             this.Configuration = configuration ?? new SystemSpeechRecognizerConfiguration();
 
@@ -124,10 +125,12 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public SystemSpeechRecognizer(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemSpeechRecognizer(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemSpeechRecognizer))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemSpeechRecognizerConfiguration() : new ConfigurationHelper<SystemSpeechRecognizerConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new SystemSpeechRecognizerConfiguration() : new ConfigurationHelper<SystemSpeechRecognizerConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 

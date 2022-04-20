@@ -16,8 +16,9 @@ namespace Microsoft.Psi.Audio
         /// Initializes a new instance of the <see cref="FFTPower"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public FFTPower(Pipeline pipeline)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public FFTPower(Pipeline pipeline, string name = nameof(FFTPower))
+            : base(pipeline, name)
         {
         }
 

@@ -3,10 +3,7 @@
 
 namespace Microsoft.Psi.Interop.Transport
 {
-    using System;
     using Microsoft.Psi.Interop.Serialization;
-    using NetMQ;
-    using NetMQ.Sockets;
 
     /// <summary>
     /// NetMQ (ZeroMQ) publisher component.
@@ -21,8 +18,9 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="topic">Topic name.</param>
         /// <param name="address">Connection string.</param>
         /// <param name="serializer">Format serializer with which messages are serialized.</param>
-        public NetMQWriter(Pipeline pipeline, string topic, string address, IFormatSerializer serializer)
-            : base(pipeline, address, serializer)
+        /// <param name="name">An optional name for the component.</param>
+        public NetMQWriter(Pipeline pipeline, string topic, string address, IFormatSerializer serializer, string name = nameof(NetMQWriter<T>))
+            : base(pipeline, address, serializer, name)
         {
             this.In = this.AddTopic<T>(topic);
         }

@@ -22,8 +22,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="frameSizeInBytes">The output frame size in bytes.</param>
-        public Reframe(Pipeline pipeline, int frameSizeInBytes)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public Reframe(Pipeline pipeline, int frameSizeInBytes, string name = nameof(Reframe))
+            : base(pipeline, name)
         {
             if (frameSizeInBytes <= 0)
             {
@@ -38,8 +39,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="frameDuration">The output frame duration.</param>
-        public Reframe(Pipeline pipeline, TimeSpan frameDuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public Reframe(Pipeline pipeline, TimeSpan frameDuration, string name = nameof(Reframe))
+            : base(pipeline, name)
         {
             if (frameDuration <= TimeSpan.Zero)
             {

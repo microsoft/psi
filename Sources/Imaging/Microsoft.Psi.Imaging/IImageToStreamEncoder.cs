@@ -11,6 +11,11 @@ namespace Microsoft.Psi.Imaging
     public interface IImageToStreamEncoder
     {
         /// <summary>
+        /// Gets the description of the encoder.
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
         /// Encodes an image into a stream.
         /// </summary>
         /// <param name="image">Image to be encoded.</param>

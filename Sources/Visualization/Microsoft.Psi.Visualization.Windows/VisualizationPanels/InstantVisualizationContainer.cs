@@ -134,6 +134,15 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             newPanel.SetParentContainer(this.Container);
             newPanel.SetParentPanel(this);
             newPanel.Width = oldPanel.Width;
+
+            // Transfer default properties to the new panel
+            if (newPanel is InstantVisualizationPanel newInstantPanel &&
+                oldPanel is InstantVisualizationPanel oldInstantPanel)
+            {
+                newInstantPanel.DefaultCursorEpsilonNegMs = oldInstantPanel.DefaultCursorEpsilonNegMs;
+                newInstantPanel.DefaultCursorEpsilonPosMs = oldInstantPanel.DefaultCursorEpsilonPosMs;
+            }
+
             newPanel.PropertyChanged += this.OnChildVisualizationPanelPropertyChanged;
 
             // Replace the panel

@@ -29,6 +29,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private double lineWidth = 1;
 
         /// <summary>
+        /// Whether to show the label.
+        /// </summary>
+        private bool showLabel = true;
+
+        /// <summary>
         /// Gets or sets the line color.
         /// </summary>
         [DataMember]
@@ -50,6 +55,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             get { return this.lineWidth; }
             set { this.Set(nameof(this.LineWidth), ref this.lineWidth, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the label.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Label")]
+        [Description("Indicates whether to show the label.")]
+        public bool ShowLabel
+        {
+            get { return this.showLabel; }
+            set { this.Set(nameof(this.ShowLabel), ref this.showLabel, value); }
         }
 
         /// <inheritdoc />

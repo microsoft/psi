@@ -12,23 +12,31 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     public sealed class WaveFileAudioSource : IProducer<AudioBuffer>
     {
+        private readonly string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WaveFileAudioSource"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="filename">The path name of the WAVE file.</param>
+        /// <param name="path">The path name of the WAVE file.</param>
         /// <param name="audioStartTime">Indicates a time to use for the start of the audio source. If null, the current time will be used.</param>
         /// <param name="audioBufferSizeMs">The size of each data buffer to post, determined by the amount of audio data it can hold.</param>
-        public WaveFileAudioSource(Pipeline pipeline, string filename, DateTime? audioStartTime = null, int audioBufferSizeMs = 20)
+        /// <param name="name">An optional name for this component.</param>
+        public WaveFileAudioSource(Pipeline pipeline, string path, DateTime? audioStartTime = null, int audioBufferSizeMs = 20, string name = nameof(WaveFileAudioSource))
         {
-            var name = Path.GetFileName(filename);
-            var path = Path.GetDirectoryName(filename);
-            var importer = WaveFileStore.Open(pipeline, name, path, audioStartTime ?? DateTime.UtcNow, audioBufferSizeMs);
+            this.name = name;
+
+            var filename = Path.GetFileName(path);
+            var directoryName = Path.GetDirectoryName(path);
+            var importer = WaveFileStore.Open(pipeline, filename, directoryName, audioStartTime ?? DateTime.UtcNow, audioBufferSizeMs);
             var audio = importer.OpenStream<AudioBuffer>(WaveFileStreamReader.AudioStreamName);
             this.Out = audio.Out;
         }
 
         /// <inheritdoc />
         public Emitter<AudioBuffer> Out { get; private set; }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
     }
 }

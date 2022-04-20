@@ -14,8 +14,9 @@ namespace Microsoft.Psi.Audio
         /// Initializes a new instance of the <see cref="ZeroCrossingRate"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public ZeroCrossingRate(Pipeline pipeline)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public ZeroCrossingRate(Pipeline pipeline, string name = nameof(ZeroCrossingRate))
+            : base(pipeline, name)
         {
         }
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28917.182
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32210.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{A0856299-D28A-4513-B964-3FA5290FF160}"
 EndProject
@@ -213,6 +213,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Psi.MixedReality.UniversalWindows", "Sources\MixedReality\Microsoft.Psi.MixedReality.UniversalWindows\Microsoft.Psi.MixedReality.UniversalWindows.csproj", "{ECD9E150-8104-4DA3-B807-A6A4392A67C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.MixedReality.Visualization.Windows", "Sources\MixedReality\Microsoft.Psi.MixedReality.Visualization.Windows\Microsoft.Psi.MixedReality.Visualization.Windows.csproj", "{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.Visualization.Windows", "Sources\Integrations\Onnx\Microsoft.Psi.Onnx.Visualization.Windows\Microsoft.Psi.Onnx.Visualization.Windows.csproj", "{74504D41-B716-4B0B-B265-ED2A91A2A5C2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HoloLensCapture", "HoloLensCapture", "{49072585-8CC1-43A5-BE0D-ABCE888BC5D1}"
+	ProjectSection(SolutionItems) = preProject
+		Sources\MixedReality\HoloLensCapture\Readme.md = Sources\MixedReality\HoloLensCapture\Readme.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HoloLensCaptureApp", "Sources\MixedReality\HoloLensCapture\HoloLensCaptureApp\HoloLensCaptureApp.csproj", "{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoloLensCaptureServer", "Sources\MixedReality\HoloLensCapture\HoloLensCaptureServer\HoloLensCaptureServer.csproj", "{272CEB19-2B5A-49BC-B8EA-CBC79AA87C37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoloLensCaptureExporter", "Sources\MixedReality\HoloLensCapture\HoloLensCaptureExporter\HoloLensCaptureExporter.csproj", "{1C844B9E-A51C-483C-A045-7AB8F2012581}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoloLensCaptureInterop", "Sources\MixedReality\HoloLensCapture\HoloLensCaptureInterop\HoloLensCaptureInterop.csproj", "{76E38559-0AF2-4AE3-BCE8-8653277A5B07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -476,6 +491,28 @@ Global
 		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74504D41-B716-4B0B-B265-ED2A91A2A5C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74504D41-B716-4B0B-B265-ED2A91A2A5C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74504D41-B716-4B0B-B265-ED2A91A2A5C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74504D41-B716-4B0B-B265-ED2A91A2A5C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}.Debug|Any CPU.ActiveCfg = Debug|ARM
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}.Debug|Any CPU.Build.0 = Debug|ARM
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}.Debug|Any CPU.Deploy.0 = Debug|ARM
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}.Release|Any CPU.ActiveCfg = Release|ARM
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}.Release|Any CPU.Build.0 = Release|ARM
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D}.Release|Any CPU.Deploy.0 = Release|ARM
+		{272CEB19-2B5A-49BC-B8EA-CBC79AA87C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{272CEB19-2B5A-49BC-B8EA-CBC79AA87C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{272CEB19-2B5A-49BC-B8EA-CBC79AA87C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{272CEB19-2B5A-49BC-B8EA-CBC79AA87C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C844B9E-A51C-483C-A045-7AB8F2012581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C844B9E-A51C-483C-A045-7AB8F2012581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C844B9E-A51C-483C-A045-7AB8F2012581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C844B9E-A51C-483C-A045-7AB8F2012581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76E38559-0AF2-4AE3-BCE8-8653277A5B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76E38559-0AF2-4AE3-BCE8-8653277A5B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76E38559-0AF2-4AE3-BCE8-8653277A5B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76E38559-0AF2-4AE3-BCE8-8653277A5B07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -570,6 +607,12 @@ Global
 		{3434D5B2-B06F-4356-9E9B-90171CEF482B} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
 		{ECD9E150-8104-4DA3-B807-A6A4392A67C6} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
 		{BE95524A-F9C2-4D0D-8F7E-1C7019B5A114} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
+		{74504D41-B716-4B0B-B265-ED2A91A2A5C2} = {EE4035A8-CEFE-4E3A-9CD9-4AE7E88DA2C4}
+		{49072585-8CC1-43A5-BE0D-ABCE888BC5D1} = {32023088-0392-4B48-B2CF-3754B55C6DE9}
+		{D318834B-5A27-4EAC-B17D-A9BD7A2DCA0D} = {49072585-8CC1-43A5-BE0D-ABCE888BC5D1}
+		{272CEB19-2B5A-49BC-B8EA-CBC79AA87C37} = {49072585-8CC1-43A5-BE0D-ABCE888BC5D1}
+		{1C844B9E-A51C-483C-A045-7AB8F2012581} = {49072585-8CC1-43A5-BE0D-ABCE888BC5D1}
+		{76E38559-0AF2-4AE3-BCE8-8653277A5B07} = {49072585-8CC1-43A5-BE0D-ABCE888BC5D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

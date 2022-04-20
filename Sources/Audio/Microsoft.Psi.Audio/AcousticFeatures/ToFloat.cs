@@ -11,27 +11,28 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     public sealed class ToFloat : ConsumerProducer<byte[], float[]>
     {
-        private ushort bytesPerSample;
+        private readonly ushort bytesPerSample;
+        private readonly Func<byte[], int, float> convertSample;
         private float[] buffer;
-        private Func<byte[], int, float> convertSample;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToFloat"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="format">The format of the input audio.</param>
-        public ToFloat(Pipeline pipeline, WaveFormat format)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public ToFloat(Pipeline pipeline, WaveFormat format, string name = nameof(ToFloat))
+            : base(pipeline, name)
         {
             this.bytesPerSample = format.BlockAlign;
-            switch (format.BitsPerSample)
+            this.convertSample = format.BitsPerSample switch
             {
-                case 8: this.convertSample = (a, i) => a[i]; break;
-                case 16: this.convertSample = (a, i) => BitConverter.ToInt16(a, i); break;
-                case 24: this.convertSample = (a, i) => BitConverter.ToInt32(new byte[] { a[i], a[i + 1], a[i + 2], (byte)((a[i + 2] & 0x80) == 0 ? 0 : 0xFF) }, 0); break;
-                case 32: this.convertSample = (a, i) => BitConverter.ToInt32(a, i); break;
-                default: throw new FormatException("Valid sample sizes are 8, 16, 24 or 32 bits");
-            }
+                8 => (a, i) => a[i],
+                16 => (a, i) => BitConverter.ToInt16(a, i),
+                24 => (a, i) => BitConverter.ToInt32(new byte[] { a[i], a[i + 1], a[i + 2], (byte)((a[i + 2] & 0x80) == 0 ? 0 : 0xFF) }, 0),
+                32 => (a, i) => BitConverter.ToInt32(a, i),
+                _ => throw new FormatException("Valid sample sizes are 8, 16, 24 or 32 bits"),
+            };
         }
 
         /// <summary>

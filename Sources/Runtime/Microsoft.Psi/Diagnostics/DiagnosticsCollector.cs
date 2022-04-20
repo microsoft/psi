@@ -123,6 +123,7 @@ namespace Microsoft.Psi.Diagnostics
         public void PipelineElementStart(Pipeline pipeline, PipelineElement element)
         {
             this.graphs[pipeline.Id].PipelineElements[element.Id].IsRunning = true;
+            this.graphs[pipeline.Id].PipelineElements[element.Id].DiagnosticState = element.StateObject.ToString();
         }
 
         /// <summary>
@@ -134,6 +135,7 @@ namespace Microsoft.Psi.Diagnostics
         public void PipelineElementStop(Pipeline pipeline, PipelineElement element)
         {
             this.graphs[pipeline.Id].PipelineElements[element.Id].IsRunning = false;
+            this.graphs[pipeline.Id].PipelineElements[element.Id].DiagnosticState = element.StateObject.ToString();
         }
 
         /// <summary>

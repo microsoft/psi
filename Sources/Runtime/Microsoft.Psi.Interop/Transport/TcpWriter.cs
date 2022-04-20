@@ -18,6 +18,7 @@ namespace Microsoft.Psi.Interop.Transport
     public class TcpWriter<T> : IConsumer<T>, IDisposable
     {
         private readonly IFormatSerializer serializer;
+        private readonly string name;
 
         private TcpListener listener;
         private NetworkStream networkStream;
@@ -26,23 +27,18 @@ namespace Microsoft.Psi.Interop.Transport
         /// Initializes a new instance of the <see cref="TcpWriter{T}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="name">Name by which to refer to the data stream.</param>
         /// <param name="port">The connection port.</param>
         /// <param name="serializer">The serializer to use to serialize messages.</param>
-        public TcpWriter(Pipeline pipeline, string name, int port, IFormatSerializer serializer)
+        /// <param name="name">An optional name for the component.</param>
+        public TcpWriter(Pipeline pipeline, int port, IFormatSerializer serializer, string name = nameof(TcpWriter<T>))
         {
             this.serializer = serializer;
-            this.Name = name;
+            this.name = name;
             this.Port = port;
             this.In = pipeline.CreateReceiver<T>(this, this.Receive, nameof(this.In));
             this.listener = new TcpListener(IPAddress.Any, port);
             this.Start();
         }
-
-        /// <summary>
-        /// Gets the name by which to refer to the data stream.
-        /// </summary>
-        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the connection port.
@@ -59,6 +55,9 @@ namespace Microsoft.Psi.Interop.Transport
             this.listener.Stop();
             this.listener = null;
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Receive(T message, Envelope envelope)
         {

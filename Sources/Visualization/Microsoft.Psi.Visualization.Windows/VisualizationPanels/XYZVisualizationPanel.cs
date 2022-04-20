@@ -19,9 +19,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     /// <summary>
     /// Represents a visualization panel that 3D visualizers can be rendered in.
     /// </summary>
-    public class XYZVisualizationPanel : VisualizationPanel
+    public class XYZVisualizationPanel : InstantVisualizationPanel
     {
-        private int relativeWidth = 100;
         private double majorDistance = 5;
         private double minorDistance = 5;
         private double thickness = 0.01;
@@ -134,18 +133,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             get { return this.cameraAnimation; }
             set { this.Set(nameof(this.CameraAnimation), ref this.cameraAnimation, value); }
-        }
-
-        /// <summary>
-        /// Gets or sets the name of the relative width for the panel.
-        /// </summary>
-        [DataMember]
-        [DisplayName("Relative Width")]
-        [Description("The relative width for the panel.")]
-        public int RelativeWidth
-        {
-            get { return this.relativeWidth; }
-            set { this.Set(nameof(this.RelativeWidth), ref this.relativeWidth, value); }
         }
 
         /// <summary>

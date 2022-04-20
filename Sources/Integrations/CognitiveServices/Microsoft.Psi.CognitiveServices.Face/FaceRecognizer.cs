@@ -24,7 +24,7 @@ namespace Microsoft.Psi.CognitiveServices.Face
     /// passed to the component via the configuration. For more information, and to see how to create person groups, see the full direct API for.
     /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
     /// </remarks>
-    public sealed class FaceRecognizer : AsyncConsumerProducer<Shared<Image>, IList<IList<(string Name, double Confidence)>>>,  IDisposable
+    public sealed class FaceRecognizer : AsyncConsumerProducer<Shared<Image>, IList<IList<(string Name, double Confidence)>>>, IDisposable
     {
         /// <summary>
         /// Empty results.
@@ -51,8 +51,9 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public FaceRecognizer(Pipeline pipeline, FaceRecognizerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public FaceRecognizer(Pipeline pipeline, FaceRecognizerConfiguration configuration, string name = nameof(FaceRecognizer))
+            : base(pipeline, name)
         {
             this.configuration = configuration;
             this.RateLimitExceeded = pipeline.CreateEmitter<bool>(this, nameof(this.RateLimitExceeded));
@@ -84,39 +85,37 @@ namespace Microsoft.Psi.CognitiveServices.Face
         /// <inheritdoc/>
         protected override async Task ReceiveAsync(Shared<Image> data, Envelope e)
         {
-            using (Stream imageFileStream = new MemoryStream())
+            using Stream imageFileStream = new MemoryStream();
+            try
             {
-                try
+                // convert image to a Stream and send to Cog Services
+                data.Resource.ToBitmap(false).Save(imageFileStream, ImageFormat.Jpeg);
+                imageFileStream.Seek(0, SeekOrigin.Begin);
+
+                var detected = (await this.client.Face.DetectWithStreamAsync(imageFileStream, recognitionModel: this.configuration.RecognitionModelName)).Select(d => d.FaceId.Value).ToList();
+
+                // Identify each face
+                if (detected.Count > 0)
                 {
-                    // convert image to a Stream and send to Cog Services
-                    data.Resource.ToBitmap(false).Save(imageFileStream, ImageFormat.Jpeg);
-                    imageFileStream.Seek(0, SeekOrigin.Begin);
-
-                    var detected = (await this.client.Face.DetectWithStreamAsync(imageFileStream, recognitionModel: this.configuration.RecognitionModelName)).Select(d => d.FaceId.Value).ToList();
-
-                    // Identify each face
-                    if (detected.Count > 0)
-                    {
-                        var identified = await this.client.Face.IdentifyAsync(detected, this.configuration.PersonGroupId);
-                        var results = identified.Select(p => (IList<(string, double)>)p.Candidates.Select(c => (this.people[c.PersonId].Name, c.Confidence)).ToList()).ToList();
-                        this.Out.Post(results, e.OriginatingTime);
-                    }
-                    else
-                    {
-                        this.Out.Post(Empty, e.OriginatingTime);
-                    }
+                    var identified = await this.client.Face.IdentifyAsync(detected, this.configuration.PersonGroupId);
+                    var results = identified.Select(p => (IList<(string, double)>)p.Candidates.Select(c => (this.people[c.PersonId].Name, c.Confidence)).ToList()).ToList();
+                    this.Out.Post(results, e.OriginatingTime);
                 }
-                catch (APIErrorException exception)
+                else
                 {
-                    // swallow exceptions unless it's a rate limit exceeded
-                    if (exception.Body.Error.Code == "RateLimitExceeded")
-                    {
-                        this.RateLimitExceeded.Post(true, e.OriginatingTime);
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    this.Out.Post(Empty, e.OriginatingTime);
+                }
+            }
+            catch (APIErrorException exception)
+            {
+                // swallow exceptions unless it's a rate limit exceeded
+                if (exception.Body.Error.Code == "RateLimitExceeded")
+                {
+                    this.RateLimitExceeded.Post(true, e.OriginatingTime);
+                }
+                else
+                {
+                    throw;
                 }
             }
         }

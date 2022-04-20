@@ -40,8 +40,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration, string name = nameof(AudioPlayer))
+            : base(pipeline, name)
         {
             pipeline.PipelineRun += (s, e) => this.OnPipelineRun();
             this.In.Unsubscribed += _ => this.OnUnsubscribed();

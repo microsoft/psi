@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a visualization object that can display lists of 3D boxes.
     /// </summary>
     [VisualizationObject("3D boxes")]
-    public class Box3DListVisualizationObject : ModelVisual3DListVisualizationObject<Box3DVisualizationObject, Box3D?>
+    public class Box3DListVisualizationObject : ModelVisual3DListVisualizationObject<Box3DVisualizationObject, Box3D>
     {
     }
 }

@@ -12,6 +12,9 @@ namespace Microsoft.Psi.Imaging
     public class DepthImageToPngStreamEncoder : IDepthImageToStreamEncoder
     {
         /// <inheritdoc/>
+        public string Description => "Png";
+
+        /// <inheritdoc/>
         public void EncodeToStream(DepthImage depthImage, Stream stream)
         {
             var encoder = new PngBitmapEncoder();

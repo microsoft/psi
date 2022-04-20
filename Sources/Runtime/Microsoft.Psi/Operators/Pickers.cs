@@ -19,9 +19,10 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="condition">Predicate function by which to filter messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Where<T>(this IProducer<T> source, Func<T, Envelope, bool> condition, DeliveryPolicy<T> deliveryPolicy = null) =>
-            Process<T, T>(
+        public static IProducer<T> Where<T>(this IProducer<T> source, Func<T, Envelope, bool> condition, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(Where))
+            => Process<T, T>(
                 source,
                 (d, e, s) =>
                 {
@@ -30,7 +31,8 @@ namespace Microsoft.Psi
                         s.Post(d, e.OriginatingTime);
                     }
                 },
-                deliveryPolicy);
+                deliveryPolicy,
+                name);
 
         /// <summary>
         /// Filter messages to those where a given condition is met.
@@ -39,9 +41,10 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="condition">Predicate function by which to filter messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> Where<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null) =>
-            Where(source, (d, e) => condition(d), deliveryPolicy);
+        public static IProducer<T> Where<T>(this IProducer<T> source, Predicate<T> condition, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(Where))
+            => Where(source, (d, e) => condition(d), deliveryPolicy, name);
 
         /// <summary>
         /// Filter stream to the first n messages.
@@ -50,9 +53,10 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="number">Number of messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Output stream.</returns>
-        public static IProducer<T> First<T>(this IProducer<T> source, int number, DeliveryPolicy<T> deliveryPolicy = null) =>
-            source.Where(v => number-- > 0, deliveryPolicy);
+        public static IProducer<T> First<T>(this IProducer<T> source, int number, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(First))
+            => source.Where(v => number-- > 0, deliveryPolicy, name);
 
         /// <summary>
         /// Filter stream to the first message (single-message stream).
@@ -60,9 +64,10 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source/output messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>An output stream containing only the first message.</returns>
-        public static IProducer<T> First<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null) =>
-            First(source, 1, deliveryPolicy);
+        public static IProducer<T> First<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(First))
+            => First(source, 1, deliveryPolicy, name);
 
         /// <summary>
         /// Filter stream to the last n messages.
@@ -71,8 +76,9 @@ namespace Microsoft.Psi
         /// <param name="source">Source stream.</param>
         /// <param name="count">The number of messages to filter.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>An output stream containing only the last message.</returns>
-        public static IProducer<T> Last<T>(this IProducer<T> source, int count, DeliveryPolicy<T> deliveryPolicy = null)
+        public static IProducer<T> Last<T>(this IProducer<T> source, int count, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(Last))
         {
             var lastValues = new List<(T, DateTime)>();
             var processor = new Processor<T, T>(
@@ -91,7 +97,8 @@ namespace Microsoft.Psi
                     {
                         emitter.Post(t, originatingTime);
                     }
-                });
+                },
+                name);
 
             return source.PipeTo(processor, deliveryPolicy);
         }
@@ -102,8 +109,9 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source/output messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>An output stream containing only the last message.</returns>
-        public static IProducer<T> Last<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
+        public static IProducer<T> Last<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(Last))
         {
             var captured = false;
             T last = default;
@@ -122,7 +130,8 @@ namespace Microsoft.Psi
                     {
                         emitter.Post(last, lastOriginatingTime);
                     }
-                });
+                },
+                name);
 
             return source.PipeTo(processor, deliveryPolicy);
         }

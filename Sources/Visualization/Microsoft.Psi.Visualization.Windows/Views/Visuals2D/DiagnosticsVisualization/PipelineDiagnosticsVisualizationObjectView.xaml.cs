@@ -89,6 +89,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                     PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime => "Message Process Time (Average)",
                     PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageEmittedCount => "Total Messages Emitted (Count)",
                     PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedCount => "Total Messages Dropped (Count)",
+                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedPercentage => "Total Messages Dropped (%)",
                     PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedCount => "Total Messages Processed (Count)",
                     PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageSize => "Message Size (Average)",
                     _ => throw new NotImplementedException(),
@@ -116,6 +117,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.graphViewer.ObjectUnderMouseCursorChanged += this.GraphViewer_ObjectUnderMouseCursorChanged;
             this.SizeChanged += this.DiagnosticsVisualizationObjectView_SizeChanged;
             this.presenter = new PipelineDiagnosticsVisualizationPresenter(this, this.PipelineDiagnosticsVisualizationObject);
+            this.presenter.UpdateGraph(this.PipelineDiagnosticsVisualizationObject.CurrentData, true);
         }
 
         /// <inheritdoc/>

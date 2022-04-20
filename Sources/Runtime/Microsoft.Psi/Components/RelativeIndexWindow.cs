@@ -30,8 +30,9 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="relativeIndexInterval">The relative index interval over which to gather messages.</param>
         /// <param name="selector">Select output message from collected window of input messages.</param>
-        public RelativeIndexWindow(Pipeline pipeline, IntInterval relativeIndexInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public RelativeIndexWindow(Pipeline pipeline, IntInterval relativeIndexInterval, Func<IEnumerable<Message<TInput>>, TOutput> selector, string name = nameof(RelativeIndexWindow<TInput, TOutput>))
+            : base(pipeline, name)
         {
             if (relativeIndexInterval.IsNegative)
             {

@@ -15,8 +15,9 @@ namespace Microsoft.Psi.Media
     public class Mpeg4Writer : IConsumer<Shared<Image>>, IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
+        private readonly string filename;
         private readonly Mpeg4WriterConfiguration configuration;
-        private string filename;
         private MP4Writer writer;
 
         /// <summary>
@@ -25,8 +26,9 @@ namespace Microsoft.Psi.Media
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of output file to write to.</param>
         /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
-        public Mpeg4Writer(Pipeline pipeline, string filename, string configurationFilename)
-            : this(pipeline, filename)
+        /// <param name="name">An optional name for the component.</param>
+        public Mpeg4Writer(Pipeline pipeline, string filename, string configurationFilename, string name = nameof(Mpeg4Writer))
+            : this(pipeline, filename, name)
         {
             var configurationHelper = new ConfigurationHelper<Mpeg4WriterConfiguration>(configurationFilename);
             this.configuration = configurationHelper.Configuration;
@@ -38,8 +40,9 @@ namespace Microsoft.Psi.Media
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of output file to write to.</param>
         /// <param name="configuration">Describes how to configure the media capture device.</param>
-        public Mpeg4Writer(Pipeline pipeline, string filename, Mpeg4WriterConfiguration configuration)
-            : this(pipeline, filename)
+        /// <param name="name">An optional name for the component.</param>
+        public Mpeg4Writer(Pipeline pipeline, string filename, Mpeg4WriterConfiguration configuration, string name = nameof(Mpeg4Writer))
+            : this(pipeline, filename, name)
         {
             this.configuration = configuration;
         }
@@ -52,8 +55,9 @@ namespace Microsoft.Psi.Media
         /// <param name="width">Width of output image in pixels.</param>
         /// <param name="height">Height of output image in pixels.</param>
         /// <param name="pixelFormat">Format of input images.</param>
-        public Mpeg4Writer(Pipeline pipeline, string filename, uint width, uint height, Imaging.PixelFormat pixelFormat)
-            : this(pipeline, filename)
+        /// <param name="name">An optional name for the component.</param>
+        public Mpeg4Writer(Pipeline pipeline, string filename, uint width, uint height, PixelFormat pixelFormat, string name = nameof(Mpeg4Writer))
+            : this(pipeline, filename, name)
         {
             this.configuration = Mpeg4WriterConfiguration.Default;
             this.configuration.ImageWidth = width;
@@ -61,10 +65,11 @@ namespace Microsoft.Psi.Media
             this.configuration.PixelFormat = pixelFormat;
         }
 
-        private Mpeg4Writer(Pipeline pipeline, string filename)
+        private Mpeg4Writer(Pipeline pipeline, string filename, string name)
         {
             pipeline.PipelineRun += (s, e) => this.OnPipelineRun();
             this.pipeline = pipeline;
+            this.name = name;
             this.ImageIn = pipeline.CreateReceiver<Shared<Image>>(this, this.ReceiveImage, nameof(this.ImageIn));
             this.AudioIn = pipeline.CreateReceiver<AudioBuffer>(this, this.ReceiveAudio, nameof(this.AudioIn));
             this.filename = filename;

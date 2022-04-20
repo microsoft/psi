@@ -3,6 +3,8 @@
 
 namespace Microsoft.Psi.Onnx
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Represents the configuration for the <see cref="OnnxModel"/> class.
     /// </summary>
@@ -37,6 +39,11 @@ namespace Microsoft.Psi.Onnx
         /// Gets or sets the name of the output vector.
         /// </summary>
         public string OutputVectorName { get; set; }
+
+        /// <summary>
+        /// Gets or sets an optional shape dictionary describing the shape of input vector.
+        /// </summary>
+        public IDictionary<string, int[]> ShapeDictionary { get; set; }
 
         /// <summary>
         /// Gets or sets the GPU device ID to run execution on, or null to run on CPU.

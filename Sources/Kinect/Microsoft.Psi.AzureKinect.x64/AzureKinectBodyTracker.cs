@@ -34,8 +34,9 @@ namespace Microsoft.Psi.AzureKinect
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">An optional configuration to use for the body tracker.</param>
-        public AzureKinectBodyTracker(Pipeline pipeline, AzureKinectBodyTrackerConfiguration configuration = null)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public AzureKinectBodyTracker(Pipeline pipeline, AzureKinectBodyTrackerConfiguration configuration = null, string name = nameof(AzureKinectBodyTracker))
+            : base(pipeline, name)
         {
             this.configuration = configuration ?? new AzureKinectBodyTrackerConfiguration();
             this.AzureKinectSensorCalibration = pipeline.CreateReceiver<Calibration>(this, this.ReceiveCalibration, nameof(this.AzureKinectSensorCalibration));
@@ -122,6 +123,7 @@ namespace Microsoft.Psi.AzureKinect
                 {
                     SensorOrientation = this.configuration.SensorOrientation,
                     ProcessingMode = this.configuration.CpuOnlyMode ? TrackerProcessingMode.Cpu : TrackerProcessingMode.Gpu,
+                    ModelPath = this.configuration.UseLiteModel ? "dnn_model_2_0_lite_op11.onnx" : "dnn_model_2_0_op11.onnx",
                 });
             }
 

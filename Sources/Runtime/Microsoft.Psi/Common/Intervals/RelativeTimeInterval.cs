@@ -15,25 +15,25 @@ namespace Microsoft.Psi
         /// Canonical infinite interval (unbounded on both ends).
         /// </summary>
         public static readonly RelativeTimeInterval Infinite =
-            new RelativeTimeInterval(TimeSpan.MinValue, false, false, TimeSpan.MaxValue, false, false);
+            new (TimeSpan.MinValue, false, false, TimeSpan.MaxValue, false, false);
 
         /// <summary>
         /// Canonical empty instance (bounded, non-inclusive, single point).
         /// </summary>
         public static readonly RelativeTimeInterval Empty =
-            new RelativeTimeInterval(TimeSpan.Zero, false, true, TimeSpan.Zero, false, true);
+            new (TimeSpan.Zero, false, true, TimeSpan.Zero, false, true);
 
         /// <summary>
         /// Zero interval (unbounded but inclusive, zero value).
         /// </summary>
         public static readonly RelativeTimeInterval Zero =
-            new RelativeTimeInterval(TimeSpan.Zero, true, true, TimeSpan.Zero, true, true);
+            new (TimeSpan.Zero, true, true, TimeSpan.Zero, true, true);
 
         private static readonly RelativeTimeInterval PastInterval =
-            new RelativeTimeInterval(TimeSpan.MinValue, false, false, TimeSpan.Zero, true, true);
+            new (TimeSpan.MinValue, false, false, TimeSpan.Zero, true, true);
 
         private static readonly RelativeTimeInterval FutureInterval =
-            new RelativeTimeInterval(TimeSpan.Zero, true, true, TimeSpan.MaxValue, false, false);
+            new (TimeSpan.Zero, true, true, TimeSpan.MaxValue, false, false);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeTimeInterval"/> class.
@@ -147,18 +147,13 @@ namespace Microsoft.Psi
         /// <param name="relative">Relative endpoints.</param>
         /// <returns>Translated interval.</returns>
         public static TimeInterval operator +(DateTime origin, RelativeTimeInterval relative)
-        {
-            return new TimeInterval(origin, relative);
-        }
+            => new (origin, relative);
 
         /// <summary>
         /// Returns a relative time interval describing the past. The returned interval includes the present moment.
         /// </summary>
         /// <returns>A relative time interval describing the past.</returns>
-        public static RelativeTimeInterval Past()
-        {
-            return PastInterval;
-        }
+        public static RelativeTimeInterval Past() => PastInterval;
 
         /// <summary>
         /// Returns a relative time interval of a specified duration in the past. The returned interval includes the present moment.
@@ -167,18 +162,13 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Indicates if the interval should be inclusive of the left endpoint.</param>
         /// <returns>A relative time interval of a specified duration in the past.</returns>
         public static RelativeTimeInterval Past(TimeSpan duration, bool inclusive = true)
-        {
-            return new RelativeTimeInterval(-duration, inclusive, true, TimeSpan.Zero, true, true);
-        }
+            => new (-duration, inclusive, true, TimeSpan.Zero, true, true);
 
         /// <summary>
         /// Returns a relative time interval describing the future. The returned interval includes the present moment.
         /// </summary>
         /// <returns>A relative time interval describing the future.</returns>
-        public static RelativeTimeInterval Future()
-        {
-            return FutureInterval;
-        }
+        public static RelativeTimeInterval Future() => FutureInterval;
 
         /// <summary>
         /// Returns a relative time interval of a specified duration in the future. The returned interval includes the present moment.
@@ -187,9 +177,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Indicates if the interval should be inclusive of the right endpoint.</param>
         /// <returns>A relative time interval of a specified duration in the future.</returns>
         public static RelativeTimeInterval Future(TimeSpan duration, bool inclusive = true)
-        {
-            return new RelativeTimeInterval(TimeSpan.Zero, true, true, duration, inclusive, true);
-        }
+            => new (TimeSpan.Zero, true, true, duration, inclusive, true);
 
         /// <summary>
         /// Determine coverage from minimum left to maximum right.
@@ -198,9 +186,7 @@ namespace Microsoft.Psi
         /// <remarks>Returns negative interval from max to min point when sequence is empty.</remarks>
         /// <returns>Interval from minimum left to maximum right value.</returns>
         public static RelativeTimeInterval Coverage(IEnumerable<RelativeTimeInterval> intervals)
-        {
-            return Coverage(intervals, (left, right) => new RelativeTimeInterval(left, right), RelativeTimeInterval.Empty);
-        }
+            => Coverage(intervals, (left, right) => new RelativeTimeInterval(left, right), RelativeTimeInterval.Empty);
 
         /// <summary>
         /// Constructor helper for left-bound instances.
@@ -209,9 +195,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Whether left point is inclusive.</param>
         /// <returns>A left-bound instance of the <see cref="RelativeTimeInterval"/> class.</returns>
         public static RelativeTimeInterval LeftBounded(TimeSpan left, bool inclusive)
-        {
-            return new RelativeTimeInterval(left, inclusive, true, TimeSpan.MaxValue, false, false);
-        }
+            => new (left, inclusive, true, TimeSpan.MaxValue, false, false);
 
         /// <summary>
         /// Constructor helper for left-bound instances.
@@ -219,10 +203,7 @@ namespace Microsoft.Psi
         /// <remarks>Defaults to inclusive.</remarks>
         /// <param name="left">Left bound point.</param>
         /// <returns>A left-bound instance of the <see cref="RelativeTimeInterval"/> class.</returns>
-        public static RelativeTimeInterval LeftBounded(TimeSpan left)
-        {
-            return LeftBounded(left, true);
-        }
+        public static RelativeTimeInterval LeftBounded(TimeSpan left) => LeftBounded(left, true);
 
         /// <summary>
         /// Constructor helper for right-bound instances.
@@ -231,9 +212,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Whether right point is inclusive.</param>
         /// <returns>A right-bound instance of the <see cref="RelativeTimeInterval"/> class.</returns>
         public static RelativeTimeInterval RightBounded(TimeSpan right, bool inclusive)
-        {
-            return new RelativeTimeInterval(TimeSpan.MinValue, false, false, right, inclusive, true);
-        }
+            => new (TimeSpan.MinValue, false, false, right, inclusive, true);
 
         /// <summary>
         /// Constructor helper for right-bound instances.
@@ -241,10 +220,7 @@ namespace Microsoft.Psi
         /// <remarks>Defaults to inclusive.</remarks>
         /// <param name="right">Right bound point.</param>
         /// <returns>A right-bound instance of the <see cref="RelativeTimeInterval"/> class.</returns>
-        public static RelativeTimeInterval RightBounded(TimeSpan right)
-        {
-            return RightBounded(right, true);
-        }
+        public static RelativeTimeInterval RightBounded(TimeSpan right) => RightBounded(right, true);
 
         /// <summary>
         /// Translate by a span distance.
@@ -253,9 +229,7 @@ namespace Microsoft.Psi
         /// <param name="span">Span by which to translate.</param>
         /// <returns>Translated interval.</returns>
         public override RelativeTimeInterval Translate(TimeSpan span)
-        {
-            return this.Translate(span, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Translate(span, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale endpoints by span distances.
@@ -264,9 +238,7 @@ namespace Microsoft.Psi
         /// <param name="right">Span by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         public override RelativeTimeInterval Scale(TimeSpan left, TimeSpan right)
-        {
-            return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale endpoints by factors.
@@ -275,32 +247,35 @@ namespace Microsoft.Psi
         /// <param name="right">Factor by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         public override RelativeTimeInterval Scale(float left, float right)
-        {
-            return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <inheritdoc/>
         public override bool Equals(object obj)
-        {
-            return (obj is RelativeTimeInterval other) && this.Equals(other);
-        }
+            => (obj is RelativeTimeInterval other) && this.Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(RelativeTimeInterval other)
-        {
-            return
-                (this.LeftEndpoint.Point, this.LeftEndpoint.Inclusive, this.LeftEndpoint.Bounded, this.RightEndpoint.Point, this.RightEndpoint.Inclusive, this.RightEndpoint.Bounded) ==
+            => (this.LeftEndpoint.Point, this.LeftEndpoint.Inclusive, this.LeftEndpoint.Bounded, this.RightEndpoint.Point, this.RightEndpoint.Inclusive, this.RightEndpoint.Bounded) ==
                 (other.LeftEndpoint.Point, other.LeftEndpoint.Inclusive, other.LeftEndpoint.Bounded, other.RightEndpoint.Point, other.RightEndpoint.Inclusive, other.RightEndpoint.Bounded);
-        }
 
         /// <inheritdoc/>
-        public override int GetHashCode() => (
-            this.LeftEndpoint.Point,
-            this.LeftEndpoint.Inclusive,
-            this.LeftEndpoint.Bounded,
-            this.RightEndpoint.Point,
-            this.RightEndpoint.Inclusive,
-            this.RightEndpoint.Bounded).GetHashCode();
+        public override int GetHashCode()
+            => (this.LeftEndpoint.Point,
+                this.LeftEndpoint.Inclusive,
+                this.LeftEndpoint.Bounded,
+                this.RightEndpoint.Point,
+                this.RightEndpoint.Inclusive,
+                this.RightEndpoint.Bounded).GetHashCode();
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            var openParens = this.LeftEndpoint.Inclusive ? "[" : "(";
+            var min = this.TimeSpanToString(this.LeftEndpoint.Point);
+            var max = this.TimeSpanToString(this.RightEndpoint.Point);
+            var closeParens = this.RightEndpoint.Inclusive ? "]" : ")";
+            return $"{openParens}{min},{max}{closeParens}";
+        }
 
         /// <summary>
         /// Scale a span by a given factor.
@@ -309,19 +284,14 @@ namespace Microsoft.Psi
         /// <param name="factor">Factor by which to scale.</param>
         /// <returns>Scaled span.</returns>
         protected override TimeSpan ScaleSpan(TimeSpan span, double factor)
-        {
-            return new TimeSpan((long)Math.Round(span.Ticks * factor));
-        }
+            => new ((long)Math.Round(span.Ticks * factor));
 
         /// <summary>
         /// Negate span.
         /// </summary>
         /// <param name="span">Span to be negated.</param>
         /// <returns>Negated span.</returns>
-        protected override TimeSpan NegateSpan(TimeSpan span)
-        {
-            return -span;
-        }
+        protected override TimeSpan NegateSpan(TimeSpan span) => -span;
 
         /// <summary>
         /// Translate point by given span.
@@ -329,10 +299,7 @@ namespace Microsoft.Psi
         /// <param name="point">Point value.</param>
         /// <param name="span">Span by which to translate.</param>
         /// <returns>Translated point.</returns>
-        protected override TimeSpan TranslatePoint(TimeSpan point, TimeSpan span)
-        {
-            return point + span;
-        }
+        protected override TimeSpan TranslatePoint(TimeSpan point, TimeSpan span) => point + span;
 
         /// <summary>
         /// Determine span between two given points.
@@ -340,10 +307,7 @@ namespace Microsoft.Psi
         /// <param name="x">First point.</param>
         /// <param name="y">Second point.</param>
         /// <returns>Span between points.</returns>
-        protected override TimeSpan Difference(TimeSpan x, TimeSpan y)
-        {
-            return x - y;
-        }
+        protected override TimeSpan Difference(TimeSpan x, TimeSpan y) => x - y;
 
         /// <summary>
         /// Compare points.
@@ -351,9 +315,30 @@ namespace Microsoft.Psi
         /// <param name="a">First point.</param>
         /// <param name="b">Second point.</param>
         /// <returns>Less (-1), greater (+1) or equal (0).</returns>
-        protected override int ComparePoints(TimeSpan a, TimeSpan b)
+        protected override int ComparePoints(TimeSpan a, TimeSpan b) => a.CompareTo(b);
+
+        private string TimeSpanToString(TimeSpan timeSpan)
         {
-            return a.CompareTo(b);
+            if (timeSpan == TimeSpan.Zero)
+            {
+                return "0";
+            }
+            else if (timeSpan == TimeSpan.MinValue)
+            {
+                return double.NegativeInfinity.ToString();
+            }
+            else if (timeSpan == TimeSpan.MaxValue)
+            {
+                return double.PositiveInfinity.ToString();
+            }
+            else if (timeSpan.TotalMilliseconds < 1000 && timeSpan.TotalMilliseconds == Math.Floor(timeSpan.TotalMilliseconds))
+            {
+                return $"{(int)timeSpan.TotalMilliseconds}ms";
+            }
+            else
+            {
+                return timeSpan.ToString();
+            }
         }
     }
 }

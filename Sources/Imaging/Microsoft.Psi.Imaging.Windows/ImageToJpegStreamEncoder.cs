@@ -11,6 +11,9 @@ namespace Microsoft.Psi.Imaging
     /// </summary>
     public class ImageToJpegStreamEncoder : IImageToStreamEncoder
     {
+        /// <inheritdoc/>
+        public string Description => $"Jpeg({this.QualityLevel})";
+
         /// <summary>
         /// Gets or sets JPEG image quality (0-100).
         /// </summary>

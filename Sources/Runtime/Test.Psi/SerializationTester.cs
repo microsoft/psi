@@ -357,6 +357,76 @@ namespace Test.Psi
             Serializer.Clear(ref clonedDict, new SerializationContext());
         }
 
+        private class IntegerEqualityComparer : IEqualityComparer<double>
+        {
+            public bool Equals(double x, double y) => (int)x == (int)y;
+
+            public int GetHashCode(double obj) => ((int)obj).GetHashCode();
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void SerializeDictionaryWithComparer()
+        {
+            var dict = new Dictionary<double, string>(new IntegerEqualityComparer());
+            dict.Add(0, "zero");
+            dict.Add(1, "one");
+
+            var clonedDict = dict.DeepClone();
+            dict.DeepClone(ref clonedDict);
+            foreach (var key in dict.Keys)
+            {
+                Assert.AreEqual(dict[key], clonedDict[key]);
+            }
+
+            clonedDict[0.9] = "0";
+            clonedDict[1.1] = "1";
+            Assert.AreEqual("0", clonedDict[0]);
+            Assert.AreEqual("1", clonedDict[1]);
+
+            var buf = new byte[256];
+            clonedDict = this.SerializationClone(dict, buf);
+            foreach (var key in dict.Keys)
+            {
+                Assert.AreEqual(dict[key], clonedDict[key]);
+            }
+
+            clonedDict[0.9] = "0";
+            clonedDict[1.1] = "1";
+            Assert.AreEqual("0", clonedDict[0]);
+            Assert.AreEqual("1", clonedDict[1]);
+
+            Serializer.Clear(ref clonedDict, new SerializationContext());
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void DictionaryBackCompat()
+        {
+            // Represents a Dictionary<int, string> { { 0, "zero" }, { 1, "one" } } serialized using the previous scheme (auto-generated ClassSerializer)
+            var buf = new byte[]
+            {
+                0, 0, 0, 128, 0, 0, 0, 128, 3, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 3, 0, 0, 0,
+                255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 4, 0, 0, 0, 122, 101, 114, 111, 255, 255, 255, 255,
+                1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 128, 3, 0, 0, 0, 111, 110, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                2, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0,
+            };
+
+            // Create the known serializers and register the old version of the Dictionary schema. This simulates what would be read from an older store.
+            var serializers = new KnownSerializers();
+            var oldSchema = TypeSchema.FromType(typeof(Dictionary<int, string>), new RuntimeInfo(serializationSystemVersion: 2), typeof(ClassSerializer<Dictionary<int, string>>), serializerVersion: 1);
+            serializers.RegisterSchema(oldSchema);
+
+            // Deserialize the buffer using a SerializationContext initialized with the old schema
+            var br = new BufferReader(buf);
+            var dict = default(Dictionary<int, string>);
+            Serializer.Deserialize(br, ref dict, new SerializationContext(serializers));
+
+            Assert.AreEqual(2, dict.Count);
+            Assert.AreEqual("zero", dict[0]);
+            Assert.AreEqual("one", dict[1]);
+        }
+
         [TestMethod]
         [Timeout(60000)]
         public void SerializeObjectDictionary()
@@ -384,12 +454,18 @@ namespace Test.Psi
         [Timeout(60000)]
         public void SerializeDictionaryTree()
         {
-            var innerDict = new Dictionary<int, STClass>();
-            innerDict.Add(0, new STClass(FooEnum.One, 1, "one", new[] { 1.0 }));
-            innerDict.Add(1, new STClass(FooEnum.Two, 2, "two", new[] { 2.0 }));
+            var innerDict1 = new Dictionary<int, STClass>();
+            innerDict1.Add(0, new STClass(FooEnum.One, 1, "one", new[] { 1.0 }));
+            innerDict1.Add(1, new STClass(FooEnum.Two, 2, "two", new[] { 2.0 }));
+
+            var innerDict2 = new Dictionary<int, STClass>();
+            innerDict2.Add(0, new STClass(FooEnum.Two, 3, "two", new[] { 2.0 }));
+            innerDict2.Add(1, new STClass(FooEnum.One, 4, "one", new[] { 1.0 }));
 
             var dict = new Dictionary<Tuple<int>, Dictionary<int, STClass>>();
-            dict.Add(Tuple.Create(0), innerDict);
+            dict.Add(Tuple.Create(0), innerDict1);
+            dict.Add(Tuple.Create(1), innerDict1); // testing duplicate reference
+            dict.Add(Tuple.Create(2), innerDict2);
 
             var clonedDict = dict.DeepClone();
             dict.DeepClone(ref clonedDict);
@@ -401,6 +477,10 @@ namespace Test.Psi
                 Assert.AreNotEqual(dict[key][1], clonedDict[key][1]);
             }
 
+            // verify duplicate reference
+            Assert.AreSame(dict[Tuple.Create(0)], dict[Tuple.Create(1)]);
+            Assert.AreNotSame(dict[Tuple.Create(1)], dict[Tuple.Create(2)]);
+
             var buf = new byte[256];
             clonedDict = this.SerializationClone(dict, buf);
             foreach (var key in dict.Keys)
@@ -410,6 +490,10 @@ namespace Test.Psi
                 Assert.AreNotEqual(dict[key][0], clonedDict[key][0]);
                 Assert.AreNotEqual(dict[key][1], clonedDict[key][1]);
             }
+
+            // verify duplicate reference
+            Assert.AreSame(dict[Tuple.Create(0)], dict[Tuple.Create(1)]);
+            Assert.AreNotSame(dict[Tuple.Create(1)], dict[Tuple.Create(2)]);
         }
 
         [TestMethod]

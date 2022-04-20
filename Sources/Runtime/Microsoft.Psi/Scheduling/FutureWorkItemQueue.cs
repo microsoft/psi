@@ -18,7 +18,10 @@ namespace Microsoft.Psi.Scheduling
 
         protected override bool DequeueCondition(WorkItem item)
         {
-            return item.StartTime <= this.scheduler.Clock.GetCurrentTime();
+            // Dequeue work item if it is due for execution, or will never be executed
+            // due to the scheduler context being finalized before its execution time.
+            return item.StartTime <= this.scheduler.Clock.GetCurrentTime()
+                || item.StartTime > item.SchedulerContext.FinalizeTime;
         }
     }
 }

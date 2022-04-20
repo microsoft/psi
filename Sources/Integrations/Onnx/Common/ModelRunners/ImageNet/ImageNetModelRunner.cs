@@ -38,13 +38,14 @@ namespace Microsoft.Psi.Onnx
         /// Initializes a new instance of the <see cref="ImageNetModelRunner"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="configuration">The configuration for the compoinent.</param>
+        /// <param name="configuration">The configuration for the component.</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <remarks>
         /// To run on a GPU, use the Microsoft.Psi.Onnx.ModelRunners.Gpu library instead of Microsoft.Psi.Onnx.ModelRunners.Cpu, and set
         /// the value of the <pararef name="gpuDeviceId"/> parameter to a valid non-negative integer. Typical device ID values are 0 or 1.
         /// </remarks>
-        public ImageNetModelRunner(Pipeline pipeline, ImageNetModelRunnerConfiguration configuration)
-            : base(pipeline)
+        public ImageNetModelRunner(Pipeline pipeline, ImageNetModelRunnerConfiguration configuration, string name = nameof(ImageNetModelRunner))
+            : base(pipeline, name)
         {
             this.configuration = configuration;
 

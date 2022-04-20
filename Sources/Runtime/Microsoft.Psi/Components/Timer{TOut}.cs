@@ -11,7 +11,7 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="TOut">The type of messages published by the generator.</typeparam>
     public class Timer<TOut> : Timer, IProducer<TOut>
     {
-        private Func<DateTime, TimeSpan, TOut> generator;
+        private readonly Func<DateTime, TimeSpan, TOut> generator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Timer{TOut}"/> class.
@@ -19,8 +19,9 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="timerInterval">Time interval with which to produce messages.</param>
         /// <param name="generator">Message generation function.</param>
-        public Timer(Pipeline pipeline, uint timerInterval, Func<DateTime, TimeSpan, TOut> generator)
-            : base(pipeline, timerInterval)
+        /// <param name="name">An optional name for the component.</param>
+        public Timer(Pipeline pipeline, uint timerInterval, Func<DateTime, TimeSpan, TOut> generator, string name = nameof(Timer))
+            : base(pipeline, timerInterval, name)
         {
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.generator = generator;

@@ -146,7 +146,7 @@ namespace Microsoft.Psi
             bool outputDefaultIfDropped = false,
             TOut defaultValue = default,
             DeliveryPolicy<TIn[]> deliveryPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelVariableLength<TIn, TOut>(source.Out.Pipeline, streamTransform, outputDefaultIfDropped, defaultValue, name, defaultParallelDeliveryPolicy);
@@ -168,7 +168,7 @@ namespace Microsoft.Psi
             this IProducer<TIn[]> source,
             Action<int, IProducer<TIn>> streamAction,
             DeliveryPolicy<TIn[]> deliveryPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelVariableLength<TIn, TIn>(source.Out.Pipeline, streamAction, name, defaultParallelDeliveryPolicy);
@@ -258,7 +258,7 @@ namespace Microsoft.Psi
             TBranchOut defaultValue = default,
             DeliveryPolicy<TIn> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
          {
             var p = new ParallelSparseSelect<TIn, TBranchKey, TBranchIn, TBranchOut, TOut>(
@@ -298,7 +298,7 @@ namespace Microsoft.Psi
             TBranchOut defaultValue = default,
             DeliveryPolicy<Dictionary<TBranchKey, TBranchIn>> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseSelect<Dictionary<TBranchKey, TBranchIn>, TBranchKey, TBranchIn, TBranchOut, Dictionary<TBranchKey, TBranchOut>>(
@@ -335,7 +335,7 @@ namespace Microsoft.Psi
             Action<TBranchKey, IProducer<TBranchIn>> streamAction,
             DeliveryPolicy<TIn> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseDo<TIn, TBranchKey, TBranchIn>(
@@ -367,7 +367,7 @@ namespace Microsoft.Psi
             Action<TBranchKey, IProducer<TBranchIn>> streamAction,
             DeliveryPolicy<Dictionary<TBranchKey, TBranchIn>> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseDo<Dictionary<TBranchKey, TBranchIn>, TBranchKey, TBranchIn>(
@@ -411,7 +411,7 @@ namespace Microsoft.Psi
             TBranchOut defaultValue = default,
             DeliveryPolicy<TIn> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseSelect<TIn, TBranchKey, TBranchIn, TBranchOut, TOut>(
@@ -454,7 +454,7 @@ namespace Microsoft.Psi
             TBranchOut defaultValue = default,
             DeliveryPolicy<TIn> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseSelect<TIn, TBranchKey, TBranchIn, TBranchOut, Dictionary<TBranchKey, TBranchOut>>(
@@ -494,7 +494,7 @@ namespace Microsoft.Psi
             TBranchOut defaultValue = default,
             DeliveryPolicy<Dictionary<TBranchKey, TBranchIn>> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseSelect<Dictionary<TBranchKey, TBranchIn>, TBranchKey, TBranchIn, TBranchOut, Dictionary<TBranchKey, TBranchOut>>(
@@ -531,7 +531,7 @@ namespace Microsoft.Psi
             Action<IProducer<TBranchIn>> streamAction,
             DeliveryPolicy<TIn> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseDo<TIn, TBranchKey, TBranchIn>(
@@ -563,7 +563,7 @@ namespace Microsoft.Psi
             Action<IProducer<TBranchIn>> streamAction,
             DeliveryPolicy<Dictionary<TBranchKey, TBranchIn>> deliveryPolicy = null,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(Parallel),
             DeliveryPolicy defaultParallelDeliveryPolicy = null)
         {
             var p = new ParallelSparseDo<Dictionary<TBranchKey, TBranchIn>, TBranchKey, TBranchIn>(

@@ -32,31 +32,38 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The configuration for the component.</param>
-        public SceneUnderstanding(Pipeline pipeline, SceneUnderstandingConfiguration configuration = null)
-            : base(pipeline, true)
+        /// <param name="name">An optional name for the component.</param>
+        public SceneUnderstanding(Pipeline pipeline, SceneUnderstandingConfiguration configuration = null, string name = nameof(SceneUnderstanding))
+            : base(pipeline, true, name)
         {
-            this.pipeline = pipeline;
-
             // requires Spatial Perception capability
             if (!SceneObserver.IsSupported())
             {
                 throw new Exception("SceneObserver is not supported.");
             }
 
-            this.configuration = configuration ??= new ();
-            this.placementRectangleSize = this.configuration.InitialPlacementRectangleSize;
-            this.PlacementRectangleSizeInput = pipeline.CreateReceiver<(int Height, int Width)>(this, this.UpdatePlacementRectangleSize, nameof(this.PlacementRectangleSizeInput));
-            this.Out = pipeline.CreateEmitter<SceneObjectCollection>(this, nameof(this.Out));
+            this.pipeline = pipeline;
 
             // Defer call to SK.AddStepper(this) to PipelineRun to ensure derived classes have finished construction!
             // Otherwise IStepper.Initialize() could get called before this object is fully constructed.
-            pipeline.PipelineRun += (_, _) =>
+            this.pipeline.PipelineRun += (_, _) =>
             {
                 if (SK.AddStepper(this) == default)
                 {
                     throw new Exception($"Unable to add {this} as a Stepper to StereoKit.");
                 }
             };
+
+            // Remove this stepper when pipeline is no longer running, otherwise Step() will continue to be called!
+            this.pipeline.PipelineCompleted += (_, _) =>
+            {
+                SK.RemoveStepper(this);
+            };
+
+            this.configuration = configuration ??= new ();
+            this.placementRectangleSize = this.configuration.InitialPlacementRectangleSize;
+            this.PlacementRectangleSizeInput = pipeline.CreateReceiver<(int Height, int Width)>(this, this.UpdatePlacementRectangleSize, nameof(this.PlacementRectangleSizeInput));
+            this.Out = pipeline.CreateEmitter<SceneObjectCollection>(this, nameof(this.Out));
         }
 
         /// <summary>
@@ -73,10 +80,7 @@ namespace Microsoft.Psi.MixedReality
         public bool Enabled => true;
 
         /// <inheritdoc />
-        public virtual bool Initialize()
-        {
-            return true;
-        }
+        public virtual bool Initialize() => true;
 
         /// <inheritdoc />
         public virtual void Step()
@@ -165,7 +169,7 @@ namespace Microsoft.Psi.MixedReality
                         var placementFromCenter = new Vec3(placement.X - (quad.Extents.X / 2f), placement.Y - (quad.Extents.Y / 2f), 0);
 
                         return new Rectangle3D(
-                            rectanglePose.Transform(placementFromCenter.ToPoint3D(false)),
+                            rectanglePose.Transform(placementFromCenter.ToPoint3D()),
                             rectanglePose.YAxis.Negate().Normalize(),
                             rectanglePose.ZAxis.Normalize(),
                             -w / 2,
@@ -226,7 +230,7 @@ namespace Microsoft.Psi.MixedReality
             mesh.GetVertexPositions(vertices);
             mesh.GetTriangleIndices(indices);
 
-            return new Mesh3D(vertices.Select(v => meshPose.Transform(v.ToPoint3D(false))).ToArray(), indices);
+            return new Mesh3D(vertices.Select(v => meshPose.Transform(v.ToPoint3D())).ToArray(), indices);
         }
 
         private void UpdatePlacementRectangleSize((int Width, int Height) size)
@@ -236,7 +240,7 @@ namespace Microsoft.Psi.MixedReality
 
         private CoordinateSystem GetWorldPose(SceneObject sceneObject)
         {
-            var posePsiBasis = new CoordinateSystem(sceneObject.GetLocationAsMatrix().ToMathNetMatrix().ChangeBasisHoloLensToPsi());
+            var posePsiBasis = new CoordinateSystem(sceneObject.GetLocationAsMatrix().ToMathNetMatrix());
             return posePsiBasis.TransformBy(this.scenePoseInWorld);
         }
     }

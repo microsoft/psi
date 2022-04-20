@@ -134,7 +134,7 @@ namespace Microsoft.Psi.Data
         public void Write<TMessage, TSupplementalMetadata>(IProducer<TMessage> source, TSupplementalMetadata supplementalMetadataValue, string name, bool largeMessages = false, DeliveryPolicy<TMessage> deliveryPolicy = null)
         {
             var meta = this.WriteToStorage(source.Out, name, largeMessages, deliveryPolicy);
-            meta.SetSupplementalMetadata(supplementalMetadataValue, this.serializers);
+            this.WriteSupplementalMetadataToCatalog(meta, supplementalMetadataValue);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Microsoft.Psi.Data
                         if (!set.Contains(key))
                         {
                             set.UnionWith(dict.Keys);
-                            meta.SetSupplementalMetadata(new DistinctKeysSupplementalMetadata<TKey>(set), this.serializers);
+                            this.WriteSupplementalMetadataToCatalog(meta, new DistinctKeysSupplementalMetadata<TKey>(set));
                             return set;
                         }
                     }
@@ -194,8 +194,12 @@ namespace Microsoft.Psi.Data
             source.Out.Name = connector.Out.Name = name;
             source.Out.Closed += closeTime => this.writer.CloseStream(source.Out.Id, closeTime);
 
-            // tell the writer to write the serialized stream
-            var meta = this.writer.OpenStream(source.Out.Id, name, false, handler.Name);
+            // tell the writer to write the serialized stream. If the pipeline is running
+            // when the write command arrives, the stream is opened at the current pipeline time
+            // o/w if the pipeline is not yet running, the opened time is set to minvalue, and
+            // will be updated  on pipeline start-up.
+            var openedTime = this.pipeline.IsRunning ? this.pipeline.GetCurrentTime() : DateTime.MinValue;
+            var meta = this.writer.OpenStream(source.Out.Id, name, false, handler.Name, openedTime);
 
             // register this stream with the store catalog
             this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, name, meta);
@@ -265,8 +269,12 @@ namespace Microsoft.Psi.Data
             source.Name = connector.Out.Name = name;
             source.Closed += closeTime => this.writer.CloseStream(source.Id, closeTime);
 
-            // tell the writer to write the serialized stream
-            var meta = this.writer.OpenStream(source.Id, name, largeMessages, handler.Name);
+            // tell the writer to write the serialized stream. If the pipeline is running
+            // when the write command arrives, the stream is opened at the current pipeline time
+            // o/w if the pipeline is not yet running, the opened time is set to minvalue, and
+            // will be updated  on pipeline start-up.
+            var openedTime = this.pipeline.IsRunning ? this.pipeline.GetCurrentTime() : DateTime.MinValue;
+            var meta = this.writer.OpenStream(source.Id, name, largeMessages, handler.Name, openedTime);
 
             // register this stream with the store catalog
             this.pipeline.ConfigurationStore.Set(Exporter.StreamMetadataNamespace, name, meta);
@@ -282,6 +290,21 @@ namespace Microsoft.Psi.Data
             connector.PipeTo(serializer, allowWhileRunning: true, DeliveryPolicy.SynchronousOrThrottle);
 
             return meta;
+        }
+
+        /// <summary>
+        /// Writes the supplemental metadata for a specified stream to the catalog.
+        /// </summary>
+        /// <typeparam name="TSupplementalMetadata">The type of the supplemental metadata.</typeparam>
+        /// <param name="meta">The psi stream metadata.</param>
+        /// <param name="supplementalMetadata">The supplemental metadata.</param>
+        private void WriteSupplementalMetadataToCatalog<TSupplementalMetadata>(PsiStreamMetadata meta, TSupplementalMetadata supplementalMetadata)
+        {
+            var handler = this.serializers.GetHandler<TSupplementalMetadata>();
+            var writer = new BufferWriter(default(byte[]));
+            handler.Serialize(writer, supplementalMetadata, new SerializationContext(this.serializers));
+            meta.SetSupplementalMetadata(typeof(TSupplementalMetadata).AssemblyQualifiedName, writer.Buffer);
+            this.writer.WriteToCatalog(meta);
         }
 
         /// <summary>

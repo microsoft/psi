@@ -12,13 +12,16 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Runtime.Serialization;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Psi;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Represents a view model of a session.
@@ -34,9 +37,11 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
         private string auxiliaryInfo = string.Empty;
 
-        private RelayCommand addPartitionCommand;
+        private RelayCommand addPartitionFromStoreCommand;
+        private RelayCommand addMultiplePartitionsFromFolderCommand;
         private RelayCommand removeSessionCommand;
         private RelayCommand visualizeSessionCommand;
+        private RelayCommand<MouseButtonEventArgs> mouseDoubleClickCommand;
         private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
@@ -111,13 +116,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets the originating time of the first message in the session.
         /// </summary>
         [Browsable(false)]
-        public DateTime FirstMessageOriginatingTime => this.partitionViewModels.Min(p => p.FirstMessageOriginatingTime);
+        public DateTime FirstMessageOriginatingTime
+            => this.partitionViewModels.Count > 0 ? this.partitionViewModels.Min(p => p.FirstMessageOriginatingTime) : default;
 
         /// <summary>
         /// Gets the originating time of the last message in the session.
         /// </summary>
         [Browsable(false)]
-        public DateTime LastMessageOriginatingTime => this.partitionViewModels.Max(p => p.LastMessageOriginatingTime);
+        public DateTime LastMessageOriginatingTime
+            => this.partitionViewModels.Count > 0 ? this.partitionViewModels.Max(p => p.LastMessageOriginatingTime) : default;
 
         /// <summary>
         /// Gets the opacity of UI elements associated with this session. UI element opacity is reduced for sessions that are not the current session.
@@ -168,7 +175,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand AddPartitionCommand => this.addPartitionCommand ??= new RelayCommand(() => this.AddPartition());
+        public RelayCommand AddPartitionFromStoreCommand => this.addPartitionFromStoreCommand ??= new RelayCommand(() => this.AddPartitionFromStore());
+
+        /// <summary>
+        /// Gets the add multiple partitions command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AddMultiplePartitionsFromFolderCommand => this.addMultiplePartitionsFromFolderCommand ??= new RelayCommand(() => this.AddMultiplePartitionsFromFolder());
 
         /// <summary>
         /// Gets the remove session command.
@@ -183,6 +197,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand VisualizeSessionCommand => this.visualizeSessionCommand ??= new RelayCommand(() => this.DatasetViewModel.VisualizeSession(this));
+
+        /// <summary>
+        /// Gets the mouse double click command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand<MouseButtonEventArgs> MouseDoubleClickCommand
+            => this.mouseDoubleClickCommand ??= new RelayCommand<MouseButtonEventArgs>(e => this.OnMouseDoubleClick(e));
 
         /// <summary>
         /// Gets the command that executes when opening the session context menu.
@@ -245,7 +267,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <summary>
         /// Adds a new partition to the session.
         /// </summary>
-        public void AddPartition()
+        public void AddPartitionFromStore()
         {
             var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
             var openFileDialog = new Win32.OpenFileDialog
@@ -253,6 +275,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 DefaultExt = ".psi",
                 Filter = string.Join("|", formats.Select(f => $"{f.Name}|*{f.Extensions}")),
             };
+
+            // Get the path to the last partition added to prepopulate the dialog
+            var lastPartition = this.session.Partitions.LastOrDefault();
+            if (lastPartition != default)
+            {
+                openFileDialog.InitialDirectory = lastPartition.StorePath;
+            }
 
             bool? result = openFileDialog.ShowDialog(Application.Current.MainWindow);
             if (result == true)
@@ -273,6 +302,77 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     visualizationContainer.Navigator.DataRange.Set(sessionExtents);
                     visualizationContainer.UpdateStreamSources(this);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Adds multiple partitions from a folder to the session.
+        /// </summary>
+        public void AddMultiplePartitionsFromFolder()
+        {
+            var selectFolderDialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select a folder containing the partitions to be added to the session.",
+                ShowNewFolderButton = false,
+            };
+
+            // Get the path to the last partition added to prepopulate the dialog
+            var lastPartition = this.session.Partitions.LastOrDefault();
+            if (lastPartition != default)
+            {
+                selectFolderDialog.SelectedPath = lastPartition.StorePath;
+            }
+
+            if (selectFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.AddMultiplePartitionsFromFolder(selectFolderDialog.SelectedPath, out var existingPartitions);
+
+                if (existingPartitions.Count > 0)
+                {
+                    var message = "The following partitions were already in the session and were not added:\r\n\r\n" +
+                        $"{string.Join("\r\n", existingPartitions.Select(p => Path.Combine(p.StorePath, p.StoreName)))}";
+
+                    // Inform the user of partitions that were already present in the session
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Existing Partitions",
+                        message,
+                        "Close",
+                        null).ShowDialog();
+                }
+
+                // Update stream bindings if this is the current session being visualized
+                if (this.IsCurrentSession)
+                {
+                    var visualizationContainer = VisualizationContext.Instance.VisualizationContainer;
+                    var sessionExtents = this.OriginatingTimeInterval;
+                    visualizationContainer.Navigator.DataRange.Set(sessionExtents);
+                    visualizationContainer.UpdateStreamSources(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds multiple partitions from a specified folder to the session.
+        /// </summary>
+        /// <param name="folderName">The folder to add partitions from.</param>
+        /// <param name="existingPartitions">A list of partitions that were already existing and were not added.</param>
+        public void AddMultiplePartitionsFromFolder(string folderName, out List<IPartition> existingPartitions)
+        {
+            existingPartitions = new List<IPartition>();
+            foreach (var store in PsiStore.EnumerateStores(folderName, false))
+            {
+                // Check if the session already contains a partition for this store
+                var partition = this.session.Partitions.FirstOrDefault(p => p.StoreName == store.Name && p.StorePath == store.Path);
+                if (partition != default)
+                {
+                    existingPartitions.Add(partition);
+                    continue;
+                }
+
+                // Add the new partition, ensuring that the partition name does not clash with an existing one
+                partition = this.session.AddPsiStorePartition(store.Name, store.Path, this.EnsureUniquePartitionName(store.Name));
+                this.AddPartition(partition);
             }
         }
 
@@ -351,9 +451,11 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
         }
 
-        private void AddPartition(IPartition partition)
+        private PartitionViewModel AddPartition(IPartition partition)
         {
-            this.internalPartitionViewModels.Add(new PartitionViewModel(this, partition));
+            var partitionViewModel = new PartitionViewModel(this, partition);
+            this.internalPartitionViewModels.Add(partitionViewModel);
+            return partitionViewModel;
         }
 
         private string EnsureUniquePartitionName(string partitionName)
@@ -380,6 +482,16 @@ namespace Microsoft.Psi.Visualization.ViewModels
             else if (e.PropertyName == nameof(this.DatasetViewModel.ShowAuxiliarySessionInfo))
             {
                 this.UpdateAuxiliaryInfo();
+            }
+        }
+
+        private void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+            if (this.DatasetViewModel.CurrentSessionViewModel != this)
+            {
+                this.DatasetViewModel.VisualizeSession(this);
+                this.IsTreeNodeExpanded = true;
+                e.Handled = true;
             }
         }
 
@@ -436,12 +548,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
             // Create the context menu
             var contextMenu = new ContextMenu();
 
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Add Partition from Existing Store ...", this.AddPartitionCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Add Partition from Store ...", this.AddPartitionFromStoreCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAddMultiple, "Add Multiple Partitions from Folder ...", this.AddMultiplePartitionsFromFolderCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionRemove, "Remove", this.RemoveSessionCommand));
             contextMenu.Items.Add(new Separator());
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.Visualize, this.VisualizeSessionCommand));
 
-            contextMenu.Items.Add(new Separator());
+            // Add the visualize session context menu if this is not the currently visualized session
+            if (!this.IsCurrentSession)
+            {
+                contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.VisualizeSession, this.VisualizeSessionCommand));
+                contextMenu.Items.Add(new Separator());
+            }
 
             // Add run batch processing task menu
             var runTasksMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Run Batch Processing Task", null);

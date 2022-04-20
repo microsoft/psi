@@ -50,18 +50,23 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <summary>
         /// Initializes a new instance of the <see cref="PointCloud3D"/> class.
         /// </summary>
-        /// <remarks>This private constructor creates an empty point cloud.</remarks>
-        private PointCloud3D()
+        /// <param name="points">The set of points expressed in a count x 4 matrix.</param>
+        public PointCloud3D(Matrix<double> points)
         {
+            if (points != null && points.RowCount != 4)
+            {
+                throw new System.Exception("The points matrix should have 4 rows when constructing a point cloud.");
+            }
+
+            this.points = points;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PointCloud3D"/> class.
         /// </summary>
-        /// <param name="points">The set of points expressed in a count x 4 matrix.</param>
-        private PointCloud3D(Matrix<double> points)
+        /// <remarks>This private constructor creates an empty point cloud.</remarks>
+        private PointCloud3D()
         {
-            this.points = points;
         }
 
         /// <summary>
@@ -79,49 +84,49 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// </summary>
         /// <param name="depthImage">The depth image.</param>
         /// <param name="depthCameraIntrinsics">The depth camera intrinsics.</param>
-        /// <param name="scaleFactor">An optional parameter representing a scale factor to apply to the depth values.</param>
         /// <param name="sparsity">An optional parameter to specify how sparsely to sample pixels (by default 1).</param>
         /// <param name="undistort">An optional parameter that specifies whether to undistort when projecting through the intrinsics.</param>
         /// <param name="robustPointsOnly">An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</param>
         /// <returns>The corresponding point cloud.</returns>
-        public static PointCloud3D FromDepthImage(Shared<DepthImage> depthImage, ICameraIntrinsics depthCameraIntrinsics, double scaleFactor = 1, int sparsity = 1, bool undistort = true, bool robustPointsOnly = false)
-            => FromDepthImage(depthImage?.Resource, depthCameraIntrinsics, scaleFactor, sparsity, undistort, robustPointsOnly);
+        public static PointCloud3D FromDepthImage(Shared<DepthImage> depthImage, ICameraIntrinsics depthCameraIntrinsics, int sparsity = 1, bool undistort = true, bool robustPointsOnly = false)
+            => FromDepthImage(depthImage?.Resource, depthCameraIntrinsics, sparsity, undistort, robustPointsOnly);
 
         /// <summary>
         /// Create a point cloud from a shared depth image.
         /// </summary>
         /// <param name="depthImage">The depth image.</param>
         /// <param name="cameraSpaceMapping">A camera space mapping matrix.</param>
-        /// <param name="scalingFactor">An optional parameter representing a scale factor to apply to the depth values (by default 1).</param>
         /// <param name="sparsity">An optional parameter to specify how sparsely to sample pixels (by default 1).</param>
         /// <param name="robustPointsOnly">An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</param>
         /// <returns>The corresponding point cloud.</returns>
-        public static PointCloud3D FromDepthImage(Shared<DepthImage> depthImage, Point3D[,] cameraSpaceMapping, double scalingFactor = 1, int sparsity = 1, bool robustPointsOnly = false)
-            => FromDepthImage(depthImage?.Resource, cameraSpaceMapping, scalingFactor, sparsity, robustPointsOnly);
+        public static PointCloud3D FromDepthImage(Shared<DepthImage> depthImage, Point3D[,] cameraSpaceMapping, int sparsity = 1, bool robustPointsOnly = false)
+            => FromDepthImage(depthImage?.Resource, cameraSpaceMapping, sparsity, robustPointsOnly);
 
         /// <summary>
         /// Create a point cloud from a depth image.
         /// </summary>
         /// <param name="depthImage">The depth image.</param>
         /// <param name="depthCameraIntrinsics">The depth camera intrinsics.</param>
-        /// <param name="scalingFactor">An optional parameter representing a scale factor to apply to the depth values (by default 1).</param>
         /// <param name="sparsity">An optional parameter to specify how sparsely to sample pixels (by default 1).</param>
         /// <param name="undistort">An optional parameter that specifies whether to undistort when projecting through the intrinsics.</param>
         /// <param name="robustPointsOnly">An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</param>
         /// <returns>The corresponding point cloud.</returns>
-        public static PointCloud3D FromDepthImage(DepthImage depthImage, ICameraIntrinsics depthCameraIntrinsics, double scalingFactor = 1, int sparsity = 1, bool undistort = true, bool robustPointsOnly = false)
-            => FromDepthImage(depthImage, depthCameraIntrinsics?.GetPixelToCameraSpaceMapping(undistort), scalingFactor, sparsity, robustPointsOnly);
+        public static PointCloud3D FromDepthImage(DepthImage depthImage, ICameraIntrinsics depthCameraIntrinsics, int sparsity = 1, bool undistort = true, bool robustPointsOnly = false)
+            => FromDepthImage(
+                depthImage,
+                depthCameraIntrinsics?.GetPixelToCameraSpaceMapping(depthImage.DepthValueSemantics, undistort),
+                sparsity,
+                robustPointsOnly);
 
         /// <summary>
         /// Create a point cloud from a depth image.
         /// </summary>
         /// <param name="depthImage">The depth image.</param>
         /// <param name="cameraSpaceMapping">A camera space mapping matrix.</param>
-        /// <param name="scalingFactor">An optional parameter representing a scale factor to apply to the depth values (by default 1).</param>
         /// <param name="sparsity">An optional parameter to specify how sparsely to sample pixels (by default 1).</param>
         /// <param name="robustPointsOnly">An optional parameter that indicates to return only robust points (where the nearby depth estimates are not zero).</param>
         /// <returns>The corresponding point cloud.</returns>
-        public static PointCloud3D FromDepthImage(DepthImage depthImage, Point3D[,] cameraSpaceMapping, double scalingFactor = 1, int sparsity = 1, bool robustPointsOnly = false)
+        public static PointCloud3D FromDepthImage(DepthImage depthImage, Point3D[,] cameraSpaceMapping, int sparsity = 1, bool robustPointsOnly = false)
         {
             if (depthImage == null || cameraSpaceMapping == null)
             {
@@ -171,6 +176,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
                 }
 
                 // Then iterate again and compute the points
+                var scalingFactor = depthImage.DepthValueToMetersScaleFactor;
                 var points = Matrix<double>.Build.Dense(4, count);
                 int index = 0;
                 for (int iy = 0; iy < depthImage.Height; iy += sparsity)

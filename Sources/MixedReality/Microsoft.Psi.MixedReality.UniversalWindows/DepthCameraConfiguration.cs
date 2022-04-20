@@ -9,42 +9,63 @@ namespace Microsoft.Psi.MixedReality
     /// <summary>
     /// Configuration for the <see cref="DepthCamera"/> component.
     /// </summary>
-    public class DepthCameraConfiguration
+    public class DepthCameraConfiguration : ResearchModeCameraConfiguration
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the calibration settings are emitted.
+        /// Initializes a new instance of the <see cref="DepthCameraConfiguration"/> class.
         /// </summary>
-        public bool OutputCalibration { get; set; } = true;
+        public DepthCameraConfiguration()
+        {
+            this.DepthSensorType = ResearchModeSensorType.DepthLongThrow;
+        }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the original map of points for calibration are emitted.
+        /// Gets or sets a value indicating whether the component emits depth images.
         /// </summary>
-        public bool OutputCalibrationMap { get; set; } = true;
+        public bool OutputDepthImage { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the minimum interval between posting calibration map messages.
+        /// Gets or sets a value indicating whether the component emits depth image camera views.
         /// </summary>
-        public TimeSpan OutputCalibrationMapInterval { get; set; } = TimeSpan.FromSeconds(20);
+        public bool OutputDepthImageCameraView { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the camera pose stream is emitted.
+        /// Gets or sets a value indicating whether the component emits infrared images.
         /// </summary>
-        public bool OutputPose { get; set; } = true;
+        public bool OutputInfraredImage { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the depth stream is emitted.
+        /// Gets or sets a value indicating whether the component emits infrared image camera views.
         /// </summary>
-        public bool OutputDepth { get; set; } = true;
+        public bool OutputInfraredImageCameraView { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the infrared stream is emitted.
+        /// Gets or sets the depth sensor type.
         /// </summary>
-        public bool OutputInfrared { get; set; } = true;
+        public ResearchModeSensorType DepthSensorType
+        {
+            get => this.SensorType;
+            set
+            {
+                if (value != ResearchModeSensorType.DepthLongThrow && value != ResearchModeSensorType.DepthAhat)
+                {
+                    throw new ArgumentException($"{value} mode is not valid for {nameof(DepthCameraConfiguration)}.{nameof(this.DepthSensorType)}.");
+                }
 
-        /// <summary>
-        /// Gets or sets the sensor mode.
-        /// </summary>
-        /// <remarks>Valid values are: DepthLongThrow or DepthAhat.</remarks>
-        public ResearchModeSensorType Mode { get; set; } = ResearchModeSensorType.DepthLongThrow;
+                this.SensorType = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        internal override bool RequiresCalibrationPointsMap()
+            => this.OutputCalibrationPointsMap || this.OutputCameraIntrinsics || this.OutputDepthImageCameraView || this.OutputInfraredImageCameraView;
+
+        /// <inheritdoc/>
+        internal override bool RequiresCameraIntrinsics()
+            => this.OutputCameraIntrinsics || this.OutputDepthImageCameraView || this.OutputInfraredImageCameraView;
+
+        /// <inheritdoc/>
+        internal override bool RequiresPose()
+            => this.OutputPose || this.OutputDepthImageCameraView || this.OutputInfraredImageCameraView;
     }
 }

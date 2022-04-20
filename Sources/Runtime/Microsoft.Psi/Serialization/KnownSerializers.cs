@@ -169,6 +169,7 @@ namespace Microsoft.Psi.Serialization
                 this.Register<string[], StringArraySerializer>();
                 this.Register<MemoryStream, MemoryStreamSerializer>();
                 this.RegisterGenericSerializer(typeof(EnumerableSerializer<>));
+                this.RegisterGenericSerializer(typeof(DictionarySerializer<,>));
             }
             else
             {

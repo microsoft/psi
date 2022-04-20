@@ -14,6 +14,11 @@ namespace Microsoft.Psi.PsiStudio.Common
         public const string Visualize = "Visualize";
 
         /// <summary>
+        /// Visualize session.
+        /// </summary>
+        public const string VisualizeSession = "Visualize Session";
+
+        /// <summary>
         /// Visualize as.
         /// </summary>
         public const string VisualizeAs = "Visualize as";

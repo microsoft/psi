@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Imaging
 {
+    using System;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
 
@@ -20,7 +21,7 @@ namespace Microsoft.Psi.Imaging
     {
         private readonly TransformDelegate transformer;
         private readonly PixelFormat pixelFormat;
-        private System.Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator;
+        private readonly Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageTransformer"/> class.
@@ -29,13 +30,18 @@ namespace Microsoft.Psi.Imaging
         /// <param name="transformer">Function for transforming the source image.</param>
         /// <param name="pixelFormat">Pixel format for destination image.</param>
         /// <param name="sharedImageAllocator ">Optional image allocator for creating new shared image.</param>
-        public ImageTransformer(Pipeline pipeline, TransformDelegate transformer, PixelFormat pixelFormat, System.Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public ImageTransformer(
+            Pipeline pipeline,
+            TransformDelegate transformer,
+            PixelFormat pixelFormat,
+            Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null,
+            string name = nameof(ImageTransformer))
+            : base(pipeline, name)
         {
             this.transformer = transformer;
             this.pixelFormat = pixelFormat;
-            sharedImageAllocator ??= (width, height, pixelFormat) => ImagePool.GetOrCreate(width, height, pixelFormat);
-            this.sharedImageAllocator = sharedImageAllocator;
+            this.sharedImageAllocator = sharedImageAllocator ?? ((width, height, pixelFormat) => ImagePool.GetOrCreate(width, height, pixelFormat));
         }
 
         /// <summary>

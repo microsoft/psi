@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Text;
     using System.Windows;
     using System.Windows.Data;
-    using GalaSoft.MvvmLight.Command;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Data.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
@@ -35,6 +35,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         // Current Visualization Container version
         private const double CurrentVisualizationContainerVersion = 5.0d;
 
+        private RelayCommand goToTimeCommand;
         private RelayCommand zoomToSessionExtentsCommand;
         private RelayCommand zoomToSelectionCommand;
         private RelayCommand clearSelectionCommand;
@@ -86,19 +87,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ZoomToSelectionCommand
-        {
-            get
-            {
-                if (this.zoomToSelectionCommand == null)
-                {
-                    this.zoomToSelectionCommand = new RelayCommand(
-                        () => this.Navigator.ZoomToSelection(),
-                        () => this.Navigator.CanZoomToSelection());
-                }
-
-                return this.zoomToSelectionCommand;
-            }
-        }
+            => this.zoomToSelectionCommand ??= new RelayCommand(
+                () => this.Navigator.ZoomToSelection(),
+                () => this.Navigator.CanZoomToSelection());
 
         /// <summary>
         /// Gets the clear selection command.
@@ -106,19 +97,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ClearSelectionCommand
-        {
-            get
-            {
-                if (this.clearSelectionCommand == null)
-                {
-                    this.clearSelectionCommand = new RelayCommand(
-                        () => this.Navigator.ClearSelection(),
-                        () => this.Navigator.CanClearSelection());
-                }
-
-                return this.clearSelectionCommand;
-            }
-        }
+            => this.clearSelectionCommand ??= new RelayCommand(
+                () => this.Navigator.ClearSelection(),
+                () => this.Navigator.CanClearSelection());
 
         /// <summary>
         /// Gets the zoom to session extents command.
@@ -126,19 +107,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ZoomToSessionExtentsCommand
-        {
-            get
-            {
-                if (this.zoomToSessionExtentsCommand == null)
-                {
-                    this.zoomToSessionExtentsCommand = new RelayCommand(
-                        () => this.Navigator.ZoomToDataRange(),
-                        () => VisualizationContext.Instance.IsDatasetLoaded() && this.Navigator.CursorMode != CursorMode.Live);
-                }
+            => this.zoomToSessionExtentsCommand ??= new RelayCommand(
+                () => this.Navigator.ZoomToDataRange(),
+                () => VisualizationContext.Instance.IsDatasetLoaded() && this.Navigator.CursorMode != CursorMode.Live);
 
-                return this.zoomToSessionExtentsCommand;
-            }
-        }
+        /// <summary>
+        /// Gets the go to time command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand GoToTimeCommand
+            => this.goToTimeCommand ??= new RelayCommand(() => this.GoToTime());
 
         /// <summary>
         /// Gets or sets the current visualization panel.
@@ -516,6 +495,72 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             this.Navigator.ViewRange.Set(timeInterval.Left, timeInterval.Right);
             this.Navigator.Cursor = timeInterval.Left;
+        }
+
+        /// <summary>
+        /// Goes to a time specified by the user.
+        /// </summary>
+        public void GoToTime()
+        {
+            var getTime = new GetParameterWindow(
+                Application.Current.MainWindow,
+                "Go To Time",
+                "Time",
+                string.Empty,
+                value =>
+                {
+                    if (DateTime.TryParse(value, out var dateTime))
+                    {
+                        if (dateTime >= this.Navigator.DataRange.StartTime &&
+                            dateTime <= this.Navigator.DataRange.EndTime)
+                        {
+                            return (true, string.Empty);
+                        }
+                        else
+                        {
+                            return (false, "The specified date-time is outside the range of the current session.");
+                        }
+                    }
+                    else
+                    {
+                        return (false, "Cannot convert the specified time to a valid date time.");
+                    }
+                });
+
+            if (getTime.ShowDialog() == true)
+            {
+                var cursor = DateTime.Parse(getTime.ParameterValue);
+
+                // If the cursor falls outside the current view range, shift the view range
+                if (cursor <= this.Navigator.ViewRange.StartTime)
+                {
+                    var viewDurationTicks = this.Navigator.ViewRange.Duration.Ticks;
+                    var viewStartTime = cursor - TimeSpan.FromTicks(viewDurationTicks / 2);
+                    if (viewStartTime < this.Navigator.DataRange.StartTime)
+                    {
+                        viewStartTime = this.Navigator.DataRange.StartTime;
+                    }
+
+                    var viewEndTime = viewStartTime + this.Navigator.ViewRange.Duration;
+                    this.Navigator.ViewRange.Set(viewStartTime, viewEndTime);
+                }
+                else if (cursor >= this.Navigator.ViewRange.EndTime)
+                {
+                    var viewDurationTicks = this.Navigator.ViewRange.Duration.Ticks;
+                    var viewEndTime = cursor + TimeSpan.FromTicks(viewDurationTicks / 2);
+                    if (viewEndTime > this.Navigator.DataRange.EndTime)
+                    {
+                        viewEndTime = this.Navigator.DataRange.EndTime;
+                    }
+
+                    var viewStartTime = viewEndTime - this.Navigator.ViewRange.Duration;
+                    this.Navigator.ViewRange.Set(viewStartTime, viewEndTime);
+                }
+
+                this.Navigator.CursorFollowsMouse = true;
+                this.Navigator.Cursor = cursor;
+                this.Navigator.CursorFollowsMouse = false;
+            }
         }
 
         private static bool SeekToLayoutElement(JsonTextReader jsonReader)

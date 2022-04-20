@@ -95,7 +95,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             while (this.visuals.Count <= this.currentIndex)
             {
                 // Create the new visual.
-                TVisual3D visual = new TVisual3D();
+                TVisual3D visual = new ();
 
                 // Initialize the visual if an initializer method was specified.
                 this.newVisualHandler?.Invoke(visual);

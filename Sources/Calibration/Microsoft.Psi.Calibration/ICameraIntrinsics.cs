@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Calibration
     using System;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// ICameraIntrinsics defines our interface for specifying the intrinsics
@@ -93,20 +94,22 @@ namespace Microsoft.Psi.Calibration
         /// </summary>
         /// <param name="point2D">The pixel position.</param>
         /// <param name="depth">The depth along the specified pixel position.</param>
+        /// <param name="depthValueSemantics">How depth values should be interpreted.</param>
         /// <param name="undistort">Indicates whether to apply undistortion.</param>
         /// <returns>Point in 3D space, assuming MathNet basis (Forward=X, Left=Y, Up=Z).</returns>
-        Point3D GetCameraSpacePosition(Point2D point2D, double depth, bool undistort);
+        Point3D GetCameraSpacePosition(Point2D point2D, double depth, DepthValueSemantics depthValueSemantics, bool undistort);
 
         /// <summary>
         /// Gets a mapping matrix that can be used to transform pixels into 3D space.
         /// </summary>
+        /// <param name="depthValueSemantics">How depth values should be interpreted.</param>
         /// <param name="undistort">Indicates whether to apply undistortion.</param>
         /// <returns>
         /// A matrix of 3D points that can be used to transform depth values at a specified pixel
         /// into 3D space. To use this matrix simply piecewise multiply the depth value by the X
         /// Y and Z dimensions of the <see cref="Point3D"/> in the matrix at the location indexed
         /// by the pixel.</returns>
-        public Point3D[,] GetPixelToCameraSpaceMapping(bool undistort);
+        Point3D[,] GetPixelToCameraSpaceMapping(DepthValueSemantics depthValueSemantics, bool undistort);
 
         /// <summary>
         /// Applies the distortion model to a point in the camera post-projection coordinates.

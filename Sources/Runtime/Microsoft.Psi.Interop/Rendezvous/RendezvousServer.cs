@@ -25,7 +25,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <summary>
         /// Protocol version.
         /// </summary>
-        internal const short ProtocolVersion = 1;
+        internal const short ProtocolVersion = 2;
 
         private readonly int port;
         private readonly ConcurrentDictionary<Guid, BinaryWriter> writers = new ();

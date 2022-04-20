@@ -15,7 +15,7 @@
     <ProjectGuid>{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MicrosoftPsiMediaNativex64</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <TargetFrameworkVersion>4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(FFMPEGDir)'!=''">

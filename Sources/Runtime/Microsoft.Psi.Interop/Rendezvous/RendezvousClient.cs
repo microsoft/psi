@@ -79,7 +79,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
                     this.active = true;
                     new Thread(new ThreadStart(this.ReadFromServer)) { IsBackground = true }.Start();
                 }
-                catch (Exception ex)
+                catch (SocketException ex)
                 {
                     Trace.WriteLine($"Failed to connect to {nameof(RendezvousServer)} (retrying): {ex.Message}");
                 }

@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Components
     public class Zip<T> : IProducer<T[]>
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly IList<Receiver<T>> inputs = new List<Receiver<T>>();
         private readonly IList<(T data, Envelope envelope, IRecyclingPool<T> recycler)> buffer = new List<(T, Envelope, IRecyclingPool<T>)>();
 
@@ -23,9 +24,11 @@ namespace Microsoft.Psi.Components
         /// Initializes a new instance of the <see cref="Zip{T}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public Zip(Pipeline pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public Zip(Pipeline pipeline, string name = nameof(Zip<T>))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.Out = pipeline.CreateEmitter<T[]>(this, nameof(this.Out));
         }
 
@@ -57,6 +60,9 @@ namespace Microsoft.Psi.Components
                 syncContext.Release();
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Receive(T clonedData, Envelope envelope, IRecyclingPool<T> recycler)
         {

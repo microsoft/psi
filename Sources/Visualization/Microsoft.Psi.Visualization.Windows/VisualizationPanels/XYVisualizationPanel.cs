@@ -11,7 +11,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.Helpers;
@@ -21,7 +20,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     /// <summary>
     /// Represents a visualization panel that 2D visualizers can be rendered in.
     /// </summary>
-    public class XYVisualizationPanel : CanvasVisualizationPanel
+    public class XYVisualizationPanel : InstantVisualizationPanel
     {
         /// <summary>
         /// The scale factor used when zooming into or out of the panel with the mouse wheel.
@@ -37,14 +36,12 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private Point mousePosition = new (0, 0);
         private AxisComputeMode axisComputeMode = AxisComputeMode.Auto;
 
-        // The viewport window within which the child visualization objects are displayed.
-        private Grid viewport = null;
+        // The current dimensions of the viewport window within which the child visualization objects are displayed.
+        private double viewportWidth;
+        private double viewportHeight;
 
         // The padding which defines the active display area of the panel.
         private Thickness viewportPadding;
-
-        // The items control to which visualization objects will be added.
-        private Grid itemsControl = null;
 
         private RelayCommand<RoutedEventArgs> viewportLoadedCommand;
         private RelayCommand<MouseButtonEventArgs> mouseRightButtonDownCommand;
@@ -200,8 +197,12 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                     this.viewportLoadedCommand = new RelayCommand<RoutedEventArgs>(
                         e =>
                         {
-                            this.viewport = e.Source as Grid;
-                            this.itemsControl = (this.viewport.Children[0] as Border).Child as Grid;
+                            // Event source is the viewport
+                            var viewport = e.Source as FrameworkElement;
+
+                            // Initialize the display area
+                            this.viewportWidth = viewport.ActualWidth;
+                            this.viewportHeight = viewport.ActualHeight;
                             this.ZoomToDisplayArea();
                         });
                 }
@@ -226,8 +227,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                         {
                             if (e.Delta != 0)
                             {
+                                // Event source is the items control Grid element
+                                var itemsControl = e.Source as FrameworkElement;
+
                                 // Get the current mouse location in the items control
-                                Point mouseLocation = Mouse.GetPosition(this.itemsControl);
+                                var mouseLocation = Mouse.GetPosition(itemsControl);
 
                                 // Get the current X Axis and Y Axis logical dimensions
                                 double xAxisLogicalWidth = this.XAxis.Maximum - this.XAxis.Minimum;
@@ -247,8 +251,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
                                 // Calculate the new minimum X and Y logical values of the axes such
                                 // that the mouse will still be above the same point in the 2D image
-                                double xAxisLogicalMinimum = this.MousePosition.X - mouseLocation.X * xAxisLogicalWidth / this.itemsControl.ActualWidth;
-                                double yAxisLogicalMinimum = this.MousePosition.Y - mouseLocation.Y * yAxisLogicalHeight / this.itemsControl.ActualHeight;
+                                double xAxisLogicalMinimum = this.MousePosition.X - mouseLocation.X * xAxisLogicalWidth / itemsControl.ActualWidth;
+                                double yAxisLogicalMinimum = this.MousePosition.Y - mouseLocation.Y * yAxisLogicalHeight / itemsControl.ActualHeight;
 
                                 // Switch to manual axis compute mode
                                 this.AxisComputeMode = AxisComputeMode.Manual;
@@ -279,7 +283,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                     this.mouseRightButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
                         e =>
                         {
-                            this.mouseRButtonDownPosition = Mouse.GetPosition(this.itemsControl);
+                            this.mouseRButtonDownPosition = Mouse.GetPosition(e.Source as FrameworkElement);
                         });
                 }
 
@@ -329,12 +333,15 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                     this.mouseMoveCommand = new RelayCommand<MouseEventArgs>(
                         e =>
                         {
+                            // Event source is the items control Grid element
+                            var itemsControl = e.Source as FrameworkElement;
+
                             // Get the current mouse position
-                            Point newMousePosition = e.GetPosition(this.itemsControl);
+                            var newMousePosition = e.GetPosition(itemsControl);
 
                             // Get the current scale factor between the axes logical bounds and the items control size.
-                            double scaleX = (this.XAxis.Maximum - this.XAxis.Minimum) / this.itemsControl.ActualWidth;
-                            double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / this.itemsControl.ActualHeight;
+                            double scaleX = (this.XAxis.Maximum - this.XAxis.Minimum) / itemsControl.ActualWidth;
+                            double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / itemsControl.ActualHeight;
 
                             // Set the mouse position in locical/image co-ordinates
                             this.MousePosition = new Point(newMousePosition.X * scaleX + this.XAxis.Minimum, newMousePosition.Y * scaleY + this.YAxis.Minimum);
@@ -533,7 +540,11 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         private void OnViewportSizeChanged(SizeChangedEventArgs e)
-            => this.ZoomToDisplayArea();
+        {
+            this.viewportWidth = e.NewSize.Width;
+            this.viewportHeight = e.NewSize.Height;
+            this.ZoomToDisplayArea();
+        }
 
         private void CalculateAxisRangesAuto()
         {
@@ -572,26 +583,23 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
         private void ZoomToDisplayArea()
         {
-            if (this.viewport != null)
-            {
-                // Calculate the aspect ratios of the value ranges and the items control size
-                double valueRangeAspectRatio = (this.XAxis.Maximum - this.XAxis.Minimum) / (this.YAxis.Maximum - this.YAxis.Minimum);
-                double viewportAspectRatio = this.viewport.ActualWidth / this.viewport.ActualHeight;
+            // Calculate the aspect ratios of the value ranges and the items control size
+            double valueRangeAspectRatio = (this.XAxis.Maximum - this.XAxis.Minimum) / (this.YAxis.Maximum - this.YAxis.Minimum);
+            double viewportAspectRatio = this.viewportWidth / this.viewportHeight;
 
-                if (valueRangeAspectRatio > viewportAspectRatio)
-                {
-                    // Add padding the the Y axis min/max to maintain the aspect ratio
-                    double scaleFactor = this.viewport.ActualWidth / (this.XAxis.Maximum - this.XAxis.Minimum);
-                    double padding = (this.viewport.ActualHeight - (this.YAxis.Maximum - this.YAxis.Minimum) * scaleFactor) / 2.0d;
-                    this.ViewportPadding = new Thickness(0, padding, 0, padding);
-                }
-                else
-                {
-                    // Add padding the the X axis min/max to maintain the aspect ratio
-                    double scaleFactor = this.viewport.ActualHeight / (this.YAxis.Maximum - this.YAxis.Minimum);
-                    double padding = (this.viewport.ActualWidth - (this.XAxis.Maximum - this.XAxis.Minimum) * scaleFactor) / 2.0d;
-                    this.ViewportPadding = new Thickness(padding, 0, padding, 0);
-                }
+            if (valueRangeAspectRatio > viewportAspectRatio)
+            {
+                // Add padding the the Y axis min/max to maintain the aspect ratio
+                double scaleFactor = this.viewportWidth / (this.XAxis.Maximum - this.XAxis.Minimum);
+                double padding = (this.viewportHeight - (this.YAxis.Maximum - this.YAxis.Minimum) * scaleFactor) / 2.0d;
+                this.ViewportPadding = new Thickness(0, padding, 0, padding);
+            }
+            else
+            {
+                // Add padding the the X axis min/max to maintain the aspect ratio
+                double scaleFactor = this.viewportHeight / (this.YAxis.Maximum - this.YAxis.Minimum);
+                double padding = (this.viewportWidth - (this.XAxis.Maximum - this.XAxis.Minimum) * scaleFactor) / 2.0d;
+                this.ViewportPadding = new Thickness(padding, 0, padding, 0);
             }
         }
 

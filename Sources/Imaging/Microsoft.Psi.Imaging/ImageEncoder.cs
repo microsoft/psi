@@ -18,8 +18,9 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="encoder">The image encoder to use.</param>
-        public ImageEncoder(Pipeline pipeline, IImageToStreamEncoder encoder)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public ImageEncoder(Pipeline pipeline, IImageToStreamEncoder encoder, string name = null)
+            : base(pipeline, name ?? $"{nameof(ImageEncoder)}({encoder.Description})")
         {
             this.encoder = encoder;
         }

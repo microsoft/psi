@@ -179,8 +179,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <inheritdoc/>
         protected override bool CanExpandDerivedMemberStreams()
         {
+            // If we have already expanded this node with derived member streams
+            if (this.InternalChildren.Any(c => c is DerivedMemberStreamTreeNode))
+            {
+                // Then no longer expand
+                return false;
+            }
+
             // Get the node type
-            Type nodeType = TypeResolutionHelper.GetVerifiedType(this.DataTypeName);
+            var nodeType = TypeResolutionHelper.GetVerifiedType(this.DataTypeName);
 
             // If it's an auto-generated nullable, we need to assess whether the inner value-type (inside the nullable)
             // can expand the members.

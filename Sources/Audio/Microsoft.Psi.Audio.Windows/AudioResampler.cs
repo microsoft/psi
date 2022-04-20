@@ -51,8 +51,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioResampler(Pipeline pipeline, AudioResamplerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public AudioResampler(Pipeline pipeline, AudioResamplerConfiguration configuration, string name = nameof(AudioResampler))
+            : base(pipeline, name)
         {
             this.configuration = configuration;
             this.currentInputFormat = configuration.InputFormat;
@@ -73,10 +74,12 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public AudioResampler(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public AudioResampler(Pipeline pipeline, string configurationFilename = null, string name = nameof(AudioResampler))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AudioResamplerConfiguration() : new ConfigurationHelper<AudioResamplerConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new AudioResamplerConfiguration() : new ConfigurationHelper<AudioResamplerConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 

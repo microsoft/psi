@@ -20,6 +20,7 @@ namespace Microsoft.Psi.Audio
     public sealed class AudioCapture : IProducer<AudioBuffer>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
 
         /// <summary>
         /// The configuration for this component.
@@ -41,11 +42,6 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         private AudioBuffer buffer;
 
-        /// <summary>
-        /// Keep track of the timestamp of the last audio buffer (computed from the value reported to us by the capture driver).
-        /// </summary>
-        private DateTime lastPostedAudioTime = DateTime.MinValue;
-
         private Thread background;
         private volatile bool isStopping;
 
@@ -54,9 +50,11 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration)
+        /// <param name="name">An optional name for this component.</param>
+        public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration, string name = nameof(AudioCapture))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
         }
@@ -175,6 +173,9 @@ namespace Microsoft.Psi.Audio
             this.Stop();
             notifyCompleted();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Stop()
         {

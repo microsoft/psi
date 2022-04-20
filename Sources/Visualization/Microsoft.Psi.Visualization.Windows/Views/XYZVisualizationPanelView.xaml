@@ -1,7 +1,7 @@
 ﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
      Licensed under the MIT License. -->
 
-<views:VisualizationPanelView
+<views:InstantVisualizationPanelView
     x:Class="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:h="http://helix-toolkit.org/wpf"
@@ -140,4 +140,4 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Grid>
-</views:VisualizationPanelView>
+</views:InstantVisualizationPanelView>

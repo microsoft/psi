@@ -78,7 +78,7 @@ namespace Test.Psi.Kinect
                         {
                             // Determine vertex position+color via new calibration
                             Point2D newpt = new Point2D(pt.X, calib.DepthIntrinsics.ImageHeight - pt.Y);
-                            Point3D p = calib.DepthIntrinsics.GetCameraSpacePosition(newpt, depth, true);
+                            Point3D p = calib.DepthIntrinsics.GetCameraSpacePosition(newpt, depth, depthImage.Resource.DepthValueSemantics, true);
                             mesh.Vertices[count].Pos = new Point3D(p.X / 1000.0, p.Y / 1000.0, p.Z / 1000.0);
 
                             Vector<double> pos = Vector<double>.Build.Dense(4);

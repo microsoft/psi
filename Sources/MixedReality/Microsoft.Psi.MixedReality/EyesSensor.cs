@@ -12,7 +12,7 @@ namespace Microsoft.Psi.MixedReality
     /// Source component that surfaces eye tracking information on a stream.
     /// </summary>
     /// <remarks>Applications using this component must enable the Gaze Input capability in Package.appxmanifest.</remarks>
-    public class EyesSensor : StereoKitComponent, IProducer<CoordinateSystem>, ISourceComponent
+    public class EyesSensor : StereoKitComponent, IProducer<Ray3D>, ISourceComponent
     {
         private readonly Pipeline pipeline;
         private readonly TimeSpan interval;
@@ -24,19 +24,20 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">Optional interval at which to poll eye tracking information (default 1/60th second).</param>
-        public EyesSensor(Pipeline pipeline, TimeSpan interval = default)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public EyesSensor(Pipeline pipeline, TimeSpan interval = default, string name = nameof(EyesSensor))
+            : base(pipeline, name)
         {
             this.pipeline = pipeline;
-            this.interval = interval == default ? TimeSpan.Zero : interval;
-            this.Out = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.Out));
+            this.interval = interval == default ? TimeSpan.FromTicks(1) : interval; // minimum interval of one-tick
+            this.Out = pipeline.CreateEmitter<Ray3D>(this, nameof(this.Out));
             this.EyesTracked = pipeline.CreateEmitter<bool>(this, nameof(this.EyesTracked));
         }
 
         /// <summary>
-        /// Gets the stream of tracked eyes pose.
+        /// Gets the stream of tracked eyes pose as a <see cref="Ray3D"/>.
         /// </summary>
-        public Emitter<CoordinateSystem> Out { get; private set; }
+        public Emitter<Ray3D> Out { get; private set; }
 
         /// <summary>
         /// Gets the stream of whether eyes are currently tracked.
@@ -60,14 +61,13 @@ namespace Microsoft.Psi.MixedReality
         /// <inheritdoc />
         public override void Step()
         {
-            var currentTime = this.pipeline.GetCurrentTime();
-            if (this.active && currentTime - this.Out.LastEnvelope.OriginatingTime >= this.interval)
+            // Get the current time from OpenXR
+            var currentSampleTime = this.pipeline.GetCurrentTimeFromOpenXr();
+
+            if (this.active && currentSampleTime - this.Out.LastEnvelope.OriginatingTime >= this.interval)
             {
-                var eyes = Input.Eyes;
-                var eyesTracked = Input.EyesTracked;
-                var originatingTime = this.pipeline.GetCurrentTime();
-                this.Out.Post(eyes.ToPsiCoordinateSystem(), originatingTime);
-                this.EyesTracked.Post(eyesTracked.IsActive(), originatingTime);
+                this.Out.Post(PsiInput.Eyes, currentSampleTime);
+                this.EyesTracked.Post(Input.EyesTracked.IsActive(), currentSampleTime);
             }
         }
     }

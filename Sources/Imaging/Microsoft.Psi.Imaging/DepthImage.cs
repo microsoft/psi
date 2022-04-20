@@ -4,8 +4,10 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Runtime.Serialization;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Serialization;
 
@@ -14,9 +16,15 @@ namespace Microsoft.Psi.Imaging
     /// </summary>
     /// <remarks>Using this class it is possible as to allocate a new depth image in unmanaged memory,
     /// as to just wrap provided pointer to unmanaged memory, where an image is stored.</remarks>
-    [Serializer(typeof(DepthImage.CustomSerializer))]
-    public class DepthImage : ImageBase
+    [Serializer(typeof(CustomSerializer))]
+    public class DepthImage : ImageBase, IDepthImage
     {
+        [OptionalField]
+        private DepthValueSemantics? depthValueSemantics;
+
+        [OptionalField]
+        private double? depthValueToMetersScaleFactor;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DepthImage"/> class.
         /// </summary>
@@ -24,12 +32,16 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Depth image width in pixels.</param>
         /// <param name="height">Depth image height in pixels.</param>
         /// <param name="stride">Depth image stride (line size in bytes).</param>
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
         /// <remarks><para><note>Using this constructor, make sure all specified image attributes are correct
         /// and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
         /// this may lead to exceptions working with the unmanaged memory.</note></para></remarks>
-        public DepthImage(UnmanagedBuffer unmanagedBuffer, int width, int height, int stride)
+        public DepthImage(UnmanagedBuffer unmanagedBuffer, int width, int height, int stride, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
             : base(unmanagedBuffer, width, height, stride, PixelFormat.Gray_16bpp)
         {
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
         }
 
         /// <summary>
@@ -39,12 +51,16 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Depth image width in pixels.</param>
         /// <param name="height">Depth image height in pixels.</param>
         /// <param name="stride">Depth image stride (line size in bytes).</param>
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
         /// <remarks><para><note>Using this constructor, make sure all specified image attributes are correct
         /// and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
         /// this may lead to exceptions working with the unmanaged memory.</note></para></remarks>
-        public DepthImage(IntPtr imageData, int width, int height, int stride)
+        public DepthImage(IntPtr imageData, int width, int height, int stride, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
             : base(imageData, width, height, stride, PixelFormat.Gray_16bpp)
         {
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
         }
 
         /// <summary>
@@ -52,9 +68,13 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="width">Depth image width in pixels.</param>
         /// <param name="height">Depth image height in pixels.</param>
-        public DepthImage(int width, int height)
+        /// <param name="depthValueSemantics">Optional depth image semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
+        public DepthImage(int width, int height, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
             : base(width, height, PixelFormat.Gray_16bpp)
         {
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
         }
 
         /// <summary>
@@ -63,18 +83,24 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Depth image width in pixels.</param>
         /// <param name="height">Depth image height in pixels.</param>
         /// <param name="stride">Depth image stride (line size in bytes).</param>
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
         /// <remarks><para><note>Using this constructor, make sure all specified image attributes are correct
         /// and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
         /// this may lead to exceptions working with the unmanaged memory.</note></para></remarks>
-        public DepthImage(int width, int height, int stride)
+        public DepthImage(int width, int height, int stride, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
             : base(width, height, stride, PixelFormat.Gray_16bpp)
         {
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DepthImage"/> class.
         /// </summary>
         /// <param name="bitmapData">Locked bitmap data.</param>
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
         /// <param name="makeCopy">Indicates whether a copy is made (default is false).</param>
         /// <remarks>
         /// <para>When the <paramref name="makeCopy"/> parameter is false (default), the depth image simply wraps
@@ -84,18 +110,28 @@ namespace Microsoft.Psi.Imaging
         /// data is made, and the bitmap data can be released right after the <see cref="DepthImage"/> has been constructed.
         /// </para>
         /// </remarks>
-        public DepthImage(BitmapData bitmapData, bool makeCopy = false)
+        public DepthImage(BitmapData bitmapData, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001, bool makeCopy = false)
             : base(bitmapData, makeCopy)
         {
             CheckPixelFormat(bitmapData.PixelFormat);
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
         }
+
+        /// <inheritdoc />
+        public DepthValueSemantics DepthValueSemantics => this.depthValueSemantics ?? DepthValueSemantics.DistanceToPlane;
+
+        /// <inheritdoc />
+        public double DepthValueToMetersScaleFactor => this.depthValueToMetersScaleFactor ?? 0.001;
 
         /// <summary>
         /// Create a new <see cref="DepthImage"/> from a specified bitmap.
         /// </summary>
         /// <param name="bitmap">A bitmap to create the depth image from.</param>
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
         /// <returns>A new depth image, which contains a copy of the specified bitmap.</returns>
-        public static DepthImage CreateFrom(Bitmap bitmap)
+        public static DepthImage CreateFrom(Bitmap bitmap, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
         {
             CheckPixelFormat(bitmap.PixelFormat);
 
@@ -107,7 +143,7 @@ namespace Microsoft.Psi.Imaging
 
             try
             {
-                depthImage = new DepthImage(sourceData, true);
+                depthImage = new DepthImage(sourceData, depthValueSemantics, depthValueToMetersScaleFactor, true);
             }
             finally
             {
@@ -169,11 +205,8 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="source">Source depth image to copy the depth image from.</param>
         /// <remarks><para>The method copies the current depth image from the specified source depth image.
-        /// The size of the images must be the same.</para></remarks>
-        public void CopyFrom(DepthImage source)
-        {
-            source.CopyTo(this);
-        }
+        /// The images must have the same size, the same depth value sematics and the same depth value scale factor.</para></remarks>
+        public void CopyFrom(DepthImage source) => source.CopyTo(this);
 
         /// <summary>
         /// Copies the depth image from a specified source image of the same size and <see cref="PixelFormat.Gray_16bpp"/> format.
@@ -181,10 +214,7 @@ namespace Microsoft.Psi.Imaging
         /// <param name="source">Source image to copy the depth image from.</param>
         /// <remarks><para>The method copies the current depth image from the specified source image.
         /// The size of the images must be the same, and the source image must have <see cref="PixelFormat.Gray_16bpp"/> format.</para></remarks>
-        public void CopyFrom(Image source)
-        {
-            source.CopyTo(this);
-        }
+        public void CopyFrom(Image source) => source.CopyTo(this);
 
         /// <summary>
         /// Decodes a specified encoded depth image with a specified decoder into the current depth image.
@@ -194,9 +224,13 @@ namespace Microsoft.Psi.Imaging
         /// <remarks>The depth image width, height and pixel format must match. The method should not be called concurrently.</remarks>
         public void DecodeFrom(EncodedDepthImage encodedDepthImage, IDepthImageFromStreamDecoder depthImageDecoder)
         {
-            if (encodedDepthImage.Width != this.Width || encodedDepthImage.Height != this.Height || encodedDepthImage.PixelFormat != this.PixelFormat)
+            if (encodedDepthImage.Width != this.Width ||
+                encodedDepthImage.Height != this.Height ||
+                encodedDepthImage.PixelFormat != this.PixelFormat ||
+                encodedDepthImage.DepthValueSemantics != this.DepthValueSemantics ||
+                encodedDepthImage.DepthValueToMetersScaleFactor != this.DepthValueToMetersScaleFactor)
             {
-                throw new InvalidOperationException("Cannot decode from an encoded depth image that has a different width, height, or pixel format.");
+                throw new InvalidOperationException("Cannot decode from an encoded depth image that has a different width, height, pixel format, depth value semantics or depth value scale factor.");
             }
 
             depthImageDecoder.DecodeFromStream(encodedDepthImage.ToStream(), this);
@@ -209,7 +243,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>A new, corresponding encoded depth image.</returns>
         public EncodedDepthImage Encode(IDepthImageToStreamEncoder depthImageEncoder)
         {
-            var encodedDepthImage = new EncodedDepthImage(this.Width, this.Height);
+            var encodedDepthImage = new EncodedDepthImage(this.Width, this.Height, this.DepthValueSemantics, this.DepthValueToMetersScaleFactor);
             encodedDepthImage.EncodeFrom(this, depthImageEncoder);
             return encodedDepthImage;
         }
@@ -222,6 +256,16 @@ namespace Microsoft.Psi.Imaging
         /// The size of the images must be the same.</para></remarks>
         public void CopyTo(DepthImage target)
         {
+            if (this.depthValueSemantics != target.depthValueSemantics)
+            {
+                throw new InvalidOperationException("Destination image has a different depth value semantics.");
+            }
+
+            if (this.depthValueToMetersScaleFactor != target.depthValueToMetersScaleFactor)
+            {
+                throw new InvalidOperationException("Destination image has a different depth value scale factor.");
+            }
+
             this.CopyTo(target.ImageData, target.Width, target.Height, target.Stride, target.PixelFormat);
         }
 
@@ -232,9 +276,7 @@ namespace Microsoft.Psi.Imaging
         /// <remarks><para>The method copies the current depth image into the specified image.
         /// The size of the images must be the same. The method implements a translation of pixel formats.</para></remarks>
         public void CopyTo(Image target)
-        {
-            this.CopyTo(target.ImageData, target.Width, target.Height, target.Stride, target.PixelFormat);
-        }
+            => this.CopyTo(target.ImageData, target.Width, target.Height, target.Stride, target.PixelFormat);
 
         /// <summary>
         /// Sets a pixel in the depth image.
@@ -353,9 +395,7 @@ namespace Microsoft.Psi.Imaging
 
         /// <inheritdoc/>
         public override ImageBase CreateEmptyOfSameSize()
-        {
-            return new DepthImage(this.Width, this.Height);
-        }
+            => new DepthImage(this.Width, this.Height, this.DepthValueSemantics, this.DepthValueToMetersScaleFactor);
 
         private static void CheckPixelFormat(System.Drawing.Imaging.PixelFormat pixelFormat)
         {
@@ -383,10 +423,39 @@ namespace Microsoft.Psi.Imaging
             }
 
             /// <inheritdoc/>
+            public override TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
+            {
+                if (targetSchema == null)
+                {
+                    var baseSchema = base.Initialize(serializers, targetSchema);
+                    var schemaMembers = new List<TypeMemberSchema>();
+                    schemaMembers.AddRange(baseSchema.Members);
+                    schemaMembers.Add(new TypeMemberSchema(nameof(DepthImage.depthValueSemantics), typeof(DepthValueSemantics?).AssemblyQualifiedName, false));
+                    schemaMembers.Add(new TypeMemberSchema(nameof(DepthImage.depthValueToMetersScaleFactor), typeof(double).AssemblyQualifiedName, false));
+
+                    var type = typeof(DepthImage);
+                    var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+                    this.Schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, schemaMembers, Version);
+                }
+                else
+                {
+                    this.Schema = targetSchema;
+                }
+
+                return this.Schema;
+            }
+
+            /// <summary>
+            /// Serialize depth image.
+            /// </summary>
+            /// <param name="writer">Writer to which to serialize.</param>
+            /// <param name="instance">Depth image instance to serialize.</param>
+            /// <param name="context">Serialization context.</param>
             public override void Serialize(BufferWriter writer, DepthImage instance, SerializationContext context)
             {
                 DepthCompressionMethod depthCompressionMethod = (depthImageCompressor == null) ? DepthCompressionMethod.None : depthImageCompressor.DepthCompressionMethod;
                 Serializer.Serialize(writer, depthCompressionMethod, context);
+
                 if (depthCompressionMethod == DepthCompressionMethod.None)
                 {
                     base.Serialize(writer, instance, context);
@@ -395,9 +464,54 @@ namespace Microsoft.Psi.Imaging
                 {
                     depthImageCompressor.Serialize(writer, instance, context);
                 }
+
+                if (this.Schema.Version >= 5)
+                {
+                    Serializer.Serialize(writer, instance.depthValueSemantics, context);
+                    Serializer.Serialize(writer, instance.depthValueToMetersScaleFactor, context);
+                }
             }
 
-            /// <inheritdoc/>
+            /// <summary>
+            /// Prepare target for cloning.
+            /// </summary>
+            /// <remarks>Called before Clone, to ensure the target is valid.</remarks>
+            /// <param name="instance">Depth image instance from which to clone.</param>
+            /// <param name="target">Depth image into which to clone.</param>
+            /// <param name="context">Serialization context.</param>
+            public override void PrepareCloningTarget(DepthImage instance, ref DepthImage target, SerializationContext context)
+            {
+                if (target == null ||
+                    target.Width != instance.Width ||
+                    target.Height != instance.Height ||
+                    target.PixelFormat != instance.PixelFormat ||
+                    target.DepthValueSemantics != instance.DepthValueSemantics ||
+                    target.DepthValueToMetersScaleFactor != instance.DepthValueToMetersScaleFactor)
+                {
+                    target?.Dispose();
+                    target = (DepthImage)instance.CreateEmptyOfSameSize();
+                }
+            }
+
+            /// <summary>
+            /// Clone depth image.
+            /// </summary>
+            /// <param name="instance">Depth image instance to clone.</param>
+            /// <param name="target">Target depth image into which to clone.</param>
+            /// <param name="context">Serialization context.</param>
+            public override void Clone(DepthImage instance, ref DepthImage target, SerializationContext context)
+            {
+                base.Clone(instance, ref target, context);
+                Serializer.Clone(instance.depthValueSemantics, ref target.depthValueSemantics, context);
+                Serializer.Clone(instance.depthValueToMetersScaleFactor, ref target.depthValueToMetersScaleFactor, context);
+            }
+
+            /// <summary>
+            /// Deserialize depth image.
+            /// </summary>
+            /// <param name="reader">Buffer reader being used.</param>
+            /// <param name="target">Target depth image into which to deserialize.</param>
+            /// <param name="context">Serialization context.</param>
             public override void Deserialize(BufferReader reader, ref DepthImage target, SerializationContext context)
             {
                 var depthCompressionMethod = DepthCompressionMethod.None;
@@ -413,6 +527,12 @@ namespace Microsoft.Psi.Imaging
                 else
                 {
                     depthImageCompressor.Deserialize(reader, ref target, context);
+                }
+
+                if (this.Schema.Version >= 5)
+                {
+                    Serializer.Deserialize(reader, ref target.depthValueSemantics, context);
+                    Serializer.Deserialize(reader, ref target.depthValueToMetersScaleFactor, context);
                 }
             }
         }

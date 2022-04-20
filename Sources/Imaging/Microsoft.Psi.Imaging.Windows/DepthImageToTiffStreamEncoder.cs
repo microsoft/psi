@@ -12,6 +12,9 @@ namespace Microsoft.Psi.Imaging
     public class DepthImageToTiffStreamEncoder : IDepthImageToStreamEncoder
     {
         /// <inheritdoc/>
+        public string Description => "Tiff";
+
+        /// <inheritdoc/>
         public void EncodeToStream(DepthImage depthImage, Stream stream)
         {
             var encoder = new TiffBitmapEncoder();

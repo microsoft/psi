@@ -26,8 +26,9 @@ namespace Microsoft.Psi.MixedReality
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="initialPosition">Initial position of spatial sound.</param>
         /// <param name="initialVolume">Intial audio volume (0-1, default 1).</param>
-        public SpatialSound(Pipeline pipeline, Point3D initialPosition, double initialVolume = 1)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public SpatialSound(Pipeline pipeline, Point3D initialPosition, double initialVolume = 1, string name = nameof(SpatialSound))
+            : base(pipeline, name)
         {
             this.position = new CoordinateSystem(initialPosition, UnitVector3D.XAxis, UnitVector3D.YAxis, UnitVector3D.ZAxis).ToStereoKitMatrix().Translation;
             this.volume = (float)initialVolume;
@@ -89,26 +90,19 @@ namespace Microsoft.Psi.MixedReality
 
         private void UpdatePosition(Point3D position)
         {
-            var p = new CoordinateSystem(position, UnitVector3D.XAxis, UnitVector3D.YAxis, UnitVector3D.ZAxis).ToStereoKitMatrix().Translation;
+            this.position = position.TransformBy(StereoKitTransforms.WorldToStereoKit).ToVec3();
             if (this.playing)
             {
-                this.soundInst.Position = p;
-            }
-            else
-            {
-                this.position = p;
+                this.soundInst.Position = this.position;
             }
         }
 
         private void UpdateVolume(double volume)
         {
+            this.volume = (float)volume;
             if (this.playing)
             {
-                this.soundInst.Volume = (float)volume;
-            }
-            else
-            {
-                this.volume = (float)volume;
+                this.soundInst.Volume = this.volume;
             }
         }
     }

@@ -13,12 +13,16 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="TOut">The output message type.</typeparam>
     public abstract class AsyncConsumerProducer<TIn, TOut> : IConsumerProducer<TIn, TOut>
     {
+        private readonly string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncConsumerProducer{TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public AsyncConsumerProducer(Pipeline pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public AsyncConsumerProducer(Pipeline pipeline, string name = nameof(AsyncConsumerProducer<TIn, TOut>))
         {
+            this.name = name;
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.In = pipeline.CreateAsyncReceiver<TIn>(this, this.ReceiveAsync, nameof(this.In));
         }
@@ -28,6 +32,9 @@ namespace Microsoft.Psi.Components
 
         /// <inheritdoc />
         public Emitter<TOut> Out { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         /// <summary>
         /// Async receiver to be implemented by subclass.

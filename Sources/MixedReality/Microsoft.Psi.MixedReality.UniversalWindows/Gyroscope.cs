@@ -15,8 +15,9 @@ namespace Microsoft.Psi.MixedReality
         /// Initializes a new instance of the <see cref="Gyroscope"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public Gyroscope(Pipeline pipeline)
-            : base(pipeline, ResearchModeSensorType.ImuGyro)
+        /// <param name="name">An optional name for the component.</param>
+        public Gyroscope(Pipeline pipeline, string name = nameof(Gyroscope))
+            : base(pipeline, ResearchModeSensorType.ImuGyro, name)
         {
         }
 

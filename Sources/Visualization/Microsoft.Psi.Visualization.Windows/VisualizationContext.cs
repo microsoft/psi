@@ -265,7 +265,7 @@ namespace Microsoft.Psi.Visualization
                 }
             }
 
-            // If the target visualization panel is an instant visualization placeholder panel, replace if with a real panel of the correct type
+            // If the target visualization panel is an instant visualization placeholder panel, replace it with a real panel of the correct type
             else if ((visualizationPanel is InstantVisualizationPlaceholderPanel placeholderPanel) && (visualizationPanel.ParentPanel is InstantVisualizationContainer instantVisualizationContainer))
             {
                 VisualizationPanel replacementPanel = VisualizationPanelFactory.CreateVisualizationPanel(visualizerMetadata.VisualizationPanelType);
@@ -356,6 +356,11 @@ namespace Microsoft.Psi.Visualization
             }
             catch (Exception e)
             {
+                // create an empty dataset
+                this.DatasetViewModels.Clear();
+                this.DatasetViewModel = new DatasetViewModel();
+                this.DatasetViewModels.Add(this.DatasetViewModel);
+
                 // catch and display any exceptions that occurred during the open dataset operation
                 var exception = e.InnerException ?? e;
                 MessageBox.Show(exception.Message, exception.GetType().Name, MessageBoxButton.OK, MessageBoxImage.Error);

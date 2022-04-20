@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Persistence
 
         public void Dispose()
         {
-            this.fileReader.Dispose();
+            this.fileReader?.Dispose();
             this.fileReader = null;
         }
     }

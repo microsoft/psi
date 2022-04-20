@@ -262,7 +262,8 @@ namespace Microsoft.Psi.Filters
         {
             // Sample the input stream at the desired rate and process through the given filter.
             var clock = Generators.Repeat(input.Out.Pipeline, 0, TimeSpan.FromSeconds(1.0 / sampleRate), alignmentDateTime);
-            return input.Interpolate(clock, sampleInterpolator, sourceDeliveryPolicy: deliveryPolicy, clockDeliveryPolicy: DeliveryPolicy.Unlimited)
+            return input
+                .Interpolate(clock, sampleInterpolator, sourceDeliveryPolicy: deliveryPolicy, clockDeliveryPolicy: DeliveryPolicy.Unlimited)
                 .Select(s => filter.ProcessSample(s), DeliveryPolicy.SynchronousOrThrottle);
         }
     }

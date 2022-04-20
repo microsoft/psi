@@ -28,8 +28,9 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The configuration for the component.</param>
-        public Microphone(Pipeline pipeline, MicrophoneConfiguration configuration = null)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public Microphone(Pipeline pipeline, MicrophoneConfiguration configuration = null, string name = nameof(Microphone))
+            : base(pipeline, name)
         {
             this.pipeline = pipeline;
             this.configuration = configuration ?? new MicrophoneConfiguration();

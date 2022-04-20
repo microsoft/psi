@@ -11,14 +11,17 @@ namespace Microsoft.Psi.Components
     public class Merge<T> : IProducer<Message<T>>
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Merge{T}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public Merge(Pipeline pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public Merge(Pipeline pipeline, string name = nameof(Merge<T>))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.Out = pipeline.CreateEmitter<Message<T>>(this, nameof(this.Out));
         }
 
@@ -36,6 +39,9 @@ namespace Microsoft.Psi.Components
         {
             return this.pipeline.CreateReceiver<T>(this, this.Receive, name);
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Receive(T message, Envelope e)
         {

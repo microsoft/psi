@@ -76,6 +76,7 @@ namespace Microsoft.Psi.PsiStudio
         private object selectedPropertiesObject;
 
         private RelayCommand playPauseCommand;
+        private RelayCommand goToTimeCommand;
         private RelayCommand toggleCursorFollowsMouseComand;
         private RelayCommand nudgeRightCommand;
         private RelayCommand nudgeLeftCommand;
@@ -91,6 +92,8 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand createAnnotationStreamCommand;
         private RelayCommand zoomToSessionExtentsCommand;
         private RelayCommand zoomToSelectionCommand;
+        private RelayCommand moveSelectionLeftCommand;
+        private RelayCommand moveSelectionRightCommand;
         private RelayCommand clearSelectionCommand;
         private RelayCommand moveToSelectionStartCommand;
         private RelayCommand togglePlayRepeatCommand;
@@ -112,8 +115,6 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand<string> treeSelectedCommand;
         private RelayCommand closedCommand;
         private RelayCommand exitCommand;
-        private RelayCommand autoSaveDatasetsCommand;
-        private RelayCommand autoLoadMRUDatasetOnStartupCommand;
 
         ////private RelayCommand showSettingsWindowComand;
 
@@ -206,6 +207,14 @@ namespace Microsoft.Psi.PsiStudio
             => this.playPauseCommand ??= new RelayCommand(
                 () => VisualizationContext.Instance.PlayOrPause(),
                 () => this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live);
+
+        /// <summary>
+        /// Gets the go-to-time command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand GoToTimeCommand
+            => this.goToTimeCommand ??= new RelayCommand(() => VisualizationContext.Instance.VisualizationContainer.GoToTime());
 
         /// <summary>
         /// Gets the toggle cursor follows mouse command.
@@ -337,6 +346,11 @@ namespace Microsoft.Psi.PsiStudio
 
                         // this should be a relatively quick operation so no need to show progress
                         await VisualizationContext.Instance.DatasetViewModel.SaveAsAsync(filename);
+
+                        if (this.AppSettings.AutoLoadMRUDatasetOnStartUp)
+                        {
+                            this.AppSettings.MRUDatasetFilename = filename;
+                        }
                     }
                 });
 
@@ -395,6 +409,26 @@ namespace Microsoft.Psi.PsiStudio
             => this.zoomToSelectionCommand ??= new RelayCommand(
                 () => this.VisualizationContainer.Navigator.ZoomToSelection(),
                 () => this.VisualizationContainer.Navigator.CanZoomToSelection());
+
+        /// <summary>
+        /// Gets the move selection left command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand MoveSelectionLeftCommand
+            => this.moveSelectionLeftCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.MoveSelectionLeft(),
+                () => this.VisualizationContainer.Navigator.CanMoveSelectionLeft());
+
+        /// <summary>
+        /// Gets the move selection right command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand MoveSelectionRightCommand
+            => this.moveSelectionRightCommand ??= new RelayCommand(
+                () => this.VisualizationContainer.Navigator.MoveSelectionRight(),
+                () => this.VisualizationContainer.Navigator.CanMoveSelectionRight());
 
         /// <summary>
         /// Gets the clear selection command.
@@ -639,35 +673,6 @@ namespace Microsoft.Psi.PsiStudio
         [IgnoreDataMember]
         public RelayCommand CreateAnnotationStreamCommand
             => this.createAnnotationStreamCommand ??= new RelayCommand(() => this.CreateAnnotationStream());
-
-        /// <summary>
-        /// Gets the auto save datasets command.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelayCommand AutoSaveDatasetsCommand
-            => this.autoSaveDatasetsCommand ??= new RelayCommand(
-                () => this.AppSettings.AutoSaveDatasets = !this.AppSettings.AutoSaveDatasets);
-
-        /// <summary>
-        /// Gets the auto load MRU dataset on startup command.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelayCommand AutoLoadMRUDatasetOnStartupCommand
-            => this.autoLoadMRUDatasetOnStartupCommand ??= new RelayCommand(
-                () =>
-                {
-                    if (this.AppSettings.AutoLoadMRUDatasetOnStartUp)
-                    {
-                        this.AppSettings.MRUDatasetFilename = null;
-                        this.AppSettings.AutoLoadMRUDatasetOnStartUp = false;
-                    }
-                    else
-                    {
-                        this.AppSettings.AutoLoadMRUDatasetOnStartUp = true;
-                    }
-                });
 
         /*/// <summary>
         /// Gets the show settings window command.
@@ -941,15 +946,18 @@ namespace Microsoft.Psi.PsiStudio
                 // Get the current session
                 var currentSessionViewModel = VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel;
 
-                foreach (IStreamVisualizationObject derivedStreamVisualizationObject in derivedStreamVisualizationObjects)
+                if (currentSessionViewModel != null)
                 {
-                    // Get the stream tree node for stream being used by the stream member visualizer.
-                    var streamTreeNode = currentSessionViewModel.FindStreamTreeNode(
-                        derivedStreamVisualizationObject.StreamBinding.PartitionName,
-                        derivedStreamVisualizationObject.StreamBinding.StreamName);
+                    foreach (IStreamVisualizationObject derivedStreamVisualizationObject in derivedStreamVisualizationObjects)
+                    {
+                        // Get the stream tree node for stream being used by the stream member visualizer.
+                        var streamTreeNode = currentSessionViewModel.FindStreamTreeNode(
+                            derivedStreamVisualizationObject.StreamBinding.PartitionName,
+                            derivedStreamVisualizationObject.StreamBinding.StreamName);
 
-                    // If the session contains the stream, ensure its member children have been created.
-                    streamTreeNode?.EnsureDerivedStreamExists(derivedStreamVisualizationObject.StreamBinding);
+                        // If the session contains the stream, ensure its member children have been created.
+                        streamTreeNode?.EnsureDerivedStreamExists(derivedStreamVisualizationObject.StreamBinding);
+                    }
                 }
             }
         }
@@ -1085,8 +1093,7 @@ namespace Microsoft.Psi.PsiStudio
             var fileInfos = directoryInfo.GetFiles("*.schema.json");
             foreach (var fileInfo in fileInfos)
             {
-                var annotationSchema = AnnotationSchema.Load(fileInfo.FullName);
-                if (annotationSchema != null)
+                if (AnnotationSchema.TryLoadFrom(fileInfo.FullName, out var annotationSchema))
                 {
                     this.annotationSchemas.Add(annotationSchema);
                 }

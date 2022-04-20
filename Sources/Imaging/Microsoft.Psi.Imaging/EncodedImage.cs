@@ -5,12 +5,13 @@ namespace Microsoft.Psi.Imaging
 {
     using System;
     using System.IO;
+    using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines an encoded image.
     /// </summary>
-    public class EncodedImage : IDisposable
+    public class EncodedImage : IImage, IDisposable
     {
         /// <summary>
         /// The pixel format was added as a private optional field backed property
@@ -39,19 +40,13 @@ namespace Microsoft.Psi.Imaging
             this.stream = new MemoryStream();
         }
 
-        /// <summary>
-        /// Gets the width of the image in pixels.
-        /// </summary>
+        /// <inheritdoc />
         public int Width { get; }
 
-        /// <summary>
-        /// Gets the height of the image in pixels.
-        /// </summary>
+        /// <inheritdoc />
         public int Height { get; }
 
-        /// <summary>
-        /// Gets the pixel format for the encoded image.
-        /// </summary>
+        /// <inheritdoc />
         public PixelFormat PixelFormat => this.pixelFormat;
 
         /// <summary>
@@ -94,15 +89,28 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
-        /// Sets the image data to byte array.
+        /// Copy the image data from a byte array.
         /// </summary>
-        /// <param name="buffer">Byte array containing the image data.</param>
+        /// <param name="source">Byte array containing the image data.</param>
         /// <param name="offset">The offset in buffer at which to begin copying bytes.</param>
         /// <param name="count">The maximum number of bytes to copy.</param>
-        public void SetBuffer(byte[] buffer, int offset, int count)
+        public void CopyFrom(byte[] source, int offset, int count)
         {
             this.stream.SetLength(0);
-            this.stream.Write(buffer, offset, count);
+            this.stream.Write(source, offset, count);
+        }
+
+        /// <summary>
+        /// Copy the image data from a memory pointer.
+        /// </summary>
+        /// <param name="source">Memory pointer from which to copy data.</param>
+        /// <param name="offset">The offset at which to begin copying bytes.</param>
+        /// <param name="count">The maximum number of bytes to copy.</param>
+        public unsafe void CopyFrom(IntPtr source, int offset, int count)
+        {
+            this.stream.SetLength(offset + count);
+            var buffer = this.stream.GetBuffer();
+            Marshal.Copy(source, buffer, offset, count);
         }
 
         /// <summary>

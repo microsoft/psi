@@ -13,9 +13,9 @@ namespace Microsoft.Psi.MixedReality.Visualization
     using Microsoft.Psi.Visualization.DataTypes;
 
     /// <summary>
-    /// Implements a stream adapter from single System.Tuple labeled rectangle into lists of System.Tuple labeled rectangles.
+    /// Implements a stream adapter for visualizing hands as graphs of 3D points.
     /// </summary>
-    [StreamAdapter]
+    [StreamAdapter("Hand to Graph")]
     public class HandVisualizationObjectAdapter : StreamAdapter<Hand, Graph<HandJointIndex, Point3D, bool>>
     {
         private static Dictionary<(HandJointIndex Start, HandJointIndex End), bool> HandJointHierarchy { get; } = new List<(HandJointIndex, HandJointIndex)>

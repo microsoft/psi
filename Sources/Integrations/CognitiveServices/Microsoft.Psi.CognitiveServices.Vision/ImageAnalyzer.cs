@@ -20,6 +20,7 @@ namespace Microsoft.Psi.CognitiveServices.Vision
     /// <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></remarks>
     public sealed class ImageAnalyzer : IConsumer<Shared<Image>>, IProducer<ImageAnalysis>
     {
+        private readonly string name;
         private readonly ComputerVisionClient computerVisionClient;
         private readonly ImageAnalyzerConfiguration configuration;
 
@@ -28,8 +29,10 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The image analyzer configuration.</param>
-        public ImageAnalyzer(Pipeline pipeline, ImageAnalyzerConfiguration configuration = null)
+        /// <param name="name">An optional name for the component.</param>
+        public ImageAnalyzer(Pipeline pipeline, ImageAnalyzerConfiguration configuration = null, string name = nameof(ImageAnalyzer))
         {
+            this.name = name;
             this.configuration = configuration ?? new ImageAnalyzerConfiguration();
             this.Out = pipeline.CreateEmitter<ImageAnalysis>(this, nameof(this.Out));
             this.In = pipeline.CreateAsyncReceiver<Shared<Image>>(this, this.ReceiveAsync, nameof(this.In));
@@ -46,6 +49,9 @@ namespace Microsoft.Psi.CognitiveServices.Vision
         /// Gets the output stream of analysis results.
         /// </summary>
         public Emitter<ImageAnalysis> Out { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         #region Static methods for parsing results to strings
 

@@ -20,8 +20,8 @@ namespace Microsoft.Psi.Components
     /// to the window message and the computed buffer of messages on the input stream.</remarks>
     public class DynamicWindow<TWindow, TInput, TOutput> : ConsumerProducer<TInput, TOutput>
     {
-        private readonly List<Message<TWindow>> windowBuffer = new List<Message<TWindow>>();
-        private readonly List<Message<TInput>> inputBuffer = new List<Message<TInput>>();
+        private readonly List<Message<TWindow>> windowBuffer = new ();
+        private readonly List<Message<TInput>> inputBuffer = new ();
         private readonly Func<Message<TWindow>, (TimeInterval Window, DateTime ObsoleteTime)> dynamicWindowFunction;
         private readonly Func<Message<TWindow>, IEnumerable<Message<TInput>>, TOutput> outputCreator;
 
@@ -33,11 +33,13 @@ namespace Microsoft.Psi.Components
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="windowCreator">The function that creates the actual window to use at every point, and specified the time point previous to which no future windows will extend.</param>
         /// <param name="outputCreator">A function that creates output messages given a message on the window-defining stream and a buffer of messages on the source stream.</param>
+        /// <param name="name">An optional name for the component.</param>
         public DynamicWindow(
             Pipeline pipeline,
             Func<Message<TWindow>, (TimeInterval, DateTime)> windowCreator,
-            Func<Message<TWindow>, IEnumerable<Message<TInput>>, TOutput> outputCreator)
-            : base(pipeline)
+            Func<Message<TWindow>, IEnumerable<Message<TInput>>, TOutput> outputCreator,
+            string name = nameof(DynamicWindow<TWindow, TInput, TOutput>))
+            : base(pipeline, name)
         {
             this.dynamicWindowFunction = windowCreator;
             this.outputCreator = outputCreator;

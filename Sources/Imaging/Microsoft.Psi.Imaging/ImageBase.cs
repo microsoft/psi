@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Imaging
     /// </summary>
     /// <remarks>Using this class it is possible as to allocate a new image in unmanaged memory,
     /// as to just wrap provided pointer to unmanaged memory, where an image is stored.</remarks>
-    public abstract class ImageBase : IDisposable
+    public abstract class ImageBase : IImage, IDisposable
     {
         /// <summary>
         /// Exception message when unexpected pixel format is encountered.
@@ -134,20 +134,14 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         public IntPtr ImageData => this.image.Data;
 
-        /// <summary>
-        /// Gets image width in pixels.
-        /// </summary>
+        /// <inheritdoc />
         public int Width => this.width;
 
-        /// <summary>
-        /// Gets image height in pixels.
-        /// </summary>
+        /// <inheritdoc />
         public int Height => this.height;
 
-        /// <summary>
-        /// Gets image stride (line size in bytes).
-        /// </summary>
-        public int Stride => this.stride;
+        /// <inheritdoc />
+        public PixelFormat PixelFormat => this.pixelFormat;
 
         /// <summary>
         /// Gets the size of the image in bytes (stride times height).
@@ -155,14 +149,14 @@ namespace Microsoft.Psi.Imaging
         public int Size => this.stride * this.height;
 
         /// <summary>
+        /// Gets image stride (line size in bytes).
+        /// </summary>
+        public int Stride => this.stride;
+
+        /// <summary>
         /// Gets the bits per pixel in the image.
         /// </summary>
         public int BitsPerPixel => this.pixelFormat.GetBitsPerPixel();
-
-        /// <summary>
-        /// Gets image pixel format.
-        /// </summary>
-        public PixelFormat PixelFormat => this.pixelFormat;
 
         /// <summary>
         /// Disposes the image.
@@ -653,15 +647,18 @@ namespace Microsoft.Psi.Imaging
         public abstract class CustomSerializer<TImage> : ISerializer<TImage>
             where TImage : ImageBase
         {
-            private const int Version = 4;
+            /// <summary>
+            /// Gets the schema version for custom image serialization.
+            /// </summary>
+            protected const int Version = 5;
 
             /// <inheritdoc />
             public bool? IsClearRequired => true;
 
             /// <summary>
-            /// Gets the type schema.
+            /// Gets or sets the type schema.
             /// </summary>
-            protected TypeSchema Schema { get; private set; }
+            protected TypeSchema Schema { get; set; }
 
             /// <summary>
             /// Initialize custom serializer.

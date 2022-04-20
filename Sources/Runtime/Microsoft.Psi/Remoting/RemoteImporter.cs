@@ -112,7 +112,15 @@ namespace Microsoft.Psi.Remoting
         {
         }
 
-        private RemoteImporter(Func<string, Importer> importerThunk, TimeInterval replay, bool replayRemoteLatestStart, string host, int port, string name, string path, bool allowSequenceRestart)
+        private RemoteImporter(
+            Func<string, Importer> importerThunk,
+            TimeInterval replay,
+            bool replayRemoteLatestStart,
+            string host,
+            int port,
+            string storeName,
+            string storePath,
+            bool allowSequenceRestart)
         {
             this.importerThunk = importerThunk;
             this.replayStart = replay.Left.Ticks;
@@ -121,7 +129,7 @@ namespace Microsoft.Psi.Remoting
             this.host = host;
             this.port = port;
             this.allowSequenceRestart = allowSequenceRestart;
-            this.storeWriter = new PsiStoreWriter(name, path);
+            this.storeWriter = new PsiStoreWriter(storeName, storePath);
             this.StartMetaClient();
         }
 

@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.MixedReality
 {
-    using System.Numerics;
     using HoloLens2ResearchMode;
     using Microsoft.Psi;
 
@@ -16,8 +15,9 @@ namespace Microsoft.Psi.MixedReality
         /// Initializes a new instance of the <see cref="Accelerometer"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public Accelerometer(Pipeline pipeline)
-            : base(pipeline, ResearchModeSensorType.ImuAccel)
+        /// <param name="name">An optional name for the component.</param>
+        public Accelerometer(Pipeline pipeline, string name = nameof(Accelerometer))
+            : base(pipeline, ResearchModeSensorType.ImuAccel, name)
         {
         }
 

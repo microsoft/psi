@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     public sealed class FFT : ConsumerProducer<float[], float[]>
     {
-        private FastFourierTransform fft;
+        private readonly FastFourierTransform fft;
         private float[] fftOutput;
 
         /// <summary>
@@ -19,8 +19,9 @@ namespace Microsoft.Psi.Audio
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="fftSize">The FFT size.</param>
         /// <param name="inputSize">The window size.</param>
-        public FFT(Pipeline pipeline, int fftSize, int inputSize)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public FFT(Pipeline pipeline, int fftSize, int inputSize, string name = nameof(FFT))
+            : base(pipeline, name)
         {
             this.fft = new FastFourierTransform(fftSize, inputSize);
         }

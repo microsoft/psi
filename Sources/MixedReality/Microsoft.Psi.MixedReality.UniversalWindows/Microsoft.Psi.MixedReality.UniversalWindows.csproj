@@ -62,7 +62,9 @@
     <Compile Include="ResearchModeCamera.cs" />
     <Compile Include="PhotoVideoCamera.cs" />
     <Compile Include="PhotoVideoCameraConfiguration.cs" />
+    <Compile Include="ResearchModeCameraConfiguration.cs" />
     <Compile Include="ResearchModeImu.cs" />
+    <Compile Include="SerializedCameraIntrinsics.cs" />
     <Compile Include="VisibleLightCameraConfiguration.cs" />
     <Compile Include="VisibleLightCamera.cs" />
     <Compile Include="DepthCamera.cs" />
@@ -148,7 +150,6 @@
   <Target Name="AdditionalPackageFiles">
     <ItemGroup>
       <BuildOutputInPackage Include="$(OutputPath)HoloLens2ResearchMode.winmd" />
-
       <!-- The following are native libs and need to be packaged in a different path -->
       <BuildOutputInPackage Include="$(OutputPath)HoloLens2ResearchMode.dll" TargetPath="/runtimes/win10-arm/native/HoloLens2ResearchMode.dll" />
       <BuildOutputInPackage Include="$(OutputPath)HoloLens2ResearchMode.pri" TargetPath="/runtimes/win10-arm/native/HoloLens2ResearchMode.pri" />

@@ -271,14 +271,7 @@ namespace Microsoft.Psi
                             this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
                             diagnosticsTime);
 
-                        var ownerToString = this.Owner.ToString();
-
-                        // If the owner to-string rendering is different from the default one (i.e., the type name)
-                        if (ownerToString != this.Owner.GetType().ToString())
-                        {
-                            // Then add this as diagnostic state information
-                            this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(ownerToString);
-                        }
+                        this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(this.Owner.ToString());
                     }
 
                     return;
@@ -341,14 +334,7 @@ namespace Microsoft.Psi
                         this.pipeline.DiagnosticsConfiguration.TrackMessageSize ? this.ComputeDataSize(message.Data) : 0,
                         currentTime);
 
-                    var ownerToString = this.Owner.ToString();
-
-                    // If the owner to-string rendering is different from the default one (i.e., the type name)
-                    if (ownerToString != this.Owner.GetType().ToString())
-                    {
-                        // Then add this as diagnostic state information
-                        this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(ownerToString);
-                    }
+                    this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(this.Owner.ToString());
                 }
 
                 if (this.counters != null)

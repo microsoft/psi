@@ -5,9 +5,11 @@ namespace Microsoft.Psi.Visualization
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Reflection;
     using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.Visualization.Adapters;
+    using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.VisualizationPanels;
@@ -102,14 +104,14 @@ namespace Microsoft.Psi.Visualization
         public static List<VisualizerMetadata> Create(Type visualizationObjectType, Dictionary<Type, SummarizerMetadata> summarizers, List<StreamAdapterMetadata> dataAdapters, VisualizationLogWriter logWriter)
         {
             // Get the visualization object attribute
-            VisualizationObjectAttribute visualizationObjectAttribute = GetVisualizationObjectAttribute(visualizationObjectType, logWriter);
+            var visualizationObjectAttribute = GetVisualizationObjectAttribute(visualizationObjectType, logWriter);
             if (visualizationObjectAttribute == null)
             {
                 return null;
             }
 
             // Get the visualization panel type attribute
-            VisualizationPanelTypeAttribute visualizationPanelTypeAttribute = GetVisualizationPanelTypeAttribute(visualizationObjectType, logWriter);
+            var visualizationPanelTypeAttribute = GetVisualizationPanelTypeAttribute(visualizationObjectType, logWriter);
             if (visualizationPanelTypeAttribute == null)
             {
                 return null;
@@ -117,14 +119,14 @@ namespace Microsoft.Psi.Visualization
 
             // Get the message data type for the visualization object.  We will get nothing back
             // if visualizationObjectType does not ultimately derive from VisualizationObject<TData>
-            Type visualizationObjectDataType = GetVisualizationObjectDataType(visualizationObjectType, logWriter);
+            var visualizationObjectDataType = GetVisualizationObjectDataType(visualizationObjectType, logWriter);
             if (visualizationObjectDataType == null)
             {
                 return null;
             }
 
             // Get the summarizer type (if the visualizer uses a summarizer)
-            SummarizerMetadata summarizerMetadata = null;
+            var summarizerMetadata = default(SummarizerMetadata);
             if (visualizationObjectAttribute.SummarizerType != null)
             {
                 if (summarizers.ContainsKey(visualizationObjectAttribute.SummarizerType))
@@ -157,7 +159,7 @@ namespace Microsoft.Psi.Visualization
             // 2) Otherwise, use the visualization object's data type
             Type dataType = summarizerMetadata != null ? summarizerMetadata.InputType : visualizationObjectDataType;
 
-            List<VisualizerMetadata> metadatas = new List<VisualizerMetadata>();
+            var metadatas = new List<VisualizerMetadata>();
 
             // Add the visualization metadata using no adapter
             Create(metadatas, dataType, visualizationObjectType, visualizationObjectAttribute, visualizationPanelTypeAttribute, null);
@@ -203,9 +205,65 @@ namespace Microsoft.Psi.Visualization
             VisualizationPanelTypeAttribute visualizationPanelTypeAttribute,
             StreamAdapterMetadata adapterMetadata)
         {
-            var commandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
-                $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText}" :
-                $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText}";
+            // First, check for the case where the list of visualizer metadatas already contains a
+            // visualizer with an adapter with the same type signature. If so, we need to generate
+            // the command names by appending a specification of the adapter name.
+            static bool HasSameAdapterTypes(Type streamAdapterType, Type otherStreamAdapterType)
+            {
+                if (streamAdapterType == null || otherStreamAdapterType == null)
+                {
+                    return false;
+                }
+
+                if (streamAdapterType.BaseType.IsGenericType && streamAdapterType.BaseType.GetGenericTypeDefinition() == typeof(StreamAdapter<,>))
+                {
+                    var streamAdapterGenericArguments = streamAdapterType.BaseType.GetGenericArguments();
+                    if (otherStreamAdapterType.BaseType.IsGenericType && otherStreamAdapterType.BaseType.GetGenericTypeDefinition() == typeof(StreamAdapter<,>))
+                    {
+                        var otherStreamAdapterGenericArguments = otherStreamAdapterType.BaseType.GetGenericArguments();
+                        return streamAdapterGenericArguments[0] == otherStreamAdapterGenericArguments[0] &&
+                            streamAdapterGenericArguments[1] == otherStreamAdapterGenericArguments[1];
+                    }
+                }
+
+                return false;
+            }
+
+            var sameAdapterVisualizerMetadatas = metadatas.Where(m => HasSameAdapterTypes(m.StreamAdapterType, adapterMetadata?.AdapterType));
+
+            var commandTitle = default(string);
+            var inNewPanelCommandTitle = default(string);
+
+            // If there are other stream adapters with the same type signature
+            if (sameAdapterVisualizerMetadatas.Any())
+            {
+                // Then elaborate the name of the command to include the name of the stream adapter.
+                var streamAdapterAttribute = adapterMetadata.AdapterType.GetCustomAttribute<StreamAdapterAttribute>();
+                var viaStreamAdapterName = string.IsNullOrEmpty(streamAdapterAttribute.Name) ? " (via unnamed adapter)" : $" (via {streamAdapterAttribute.Name} adapter)";
+                commandTitle = $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText}{viaStreamAdapterName}";
+                inNewPanelCommandTitle = $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText} in New Panel{viaStreamAdapterName}";
+
+                // Also for all the matching adapters, elaborate the names of the corresponding commands
+                foreach (var sameAdapterOtherVisualizerMetadata in sameAdapterVisualizerMetadatas)
+                {
+                    var otherStreamAdapterAttribute = sameAdapterOtherVisualizerMetadata.StreamAdapterType.GetCustomAttribute<StreamAdapterAttribute>();
+                    var viaOtherStreamAdapterName = string.IsNullOrEmpty(otherStreamAdapterAttribute.Name) ? " (via unnamed adapter)" : $" (via {otherStreamAdapterAttribute.Name} adapter)";
+
+                    if (!sameAdapterOtherVisualizerMetadata.CommandText.EndsWith(viaOtherStreamAdapterName))
+                    {
+                        sameAdapterOtherVisualizerMetadata.CommandText += viaOtherStreamAdapterName;
+                    }
+                }
+            }
+            else
+            {
+                commandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
+                    $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText}" :
+                    $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText}";
+                inNewPanelCommandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
+                    $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText} in New Panel" :
+                    $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText} in New Panel";
+            }
 
             metadatas.Add(new VisualizerMetadata(
                 dataType,
@@ -218,10 +276,6 @@ namespace Microsoft.Psi.Visualization
                 visualizationObjectAttribute.VisualizationFormatString,
                 false,
                 visualizationObjectAttribute.IsUniversalVisualizer));
-
-            var inNewPanelCommandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
-                $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText} in New Panel" :
-                $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText} in New Panel";
 
             metadatas.Add(new VisualizerMetadata(
                 dataType,
@@ -242,25 +296,25 @@ namespace Microsoft.Psi.Visualization
 
             if (visualizationObjectAttribute == null)
             {
-                logWriter.WriteError("Visualization object {0} could not be loaded because it is not decorated with a VisualizationObjectAttribute", visualizationObjectType.Name);
+                logWriter.WriteError($"Visualization object {0} could not be loaded because it is not decorated with a {nameof(VisualizationObjectAttribute)}.", visualizationObjectType.Name);
                 return null;
             }
 
             if (string.IsNullOrWhiteSpace(visualizationObjectAttribute.CommandText))
             {
-                logWriter.WriteError("Visualization object {0} could not be loaded because its VisualizationObjectAttribute does not specify a Text property", visualizationObjectType.Name);
+                logWriter.WriteError($"Visualization object {0} could not be loaded because its {nameof(VisualizationObjectAttribute)} does not specify a {nameof(VisualizationObjectAttribute.CommandText)} property.", visualizationObjectType.Name);
                 return null;
             }
 
             if (string.IsNullOrWhiteSpace(visualizationObjectAttribute.IconSourcePath) && string.IsNullOrWhiteSpace(visualizationObjectAttribute.NewPanelIconSourcePath))
             {
-                logWriter.WriteError("Visualization object {0} could not be loaded because its VisualizationObjectAttribute does not specify either an IconSourcePath property or a NewPanelIconSourcePath property", visualizationObjectType.Name);
+                logWriter.WriteError($"Visualization object {0} could not be loaded because its {nameof(VisualizationObjectAttribute)} does not specify either an {nameof(VisualizationObjectAttribute.IconSourcePath)} property or a {nameof(VisualizationObjectAttribute.NewPanelIconSourcePath)} property.", visualizationObjectType.Name);
                 return null;
             }
 
             if (!visualizationObjectAttribute.VisualizationFormatString.Contains(VisualizationObjectAttribute.DefaultVisualizationFormatString))
             {
-                logWriter.WriteError("Visualization object {0} could not be loaded because its VisualizationObjectAttribute has an invalid value for the VisualizationFormatString property", visualizationObjectType.Name);
+                logWriter.WriteError($"Visualization object {0} could not be loaded because its {nameof(VisualizationObjectAttribute)} has an invalid value for the {nameof(VisualizationObjectAttribute.DefaultVisualizationFormatString)} property.", visualizationObjectType.Name);
                 return null;
             }
 

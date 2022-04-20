@@ -23,11 +23,12 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">Optional interval at which to poll head information (default 1/60th second).</param>
-        public HeadSensor(Pipeline pipeline, TimeSpan interval = default)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public HeadSensor(Pipeline pipeline, TimeSpan interval = default, string name = nameof(HeadSensor))
+            : base(pipeline, name)
         {
             this.pipeline = pipeline;
-            this.interval = interval == default ? TimeSpan.Zero : interval;
+            this.interval = interval == default ? TimeSpan.FromTicks(1) : interval; // minimum interval of one-tick
             this.Out = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.Out));
         }
 
@@ -39,12 +40,12 @@ namespace Microsoft.Psi.MixedReality
         /// <inheritdoc />
         public override void Step()
         {
-            var currentTime = this.pipeline.GetCurrentTime();
-            if (this.active && currentTime - this.Out.LastEnvelope.OriginatingTime >= this.interval)
+            // Get the current time from OpenXR
+            var currentSampleTime = this.pipeline.GetCurrentTimeFromOpenXr();
+
+            if (this.active && currentSampleTime - this.Out.LastEnvelope.OriginatingTime >= this.interval)
             {
-                var head = Input.Head;
-                var originatingTime = this.pipeline.GetCurrentTime();
-                this.Out.Post(head.ToPsiCoordinateSystem(), originatingTime);
+                this.Out.Post(PsiInput.Head, currentSampleTime);
             }
         }
 

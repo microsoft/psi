@@ -48,9 +48,9 @@ namespace Microsoft.Psi.Components
             bool outputDefaultIfDropped = false,
             TBranchOut defaultValue = default,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(ParallelSparseSelect<TIn, TOut, TBranchIn, TBranchKey, TBranchOut>),
             DeliveryPolicy defaultDeliveryPolicy = null)
-            : base(pipeline, name ?? nameof(ParallelSparseSelect<TIn, TOut, TBranchIn, TBranchKey, TBranchOut>), defaultDeliveryPolicy)
+            : base(pipeline, name, defaultDeliveryPolicy)
         {
             this.pipeline = pipeline;
             this.inConnector = this.CreateInputConnectorFrom<TIn>(pipeline, nameof(this.inConnector));

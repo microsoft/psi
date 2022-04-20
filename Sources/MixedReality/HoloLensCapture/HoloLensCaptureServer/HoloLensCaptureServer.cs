@@ -1,0 +1,542 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
+namespace HoloLensCaptureServer
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.IO;
+    using System.Text;
+    using HoloLensCaptureInterop;
+    using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi;
+    using Microsoft.Psi.Audio;
+    using Microsoft.Psi.Calibration;
+    using Microsoft.Psi.Data;
+    using Microsoft.Psi.Diagnostics;
+    using Microsoft.Psi.Imaging;
+    using Microsoft.Psi.Interop.Rendezvous;
+    using Microsoft.Psi.Interop.Serialization;
+    using Microsoft.Psi.Interop.Transport;
+    using Microsoft.Psi.MixedReality;
+    using Microsoft.Psi.Spatial.Euclidean;
+
+    /// <summary>
+    /// Capture server to persist streams from the accompanying HoloLencCaptureApp.
+    /// </summary>
+    public class HoloLensCaptureServer
+    {
+        // version number shared by capture app and server to ensure compatiblity.
+        private const string Version = "v1";
+
+        // capture actions to execute for expected stream types
+        private static readonly Dictionary<string, Action<Rendezvous.Stream, Rendezvous.TcpSourceEndpoint>> CaptureStreamAction = new ()
+        {
+            {
+                // CoordinateSystem
+                SimplifyTypeName(typeof(CoordinateSystem).FullName),
+                (s, t) => CaptureTcpStream<CoordinateSystem>(s, t, Serializers.CoordinateSystemFormat())
+            },
+            {
+                // Ray3D
+                SimplifyTypeName(typeof(Ray3D).FullName),
+                (s, t) => CaptureTcpStream<Ray3D>(s, t, Serializers.Ray3DFormat())
+            },
+            {
+                // Hand
+                SimplifyTypeName(typeof(Hand).FullName),
+                (s, t) => CaptureTcpStream<Hand>(s, t, Serializers.HandFormat())
+            },
+            {
+                // AudioBuffer
+                SimplifyTypeName(typeof(AudioBuffer).FullName),
+                (s, t) => CaptureTcpStream<AudioBuffer>(s, t, Serializers.AudioBufferFormat())
+            },
+            {
+                // Shared<Image>
+                SimplifyTypeName(typeof(Shared<Image>).FullName),
+                (s, t) => CaptureTcpStream<Shared<Image>>(s, t, Serializers.SharedImageFormat(), largeMessage: true)
+            },
+            {
+                // Shared<EncodedImage>
+                SimplifyTypeName(typeof(Shared<EncodedImage>).FullName),
+                (s, t) => CaptureTcpStream<Shared<EncodedImage>>(s, t, Serializers.SharedEncodedImageFormat(), largeMessage: true, persistFrameRate: true)
+            },
+            {
+                // Shared<DepthImage>
+                SimplifyTypeName(typeof(Shared<DepthImage>).FullName),
+                (s, t) => CaptureTcpStream<Shared<DepthImage>>(s, t, Serializers.SharedDepthImageFormat(), largeMessage: true, persistFrameRate: true)
+            },
+            {
+                // CameraIntrinsics
+                SimplifyTypeName(typeof(CameraIntrinsics).FullName),
+                (s, t) => CaptureTcpStream<CameraIntrinsics>(s, t, Serializers.CameraIntrinsicsFormat())
+            },
+            {
+                // CalibrationPointsMap
+                SimplifyTypeName(typeof(CalibrationPointsMap).FullName),
+                (s, t) => CaptureTcpStream<CalibrationPointsMap>(s, t, Serializers.CalibrationPointsMapFormat(), largeMessage: true)
+            },
+            {
+                // SceneObjectCollection
+                SimplifyTypeName(typeof(SceneObjectCollection).FullName),
+                (s, t) => CaptureTcpStream<SceneObjectCollection>(s, t, Serializers.SceneObjectCollectionFormat(), largeMessage: true)
+            },
+            {
+                // PipelineDiagnostics
+                SimplifyTypeName(typeof(PipelineDiagnostics).FullName),
+                (s, t) => CaptureTcpStream<PipelineDiagnostics>(s, t, Serializers.PipelineDiagnosticsFormat())
+            },
+            {
+                // int
+                SimplifyTypeName(typeof(int).FullName),
+                (s, t) => CaptureTcpStream<int>(s, t, Serializers.Int32Format())
+            },
+            {
+                // (Vector3D, DateTime)[]
+                SimplifyTypeName(typeof((Vector3D, DateTime)[]).FullName),
+                (s, t) =>
+                {
+                    // relay *frames* of IMU samples
+                    CaptureTcpStream<(Vector3D, DateTime)[]>(s, t, Serializers.ImuFormat());
+
+                    // relay *individual* IMU samples
+                    // GetTcpStream<(Vector3D, DateTime)[]>(Serializers.ImuFormat()).SelectManyImuSamples().Write(stream.StreamName, store);
+                }
+            },
+            {
+                // (Hand Left, Hand Right)
+                SimplifyTypeName(typeof((Hand Left, Hand Right)).FullName),
+                (s, t) => CaptureTcpStream<(Hand Left, Hand Right)>(s, t, Serializers.HandsFormat(), persistFrameRate: true)
+            },
+            {
+                // EncodedImageCameraView
+                SimplifyTypeName(typeof(EncodedImageCameraView).FullName),
+                (s, t) => CaptureTcpStream<EncodedImageCameraView>(s, t, Serializers.EncodedImageCameraViewFormat(), true, t => t.Dispose(), true)
+            },
+            {
+                // ImageCameraView
+                SimplifyTypeName(typeof(ImageCameraView).FullName),
+                (s, t) => CaptureTcpStream<ImageCameraView>(s, t, Serializers.ImageCameraViewFormat(), true, t => t.Dispose(), true)
+            },
+            {
+                // DepthImageCameraView
+                SimplifyTypeName(typeof(DepthImageCameraView).FullName),
+                (s, t) => CaptureTcpStream<DepthImageCameraView>(s, t, Serializers.DepthImageCameraViewFormat(), true, t => t.Dispose(), true)
+            },
+        };
+
+        private static readonly RendezvousServer RendezvousServer = new ();
+        private static Pipeline captureServerPipeline = null;
+        private static PsiExporter captureServerStore = null;
+        private static string logFile = null;
+        private static Dictionary<string, StreamStatistics> statistics = null;
+
+        private static void Main(string[] args)
+        {
+            // Listen for the client app (HoloLensCaptureApp) to connect and create the pipeline
+            RendezvousServer.Rendezvous.ProcessAdded += (_, process) =>
+            {
+                ReportProcessAdded(process);
+
+                if (process.Name == "HoloLensCaptureApp")
+                {
+                    if (process.Version != Version)
+                    {
+                        throw new Exception($"Connection received from unexpected version of HoloLensCaptureApp (expected {Version}, actual {process.Version}).");
+                    }
+
+                    Console.WriteLine($"  Starting Capture Server Pipeline");
+                    CreateAndRunComputeServerPipeline(process);
+                    captureServerPipeline.PipelineExceptionNotHandled += (_, args) =>
+                    {
+                        StopComputeServerPipeline($"SERVER PIPELINE RUNTIME EXCEPTION: {args.Exception.Message}");
+                    };
+                }
+                else if (process.Name != nameof(HoloLensCaptureServer))
+                {
+                    throw new Exception($"Connection received from unexpected process named {process.Name}.");
+                }
+            };
+
+            // When the client app is stopped (removed), disposed of the capture server pipeline
+            RendezvousServer.Rendezvous.ProcessRemoved += (_, process) =>
+            {
+                ReportProcessRemoved(process);
+                if (process.Name == "HoloLensCaptureApp")
+                {
+                    StopComputeServerPipeline("Client stopped recording");
+                }
+            };
+
+            RendezvousServer.Error += (_, ex) =>
+            {
+                Console.WriteLine();
+                StopComputeServerPipeline($"RENDEZVOUS ERROR: {ex.Message}");
+            };
+
+            AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+            {
+                StopComputeServerPipeline($"SERVER EXITED");
+            };
+
+            RendezvousServer.Start();
+            Console.WriteLine($"Listening on TCP port {RendezvousServer.DefaultPort} for client HoloLensCaptureApp.");
+            Console.WriteLine("Be sure to check firewall settings (may need to enable Public).");
+
+            // Wait to press a key to exit
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+
+            RendezvousServer.Stop();
+            StopComputeServerPipeline("Server manually stopped");
+        }
+
+        private static void CreateAndRunComputeServerPipeline(Rendezvous.Process inputRendezvousProcess)
+        {
+            var config = ConfigurationManager.AppSettings;
+            var storeName = config["storeName"];
+            var storePath = config["storePath"];
+            var diagnosticsInterval = double.Parse(config["diagnosticsIntervalSeconds"]);
+
+            // Create the pipeline, store and output diagnostics
+            if (captureServerPipeline != null)
+            {
+                StopComputeServerPipeline("CLIENT STARTED NEW RECORDING WHILE PREVIOUS STILL RUNNING");
+            }
+
+            captureServerPipeline = Pipeline.Create(
+                enableDiagnostics: diagnosticsInterval > 0,
+                diagnosticsConfiguration: new DiagnosticsConfiguration()
+                {
+                    SamplingInterval = TimeSpan.FromSeconds(diagnosticsInterval),
+                });
+            captureServerStore = PsiStore.Create(captureServerPipeline, storeName, storePath);
+
+            captureServerPipeline.Diagnostics.Write("ServerDiagnostics", captureServerStore);
+
+            // Detect app disconnect
+            var lastAppHeartBeat = DateTime.MaxValue;
+            var appHeartBeatTimeout = TimeSpan.FromSeconds(20);
+            Timers.Timer(captureServerPipeline, TimeSpan.FromSeconds(1)).Do(_ =>
+            {
+                if (DateTime.UtcNow - lastAppHeartBeat > appHeartBeatTimeout)
+                {
+                    StopComputeServerPipeline("APPLICATION HEARTBEAT LOST");
+                }
+            });
+
+            // Connect to remote clock on the client app to synchronize clocks
+            foreach (var endpoint in inputRendezvousProcess.Endpoints)
+            {
+                if (endpoint is Rendezvous.RemoteClockExporterEndpoint remoteClockExporterEndpoint)
+                {
+                    var remoteClock = remoteClockExporterEndpoint.ToRemoteClockImporter(captureServerPipeline);
+                    Console.Write("    Connecting to clock sync ...");
+                    if (!remoteClock.Connected.WaitOne(10000))
+                    {
+                        Console.WriteLine("FAILED.");
+                        throw new Exception("Failed to connect to remote clock exporter.");
+                    }
+
+                    Console.WriteLine("DONE.");
+                }
+            }
+
+            statistics = new ();
+            foreach (var endpoint in inputRendezvousProcess.Endpoints)
+            {
+                if (endpoint is Rendezvous.TcpSourceEndpoint tcpEndpoint)
+                {
+                    foreach (var stream in tcpEndpoint.Streams)
+                    {
+                        // Determine the correct action to execute for capturing the rendezvous stream,
+                        // based on a simplified version of the stream's type name.
+                        var simpleTypeName = SimplifyTypeName(stream.TypeName);
+
+                        if (!CaptureStreamAction.ContainsKey(simpleTypeName))
+                        {
+                            throw new Exception($"Unknown stream type: {stream.StreamName} ({stream.TypeName})");
+                        }
+
+                        CaptureStreamAction[simpleTypeName](stream, tcpEndpoint);
+                    }
+                }
+                else if (endpoint is not Rendezvous.RemoteClockExporterEndpoint)
+                {
+                    throw new Exception("Unexpected endpoint type.");
+                }
+            }
+
+            // Send a server heartbeat
+            var serverHeartbeat = Generators.Sequence(
+                captureServerPipeline,
+                (0f, 0f),
+                _ =>
+                {
+                    if (statistics.TryGetValue("VideoEncodedImageCameraView", out var videoStats))
+                    {
+                        if (statistics.TryGetValue("DepthImageCameraView", out var depthStats))
+                        {
+                            return ((float)videoStats.MessagesPerSecond,
+                                    (float)depthStats.MessagesPerSecond);
+                        }
+                        else
+                        {
+                            return ((float)videoStats.MessagesPerSecond, 0.0f);
+                        }
+                    }
+                    else
+                    {
+                        if (statistics.TryGetValue("DepthImageCameraView", out var depthStats))
+                        {
+                            return (0.0f, (float)depthStats.MessagesPerSecond);
+                        }
+                        else
+                        {
+                            return (0.0f, 0.0f);
+                        }
+                    }
+                },
+                TimeSpan.FromSeconds(0.2) /* 5Hz */);
+            serverHeartbeat.Write("ServerHeartbeat", captureServerStore);
+            var heartbeatTcpSource = new TcpWriter<(float, float)>(captureServerPipeline, 16000, Serializers.HeartbeatFormat());
+            serverHeartbeat.PipeTo(heartbeatTcpSource);
+            RendezvousServer.Rendezvous.TryAddProcess(
+                new Rendezvous.Process(
+                    nameof(HoloLensCaptureServer),
+                    new[] { heartbeatTcpSource.ToRendezvousEndpoint("0.0.0.0", "ServerHeartbeat") }, // dummy host name, ignored by app
+                    Version));
+
+            // Report statistics to console
+            logFile = Path.Combine(captureServerStore.Path, "CaptureLog.txt");
+            Generators.Sequence(
+                captureServerPipeline,
+                string.Empty,
+                _ =>
+                {
+                    var sb = new StringBuilder();
+                    foreach (var kv in statistics)
+                    {
+                        sb.Append($"{kv.Key}: {kv.Value}\n");
+                    }
+
+                    return sb.ToString();
+                },
+                TimeSpan.FromSeconds(10))
+                .Do(log =>
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(log);
+                    File.WriteAllText(logFile, $"Capture Statistics\nVersion: {Version}\n\n{log}\n\nIn progress... ");
+                });
+
+            // Run the pipeline
+            captureServerPipeline.RunAsync();
+            Console.WriteLine("    Running...");
+        }
+
+        private static void CaptureTcpStream<T>(
+            Rendezvous.Stream stream,
+            Rendezvous.TcpSourceEndpoint tcpEndpoint,
+            IFormatDeserializer deserializer,
+            bool largeMessage = false,
+            Action<T> deallocator = null,
+            bool persistFrameRate = false)
+        {
+            var tcpSource = tcpEndpoint.ToTcpSource<T>(captureServerPipeline, deserializer, deallocator: deallocator);
+            var stats = new StreamStatistics();
+            statistics.Add(stream.StreamName, stats);
+            tcpSource
+                .Do((_, e) => stats.ReportMessage(e.OriginatingTime))
+                .Write(stream.StreamName, captureServerStore, largeMessage);
+
+            if (persistFrameRate)
+            {
+                tcpSource
+                    .Window(TimeSpan.FromSeconds(-3), TimeSpan.Zero, DeliveryPolicy.SynchronousOrThrottle)
+                    .Select(b => b.Length / 3.0, DeliveryPolicy.SynchronousOrThrottle)
+                    .Write($"{stream.StreamName}.AvgFrameRate", captureServerStore);
+            }
+        }
+
+        private static void StopComputeServerPipeline(string message)
+        {
+            if (captureServerPipeline != null)
+            {
+                RendezvousServer.Rendezvous.TryRemoveProcess(nameof(HoloLensCaptureServer));
+                RendezvousServer.Rendezvous.TryRemoveProcess("HoloLensCaptureApp");
+                captureServerPipeline?.Dispose();
+                if (captureServerPipeline != null)
+                {
+                    Console.WriteLine($"  Stopped Capture Server Pipeline.");
+                }
+
+                captureServerPipeline = null;
+            }
+
+            if (logFile != null)
+            {
+                using var writer = File.AppendText(logFile);
+                writer.Write($"Complete!\n\n({message})");
+                logFile = null;
+            }
+        }
+
+        private static void ReportProcessAdded(Rendezvous.Process process)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"PROCESS ADDED: {process.Name}");
+            foreach (var endpoint in process.Endpoints)
+            {
+                if (endpoint is Rendezvous.TcpSourceEndpoint tcpEndpoint)
+                {
+                    Console.WriteLine($"  ENDPOINT: TCP {tcpEndpoint.Host} {tcpEndpoint.Port}");
+                }
+                else if (endpoint is Rendezvous.NetMQSourceEndpoint netMQEndpoint)
+                {
+                    Console.WriteLine($"  ENDPOINT: NetMQ {netMQEndpoint.Address}");
+                }
+                else if (endpoint is Rendezvous.RemoteExporterEndpoint remoteExporterEndpoint)
+                {
+                    Console.WriteLine($"  ENDPOINT: Remote {remoteExporterEndpoint.Host} {remoteExporterEndpoint.Port} {remoteExporterEndpoint.Transport}");
+                }
+                else if (endpoint is Rendezvous.RemoteClockExporterEndpoint remoteClockExporterEndpoint)
+                {
+                    Console.WriteLine($"  ENDPOINT: Remote Clock {remoteClockExporterEndpoint.Host} {remoteClockExporterEndpoint.Port}");
+                }
+                else
+                {
+                    throw new ArgumentException($"Unknown type of Endpoint ({endpoint.GetType().Name}).");
+                }
+
+                foreach (var stream in endpoint.Streams)
+                {
+                    Console.WriteLine($"    STREAM: {stream.StreamName} ({stream.TypeName.Split(',')[0]})");
+                }
+            }
+        }
+
+        private static void ReportProcessRemoved(Rendezvous.Process process)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"PROCESS REMOVED: {process.Name}");
+        }
+
+        /// <summary>
+        /// Simplify the full type name into just the basic underlying type names,
+        /// stripping away details like assembly, version, culture, token, etc.
+        /// For example, for the type (Vector3D, DateTime)[]
+        /// Input: "System.ValueTuple`2
+        ///     [[MathNet.Spatial.Euclidean.Vector3D, MathNet.Spatial, Version=0.6.0.0, Culture=neutral, PublicKeyToken=000000000000],
+        ///     [System.DateTime, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=000000000000]]
+        ///     [], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=000000000000"
+        /// Output: "System.ValueTuple`2[[MathNet.Spatial.Euclidean.Vector3D],[System.DateTime]][]".
+        /// </summary>
+        private static string SimplifyTypeName(string typeName)
+        {
+            static string SubstringToComma(string s)
+            {
+                var commaIndex = s.IndexOf(',');
+                if (commaIndex >= 0)
+                {
+                    return s.Substring(0, commaIndex);
+                }
+                else
+                {
+                    return s;
+                }
+            }
+
+            // Split first on open bracket, then on closed bracket
+            var allSplits = new List<string[]>();
+            foreach (var openSplit in typeName.Split('['))
+            {
+                allSplits.Add(openSplit.Split(']'));
+            }
+
+            // Re-assemble into a simplified string (without assembly, version, culture, token, etc).
+            var assembledString = string.Empty;
+            for (int i = 0; i < allSplits.Count; i++)
+            {
+                // Add back an open bracket (except the first time)
+                if (i != 0)
+                {
+                    assembledString += "[";
+                }
+
+                for (int j = 0; j < allSplits[i].Length; j++)
+                {
+                    // Remove everything after the comma (assembly, version, culture, token, etc).
+                    assembledString += SubstringToComma(allSplits[i][j]);
+
+                    // Add back a closed bracket (except the last time)
+                    if (j != allSplits[i].Length - 1)
+                    {
+                        assembledString += "]";
+                    }
+                }
+            }
+
+            return assembledString;
+        }
+
+        private class StreamStatistics
+        {
+            private readonly Queue<DateTime> pastOriginatingTimes = new ();
+
+            /// <summary>
+            /// Gets First message time.
+            /// </summary>
+            public DateTime FirstMessage { get; private set; } = DateTime.MinValue;
+
+            /// <summary>
+            /// Gets last message time.
+            /// </summary>
+            public DateTime LastMessage { get; private set; } = DateTime.MaxValue;
+
+            /// <summary>
+            /// Gets message count.
+            /// </summary>
+            public long MessageCount { get; private set; } = 0;
+
+            /// <summary>
+            /// Gets messages per second.
+            /// </summary>
+            public double MessagesPerSecond { get; private set; } = 0;
+
+            public void ReportMessage(DateTime originatingTime)
+            {
+                this.MessageCount++;
+                this.LastMessage = originatingTime;
+                if (this.FirstMessage == DateTime.MinValue)
+                {
+                    this.FirstMessage = originatingTime;
+                }
+
+                // compute messages per second over 5 sec sliding window
+                var windowSeconds = TimeSpan.FromSeconds(5);
+                this.pastOriginatingTimes.Enqueue(originatingTime);
+                while (this.pastOriginatingTimes.Peek() <= originatingTime - windowSeconds)
+                {
+                    this.pastOriginatingTimes.Dequeue();
+                }
+
+                this.MessagesPerSecond = (double)this.pastOriginatingTimes.Count / windowSeconds.TotalSeconds;
+            }
+
+            public override string ToString()
+            {
+                if (this.FirstMessage == DateTime.MinValue)
+                {
+                    return "No messages";
+                }
+
+                var elapsed = this.LastMessage - this.FirstMessage;
+                var mps = this.MessageCount / elapsed.TotalSeconds;
+                return $"{mps:0.#}/s (frames={this.MessageCount} time={elapsed})";
+            }
+        }
+    }
+}

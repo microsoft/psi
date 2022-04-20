@@ -17,6 +17,7 @@ namespace Microsoft.Psi.Audio
     /// </remarks>
     public sealed class AcousticFeaturesExtractor : IConsumer<AudioBuffer>
     {
+        private readonly string name;
         private readonly Connector<AudioBuffer> inAudio;
 
         /// <summary>
@@ -24,8 +25,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public AcousticFeaturesExtractor(Pipeline pipeline, string configurationFilename = null)
-            : this(pipeline, new ConfigurationHelper<AcousticFeaturesExtractorConfiguration>(configurationFilename).Configuration)
+        /// <param name="name">An optional name for the component.</param>
+        public AcousticFeaturesExtractor(Pipeline pipeline, string configurationFilename = null, string name = nameof(AcousticFeaturesExtractor))
+            : this(pipeline, new ConfigurationHelper<AcousticFeaturesExtractorConfiguration>(configurationFilename).Configuration, name)
         {
         }
 
@@ -34,9 +36,11 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AcousticFeaturesExtractor(Pipeline pipeline, AcousticFeaturesExtractorConfiguration configuration)
+        /// <param name="name">An optional name for the component.</param>
+        public AcousticFeaturesExtractor(Pipeline pipeline, AcousticFeaturesExtractorConfiguration configuration, string name = nameof(AcousticFeaturesExtractor))
         {
             // Create the Audio passthrough emitter and hook it up to the receiver
+            this.name = name;
             this.inAudio = pipeline.CreateConnector<AudioBuffer>(nameof(this.inAudio));
             this.In = this.inAudio.In;
 
@@ -163,5 +167,8 @@ namespace Microsoft.Psi.Audio
         /// Gets the stream containing the spectral entropy.
         /// </summary>
         public IProducer<float> SpectralEntropy { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
     }
 }

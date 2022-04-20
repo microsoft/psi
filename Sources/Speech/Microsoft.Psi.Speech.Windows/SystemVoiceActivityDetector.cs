@@ -76,8 +76,9 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public SystemVoiceActivityDetector(Pipeline pipeline, SystemVoiceActivityDetectorConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemVoiceActivityDetector(Pipeline pipeline, SystemVoiceActivityDetectorConfiguration configuration, string name = nameof(SystemVoiceActivityDetector))
+            : base(pipeline, name)
         {
             this.configuration = configuration ?? new SystemVoiceActivityDetectorConfiguration();
 
@@ -101,10 +102,12 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public SystemVoiceActivityDetector(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemVoiceActivityDetector(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemVoiceActivityDetector))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemVoiceActivityDetectorConfiguration() : new ConfigurationHelper<SystemVoiceActivityDetectorConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new SystemVoiceActivityDetectorConfiguration() : new ConfigurationHelper<SystemVoiceActivityDetectorConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 

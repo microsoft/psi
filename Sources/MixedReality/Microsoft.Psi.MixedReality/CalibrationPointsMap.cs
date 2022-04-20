@@ -10,37 +10,21 @@ namespace Microsoft.Psi.MixedReality
     /// For the image pixel each point corresponds to, (i,j), it was sampled at
     /// the center of the pixel, at position: (i+0.5, j+0.5).
     /// </summary>
-    public readonly struct CalibrationPointsMap
+    public sealed class CalibrationPointsMap
     {
         /// <summary>
-        /// Gets the sensor image width.
+        /// Gets or sets the sensor image width.
         /// </summary>
-        public readonly int Width;
+        public int Width { get; set; }
 
         /// <summary>
-        /// Gets the sensor image height.
+        /// Gets or sets the sensor image height.
         /// </summary>
-        public readonly int Height;
+        public int Height { get; set; }
 
         /// <summary>
-        /// Gets the set of XY points on the camera unit plane, one for the center of each image pixel.
+        /// Gets or sets the set of XY points on the camera unit plane, one for the center of each image pixel.
         /// </summary>
-        public readonly float[] CameraUnitPlanePoints;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CalibrationPointsMap"/> struct.
-        /// </summary>
-        /// <param name="width">The sensor image width.</param>
-        /// <param name="height">The sensor image height.</param>
-        /// <param name="cameraUnitPlanePoints">The set of XY points on the camera unit plane.
-        /// These points are laid out row-wise, X then Y, repeating.
-        /// For the image pixel each point corresponds to, (i,j), it was sampled at
-        /// the center of the pixel, at position: (i+0.5, j+0.5).</param>
-        public CalibrationPointsMap(int width, int height, float[] cameraUnitPlanePoints)
-        {
-            this.Width = width;
-            this.Height = height;
-            this.CameraUnitPlanePoints = cameraUnitPlanePoints;
-        }
+        public double[] CameraUnitPlanePoints { get; set; }
     }
 }

@@ -4,11 +4,7 @@
 namespace Microsoft.Psi.Audio
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Threading;
     using Microsoft.Psi;
-    using Microsoft.Psi.Data;
 
     /// <summary>
     /// Provides static methods to access WAVE file stores.
@@ -26,8 +22,6 @@ namespace Microsoft.Psi.Audio
         /// <param name="audioBufferSizeMs">The size of each data buffer in milliseconds.</param>
         /// <returns>A <see cref="WaveFileImporter"/> instance.</returns>
         public static WaveFileImporter Open(Pipeline pipeline, string name, string path, DateTime startTime, int audioBufferSizeMs = WaveFileStreamReader.DefaultAudioBufferSizeMs)
-        {
-            return new WaveFileImporter(pipeline, name, path, startTime, audioBufferSizeMs);
-        }
+            => new (pipeline, name, path, startTime, audioBufferSizeMs);
     }
 }

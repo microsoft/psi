@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Scheduling
         private readonly Func<Exception, bool> errorHandler;
         private readonly bool allowSchedulingOnExternalThreads;
         private readonly ManualResetEvent stopped = new ManualResetEvent(true);
-        private readonly AutoResetEvent futureAdded = new AutoResetEvent(false);
+        private readonly AutoResetEvent futureQueuePulse = new AutoResetEvent(false);
         private readonly ThreadLocal<WorkItem?> nextWorkitem = new ThreadLocal<WorkItem?>();
         private readonly ThreadLocal<bool> isSchedulerThread = new ThreadLocal<bool>(() => false);
         private readonly ThreadLocal<DateTime> currentWorkitemTime = new ThreadLocal<DateTime>(() => DateTime.MaxValue);
@@ -82,7 +82,7 @@ namespace Microsoft.Psi.Scheduling
         {
             this.threadSemaphore.Dispose();
             this.stopped.Dispose();
-            this.futureAdded.Dispose();
+            this.futureQueuePulse.Dispose();
             this.globalWorkitems.Dispose();
             this.futureWorkitems.Dispose();
             this.nextWorkitem.Dispose();
@@ -364,6 +364,10 @@ namespace Microsoft.Psi.Scheduling
                 return;
             }
 
+            // Pulse the future queue to process any work items that are either due or
+            // non-reachable due to having a start time past the finalization time.
+            this.futureQueuePulse.Set();
+
             if (!this.isSchedulerThread.Value && !this.allowSchedulingOnExternalThreads)
             {
                 // this is not a scheduler thread, so just wait for the context to empty and return
@@ -417,17 +421,21 @@ namespace Microsoft.Psi.Scheduling
         /// <param name="asContinuation">Flag whether to execute once current operation completes.</param>
         private void Schedule(WorkItem wi, bool asContinuation = true)
         {
+            // Exit the context without executing the work item if:
+            // (1) a forced shutdown has been initiated
+            // (2) the scheduler has already been stopped (completed)
             if (this.forcedShutdownRequested || this.completed)
             {
                 wi.SchedulerContext.Exit();
                 return;
             }
 
-            // if the workitem not yet due, add it to the future workitem queue
-            if ((wi.StartTime > wi.SchedulerContext.Clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue) || !this.started || !wi.SchedulerContext.Started)
+            // if the work item is not yet due, add it to the future work item queue, as long as it is not after the finalize time
+            if ((wi.StartTime > wi.SchedulerContext.Clock.GetCurrentTime() && wi.StartTime <= wi.SchedulerContext.FinalizeTime && this.delayFutureWorkitemsUntilDue) ||
+                !this.started || !wi.SchedulerContext.Started)
             {
                 this.futureWorkitems.Enqueue(wi);
-                this.futureAdded.Set();
+                this.futureQueuePulse.Set();
                 return;
             }
 
@@ -582,7 +590,7 @@ namespace Microsoft.Psi.Scheduling
         {
             int waitTimeout = -1;
 
-            var workReadyHandles = new EventWaitHandle[] { this.stopped, this.futureAdded };
+            var workReadyHandles = new EventWaitHandle[] { this.stopped, this.futureQueuePulse };
             var allHandles = new[] { this.threadSemaphore.Empty, this.globalWorkitems.Empty, this.futureWorkitems.Empty };
             var spinWait = default(SpinWait);
             while (true)

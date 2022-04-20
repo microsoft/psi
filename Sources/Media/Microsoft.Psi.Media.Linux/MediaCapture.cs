@@ -19,6 +19,7 @@ namespace Microsoft.Psi.Media
     public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly MediaCaptureConfiguration configuration;
 
         private MediaCaptureInternal camera;
@@ -28,8 +29,9 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
-        public MediaCapture(Pipeline pipeline, string configurationFilename)
-        : this(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaCapture(Pipeline pipeline, string configurationFilename, string name = nameof(MediaCapture))
+            : this(pipeline, name)
         {
             var configurationHelper = new ConfigurationHelper<MediaCaptureConfiguration>(configurationFilename);
             this.configuration = configurationHelper.Configuration;
@@ -40,8 +42,9 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Describes how to configure the media capture device.</param>
-        public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration)
-        : this(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration, string name = nameof(MediaCapture))
+            : this(pipeline, name)
         {
             this.configuration = configuration;
         }
@@ -54,8 +57,9 @@ namespace Microsoft.Psi.Media
         /// <param name="height">Height of output image in pixels.</param>
         /// <param name="deviceId">Device ID.</param>
         /// <param name="pixelFormat">Pixel format.</param>
-        public MediaCapture(Pipeline pipeline, int width, int height, string deviceId = "/dev/video0", PixelFormatId pixelFormat = PixelFormatId.BGR24)
-            : this(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaCapture(Pipeline pipeline, int width, int height, string deviceId = "/dev/video0", PixelFormatId pixelFormat = PixelFormatId.BGR24, string name = nameof(MediaCapture))
+            : this(pipeline, name)
         {
             if (pixelFormat != PixelFormatId.BGR24 && pixelFormat != PixelFormatId.YUYV && pixelFormat != PixelFormatId.MJPEG)
             {
@@ -71,9 +75,10 @@ namespace Microsoft.Psi.Media
             };
         }
 
-        private MediaCapture(Pipeline pipeline)
+        private MediaCapture(Pipeline pipeline, string name)
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.Out = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Out));
             this.Raw = pipeline.CreateEmitter<Shared<byte[]>>(this, nameof(this.Raw));
         }
@@ -141,78 +146,68 @@ namespace Microsoft.Psi.Media
                 if (this.Raw.HasSubscribers)
                 {
                     var len = frame.Length;
-                    using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
-                    {
-                        Marshal.Copy(frame.Start, shared.Resource, 0, len);
-                        this.Raw.Post(shared, originatingTime);
-                    }
+                    using Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len);
+                    Marshal.Copy(frame.Start, shared.Resource, 0, len);
+                    this.Raw.Post(shared, originatingTime);
                 }
 
                 if (this.Out.HasSubscribers)
                 {
                     if (this.configuration.PixelFormat == PixelFormatId.BGR24)
                     {
-                        using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp))
-                        {
-                            sharedImage.Resource.CopyFrom((IntPtr)frame.Start);
-                            this.Out.Post(sharedImage, this.pipeline.GetCurrentTime());
-                        }
+                        using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp);
+                        sharedImage.Resource.CopyFrom((IntPtr)frame.Start);
+                        this.Out.Post(sharedImage, this.pipeline.GetCurrentTime());
                     }
                     else if (this.configuration.PixelFormat == PixelFormatId.YUYV)
                     {
                         // convert YUYV -> BGR24 (see https://msdn.microsoft.com/en-us/library/ms893078.aspx)
-                        using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp))
+                        using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGR_24bpp);
+                        var len = (int)(frame.Length * 1.5);
+                        using Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len);
+                        var bytes = shared.Resource;
+                        var pY = (byte*)frame.Start.ToPointer();
+                        var pU = pY + 1;
+                        var pV = pY + 3;
+                        for (var i = 0; i < len;)
                         {
-                            var len = (int)(frame.Length * 1.5);
-                            using (Shared<byte[]> shared = SharedArrayPool<byte>.GetOrCreate(len))
-                            {
-                                var bytes = shared.Resource;
-                                var pY = (byte*)frame.Start.ToPointer();
-                                var pU = pY + 1;
-                                var pV = pY + 3;
-                                for (var i = 0; i < len;)
-                                {
-                                    int y = (*pY - 16) * 298;
-                                    int u = *pU - 128;
-                                    int v = *pV - 128;
-                                    int r = (y + (409 * v) + 128) >> 8;
-                                    int g = (y - (100 * u) - (208 * v) + 128) >> 8;
-                                    int b = (y + (516 * u) + 128) >> 8;
+                            int y = (*pY - 16) * 298;
+                            int u = *pU - 128;
+                            int v = *pV - 128;
+                            int r = (y + (409 * v) + 128) >> 8;
+                            int g = (y - (100 * u) - (208 * v) + 128) >> 8;
+                            int b = (y + (516 * u) + 128) >> 8;
 
-                                    bytes[i++] = (byte)((r < 0) ? 0 : ((r > 255) ? 255 : r));
-                                    bytes[i++] = (byte)((g < 0) ? 0 : ((g > 255) ? 255 : g));
-                                    bytes[i++] = (byte)((b < 0) ? 0 : ((b > 255) ? 255 : b));
+                            bytes[i++] = (byte)((r < 0) ? 0 : ((r > 255) ? 255 : r));
+                            bytes[i++] = (byte)((g < 0) ? 0 : ((g > 255) ? 255 : g));
+                            bytes[i++] = (byte)((b < 0) ? 0 : ((b > 255) ? 255 : b));
 
-                                    pY += 2;
+                            pY += 2;
 
-                                    y = (*pY - 16) * 298;
-                                    r = (y + (409 * v) + 128) >> 8;
-                                    g = (y - (100 * u) - (208 * v) + 128) >> 8;
-                                    b = (y + (516 * u) + 128) >> 8;
-                                    bytes[i++] = (byte)((r < 0) ? 0 : ((r > 255) ? 255 : r));
-                                    bytes[i++] = (byte)((g < 0) ? 0 : ((g > 255) ? 255 : g));
-                                    bytes[i++] = (byte)((b < 0) ? 0 : ((b > 255) ? 255 : b));
+                            y = (*pY - 16) * 298;
+                            r = (y + (409 * v) + 128) >> 8;
+                            g = (y - (100 * u) - (208 * v) + 128) >> 8;
+                            b = (y + (516 * u) + 128) >> 8;
+                            bytes[i++] = (byte)((r < 0) ? 0 : ((r > 255) ? 255 : r));
+                            bytes[i++] = (byte)((g < 0) ? 0 : ((g > 255) ? 255 : g));
+                            bytes[i++] = (byte)((b < 0) ? 0 : ((b > 255) ? 255 : b));
 
-                                    pY += 2;
-                                    pU += 4;
-                                    pV += 4;
-                                }
-
-                                sharedImage.Resource.CopyFrom(bytes);
-                                this.Out.Post(sharedImage, originatingTime);
-                            }
+                            pY += 2;
+                            pU += 4;
+                            pV += 4;
                         }
+
+                        sharedImage.Resource.CopyFrom(bytes);
+                        this.Out.Post(sharedImage, originatingTime);
                     }
                     else if (this.configuration.PixelFormat == PixelFormatId.MJPEG)
                     {
                         var decoded = SKBitmap.Decode(new UnmanagedMemoryStream((byte*)frame.Start, frame.Length));
                         if (decoded != null)
                         {
-                            using (var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGRA_32bpp))
-                            {
-                                sharedImage.Resource.CopyFrom(decoded.Bytes);
-                                this.Out.Post(sharedImage, originatingTime);
-                            }
+                            using var sharedImage = ImagePool.GetOrCreate(this.configuration.Width, this.configuration.Height, PixelFormat.BGRA_32bpp);
+                            sharedImage.Resource.CopyFrom(decoded.Bytes);
+                            this.Out.Post(sharedImage, originatingTime);
                         }
                     }
                 }
@@ -239,6 +234,9 @@ namespace Microsoft.Psi.Media
 
             notifyCompleted();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
     }
 }
 

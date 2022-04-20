@@ -233,16 +233,13 @@ namespace Microsoft.Psi
         /// <summary>
         /// Sets supplemental stream metadata.
         /// </summary>
-        /// <typeparam name="T">Type of supplemental metadata.</typeparam>
-        /// <param name="value">Supplemental metadata value.</param>
-        /// <param name="serializers">Known serializers.</param>
-        internal void SetSupplementalMetadata<T>(T value, KnownSerializers serializers)
+        /// <param name="supplementalMetadataTypeName">The serialized supplemental metadata bytes.</param>
+        /// <param name="supplementalMetadataBytes">The supplemental metadata type name.</param>
+        internal void SetSupplementalMetadata(string supplementalMetadataTypeName, byte[] supplementalMetadataBytes)
         {
-            this.SupplementalMetadataTypeName = typeof(T).AssemblyQualifiedName;
-            var handler = serializers.GetHandler<T>();
-            var writer = new BufferWriter(this.supplementalMetadataBytes);
-            handler.Serialize(writer, value, new SerializationContext(serializers));
-            this.supplementalMetadataBytes = writer.Buffer;
+            this.SupplementalMetadataTypeName = supplementalMetadataTypeName;
+            this.supplementalMetadataBytes = new byte[supplementalMetadataBytes.Length];
+            Array.Copy(supplementalMetadataBytes, this.supplementalMetadataBytes, supplementalMetadataBytes.Length);
         }
 
         /// <summary>

@@ -47,20 +47,22 @@ namespace Microsoft.Psi.Spatial.Euclidean
     /// <summary>
     /// Represents a 3D rectangular box.
     /// </summary>
-    public readonly struct Box3D : IEquatable<Box3D>
+    public class Box3D : IEquatable<Box3D>
     {
         /// <summary>
-        /// The pose of the box.
+        /// The private pose (used to determine if the Pose has been mutated and update the inversePose).
         /// </summary>
-        public readonly CoordinateSystem Pose;
+        [NonSerialized]
+        private CoordinateSystem pose = null;
 
         /// <summary>
-        /// The bounds for the box.
+        /// The inverse pose (cached for efficiently resolving ContainsPoint queries).
         /// </summary>
-        public readonly Bounds3D Bounds;
+        [NonSerialized]
+        private CoordinateSystem inversePose = null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box3D"/> struct.
+        /// Initializes a new instance of the <see cref="Box3D"/> class.
         /// </summary>
         /// <param name="x1">The x-offset of the first diagonal corner of the box relative to its origin.</param>
         /// <param name="x2">The x-offset of the second diagonal corner of the box relative to its origin.</param>
@@ -79,7 +81,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box3D"/> struct.
+        /// Initializes a new instance of the <see cref="Box3D"/> class.
         /// </summary>
         /// <param name="bounds">The bounds for the box.</param>
         /// <param name="pose">An optional pose for the box (by default, at origin).</param>
@@ -90,7 +92,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Box3D"/> struct.
+        /// Initializes a new instance of the <see cref="Box3D"/> class.
         /// </summary>
         /// <param name="origin">The origin of the rectangle.</param>
         /// <param name="xAxis">The x-axis of the rectangle.</param>
@@ -111,6 +113,16 @@ namespace Microsoft.Psi.Spatial.Euclidean
             : this(x1, x2, y1, y2, z1, z2, new CoordinateSystem(origin, xAxis, yAxis, zAxis))
         {
         }
+
+        /// <summary>
+        /// Gets the pose of the box.
+        /// </summary>
+        public CoordinateSystem Pose { get; }
+
+        /// <summary>
+        /// Gets the bounds for the box.
+        /// </summary>
+        public Bounds3D Bounds { get; }
 
         /// <summary>
         /// Gets the origin of the box.
@@ -164,7 +176,22 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="left">The first box.</param>
         /// <param name="right">The second box.</param>
         /// <returns>True if the boxes are the same; otherwise false.</returns>
-        public static bool operator ==(Box3D left, Box3D right) => left.Equals(right);
+        public static bool operator ==(Box3D left, Box3D right)
+        {
+            if (left is null)
+            {
+                if (right is null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            else
+            {
+                return left.Equals(right);
+            }
+        }
 
         /// <summary>
         /// Returns a value indicating whether the specified boxes are different.
@@ -172,7 +199,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="left">The first box.</param>
         /// <param name="right">The second box.</param>
         /// <returns>True if the boxes are different; otherwise false.</returns>
-        public static bool operator !=(Box3D left, Box3D right) => !left.Equals(right);
+        public static bool operator !=(Box3D left, Box3D right) => !(left == right);
 
         /// <summary>
         /// Gets the corner points of the box.
@@ -187,10 +214,19 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <summary>
         /// Determines whether the <see cref="Box3D"/> contains a point.
         /// </summary>
-        /// <param name="point">The point to check.</param>
+        /// <param name="point3D">The point to check.</param>
+        /// <param name="epsilon">An optional epsilon parameter to specify a numerical tolerance.</param>
         /// <returns>True if this <see cref="Box3D"/> contains the point, otherwise false.</returns>
-        public bool ContainsPoint(Point3D point) =>
-            this.Bounds.ContainsPoint(point.TransformBy(this.Pose.Invert()));
+        public bool ContainsPoint(Point3D point3D, double epsilon = 0)
+        {
+            if (!Equals(this.Pose, this.pose))
+            {
+                this.Pose.DeepClone(ref this.pose);
+                this.Pose.Invert().DeepClone(ref this.inversePose);
+            }
+
+            return this.Bounds.ContainsPoint(point3D.TransformBy(this.inversePose), epsilon);
+        }
 
         /// <summary>
         /// Computes the intersection point between a 3D ray and this box.
@@ -223,12 +259,32 @@ namespace Microsoft.Psi.Spatial.Euclidean
         }
 
         /// <inheritdoc/>
-        public bool Equals(Box3D other) =>
-            this.Pose == other.Pose && this.Bounds == other.Bounds;
+        public bool Equals(Box3D other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+
+            // Optimization for a common success case.
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            // If run-time types are not exactly the same, return false.
+            if (this.GetType() != other.GetType())
+            {
+                return false;
+            }
+
+            // Return true if the fields match.
+            return this.Pose == other.Pose && this.Bounds == other.Bounds;
+        }
 
         /// <inheritdoc/>
         public override bool Equals(object obj) =>
-            obj is Box3D other && this.Equals(other);
+            obj is not null && obj.GetType().Equals(typeof(Box3D)) && this.Equals((Box3D)obj);
 
         /// <inheritdoc/>
         public override int GetHashCode() =>
@@ -359,5 +415,23 @@ namespace Microsoft.Psi.Spatial.Euclidean
             var pose = this.Pose.TransformBy(translate);
             return new Box3D(bounds, pose);
         }
+
+        /// <summary>
+        /// Inflates the <see cref="Box3D"/> by a specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor.</param>
+        /// <returns>The inflated <see cref="Box3D"/>.</returns>
+        public Box3D Scale(double scaleFactor)
+            => new (this.Bounds.Scale(scaleFactor), this.Pose);
+
+        /// <summary>
+        /// Inflates the <see cref="Box3D"/> by specified scale factors on different axes.
+        /// </summary>
+        /// <param name="scaleFactorX">The scale factor on the X axis.</param>
+        /// <param name="scaleFactorY">The scale factor on the Y axis.</param>
+        /// <param name="scaleFactorZ">The scale factor on the Z axis.</param>
+        /// <returns>The inflated <see cref="Box3D"/>.</returns>
+        public Box3D Scale(double scaleFactorX, double scaleFactorY, double scaleFactorZ)
+            => new (this.Bounds.Scale(scaleFactorX, scaleFactorY, scaleFactorZ), this.Pose);
     }
 }

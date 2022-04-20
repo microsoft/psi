@@ -35,12 +35,13 @@ namespace Microsoft.Psi.Onnx
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="modelFileName">The name of the model.</param>
         /// <param name="gpuDeviceId">The GPU device ID to run execution on, or null to run on CPU.</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <remarks>
         /// To run on a GPU, use the Microsoft.Psi.Onnx.ModelRunners.Gpu library instead of Microsoft.Psi.Onnx.ModelRunners.Cpu, and set
         /// the value of the <pararef name="gpuDeviceId"/> parameter to a valid non-negative integer. Typical device ID values are 0 or 1.
         /// </remarks>
-        public TinyYoloV2OnnxModelRunner(Pipeline pipeline, string modelFileName, int? gpuDeviceId = null)
-            : base(pipeline)
+        public TinyYoloV2OnnxModelRunner(Pipeline pipeline, string modelFileName, int? gpuDeviceId = null, string name = nameof(TinyYoloV2OnnxModelRunner))
+            : base(pipeline, name)
         {
             // create an ONNX model, with a configuration that matches the structure
             // of the Tiny Yolo V2 model

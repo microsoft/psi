@@ -71,7 +71,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         // True if the timeline cursor should follow the mouse cursor when in manual navigation mode, otherwise false
         private bool cursorFollowsMouse = true;
 
-        private RelayCommand<DateTime> copyCursorTimeToClipboardCommand;
+        private RelayCommand<string> copyToClipboardCommand;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Navigator"/> class.
@@ -101,12 +101,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         public event NavigatorTimeChangedHandler CursorChanged;
 
         /// <summary>
-        /// Gets the command for copying the cursor time to clipboard.
+        /// Gets the command for copying a string to clipboard.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand<DateTime> CopyCursorTimeToClipboardCommand
-            => this.copyCursorTimeToClipboardCommand ??= new RelayCommand<DateTime>(cursor => Clipboard.SetText(cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
+        public RelayCommand<string> CopyToClipboardCommand
+            => this.copyToClipboardCommand ??= new RelayCommand<string>(text => Clipboard.SetText(text));
 
         /// <summary>
         /// Gets or the cursor mode.
@@ -626,6 +626,77 @@ namespace Microsoft.Psi.Visualization.Navigation
         {
             TimeSpan padding = TimeSpan.FromTicks((long)(this.selectionRange.Duration.Ticks * this.zoomToSelectionPadding * 0.5));
             this.viewRange.Set(this.selectionRange.StartTime - padding, this.selectionRange.EndTime + padding);
+        }
+
+        /// <summary>
+        /// Move selection left.
+        /// </summary>
+        public void MoveSelectionLeft()
+        {
+            var selectionDuration = this.selectionRange.Duration;
+            var selectionStartTime = new DateTime(Math.Max((this.selectionRange.StartTime - selectionDuration).Ticks, this.dataRange.StartTime.Ticks));
+            var selectionEndTime = selectionStartTime + selectionDuration;
+            this.selectionRange.Set(selectionStartTime, selectionEndTime);
+
+            this.ShiftViewRangeToAccomodateSelection();
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the selection can be moved left.
+        /// </summary>
+        /// <returns>True if the selection can be moved left.</returns>
+        public bool CanMoveSelectionLeft()
+            => this.CursorMode != CursorMode.Live && this.SelectionRange.IsFinite && this.SelectionRange.StartTime > this.DataRange.StartTime;
+
+        /// <summary>
+        /// Move selection right.
+        /// </summary>
+        public void MoveSelectionRight()
+        {
+            var selectionDuration = this.selectionRange.Duration;
+            var selectionEndTime = new DateTime(Math.Min((this.selectionRange.EndTime + selectionDuration).Ticks, this.dataRange.EndTime.Ticks));
+            var selectionStartTime = selectionEndTime - selectionDuration;
+            this.selectionRange.Set(selectionStartTime, selectionEndTime);
+
+            this.ShiftViewRangeToAccomodateSelection();
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the selection can be moved right.
+        /// </summary>
+        /// <returns>True if the selection can be moved right.</returns>
+        public bool CanMoveSelectionRight()
+            => this.CursorMode != CursorMode.Live && this.SelectionRange.IsFinite && this.SelectionRange.EndTime < this.DataRange.EndTime;
+
+        /// <summary>
+        /// Shift the view range to capture the selection.
+        /// </summary>
+        public void ShiftViewRangeToAccomodateSelection()
+        {
+            var viewRangeDuration = this.viewRange.Duration;
+
+            // If the view range is shorter than the selection
+            if (viewRangeDuration <= this.selectionRange.Duration)
+            {
+                // adjust the desired view range duration to be more than the selection range
+                viewRangeDuration = TimeSpan.FromTicks((int)(this.selectionRange.Duration.Ticks * 1.1));
+            }
+
+            // If the selection range is after the view range
+            if (this.selectionRange.EndTime > this.viewRange.EndTime)
+            {
+                var padding = TimeSpan.FromTicks((int)(viewRangeDuration.Ticks * 0.05));
+                var viewRangeEnd = new DateTime(Math.Min((this.selectionRange.StartTime - padding + viewRangeDuration).Ticks, this.dataRange.EndTime.Ticks));
+                var viewRangeStart = viewRangeEnd - viewRangeDuration;
+                this.viewRange.Set(viewRangeStart, viewRangeEnd);
+            }
+            else if (this.selectionRange.StartTime < this.viewRange.StartTime)
+            {
+                var padding = TimeSpan.FromTicks((int)(viewRangeDuration.Ticks * 0.05));
+                var viewRangeStart = new DateTime(Math.Max((this.selectionRange.EndTime + padding - viewRangeDuration).Ticks, this.dataRange.StartTime.Ticks));
+                var viewRangeEnd = viewRangeStart + viewRangeDuration;
+                this.viewRange.Set(viewRangeStart, viewRangeEnd);
+            }
         }
 
         /// <summary>

@@ -17,6 +17,7 @@ namespace Microsoft.Psi.MixedReality
     /// </summary>
     public abstract class ResearchModeImu : IProducer<(Vector3D Sample, DateTime OriginatingTime)[]>, ISourceComponent
     {
+        private readonly string name;
         private readonly ResearchModeSensorDevice sensorDevice;
         private readonly ResearchModeImuSensor imuSensor;
         private readonly Task<ResearchModeSensorConsent> requestImuAccessTask;
@@ -30,8 +31,10 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="sensorType">The research mode sensor type.</param>
-        public ResearchModeImu(Pipeline pipeline, ResearchModeSensorType sensorType)
+        /// <param name="name">An optional name for the component.</param>
+        public ResearchModeImu(Pipeline pipeline, ResearchModeSensorType sensorType, string name = nameof(ResearchModeImu))
         {
+            this.name = name;
             this.Pipeline = pipeline;
             this.sensorDevice = new ResearchModeSensorDevice();
             this.requestImuAccessTask = this.sensorDevice.RequestIMUAccessAsync().AsTask();
@@ -71,6 +74,9 @@ namespace Microsoft.Psi.MixedReality
             notifyCompleted();
         }
 
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
+
         /// <summary>
         /// Processes a sensor frame received from the sensor.
         /// </summary>
@@ -87,20 +93,35 @@ namespace Microsoft.Psi.MixedReality
         /// <param name="toNanos">Function getting sample nanoseconds.</param>
         protected void PostSamples<T>(IResearchModeSensorFrame sensorFrame, T[] samples, Func<T, (float X, float Y, float Z)> toValueFn, Func<T, ulong> toNanos)
         {
-            var frameTicks = sensorFrame.GetTimeStamp().HostTicks;
+            if (samples.Length == 0)
+            {
+                return;
+            }
+
+            // Frames of samples arrive with a time stamp in 100ns "host ticks", which we convert to pipeline time.
+            // Individual samples within the frames have "VinylHupTicks", extracted by the toNanos function, which
+            // are in nanoseconds and are rooted at an arbitrary epoch (HololLens boot). To compute the originating
+            // time of individual samples, we find the difference between a particular sample and the last sample
+            // in the frame and apply this as a relative (negative) offset to the frame originating time, which also
+            // corresponds with the last sample but is rooted in a proper epoch.
+            var frameOriginatingTime = this.Pipeline.GetCurrentTimeFromElapsedTicks((long)sensorFrame.GetTimeStamp().HostTicks);
+            var lastRecentSampleNanos = toNanos(samples.Last()); // nanoseconds of last sample (arbitrary epoch)
             var frameSamples = samples
                 .Select(sample =>
                 {
+                    var sensorTicksOffsetFromFrame = (long)(toNanos(sample) - lastRecentSampleNanos) / 100; // negative offset in tick from last sample
+                    var sampleOriginatingTime = frameOriginatingTime.AddTicks(sensorTicksOffsetFromFrame); // sample originating time relative to frame
                     var val = toValueFn(sample);
-                    var sensorTicks = (toNanos(sample) - toNanos(samples[0])) / 100; // nanoseconds to ticks
-                    var sampleOriginatingTime = this.Pipeline.GetCurrentTimeFromElapsedTicks((long)(frameTicks + sensorTicks));
                     return (new Vector3D(-val.Z, -val.X, val.Y) /* \psi basis */, sampleOriginatingTime);
                 })
                 .Where(sample => sample.sampleOriginatingTime > this.lastSampleOriginatingTime)
                 .ToArray();
-            this.lastSampleOriginatingTime = frameSamples.Last().sampleOriginatingTime;
-            var frameOriginatingTime = this.Pipeline.GetCurrentTimeFromElapsedTicks((long)frameTicks);
-            this.Out.Post(frameSamples, frameOriginatingTime);
+
+            if (frameSamples.Length > 0)
+            {
+                this.lastSampleOriginatingTime = frameSamples.Last().sampleOriginatingTime;
+                this.Out.Post(frameSamples, frameOriginatingTime);
+            }
         }
 
         private void CaptureThread()

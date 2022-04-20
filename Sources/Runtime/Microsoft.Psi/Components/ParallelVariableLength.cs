@@ -29,10 +29,10 @@ namespace Microsoft.Psi.Components
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="action">Function mapping keyed input producers to output producers.</param>
-        /// <param name="name">Name for this component (defaults to ParallelVariableLength).</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy to be used by this component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
-        public ParallelVariableLength(Pipeline pipeline, Action<int, IProducer<TIn>> action, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)
-            : base(pipeline, name ?? nameof(ParallelVariableLength<TIn, TOut>), defaultDeliveryPolicy)
+        public ParallelVariableLength(Pipeline pipeline, Action<int, IProducer<TIn>> action, string name = nameof(ParallelVariableLength<TIn, TOut>), DeliveryPolicy defaultDeliveryPolicy = null)
+            : base(pipeline, name, defaultDeliveryPolicy)
         {
             this.parallelAction = action;
             this.inConnector = this.CreateInputConnectorFrom<TIn[]>(pipeline, nameof(this.inConnector));
@@ -47,10 +47,10 @@ namespace Microsoft.Psi.Components
         /// <param name="transform">Function mapping keyed input producers to output producers.</param>
         /// <param name="outputDefaultIfDropped">When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</param>
         /// <param name="defaultValue">Default value to use when messages are dropped in processing one of the input elements.</param>
-        /// <param name="name">Name for this component (defaults to ParallelVariableLength).</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy to be used by this component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
-        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped = false, TOut defaultValue = default, string name = null, DeliveryPolicy defaultDeliveryPolicy = null)
-            : base(pipeline, name ?? nameof(ParallelVariableLength<TIn, TOut>), defaultDeliveryPolicy)
+        public ParallelVariableLength(Pipeline pipeline, Func<int, IProducer<TIn>, IProducer<TOut>> transform, bool outputDefaultIfDropped = false, TOut defaultValue = default, string name = nameof(ParallelVariableLength<TIn, TOut>), DeliveryPolicy defaultDeliveryPolicy = null)
+            : base(pipeline, name, defaultDeliveryPolicy)
         {
             this.parallelTransform = transform;
             this.inConnector = this.CreateInputConnectorFrom<TIn[]>(pipeline, nameof(this.inConnector));

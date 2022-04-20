@@ -42,18 +42,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns>The voxel.</returns>
-        public Voxel<T> this[(int x, int y, int z) index]
-        {
-            get
-            {
-                if (!this.voxels.ContainsKey(index))
-                {
-                    throw new ArgumentOutOfRangeException("No voxel is available at the specified index.");
-                }
-
-                return this.voxels[index];
-            }
-        }
+        public Voxel<T> this[(int x, int y, int z) index] => this.voxels[index];
 
         /// <summary>
         /// Gets the voxel for a specified set of coordinates.

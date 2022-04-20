@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft.Psi.MixedReality.UniversalWindows")]
-[assembly: AssemblyCopyright("Â© Microsoft Corporation. All rights reserved.")]
+[assembly: AssemblyCopyright("© Microsoft Corporation. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.16.92.1")]
-[assembly: AssemblyFileVersion("0.16.92.1")]
-[assembly: AssemblyInformationalVersion("0.16.92.1-beta")]
+[assembly: AssemblyVersion("0.17.52.1")]
+[assembly: AssemblyFileVersion("0.17.52.1")]
+[assembly: AssemblyInformationalVersion("0.17.52.1-beta")]
 [assembly: ComVisible(false)]

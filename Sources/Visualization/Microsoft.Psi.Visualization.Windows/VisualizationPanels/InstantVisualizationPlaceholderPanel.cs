@@ -7,17 +7,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
-    using GalaSoft.MvvmLight.Command;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views;
 
     /// <summary>
     /// Represents a placeholder for another instant visualization panel.
     /// </summary>
-    public class InstantVisualizationPlaceholderPanel : VisualizationPanel
+    public class InstantVisualizationPlaceholderPanel : InstantVisualizationPanel
     {
         private readonly InstantVisualizationContainer instantVisualizationContainer;
-        private int relativeWidth = 100;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InstantVisualizationPlaceholderPanel"/> class.
@@ -35,17 +34,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand RemoveCellCommand => new RelayCommand(() => this.instantVisualizationContainer.CreateRemoveCellCommand(this));
-
-        /// <summary>
-        /// Gets or sets the name of the relative width for the panel.
-        /// </summary>
-        [DataMember]
-        [Description("The relative width for the panel.")]
-        public int RelativeWidth
-        {
-            get { return this.relativeWidth; }
-            set { this.Set(nameof(this.RelativeWidth), ref this.relativeWidth, value); }
-        }
 
         /// <inheritdoc/>
         public override List<VisualizationPanelType> CompatiblePanelTypes => new List<VisualizationPanelType>() { VisualizationPanelType.Canvas, VisualizationPanelType.XY, VisualizationPanelType.XYZ };

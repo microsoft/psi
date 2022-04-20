@@ -26,12 +26,14 @@ namespace Microsoft.Psi.AzureKinect
         /// <param name="configuration">Configuration to use for the sensor.</param>
         /// <param name="defaultDeliveryPolicy">An optional default delivery policy for the subpipeline (defaults is LatestMessage).</param>
         /// <param name="bodyTrackerDeliveryPolicy">An optional delivery policy for sending the depth-and-IR images stream to the body tracker (default is LatestMessage).</param>
+        /// <param name="name">An optional name for the component.</param>
         public AzureKinectSensor(
             Pipeline pipeline,
             AzureKinectSensorConfiguration configuration = null,
             DeliveryPolicy defaultDeliveryPolicy = null,
-            DeliveryPolicy bodyTrackerDeliveryPolicy = null)
-            : base(pipeline, nameof(AzureKinectSensor), defaultDeliveryPolicy ?? DeliveryPolicy.LatestMessage)
+            DeliveryPolicy bodyTrackerDeliveryPolicy = null,
+            string name = nameof(AzureKinectSensor))
+            : base(pipeline, name, defaultDeliveryPolicy ?? DeliveryPolicy.LatestMessage)
         {
             this.Configuration = configuration ?? new AzureKinectSensorConfiguration();
 
@@ -88,7 +90,7 @@ namespace Microsoft.Psi.AzureKinect
                     int numDevices = Device.GetInstalledCount();
                     for (int i = 0; i < numDevices; i++)
                     {
-                        CameraDeviceInfo di = new CameraDeviceInfo
+                        var di = new CameraDeviceInfo
                         {
                             FriendlyName = $"AzureKinect-{i}",
                             DeviceName = $"AzureKinect-{i}",
@@ -110,7 +112,7 @@ namespace Microsoft.Psi.AzureKinect
                         di.Sensors = new List<CameraDeviceInfo.Sensor>();
                         for (int k = 0; k < 3; k++)
                         {
-                            CameraDeviceInfo.Sensor sensor = new CameraDeviceInfo.Sensor();
+                            var sensor = new CameraDeviceInfo.Sensor();
                             uint[,] resolutions = null;
                             switch (k)
                             {
@@ -156,7 +158,7 @@ namespace Microsoft.Psi.AzureKinect
                                         continue; // Mode doesn't support 30fps
                                     }
 
-                                    CameraDeviceInfo.Sensor.ModeInfo mi = new CameraDeviceInfo.Sensor.ModeInfo
+                                    var mi = new CameraDeviceInfo.Sensor.ModeInfo
                                     {
                                         Format = Imaging.PixelFormat.BGRA_32bpp,
                                         FrameRateNumerator = fr,

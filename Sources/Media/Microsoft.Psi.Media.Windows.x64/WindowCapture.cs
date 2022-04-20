@@ -31,8 +31,9 @@ namespace Microsoft.Psi.Media
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">Interval at which to render and emit frames of the window.</param>
         /// <param name="hWnd">Window handle to capture (default=desktop window/primary screen).</param>
-        public WindowCapture(Pipeline pipeline, TimeSpan interval, IntPtr hWnd)
-            : base(pipeline, true)
+        /// <param name="name">An optional name for the component.</param>
+        public WindowCapture(Pipeline pipeline, TimeSpan interval, IntPtr hWnd, string name = nameof(WindowCapture))
+            : base(pipeline, true, name)
         {
             this.interval = interval;
             this.hWnd = hWnd == IntPtr.Zero ? GetDesktopWindow() : hWnd;
@@ -44,8 +45,9 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">Interval at which to render and emit frames of the window.</param>
-        public WindowCapture(Pipeline pipeline, TimeSpan interval)
-            : this(pipeline, interval, IntPtr.Zero)
+        /// <param name="name">An optional name for the component.</param>
+        public WindowCapture(Pipeline pipeline, TimeSpan interval, string name = nameof(WindowCapture))
+            : this(pipeline, interval, IntPtr.Zero, name)
         {
         }
 
@@ -54,8 +56,9 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Configuration values for the window capture component.</param>
-        public WindowCapture(Pipeline pipeline, WindowCaptureConfiguration configuration)
-            : this(pipeline, configuration.Interval, configuration.WindowHandle)
+        /// <param name="name">An optional name for the component.</param>
+        public WindowCapture(Pipeline pipeline, WindowCaptureConfiguration configuration, string name = nameof(WindowCapture))
+            : this(pipeline, configuration.Interval, configuration.WindowHandle, name)
         {
         }
 
@@ -63,8 +66,9 @@ namespace Microsoft.Psi.Media
         /// Initializes a new instance of the <see cref="WindowCapture"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public WindowCapture(Pipeline pipeline)
-            : this(pipeline, WindowCaptureConfiguration.Default)
+        /// <param name="name">An optional name for the component.</param>
+        public WindowCapture(Pipeline pipeline, string name = nameof(WindowCapture))
+            : this(pipeline, WindowCaptureConfiguration.Default, name)
         {
         }
 

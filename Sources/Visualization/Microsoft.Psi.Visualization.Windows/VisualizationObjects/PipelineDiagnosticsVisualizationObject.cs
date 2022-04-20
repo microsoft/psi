@@ -88,6 +88,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             TotalMessageDroppedCount,
 
             /// <summary>
+            /// Message dropped percentage heatmap visualization.
+            /// </summary>
+            TotalMessageDroppedPercentage,
+
+            /// <summary>
             /// Message processed count heatmap visualization.
             /// </summary>
             TotalMessageProcessedCount,

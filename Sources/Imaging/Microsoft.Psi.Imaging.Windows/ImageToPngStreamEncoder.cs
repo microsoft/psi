@@ -12,6 +12,9 @@ namespace Microsoft.Psi.Imaging
     public class ImageToPngStreamEncoder : IImageToStreamEncoder
     {
         /// <inheritdoc/>
+        public string Description => $"Png";
+
+        /// <inheritdoc/>
         public void EncodeToStream(Image image, Stream stream)
         {
             // The encoder is created on every call (rather than in a constructor)

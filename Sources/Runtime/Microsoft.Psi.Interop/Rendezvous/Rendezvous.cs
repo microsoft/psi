@@ -361,9 +361,11 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// </summary>
             /// <param name="name">Unique name by which to refer to the process.</param>
             /// <param name="endpoints">Process endpoints.</param>
-            public Process(string name, IEnumerable<Endpoint> endpoints)
+            /// <param name="version">Optional process version (allowing negotiation of client compatibility).</param>
+            public Process(string name, IEnumerable<Endpoint> endpoints, string version = null)
             {
                 this.Name = name;
+                this.Version = version ?? string.Empty;
                 this.endpoints = endpoints.ToList();
             }
 
@@ -371,8 +373,9 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// Initializes a new instance of the <see cref="Process"/> class.
             /// </summary>
             /// <param name="name">Unique name by which to refer to the process.</param>
-            public Process(string name)
-                : this(name, Enumerable.Empty<Endpoint>())
+            /// <param name="version">Optional process version (allowing negotiation of client compatibility).</param>
+            public Process(string name, string version = null)
+                : this(name, Enumerable.Empty<Endpoint>(), version)
             {
             }
 
@@ -380,6 +383,11 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// Gets the process name.
             /// </summary>
             public string Name { get; private set; }
+
+            /// <summary>
+            /// Gets the process version.
+            /// </summary>
+            public string Version { get; private set; }
 
             /// <summary>
             /// Gets the endpoints.

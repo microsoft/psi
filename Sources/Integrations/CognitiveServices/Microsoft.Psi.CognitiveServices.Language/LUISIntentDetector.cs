@@ -34,8 +34,9 @@ namespace Microsoft.Psi.CognitiveServices.Language
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public LUISIntentDetector(Pipeline pipeline, LUISIntentDetectorConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public LUISIntentDetector(Pipeline pipeline, LUISIntentDetectorConfiguration configuration, string name = nameof(LUISIntentDetector))
+            : base(pipeline, name)
         {
             this.configuration = configuration;
         }

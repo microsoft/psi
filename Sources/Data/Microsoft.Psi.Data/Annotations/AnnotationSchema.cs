@@ -50,23 +50,37 @@ namespace Microsoft.Psi.Data.Annotations
         /// Loads an annotation schema from disk.
         /// </summary>
         /// <param name="fileName">The full path and filename of the annotation schema to load.</param>
-        /// <returns>The requested annotation schema if it exists, otherwise null.</returns>
-        public static AnnotationSchema Load(string fileName)
+        /// <returns>The requested annotation schema.</returns>
+        public static AnnotationSchema LoadFrom(string fileName)
         {
+            using var streamReader = new StreamReader(fileName);
+            return LoadFrom(streamReader);
+        }
+
+        /// <summary>
+        /// Tries to load an annotation schema from disk.
+        /// </summary>
+        /// <param name="fileName">The full path and filename of the annotation schema to load.</param>
+        /// <param name="annotationSchema">The loaded annotation schema if successful.</param>
+        /// <returns>True if the annotation schema is loaded successfully, otherwise null.</returns>
+        public static bool TryLoadFrom(string fileName, out AnnotationSchema annotationSchema)
+        {
+            annotationSchema = null;
             if (!File.Exists(fileName))
             {
-                return null;
+                return false;
             }
 
             try
             {
-                using var streamReader = new StreamReader(fileName);
-                return Load(streamReader);
+                annotationSchema = LoadFrom(fileName);
             }
             catch (Exception)
             {
-                return null;
+                return false;
             }
+
+            return true;
         }
 
         /// <summary>
@@ -177,7 +191,7 @@ namespace Microsoft.Psi.Data.Annotations
             }
         }
 
-        private static AnnotationSchema Load(StreamReader streamReader)
+        private static AnnotationSchema LoadFrom(StreamReader streamReader)
         {
             var reader = new JsonTextReader(streamReader);
             var serializer = JsonSerializer.Create(JsonSerializerSettings);

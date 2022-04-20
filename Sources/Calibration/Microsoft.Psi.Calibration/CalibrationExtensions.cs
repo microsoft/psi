@@ -59,6 +59,7 @@ namespace Microsoft.Psi.Calibration
             pi = 0;
             cameraMatrix[0, 0] = computedParameters[pi++]; // fx
             cameraMatrix[1, 1] = computedParameters[pi++]; // fy
+            cameraMatrix[2, 2] = 1;
             cameraMatrix[0, 2] = computedParameters[pi++]; // cx
             cameraMatrix[1, 2] = computedParameters[pi++]; // cy
             distortionCoefficients[0] = computedParameters[pi++]; // k1
@@ -127,6 +128,7 @@ namespace Microsoft.Psi.Calibration
             pi = 0;
             cameraMatrix[0, 0] = computedParameters[pi++]; // fx
             cameraMatrix[1, 1] = computedParameters[pi++]; // fy
+            cameraMatrix[2, 2] = 1;
             cameraMatrix[0, 2] = computedParameters[pi++]; // cx
             cameraMatrix[1, 2] = computedParameters[pi++]; // cy
             distortionCoefficients[0] = computedParameters[pi++]; // k1
@@ -188,7 +190,7 @@ namespace Microsoft.Psi.Calibration
         public static Point3D? ProjectToCameraSpace(IDepthDeviceCalibrationInfo depthDeviceCalibrationInfo, Point2D point2D, Shared<DepthImage> depthImage)
         {
             var colorExtrinsicsInverse = depthDeviceCalibrationInfo.ColorPose;
-            var pointInCameraSpace = depthDeviceCalibrationInfo.ColorIntrinsics.GetCameraSpacePosition(point2D, 1.0, true);
+            var pointInCameraSpace = depthDeviceCalibrationInfo.ColorIntrinsics.GetCameraSpacePosition(point2D, 1.0, depthImage.Resource.DepthValueSemantics, true);
             double x = pointInCameraSpace.X * colorExtrinsicsInverse[0, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[0, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[0, 2] + colorExtrinsicsInverse[0, 3];
             double y = pointInCameraSpace.X * colorExtrinsicsInverse[1, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[1, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[1, 2] + colorExtrinsicsInverse[1, 3];
             double z = pointInCameraSpace.X * colorExtrinsicsInverse[2, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[2, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[2, 2] + colorExtrinsicsInverse[2, 3];
@@ -203,14 +205,13 @@ namespace Microsoft.Psi.Calibration
         /// </summary>
         /// <param name="source">Tuple of depth image, list of points to project, and calibration information.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Returns a producer that generates a list of corresponding 3D points in Kinect camera space.</returns>
         public static IProducer<List<Point3D>> ProjectTo3D(
-            this IProducer<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> source, DeliveryPolicy<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> deliveryPolicy = null)
-        {
-            var projectTo3D = new ProjectTo3D(source.Out.Pipeline);
-            source.PipeTo(projectTo3D, deliveryPolicy);
-            return projectTo3D;
-        }
+            this IProducer<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> source,
+            DeliveryPolicy<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> deliveryPolicy = null,
+            string name = nameof(ProjectTo3D))
+            => source.PipeTo(new ProjectTo3D(source.Out.Pipeline, name), deliveryPolicy);
 
         /// <summary>
         /// Performs a ray/mesh intersection with the depth map.
@@ -302,7 +303,7 @@ namespace Microsoft.Psi.Calibration
         /// </summary>
         /// <param name="m">Input rotation matrix.</param>
         /// <returns>Same rotation in axis-angle representation (L2-Norm of the vector represents angular distance).</returns>
-        /// <param name="epsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation.</param>
+        /// <param name="epsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</param>
         public static Vector<double> MatrixToAxisAngle(Matrix<double> m, double epsilon = 0.01 * Math.PI / 180)
         {
             if (m.RowCount != 3 || m.ColumnCount != 3)
@@ -478,6 +479,7 @@ namespace Microsoft.Psi.Calibration
                 var k = Matrix<double>.Build.DenseIdentity(3, 3);
                 k[0, 0] = p[pi++]; // fx
                 k[1, 1] = p[pi++]; // fy
+                k[2, 2] = 1;
                 k[0, 2] = p[pi++]; // cx
                 k[1, 2] = p[pi++]; // cy
 

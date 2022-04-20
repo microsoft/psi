@@ -7,8 +7,10 @@ namespace Microsoft.Psi.MixedReality
     using System.Numerics;
     using MathNet.Numerics.LinearAlgebra.Double;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi.Spatial.Euclidean;
     using StereoKit;
     using StereoKitColor = StereoKit.Color;
+    using StereoKitColor32 = StereoKit.Color32;
     using SystemDrawingColor = System.Drawing.Color;
 
     /// <summary>
@@ -20,99 +22,60 @@ namespace Microsoft.Psi.MixedReality
         private static readonly CoordinateSystem HoloLensBasisInverted = HoloLensBasis.Invert();
 
         /// <summary>
-        /// Compute a change of basis for the given matrix. From HoloLens basis to \psi basis.
-        /// </summary>
-        /// <param name="holoLensMatrix">The given matrix in HoloLens basis.</param>
-        /// <returns>The converted matrix with \psi basis.</returns>
-        /// /// <remarks>
-        /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// </remarks>
-        public static DenseMatrix ChangeBasisHoloLensToPsi(this DenseMatrix holoLensMatrix)
-        {
-            return HoloLensBasisInverted * holoLensMatrix * HoloLensBasis;
-        }
-
-        /// <summary>
-        /// Compute a change of basis for the given matrix. From \psi basis to HoloLens basis.
-        /// </summary>
-        /// <param name="psiMatrix">The given matrix in \psi basis.</param>
-        /// <returns>The converted matrix with HoloLens basis.</returns>
-        /// /// <remarks>
-        /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// </remarks>
-        public static DenseMatrix ChangeBasisPsiToHoloLens(this DenseMatrix psiMatrix)
-        {
-            return HoloLensBasis * psiMatrix * HoloLensBasisInverted;
-        }
-
-        /// <summary>
-        /// Converts a <see cref="StereoKit.Matrix"/> pose to a \psi <see cref="CoordinateSystem"/>,
-        /// changing basis from HoloLens to \psi and transforming from StereoKit coordinates to world coordinates.
+        /// Converts a <see cref="StereoKit.Matrix"/> to a <see cref="CoordinateSystem"/>,
+        /// changing basis from HoloLens to MathNet.
         /// </summary>
         /// <param name="stereoKitMatrix">The <see cref="StereoKit.Matrix"/> to be converted.</param>
         /// <returns>The <see cref="CoordinateSystem"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
-        public static CoordinateSystem ToPsiCoordinateSystem(this StereoKit.Matrix stereoKitMatrix)
+        public static CoordinateSystem ToCoordinateSystem(this StereoKit.Matrix stereoKitMatrix)
         {
             Matrix4x4 systemMatrix = stereoKitMatrix;
-            var mathNetMatrix = systemMatrix.ToMathNetMatrix().ChangeBasisHoloLensToPsi();
-            var coordinateSystem = new CoordinateSystem(mathNetMatrix);
-            return coordinateSystem.TransformBy(StereoKitTransforms.StereoKitStartingPose);
+            return new CoordinateSystem(systemMatrix.ToMathNetMatrix());
         }
 
         /// <summary>
-        /// Converts a StereoKit <see cref="Pose"/> to a \psi <see cref="CoordinateSystem"/>,
-        /// changing basis from HoloLens to \psi and transforming from StereoKit coordinates to world coordinates.
+        /// Converts a StereoKit <see cref="Pose"/> to a <see cref="CoordinateSystem"/>,
+        /// changing basis from HoloLens to MathNet.
         /// </summary>
         /// <param name="pose">The StereoKit <see cref="Pose"/> to be converted.</param>
         /// <returns>The <see cref="CoordinateSystem"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
-        public static CoordinateSystem ToPsiCoordinateSystem(this Pose pose)
+        public static CoordinateSystem ToCoordinateSystem(this Pose pose)
         {
-            return pose.ToMatrix().ToPsiCoordinateSystem();
+            return pose.ToMatrix().ToCoordinateSystem();
         }
 
         /// <summary>
-        /// Converts a <see cref="CoordinateSystem"/> pose to a <see cref="StereoKit.Matrix"/> pose,
-        /// changing basis from \psi to HoloLens and transforming from world coordinates to StereoKit coordinates.
+        /// Converts a <see cref="CoordinateSystem"/> to a <see cref="StereoKit.Matrix"/>,
+        /// changing basis from MathNet to HoloLens.
         /// </summary>
-        /// <param name="coordinateSystem">The <see cref="CoordinateSystem"/> pose to be converted.</param>
+        /// <param name="coordinateSystem">The <see cref="CoordinateSystem"/> to be converted.</param>
         /// <returns>The <see cref="StereoKit.Matrix"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
         public static StereoKit.Matrix ToStereoKitMatrix(this CoordinateSystem coordinateSystem)
         {
-            var mathNetMatrix = coordinateSystem.TransformBy(StereoKitTransforms.StereoKitStartingPoseInverse).ChangeBasisPsiToHoloLens();
-            return new StereoKit.Matrix(mathNetMatrix.ToSystemNumericsMatrix());
+            return new StereoKit.Matrix(coordinateSystem.ToHoloLensSystemMatrix());
         }
 
         /// <summary>
         /// Converts a <see cref="CoordinateSystem"/> pose to a StereoKit <see cref="Pose"/>,
-        /// changing basis from \psi to HoloLens and transforming from world coordinates to StereoKit coordinates.
+        /// changing basis from MathNet to HoloLens.
         /// </summary>
         /// <param name="coordinateSystem">The <see cref="CoordinateSystem"/> pose to be converted.</param>
         /// <returns>The <see cref="Pose"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
         public static Pose ToStereoKitPose(this CoordinateSystem coordinateSystem)
         {
@@ -120,128 +83,48 @@ namespace Microsoft.Psi.MixedReality
         }
 
         /// <summary>
-        /// Converts a <see cref="Matrix4x4"/> to a <see cref="DenseMatrix"/>.
-        /// </summary>
-        /// <param name="systemNumericsMatrix">The System.Numerics matrix.</param>
-        /// <returns>The MathNet dense matrix.</returns>
-        public static DenseMatrix ToMathNetMatrix(this Matrix4x4 systemNumericsMatrix)
-        {
-            // Values are stored column-major.
-            var values = new double[]
-            {
-                systemNumericsMatrix.M11,
-                systemNumericsMatrix.M12,
-                systemNumericsMatrix.M13,
-                systemNumericsMatrix.M14,
-                systemNumericsMatrix.M21,
-                systemNumericsMatrix.M22,
-                systemNumericsMatrix.M23,
-                systemNumericsMatrix.M24,
-                systemNumericsMatrix.M31,
-                systemNumericsMatrix.M32,
-                systemNumericsMatrix.M33,
-                systemNumericsMatrix.M34,
-                systemNumericsMatrix.M41,
-                systemNumericsMatrix.M42,
-                systemNumericsMatrix.M43,
-                systemNumericsMatrix.M44,
-            };
-
-            return new DenseMatrix(4, 4, values);
-        }
-
-        /// <summary>
-        /// Converts a <see cref="DenseMatrix"/> to a <see cref="Matrix4x4"/>.
-        /// </summary>
-        /// <param name="mathNetMatrix">The MathNet dense matrix.</param>
-        /// <returns>The System.Numerics matrix.</returns>
-        public static Matrix4x4 ToSystemNumericsMatrix(this DenseMatrix mathNetMatrix)
-        {
-            var values = mathNetMatrix.Values;
-            return new Matrix4x4(
-                (float)values[0],
-                (float)values[1],
-                (float)values[2],
-                (float)values[3],
-                (float)values[4],
-                (float)values[5],
-                (float)values[6],
-                (float)values[7],
-                (float)values[8],
-                (float)values[9],
-                (float)values[10],
-                (float)values[11],
-                (float)values[12],
-                (float)values[13],
-                (float)values[14],
-                (float)values[15]);
-        }
-
-        /// <summary>
-        /// Convert <see cref="Point3D"/> to <see cref="Vec3"/>, changing the basis from \psi to HoloLens.
+        /// Convert <see cref="Point3D"/> to <see cref="Vec3"/>, changing the basis from MathNet to HoloLens.
         /// </summary>
         /// <param name="point3d"><see cref="Point3D"/> to be converted.</param>
-        /// <param name="transformWorldToStereoKit">If true, transform from world coordinates to StereoKit coordinates.</param>
         /// <returns><see cref="Vec3"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
-        public static Vec3 ToVec3(this Point3D point3d, bool transformWorldToStereoKit = true)
+        public static Vec3 ToVec3(this Point3D point3d)
         {
-            if (transformWorldToStereoKit)
-            {
-                point3d = StereoKitTransforms.StereoKitStartingPoseInverse.Transform(point3d);
-            }
-
-            // Change of basis happening here:
+            // Change of basis happening in place here.
             return new Vec3(-(float)point3d.Y, (float)point3d.Z, -(float)point3d.X);
         }
 
         /// <summary>
-        /// Convert <see cref="Vec3"/> to <see cref="Point3D"/>, changing the basis from HoloLens to \psi.
+        /// Convert <see cref="Vec3"/> to <see cref="Point3D"/>, changing the basis from HoloLens to MathNet.
         /// </summary>
         /// <param name="vec3"><see cref="Vec3"/> to be converted.</param>
-        /// <param name="transformStereoKitToWorld">If true, transform from StereoKit coordinates to world coordinates.</param>
         /// <returns><see cref="Point3D"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
-        public static Point3D ToPoint3D(this Vec3 vec3, bool transformStereoKitToWorld = true)
+        public static Point3D ToPoint3D(this Vec3 vec3)
         {
-            var point3D = new Point3D(-vec3.z, -vec3.x, vec3.y);
-
-            if (transformStereoKitToWorld)
-            {
-                return StereoKitTransforms.StereoKitStartingPose.Transform(point3D);
-            }
-            else
-            {
-                return point3D;
-            }
+            // Change of basis happening in place here.
+            return new Point3D(-vec3.z, -vec3.x, vec3.y);
         }
 
         /// <summary>
-        /// Convert <see cref="Vector3"/> to <see cref="Point3D"/>, changing the basis from HoloLens to \psi.
+        /// Convert <see cref="Vector3"/> to <see cref="Point3D"/>, changing the basis from HoloLens to MathNet.
         /// </summary>
         /// <param name="vector3"><see cref="Vector3"/> to be converted.</param>
-        /// <param name="transformStereoKitToWorld">If true, transform from StereoKit coordinates to world coordinates.</param>
         /// <returns><see cref="Point3D"/>.</returns>
         /// <remarks>
         /// The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The \psi basis assumes that Forward=X, Left=Y, and Up=Z.
-        /// "StereoKit coordinates" means "in relation to the pose of the headset at startup".
-        /// "World coordinates" means "in relation to the world spatial anchor".
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.
         /// </remarks>
-        public static Point3D ToPoint3D(this Vector3 vector3, bool transformStereoKitToWorld = true)
+        public static Point3D ToPoint3D(this Vector3 vector3)
         {
             Vec3 v = vector3;
-            return v.ToPoint3D(transformStereoKitToWorld);
+            return v.ToPoint3D();
         }
 
         /// <summary>
@@ -253,19 +136,107 @@ namespace Microsoft.Psi.MixedReality
             => new ((float)color.R / 255, (float)color.G / 255, (float)color.B / 255, (float)color.A / 255);
 
         /// <summary>
+        /// Converts a specified <see cref="System.Drawing.Color"/> to a <see cref="StereoKit.Color"/>.
+        /// </summary>
+        /// <param name="color">The <see cref="System.Drawing.Color"/>.</param>
+        /// <returns>The corresponding <see cref="StereoKit.Color32"/>.</returns>
+        public static StereoKitColor32 ToStereoKitColor32(this SystemDrawingColor color)
+            => new (color.R, color.G, color.B, color.A);
+
+        /// <summary>
         /// Convert stream of frames of IMU samples to flattened stream of samples within.
         /// </summary>
         /// <param name="source">Stream of IMU frames.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of IMU samples.</returns>
-        public static IProducer<Vector3D> SelectManyImuSamples(this IProducer<(Vector3D Sample, DateTime OriginatingTime)[]> source)
-        {
-            return source.Process<(Vector3D Sample, DateTime OriginatingTime)[], Vector3D>((samples, envelope, emitter) =>
-            {
-                foreach (var sample in samples)
+        public static IProducer<Vector3D> SelectManyImuSamples(
+            this IProducer<(Vector3D Sample, DateTime OriginatingTime)[]> source,
+            DeliveryPolicy<(Vector3D Sample, DateTime OriginatingTime)[]> deliveryPolicy = null,
+            string name = nameof(SelectManyImuSamples))
+            => source.Process<(Vector3D Sample, DateTime OriginatingTime)[], Vector3D>(
+                (samples, envelope, emitter) =>
                 {
-                    emitter.Post(sample.Sample, sample.OriginatingTime);
-                }
-            });
+                    foreach (var sample in samples)
+                    {
+                        emitter.Post(sample.Sample, sample.OriginatingTime);
+                    }
+                },
+                deliveryPolicy,
+                name);
+
+        /// <summary>
+        /// Gets the pipeline current time from OpenXR.
+        /// </summary>
+        /// <param name="pipeline">The pipeline to get the current time for.</param>
+        /// <returns>The current OpenXR time.</returns>
+        public static DateTime GetCurrentTimeFromOpenXr(this Pipeline pipeline)
+        {
+            long currentSampleTicks = TimeHelper.ConvertXrTimeToHnsTicks(Backend.OpenXR.Time);
+            return pipeline.GetCurrentTimeFromElapsedTicks(currentSampleTicks);
+        }
+
+        /// <summary>
+        /// Converts a MathNet <see cref="DenseMatrix"/> to a HoloLens <see cref="Matrix4x4"/>.
+        /// </summary>
+        /// <param name="mathNetMatrix">The MathNet dense matrix.</param>
+        /// <returns>The HoloLens System.Numerics matrix.</returns>
+        /// <remarks>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.</remarks>
+        internal static Matrix4x4 ToHoloLensSystemMatrix(this DenseMatrix mathNetMatrix)
+        {
+            var holoLensMatrix = HoloLensBasis * mathNetMatrix * HoloLensBasisInverted;
+            return new Matrix4x4(
+                (float)holoLensMatrix.Values[0],
+                (float)holoLensMatrix.Values[1],
+                (float)holoLensMatrix.Values[2],
+                (float)holoLensMatrix.Values[3],
+                (float)holoLensMatrix.Values[4],
+                (float)holoLensMatrix.Values[5],
+                (float)holoLensMatrix.Values[6],
+                (float)holoLensMatrix.Values[7],
+                (float)holoLensMatrix.Values[8],
+                (float)holoLensMatrix.Values[9],
+                (float)holoLensMatrix.Values[10],
+                (float)holoLensMatrix.Values[11],
+                (float)holoLensMatrix.Values[12],
+                (float)holoLensMatrix.Values[13],
+                (float)holoLensMatrix.Values[14],
+                (float)holoLensMatrix.Values[15]);
+        }
+
+        /// <summary>
+        /// Converts a HoloLens <see cref="Matrix4x4"/> to a MathNet <see cref="DenseMatrix"/>.
+        /// </summary>
+        /// <param name="holoLensMatrix">The System.Numerics matrix.</param>
+        /// <returns>The MathNet dense matrix.</returns>
+        /// <remarks>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.</remarks>
+        internal static DenseMatrix ToMathNetMatrix(this Matrix4x4 holoLensMatrix)
+        {
+            // Values are stored column-major.
+            var values = new double[]
+            {
+                holoLensMatrix.M11,
+                holoLensMatrix.M12,
+                holoLensMatrix.M13,
+                holoLensMatrix.M14,
+                holoLensMatrix.M21,
+                holoLensMatrix.M22,
+                holoLensMatrix.M23,
+                holoLensMatrix.M24,
+                holoLensMatrix.M31,
+                holoLensMatrix.M32,
+                holoLensMatrix.M33,
+                holoLensMatrix.M34,
+                holoLensMatrix.M41,
+                holoLensMatrix.M42,
+                holoLensMatrix.M43,
+                holoLensMatrix.M44,
+            };
+
+            var mathNetMatrix = new DenseMatrix(4, 4, values);
+            return HoloLensBasisInverted * mathNetMatrix * HoloLensBasis;
         }
     }
 }

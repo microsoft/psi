@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Calibration
     using System.Runtime.Serialization;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// CameraIntrinsics defines the intrinsic properties for a given camera.
@@ -18,9 +19,6 @@ namespace Microsoft.Psi.Calibration
         [OptionalField]
         private bool closedFormDistorts;
 
-        [OptionalField]
-        private DepthPixelSemantics depthPixelSemantics;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraIntrinsics"/> class.
         /// </summary>
@@ -30,15 +28,13 @@ namespace Microsoft.Psi.Calibration
         /// <param name="radialDistortion">The radial distortion parameters (up to 6).</param>
         /// <param name="tangentialDistortion">The tangential distortion parameters (up to 2).</param>
         /// <param name="closedFormDistorts">Indicates which direction the closed form equation for Brown-Conrady Distortion model goes. I.e. does it perform distortion or undistortion. Default is to distort (thus making projection simpler and unprojection more complicated).</param>
-        /// <param name="depthPixelSemantics">Defines how depth pixel values should be interpreted.</param>
         public CameraIntrinsics(
             int imageWidth,
             int imageHeight,
             Matrix<double> transform,
             Vector<double> radialDistortion = null,
             Vector<double> tangentialDistortion = null,
-            bool closedFormDistorts = true,
-            DepthPixelSemantics depthPixelSemantics = DepthPixelSemantics.DistanceToPlane)
+            bool closedFormDistorts = true)
         {
             this.ImageWidth = imageWidth;
             this.ImageHeight = imageHeight;
@@ -64,7 +60,6 @@ namespace Microsoft.Psi.Calibration
             this.FocalLengthXY = new Point2D(this.Transform[0, 0], this.Transform[1, 1]);
             this.PrincipalPoint = new Point2D(this.Transform[0, 2], this.Transform[1, 2]);
             this.ClosedFormDistorts = closedFormDistorts;
-            this.depthPixelSemantics = depthPixelSemantics;
         }
 
         /// <inheritdoc/>
@@ -111,22 +106,6 @@ namespace Microsoft.Psi.Calibration
             private set
             {
                 this.closedFormDistorts = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets pixel semantics.
-        /// </summary>
-        public DepthPixelSemantics DepthPixelSemantics
-        {
-            get
-            {
-                return this.depthPixelSemantics;
-            }
-
-            private set
-            {
-                this.depthPixelSemantics = value;
             }
         }
 
@@ -183,12 +162,12 @@ namespace Microsoft.Psi.Calibration
         public bool TryGetPixelPosition(Point3D point3D, bool distort, out Point2D pixelPosition, bool nullIfOutsideFieldOfView = true)
         {
             var point2D = this.GetPixelPosition(point3D, distort, nullIfOutsideFieldOfView);
-            pixelPosition = point2D.HasValue ? point2D.Value : default;
+            pixelPosition = point2D ?? default;
             return point2D.HasValue;
         }
 
         /// <inheritdoc/>
-        public Point3D GetCameraSpacePosition(Point2D point2D, double depth, bool undistort)
+        public Point3D GetCameraSpacePosition(Point2D point2D, double depth, DepthValueSemantics depthValueSemantics, bool undistort)
         {
             // Convert from pixel coordinates to NDC
             var tmp = new Point3D(point2D.X, point2D.Y, 1.0);
@@ -201,7 +180,7 @@ namespace Microsoft.Psi.Calibration
                 this.TryUndistortPoint(pixelPoint2D, out pixelPoint2D);
             }
 
-            if (this.depthPixelSemantics == DepthPixelSemantics.DistanceToPoint)
+            if (depthValueSemantics == DepthValueSemantics.DistanceToPoint)
             {
                 double norm = Math.Sqrt(pixelPoint2D.X * pixelPoint2D.X + pixelPoint2D.Y * pixelPoint2D.Y + 1);
                 depth /= norm;
@@ -234,7 +213,7 @@ namespace Microsoft.Psi.Calibration
         }
 
         /// <inheritdoc/>
-        public Point3D[,] GetPixelToCameraSpaceMapping(bool undistort)
+        public Point3D[,] GetPixelToCameraSpaceMapping(DepthValueSemantics depthValueSemantics, bool undistort)
         {
             var result = new Point3D[this.ImageWidth, this.ImageHeight];
             for (int i = 0; i < this.ImageWidth; i++)
@@ -252,7 +231,7 @@ namespace Microsoft.Psi.Calibration
                         this.TryUndistortPoint(pixelPoint2D, out pixelPoint2D);
                     }
 
-                    if (this.depthPixelSemantics == DepthPixelSemantics.DistanceToPoint)
+                    if (depthValueSemantics == DepthValueSemantics.DistanceToPoint)
                     {
                         double norm = Math.Sqrt(pixelPoint2D.X * pixelPoint2D.X + pixelPoint2D.Y * pixelPoint2D.Y + 1);
                         result[i, j] = new Point3D(1 / norm, -pixelPoint2D.X / norm, -pixelPoint2D.Y / norm);
@@ -271,7 +250,6 @@ namespace Microsoft.Psi.Calibration
         public override int GetHashCode()
         {
             var hashCode = default(HashCode);
-            hashCode.Add(this.depthPixelSemantics);
             hashCode.Add(this.ClosedFormDistorts);
             hashCode.Add(this.FocalLengthXY);
             hashCode.Add(this.ImageHeight);
@@ -289,7 +267,6 @@ namespace Microsoft.Psi.Calibration
         /// <inheritdoc/>
         public bool Equals(ICameraIntrinsics other) =>
             other is CameraIntrinsics cameraIntrinsics &&
-            Equals(this.depthPixelSemantics, cameraIntrinsics.depthPixelSemantics) &&
             Equals(this.ClosedFormDistorts, cameraIntrinsics.ClosedFormDistorts) &&
             Equals(this.FocalLengthXY, cameraIntrinsics.FocalLengthXY) &&
             Equals(this.ImageHeight, cameraIntrinsics.ImageHeight) &&

@@ -101,31 +101,16 @@ namespace Microsoft.Psi.Imaging
         /// </returns>
         internal static int GetBytesPerPixel(PixelFormat pixelFormat)
         {
-            switch (pixelFormat)
+            return pixelFormat switch
             {
-                case PixelFormat.Gray_8bpp:
-                    return 1;
-
-                case PixelFormat.Gray_16bpp:
-                    return 2;
-
-                case PixelFormat.BGR_24bpp:
-                case PixelFormat.RGB_24bpp:
-                    return 3;
-
-                case PixelFormat.BGRX_32bpp:
-                case PixelFormat.BGRA_32bpp:
-                    return 4;
-
-                case PixelFormat.RGBA_64bpp:
-                    return 8;
-
-                case PixelFormat.Undefined:
-                    return 0;
-
-                default:
-                    throw new ArgumentException("Unknown pixel format");
-            }
+                PixelFormat.Gray_8bpp => 1,
+                PixelFormat.Gray_16bpp => 2,
+                PixelFormat.BGR_24bpp or PixelFormat.RGB_24bpp => 3,
+                PixelFormat.BGRX_32bpp or PixelFormat.BGRA_32bpp => 4,
+                PixelFormat.RGBA_64bpp => 8,
+                PixelFormat.Undefined => 0,
+                _ => throw new ArgumentException("Unknown pixel format"),
+            };
         }
 
         /// <summary>
@@ -138,25 +123,13 @@ namespace Microsoft.Psi.Imaging
         /// </returns>
         internal static int GetBitsPerChannel(PixelFormat pixelFormat)
         {
-            switch (pixelFormat)
+            return pixelFormat switch
             {
-                case PixelFormat.Gray_8bpp:
-                case PixelFormat.BGR_24bpp:
-                case PixelFormat.BGRX_32bpp:
-                case PixelFormat.BGRA_32bpp:
-                case PixelFormat.RGB_24bpp:
-                    return 8;
-
-                case PixelFormat.Gray_16bpp:
-                case PixelFormat.RGBA_64bpp:
-                    return 16;
-
-                case PixelFormat.Undefined:
-                    return 0;
-
-                default:
-                    throw new ArgumentException("Unknown pixel format");
-            }
+                PixelFormat.Gray_8bpp or PixelFormat.BGR_24bpp or PixelFormat.BGRX_32bpp or PixelFormat.BGRA_32bpp or PixelFormat.RGB_24bpp => 8,
+                PixelFormat.Gray_16bpp or PixelFormat.RGBA_64bpp => 16,
+                PixelFormat.Undefined => 0,
+                _ => throw new ArgumentException("Unknown pixel format"),
+            };
         }
     }
 }

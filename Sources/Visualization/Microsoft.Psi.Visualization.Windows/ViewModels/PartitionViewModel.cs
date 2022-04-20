@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
+    using Microsoft.Psi.PsiStudio.Common;
     using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Base;
@@ -852,6 +853,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Save Changes", this.SaveChangesCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionRemove, "Remove", this.RemovePartitionCommand));
             contextMenu.Items.Add(new Separator());
+
+            // Add the visualize session context menu if the partition is not in the currently visualized session
+            if (!this.SessionViewModel.IsCurrentSession)
+            {
+                contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.VisualizeSession, this.SessionViewModel.VisualizeSessionCommand));
+                contextMenu.Items.Add(new Separator());
+            }
 
             // Add show partition info menu
             var showPartitionInfoMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Show Partitions Info", null);

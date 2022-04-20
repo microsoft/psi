@@ -16,6 +16,7 @@ namespace Microsoft.Psi.Interop.Transport
     public class NetMQWriter : IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly IFormatSerializer serializer;
         private readonly Dictionary<string, Type> topics = new ();
 
@@ -27,9 +28,11 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="address">Connection string.</param>
         /// <param name="serializer">Format serializer with which messages are serialized.</param>
-        public NetMQWriter(Pipeline pipeline, string address, IFormatSerializer serializer)
+        /// <param name="name">An optional name for the component.</param>
+        public NetMQWriter(Pipeline pipeline, string address, IFormatSerializer serializer, string name = nameof(NetMQWriter))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.Address = address;
             this.serializer = serializer;
             this.socket = new PublisherSocket();
@@ -70,6 +73,9 @@ namespace Microsoft.Psi.Interop.Transport
                 this.socket = null;
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Receive<T>(T message, Envelope envelope, string topic)
         {

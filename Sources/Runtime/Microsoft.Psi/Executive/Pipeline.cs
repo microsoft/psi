@@ -74,6 +74,7 @@ namespace Microsoft.Psi
         private Time.TimerDelegate progressDelegate;
         private Platform.ITimer progressTimer;
         private bool pipelineRunEventHandled = false;
+        private int isPipelineDisposed = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pipeline"/> class.
@@ -684,9 +685,9 @@ namespace Microsoft.Psi
         /// <param name="abandonPendingWorkItems">Abandons pending work items.</param>
         internal void Dispose(bool abandonPendingWorkItems)
         {
-            if (this.components == null)
+            if (Interlocked.CompareExchange(ref this.isPipelineDisposed, 1, 0) != 0)
             {
-                // we never started or we've been already disposed
+                // we've already been disposed
                 return;
             }
 

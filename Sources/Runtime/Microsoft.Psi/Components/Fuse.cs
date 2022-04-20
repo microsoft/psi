@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Components
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Psi.Common.Interpolators;
 
     /// <summary>
     /// Component that fuses multiple streams based on a specified interpolator.
@@ -18,7 +17,8 @@ namespace Microsoft.Psi.Components
     public class Fuse<TPrimary, TSecondary, TInterpolation, TOut> : IProducer<TOut>
     {
         private readonly Pipeline pipeline;
-        private readonly Queue<Message<TPrimary>> primaryQueue = new Queue<Message<TPrimary>>(); // to be paired
+        private readonly string name;
+        private readonly Queue<Message<TPrimary>> primaryQueue = new (); // to be paired
         private readonly Interpolator<TSecondary, TInterpolation> interpolator;
         private readonly Func<TPrimary, TInterpolation[], TOut> outputCreator;
         private readonly Func<TPrimary, IEnumerable<int>> secondarySelector;
@@ -39,15 +39,18 @@ namespace Microsoft.Psi.Components
         /// <param name="outputCreator">Mapping function from messages to output.</param>
         /// <param name="secondaryCount">Number of secondary streams.</param>
         /// <param name="secondarySelector">Selector function mapping primary messages to a set of secondary stream indices.</param>
+        /// <param name="name">An optional name for the component.</param>
         public Fuse(
             Pipeline pipeline,
             Interpolator<TSecondary, TInterpolation> interpolator,
             Func<TPrimary, TInterpolation[], TOut> outputCreator,
             int secondaryCount = 1,
-            Func<TPrimary, IEnumerable<int>> secondarySelector = null)
+            Func<TPrimary, IEnumerable<int>> secondarySelector = null,
+            string name = null)
             : base()
         {
             this.pipeline = pipeline;
+            this.name = name ?? $"Fuse({interpolator})";
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.InPrimary = pipeline.CreateReceiver<TPrimary>(this, this.ReceivePrimary, nameof(this.InPrimary));
             this.interpolator = interpolator;
@@ -82,6 +85,9 @@ namespace Microsoft.Psi.Components
         /// Gets collection of secondary receivers.
         /// </summary>
         public IList<Receiver<TSecondary>> InSecondaries => this.inSecondaries;
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         /// <summary>
         /// Add input receiver.

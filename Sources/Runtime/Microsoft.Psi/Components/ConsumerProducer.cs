@@ -6,19 +6,23 @@ namespace Microsoft.Psi.Components
     /// <summary>
     /// This is the base class for any component that transforms an input type into an output type.
     /// Derive from thsi class if your component has more than one input or more than one output.
-    /// Otherwise, use one of the the <see cref="Operators.Select{TIn, TOut}(IProducer{TIn}, System.Func{TIn, Envelope, TOut}, DeliveryPolicy{TIn})"/>
-    /// or <see cref="Operators.Process{TIn, TOut}(IProducer{TIn}, System.Action{TIn, Envelope, Emitter{TOut}}, DeliveryPolicy{TIn})"/> operators.
+    /// Otherwise, use one of the the <see cref="Operators.Select{TIn, TOut}(IProducer{TIn}, System.Func{TIn, Envelope, TOut}, DeliveryPolicy{TIn}, string)"/>
+    /// or <see cref="Operators.Process{TIn, TOut}(IProducer{TIn}, System.Action{TIn, Envelope, Emitter{TOut}}, DeliveryPolicy{TIn}, string)"/> operators.
     /// </summary>
     /// <typeparam name="TIn">The input message type.</typeparam>
     /// <typeparam name="TOut">The output message type.</typeparam>
     public abstract class ConsumerProducer<TIn, TOut> : IConsumerProducer<TIn, TOut>
     {
+        private readonly string name;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConsumerProducer{TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        public ConsumerProducer(Pipeline pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public ConsumerProducer(Pipeline pipeline, string name = nameof(ConsumerProducer<TIn, TOut>))
         {
+            this.name = name;
             this.Out = pipeline.CreateEmitter<TOut>(this, nameof(this.Out));
             this.In = pipeline.CreateReceiver<TIn>(this, this.Receive, nameof(this.In));
         }
@@ -32,6 +36,9 @@ namespace Microsoft.Psi.Components
         /// Gets the stream to write messages to.
         /// </summary>
         public Emitter<TOut> Out { get; }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         /// <summary>
         /// Override this method to process the incomming message and potentially publish one or more output messages.

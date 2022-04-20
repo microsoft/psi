@@ -30,8 +30,9 @@ namespace Microsoft.Psi.Components
         /// is non-null, the messages will have originating times that align with the specified time.</param>
         /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
         /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
-        public Generator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval, DateTime? alignDateTime = null, bool isInfiniteSource = false)
-            : this(pipeline, CreateEnumerator(pipeline, enumerator, interval, alignDateTime), null, isInfiniteSource)
+        /// <param name="name">An optional name for the component.</param>
+        public Generator(Pipeline pipeline, IEnumerator<T> enumerator, TimeSpan interval, DateTime? alignDateTime = null, bool isInfiniteSource = false, string name = nameof(Generator))
+            : this(pipeline, CreateEnumerator(pipeline, enumerator, interval, alignDateTime), null, isInfiniteSource, name)
         {
         }
 
@@ -46,8 +47,9 @@ namespace Microsoft.Psi.Components
         /// account any other components in the pipeline which may have proposed replay times.</param>
         /// <param name="isInfiniteSource">If true, mark this Generator instance as representing an infinite source (e.g., a live-running sensor).
         /// If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</param>
-        public Generator(Pipeline pipeline, IEnumerator<(T, DateTime)> enumerator, DateTime? startTime = null, bool isInfiniteSource = false)
-            : base(pipeline, isInfiniteSource)
+        /// <param name="name">An optional name for the component.</param>
+        public Generator(Pipeline pipeline, IEnumerator<(T, DateTime)> enumerator, DateTime? startTime = null, bool isInfiniteSource = false, string name = nameof(Generator))
+            : base(pipeline, isInfiniteSource, name)
         {
             this.Out = pipeline.CreateEmitter<T>(this, nameof(this.Out));
             this.enumerator = new Enumerator(enumerator);

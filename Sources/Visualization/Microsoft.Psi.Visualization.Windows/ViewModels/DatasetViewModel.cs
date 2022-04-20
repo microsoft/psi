@@ -20,6 +20,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Defines types of auxiliary dataset information to display.
@@ -320,7 +321,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private string auxiliaryInfo = string.Empty;
 
         private RelayCommand createSessionCommand;
-        private RelayCommand createSessionFromStoreCommand;
+        private RelayCommand addSessionFromStoreCommand;
+        private RelayCommand addSessionFromFolderCommand;
+        private RelayCommand addMultipleSessionsFromFolderCommand;
         private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
@@ -392,7 +395,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public TimeSpan TotalDuration => TimeSpan.FromTicks(this.sessionViewModels.Sum(svm => svm.OriginatingTimeInterval.Span.Ticks));
 
         /// <summary>
-        /// Gets the create session command.
+        /// Gets the command to create a session.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -400,12 +403,28 @@ namespace Microsoft.Psi.Visualization.ViewModels
             this.createSessionCommand ??= new RelayCommand(() => this.CreateSession());
 
         /// <summary>
-        /// Gets the create session command.
+        /// Gets the command to add a session from a store.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand CreateSessionFromStoreCommand =>
-            this.createSessionFromStoreCommand ??= new RelayCommand(() => this.CreateSessionFromStore());
+        public RelayCommand AddSessionFromStoreCommand =>
+            this.addSessionFromStoreCommand ??= new RelayCommand(() => this.AddSessionFromStore());
+
+        /// <summary>
+        /// Gets the command to add a session from a specified folder.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AddSessionFromFolderCommand =>
+            this.addSessionFromFolderCommand ??= new RelayCommand(() => this.AddSessionFromFolder());
+
+        /// <summary>
+        /// Gets the command to add multiple sessions from a specified folder.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand AddMultipleSessionsFromFolderCommand =>
+            this.addMultipleSessionsFromFolderCommand ??= new RelayCommand(() => this.AddMultipleSessionsFromFolder());
 
         /// <summary>
         /// Gets the command that executes when opening the dataset context menu.
@@ -637,9 +656,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Creates a new session from a store.
+        /// Adds a new session from an existing store.
         /// </summary>
-        public void CreateSessionFromStore()
+        /// <returns>The session view model for the newly added session.</returns>
+        public SessionViewModel AddSessionFromStore()
         {
             var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
             var openFileDialog = new Win32.OpenFileDialog
@@ -652,10 +672,24 @@ namespace Microsoft.Psi.Visualization.ViewModels
             if (result == true)
             {
                 var fileInfo = new FileInfo(openFileDialog.FileName);
-                var name = fileInfo.Name.Split('.')[0];
+                var sessionName = fileInfo.Directory.Name;
+                var storeName = fileInfo.Name.Split('.')[0];
+                var storePath = fileInfo.DirectoryName;
                 var readerType = VisualizationContext.Instance.PluginMap.GetStreamReaderType(fileInfo.Extension);
-                var streamReader = Psi.Data.StreamReader.Create(name, fileInfo.DirectoryName, readerType);
-                this.CreateSessionFromStore(name, streamReader);
+                var streamReader = Psi.Data.StreamReader.Create(storeName, storePath, readerType);
+                var sessionViewModel = this.AddSessionFromStore(sessionName, streamReader);
+
+                // if this is the only session, set it to visualize
+                if (this.dataset.Sessions.Count == 1)
+                {
+                    this.VisualizeSession(sessionViewModel);
+                }
+
+                return sessionViewModel;
+            }
+            else
+            {
+                return default;
             }
         }
 
@@ -665,10 +699,145 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="sessionName">The name of the session.</param>
         /// <param name="streamReader">The stream reader for the data store.</param>
         /// <param name="partitionName">The partition name.</param>
-        public void CreateSessionFromStore(string sessionName, IStreamReader streamReader, string partitionName = null)
+        /// <returns>The session view model for the newly added session.</returns>
+        public SessionViewModel AddSessionFromStore(string sessionName, IStreamReader streamReader, string partitionName = null)
         {
             sessionName = this.EnsureUniqueSessionName(sessionName);
-            this.AddSession(this.dataset.AddSessionFromStore(streamReader, sessionName, partitionName));
+            return this.AddSession(this.dataset.AddSessionFromStore(streamReader, sessionName, partitionName));
+        }
+
+        /// <summary>
+        /// Adds a new session from a folder.
+        /// </summary>
+        /// <returns>The session view model for the newly added session.</returns>
+        public SessionViewModel AddSessionFromFolder()
+        {
+            var selectFolderDialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select a folder containing the partitions to be added as a new session.",
+                ShowNewFolderButton = false,
+            };
+
+            // Get the dataset directory name to prepopulate the folder select path
+            var datasetDirectoryName = string.IsNullOrEmpty(this.dataset.Filename) ? default : new FileInfo(this.dataset.Filename).DirectoryName;
+            if (datasetDirectoryName != default)
+            {
+                selectFolderDialog.SelectedPath = datasetDirectoryName;
+            }
+
+            var result = selectFolderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                // get the folder
+                var selectedFolder = selectFolderDialog.SelectedPath;
+
+                // set the session name to be the directory name
+                var sessionName = new FileInfo(selectedFolder).Name;
+                var session = this.dataset.AddSession(sessionName);
+                var sessionViewModel = this.AddSession(session);
+                sessionViewModel.AddMultiplePartitionsFromFolder(selectedFolder, out var _);
+
+                // if this is the only session, set it to visualize
+                if (this.dataset.Sessions.Count == 1)
+                {
+                    this.VisualizeSession(sessionViewModel);
+                }
+
+                return sessionViewModel;
+            }
+            else
+            {
+                return default;
+            }
+        }
+
+        /// <summary>
+        /// Adds multiple sessions from a folder.
+        /// </summary>
+        public void AddMultipleSessionsFromFolder()
+        {
+            var selectFolderDialog = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = "Select a folder containing the sessions to be added to the dataset.",
+                ShowNewFolderButton = false,
+            };
+
+            // Get the dataset directory name to prepopulate the folder select path
+            var datasetDirectoryName = string.IsNullOrEmpty(this.dataset.Filename) ? default : new FileInfo(this.dataset.Filename).DirectoryName;
+            if (datasetDirectoryName != default)
+            {
+                selectFolderDialog.SelectedPath = datasetDirectoryName;
+            }
+
+            var result = selectFolderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                this.AddMultipleSessionsFromFolder(selectFolderDialog.SelectedPath, out var existingSessions, out var existingPartitions);
+
+                if (existingSessions.Count > 0 || existingPartitions.Count > 0)
+                {
+                    var message = default(string);
+                    if (existingSessions.Count > 0)
+                    {
+                        if (existingPartitions.Count > 0)
+                        {
+                            message = $"{existingSessions.Count} session(s) and {existingPartitions.Count} partition(s) already existed in the dataset and were not added.";
+                        }
+                        else
+                        {
+                            message = $"{existingSessions.Count} session(s) already existed in the dataset and were not added.";
+                        }
+                    }
+                    else if (existingPartitions.Count > 0)
+                    {
+                        message = $"{existingPartitions} partition(s) already existed in the dataset and were not added.";
+                    }
+
+                    // Inform the user of partitions that were already present in the session
+                    new MessageBoxWindow(Application.Current.MainWindow, "Existing Sessions or Partitions", message, "Close", null)
+                        .ShowDialog();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Adds multiple sessions from a specified folder to the dataset.
+        /// </summary>
+        /// <param name="folderName">The folder to add sessions from.</param>
+        /// <param name="existingSessions">A list of sessions that were already existing and were not added.</param>
+        /// <param name="existingPartitions">A list of partitions that were already existing and were not added.</param>
+        public void AddMultipleSessionsFromFolder(string folderName, out List<Session> existingSessions, out List<IPartition> existingPartitions)
+        {
+            existingSessions = new List<Session>();
+            existingPartitions = new List<IPartition>();
+
+            // go through the subdirectories
+            foreach (var sessionFolder in Directory.GetDirectories(folderName))
+            {
+                // set the session name to be the directory name
+                var sessionName = new FileInfo(sessionFolder).Name;
+
+                // check if the dataset already contains a session by that name
+                var existingSession = this.dataset.Sessions.FirstOrDefault(s => s.Name == sessionName);
+                if (existingSession != null)
+                {
+                    // add it to the list of existing session
+                    existingSessions.Add(existingSession);
+                }
+                else
+                {
+                    this.AddSession(this.dataset.AddSession(sessionName));
+                }
+
+                // get the view model
+                var sessionViewModel = this.sessionViewModels.First(s => s.Name == sessionName);
+
+                // add partitions from the folder
+                sessionViewModel.AddMultiplePartitionsFromFolder(sessionFolder, out var existingPartitionsInSession);
+
+                // and add any existing partitions to the range.
+                existingPartitions.AddRange(existingPartitionsInSession);
+            }
         }
 
         /// <summary>
@@ -720,8 +889,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
         }
 
-        private void AddSession(Session session) =>
-            this.internalSessionViewModels.Add(new SessionViewModel(this, session));
+        private SessionViewModel AddSession(Session session)
+        {
+            var sessionViewModel = new SessionViewModel(this, session);
+            this.internalSessionViewModels.Add(sessionViewModel);
+            return sessionViewModel;
+        }
 
         private string EnsureUniqueSessionName(string sessionName)
         {
@@ -742,8 +915,26 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             var contextMenu = new ContextMenu();
 
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionCreate, "Create Session", this.CreateSessionCommand));
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionCreateFromStore, "Create Session from Store ...", this.CreateSessionFromStoreCommand));
+            contextMenu.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    IconSourcePath.SessionCreate,
+                    "Create Session",
+                    this.CreateSessionCommand));
+            contextMenu.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    IconSourcePath.SessionAddFromStore,
+                    "Add Session from Store ...",
+                    this.AddSessionFromStoreCommand));
+            contextMenu.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    IconSourcePath.SessionAddFromFolder,
+                    "Add Session from Folder ...",
+                    this.AddSessionFromFolderCommand));
+            contextMenu.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    IconSourcePath.MultipleSessionsAddFromFolder,
+                    "Add Multiple Sessions from Folder ...",
+                    this.AddMultipleSessionsFromFolderCommand));
 
             contextMenu.Items.Add(new Separator());
 

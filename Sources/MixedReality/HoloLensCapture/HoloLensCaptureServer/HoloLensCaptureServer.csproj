@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net472</TargetFrameworks>
+    <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net472|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net472|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />
+    <ProjectReference Include="..\..\..\Runtime\Microsoft.Psi.Interop\Microsoft.Psi.Interop.csproj" />
+    <ProjectReference Include="..\..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
+    <ProjectReference Include="..\..\..\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
+    <ProjectReference Include="..\HoloLensCaptureInterop\HoloLensCaptureInterop.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+</Project>

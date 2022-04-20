@@ -95,6 +95,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 Source = visualizationObject,
             };
             BindingOperations.SetBinding(this.Rectangle, Shape.StrokeThicknessProperty, binding);
+
+            binding = new Binding(nameof(LabeledRectangleListVisualizationObject.ShowLabel))
+            {
+                Source = visualizationObject,
+                Converter = new Converters.BoolToVisibilityConverter(),
+            };
+            BindingOperations.SetBinding(this.Label, Grid.VisibilityProperty, binding);
         }
 
         /// <inheritdoc/>
@@ -118,7 +125,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.Label.Width = Math.Max(0, rectangle.Width * canvasView.ScaleTransform.ScaleX);
             this.Label.Height = 30;
             this.Label.ToolTip = tooltip;
-            this.Label.Visibility = (label == default) ? Visibility.Collapsed : Visibility.Visible;
 
             // update the render transform for the label
             (this.Label.RenderTransform as TranslateTransform).X = (rectangle.Left + canvasView.TranslateTransform.X) * canvasView.ScaleTransform.ScaleX;

@@ -10,6 +10,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Diagnostics;
     using System.Linq;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Diagnostics;
@@ -35,6 +36,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
         private string auxiliaryInfo = string.Empty;
 
+        private RelayCommand<MouseButtonEventArgs> mouseDoubleClickCommand;
         private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
@@ -105,8 +107,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets the time interval of the stream(s) subsumed by this stream container tree node.
         /// </summary>
         [Browsable(false)]
-        public TimeInterval SubsumedTimeInterval
-            => new TimeInterval(this.SubsumedOpenedTime, this.SubsumedClosedTime);
+        public TimeInterval SubsumedTimeInterval => new (this.SubsumedOpenedTime, this.SubsumedClosedTime);
 
         /// <summary>
         /// Gets the command that executes when opening the stream tree node context menu.
@@ -120,6 +121,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.PopulateContextMenu(contextMenu);
                     grid.ContextMenu = contextMenu;
                 });
+
+        /// <summary>
+        /// Gets the command that executes when double clicking on the stream tree node.
+        /// </summary>
+        [Browsable(false)]
+        public RelayCommand<MouseButtonEventArgs> MouseDoubleClickCommand =>
+            this.mouseDoubleClickCommand ??= new RelayCommand<MouseButtonEventArgs>(e => this.OnMouseDoubleClick(e));
 
         /// <summary>
         /// Gets the name to display in the stream tree.
@@ -198,7 +206,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [Browsable(false)]
         public virtual TimeInterval SubsumedOriginatingTimeInterval =>
-            new TimeInterval(this.SubsumedFirstMessageOriginatingTime, this.SubsumedLastMessageOriginatingTime);
+            new (this.SubsumedFirstMessageOriginatingTime, this.SubsumedLastMessageOriginatingTime);
 
         /// <summary>
         /// Gets the originating time of the first message in the stream(s) subsumed by the tree node.
@@ -261,7 +269,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             => this.children.Where(c => c is not DerivedStreamTreeNode).Sum(c => c.SubsumedMessageCount);
 
         /// <summary>
-        /// Gets the total number of messages in the stream(s) subsumed by the tree node.
+        /// Gets the average message latency for the stream(s) subsumed by the tree node.
         /// </summary>
         [DisplayName("Subsumed Avg. Message Latency (ms)")]
         [Description("The average latency (in milliseconds) of messages in the stream(s) subsumed by the tree node.")]
@@ -271,7 +279,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 double.NaN;
 
         /// <summary>
-        /// Gets the total number of messages in the stream(s) subsumed by the tree node.
+        /// Gets the average message size for the stream(s) subsumed by the tree node.
         /// </summary>
         [DisplayName("Subsumed Avg. Message Size")]
         [Description("The average size (in bytes) of messages in the stream(s) subsumed by the tree node.")]
@@ -441,6 +449,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
+        /// Handler for a double-click event on the stream container tree node.
+        /// </summary>
+        /// <param name="e">The mouse button event arguments.</param>
+        protected virtual void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Updates the auxiliary info to be displayed.
         /// </summary>
         protected virtual void UpdateAuxiliaryInfo()
@@ -491,6 +507,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <param name="contextMenu">The context menu to populate.</param>
         protected virtual void PopulateContextMenu(ContextMenu contextMenu)
         {
+            // Add the visualize session context menu if the stream is not in the currently visualized session
+            if (!this.SessionViewModel.IsCurrentSession)
+            {
+                if (contextMenu.Items.Count > 0)
+                {
+                    contextMenu.Items.Add(new Separator());
+                }
+
+                contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.VisualizeSession, this.SessionViewModel.VisualizeSessionCommand));
+            }
+
             this.PopulateContextMenuWithExpandAndCollapseAll(contextMenu);
             this.PopulateContextMenuWithShowStreamInfo(contextMenu);
         }

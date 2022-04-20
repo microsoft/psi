@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Interop.Rendezvous
 {
     using System;
-    using System.Linq;
     using Microsoft.Psi.Interop.Serialization;
     using Microsoft.Psi.Interop.Transport;
     using Microsoft.Psi.Remoting;
@@ -20,11 +19,12 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <typeparam name="T">Type of data stream.</typeparam>
         /// <param name="writer"><see cref="TcpWriter{T}"/> from which to create endpoint.</param>
         /// <param name="address">Address with which to create endpoint.</param>
+        /// <param name="streamName">The name of the rendezvous stream.</param>
         /// <returns>Rendezvous endpoint.</returns>
-        public static Rendezvous.Endpoint ToRendezvousEndpoint<T>(this TcpWriter<T> writer, string address)
+        public static Rendezvous.Endpoint ToRendezvousEndpoint<T>(this TcpWriter<T> writer, string address, string streamName)
         {
             // Each TcpWriter is an endpoint emitting a single stream
-            return new Rendezvous.TcpSourceEndpoint(address, writer.Port, new[] { new Rendezvous.Stream(writer.Name, typeof(T)) });
+            return new Rendezvous.TcpSourceEndpoint(address, writer.Port, new[] { new Rendezvous.Stream(streamName, typeof(T)) });
         }
 
         /// <summary>
@@ -34,11 +34,18 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="endpoint"><see cref="Rendezvous.TcpSourceEndpoint"/> from which to create .</param>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="deserializer">The deserializer to use to deserialize messages.</param>
+        /// <param name="deallocator">An optional deallocator for the data.</param>
         /// <param name="useSourceOriginatingTimes">An optional parameter indicating whether to use originating times received from the source over the network or to re-timestamp with the current pipeline time upon receiving.</param>
-        /// <param name="name">An optional name for the TCP source.</param>
+        /// <param name="name">An optional name for the TCP source component.</param>
         /// <returns><see cref="TcpSource{T}"/>.</returns>
-        public static TcpSource<T> ToTcpSource<T>(this Rendezvous.TcpSourceEndpoint endpoint, Pipeline pipeline, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = null)
-            => new (pipeline, endpoint.Host, endpoint.Port, deserializer, useSourceOriginatingTimes, name);
+        public static TcpSource<T> ToTcpSource<T>(
+            this Rendezvous.TcpSourceEndpoint endpoint,
+            Pipeline pipeline,
+            IFormatDeserializer deserializer,
+            Action<T> deallocator = null,
+            bool useSourceOriginatingTimes = true,
+            string name = nameof(TcpSource<T>))
+            => new (pipeline, endpoint.Host, endpoint.Port, deserializer, deallocator, useSourceOriginatingTimes, name);
 
         /// <summary>
         /// Create a rendezvous endpoint from a <see cref="NetMQWriter"/>.
@@ -79,9 +86,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
         /// <returns><see cref="NetMQSource{T}"/>.</returns>
         public static NetMQSource<T> ToNetMQSource<T>(this Rendezvous.NetMQSourceEndpoint endpoint, Pipeline pipeline, string topic, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true)
-        {
-            return new NetMQSource<T>(pipeline, topic, endpoint.Address, deserializer, useSourceOriginatingTimes);
-        }
+            => new NetMQSource<T>(pipeline, topic, endpoint.Address, deserializer, useSourceOriginatingTimes);
 
         /// <summary>
         /// Create a rendezvous endpoint from a <see cref="RemoteExporter"/>.

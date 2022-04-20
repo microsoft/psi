@@ -51,7 +51,7 @@ namespace Microsoft.Psi
             }
             else
             {
-                var connector = new Connector<T>(input.Out.Pipeline, targetPipeline, name ?? "BridgeConnector");
+                var connector = new Connector<T>(input.Out.Pipeline, targetPipeline, name ?? nameof(BridgeTo));
                 return input.PipeTo(connector, deliveryPolicy);
             }
         }

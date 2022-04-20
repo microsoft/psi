@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
-    /// Implements various operators for manipulating spatial euclidean entities.
+    /// Implements various operators for manipulating euclidean entities.
     /// </summary>
     public static partial class Operators
     {
@@ -53,9 +53,10 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// </summary>
         /// <param name="source">The source stream of coordinate systems.</param>
         /// <param name="deliveryPolicy">An optional delivery policy parameter.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream containing the linear velocity of the specified point.</returns>
-        public static IProducer<LinearVelocity3D?> GetLinearVelocity3D(this IProducer<CoordinateSystem> source, DeliveryPolicy<CoordinateSystem> deliveryPolicy = null) =>
-            source.GetLinearVelocity3D(cs => cs?.Origin, deliveryPolicy);
+        public static IProducer<LinearVelocity3D?> GetLinearVelocity3D(this IProducer<CoordinateSystem> source, DeliveryPolicy<CoordinateSystem> deliveryPolicy = null, string name = nameof(GetLinearVelocity3D))
+            => source.GetLinearVelocity3D(cs => cs?.Origin, deliveryPolicy, name);
 
         /// <summary>
         /// Computes the linear velocity of an object.
@@ -64,8 +65,9 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="source">The source stream of points.</param>
         /// <param name="getLocation">A function that specifies the location of the object.</param>
         /// <param name="deliveryPolicy">An optional delivery policy parameter.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>A stream containing the linear velocity of the specified point.</returns>
-        public static IProducer<LinearVelocity3D?> GetLinearVelocity3D<T>(this IProducer<T> source, Func<T, Point3D?> getLocation, DeliveryPolicy<T> deliveryPolicy = null)
+        public static IProducer<LinearVelocity3D?> GetLinearVelocity3D<T>(this IProducer<T> source, Func<T, Point3D?> getLocation, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(GetLinearVelocity3D))
         {
             var lastPoint3D = default(Point3D?);
             var lastDateTime = DateTime.MinValue;
@@ -82,7 +84,8 @@ namespace Microsoft.Psi.Spatial.Euclidean
                     lastPoint3D = point3D;
                     lastDateTime = envelope.OriginatingTime;
                 },
-                deliveryPolicy);
+                deliveryPolicy,
+                name);
         }
 
         /// <summary>

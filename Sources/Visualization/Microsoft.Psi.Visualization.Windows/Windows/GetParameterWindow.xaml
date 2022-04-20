@@ -41,19 +41,22 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160" SharedSizeGroup="LeftColumn" />
-            <ColumnDefinition Width="250" SharedSizeGroup="RightColumn" />
+            <ColumnDefinition Width="Auto" SharedSizeGroup="LeftColumn" />
+            <ColumnDefinition Width="400" SharedSizeGroup="RightColumn" />
         </Grid.ColumnDefinitions>
 
         <!-- Stream Name -->
-        <Label Grid.Row="0" Grid.Column="0" Content="{Binding ParameterName}"/>
+        <Label Grid.Row="0" Grid.Column="0" Name="ParameterLabel" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="0" Grid.Column="1" Name="ParameterTextBox" Text="{Binding ParameterValue, UpdateSourceTrigger=PropertyChanged}" TextChanged="ValidateFormValues" />
-            
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Margin="3,0,0,0" HorizontalAlignment="Left" Text="{Binding ErrorMessage}" TextWrapping="Wrap" Foreground="LightGray"/>
+
         <!-- Buttons -->
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,2,10,10">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,2,10,10">
             <Button Name="OKButton" Click="OKButton_Click" IsDefault="True" Margin="0,5,2,0" IsEnabled="{Binding IsValid}">OK</Button>
             <Button IsCancel="True" Margin="2,5,0,0">Cancel</Button>
         </StackPanel>

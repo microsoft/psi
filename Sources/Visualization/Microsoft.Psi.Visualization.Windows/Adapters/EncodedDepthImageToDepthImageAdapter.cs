@@ -19,7 +19,11 @@ namespace Microsoft.Psi.Visualization.Adapters
 
             if (source != null && source.Resource != null)
             {
-                sharedDepthImage = DepthImagePool.GetOrCreate(source.Resource.Width, source.Resource.Height);
+                sharedDepthImage = DepthImagePool.GetOrCreate(
+                    source.Resource.Width,
+                    source.Resource.Height,
+                    source.Resource.DepthValueSemantics,
+                    source.Resource.DepthValueToMetersScaleFactor);
                 var decoder = new DepthImageFromStreamDecoder();
                 decoder.DecodeFromStream(source.Resource.ToStream(), sharedDepthImage.Resource);
             }

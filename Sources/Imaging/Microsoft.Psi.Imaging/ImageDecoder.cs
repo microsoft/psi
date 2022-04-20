@@ -19,8 +19,9 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="decoder">The image decoder to use.</param>
-        public ImageDecoder(Pipeline pipeline, IImageFromStreamDecoder decoder)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public ImageDecoder(Pipeline pipeline, IImageFromStreamDecoder decoder, string name = nameof(ImageDecoder))
+            : base(pipeline, name)
         {
             this.decoder = decoder;
         }

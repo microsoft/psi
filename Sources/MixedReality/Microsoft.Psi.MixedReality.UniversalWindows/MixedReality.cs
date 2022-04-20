@@ -4,9 +4,7 @@
 namespace Microsoft.Psi.MixedReality
 {
     using System;
-    using System.Numerics;
     using System.Threading.Tasks;
-    using MathNet.Spatial.Euclidean;
     using StereoKit;
     using Windows.Perception.Spatial;
 
@@ -15,7 +13,7 @@ namespace Microsoft.Psi.MixedReality
     /// </summary>
     public static class MixedReality
     {
-        private const string WorldSpatialAnchorId = "_world";
+        private const string DefaultWorldSpatialAnchorId = "_world";
 
         /// <summary>
         /// Gets the world coordinate system.
@@ -28,16 +26,18 @@ namespace Microsoft.Psi.MixedReality
         public static SpatialAnchorHelper SpatialAnchorHelper { get; private set; }
 
         /// <summary>
-        /// Initializes static members of the <see cref="MixedReality"/> class. Attempts to initialize
-        /// the world coordinate system from a persisted spatial anchor. If one is not found, a stationary
-        /// frame of reference is created at the current location and its position is used as the world
-        /// coordinate system.
+        /// Initializes static members of the <see cref="MixedReality"/> class.
+        /// Attempts to initialize the world coordinate system from a given spatial anchor.
+        /// If no spatial anchor is given, it attempts to load a default spatial anchor.
+        /// If the default spatial anchor is not found (e.g., if the app is being run for the first time),
+        /// a stationary frame of reference for the world is created at the current location.
         /// </summary>
+        /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (optional).</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
         /// This method should be called after SK.Initialize.
         /// </remarks>
-        public static async Task InitializeAsync()
+        public static async Task InitializeAsync(SpatialAnchor worldSpatialAnchor = null)
         {
             if (!SK.IsInitialized)
             {
@@ -47,7 +47,11 @@ namespace Microsoft.Psi.MixedReality
             // Create the spatial anchor helper
             SpatialAnchorHelper = new SpatialAnchorHelper(await SpatialAnchorManager.RequestStoreAsync());
 
-            InitializeWorldCoordinateSystem();
+            InitializeWorldCoordinateSystem(worldSpatialAnchor);
+
+            // By default, don't render the hands or register with StereoKit physics system.
+            Input.HandVisible(Handed.Max, false);
+            Input.HandSolid(Handed.Max, false);
         }
 
         /// <summary>
@@ -55,11 +59,12 @@ namespace Microsoft.Psi.MixedReality
         /// or creates it at a stationary frame of reference if it does not exist. Once initialized, the
         /// world coordinate system will be consistent across application sessions, unless the associated
         /// spatial anchor is modified or deleted.
+        /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (may be null).</param>
         /// </summary>
-        private static void InitializeWorldCoordinateSystem()
+        private static void InitializeWorldCoordinateSystem(SpatialAnchor worldSpatialAnchor)
         {
-            // Try to get a previously saved world spatial anchor
-            var worldSpatialAnchor = SpatialAnchorHelper.TryGetSpatialAnchor(WorldSpatialAnchorId);
+            // If no world anchor was given, try to load the default world spatial anchor if it was previously persisted
+            worldSpatialAnchor ??= SpatialAnchorHelper.TryGetSpatialAnchor(DefaultWorldSpatialAnchorId);
 
             if (worldSpatialAnchor != null)
             {
@@ -68,6 +73,7 @@ namespace Microsoft.Psi.MixedReality
             }
             else
             {
+                // Generate and persist the default world spatial anchor
                 var locator = SpatialLocator.GetDefault();
 
                 if (locator != null)
@@ -80,7 +86,7 @@ namespace Microsoft.Psi.MixedReality
 
                     // Create a spatial anchor to represent the world origin and persist it to the spatial
                     // anchor store to ensure that the origin remains coherent between sessions.
-                    worldSpatialAnchor = SpatialAnchorHelper.TryCreateSpatialAnchor(WorldSpatialAnchorId, WorldSpatialCoordinateSystem);
+                    worldSpatialAnchor = SpatialAnchorHelper.TryCreateSpatialAnchor(DefaultWorldSpatialAnchorId, WorldSpatialCoordinateSystem);
 
                     if (worldSpatialAnchor == null)
                     {
@@ -99,14 +105,15 @@ namespace Microsoft.Psi.MixedReality
                 // These transforms will allow us to convert world coordinates to/from StereoKit coordinates where needed:
                 // on input from StereoKit -> \psi, and on output (rendering) \psi -> StereoKit
 
-                // The pose of world anchor is essentially the inverse of the startup pose of StereoKit with respect to the world.
-                Matrix4x4 worldStereoKitMatrix = World.FromPerceptionAnchor(worldSpatialAnchor).ToMatrix();
-                StereoKitTransforms.StereoKitStartingPoseInverse = new CoordinateSystem(worldStereoKitMatrix.ToMathNetMatrix().ChangeBasisHoloLensToPsi());
+                // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
+                // and for transforming from world coordinates to StereoKit coordinates.
+                StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(worldSpatialAnchor).ToMatrix();
+                StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.ToCoordinateSystem();
 
-                // Inverting then gives us the starting pose of StereoKit in the "world" (relative to the world anchor).
-                StereoKitTransforms.StereoKitStartingPose = StereoKitTransforms.StereoKitStartingPoseInverse.Invert();
+                // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
+                StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
 
-                System.Diagnostics.Trace.WriteLine($"StereoKit origin: {StereoKitTransforms.StereoKitStartingPose.Origin.X},{StereoKitTransforms.StereoKitStartingPose.Origin.Y},{StereoKitTransforms.StereoKitStartingPose.Origin.Z}");
+                System.Diagnostics.Trace.WriteLine($"StereoKit origin: {StereoKitTransforms.StereoKitToWorld.Origin.X},{StereoKitTransforms.StereoKitToWorld.Origin.Y},{StereoKitTransforms.StereoKitToWorld.Origin.Z}");
 
                 // TODO: It would be nice if we could actually just shift the origin coordinate system in StereoKit
                 // to the pose currently defined in StereoKitTransforms.WorldPose.

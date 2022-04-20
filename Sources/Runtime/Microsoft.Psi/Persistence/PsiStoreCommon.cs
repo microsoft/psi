@@ -54,6 +54,12 @@ namespace Microsoft.Psi.Persistence
 
             var fileName = GetDataFileName(appName);
             fullPath = Path.GetFullPath(rootPath);
+
+            if (!Directory.Exists(fullPath))
+            {
+                return false;
+            }
+
             if (!Directory.EnumerateFiles(fullPath, fileName + "*").Any())
             {
                 fullPath = Directory.EnumerateDirectories(fullPath, appName + ".*").OrderByDescending(d => Directory.GetCreationTimeUtc(d)).FirstOrDefault();
@@ -126,11 +132,13 @@ namespace Microsoft.Psi.Persistence
         private static IEnumerable<(string Name, string Session, string Path)> EnumerateStores(string rootPath, string currentPath, bool recursively)
         {
             // scan for any psi catalog files
-            var catalogFile = $"*.{CatalogFileName}_000000.psi";
-            foreach (var filename in Directory.EnumerateFiles(currentPath, catalogFile))
+            var catalogFileSuffix = $".{CatalogFileName}_000000.psi";
+            var catalogFileSearchPattern = $"*{catalogFileSuffix}";
+
+            foreach (var filename in Directory.EnumerateFiles(currentPath, catalogFileSearchPattern))
             {
                 var fi = new FileInfo(filename);
-                var storeName = fi.Name.Substring(0, fi.Name.Length - catalogFile.Length);
+                var storeName = fi.Name.Substring(0, fi.Name.Length - catalogFileSuffix.Length);
                 var sessionName = (currentPath == rootPath) ? filename : Path.Combine(currentPath, filename).Substring(rootPath.Length);
                 sessionName = sessionName.Substring(0, sessionName.Length - fi.Name.Length);
                 sessionName = sessionName.Trim('\\');

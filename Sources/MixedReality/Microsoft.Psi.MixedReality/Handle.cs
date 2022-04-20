@@ -11,7 +11,7 @@ namespace Microsoft.Psi.MixedReality
     /// <summary>
     /// Component that represents a movable UI handle.
     /// </summary>
-    public class Handle : StereoKitComponent, IProducer<CoordinateSystem>, ISourceComponent
+    public class Handle : StereoKitRenderer, IProducer<CoordinateSystem>, ISourceComponent
     {
         private readonly Pipeline pipeline;
         private readonly string id;
@@ -33,7 +33,7 @@ namespace Microsoft.Psi.MixedReality
         {
             this.pipeline = pipeline;
             this.id = Guid.NewGuid().ToString();
-            this.pose = initialPose.ToStereoKitPose();
+            this.pose = initialPose.TransformBy(StereoKitTransforms.WorldToStereoKit).ToStereoKitPose();
             this.bounds = new Bounds(new Vec3((float)bounds.Y, (float)bounds.Z, (float)bounds.X)); // psi -> SK coordinates
             this.show = showHandle;
             this.Out = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.Out));
@@ -43,17 +43,6 @@ namespace Microsoft.Psi.MixedReality
         /// Gets the stream of the handle's pose.
         /// </summary>
         public Emitter<CoordinateSystem> Out { get; private set; }
-
-        /// <inheritdoc />
-        public override void Step()
-        {
-            var originatingTime = this.pipeline.GetCurrentTime();
-            if (this.active)
-            {
-                UI.Handle(this.id, ref this.pose, this.bounds, this.show);
-                this.Out.Post(this.pose.ToPsiCoordinateSystem(), originatingTime);
-            }
-        }
 
         /// <inheritdoc />
         public void Start(Action<DateTime> notifyCompletionTime)
@@ -67,6 +56,16 @@ namespace Microsoft.Psi.MixedReality
         {
             this.active = false;
             notifyCompleted();
+        }
+
+        /// <inheritdoc />
+        protected override void Render()
+        {
+            if (this.active)
+            {
+                UI.Handle(this.id, ref this.pose, this.bounds, this.show);
+                this.Out.Post(this.pose.ToCoordinateSystem(), this.pipeline.GetCurrentTime());
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Microsoft.Psi.AzureKinect
     {
         private static readonly object CameraOpenLock = new object();
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly AzureKinectSensorConfiguration configuration;
 
         /// <summary>
@@ -43,9 +44,11 @@ namespace Microsoft.Psi.AzureKinect
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="config">Configuration to use for the device.</param>
-        public AzureKinectCore(Pipeline pipeline, AzureKinectSensorConfiguration config = null)
+        /// <param name="name">An optional name for the component.</param>
+        public AzureKinectCore(Pipeline pipeline, AzureKinectSensorConfiguration config = null, string name = nameof(AzureKinectCore))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.configuration = config ?? new AzureKinectSensorConfiguration();
 
             if (this.configuration.OutputColor)
@@ -241,6 +244,9 @@ namespace Microsoft.Psi.AzureKinect
             notifyCompleted();
         }
 
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
+
         private void CaptureThreadProc()
         {
             if (this.configuration.ColorResolution == ColorResolution.Off &&
@@ -393,7 +399,11 @@ namespace Microsoft.Psi.AzureKinect
 
                     if (this.configuration.OutputDepth && capture.Depth != null)
                     {
-                        sharedDepthImage = DepthImagePool.GetOrCreate(this.depthImageWidth, this.depthImageHeight);
+                        sharedDepthImage = DepthImagePool.GetOrCreate(
+                            this.depthImageWidth,
+                            this.depthImageHeight,
+                            DepthValueSemantics.DistanceToPlane,
+                            0.001);
                         sharedDepthImage.Resource.CopyFrom(capture.Depth.Memory.ToArray());
                         this.DepthImage.Post(sharedDepthImage, currentTime);
 

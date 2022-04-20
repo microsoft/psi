@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.MixedReality
 {
     using MathNet.Spatial.Euclidean;
+    using StereoKit;
 
     /// <summary>
     /// Static StereoKit transforms which are applied in/out of StereoKit from \psi.
@@ -11,13 +12,22 @@ namespace Microsoft.Psi.MixedReality
     public static class StereoKitTransforms
     {
         /// <summary>
-        /// Gets or sets the starting pose of StereoKit (the headset) in the world (in \psi basis).
+        /// Gets the "world hierarchy" for rendering.
+        /// Push this matrix onto StereoKit's <see cref="Hierarchy"/> stack to render content coherently in the world.
         /// </summary>
-        public static CoordinateSystem StereoKitStartingPose { get; set; } = new CoordinateSystem();
+        /// <remarks>
+        /// This matrix is pushed automatically by the <see cref="StereoKitRenderer"/> base class for new rendering components.
+        /// </remarks>
+        public static Matrix WorldHierarchy { get; internal set; } = Matrix.Identity;
 
         /// <summary>
-        /// Gets or sets the inverse of the StereoKit starting pose in the world.
+        /// Gets or sets the transform from StereoKit to the world.
         /// </summary>
-        public static CoordinateSystem StereoKitStartingPoseInverse { get; set; } = new CoordinateSystem();
+        internal static CoordinateSystem StereoKitToWorld { get; set; } = new CoordinateSystem();
+
+        /// <summary>
+        /// Gets or sets the the transform from the world to StereoKit.
+        /// </summary>
+        internal static CoordinateSystem WorldToStereoKit { get; set; } = new CoordinateSystem();
     }
 }

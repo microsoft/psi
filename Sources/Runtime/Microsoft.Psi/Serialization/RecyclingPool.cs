@@ -37,13 +37,14 @@ namespace Microsoft.Psi
         private class Cloner<T> : IRecyclingPool<T>
         {
             private const int MaxAllocationsWithoutRecycling = 100;
-            private readonly SerializationContext serializationContext = new SerializationContext();
-            private readonly Stack<T> free = new Stack<T>(); // not ConcurrentStack because ConcurrentStack performs an allocation for each Push. We want to be allocation free.
-            private int outstandingAllocationCount;
+            private readonly SerializationContext serializationContext = new ();
+            private readonly Stack<T> free = new (); // not ConcurrentStack because ConcurrentStack performs an allocation for each Push. We want to be allocation free.
 #if TRACKLEAKS
-            private StackTrace debugTrace;
+            private readonly StackTrace debugTrace;
             private bool recycledOnce;
 #endif
+
+            private int outstandingAllocationCount;
 
             public Cloner(StackTrace debugTrace = null)
             {
@@ -77,7 +78,7 @@ namespace Microsoft.Psi
                     }
                     else
                     {
-                        clone = default(T);
+                        clone = default;
                     }
 
                     this.outstandingAllocationCount++;
@@ -86,8 +87,8 @@ namespace Microsoft.Psi
                 // alert if the component is not recycling messages
                 if (!this.recycledOnce && this.outstandingAllocationCount == MaxAllocationsWithoutRecycling && this.debugTrace != null)
                 {
-                    StringBuilder sb = new StringBuilder("\\psi output **********************************************");
-                    sb.AppendLine($"This component is not recycling messages {this.GetType()}. Constructor stack trace below:");
+                    var sb = new StringBuilder("\\psi output **********************************************");
+                    sb.AppendLine($"This component is not recycling messages {typeof(T)} (no recycling after {this.outstandingAllocationCount} allocations). Constructor stack trace below:");
                     foreach (var frame in this.debugTrace.GetFrames())
                     {
                         sb.AppendLine($"{frame.GetFileName()}({frame.GetFileLineNumber()}): {frame.GetMethod().DeclaringType}.{frame.GetMethod().Name}");
@@ -133,10 +134,7 @@ namespace Microsoft.Psi
 
             public int AvailableAllocationCount => 0;
 
-            public T Get()
-            {
-                return default(T);
-            }
+            public T Get() => default;
 
             public void Recycle(T freeInstance)
             {

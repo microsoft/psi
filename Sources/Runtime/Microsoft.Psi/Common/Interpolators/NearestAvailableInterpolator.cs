@@ -19,6 +19,7 @@ namespace Microsoft.Psi.Common.Interpolators
         private readonly RelativeTimeInterval relativeTimeInterval;
         private readonly bool orDefault;
         private readonly T defaultValue;
+        private readonly string name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NearestAvailableInterpolator{T}"/> class.
@@ -31,6 +32,17 @@ namespace Microsoft.Psi.Common.Interpolators
             this.relativeTimeInterval = relativeTimeInterval;
             this.orDefault = orDefault;
             this.defaultValue = defaultValue;
+
+            if (this.relativeTimeInterval == RelativeTimeInterval.Zero)
+            {
+                this.name = this.orDefault ? $"{nameof(Available)}.{nameof(Available.ExactOrDefault)}" : $"{nameof(Available)}.{nameof(Available.Exact)}";
+            }
+            else
+            {
+                this.name =
+                    (this.orDefault ? $"{nameof(Available)}.{nameof(Available.NearestOrDefault)}" : $"{nameof(Available)}.{nameof(Available.Nearest)}") +
+                    this.relativeTimeInterval.ToString();
+            }
         }
 
         /// <inheritdoc/>
@@ -92,5 +104,8 @@ namespace Microsoft.Psi.Common.Interpolators
                     InterpolationResult<T>.DoesNotExist(upperBound);
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
     }
 }

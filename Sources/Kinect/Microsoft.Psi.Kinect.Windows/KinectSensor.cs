@@ -407,7 +407,11 @@ namespace Microsoft.Psi.Kinect
                 FrameDescription depthFrameDescription = depthFrame.FrameDescription;
                 using (KinectBuffer depthBuffer = depthFrame.LockImageBuffer())
                 {
-                    using (var dest = DepthImagePool.GetOrCreate(depthFrameDescription.Width, depthFrameDescription.Height))
+                    using (var dest = DepthImagePool.GetOrCreate(
+                        depthFrameDescription.Width,
+                        depthFrameDescription.Height,
+                        DepthValueSemantics.DistanceToPlane,
+                        0.001))
                     {
                         depthFrame.CopyFrameDataToIntPtr(dest.Resource.ImageData, (uint)(depthFrameDescription.Width * depthFrameDescription.Height * 2));
                         var time = this.pipeline.GetCurrentTimeFromElapsedTicks(depthFrame.RelativeTime.Ticks);

@@ -13,16 +13,17 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     public sealed class WaveFileWriter : SimpleConsumer<AudioBuffer>, IDisposable
     {
+        private readonly string outputFilename;
         private WaveDataWriterClass writer;
-        private string outputFilename;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WaveFileWriter"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">The path name of the Wave file.</param>
-        public WaveFileWriter(Pipeline pipeline, string filename)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public WaveFileWriter(Pipeline pipeline, string filename, string name = nameof(WaveFileWriter))
+            : base(pipeline, name)
         {
             this.outputFilename = filename;
         }

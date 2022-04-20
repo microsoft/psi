@@ -17,6 +17,7 @@ namespace Microsoft.Psi.Media
     public class MediaCapture : IProducer<Shared<Image>>, ISourceComponent, IDisposable, IMediaCapture
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
 
         /// <summary>
         /// The video camera configuration.
@@ -40,9 +41,11 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">Name of file containing media capture device configuration.</param>
-        public MediaCapture(Pipeline pipeline, string configurationFilename)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaCapture(Pipeline pipeline, string configurationFilename, string name = nameof(MediaCapture))
         : this(pipeline)
         {
+            this.name = name;
             var configurationHelper = new ConfigurationHelper<MediaCaptureConfiguration>(configurationFilename);
             this.configuration = configurationHelper.Configuration;
             if (this.configuration.CaptureAudio)
@@ -56,8 +59,9 @@ namespace Microsoft.Psi.Media
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">Describes how to configure the media capture device.</param>
-        public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration = null)
-        : this(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration = null, string name = nameof(MediaCapture))
+            : this(pipeline, name)
         {
             this.configuration = configuration ?? new MediaCaptureConfiguration();
             if (this.configuration.CaptureAudio)
@@ -76,8 +80,17 @@ namespace Microsoft.Psi.Media
         /// <param name="captureAudio">Should we create an audio capture device.</param>
         /// <param name="deviceId">Device ID.</param>
         /// <param name="useInSharedMode">Indicates whether camera is shared amongst multiple applications.</param>
-        public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 30, bool captureAudio = false, string deviceId = null, bool useInSharedMode = false)
-            : this(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaCapture(
+            Pipeline pipeline,
+            int width,
+            int height,
+            double framerate = 30,
+            bool captureAudio = false,
+            string deviceId = null,
+            bool useInSharedMode = false,
+            string name = nameof(MediaCapture))
+            : this(pipeline, name)
         {
             this.configuration = new MediaCaptureConfiguration()
             {
@@ -94,8 +107,9 @@ namespace Microsoft.Psi.Media
             }
         }
 
-        private MediaCapture(Pipeline pipeline)
+        private MediaCapture(Pipeline pipeline, string name)
         {
+            this.name = name;
             this.pipeline = pipeline;
             this.Out = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.Out));
         }
@@ -298,6 +312,9 @@ namespace Microsoft.Psi.Media
             MediaCaptureDevice.Uninitialize();
             notifyCompleted();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void SetDeviceProperty(VideoProperty prop, MediaCaptureInfo.PropertyInfo propInfo, MediaCaptureConfiguration.PropertyValue<int> value)
         {

@@ -23,6 +23,7 @@ namespace Microsoft.Psi.Common.Interpolators
         private readonly Func<TIn, TIn, double, TOut> interpolator;
         private readonly bool orDefault;
         private readonly TOut defaultValue;
+        private readonly string name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdjacentValuesInterpolator{TIn, TOut}"/> class.
@@ -31,11 +32,15 @@ namespace Microsoft.Psi.Common.Interpolators
         /// between them where the interpolation result should be produces the interpolation result.</param>
         /// <param name="orDefault">Indicates whether to output a default value when no result is found.</param>
         /// <param name="defaultValue">An optional default value to use.</param>
-        public AdjacentValuesInterpolator(Func<TIn, TIn, double, TOut> interpolator, bool orDefault, TOut defaultValue = default)
+        /// <param name="name">An optional name for the interpolator (defaults to AdjacentValuesInterpolator).</param>
+        public AdjacentValuesInterpolator(Func<TIn, TIn, double, TOut> interpolator, bool orDefault, TOut defaultValue = default, string name = null)
         {
             this.interpolator = interpolator;
             this.orDefault = orDefault;
             this.defaultValue = defaultValue;
+
+            name ??= "AdjacentValues";
+            this.name = this.orDefault ? $"{nameof(Reproducible)}.{name}OrDefault" : $"{nameof(Reproducible)}.{name}";
         }
 
         /// <inheritdoc/>
@@ -111,5 +116,8 @@ namespace Microsoft.Psi.Common.Interpolators
                 return InterpolationResult<TOut>.InsufficientData();
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
     }
 }

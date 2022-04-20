@@ -232,6 +232,18 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
+        /// Creates and adds an empty session with the specified name to the dataset.
+        /// </summary>
+        /// <param name="sessionName">The session name.</param>
+        /// <returns>The session.</returns>
+        public Session AddSession(string sessionName)
+        {
+            var session = new Session(this, sessionName);
+            this.AddSession(session);
+            return session;
+        }
+
+        /// <summary>
         /// Creates and adds a session to this dataset using the specified parameters.
         /// </summary>
         /// <param name="streamReader">The stream reader of the data store.</param>

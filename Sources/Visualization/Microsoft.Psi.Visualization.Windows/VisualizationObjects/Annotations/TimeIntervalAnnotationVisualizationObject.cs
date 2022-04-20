@@ -439,6 +439,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnStreamBound();
             this.AnnotationSchema = DataManager.Instance.GetSupplementalMetadata<AnnotationSchema>(this.StreamSource);
+
+            if (this.AnnotationSchema == null)
+            {
+                throw new Exception("Cannot find annotation schema.");
+            }
+
             this.GenerateLegendValue();
         }
 
@@ -611,7 +617,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="track">The name of the track.</param>
         private void RenameTrack(string track)
         {
-            var dlg = new GetParameterWindow(Application.Current.MainWindow, "New Track Name", track);
+            var dlg = new GetParameterWindow(Application.Current.MainWindow, "Rename Track", "New Track Name", track);
             if (dlg.ShowDialog() == true)
             {
                 var newTrackName = dlg.ParameterValue;

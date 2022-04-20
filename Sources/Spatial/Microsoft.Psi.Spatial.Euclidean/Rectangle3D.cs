@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
@@ -167,11 +168,53 @@ namespace Microsoft.Psi.Spatial.Euclidean
         }
 
         /// <summary>
+        /// Computes the closest point in this planar rectangle to a specified 3D point.
+        /// </summary>
+        /// <param name="point3D">The 3D point to compute the closest point to.</param>
+        /// <returns>The intersection point, if one exists.</returns>
+        public Point3D ClosestPointTo(Point3D point3D)
+        {
+            // compute the plane of the rectangle from three corner points
+            var candidates = new List<Point3D>();
+
+            // compute the projection of the point in the plane of the rectangle, and,
+            // if that projection falls inside the rectangle, that's the closest point
+            var projectedPoint3D = point3D.ProjectOn(this.GetPlane());
+            if (this.Contains(projectedPoint3D))
+            {
+                return projectedPoint3D;
+            }
+
+            candidates.Add(new LineSegment3D(this.BottomLeft, this.BottomRight).ClosestPointTo(point3D));
+            candidates.Add(new LineSegment3D(this.BottomRight, this.TopRight).ClosestPointTo(point3D));
+            candidates.Add(new LineSegment3D(this.TopRight, this.TopLeft).ClosestPointTo(point3D));
+            candidates.Add(new LineSegment3D(this.TopLeft, this.BottomLeft).ClosestPointTo(point3D));
+
+            var minDistance = candidates.Min(c => c.DistanceTo(point3D));
+            return candidates.First(c => c.DistanceTo(point3D) == minDistance);
+        }
+
+        /// <summary>
         /// Gets the <see cref="Plane"/> in which the <see cref="Rectangle3D"/> lies.
         /// </summary>
         /// <returns>The <see cref="Plane"/> in which the <see cref="Rectangle3D"/> lies.</returns>
         public Plane GetPlane()
             => Plane.FromPoints(this.TopLeft, this.TopRight, this.BottomLeft);
+
+        /// <summary>
+        /// Get a coordinate system pose, with origin at the center.
+        /// X-axis points in the facing direction of the normal.
+        /// Y-axis points in the width direction.
+        /// Z-axis points in the height direction.
+        /// </summary>
+        /// <returns>The centered coordinate system pose for the rectangle.</returns>
+        public CoordinateSystem GetCenteredCoordinateSystem()
+        {
+            var widthVector = (this.BottomRight - this.BottomLeft).Normalize();
+            var heightVector = (this.TopLeft - this.BottomLeft).Normalize();
+            var normalVector = widthVector.CrossProduct(heightVector);
+            return new CoordinateSystem(this.GetCenter(), normalVector, widthVector, heightVector);
+        }
 
         /// <summary>
         /// Determines whether the rectangle contains a specified point.

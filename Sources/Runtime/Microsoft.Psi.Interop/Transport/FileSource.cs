@@ -22,30 +22,27 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">File name to which to persist.</param>
         /// <param name="deserializer">Format serializer with which messages are deserialized.</param>
-        public FileSource(Pipeline pipeline, string filename, IPersistentFormatDeserializer deserializer)
-            : base(pipeline, EnumerateFile(filename, deserializer), GetStartTimeFromFile(filename, deserializer))
+        /// <param name="name">An optional name for the component.</param>
+        public FileSource(Pipeline pipeline, string filename, IPersistentFormatDeserializer deserializer, string name = nameof(FileSource<T>))
+            : base(pipeline, EnumerateFile(filename, deserializer), GetStartTimeFromFile(filename, deserializer), name: name)
         {
         }
 
         private static IEnumerator<(T, DateTime)> EnumerateFile(string filename, IPersistentFormatDeserializer deserializer)
         {
-            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using var stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+            foreach (var record in deserializer.DeserializeRecords(stream))
             {
-                foreach (var record in deserializer.DeserializeRecords(stream))
-                {
-                    yield return ((T)record.Item1, record.Item2);
-                }
+                yield return ((T)record.Item1, record.Item2);
             }
         }
 
         private static DateTime GetStartTimeFromFile(string filename, IPersistentFormatDeserializer deserializer)
         {
             DateTime startTime;
-            using (FileStream stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                (_, startTime) = deserializer.DeserializeRecords(stream).First();
-                return startTime;
-            }
+            using var stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read);
+            (_, startTime) = deserializer.DeserializeRecords(stream).First();
+            return startTime;
         }
     }
 }

@@ -44,8 +44,9 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public SystemSpeechSynthesizer(Pipeline pipeline, SystemSpeechSynthesizerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemSpeechSynthesizer(Pipeline pipeline, SystemSpeechSynthesizerConfiguration configuration, string name = nameof(SystemSpeechSynthesizer))
+            : base(pipeline, name)
         {
             this.pipeline = pipeline;
 
@@ -74,10 +75,12 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public SystemSpeechSynthesizer(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemSpeechSynthesizer(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemSpeechSynthesizer))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemSpeechSynthesizerConfiguration() : new ConfigurationHelper<SystemSpeechSynthesizerConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new SystemSpeechSynthesizerConfiguration() : new ConfigurationHelper<SystemSpeechSynthesizerConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 

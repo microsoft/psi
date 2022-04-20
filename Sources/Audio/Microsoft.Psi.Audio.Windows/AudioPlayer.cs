@@ -35,8 +35,9 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration, string name = nameof(AudioPlayer))
+            : base(pipeline, name)
         {
             this.pipeline = pipeline;
             this.configuration = configuration;
@@ -58,10 +59,12 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public AudioPlayer(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public AudioPlayer(Pipeline pipeline, string configurationFilename = null, string name = nameof(AudioPlayer))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AudioPlayerConfiguration() : new ConfigurationHelper<AudioPlayerConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new AudioPlayerConfiguration() : new ConfigurationHelper<AudioPlayerConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 

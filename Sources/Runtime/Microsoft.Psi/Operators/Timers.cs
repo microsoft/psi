@@ -22,11 +22,10 @@ namespace Microsoft.Psi
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">The interval at which to generate messages.</param>
         /// <param name="generatorFn">The function generating the messages.</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <returns>A stream of messages of type T.</returns>
-        public static IProducer<T> Timer<T>(Pipeline pipeline, TimeSpan interval, Func<DateTime, TimeSpan, T> generatorFn)
-        {
-            return new Timer<T>(pipeline, (uint)interval.TotalMilliseconds, generatorFn);
-        }
+        public static IProducer<T> Timer<T>(Pipeline pipeline, TimeSpan interval, Func<DateTime, TimeSpan, T> generatorFn, string name = nameof(Timer))
+            => new Timer<T>(pipeline, (uint)interval.TotalMilliseconds, generatorFn, name);
 
         /// <summary>
         /// Generates a stream of <see cref="TimeSpan"/> messages indicating the time elapsed from the start of the pipeline.
@@ -37,10 +36,9 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="interval">The interval at which to generate messages.</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <returns>A stream of messages representing time elapsed since the start of the pipeline.</returns>
-        public static IProducer<TimeSpan> Timer(Pipeline pipeline, TimeSpan interval)
-        {
-            return Timer(pipeline, interval, (_, t) => t);
-        }
+        public static IProducer<TimeSpan> Timer(Pipeline pipeline, TimeSpan interval, string name = nameof(Timer))
+            => Timer(pipeline, interval, (_, t) => t, name);
     }
 }

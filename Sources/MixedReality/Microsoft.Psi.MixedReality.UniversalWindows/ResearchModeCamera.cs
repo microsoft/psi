@@ -4,7 +4,7 @@
 namespace Microsoft.Psi.MixedReality
 {
     using System;
-    using System.Collections.Generic;
+    using System.IO;
     using System.Numerics;
     using System.Threading;
     using System.Threading.Tasks;
@@ -14,30 +14,39 @@ namespace Microsoft.Psi.MixedReality
     using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Components;
     using Windows.Foundation;
+    using Windows.Perception;
     using Windows.Perception.Spatial;
     using Windows.Perception.Spatial.Preview;
+    using Windows.Storage;
 
     /// <summary>
     /// Represents an abstract base class for a HoloLens 2 research mode camera component.
     /// </summary>
     public abstract class ResearchModeCamera : ISourceComponent
     {
-        // Camera coordinate system (x - right, y - down, z - forward) relative
-        // to the HoloLens coordinate system (x - right, y - up, z - back)
-        private static readonly CoordinateSystem CameraCoordinateSystem =
-            new (default, UnitVector3D.XAxis, UnitVector3D.YAxis.Negate(), UnitVector3D.ZAxis.Negate());
+#pragma warning disable SA1117 // Parameters should be on same line or separate lines
+        // Camera basis (x - right, y - down, z - forward) relative
+        // to the HoloLens basis (x - right, y - up, z - back)
+        private static readonly Matrix4x4 CameraBasis = new (
+            1,  0,  0,  0,
+            0, -1,  0,  0,
+            0,  0, -1,  0,
+            0,  0,  0,  1);
+#pragma warning restore SA1117 // Parameters should be on same line or separate lines
 
         private readonly Pipeline pipeline;
+        private readonly ResearchModeCameraConfiguration configuration;
+        private readonly string name;
         private readonly ResearchModeSensorDevice sensorDevice;
         private readonly ResearchModeCameraSensor cameraSensor;
         private readonly Task<ResearchModeSensorConsent> requestCameraAccessTask;
         private readonly SpatialLocator rigNodeLocator;
-        private readonly bool createCalibrationMap;
-        private readonly bool computeCameraIntrinsics;
 
-        private CalibrationPointsMap calibrationPointsMap;
-        private ICameraIntrinsics cameraIntrinsics;
-        private CoordinateSystem cameraExtrinsics;
+        private bool pipelineIsRunning = false;
+        private CameraIntrinsics cameraIntrinsics = null;
+        private CoordinateSystem cameraPose = null;
+        private CalibrationPointsMap calibrationPointsMap = null;
+        private Matrix4x4? invertedCameraExtrinsics = null;
         private Thread captureThread;
         private bool shutdown;
 
@@ -50,30 +59,22 @@ namespace Microsoft.Psi.MixedReality
         /// Initializes a new instance of the <see cref="ResearchModeCamera"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="sensorType">The research mode sensor type.</param>
-        /// <param name="createCalibrationMap">A value indicating whether to create a map of calibration points (needed to compute intrinsics).</param>
-        /// <param name="computeCameraIntrinsics">A value indicating whether to compute camera intrinsics.</param>
-        public ResearchModeCamera(Pipeline pipeline, ResearchModeSensorType sensorType, bool createCalibrationMap = true, bool computeCameraIntrinsics = true)
+        /// <param name="configuration">The research mode camera configuration.</param>
+        /// <param name="name">An optional name for the component.</param>
+        protected ResearchModeCamera(Pipeline pipeline, ResearchModeCameraConfiguration configuration, string name = nameof(ResearchModeCamera))
         {
             this.pipeline = pipeline;
-            this.createCalibrationMap = createCalibrationMap;
-            this.computeCameraIntrinsics = computeCameraIntrinsics;
+            this.configuration = configuration;
+            this.name = name;
+            this.pipeline.PipelineRun += (_, _) => this.pipelineIsRunning = true;
 
             this.Pose = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.Pose));
-
-            if (this.computeCameraIntrinsics)
-            {
-                this.CameraIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.CameraIntrinsics));
-            }
-
-            if (this.createCalibrationMap)
-            {
-                this.CalibrationPointsMap = pipeline.CreateEmitter<CalibrationPointsMap>(this, nameof(this.CalibrationPointsMap));
-            }
+            this.CameraIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.CameraIntrinsics));
+            this.CalibrationPointsMap = pipeline.CreateEmitter<CalibrationPointsMap>(this, nameof(this.CalibrationPointsMap));
 
             this.sensorDevice = new ResearchModeSensorDevice();
             this.requestCameraAccessTask = this.sensorDevice.RequestCameraAccessAsync().AsTask();
-            this.cameraSensor = (ResearchModeCameraSensor)this.sensorDevice.GetSensor(sensorType);
+            this.cameraSensor = (ResearchModeCameraSensor)this.sensorDevice.GetSensor(this.configuration.SensorType);
 
             Guid rigNodeGuid = this.sensorDevice.GetRigNodeId();
             this.rigNodeLocator = SpatialGraphInteropPreview.CreateLocatorForNode(rigNodeGuid);
@@ -92,12 +93,12 @@ namespace Microsoft.Psi.MixedReality
         /// <summary>
         /// Gets the camera intrinsics stream.
         /// </summary>
-        public Emitter<ICameraIntrinsics> CameraIntrinsics { get; }
+        public Emitter<ICameraIntrinsics> CameraIntrinsics { get; } = null;
 
         /// <summary>
         /// Gets the stream for calibration map (image points and corresponding 3D camera points).
         /// </summary>
-        public Emitter<CalibrationPointsMap> CalibrationPointsMap { get; }
+        public Emitter<CalibrationPointsMap> CalibrationPointsMap { get; } = null;
 
         /// <summary>
         /// Gets the stream on which the count of out of order frames are posted.
@@ -109,9 +110,90 @@ namespace Microsoft.Psi.MixedReality
 #endif
 
         /// <summary>
+        /// Gets the research mode camera configuration.
+        /// </summary>
+        protected ResearchModeCameraConfiguration Configuration => this.configuration;
+
+        /// <summary>
         /// Gets the rig node locator.
         /// </summary>
         protected SpatialLocator RigNodeLocator => this.rigNodeLocator;
+
+        /// <summary>
+        /// Calibrates the camera sensor.
+        /// </summary>
+        public void Calibrate()
+        {
+            if (this.pipelineIsRunning)
+            {
+                throw new InvalidOperationException($"The {nameof(this.Calibrate)}() method should only be called before the pipeline has started running.");
+            }
+
+            this.calibrationPointsMap = this.ComputeCalibrationPointsMap();
+            this.cameraIntrinsics = this.calibrationPointsMap.ComputeCameraIntrinsics();
+        }
+
+        /// <summary>
+        /// Calibrates the camera sensor, using stored files.
+        /// </summary>
+        /// <param name="calibrationFolder">The device folder containing calibration files. Defaults to Documents.</param>
+        /// <returns>True when complete.</returns>
+        /// <remarks>
+        /// Camera intrinsics are loaded from the file: {calibrationFolder}/{ResearchModeSensorType}Intrinsics.xml,
+        /// and the map of calibration points are loaded from the file: {calibrationFolder}/{ResearchModeSensorType}Points.map.
+        /// Follow these steps to give your app read/write access to the Documents folder:
+        /// https://docs.microsoft.com/en-us/uwp/api/windows.storage.knownfolders.documentslibrary?view=winrt-22000#prerequisites
+        /// If the files do not already exist, they will be created, and calibration will be computed from scratch and saved.
+        /// </remarks>
+        public async Task<bool> CalibrateFromFileAsync(StorageFolder calibrationFolder = null)
+        {
+            if (this.pipelineIsRunning)
+            {
+                throw new InvalidOperationException($"The {nameof(this.CalibrateFromFileAsync)}() method should only be called before the pipeline has started running.");
+            }
+
+            // Use the Documents folder by default.
+            calibrationFolder ??= KnownFolders.DocumentsLibrary;
+
+            // Attempt to load from file
+            var sensorType = this.cameraSensor.GetSensorType();
+            string calibrationPointsMapFileName = $"{sensorType}Points.map";
+            string cameraIntrinsicsFileName = $"{sensorType}Intrinsics.xml";
+
+            try
+            {
+                // Get the file (throws FileNotFoundException if it doesn't exist, handled below).
+                var calibrationPointsMapFile = await calibrationFolder.GetFileAsync(calibrationPointsMapFileName);
+                this.calibrationPointsMap = await calibrationPointsMapFile.DeserializeCalibrationPointsMapAsync();
+            }
+            catch (FileNotFoundException)
+            {
+                // Create the file if it didn't exist.
+                var calibrationPointsMapFile = await calibrationFolder.CreateFileAsync(calibrationPointsMapFileName, CreationCollisionOption.FailIfExists);
+
+                // Compute and serialize
+                this.calibrationPointsMap = this.ComputeCalibrationPointsMap();
+                await this.calibrationPointsMap.SerializeAsync(calibrationPointsMapFile);
+            }
+
+            try
+            {
+                // Get the file (throws FileNotFoundException if it doesn't exist, handled below).
+                var cameraIntrinsicsFile = await calibrationFolder.GetFileAsync(cameraIntrinsicsFileName);
+                this.cameraIntrinsics = await cameraIntrinsicsFile.DeserializeCameraIntrinsicsAsync();
+            }
+            catch (FileNotFoundException)
+            {
+                // Create the file if it didn't exist.
+                var cameraIntrinsicsFile = await calibrationFolder.CreateFileAsync(cameraIntrinsicsFileName, CreationCollisionOption.FailIfExists);
+
+                // Compute and serialize
+                this.cameraIntrinsics = this.calibrationPointsMap.ComputeCameraIntrinsics();
+                await this.cameraIntrinsics.SerializeAsync(cameraIntrinsicsFile);
+            }
+
+            return true;
+        }
 
         /// <inheritdoc/>
         public void Start(Action<DateTime> notifyCompletionTime)
@@ -135,6 +217,9 @@ namespace Microsoft.Psi.MixedReality
             notifyCompleted();
         }
 
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
+
         /// <summary>
         /// Processes a sensor frame received from the sensor.
         /// </summary>
@@ -148,13 +233,19 @@ namespace Microsoft.Psi.MixedReality
         /// Gets the camera intrinsics.
         /// </summary>
         /// <returns>The camera's intrinsics.</returns>
-        protected ICameraIntrinsics GetCameraIntrinsics() => this.cameraIntrinsics;
+        protected CameraIntrinsics GetCameraIntrinsics() => this.cameraIntrinsics;
 
         /// <summary>
         /// Gets the calibration points map (used for computing intrinsics)).
         /// </summary>
         /// <returns>The calibration points map.</returns>
         protected CalibrationPointsMap GetCalibrationPointsMap() => this.calibrationPointsMap;
+
+        /// <summary>
+        /// Gets the camera pose.
+        /// </summary>
+        /// <returns>The camera's pose.</returns>
+        protected CoordinateSystem GetCameraPose() => this.cameraPose;
 
         /// <summary>
         /// Converts the rig node location to the camera pose.
@@ -169,13 +260,17 @@ namespace Microsoft.Psi.MixedReality
             m.Translation = p;
 
             // Extrinsics of the camera relative to the rig node
-            this.cameraExtrinsics ??= new CoordinateSystem(this.cameraSensor.GetCameraExtrinsicsMatrix().ToMathNetMatrix());
+            if (!this.invertedCameraExtrinsics.HasValue)
+            {
+                Matrix4x4.Invert(this.cameraSensor.GetCameraExtrinsicsMatrix(), out var invertedMatrix);
+                this.invertedCameraExtrinsics = invertedMatrix;
+            }
 
             // Transform the rig node location to camera pose in world coordinates
-            var cameraPose = m.ToMathNetMatrix() * this.cameraExtrinsics.Invert() * CameraCoordinateSystem;
+            var cameraPose = CameraBasis * this.invertedCameraExtrinsics.Value * m;
 
             // Convert to \psi basis
-            return new CoordinateSystem(cameraPose.ChangeBasisHoloLensToPsi());
+            return new CoordinateSystem(cameraPose.ToMathNetMatrix());
         }
 
         private void CaptureThread()
@@ -185,54 +280,19 @@ namespace Microsoft.Psi.MixedReality
 
             try
             {
-                if (this.createCalibrationMap || this.computeCameraIntrinsics)
+                // Compute the map of calibration points if we don't have it already, and we need
+                // it, either b/c we need to compute camera intrinsics, or b/c we need to emit them.
+                if (this.calibrationPointsMap is null && this.configuration.RequiresCalibrationPointsMap())
                 {
-                    // Get the resolution from the initial frame. We could also just have used constants
-                    // based on the sensor type, but this approach keeps things more general/flexible.
-                    var sensorFrame = this.cameraSensor.GetNextBuffer();
-                    var resolution = sensorFrame.GetResolution();
-                    var width = (int)resolution.Width;
-                    var height = (int)resolution.Height;
-
-                    // Compute a lookup table of calibration points
-                    List<Point3D> cameraPoints = new ();
-                    List<Point2D> imagePoints = new ();
-                    float[] cameraUnitPlanePoints = new float[width * height * 2];
-
-                    int ci = 0;
-                    for (int y = 0; y < height; y++)
-                    {
-                        for (int x = 0; x < width; x++)
-                        {
-                            // Check the return value for success (HRESULT == S_OK)
-                            if (this.cameraSensor.MapImagePointToCameraUnitPlane(new Point(x + 0.5, y + 0.5), out var xy) == 0)
-                            {
-                                // Add the camera space mapping for the image pixel
-                                cameraUnitPlanePoints[ci++] = (float)xy.X;
-                                cameraUnitPlanePoints[ci++] = (float)xy.Y;
-
-                                var norm = Math.Sqrt((xy.X * xy.X) + (xy.Y * xy.Y) + 1.0);
-                                imagePoints.Add(new Point2D(x + 0.5, y + 0.5));
-                                cameraPoints.Add(new Point3D(xy.X / norm, xy.Y / norm, 1.0 / norm));
-                            }
-                            else
-                            {
-                                cameraUnitPlanePoints[ci++] = float.NaN;
-                                cameraUnitPlanePoints[ci++] = float.NaN;
-                            }
-                        }
-                    }
-
-                    this.calibrationPointsMap = new CalibrationPointsMap(width, height, cameraUnitPlanePoints);
-
-                    if (this.computeCameraIntrinsics)
-                    {
-                        // Compute instrinsics before the main loop as it could take a while. This avoids a long
-                        // observed initial delay for the first posted frame while intrinsics are being computed.
-                        this.cameraIntrinsics = this.ComputeCameraIntrinsics(width, height, cameraPoints, imagePoints);
-                    }
+                    this.calibrationPointsMap = this.ComputeCalibrationPointsMap();
                 }
 
+                if (this.cameraIntrinsics is null && this.configuration.RequiresCameraIntrinsics())
+                {
+                    this.cameraIntrinsics = this.calibrationPointsMap.ComputeCameraIntrinsics();
+                }
+
+                // Main capture loop
                 while (!this.shutdown)
                 {
                     var sensorFrame = this.cameraSensor.GetNextBuffer();
@@ -261,6 +321,41 @@ namespace Microsoft.Psi.MixedReality
                     // Sensor-specific processing implemented by derived class
                     if (!this.shutdown)
                     {
+                        // Post the map of calibration points (used for computing camera intrinsics) if requested
+                        if (this.configuration.OutputCalibrationPointsMap &&
+                            (originatingTime - this.CalibrationPointsMap.LastEnvelope.OriginatingTime) > this.configuration.OutputCalibrationPointsMapMinInterval)
+                        {
+                            this.CalibrationPointsMap.Post(this.GetCalibrationPointsMap(), originatingTime);
+                        }
+
+                        // Post the camera intrinsics if requested
+                        if (this.configuration.OutputCameraIntrinsics &&
+                            (originatingTime - this.CameraIntrinsics.LastEnvelope.OriginatingTime) > this.configuration.OutputMinInterval)
+                        {
+                            this.CameraIntrinsics.Post(this.cameraIntrinsics, originatingTime);
+                        }
+
+                        // compute the camera pose if needed
+                        if (this.configuration.RequiresPose())
+                        {
+                            var timestamp = PerceptionTimestampHelper.FromSystemRelativeTargetTime(TimeSpan.FromTicks((long)frameTicks));
+                            var rigNodeLocation = this.RigNodeLocator.TryLocateAtTimestamp(timestamp, MixedReality.WorldSpatialCoordinateSystem);
+
+                            // The rig node may not always be locatable, so we need a null check
+                            if (rigNodeLocation != null)
+                            {
+                                // Compute the camera pose from the rig node location
+                                this.cameraPose = this.ToCameraPose(rigNodeLocation);
+                            }
+                        }
+
+                        // Post the camera pose if requested
+                        if (this.configuration.OutputPose &&
+                            (originatingTime - this.Pose.LastEnvelope.OriginatingTime) > this.configuration.OutputMinInterval)
+                        {
+                            this.Pose.Post(this.cameraPose, originatingTime);
+                        }
+
                         this.ProcessSensorFrame(sensorFrame, resolution, frameTicks, originatingTime);
                     }
                 }
@@ -282,40 +377,65 @@ namespace Microsoft.Psi.MixedReality
                 case ResearchModeSensorConsent.DeniedByUser:
                     throw new UnauthorizedAccessException("Access to the camera was denied by the user");
                 case ResearchModeSensorConsent.NotDeclaredByApp:
-                    throw new UnauthorizedAccessException("Camera capability was not declared in the app manifest");
+                    throw new UnauthorizedAccessException("Webcam capability was not declared in the app manifest");
                 case ResearchModeSensorConsent.UserPromptRequired:
                     throw new UnauthorizedAccessException("Permission to access to the camera must be requested first");
             }
         }
 
-        /// <summary>
-        /// Computes the camera intrinsics from a lookup table mapping image points to 3D points in camera space.
-        /// </summary>
-        /// <param name="width">The image width for the camera.</param>
-        /// <param name="height">The image height for the camera.</param>
-        /// <param name="cameraPoints">The list of 3D camera points to use for calibration.</param>
-        /// <param name="imagePoints">The list of corresponding 2D image points.</param>
-        /// <returns>The camera intrinsics.</returns>
-        private ICameraIntrinsics ComputeCameraIntrinsics(int width, int height, List<Point3D> cameraPoints, List<Point2D> imagePoints)
+        private CalibrationPointsMap ComputeCalibrationPointsMap()
         {
-            // Initialize a starting camera matrix
-            var initialCameraMatrix = MathNet.Numerics.LinearAlgebra.Matrix<double>.Build.Dense(3, 3);
-            var initialDistortion = MathNet.Numerics.LinearAlgebra.Vector<double>.Build.Dense(2);
-            initialCameraMatrix[0, 0] = 250; // fx
-            initialCameraMatrix[1, 1] = 250; // fy
-            initialCameraMatrix[0, 2] = width / 2.0; // cx
-            initialCameraMatrix[1, 2] = height / 2.0; // cy
-            initialCameraMatrix[2, 2] = 1;
-            CalibrationExtensions.CalibrateCameraIntrinsics(
-                cameraPoints,
-                imagePoints,
-                initialCameraMatrix,
-                initialDistortion,
-                out var computedCameraMatrix,
-                out var computedDistortionCoefficients,
-                false);
+            int width, height;
+            switch (this.cameraSensor.GetSensorType())
+            {
+                case ResearchModeSensorType.DepthLongThrow:
+                    width = 320;
+                    height = 288;
+                    break;
+                case ResearchModeSensorType.DepthAhat:
+                    width = 512;
+                    height = 512;
+                    break;
+                case ResearchModeSensorType.LeftFront:
+                case ResearchModeSensorType.RightFront:
+                case ResearchModeSensorType.LeftLeft:
+                case ResearchModeSensorType.RightRight:
+                    width = 640;
+                    height = 480;
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid research mode camera for computing calibration.");
+            }
 
-            return new CameraIntrinsics(width, height, computedCameraMatrix, computedDistortionCoefficients, depthPixelSemantics: DepthPixelSemantics.DistanceToPoint);
+            // Compute a lookup table of calibration points
+            double[] cameraUnitPlanePoints = new double[width * height * 2];
+
+            int ci = 0;
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // Check the return value for success (HRESULT == S_OK)
+                    if (this.cameraSensor.MapImagePointToCameraUnitPlane(new Point(x + 0.5, y + 0.5), out var xy) == 0)
+                    {
+                        // Add the camera space mapping for the image pixel
+                        cameraUnitPlanePoints[ci++] = xy.X;
+                        cameraUnitPlanePoints[ci++] = xy.Y;
+                    }
+                    else
+                    {
+                        cameraUnitPlanePoints[ci++] = double.NaN;
+                        cameraUnitPlanePoints[ci++] = double.NaN;
+                    }
+                }
+            }
+
+            return new CalibrationPointsMap()
+            {
+                Width = width,
+                Height = height,
+                CameraUnitPlanePoints = cameraUnitPlanePoints,
+            };
         }
     }
 }

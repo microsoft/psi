@@ -13,19 +13,20 @@ namespace Microsoft.Psi.Components
     /// <typeparam name="TOut">The output message type.</typeparam>
     public class Aggregator<TState, TIn, TOut> : ConsumerProducer<TIn, TOut>, IDisposable
     {
-        private Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator;
+        private readonly Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator;
         private TState state;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Aggregator{TState, TIn, TOut}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="init">Initial state.</param>
+        /// <param name="initialState">Initial state.</param>
         /// <param name="aggregator">Aggregation function.</param>
-        public Aggregator(Pipeline pipeline, TState init, Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public Aggregator(Pipeline pipeline, TState initialState, Func<TState, TIn, Envelope, Emitter<TOut>, TState> aggregator, string name = nameof(Aggregator<TState, TIn, TOut>))
+            : base(pipeline, name)
         {
-            this.state = init;
+            this.state = initialState;
             this.aggregator = aggregator;
         }
 

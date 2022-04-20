@@ -17,11 +17,10 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source stream messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Stream of originating times.</returns>
-        public static IProducer<DateTime> TimeOf<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
-        {
-            return source.Select((_, e) => e.OriginatingTime, deliveryPolicy);
-        }
+        public static IProducer<DateTime> TimeOf<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(TimeOf))
+            => source.Select((_, e) => e.OriginatingTime, deliveryPolicy, name);
 
         /// <summary>
         /// Map messages to their current latency (time since origination).
@@ -29,11 +28,10 @@ namespace Microsoft.Psi
         /// <typeparam name="T">Type of source stream messages.</typeparam>
         /// <param name="source">Source stream.</param>
         /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
         /// <returns>Stream of latency (time span) values.</returns>
-        public static IProducer<TimeSpan> Latency<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null)
-        {
-            return source.Select((_, e) => e.CreationTime - e.OriginatingTime, deliveryPolicy);
-        }
+        public static IProducer<TimeSpan> Latency<T>(this IProducer<T> source, DeliveryPolicy<T> deliveryPolicy = null, string name = nameof(Latency))
+            => source.Select((_, e) => e.CreationTime - e.OriginatingTime, deliveryPolicy, name);
 
         /// <summary>
         /// Delays the delivery of messages by a given time span.

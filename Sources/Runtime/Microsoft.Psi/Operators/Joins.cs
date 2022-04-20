@@ -13,7 +13,7 @@ namespace Microsoft.Psi
     /// </summary>
     public static partial class Operators
     {
-        #region Scalar joins
+        #region Scalar join operators
 
         /// <summary>
         /// Join with values from a secondary stream based on a specified reproducible interpolator.
@@ -27,6 +27,7 @@ namespace Microsoft.Psi
         /// <param name="outputCreator">Function mapping the primary and secondary messages to an output message type.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined values.</returns>
         public static IProducer<TOut> Join<TPrimary, TSecondary, TOut>(
             this IProducer<TPrimary> primary,
@@ -34,7 +35,8 @@ namespace Microsoft.Psi
             ReproducibleInterpolator<TSecondary> interpolator,
             Func<TPrimary, TSecondary, TOut> outputCreator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -42,7 +44,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (m, secondaryArray) => outputCreator(m, secondaryArray[0]),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -55,14 +58,16 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined values.</returns>
         public static IProducer<(TPrimary, TSecondary)> Join<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
-            return Join(primary, secondary, Reproducible.Exact<TSecondary>(), primaryDeliveryPolicy, secondaryDeliveryPolicy);
+            return Join(primary, secondary, Reproducible.Exact<TSecondary>(), primaryDeliveryPolicy, secondaryDeliveryPolicy, name);
         }
 
         /// <summary>
@@ -76,15 +81,17 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined values.</returns>
         public static IProducer<(TPrimary, TSecondary)> Join<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
-            return Join(primary, secondary, new RelativeTimeInterval(-tolerance, tolerance), primaryDeliveryPolicy, secondaryDeliveryPolicy);
+            return Join(primary, secondary, new RelativeTimeInterval(-tolerance, tolerance), primaryDeliveryPolicy, secondaryDeliveryPolicy, name);
         }
 
         /// <summary>
@@ -98,13 +105,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined values.</returns>
         public static IProducer<(TPrimary, TSecondary)> Join<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -112,7 +121,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(relativeTimeInterval),
                 ValueTuple.Create,
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -125,15 +135,17 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined values.</returns>
         public static IProducer<(TPrimary, TSecondary)> Join<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
-            return Join(primary, secondary, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondaryDeliveryPolicy);
+            return Join(primary, secondary, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondaryDeliveryPolicy, name ?? $"{nameof(Join)}({interpolator})");
         }
 
         #endregion Scalar joins
@@ -151,13 +163,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -165,7 +179,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p.Item1, p.Item2, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -179,12 +194,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -192,7 +209,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<TSecondary>(),
                 (p, s) => (p.Item1, p.Item2, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -207,13 +225,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -221,7 +241,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(tolerance),
                 (p, s) => (p.Item1, p.Item2, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -236,13 +257,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -250,7 +273,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(relativeTimeInterval),
                 (p, s) => (p.Item1, p.Item2, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -265,13 +289,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -279,7 +305,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p.Item1, p.Item2, p.Item3, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -294,12 +321,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -307,7 +336,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<TSecondary>(),
                 (p, s) => (p.Item1, p.Item2, p.Item3, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -323,13 +353,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -337,7 +369,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(tolerance),
                 (p, s) => (p.Item1, p.Item2, p.Item3, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -353,13 +386,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -367,7 +402,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(relativeTimeInterval),
                 (p, s) => (p.Item1, p.Item2, p.Item3, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -383,13 +419,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -397,7 +435,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -413,12 +452,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -426,7 +467,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<TSecondary>(),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -442,13 +484,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -456,7 +500,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(tolerance),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -473,13 +518,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -487,7 +534,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(relativeTimeInterval),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -504,13 +552,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -518,7 +568,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -535,12 +586,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -548,7 +601,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<TSecondary>(),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -566,13 +620,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -580,7 +636,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(tolerance),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -598,13 +655,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -612,7 +671,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(relativeTimeInterval),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -630,13 +690,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -644,7 +706,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, p.Item6, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -662,12 +725,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -675,7 +740,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<TSecondary>(),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, p.Item6, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -694,13 +760,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -708,7 +776,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(tolerance),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, p.Item6, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -727,13 +796,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary)> Join<TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6, TSecondary>(
             this IProducer<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primary,
             IProducer<TSecondary> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<(TPrimaryItem1, TPrimaryItem2, TPrimaryItem3, TPrimaryItem4, TPrimaryItem5, TPrimaryItem6)> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -741,7 +812,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<TSecondary>(relativeTimeInterval),
                 (p, s) => (p.Item1, p.Item2, p.Item3, p.Item4, p.Item5, p.Item6, s),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         #endregion Tuple-flattening scalar joins
@@ -759,13 +831,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2)> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -773,7 +847,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p, s.Item1, s.Item2),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -787,12 +862,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream of tuples (arity 2).</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -800,7 +877,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<(TSecondaryItem1, TSecondaryItem2)>(),
                 (p, s) => (p, s.Item1, s.Item2),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -815,13 +893,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -829,7 +909,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2)>(tolerance),
                 (p, s) => (p, s.Item1, s.Item2),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -844,13 +925,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 3.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2)> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -858,7 +941,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2)>(relativeTimeInterval),
                 (p, s) => (p, s.Item1, s.Item2),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -873,13 +957,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -887,7 +973,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p, s.Item1, s.Item2, s.Item3),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -902,12 +989,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream of tuples (arity 3).</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -915,7 +1004,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)>(),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -931,13 +1021,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -945,7 +1037,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)>(tolerance),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -961,13 +1054,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 4.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -975,7 +1070,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3)>(relativeTimeInterval),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -991,13 +1087,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1005,7 +1103,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -1021,12 +1120,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream of tuples (arity 4).</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1034,7 +1135,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)>(),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1051,13 +1153,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1065,7 +1169,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)>(tolerance),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1082,13 +1187,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 5.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1096,7 +1203,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4)>(relativeTimeInterval),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1113,13 +1221,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1127,7 +1237,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -1144,12 +1255,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream of tuples (arity 5).</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1157,7 +1270,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)>(),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1175,13 +1289,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1189,7 +1305,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)>(tolerance),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1207,13 +1324,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 6.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1221,7 +1340,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5)>(relativeTimeInterval),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1239,13 +1359,15 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             ReproducibleInterpolator<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1253,7 +1375,8 @@ namespace Microsoft.Psi
                 interpolator,
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5, s.Item6),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -1271,12 +1394,14 @@ namespace Microsoft.Psi
         /// <param name="secondary">Secondary stream of tuples (arity 6).</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1284,7 +1409,8 @@ namespace Microsoft.Psi
                 Reproducible.Exact<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)>(),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5, s.Item6),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1303,13 +1429,15 @@ namespace Microsoft.Psi
         /// <param name="tolerance">Time tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             TimeSpan tolerance,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1317,7 +1445,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)>(tolerance),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5, s.Item6),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         /// <summary>
@@ -1336,13 +1465,15 @@ namespace Microsoft.Psi
         /// <param name="relativeTimeInterval">Relative time interval tolerance.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondaryDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Stream of joined tuple values flattened to arity 7.</returns>
         public static IProducer<(TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> Join<TPrimary, TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6>(
             this IProducer<TPrimary> primary,
             IProducer<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondary,
             RelativeTimeInterval relativeTimeInterval,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null)
+            DeliveryPolicy<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)> secondaryDeliveryPolicy = null,
+            string name = null)
         {
             return Join(
                 primary,
@@ -1350,7 +1481,8 @@ namespace Microsoft.Psi
                 Reproducible.Nearest<(TSecondaryItem1, TSecondaryItem2, TSecondaryItem3, TSecondaryItem4, TSecondaryItem5, TSecondaryItem6)>(relativeTimeInterval),
                 (p, s) => (p, s.Item1, s.Item2, s.Item3, s.Item4, s.Item5, s.Item6),
                 primaryDeliveryPolicy,
-                secondaryDeliveryPolicy);
+                secondaryDeliveryPolicy,
+                name);
         }
 
         #endregion Reverse tuple-flattening scalar joins
@@ -1369,6 +1501,7 @@ namespace Microsoft.Psi
         /// <param name="outputCreator">Mapping function from primary and secondary messages to output.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TOut> Join<TPrimary, TSecondary, TOut>(
             this IProducer<TPrimary> primary,
@@ -1376,14 +1509,16 @@ namespace Microsoft.Psi
             ReproducibleInterpolator<TSecondary> interpolator,
             Func<TPrimary, TSecondary[], TOut> outputCreator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null,
+            string name = null)
         {
             var join = new Join<TPrimary, TSecondary, TOut>(
                 primary.Out.Pipeline,
                 interpolator,
                 outputCreator,
                 secondaries.Count(),
-                null);
+                null,
+                name ?? $"{nameof(Join)}({interpolator})");
 
             primary.PipeTo(join.InPrimary, primaryDeliveryPolicy);
 
@@ -1406,15 +1541,17 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<(TPrimary, TSecondary[])> Join<TPrimary, TSecondary>(
             this IProducer<TPrimary> primary,
             IEnumerable<IProducer<TSecondary>> secondaries,
             ReproducibleInterpolator<TSecondary> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null,
+            string name = null)
         {
-            return primary.Join(secondaries, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondariesDeliveryPolicy);
+            return primary.Join(secondaries, interpolator, ValueTuple.Create, primaryDeliveryPolicy, secondariesDeliveryPolicy, name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -1430,6 +1567,7 @@ namespace Microsoft.Psi
         /// <param name="outputCreator">Mapping function from primary and secondary messages to output.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TOut> Join<TPrimary, TSecondary, TInterpolation, TOut>(
             this IProducer<TPrimary> primary,
@@ -1437,14 +1575,16 @@ namespace Microsoft.Psi
             ReproducibleInterpolator<TSecondary, TInterpolation> interpolator,
             Func<TPrimary, TInterpolation[], TOut> outputCreator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null,
+            string name = null)
         {
             var join = new Join<TPrimary, TSecondary, TInterpolation, TOut>(
                 primary.Out.Pipeline,
                 interpolator,
                 outputCreator,
                 secondaries.Count(),
-                null);
+                null,
+                name ?? $"{nameof(Join)}({interpolator})");
 
             primary.PipeTo(join.InPrimary, primaryDeliveryPolicy);
 
@@ -1468,15 +1608,17 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="primaryDeliveryPolicy">An optional delivery policy for the primary stream.</param>
         /// <param name="secondariesDeliveryPolicy">An optional delivery policy for the secondary stream(s).</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<(TPrimary, TInterpolation[])> Join<TPrimary, TSecondary, TInterpolation>(
             this IProducer<TPrimary> primary,
             IEnumerable<IProducer<TSecondary>> secondaries,
             ReproducibleInterpolator<TSecondary, TInterpolation> interpolator,
             DeliveryPolicy<TPrimary> primaryDeliveryPolicy = null,
-            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null)
+            DeliveryPolicy<TSecondary> secondariesDeliveryPolicy = null,
+            string name = null)
         {
-            return primary.Join(secondaries, interpolator, (p, i) => (p, i), primaryDeliveryPolicy, secondariesDeliveryPolicy);
+            return primary.Join(secondaries, interpolator, (p, i) => (p, i), primaryDeliveryPolicy, secondariesDeliveryPolicy, name ?? $"{nameof(Join)}({interpolator})");
         }
 
         /// <summary>
@@ -1488,12 +1630,14 @@ namespace Microsoft.Psi
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="outputCreator">Mapping function from input to output messages.</param>
         /// <param name="deliveryPolicy">An optional delivery policy to use for the streams.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TOut[]> Join<TIn, TOut>(
             this IEnumerable<IProducer<TIn>> inputs,
             ReproducibleInterpolator<TIn> interpolator,
             Func<TIn, TOut> outputCreator,
-            DeliveryPolicy<TIn> deliveryPolicy = null)
+            DeliveryPolicy<TIn> deliveryPolicy = null,
+            string name = null)
         {
             var count = inputs.Count();
             if (count > 1)
@@ -1514,11 +1658,12 @@ namespace Microsoft.Psi
                         return buffer;
                     },
                     deliveryPolicy,
-                    deliveryPolicy);
+                    deliveryPolicy,
+                    name ?? $"{nameof(Join)}({interpolator})");
             }
             else if (count == 1)
             {
-                return inputs.First().Select(x => new[] { outputCreator(x) }, deliveryPolicy);
+                return inputs.First().Select(x => new[] { outputCreator(x) }, deliveryPolicy, name ?? $"{nameof(Join)}({interpolator})");
             }
             else
             {
@@ -1533,13 +1678,15 @@ namespace Microsoft.Psi
         /// <param name="inputs">Collection of input streams.</param>
         /// <param name="interpolator">Reproducible interpolator to use when joining the streams.</param>
         /// <param name="deliveryPolicy">An optional delivery policy to use for the streams.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
         /// <returns>Output stream.</returns>
         public static IProducer<TIn[]> Join<TIn>(
             this IEnumerable<IProducer<TIn>> inputs,
             ReproducibleInterpolator<TIn> interpolator,
-            DeliveryPolicy<TIn> deliveryPolicy = null)
+            DeliveryPolicy<TIn> deliveryPolicy = null,
+            string name = null)
         {
-            return inputs.Join(interpolator, _ => _, deliveryPolicy);
+            return inputs.Join(interpolator, _ => _, deliveryPolicy, name ?? $"{nameof(Join)}({interpolator})");
         }
 
         #endregion Vector joins

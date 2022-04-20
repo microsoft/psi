@@ -68,16 +68,18 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="originCoordinateSystem">The origin coordinate system.</param>
         /// <param name="destinationCoordinateSystem">A destination coordinate system.</param>
         /// <param name="time">The time it took to reach the destination coordinate system.</param>
+        /// <param name="angleEpsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</param>
         public CoordinateSystemVelocity3D(
             CoordinateSystem originCoordinateSystem,
             CoordinateSystem destinationCoordinateSystem,
-            TimeSpan time)
+            TimeSpan time,
+            double angleEpsilon = 0.01 * Math.PI / 180)
         {
             this.OriginCoordinateSystem = originCoordinateSystem;
             var coordinateDifference = destinationCoordinateSystem.TransformBy(originCoordinateSystem.Invert());
             var timeInSeconds = time.TotalSeconds;
             this.LinearVector = coordinateDifference.Origin.ToVector3D().ScaleBy(1.0 / timeInSeconds);
-            var axisAngleDistance = Vector3D.OfVector(MatrixToAxisAngle(coordinateDifference.GetRotationSubMatrix()));
+            var axisAngleDistance = Vector3D.OfVector(MatrixToAxisAngle(coordinateDifference.GetRotationSubMatrix(), angleEpsilon));
             var angularSpeed = axisAngleDistance.Length / timeInSeconds;
             this.AxisAngleVector = angularSpeed == 0 ? default : axisAngleDistance.Normalize().ScaleBy(angularSpeed);
         }

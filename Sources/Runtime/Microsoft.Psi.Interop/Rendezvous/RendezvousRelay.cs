@@ -41,6 +41,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         {
             writer.Write((byte)1); // add
             writer.Write(process.Name);
+            writer.Write(process.Version);
             writer.Write(process.Endpoints.Count());
             foreach (var endpoint in process.Endpoints)
             {
@@ -160,7 +161,9 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <returns>Process.</returns>
         private static Rendezvous.Process ReadProcess(BinaryReader reader)
         {
-            var process = new Rendezvous.Process(reader.ReadString());
+            var processName = reader.ReadString();
+            var processVersion = reader.ReadString();
+            var process = new Rendezvous.Process(processName, processVersion);
 
             // read endpoint info
             var endpointCount = reader.ReadInt32();

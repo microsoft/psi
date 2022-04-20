@@ -24,7 +24,10 @@
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding PlayPauseCommand}" Key="F10" />
+        <KeyBinding Command="{Binding GoToTimeCommand}" Key="G" Modifiers="Ctrl" />
         <KeyBinding Command="{Binding ToggleCursorFollowsMouseComand}" Key="F" Modifiers="Alt" />
+        <KeyBinding Command="{Binding MoveSelectionLeftCommand}" Key="Left" Modifiers="Alt" />
+        <KeyBinding Command="{Binding MoveSelectionRightCommand}" Key="Right" Modifiers="Alt" />
         <KeyBinding Command="{Binding ClearSelectionCommand}" Key="C" Modifiers="Alt" />
         <KeyBinding Command="{Binding NudgeRightCommand}" Key="OemPeriod" Modifiers="Ctrl" />
         <KeyBinding Command="{Binding NudgeLeftCommand}" Key="OemComma" Modifiers="Ctrl" />
@@ -71,8 +74,8 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Auto Save Da_taset" Command="{Binding AutoSaveDatasetsCommand}" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoSaveDatasets}"/>
-                <MenuItem Header="Auto Load Most _Recently Used Dataset" Command="{Binding AutoLoadMRUDatasetOnStartupCommand}" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoLoadMRUDatasetOnStartUp}"/>
+                <MenuItem Header="Auto Save Da_taset" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoSaveDatasets}"/>
+                <MenuItem Header="Auto Load Most _Recently Used Dataset" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoLoadMRUDatasetOnStartUp}"/>
                 <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitCommand}" Height="25"/>
             </MenuItem>
@@ -122,6 +125,12 @@
                 </Button>
                 <Button Command="{Binding ZoomToSelectionCommand}" Margin="1" ToolTip="Zoom to Selection" AutomationProperties.Name="ZoomToSelectionButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=zoom-to-selection.png}"/>
+                </Button>
+                <Button Command="{Binding MoveSelectionLeftCommand}" Margin="1" ToolTip="Move Selection Left (Alt+Left)" AutomationProperties.Name="MoveSelectionLeftButton">
+                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=move-selection-left.png}"/>
+                </Button>
+                <Button Command="{Binding MoveSelectionRightCommand}" Margin="1" ToolTip="Move Selection Right (Alt+Right)" AutomationProperties.Name="MoveSelectionRightButton">
+                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=move-selection-right.png}"/>
                 </Button>
                 <Button Command="{Binding ClearSelectionCommand}" Margin="1" ToolTip="Clear Selection (Alt+C)" AutomationProperties.Name="ClearSelectionButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=selection-remove.png}"/>
@@ -191,6 +200,9 @@
                     </Image>
                 </Button>
                 <Separator Margin="4,2,4,2" Background="{StaticResource SeparatorColorBrush}" AutomationProperties.IsOffscreenBehavior="Offscreen"/>
+                <Button Command="{Binding GoToTimeCommand}" Margin="1" ToolTip="Go To Time ... (Ctrl+G)" AutomationProperties.Name="GoToTimeButton">
+                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=go-to-time.png}"/>
+                </Button>
                 <ToggleButton Command="{Binding ToggleCursorFollowsMouseComand}" IsChecked="{Binding VisualizationContainer.Navigator.CursorFollowsMouse, Mode=OneWay}" Margin="1" ToolTip="Cursor Follows Mouse (Alt+F)" AutomationProperties.Name="CursorFollowsMouseToggleButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=cursor-follow.png}"/>
                 </ToggleButton>
@@ -245,100 +257,113 @@
                                     HorizontalContentAlignment="Stretch">
                                     <TreeView.Resources>
                                         <HierarchicalDataTemplate x:Key="DatasetTemplate" ItemsSource="{Binding SessionViewModels}">
-                                            <Grid Name="Grid" HorizontalAlignment="Stretch">
-                                                <Grid.ContextMenu>
-                                                    <ContextMenu/>
-                                                </Grid.ContextMenu>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Image Grid.Column="0" Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=dataset.png}"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="3,0,0,0"/>
-                                                <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                            <ContentControl>
+                                                <Grid Name="Grid" HorizontalAlignment="Stretch">
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu/>
+                                                    </Grid.ContextMenu>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Grid.Column="0" Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=dataset.png}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="3,0,0,0"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                                </Grid>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="ContextMenuOpening">
                                                         <cmd:EventToCommand Command="{Binding Path=ContextMenuOpeningCommand}" CommandParameter="{Binding ElementName=Grid}" PassEventArgsToCommand="False" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                            </Grid>
+                                            </ContentControl>
                                         </HierarchicalDataTemplate>
 
                                         <HierarchicalDataTemplate x:Key="SessionTemplate" ItemsSource="{Binding PartitionViewModels}">
-                                            <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch">
-                                                <Grid.ContextMenu>
-                                                    <ContextMenu/>
-                                                </Grid.ContextMenu>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Image Grid.Column="0" Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=session.png}"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="3,0,0,0"/>
-                                                <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                            <ContentControl>
+                                                <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch">
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu/>
+                                                    </Grid.ContextMenu>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Grid.Column="0" Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=session.png}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="3,0,0,0"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                                </Grid>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="ContextMenuOpening">
                                                         <cmd:EventToCommand Command="{Binding Path=ContextMenuOpeningCommand}" CommandParameter="{Binding ElementName=Grid}" PassEventArgsToCommand="False" />
                                                     </i:EventTrigger>
+                                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                                        <cmd:EventToCommand Command="{Binding Path=MouseDoubleClickCommand}" PassEventArgsToCommand="True" />
+                                                    </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                            </Grid>
+                                            </ContentControl>
                                         </HierarchicalDataTemplate>
 
                                         <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding StreamTreeRoot.Children}">
-                                            <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch">
-                                                <Grid.ContextMenu>
-                                                    <ContextMenu/>
-                                                </Grid.ContextMenu>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Image Grid.Column="0" Source="{Binding IconSource}"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding DisplayName}" Margin="3,0,0,0"/>
-                                                <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                            <ContentControl>
+                                                <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch">
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu/>
+                                                    </Grid.ContextMenu>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Grid.Column="0" Source="{Binding IconSource}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding DisplayName}" Margin="3,0,0,0"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                                </Grid>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="ContextMenuOpening">
                                                         <cmd:EventToCommand Command="{Binding Path=ContextMenuOpeningCommand}" CommandParameter="{Binding ElementName=Grid}" PassEventArgsToCommand="False" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                            </Grid>
+                                            </ContentControl>
                                         </HierarchicalDataTemplate>
 
                                         <HierarchicalDataTemplate x:Key="StreamTreeNodeTemplate" ItemsSource="{Binding Children}">
-                                            <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch" MouseMove="StreamTreeNode_MouseMove">
-                                                <Grid.ContextMenu>
-                                                    <ContextMenu/>
-                                                </Grid.ContextMenu>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                                                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition></RowDefinition>
-                                                </Grid.RowDefinitions>
-                                                <Image Grid.Column="0" Source="{Binding IconSource}"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding DisplayName}" Margin="3,0,0,0" Foreground="{Binding ForegroundBrush}"/>
-                                                <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                            <ContentControl>
+                                                <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch" MouseMove="StreamTreeNode_MouseMove">
+                                                    <Grid.ContextMenu>
+                                                        <ContextMenu/>
+                                                    </Grid.ContextMenu>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition></RowDefinition>
+                                                    </Grid.RowDefinitions>
+                                                    <Image Grid.Column="0" Source="{Binding IconSource}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding DisplayName}" Margin="3,0,0,0" Foreground="{Binding ForegroundBrush}"/>
+                                                    <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                                                </Grid>
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="ContextMenuOpening">
                                                         <cmd:EventToCommand Command="{Binding Path=ContextMenuOpeningCommand}" CommandParameter="{Binding ElementName=Grid}" PassEventArgsToCommand="False" />
                                                     </i:EventTrigger>
+                                                    <i:EventTrigger EventName="MouseDoubleClick">
+                                                        <cmd:EventToCommand Command="{Binding Path=MouseDoubleClickCommand}" PassEventArgsToCommand="True" />
+                                                    </i:EventTrigger>
                                                 </i:Interaction.Triggers>
-                                            </Grid>
-
+                                            </ContentControl>
                                         </HierarchicalDataTemplate>
                                     </TreeView.Resources>
 

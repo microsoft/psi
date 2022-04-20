@@ -7,7 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
-    using GalaSoft.MvvmLight.Command;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi;
     using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization;

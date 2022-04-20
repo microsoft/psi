@@ -9,6 +9,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Linq;
     using System.Reflection;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Data.Annotations;
     using Microsoft.Psi.PsiStudio.Common;
@@ -611,6 +612,20 @@ namespace Microsoft.Psi.Visualization.ViewModels
             base.PopulateContextMenu(contextMenu);
         }
 
+        /// <inheritdoc/>
+        protected override void OnMouseDoubleClick(MouseButtonEventArgs e)
+        {
+            base.OnMouseDoubleClick(e);
+
+            if (this.CanExpandDerivedMemberStreams())
+            {
+                this.AddDerivedMemberStreamChildren();
+                this.ExpandAll();
+                this.IsTreeNodeExpanded = true;
+                e.Handled = true;
+            }
+        }
+
         /// <summary>
         /// Populates a specified context menu with visualizers.
         /// </summary>
@@ -711,7 +726,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                         this.AddDerivedMemberStreamChildren();
                         this.ExpandAll();
                     }),
-                    isEnabled: this.CanExpandDerivedMemberStreams() && !this.InternalChildren.Any(c => c is DerivedMemberStreamTreeNode)));
+                    isEnabled: this.CanExpandDerivedMemberStreams()));
         }
 
         /// <summary>
@@ -720,7 +735,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// <returns>True if the stream tree node can expand derived members.</returns>
         protected virtual bool CanExpandDerivedMemberStreams()
         {
-            Type nodeType = TypeResolutionHelper.GetVerifiedType(this.DataTypeName);
+            // If we have already expanded this node with derived member streams
+            if (this.InternalChildren.Any(c => c is DerivedMemberStreamTreeNode))
+            {
+                // Then no longer expand
+                return false;
+            }
+
+            var nodeType = TypeResolutionHelper.GetVerifiedType(this.DataTypeName);
 
             if (nodeType != null)
             {

@@ -17,12 +17,14 @@ namespace Microsoft.Psi.Media
     /// </summary>
     public class MediaSource : Generator, IDisposable
     {
+        private readonly Stream input;
+        private readonly DateTime start;
+        private readonly bool dropOutOfOrderPackets = false;
+
         private bool disposed = false;
-        private Stream input;
         private short videoWidth;
         private short videoHeight;
         private SourceReader sourceReader;
-        private DateTime start;
         private int imageStreamIndex = -1;
         private int audioStreamIndex = -1;
         private WaveFormat waveFormat;
@@ -38,18 +40,14 @@ namespace Microsoft.Psi.Media
         private DateTime lastPostedAudioTime = DateTime.MinValue;
 
         /// <summary>
-        /// Whether to drop out of order packets from media foundation.
-        /// </summary>
-        private bool dropOutOfOrderPackets = false;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MediaSource"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="filename">Name of media file to play.</param>
         /// <param name="dropOutOfOrderPackets">Optional flag specifying whether to drop out of order packets (defaults to <c>false</c>).</param>
-        public MediaSource(Pipeline pipeline, string filename, bool dropOutOfOrderPackets = false)
-            : this(pipeline, File.OpenRead(filename), new FileInfo(filename).CreationTime, dropOutOfOrderPackets)
+        /// <param name="name">An optional name for the stream operator.</param>
+        public MediaSource(Pipeline pipeline, string filename, bool dropOutOfOrderPackets = false, string name = nameof(MediaSource))
+            : this(pipeline, File.OpenRead(filename), new FileInfo(filename).CreationTime, dropOutOfOrderPackets, name)
         {
         }
 
@@ -60,8 +58,9 @@ namespace Microsoft.Psi.Media
         /// <param name="input">Source stream of the media to consume.</param>
         /// <param name="startTime">Optional date/time that the media started.</param>
         /// <param name="dropOutOfOrderPackets">Optional flag specifying whether to drop out of order packets (defaults to <c>false</c>).</param>
-        public MediaSource(Pipeline pipeline, Stream input, DateTime? startTime = null, bool dropOutOfOrderPackets = false)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public MediaSource(Pipeline pipeline, Stream input, DateTime? startTime = null, bool dropOutOfOrderPackets = false, string name = nameof(MediaSource))
+            : base(pipeline, name: name)
         {
             var proposedReplayTime = startTime ?? DateTime.UtcNow;
             pipeline.ProposeReplayTime(new TimeInterval(proposedReplayTime, DateTime.MaxValue));
@@ -104,30 +103,23 @@ namespace Microsoft.Psi.Media
         /// <returns>The originating time at which to capture the next sample.</returns>
         protected override DateTime GenerateNext(DateTime currentTime)
         {
-            DateTime originatingTime = default(DateTime);
-            int streamIndex = 0;
-            SourceReaderFlags flags = SourceReaderFlags.None;
-            long timestamp = 0;
-            Sample sample = this.sourceReader.ReadSample(SourceReaderIndex.AnyStream, 0, out streamIndex, out flags, out timestamp);
+            DateTime originatingTime = default;
+            var sample = this.sourceReader.ReadSample(SourceReaderIndex.AnyStream, 0, out int streamIndex, out SourceReaderFlags flags, out long timestamp);
             if (sample != null)
             {
                 originatingTime = this.start + TimeSpan.FromTicks(timestamp);
-                MediaBuffer buffer = sample.ConvertToContiguousBuffer();
-                int currentByteCount = 0;
-                int maxByteCount = 0;
-                IntPtr data = buffer.Lock(out maxByteCount, out currentByteCount);
+                var buffer = sample.ConvertToContiguousBuffer();
+                var data = buffer.Lock(out _, out int currentByteCount);
 
                 if (streamIndex == this.imageStreamIndex)
                 {
                     // Detect out of order originating times
                     if (originatingTime > this.lastPostedImageTime)
                     {
-                        using (var sharedImage = ImagePool.GetOrCreate(this.videoWidth, this.videoHeight, Imaging.PixelFormat.BGR_24bpp))
-                        {
-                            sharedImage.Resource.CopyFrom(data);
-                            this.Image.Post(sharedImage, originatingTime);
-                            this.lastPostedImageTime = originatingTime;
-                        }
+                        using var sharedImage = ImagePool.GetOrCreate(this.videoWidth, this.videoHeight, Imaging.PixelFormat.BGR_24bpp);
+                        sharedImage.Resource.CopyFrom(data);
+                        this.Image.Post(sharedImage, originatingTime);
+                        this.lastPostedImageTime = originatingTime;
                     }
                     else if (!this.dropOutOfOrderPackets)
                     {
@@ -144,7 +136,7 @@ namespace Microsoft.Psi.Media
                     // Detect out of order originating times
                     if (originatingTime > this.lastPostedAudioTime)
                     {
-                        AudioBuffer audioBuffer = new AudioBuffer(currentByteCount, this.waveFormat);
+                        var audioBuffer = new AudioBuffer(currentByteCount, this.waveFormat);
                         Marshal.Copy(data, audioBuffer.Data, 0, currentByteCount);
                         this.Audio.Post(audioBuffer, originatingTime);
                         this.lastPostedAudioTime = originatingTime;
@@ -185,7 +177,7 @@ namespace Microsoft.Psi.Media
         private void InitializeMediaPipeline()
         {
             MediaManager.Startup(false);
-            MediaAttributes sourceReaderAttributes = new MediaAttributes();
+            var sourceReaderAttributes = new MediaAttributes();
             sourceReaderAttributes.Set(SourceReaderAttributeKeys.EnableAdvancedVideoProcessing, true);
             this.sourceReader = new SourceReader(this.input, sourceReaderAttributes);
             this.sourceReader.SetStreamSelection(SourceReaderIndex.AllStreams, false);

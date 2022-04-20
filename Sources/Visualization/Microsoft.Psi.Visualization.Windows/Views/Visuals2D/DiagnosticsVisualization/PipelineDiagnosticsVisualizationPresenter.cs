@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Linq;
     using System.Text;
     using Microsoft.Msagl.Drawing;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization.VisualizationObjects;
@@ -289,6 +290,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
         private static bool IsBridgeToExporter(PipelineDiagnostics.PipelineElementDiagnostics node)
         {
+            if (node.TypeName == nameof(PsiExporter))
+            {
+                return true;
+            }
+
+            if (node.ConnectorBridgeToPipelineElement == null)
+            {
+                return false;
+            }
+
             var bridgeEmitters = node.ConnectorBridgeToPipelineElement.Emitters;
             var typeName = bridgeEmitters.Length == 1 ? bridgeEmitters[0].PipelineElement.TypeName : string.Empty;
             return typeName == "MessageConnector`1" || typeName == "MessageEnvelopeConnector`1";
@@ -354,6 +365,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageEmittedCount => i => i.TotalMessageEmittedCount,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedCount => i => i.TotalMessageProcessedCount,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedCount => i => i.TotalMessageDroppedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedPercentage => i =>
+                    i.TotalMessageEmittedCount > 0 ? 100 * i.TotalMessageDroppedCount / (double)i.TotalMessageEmittedCount : double.NaN,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageSize => i =>
                 {
                     var avg = i.AvgMessageSize;
@@ -476,9 +489,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             vis.Label.FontColor = this.LabelColor(fillColor);
             vis.Attr.Color = fillColor;
             vis.Attr.FillColor = fillColor;
-            if (vis.LabelText == "Join" || vis.LabelText == "Fuse")
+            if ((vis.LabelText.StartsWith("Join(") && vis.LabelText.EndsWith(")")) ||
+                (vis.LabelText.StartsWith("Fuse(") && vis.LabelText.EndsWith(")")))
             {
-                this.SetJoinVisualAttributes(vis, node.Name);
+                this.SetFuseVisualAttributes(vis, node.DiagnosticState);
             }
 
             return vis;
@@ -555,7 +569,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.SetVisualAttributes(vis, Shape.Circle, this.ConnectorColor, "☍", label);
         }
 
-        private void SetJoinVisualAttributes(Node vis, string label)
+        private void SetFuseVisualAttributes(Node vis, string label)
         {
             this.SetVisualAttributes(vis, Shape.Circle, this.JoinColor, "+", label);
         }
@@ -755,9 +769,12 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                             if (subpipelineNodes.TryGetValue(i.Source.PipelineElement.ConnectorBridgeToPipelineElement.PipelineId, out PipelineDiagnostics.PipelineElementDiagnostics source) &&
                                 subpipelineNodes.TryGetValue(c.PipelineId, out PipelineDiagnostics.PipelineElementDiagnostics target))
                             {
-                                if (this.AddVisualEdge(source.Id, target.Id, i, graph, statsSelector))
+                                if (this.ShowExporterConnections || !IsBridgeToExporter(target))
                                 {
-                                    selectedEdgeUpdated = true;
+                                    if (this.AddVisualEdge(source.Id, target.Id, i, graph, statsSelector))
+                                    {
+                                        selectedEdgeUpdated = true;
+                                    }
                                 }
                             }
                         }

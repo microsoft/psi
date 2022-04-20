@@ -8,9 +8,9 @@ namespace Microsoft.Psi.MixedReality.Visualization
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Implements a visualization object for tracked hands.
+    /// Implements a visualization object for <see cref="Hand"/>.
     /// </summary>
-    [VisualizationObject("Mixed Reality Tracked Hand")]
+    [VisualizationObject("Hand")]
     public class HandVisualizationObject : Point3DGraphVisualizationObject<HandJointIndex>
     {
         /// <summary>

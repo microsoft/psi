@@ -9,6 +9,7 @@ namespace Test.Psi
     using System.Reactive;
     using System.Reactive.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Diagnostics;
@@ -570,6 +571,27 @@ namespace Test.Psi
                 var results = seq.AsEnumerable().ToArray();
                 CollectionAssert.AreEqual(new[] { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10 }, results);
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PipelineShutdownWithPendingMessage()
+        {
+            var mre = new ManualResetEvent(false);
+            var p = Pipeline.Create("root");
+
+            // Post two messages with an interval of 10 seconds
+            Generators.Repeat(p, 0, 2, TimeSpan.FromSeconds(10000)).Do(_ => mre.Set());
+
+            // Run the pipeline, and stop it as soon as the first message is seen
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            p.RunAsync();
+            mre.WaitOne();
+            p.Dispose();
+            stopwatch.Stop();
+
+            // The pipeline should shutdown without waiting for the Generator's loopback message
+            Assert.IsTrue(stopwatch.ElapsedMilliseconds < 5000);
         }
 
         [TestMethod]
@@ -2236,6 +2258,36 @@ namespace Test.Psi
 
                 Assert.IsTrue(fired);
             }
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
+        public void PipelineDispose()
+        {
+            var log = new List<string>();
+            var p = Pipeline.Create();
+            var c = new FinalizationTestComponent(p, "C", log);
+            var b = new FinalizationTestComponent(p, "B", log);
+            var a = new FinalizationTestComponent(p, "A", log);
+            Assert.IsTrue(p.IsInitial);
+
+            // Test dispose before starting the pipeline
+            p.Dispose();
+            Assert.IsTrue(p.IsCompleted);
+            Assert.IsTrue(log.Count == 0);
+
+            log.Clear();
+            p = Pipeline.Create();
+            c = new FinalizationTestComponent(p, "C", log);
+            b = new FinalizationTestComponent(p, "B", log);
+            a = new FinalizationTestComponent(p, "A", log);
+            p.RunAsync();
+            Assert.IsTrue(p.IsRunning);
+
+            // Tests for resilience to double-dispose
+            Parallel.For(0, 10, _ => p.Dispose());
+            Assert.IsTrue(p.IsCompleted);
+            Assert.IsTrue(log.Count == 15);
         }
 
         private class FinalizationTestComponent : ISourceComponent

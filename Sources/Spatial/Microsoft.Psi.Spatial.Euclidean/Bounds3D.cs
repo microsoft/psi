@@ -126,15 +126,43 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// </summary>
         /// <param name="point">The point to check.</param>
         /// <returns>True if this <see cref="Bounds3D"/> contains the point, otherwise false.</returns>
-        public bool ContainsPoint(Point3D point)
+        /// <param name="epsilon">An optional epsilon parameter to specify a numerical tolerance.</param>
+        public bool ContainsPoint(Point3D point, double epsilon = 0)
         {
             return
-                point.X >= this.Min.X &&
-                point.X <= this.Max.X &&
-                point.Y >= this.Min.Y &&
-                point.Y <= this.Max.Y &&
-                point.Z >= this.Min.Z &&
-                point.Z <= this.Max.Z;
+                point.X >= (this.Min.X - epsilon) &&
+                point.X <= (this.Max.X + epsilon) &&
+                point.Y >= (this.Min.Y - epsilon) &&
+                point.Y <= (this.Max.Y + epsilon) &&
+                point.Z >= (this.Min.Z - epsilon) &&
+                point.Z <= (this.Max.Z + epsilon);
+        }
+
+        /// <summary>
+        /// Inflates the bounds by a specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor.</param>
+        /// <returns>The scaled bounds.</returns>
+        public Bounds3D Scale(double scaleFactor)
+            => this.Scale(scaleFactor, scaleFactor, scaleFactor);
+
+        /// <summary>
+        /// Inflates the bounds by specified scale factors on different axes.
+        /// </summary>
+        /// <param name="scaleFactorX">The scale factor on the X axis.</param>
+        /// <param name="scaleFactorY">The scale factor on the Y axis.</param>
+        /// <param name="scaleFactorZ">The scale factor on the Z axis.</param>
+        /// <returns>The scaled bounds.</returns>
+        public Bounds3D Scale(double scaleFactorX, double scaleFactorY, double scaleFactorZ)
+        {
+            var center = this.Center;
+            var minX = center.X - (center.X - this.Min.X) * scaleFactorX;
+            var maxX = center.X + (this.Max.X - center.X) * scaleFactorX;
+            var minY = center.Y - (center.Y - this.Min.Y) * scaleFactorY;
+            var maxY = center.Y + (this.Max.Y - center.Y) * scaleFactorY;
+            var minZ = center.Z - (center.Z - this.Min.Z) * scaleFactorZ;
+            var maxZ = center.Z + (this.Max.Z - center.Z) * scaleFactorZ;
+            return new Bounds3D(minX, maxX, minY, maxY, minZ, maxZ);
         }
 
         /// <inheritdoc/>

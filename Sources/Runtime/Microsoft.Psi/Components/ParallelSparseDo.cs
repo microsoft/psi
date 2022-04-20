@@ -26,16 +26,16 @@ namespace Microsoft.Psi.Components
         /// <param name="splitter">A function that generates a dictionary of key-value pairs for each given input message.</param>
         /// <param name="action">Action to perform in parallel.</param>
         /// <param name="branchTerminationPolicy">Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</param>
-        /// <param name="name">Name for this component (defaults to ParallelSparse).</param>
+        /// <param name="name">An optional name for the component.</param>
         /// <param name="defaultDeliveryPolicy">Pipeline-level default delivery policy to be used by this component (defaults to <see cref="DeliveryPolicy.Unlimited"/> if unspecified).</param>
         public ParallelSparseDo(
             Pipeline pipeline,
             Func<TIn, Dictionary<TBranchKey, TBranchIn>> splitter,
             Action<TBranchKey, IProducer<TBranchIn>> action,
             Func<TBranchKey, Dictionary<TBranchKey, TBranchIn>, DateTime, (bool, DateTime)> branchTerminationPolicy = null,
-            string name = null,
+            string name = nameof(ParallelSparseDo<TIn, TBranchKey, TBranchIn>),
             DeliveryPolicy defaultDeliveryPolicy = null)
-            : base(pipeline, name ?? nameof(ParallelSparseDo<TIn, TBranchKey, TBranchIn>), defaultDeliveryPolicy)
+            : base(pipeline, name, defaultDeliveryPolicy)
         {
             this.inConnector = this.CreateInputConnectorFrom<TIn>(pipeline, nameof(this.inConnector));
             var parallelSparseSplitter = new ParallelSparseSplitter<TIn, TBranchKey, TBranchIn, TBranchIn>(this, splitter, action, branchTerminationPolicy);

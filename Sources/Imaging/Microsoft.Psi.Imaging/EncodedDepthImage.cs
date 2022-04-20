@@ -5,12 +5,19 @@ namespace Microsoft.Psi.Imaging
 {
     using System;
     using System.IO;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines an encoded depth image.
     /// </summary>
-    public class EncodedDepthImage : IDisposable
+    public class EncodedDepthImage : IDepthImage, IDisposable
     {
+        [OptionalField]
+        private readonly DepthValueSemantics? depthValueSemantics;
+
+        [OptionalField]
+        private readonly double? depthValueToMetersScaleFactor;
+
         /// <summary>
         /// The memory stream storing the encoded bytes.
         /// </summary>
@@ -21,10 +28,14 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="width">Width of encoded depth image in pixels.</param>
         /// <param name="height">Height of encoded depth image in pixels.</param>
-        public EncodedDepthImage(int width, int height)
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
+        public EncodedDepthImage(int width, int height, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
         {
             this.Width = width;
             this.Height = height;
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
             this.PixelFormat = PixelFormat.Gray_16bpp;
             this.stream = new MemoryStream();
         }
@@ -35,30 +46,34 @@ namespace Microsoft.Psi.Imaging
         /// <param name="width">Width of image in pixels.</param>
         /// <param name="height">Height of image in pixels.</param>
         /// <param name="contents">Byte array used to initialize the image data.</param>
-        public EncodedDepthImage(int width, int height, byte[] contents)
+        /// <param name="depthValueSemantics">Optional depth value semantics.</param>
+        /// <param name="depthValueToMetersScaleFactor">Optional scale factor to convert from depth values to meters.</param>
+        public EncodedDepthImage(int width, int height, byte[] contents, DepthValueSemantics depthValueSemantics = DepthValueSemantics.DistanceToPlane, double depthValueToMetersScaleFactor = 0.001)
         {
             this.Width = width;
             this.Height = height;
+            this.depthValueSemantics = depthValueSemantics;
+            this.depthValueToMetersScaleFactor = depthValueToMetersScaleFactor;
             this.PixelFormat = PixelFormat.Gray_16bpp;
             this.stream = new MemoryStream();
             this.stream.Write(contents, 0, contents.Length);
             this.stream.Position = 0;
         }
 
-        /// <summary>
-        /// Gets the width of the depth image in pixels.
-        /// </summary>
+        /// <inheritdoc />
         public int Width { get; }
 
-        /// <summary>
-        /// Gets the height of the depth image in pixels.
-        /// </summary>
+        /// <inheritdoc />
         public int Height { get; }
 
-        /// <summary>
-        /// Gets the pixel format for the depth image.
-        /// </summary>
+        /// <inheritdoc />
         public PixelFormat PixelFormat { get; }
+
+        /// <inheritdoc />
+        public DepthValueSemantics DepthValueSemantics => this.depthValueSemantics ?? DepthValueSemantics.DistanceToPlane;
+
+        /// <inheritdoc />
+        public double DepthValueToMetersScaleFactor => this.depthValueToMetersScaleFactor ?? 0.001;
 
         /// <summary>
         /// Releases the depth image.
@@ -114,9 +129,13 @@ namespace Microsoft.Psi.Imaging
         /// <remarks>The depth image width, height and pixel format must match. The method should not be called concurrently.</remarks>
         public void EncodeFrom(DepthImage depthImage, IDepthImageToStreamEncoder depthImageEncoder)
         {
-            if (depthImage.Width != this.Width || depthImage.Height != this.Height || depthImage.PixelFormat != this.PixelFormat)
+            if (depthImage.Width != this.Width ||
+                depthImage.Height != this.Height ||
+                depthImage.PixelFormat != this.PixelFormat ||
+                depthImage.DepthValueSemantics != this.DepthValueSemantics ||
+                depthImage.DepthValueToMetersScaleFactor != this.DepthValueToMetersScaleFactor)
             {
-                throw new InvalidOperationException("Cannot encode from an image that has a different width, height, or pixel format.");
+                throw new InvalidOperationException("Cannot encode from an image that has a different width, height, pixel format, depth value semantics, or depth value scale factor.");
             }
 
             this.stream.Position = 0;
@@ -130,7 +149,7 @@ namespace Microsoft.Psi.Imaging
         /// <returns>A new, corresponding decoded depth image.</returns>
         public DepthImage Decode(IDepthImageFromStreamDecoder depthImageDecoder)
         {
-            var depthImage = new DepthImage(this.Width, this.Height);
+            var depthImage = new DepthImage(this.Width, this.Height, this.DepthValueSemantics, this.DepthValueToMetersScaleFactor);
             depthImage.DecodeFrom(this, depthImageDecoder);
             return depthImage;
         }

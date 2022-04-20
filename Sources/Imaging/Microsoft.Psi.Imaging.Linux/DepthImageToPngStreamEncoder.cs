@@ -3,7 +3,6 @@
 
 namespace Microsoft.Psi.Imaging
 {
-    using System;
     using System.IO;
     using SkiaSharp;
 
@@ -12,6 +11,9 @@ namespace Microsoft.Psi.Imaging
     /// </summary>
     public class DepthImageToPngStreamEncoder : IDepthImageToStreamEncoder
     {
+        /// <inheritdoc/>
+        public string Description => "Png";
+
         /// <inheritdoc/>
         public void EncodeToStream(DepthImage depthImage, Stream stream)
         {

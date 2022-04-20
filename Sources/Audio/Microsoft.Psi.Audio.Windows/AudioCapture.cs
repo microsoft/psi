@@ -23,6 +23,7 @@ namespace Microsoft.Psi.Audio
     public sealed class AudioCapture : IProducer<AudioBuffer>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
+        private readonly string name;
 
         /// <summary>
         /// The configuration for this component.
@@ -59,9 +60,11 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration)
+        /// <param name="name">An optional name for the component.</param>
+        public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration, string name = nameof(AudioCapture))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
             this.AudioLevelInput = pipeline.CreateReceiver<double>(this, this.SetAudioLevel, nameof(this.AudioLevelInput), true);
@@ -81,10 +84,12 @@ namespace Microsoft.Psi.Audio
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public AudioCapture(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public AudioCapture(Pipeline pipeline, string configurationFilename = null, string name = nameof(AudioCapture))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AudioCaptureConfiguration() : new ConfigurationHelper<AudioCaptureConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new AudioCaptureConfiguration() : new ConfigurationHelper<AudioCaptureConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 
@@ -94,8 +99,9 @@ namespace Microsoft.Psi.Audio
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="outputFormat">The output format to use.</param>
         /// <param name="deviceName">The name of the audio device.</param>
-        public AudioCapture(Pipeline pipeline, WaveFormat outputFormat, string deviceName = null)
-            : this(pipeline, new AudioCaptureConfiguration() { Format = outputFormat, DeviceName = deviceName })
+        /// <param name="name">An optional name for the component.</param>
+        public AudioCapture(Pipeline pipeline, WaveFormat outputFormat, string deviceName = null, string name = nameof(AudioCapture))
+            : this(pipeline, new AudioCaptureConfiguration() { Format = outputFormat, DeviceName = deviceName }, name)
         {
         }
 
@@ -197,6 +203,9 @@ namespace Microsoft.Psi.Audio
             notifyCompleted();
             this.sourceFormat = null;
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         /// <summary>
         /// The event handler that processes new audio data packets.

@@ -11,11 +11,11 @@ namespace Microsoft.Psi.Audio
     /// </summary>
     public sealed class FrameShift : ConsumerProducer<byte[], byte[]>
     {
-        private int frameSizeInBytes;
-        private int frameShiftInBytes;
-        private int frameOverlapInBytes;
-        private byte[] frameBuffer;
-        private double bytesPerSec;
+        private readonly int frameSizeInBytes;
+        private readonly int frameShiftInBytes;
+        private readonly int frameOverlapInBytes;
+        private readonly byte[] frameBuffer;
+        private readonly double bytesPerSec;
         private int frameBytesRemaining;
         private DateTime lastOriginatingTime = DateTime.MinValue;
 
@@ -26,8 +26,9 @@ namespace Microsoft.Psi.Audio
         /// <param name="frameSizeInBytes">The frame size in bytes.</param>
         /// <param name="frameShiftInBytes">The number of bytes to shift by.</param>
         /// <param name="bytesPerSec">The sampling frequency in bytes per second.</param>
-        public FrameShift(Pipeline pipeline, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec)
-            : base(pipeline)
+        /// <param name="name">An optional name for this component.</param>
+        public FrameShift(Pipeline pipeline, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, string name = nameof(FrameShift))
+            : base(pipeline, name)
         {
             this.frameSizeInBytes = frameSizeInBytes;
             this.frameShiftInBytes = frameShiftInBytes;

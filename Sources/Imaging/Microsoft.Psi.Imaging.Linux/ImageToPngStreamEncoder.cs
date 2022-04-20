@@ -12,6 +12,9 @@ namespace Microsoft.Psi.Imaging
     public class ImageToPngStreamEncoder : IImageToStreamEncoder
     {
         /// <inheritdoc/>
+        public string Description => "Png";
+
+        /// <inheritdoc/>
         public void EncodeToStream(Image image, Stream stream)
         {
             image.AsSKImage().Encode(SKEncodedImageFormat.Png, 100).SaveTo(stream);

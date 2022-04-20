@@ -34,8 +34,9 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configuration">The component configuration.</param>
-        public SystemSpeechIntentDetector(Pipeline pipeline, SystemSpeechIntentDetectorConfiguration configuration)
-            : base(pipeline)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemSpeechIntentDetector(Pipeline pipeline, SystemSpeechIntentDetectorConfiguration configuration, string name = nameof(SystemSpeechIntentDetector))
+            : base(pipeline, name)
         {
             this.pipeline = pipeline;
             this.Configuration = configuration ?? new SystemSpeechIntentDetectorConfiguration();
@@ -53,10 +54,12 @@ namespace Microsoft.Psi.Speech
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
-        public SystemSpeechIntentDetector(Pipeline pipeline, string configurationFilename = null)
+        /// <param name="name">An optional name for the component.</param>
+        public SystemSpeechIntentDetector(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemSpeechIntentDetector))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemSpeechIntentDetectorConfiguration() : new ConfigurationHelper<SystemSpeechIntentDetectorConfiguration>(configurationFilename).Configuration)
+                (configurationFilename == null) ? new SystemSpeechIntentDetectorConfiguration() : new ConfigurationHelper<SystemSpeechIntentDetectorConfiguration>(configurationFilename).Configuration,
+                name)
         {
         }
 

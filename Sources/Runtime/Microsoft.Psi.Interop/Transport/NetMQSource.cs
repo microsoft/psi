@@ -20,6 +20,7 @@ namespace Microsoft.Psi.Interop.Transport
         private readonly string address;
         private readonly IFormatDeserializer deserializer;
         private readonly Pipeline pipeline;
+        private readonly string name;
         private readonly bool useSourceOriginatingTimes;
 
         private SubscriberSocket socket;
@@ -33,9 +34,11 @@ namespace Microsoft.Psi.Interop.Transport
         /// <param name="address">Connection string.</param>
         /// <param name="deserializer">Format deserializer with which messages are deserialized.</param>
         /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
-        public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true)
+        /// <param name="name">An optional name for the component.</param>
+        public NetMQSource(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = nameof(NetMQSource<T>))
         {
             this.pipeline = pipeline;
+            this.name = name;
             this.useSourceOriginatingTimes = useSourceOriginatingTimes;
             this.topic = topic;
             this.address = address;
@@ -73,6 +76,9 @@ namespace Microsoft.Psi.Interop.Transport
             this.Stop();
             notifyCompleted();
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
 
         private void Stop()
         {
