@@ -107,6 +107,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo), List&lt;Point3D&gt;&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo), List&lt;Point3D&gt;&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;(Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo), List&lt;Point3D&gt;&gt;.Receive(ValueTuple&lt;Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo&gt;, Envelope)</a>
     </div>
   </div>
@@ -124,16 +127,16 @@ Outputs the 3D points projected into the depth camera's coordinate system.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ProjectTo3D.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ProjectTo3D.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ProjectTo3D__ctor_" data-uid="Microsoft.Psi.Calibration.ProjectTo3D.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Calibration_ProjectTo3D__ctor_Microsoft_Psi_Pipeline_" data-uid="Microsoft.Psi.Calibration.ProjectTo3D.#ctor(Microsoft.Psi.Pipeline)">ProjectTo3D(Pipeline)</h4>
+  <h4 id="Microsoft_Psi_Calibration_ProjectTo3D__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Calibration.ProjectTo3D.#ctor(Microsoft.Psi.Pipeline,System.String)">ProjectTo3D(Pipeline, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Calibration.ProjectTo3D.html">ProjectTo3D</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ProjectTo3D(Pipeline pipeline)</code></pre>
+    <pre><code class="lang-csharp hljs">public ProjectTo3D(Pipeline pipeline, string name = &quot;ProjectTo3D&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -151,13 +154,19 @@ Outputs the 3D points projected into the depth camera's coordinate system.</p>
         <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ProjectTo3D.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/ProjectTo3D.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_ProjectTo3D_Receive_" data-uid="Microsoft.Psi.Calibration.ProjectTo3D.Receive*"></a>
   <h4 id="Microsoft_Psi_Calibration_ProjectTo3D_Receive_System_ValueTuple_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage__List_Point2D__Microsoft_Psi_Calibration_IDepthDeviceCalibrationInfo__Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Calibration.ProjectTo3D.Receive(System.ValueTuple{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage},List{Point2D},Microsoft.Psi.Calibration.IDepthDeviceCalibrationInfo},Microsoft.Psi.Envelope)">Receive((Shared&lt;DepthImage&gt;, List&lt;Point2D&gt;, IDepthDeviceCalibrationInfo), Envelope)</h4>

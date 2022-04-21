@@ -365,16 +365,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L129">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L130">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_ContainsPoint_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.ContainsPoint*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_ContainsPoint_Point3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.ContainsPoint(Point3D)">ContainsPoint(Point3D)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_ContainsPoint_Point3D_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.ContainsPoint(Point3D,System.Double)">ContainsPoint(Point3D, Double)</h4>
   <div class="markdown level1 summary"><p>Determines whether the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Bounds3D.html">Bounds3D</a> contains a point.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool ContainsPoint(Point3D point)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool ContainsPoint(Point3D point, double epsilon = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -390,6 +390,12 @@
         <td><span class="xref">Point3D</span></td>
         <td><span class="parametername">point</span></td>
         <td><p>The point to check.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">epsilon</span></td>
+        <td><p>An optional epsilon parameter to specify a numerical tolerance.</p>
 </td>
       </tr>
     </tbody>
@@ -412,7 +418,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L141">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L169">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Equals*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Equals_Microsoft_Psi_Spatial_Euclidean_Bounds3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Equals(Microsoft.Psi.Spatial.Euclidean.Bounds3D)">Equals(Bounds3D)</h4>
@@ -456,7 +462,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L149">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L177">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Equals*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Equals_System_Object_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Equals(System.Object)">Equals(Object)</h4>
@@ -529,7 +535,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L155">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L183">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_GetHashCode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.GetHashCode*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_GetHashCode" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.GetHashCode">GetHashCode()</h4>
@@ -551,6 +557,112 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L146">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Scale_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Scale*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Scale_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Scale(System.Double)">Scale(Double)</h4>
+  <div class="markdown level1 summary"><p>Inflates the bounds by a specified scale factor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bounds3D Scale(double scaleFactor)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scaleFactor</span></td>
+        <td><p>The scale factor.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Bounds3D.html">Bounds3D</a></td>
+        <td><p>The scaled bounds.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Bounds3D.cs/#L156">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Scale_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Scale*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Bounds3D_Scale_System_Double_System_Double_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Bounds3D.Scale(System.Double,System.Double,System.Double)">Scale(Double, Double, Double)</h4>
+  <div class="markdown level1 summary"><p>Inflates the bounds by specified scale factors on different axes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Bounds3D Scale(double scaleFactorX, double scaleFactorY, double scaleFactorZ)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scaleFactorX</span></td>
+        <td><p>The scale factor on the X axis.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scaleFactorY</span></td>
+        <td><p>The scale factor on the Y axis.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">scaleFactorZ</span></td>
+        <td><p>The scale factor on the Z axis.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.Bounds3D.html">Bounds3D</a></td>
+        <td><p>The scaled bounds.</p>
+</td>
       </tr>
     </tbody>
   </table>

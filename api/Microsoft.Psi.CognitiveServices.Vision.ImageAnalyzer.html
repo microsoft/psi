@@ -111,16 +111,16 @@ subscription key is required to use this component. For more information, see th
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L33">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer__ctor_" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzerConfiguration_" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration)">ImageAnalyzer(Pipeline, ImageAnalyzerConfiguration)</h4>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzerConfiguration_System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzerConfiguration,System.String)">ImageAnalyzer(Pipeline, ImageAnalyzerConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.html">ImageAnalyzer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImageAnalyzer(Pipeline pipeline, ImageAnalyzerConfiguration configuration = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImageAnalyzer(Pipeline pipeline, ImageAnalyzerConfiguration configuration = null, string name = &quot;ImageAnalyzer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -144,13 +144,19 @@ subscription key is required to use this component. For more information, see th
         <td><p>The image analyzer configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L43">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer_In_" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.In*"></a>
   <h4 id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer_In" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.In">In</h4>
@@ -178,7 +184,7 @@ subscription key is required to use this component. For more information, see th
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer_Out_" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.Out*"></a>
   <h4 id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer_Out" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.Out">Out</h4>
@@ -200,6 +206,35 @@ subscription key is required to use this component. For more information, see th
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<span class="xref">ImageAnalysis</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/ImageAnalyzer.cs/#L54">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer_ToString_" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.ToString*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_ImageAnalyzer_ToString" data-uid="Microsoft.Psi.CognitiveServices.Vision.ImageAnalyzer.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>

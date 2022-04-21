@@ -107,16 +107,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L64">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera__ctor_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera__ctor_Microsoft_Psi_Pipeline_ResearchModeSensorType_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.#ctor(Microsoft.Psi.Pipeline,ResearchModeSensorType,System.Boolean,System.Boolean)">ResearchModeCamera(Pipeline, ResearchModeSensorType, Boolean, Boolean)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_System_String_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration,System.String)">ResearchModeCamera(Pipeline, ResearchModeCameraConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html">ResearchModeCamera</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ResearchModeCamera(Pipeline pipeline, ResearchModeSensorType sensorType, bool createCalibrationMap = true, bool computeCameraIntrinsics = true)</code></pre>
+    <pre><code class="lang-csharp hljs">protected ResearchModeCamera(Pipeline pipeline, ResearchModeCameraConfiguration configuration, string name = &quot;ResearchModeCamera&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -135,21 +135,15 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ResearchModeSensorType</span></td>
-        <td><span class="parametername">sensorType</span></td>
-        <td><p>The research mode sensor type.</p>
+        <td><a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html">ResearchModeCameraConfiguration</a></td>
+        <td><span class="parametername">configuration</span></td>
+        <td><p>The research mode camera configuration.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">createCalibrationMap</span></td>
-        <td><p>A value indicating whether to create a map of calibration points (needed to compute intrinsics).</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">computeCameraIntrinsics</span></td>
-        <td><p>A value indicating whether to compute camera intrinsics.</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>
@@ -158,7 +152,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L100">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L101">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_CalibrationPointsMap_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.CalibrationPointsMap*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_CalibrationPointsMap" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.CalibrationPointsMap">CalibrationPointsMap</h4>
@@ -186,7 +180,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L95">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_CameraIntrinsics_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.CameraIntrinsics*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_CameraIntrinsics" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.CameraIntrinsics">CameraIntrinsics</h4>
@@ -214,7 +208,35 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L108">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L115">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_Configuration_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Configuration*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_Configuration" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Configuration">Configuration</h4>
+  <div class="markdown level1 summary"><p>Gets the research mode camera configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected ResearchModeCameraConfiguration Configuration { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html">ResearchModeCameraConfiguration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_DebugOutOfOrderFrames_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.DebugOutOfOrderFrames*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_DebugOutOfOrderFrames" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.DebugOutOfOrderFrames">DebugOutOfOrderFrames</h4>
@@ -242,7 +264,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_Pose_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Pose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_Pose" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Pose">Pose</h4>
@@ -270,7 +292,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L114">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_RigNodeLocator_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.RigNodeLocator*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_RigNodeLocator" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.RigNodeLocator">RigNodeLocator</h4>
@@ -300,7 +322,74 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L157">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_Calibrate_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Calibrate*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_Calibrate" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Calibrate">Calibrate()</h4>
+  <div class="markdown level1 summary"><p>Calibrates the camera sensor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Calibrate()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L148">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_CalibrateFromFileAsync_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.CalibrateFromFileAsync*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_CalibrateFromFileAsync_Windows_Storage_StorageFolder_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.CalibrateFromFileAsync(Windows.Storage.StorageFolder)">CalibrateFromFileAsync(StorageFolder)</h4>
+  <div class="markdown level1 summary"><p>Calibrates the camera sensor, using stored files.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; CalibrateFromFileAsync(StorageFolder calibrationFolder = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/uwp/api/windows.storage.storagefolder">StorageFolder</a></td>
+        <td><span class="parametername">calibrationFolder</span></td>
+        <td><p>The device folder containing calibration files. Defaults to Documents.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td><p>True when complete.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_MixedReality_ResearchModeCamera_CalibrateFromFileAsync_Windows_Storage_StorageFolder__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Camera intrinsics are loaded from the file: {calibrationFolder}/{ResearchModeSensorType}Intrinsics.xml,
+and the map of calibration points are loaded from the file: {calibrationFolder}/{ResearchModeSensorType}Points.map.
+Follow these steps to give your app read/write access to the Documents folder:
+<a href="https://docs.microsoft.com/en-us/uwp/api/windows.storage.knownfolders.documentslibrary?view=winrt-22000#prerequisites">https://docs.microsoft.com/en-us/uwp/api/windows.storage.knownfolders.documentslibrary?view=winrt-22000#prerequisites</a>
+If the files do not already exist, they will be created, and calibration will be computed from scratch and saved.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L242">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_GetCalibrationPointsMap_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.GetCalibrationPointsMap*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_GetCalibrationPointsMap" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.GetCalibrationPointsMap">GetCalibrationPointsMap()</h4>
@@ -329,7 +418,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L151">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L236">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_GetCameraIntrinsics_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.GetCameraIntrinsics*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_GetCameraIntrinsics" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.GetCameraIntrinsics">GetCameraIntrinsics()</h4>
@@ -338,7 +427,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected ICameraIntrinsics GetCameraIntrinsics()</code></pre>
+    <pre><code class="lang-csharp hljs">protected CameraIntrinsics GetCameraIntrinsics()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -350,7 +439,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.CameraIntrinsics.html">CameraIntrinsics</a></td>
         <td><p>The camera's intrinsics.</p>
 </td>
       </tr>
@@ -358,7 +447,36 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L145">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L248">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_GetCameraPose_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.GetCameraPose*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_GetCameraPose" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.GetCameraPose">GetCameraPose()</h4>
+  <div class="markdown level1 summary"><p>Gets the camera pose.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected CoordinateSystem GetCameraPose()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><p>The camera's pose.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L230">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_ProcessSensorFrame_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.ProcessSensorFrame*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_ProcessSensorFrame_IResearchModeSensorFrame_ResearchModeSensorResolution_System_UInt64_Windows_Foundation_DateTime_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.ProcessSensorFrame(IResearchModeSensorFrame,ResearchModeSensorResolution,System.UInt64,Windows.Foundation.DateTime)">ProcessSensorFrame(IResearchModeSensorFrame, ResearchModeSensorResolution, UInt64, DateTime)</h4>
@@ -407,7 +525,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L117">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L199">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_Start_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_Start_Action_Windows_Foundation_DateTime__" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Start(Action{Windows.Foundation.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -436,7 +554,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L130">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L212">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_Stop_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_Stop_Windows_Foundation_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.Stop(Windows.Foundation.DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -470,7 +588,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L164">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L255">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_ToCameraPose_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.ToCameraPose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_ToCameraPose_Windows_Perception_Spatial_SpatialLocation_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.ToCameraPose(Windows.Perception.Spatial.SpatialLocation)">ToCameraPose(SpatialLocation)</h4>
@@ -515,6 +633,33 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L221">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_ResearchModeCamera_ToString_" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.ToString*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_ResearchModeCamera_ToString" data-uid="Microsoft.Psi.MixedReality.ResearchModeCamera.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
@@ -537,7 +682,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L23" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ResearchModeCamera.cs/#L25" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -138,16 +138,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Fuse_4__ctor_" data-uid="Microsoft.Psi.Components.Fuse`4.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Fuse_4__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Interpolator__1__2__Func__0__2____3__System_Int32_Func__0_IEnumerable_System_Int32___" data-uid="Microsoft.Psi.Components.Fuse`4.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Interpolator{`1,`2},Func{`0,`2[],`3},System.Int32,Func{`0,IEnumerable{System.Int32}})">Fuse(Pipeline, Interpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation[], TOut&gt;, Int32, Func&lt;TPrimary, IEnumerable&lt;Int32&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Fuse_4__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Interpolator__1__2__Func__0__2____3__System_Int32_Func__0_IEnumerable_System_Int32___System_String_" data-uid="Microsoft.Psi.Components.Fuse`4.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Interpolator{`1,`2},Func{`0,`2[],`3},System.Int32,Func{`0,IEnumerable{System.Int32}},System.String)">Fuse(Pipeline, Interpolator&lt;TSecondary, TInterpolation&gt;, Func&lt;TPrimary, TInterpolation[], TOut&gt;, Int32, Func&lt;TPrimary, IEnumerable&lt;Int32&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Fuse-4.html">Fuse&lt;TPrimary, TSecondary, TInterpolation, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Fuse(Pipeline pipeline, Interpolator&lt;TSecondary, TInterpolation&gt; interpolator, Func&lt;TPrimary, TInterpolation[], TOut&gt; outputCreator, int secondaryCount = 1, Func&lt;TPrimary, IEnumerable&lt;int&gt;&gt; secondarySelector = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public Fuse(Pipeline pipeline, Interpolator&lt;TSecondary, TInterpolation&gt; interpolator, Func&lt;TPrimary, TInterpolation[], TOut&gt; outputCreator, int secondaryCount = 1, Func&lt;TPrimary, IEnumerable&lt;int&gt;&gt; secondarySelector = null, string name = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -189,13 +189,19 @@
         <td><p>Selector function mapping primary messages to a set of secondary stream indices.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L82">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Fuse_4_InPrimary_" data-uid="Microsoft.Psi.Components.Fuse`4.InPrimary*"></a>
   <h4 id="Microsoft_Psi_Components_Fuse_4_InPrimary" data-uid="Microsoft.Psi.Components.Fuse`4.InPrimary">InPrimary</h4>
@@ -223,7 +229,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Fuse_4_InSecondaries_" data-uid="Microsoft.Psi.Components.Fuse`4.InSecondaries*"></a>
   <h4 id="Microsoft_Psi_Components_Fuse_4_InSecondaries" data-uid="Microsoft.Psi.Components.Fuse`4.InSecondaries">InSecondaries</h4>
@@ -251,7 +257,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L77">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Fuse_4_Out_" data-uid="Microsoft.Psi.Components.Fuse`4.Out*"></a>
   <h4 id="Microsoft_Psi_Components_Fuse_4_Out" data-uid="Microsoft.Psi.Components.Fuse`4.Out">Out</h4>
@@ -281,7 +287,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L90">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Fuse_4_AddInput_" data-uid="Microsoft.Psi.Components.Fuse`4.AddInput*"></a>
   <h4 id="Microsoft_Psi_Components_Fuse_4_AddInput" data-uid="Microsoft.Psi.Components.Fuse`4.AddInput">AddInput()</h4>
@@ -308,6 +314,33 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_Fuse_4_ToString_" data-uid="Microsoft.Psi.Components.Fuse`4.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_Fuse_4_ToString" data-uid="Microsoft.Psi.Components.Fuse`4.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
@@ -330,7 +363,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L18" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Fuse.cs/#L17" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

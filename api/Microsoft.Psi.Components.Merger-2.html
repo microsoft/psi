@@ -122,16 +122,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Merger.cs/#L26">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Merger.cs/#L28">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Merger_2__ctor_" data-uid="Microsoft.Psi.Components.Merger`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Merger_2__ctor_Microsoft_Psi_Pipeline_Action__1_Microsoft_Psi_Message__0___" data-uid="Microsoft.Psi.Components.Merger`2.#ctor(Microsoft.Psi.Pipeline,Action{`1,Microsoft.Psi.Message{`0}})">Merger(Pipeline, Action&lt;TKey, Message&lt;TIn&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Merger_2__ctor_Microsoft_Psi_Pipeline_Action__1_Microsoft_Psi_Message__0___System_String_" data-uid="Microsoft.Psi.Components.Merger`2.#ctor(Microsoft.Psi.Pipeline,Action{`1,Microsoft.Psi.Message{`0}},System.String)">Merger(Pipeline, Action&lt;TKey, Message&lt;TIn&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Merger-2.html">Merger&lt;TIn, TKey&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Merger(Pipeline pipeline, Action&lt;TKey, Message&lt;TIn&gt;&gt; action)</code></pre>
+    <pre><code class="lang-csharp hljs">public Merger(Pipeline pipeline, Action&lt;TKey, Message&lt;TIn&gt;&gt; action, string name = &quot;Merger&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -155,13 +155,19 @@
         <td><p>Action invoked for each key/message.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Merger.cs/#L37">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Merger.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Merger_2_Add_" data-uid="Microsoft.Psi.Components.Merger`2.Add*"></a>
   <h4 id="Microsoft_Psi_Components_Merger_2_Add__1_" data-uid="Microsoft.Psi.Components.Merger`2.Add(`1)">Add(TKey)</h4>
@@ -203,6 +209,33 @@
         <td><a class="xref" href="Microsoft.Psi.Receiver-1.html">Receiver</a>&lt;TIn&gt;</td>
         <td><p>Receiver having been mapped.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Merger.cs/#L55">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_Merger_2_ToString_" data-uid="Microsoft.Psi.Components.Merger`2.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_Merger_2_ToString" data-uid="Microsoft.Psi.Components.Merger`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

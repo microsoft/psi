@@ -248,16 +248,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L29">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor__ctor_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.#ctor*"></a>
-  <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_AzureKinect_AzureKinectSensorConfiguration_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_DeliveryPolicy_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.AzureKinect.AzureKinectSensorConfiguration,Microsoft.Psi.DeliveryPolicy,Microsoft.Psi.DeliveryPolicy)">AzureKinectSensor(Pipeline, AzureKinectSensorConfiguration, DeliveryPolicy, DeliveryPolicy)</h4>
+  <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_AzureKinect_AzureKinectSensorConfiguration_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_DeliveryPolicy_System_String_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.AzureKinect.AzureKinectSensorConfiguration,Microsoft.Psi.DeliveryPolicy,Microsoft.Psi.DeliveryPolicy,System.String)">AzureKinectSensor(Pipeline, AzureKinectSensorConfiguration, DeliveryPolicy, DeliveryPolicy, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.AzureKinect.AzureKinectSensor.html">AzureKinectSensor</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AzureKinectSensor(Pipeline pipeline, AzureKinectSensorConfiguration configuration = null, DeliveryPolicy defaultDeliveryPolicy = null, DeliveryPolicy bodyTrackerDeliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AzureKinectSensor(Pipeline pipeline, AzureKinectSensorConfiguration configuration = null, DeliveryPolicy defaultDeliveryPolicy = null, DeliveryPolicy bodyTrackerDeliveryPolicy = null, string name = &quot;AzureKinectSensor&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -293,13 +293,19 @@
         <td><p>An optional delivery policy for sending the depth-and-IR images stream to the body tracker (default is LatestMessage).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L81">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L83">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_AllDevices_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.AllDevices*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_AllDevices" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.AllDevices">AllDevices</h4>
@@ -327,7 +333,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L222">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L224">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_AzureKinectSensorCalibration_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.AzureKinectSensorCalibration*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_AzureKinectSensorCalibration" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.AzureKinectSensorCalibration">AzureKinectSensorCalibration</h4>
@@ -355,7 +361,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L234">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L236">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Bodies_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Bodies*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Bodies" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Bodies">Bodies</h4>
@@ -383,7 +389,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L192">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L194">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_ColorImage_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.ColorImage*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_ColorImage" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.ColorImage">ColorImage</h4>
@@ -411,7 +417,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L187">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L189">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Configuration_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Configuration*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Configuration" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Configuration">Configuration</h4>
@@ -439,7 +445,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L217">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L219">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_DepthDeviceCalibrationInfo_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.DepthDeviceCalibrationInfo*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_DepthDeviceCalibrationInfo" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.DepthDeviceCalibrationInfo">DepthDeviceCalibrationInfo</h4>
@@ -467,7 +473,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L202">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L204">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_DepthImage_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.DepthImage*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_DepthImage" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.DepthImage">DepthImage</h4>
@@ -495,7 +501,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L207">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L209">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_FrameRate_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.FrameRate*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_FrameRate" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.FrameRate">FrameRate</h4>
@@ -523,7 +529,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L212">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L214">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Imu_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Imu*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Imu" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Imu">Imu</h4>
@@ -551,7 +557,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L197">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L199">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_InfraredImage_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.InfraredImage*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_InfraredImage" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.InfraredImage">InfraredImage</h4>
@@ -579,7 +585,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L227">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L229">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Temperature_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Temperature*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_Temperature" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.Temperature">Temperature</h4>
@@ -609,7 +615,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L240">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Kinect/Microsoft.Psi.AzureKinect.x64/AzureKinectSensor.cs/#L242">View Source</a>
   </span>
   <a id="Microsoft_Psi_AzureKinect_AzureKinectSensor_GetInstalledCount_" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.GetInstalledCount*"></a>
   <h4 id="Microsoft_Psi_AzureKinect_AzureKinectSensor_GetInstalledCount" data-uid="Microsoft.Psi.AzureKinect.AzureKinectSensor.GetInstalledCount">GetInstalledCount()</h4>

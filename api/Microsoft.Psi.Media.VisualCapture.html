@@ -106,6 +106,9 @@
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_Stop_DateTime_Action_">Generator.Stop(DateTime, Action)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_ToString">Generator.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_GenerateNext_DateTime_">Generator.GenerateNext(DateTime)</a>
     </div>
   </div>
@@ -119,16 +122,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_VisualCapture__ctor_" data-uid="Microsoft.Psi.Media.VisualCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_VisualCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Media_VisualCaptureConfiguration_" data-uid="Microsoft.Psi.Media.VisualCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Media.VisualCaptureConfiguration)">VisualCapture(Pipeline, VisualCaptureConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Media_VisualCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Media_VisualCaptureConfiguration_System_String_" data-uid="Microsoft.Psi.Media.VisualCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Media.VisualCaptureConfiguration,System.String)">VisualCapture(Pipeline, VisualCaptureConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.VisualCapture.html">VisualCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public VisualCapture(Pipeline pipeline, VisualCaptureConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public VisualCapture(Pipeline pipeline, VisualCaptureConfiguration configuration, string name = &quot;VisualCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -152,20 +155,26 @@
         <td><p>Configuration values for the visual capture component.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L32">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L33">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_VisualCapture__ctor_" data-uid="Microsoft.Psi.Media.VisualCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_VisualCapture__ctor_Microsoft_Psi_Pipeline_System_TimeSpan_System_Windows_Media_Visual_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Media.VisualCapture.#ctor(Microsoft.Psi.Pipeline,System.TimeSpan,System.Windows.Media.Visual,System.Int32,System.Int32)">VisualCapture(Pipeline, TimeSpan, Visual, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Media_VisualCapture__ctor_Microsoft_Psi_Pipeline_System_TimeSpan_System_Windows_Media_Visual_System_Int32_System_Int32_System_String_" data-uid="Microsoft.Psi.Media.VisualCapture.#ctor(Microsoft.Psi.Pipeline,System.TimeSpan,System.Windows.Media.Visual,System.Int32,System.Int32,System.String)">VisualCapture(Pipeline, TimeSpan, Visual, Int32, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.VisualCapture.html">VisualCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public VisualCapture(Pipeline pipeline, TimeSpan interval, Visual visual, int pixelWidth, int pixelHeight)</code></pre>
+    <pre><code class="lang-csharp hljs">public VisualCapture(Pipeline pipeline, TimeSpan interval, Visual visual, int pixelWidth, int pixelHeight, string name = &quot;VisualCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -207,13 +216,19 @@
         <td><p>Pixel height at which to render the visual.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L58">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_VisualCapture_Out_" data-uid="Microsoft.Psi.Media.VisualCapture.Out*"></a>
   <h4 id="Microsoft_Psi_Media_VisualCapture_Out" data-uid="Microsoft.Psi.Media.VisualCapture.Out">Out</h4>
@@ -243,7 +258,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/VisualCapture.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_VisualCapture_GenerateNext_" data-uid="Microsoft.Psi.Media.VisualCapture.GenerateNext*"></a>
   <h4 id="Microsoft_Psi_Media_VisualCapture_GenerateNext_System_DateTime_" data-uid="Microsoft.Psi.Media.VisualCapture.GenerateNext(System.DateTime)">GenerateNext(DateTime)</h4>

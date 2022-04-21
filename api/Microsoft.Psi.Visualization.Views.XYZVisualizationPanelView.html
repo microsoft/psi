@@ -98,7 +98,8 @@
     <div class="level7"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
     <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html">VisualizationPanelView</a></div>
-    <div class="level10"><span class="xref">XYZVisualizationPanelView</span></div>
+    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.InstantVisualizationPanelView.html">InstantVisualizationPanelView</a></div>
+    <div class="level11"><span class="xref">XYZVisualizationPanelView</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -112,6 +113,9 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.Views.InstantVisualizationPanelView.html#Microsoft_Psi_Visualization_Views_InstantVisualizationPanelView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">InstantVisualizationPanelView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a>
+    </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_ContextMenuItemsSourceType">VisualizationPanelView.ContextMenuItemsSourceType</a>
     </div>
@@ -1992,13 +1996,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class XYZVisualizationPanelView : VisualizationPanelView, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource</code></pre>
+    <pre><code class="lang-csharp hljs">public class XYZVisualizationPanelView : InstantVisualizationPanelView, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild, IContextMenuItemsSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView__ctor_" data-uid="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView__ctor" data-uid="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.#ctor">XYZVisualizationPanelView()</h4>
@@ -2013,7 +2017,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L41">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView_VisualizationPanel_" data-uid="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.VisualizationPanel*"></a>
   <h4 id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView_VisualizationPanel" data-uid="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.VisualizationPanel">VisualizationPanel</h4>
@@ -2039,41 +2043,6 @@
       </tr>
     </tbody>
   </table>
-  <h3 id="methods">Methods
-  </h3>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L44">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView_AppendContextMenuItems_" data-uid="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.AppendContextMenuItems*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Views_XYZVisualizationPanelView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__" data-uid="Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.AppendContextMenuItems(System.Collections.Generic.List{System.Windows.Controls.MenuItem})">AppendContextMenuItems(List&lt;MenuItem&gt;)</h4>
-  <div class="markdown level1 summary"><p>Gets the context menu items the context menu source wishes to display.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void AppendContextMenuItems(List&lt;MenuItem&gt; menuItems)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.menuitem">MenuItem</a>&gt;</td>
-        <td><span class="parametername">menuItems</span></td>
-        <td><p>A collection of menu items to append to.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationPanelView.html#Microsoft_Psi_Visualization_Views_VisualizationPanelView_AppendContextMenuItems_System_Collections_Generic_List_System_Windows_Controls_MenuItem__">VisualizationPanelView.AppendContextMenuItems(List&lt;MenuItem&gt;)</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
@@ -2117,7 +2086,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L21" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/XYZVisualizationPanelView.xaml.cs/#L18" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

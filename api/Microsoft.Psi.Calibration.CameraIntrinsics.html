@@ -107,16 +107,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L34">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics__ctor_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics__ctor_System_Int32_System_Int32_Matrix_System_Double__Vector_System_Double__Vector_System_Double__System_Boolean_Microsoft_Psi_Calibration_DepthPixelSemantics_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.#ctor(System.Int32,System.Int32,Matrix{System.Double},Vector{System.Double},Vector{System.Double},System.Boolean,Microsoft.Psi.Calibration.DepthPixelSemantics)">CameraIntrinsics(Int32, Int32, Matrix&lt;Double&gt;, Vector&lt;Double&gt;, Vector&lt;Double&gt;, Boolean, DepthPixelSemantics)</h4>
+  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics__ctor_System_Int32_System_Int32_Matrix_System_Double__Vector_System_Double__Vector_System_Double__System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.#ctor(System.Int32,System.Int32,Matrix{System.Double},Vector{System.Double},Vector{System.Double},System.Boolean)">CameraIntrinsics(Int32, Int32, Matrix&lt;Double&gt;, Vector&lt;Double&gt;, Vector&lt;Double&gt;, Boolean)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Calibration.CameraIntrinsics.html">CameraIntrinsics</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CameraIntrinsics(int imageWidth, int imageHeight, Matrix&lt;double&gt; transform, Vector&lt;double&gt; radialDistortion = null, Vector&lt;double&gt; tangentialDistortion = null, bool closedFormDistorts = true, DepthPixelSemantics depthPixelSemantics = default(DepthPixelSemantics))</code></pre>
+    <pre><code class="lang-csharp hljs">public CameraIntrinsics(int imageWidth, int imageHeight, Matrix&lt;double&gt; transform, Vector&lt;double&gt; radialDistortion = null, Vector&lt;double&gt; tangentialDistortion = null, bool closedFormDistorts = true)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -164,19 +164,13 @@
         <td><p>Indicates which direction the closed form equation for Brown-Conrady Distortion model goes. I.e. does it perform distortion or undistortion. Default is to distort (thus making projection simpler and unprojection more complicated).</p>
 </td>
       </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Calibration.DepthPixelSemantics.html">DepthPixelSemantics</a></td>
-        <td><span class="parametername">depthPixelSemantics</span></td>
-        <td><p>Defines how depth pixel values should be interpreted.</p>
-</td>
-      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L104">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L99">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_ClosedFormDistorts_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.ClosedFormDistorts*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_ClosedFormDistorts" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.ClosedFormDistorts">ClosedFormDistorts</h4>
@@ -208,35 +202,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L120">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Calibration_CameraIntrinsics_DepthPixelSemantics_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.DepthPixelSemantics*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_DepthPixelSemantics" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.DepthPixelSemantics">DepthPixelSemantics</h4>
-  <div class="markdown level1 summary"><p>Gets pixel semantics.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DepthPixelSemantics DepthPixelSemantics { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Calibration.DepthPixelSemantics.html">DepthPixelSemantics</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L95">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L90">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_FocalLength_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.FocalLength*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_FocalLength" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.FocalLength">FocalLength</h4>
@@ -264,7 +230,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L93">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_FocalLengthXY_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.FocalLengthXY*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_FocalLengthXY" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.FocalLengthXY">FocalLengthXY</h4>
@@ -292,7 +258,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L137">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L116">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_ImageHeight_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.ImageHeight*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_ImageHeight" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.ImageHeight">ImageHeight</h4>
@@ -320,7 +286,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L134">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L113">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_ImageWidth_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.ImageWidth*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_ImageWidth" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.ImageWidth">ImageWidth</h4>
@@ -348,7 +314,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L92">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_InvTransform_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.InvTransform*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_InvTransform" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.InvTransform">InvTransform</h4>
@@ -376,7 +342,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L101">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_PrincipalPoint_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.PrincipalPoint*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_PrincipalPoint" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.PrincipalPoint">PrincipalPoint</h4>
@@ -404,7 +370,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_RadialDistortion_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.RadialDistortion*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_RadialDistortion" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.RadialDistortion">RadialDistortion</h4>
@@ -432,7 +398,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L69">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_TangentialDistortion_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TangentialDistortion*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_TangentialDistortion" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TangentialDistortion">TangentialDistortion</h4>
@@ -460,7 +426,7 @@ Xundistorted = Xdistorted * (1+K1<em>R2+K2</em>R3+...</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_Transform_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Transform*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_Transform" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Transform">Transform</h4>
@@ -491,7 +457,7 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L303">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L280">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_Equals_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Equals*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_Equals_Microsoft_Psi_Calibration_CameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Equals(Microsoft.Psi.Calibration.CameraIntrinsics)">Equals(CameraIntrinsics)</h4>
@@ -535,7 +501,7 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L290">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L268">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_Equals_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Equals*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_Equals_Microsoft_Psi_Calibration_ICameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Equals(Microsoft.Psi.Calibration.ICameraIntrinsics)">Equals(ICameraIntrinsics)</h4>
@@ -579,7 +545,7 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L287">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L265">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_Equals_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Equals*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_Equals_System_Object_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.Equals(System.Object)">Equals(Object)</h4>
@@ -623,16 +589,16 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L191">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L170">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_GetCameraSpacePosition_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetCameraSpacePosition*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_GetCameraSpacePosition_Point2D_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetCameraSpacePosition(Point2D,System.Double,System.Boolean)">GetCameraSpacePosition(Point2D, Double, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_GetCameraSpacePosition_Point2D_System_Double_Microsoft_Psi_Imaging_DepthValueSemantics_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetCameraSpacePosition(Point2D,System.Double,Microsoft.Psi.Imaging.DepthValueSemantics,System.Boolean)">GetCameraSpacePosition(Point2D, Double, DepthValueSemantics, Boolean)</h4>
   <div class="markdown level1 summary"><p>Gets the corresponding 3D camera space position at a given depth along a specified pixel.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Point3D GetCameraSpacePosition(Point2D point2D, double depth, bool undistort)</code></pre>
+    <pre><code class="lang-csharp hljs">public Point3D GetCameraSpacePosition(Point2D point2D, double depth, DepthValueSemantics depthValueSemantics, bool undistort)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -654,6 +620,12 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depth</span></td>
         <td><p>The depth along the specified pixel position.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>How depth values should be interpreted.</p>
 </td>
       </tr>
       <tr>
@@ -682,7 +654,7 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L271">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L250">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_GetHashCode_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetHashCode*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_GetHashCode" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetHashCode">GetHashCode()</h4>
@@ -709,7 +681,7 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L162">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L141">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_GetPixelPosition_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetPixelPosition*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_GetPixelPosition_Point3D_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetPixelPosition(Point3D,System.Boolean,System.Boolean)">GetPixelPosition(Point3D, Boolean, Boolean)</h4>
@@ -768,16 +740,16 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L237">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L216">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_GetPixelToCameraSpaceMapping_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetPixelToCameraSpaceMapping*"></a>
-  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_GetPixelToCameraSpaceMapping_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetPixelToCameraSpaceMapping(System.Boolean)">GetPixelToCameraSpaceMapping(Boolean)</h4>
+  <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_GetPixelToCameraSpaceMapping_Microsoft_Psi_Imaging_DepthValueSemantics_System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.GetPixelToCameraSpaceMapping(Microsoft.Psi.Imaging.DepthValueSemantics,System.Boolean)">GetPixelToCameraSpaceMapping(DepthValueSemantics, Boolean)</h4>
   <div class="markdown level1 summary"><p>Gets a mapping matrix that can be used to transform pixels into 3D space.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Point3D[, ] GetPixelToCameraSpaceMapping(bool undistort)</code></pre>
+    <pre><code class="lang-csharp hljs">public Point3D[, ] GetPixelToCameraSpaceMapping(DepthValueSemantics depthValueSemantics, bool undistort)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -789,6 +761,12 @@ normalized device coordinates (NDC) ranging from -1 .. +1.</p>
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>How depth values should be interpreted.</p>
+</td>
+      </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">undistort</span></td>
@@ -818,7 +796,7 @@ by the pixel.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L226">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L205">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_TryDistortPoint_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TryDistortPoint*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_TryDistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TryDistortPoint(Point2D,Point2D@)">TryDistortPoint(Point2D, out Point2D)</h4>
@@ -880,7 +858,7 @@ Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L183">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L162">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_TryGetPixelPosition_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TryGetPixelPosition*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_TryGetPixelPosition_Point3D_System_Boolean_Point2D__System_Boolean_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TryGetPixelPosition(Point3D,System.Boolean,Point2D@,System.Boolean)">TryGetPixelPosition(Point3D, Boolean, out Point2D, Boolean)</h4>
@@ -945,7 +923,7 @@ Xd(n+1) = Xd(n) + J^-1 * F(Xd,Yd).</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L215">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L194">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_TryUndistortPoint_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TryUndistortPoint*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_TryUndistortPoint_Point2D_Point2D__" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.TryUndistortPoint(Point2D,Point2D@)">TryUndistortPoint(Point2D, out Point2D)</h4>
@@ -1006,7 +984,7 @@ T0,T1 - tangential distortion coefficients.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L145">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L124">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_op_Equality_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.op_Equality*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_op_Equality_Microsoft_Psi_Calibration_CameraIntrinsics_Microsoft_Psi_Calibration_CameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.op_Equality(Microsoft.Psi.Calibration.CameraIntrinsics,Microsoft.Psi.Calibration.CameraIntrinsics)">Equality(CameraIntrinsics, CameraIntrinsics)</h4>
@@ -1059,7 +1037,7 @@ T0,T1 - tangential distortion coefficients.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L156">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L135">View Source</a>
   </span>
   <a id="Microsoft_Psi_Calibration_CameraIntrinsics_op_Inequality_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.op_Inequality*"></a>
   <h4 id="Microsoft_Psi_Calibration_CameraIntrinsics_op_Inequality_Microsoft_Psi_Calibration_CameraIntrinsics_Microsoft_Psi_Calibration_CameraIntrinsics_" data-uid="Microsoft.Psi.Calibration.CameraIntrinsics.op_Inequality(Microsoft.Psi.Calibration.CameraIntrinsics,Microsoft.Psi.Calibration.CameraIntrinsics)">Inequality(CameraIntrinsics, CameraIntrinsics)</h4>
@@ -1138,7 +1116,7 @@ T0,T1 - tangential distortion coefficients.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Calibration/Microsoft.Psi.Calibration/CameraIntrinsics.cs/#L15" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

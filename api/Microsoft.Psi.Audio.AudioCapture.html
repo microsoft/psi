@@ -116,16 +116,16 @@ input devices currently available on the system.
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L64">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture__ctor_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_AudioCaptureConfiguration_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.AudioCaptureConfiguration)">AudioCapture(Pipeline, AudioCaptureConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_AudioCaptureConfiguration_System_String_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.AudioCaptureConfiguration,System.String)">AudioCapture(Pipeline, AudioCaptureConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioCapture.html">AudioCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioCapture(Pipeline pipeline, AudioCaptureConfiguration configuration, string name = &quot;AudioCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -149,20 +149,26 @@ input devices currently available on the system.
         <td><p>The component configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L103">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture__ctor_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_WaveFormat_System_String_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.WaveFormat,System.String)">AudioCapture(Pipeline, WaveFormat, String)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_WaveFormat_System_String_System_String_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.WaveFormat,System.String,System.String)">AudioCapture(Pipeline, WaveFormat, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioCapture.html">AudioCapture</a> class with a specified output format and device name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioCapture(Pipeline pipeline, WaveFormat outputFormat, string deviceName = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioCapture(Pipeline pipeline, WaveFormat outputFormat, string deviceName = null, string name = &quot;AudioCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -192,20 +198,26 @@ input devices currently available on the system.
         <td><p>The name of the audio device.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L88">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture__ctor_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioCapture__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor(Microsoft.Psi.Pipeline,System.String)">AudioCapture(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioCapture__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Audio.AudioCapture.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">AudioCapture(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioCapture.html">AudioCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioCapture(Pipeline pipeline, string configurationFilename = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioCapture(Pipeline pipeline, string configurationFilename = null, string name = &quot;AudioCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -229,13 +241,19 @@ input devices currently available on the system.
         <td><p>The component configuration file.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L123">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L129">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_AudioDeviceName_" data-uid="Microsoft.Psi.Audio.AudioCapture.AudioDeviceName*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_AudioDeviceName" data-uid="Microsoft.Psi.Audio.AudioCapture.AudioDeviceName">AudioDeviceName</h4>
@@ -263,7 +281,7 @@ input devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L118">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L124">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_AudioLevel_" data-uid="Microsoft.Psi.Audio.AudioCapture.AudioLevel*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_AudioLevel" data-uid="Microsoft.Psi.Audio.AudioCapture.AudioLevel">AudioLevel</h4>
@@ -291,7 +309,7 @@ input devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L113">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L119">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_AudioLevelInput_" data-uid="Microsoft.Psi.Audio.AudioCapture.AudioLevelInput*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_AudioLevelInput" data-uid="Microsoft.Psi.Audio.AudioCapture.AudioLevelInput">AudioLevelInput</h4>
@@ -319,7 +337,7 @@ input devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L111">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_Out_" data-uid="Microsoft.Psi.Audio.AudioCapture.Out*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_Out" data-uid="Microsoft.Psi.Audio.AudioCapture.Out">Out</h4>
@@ -349,7 +367,7 @@ input devices currently available on the system.
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L162">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L168">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_Dispose_" data-uid="Microsoft.Psi.Audio.AudioCapture.Dispose*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_Dispose" data-uid="Microsoft.Psi.Audio.AudioCapture.Dispose">Dispose()</h4>
@@ -362,7 +380,7 @@ input devices currently available on the system.
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L142">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L148">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_GetAvailableDevices_" data-uid="Microsoft.Psi.Audio.AudioCapture.GetAvailableDevices*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_GetAvailableDevices" data-uid="Microsoft.Psi.Audio.AudioCapture.GetAvailableDevices">GetAvailableDevices()</h4>
@@ -391,7 +409,7 @@ input devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L151">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L157">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_SetAudioLevel_" data-uid="Microsoft.Psi.Audio.AudioCapture.SetAudioLevel*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_SetAudioLevel_Microsoft_Psi_Message_System_Double__" data-uid="Microsoft.Psi.Audio.AudioCapture.SetAudioLevel(Microsoft.Psi.Message{System.Double})">SetAudioLevel(Message&lt;Double&gt;)</h4>
@@ -422,7 +440,7 @@ input devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L172">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L178">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_Start_" data-uid="Microsoft.Psi.Audio.AudioCapture.Start*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_Start_Action_DateTime__" data-uid="Microsoft.Psi.Audio.AudioCapture.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -451,7 +469,7 @@ input devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L195">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L201">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioCapture_Stop_" data-uid="Microsoft.Psi.Audio.AudioCapture.Stop*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioCapture_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Audio.AudioCapture.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -479,6 +497,33 @@ input devices currently available on the system.
       <tr>
         <td><span class="xref">Action</span></td>
         <td><span class="parametername">notifyCompleted</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioCapture.cs/#L208">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Audio_AudioCapture_ToString_" data-uid="Microsoft.Psi.Audio.AudioCapture.ToString*"></a>
+  <h4 id="Microsoft_Psi_Audio_AudioCapture_ToString" data-uid="Microsoft.Psi.Audio.AudioCapture.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>

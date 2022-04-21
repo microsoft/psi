@@ -106,16 +106,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera__ctor_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_PhotoVideoCameraConfiguration_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.PhotoVideoCameraConfiguration)">PhotoVideoCamera(Pipeline, PhotoVideoCameraConfiguration)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_PhotoVideoCameraConfiguration_System_String_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.PhotoVideoCameraConfiguration,System.String)">PhotoVideoCamera(Pipeline, PhotoVideoCameraConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.PhotoVideoCamera.html">PhotoVideoCamera</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PhotoVideoCamera(Pipeline pipeline, PhotoVideoCameraConfiguration configuration = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public PhotoVideoCamera(Pipeline pipeline, PhotoVideoCameraConfiguration configuration = null, string name = &quot;PhotoVideoCamera&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -139,22 +139,28 @@
         <td><p>The configuration for this component.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L91">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewImage_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewImage*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewImage" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewImage">PreviewImage</h4>
-  <div class="markdown level1 summary"><p>Gets the preview image stream.</p>
+  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewEncodedImage_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewEncodedImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewEncodedImage" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewEncodedImage">PreviewEncodedImage</h4>
+  <div class="markdown level1 summary"><p>Gets the original preview NV12-encoded image stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Emitter&lt;Shared&lt;Image&gt;&gt; PreviewImage { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Emitter&lt;Shared&lt;EncodedImage&gt;&gt; PreviewEncodedImage { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -166,14 +172,42 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.EncodedImage.html">EncodedImage</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewEncodedImageCameraView_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewEncodedImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewEncodedImageCameraView" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewEncodedImageCameraView">PreviewEncodedImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets the original preview NV12-encoded image camera view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;EncodedImageCameraView&gt; PreviewEncodedImageCameraView { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView.html">EncodedImageCameraView</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L101">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewIntrinsics_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewIntrinsics*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewIntrinsics" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewIntrinsics">PreviewIntrinsics</h4>
@@ -201,7 +235,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewPose_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewPose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_PreviewPose" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.PreviewPose">PreviewPose</h4>
@@ -229,16 +263,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L64">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L71">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoImage_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoImage*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoImage" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoImage">VideoImage</h4>
-  <div class="markdown level1 summary"><p>Gets the video image stream.</p>
+  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoEncodedImage_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoEncodedImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoEncodedImage" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoEncodedImage">VideoEncodedImage</h4>
+  <div class="markdown level1 summary"><p>Gets the original video NV12-encoded image stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Emitter&lt;Shared&lt;Image&gt;&gt; VideoImage { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Emitter&lt;Shared&lt;EncodedImage&gt;&gt; VideoEncodedImage { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -250,14 +284,42 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.EncodedImage.html">EncodedImage</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoEncodedImageCameraView_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoEncodedImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoEncodedImageCameraView" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoEncodedImageCameraView">VideoEncodedImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets the original video NV12-encoded image camera view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;EncodedImageCameraView&gt; VideoEncodedImageCameraView { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView.html">EncodedImageCameraView</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoIntrinsics_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoIntrinsics*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoIntrinsics" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoIntrinsics">VideoIntrinsics</h4>
@@ -285,7 +347,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoPose_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoPose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_VideoPose" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.VideoPose">VideoPose</h4>
@@ -315,7 +377,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L92">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_Dispose_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.Dispose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_Dispose" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.Dispose">Dispose()</h4>
@@ -327,7 +389,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L119">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_Start_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_Start_Action_Windows_Foundation_DateTime__" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.Start(Action{Windows.Foundation.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -356,7 +418,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L168">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L189">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_Stop_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_Stop_Windows_Foundation_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.Stop(Windows.Foundation.DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -388,6 +450,33 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L213">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_PhotoVideoCamera_ToString_" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.ToString*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_PhotoVideoCamera_ToString" data-uid="Microsoft.Psi.MixedReality.PhotoVideoCamera.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a>
@@ -413,7 +502,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L25" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/PhotoVideoCamera.cs/#L26" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

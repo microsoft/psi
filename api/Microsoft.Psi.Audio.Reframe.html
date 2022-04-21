@@ -107,6 +107,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;AudioBuffer, AudioBuffer&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;AudioBuffer, AudioBuffer&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;AudioBuffer, AudioBuffer&gt;.Receive(AudioBuffer, Envelope)</a>
     </div>
   </div>
@@ -120,16 +123,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Reframe.cs/#L25">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Reframe.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Reframe__ctor_" data-uid="Microsoft.Psi.Audio.Reframe.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_Reframe__ctor_Microsoft_Psi_Pipeline_System_Int32_" data-uid="Microsoft.Psi.Audio.Reframe.#ctor(Microsoft.Psi.Pipeline,System.Int32)">Reframe(Pipeline, Int32)</h4>
+  <h4 id="Microsoft_Psi_Audio_Reframe__ctor_Microsoft_Psi_Pipeline_System_Int32_System_String_" data-uid="Microsoft.Psi.Audio.Reframe.#ctor(Microsoft.Psi.Pipeline,System.Int32,System.String)">Reframe(Pipeline, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.Reframe.html">Reframe</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Reframe(Pipeline pipeline, int frameSizeInBytes)</code></pre>
+    <pre><code class="lang-csharp hljs">public Reframe(Pipeline pipeline, int frameSizeInBytes, string name = &quot;Reframe&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -153,20 +156,26 @@
         <td><p>The output frame size in bytes.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Reframe.cs/#L41">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Reframe.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Reframe__ctor_" data-uid="Microsoft.Psi.Audio.Reframe.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_Reframe__ctor_Microsoft_Psi_Pipeline_TimeSpan_" data-uid="Microsoft.Psi.Audio.Reframe.#ctor(Microsoft.Psi.Pipeline,TimeSpan)">Reframe(Pipeline, TimeSpan)</h4>
+  <h4 id="Microsoft_Psi_Audio_Reframe__ctor_Microsoft_Psi_Pipeline_TimeSpan_System_String_" data-uid="Microsoft.Psi.Audio.Reframe.#ctor(Microsoft.Psi.Pipeline,TimeSpan,System.String)">Reframe(Pipeline, TimeSpan, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.Reframe.html">Reframe</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Reframe(Pipeline pipeline, TimeSpan frameDuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public Reframe(Pipeline pipeline, TimeSpan frameDuration, string name = &quot;Reframe&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -190,13 +199,19 @@
         <td><p>The output frame duration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Reframe.cs/#L57">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Reframe.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Reframe_Receive_" data-uid="Microsoft.Psi.Audio.Reframe.Receive*"></a>
   <h4 id="Microsoft_Psi_Audio_Reframe_Receive_Microsoft_Psi_Audio_AudioBuffer_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Audio.Reframe.Receive(Microsoft.Psi.Audio.AudioBuffer,Microsoft.Psi.Envelope)">Receive(AudioBuffer, Envelope)</h4>

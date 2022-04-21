@@ -105,16 +105,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L100">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L95">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_Dither_" data-uid="Microsoft.Psi.Audio.Operators.Dither*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_Dither_Microsoft_Psi_IProducer_System_Single____System_Single_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.Dither(Microsoft.Psi.IProducer{System.Single[]},System.Single,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]})">Dither(IProducer&lt;Single[]&gt;, Single, Int32, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_Dither_Microsoft_Psi_IProducer_System_Single____System_Single_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.Dither(Microsoft.Psi.IProducer{System.Single[]},System.Single,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">Dither(IProducer&lt;Single[]&gt;, Single, Int32, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Applies dithering to input sample values.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; Dither(this IProducer&lt;float[]&gt; source, float scaleFactor, int randomSeed = 0, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; Dither(this IProducer&lt;float[]&gt; source, float scaleFactor, int randomSeed = 0, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;Dither&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -150,6 +150,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -170,16 +176,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L142">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L138">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_FFT_" data-uid="Microsoft.Psi.Audio.Operators.FFT*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_FFT_Microsoft_Psi_IProducer_System_Single____System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.FFT(Microsoft.Psi.IProducer{System.Single[]},System.Int32,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]})">FFT(IProducer&lt;Single[]&gt;, Int32, Int32, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_FFT_Microsoft_Psi_IProducer_System_Single____System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.FFT(Microsoft.Psi.IProducer{System.Single[]},System.Int32,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">FFT(IProducer&lt;Single[]&gt;, Int32, Int32, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Performs a Fast Fourier Transform on input sample buffers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; FFT(this IProducer&lt;float[]&gt; source, int fftSize, int inputSize, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; FFT(this IProducer&lt;float[]&gt; source, int fftSize, int inputSize, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;FFT&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -215,6 +221,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -235,16 +247,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L153">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L148">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_FFTPower_" data-uid="Microsoft.Psi.Audio.Operators.FFTPower*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_FFTPower_Microsoft_Psi_IProducer_System_Single____Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.FFTPower(Microsoft.Psi.IProducer{System.Single[]},Microsoft.Psi.DeliveryPolicy{System.Single[]})">FFTPower(IProducer&lt;Single[]&gt;, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_FFTPower_Microsoft_Psi_IProducer_System_Single____Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.FFTPower(Microsoft.Psi.IProducer{System.Single[]},Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">FFTPower(IProducer&lt;Single[]&gt;, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts a stream of FFTs to FFT power spectra.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; FFTPower(this IProducer&lt;float[]&gt; source, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; FFTPower(this IProducer&lt;float[]&gt; source, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;FFTPower&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -268,6 +280,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -288,16 +306,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L75">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_FrameShift_" data-uid="Microsoft.Psi.Audio.Operators.FrameShift*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_FrameShift_Microsoft_Psi_IProducer_System_Byte____System_Int32_System_Int32_System_Double_Microsoft_Psi_DeliveryPolicy_System_Byte____" data-uid="Microsoft.Psi.Audio.Operators.FrameShift(Microsoft.Psi.IProducer{System.Byte[]},System.Int32,System.Int32,System.Double,Microsoft.Psi.DeliveryPolicy{System.Byte[]})">FrameShift(IProducer&lt;Byte[]&gt;, Int32, Int32, Double, DeliveryPolicy&lt;Byte[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_FrameShift_Microsoft_Psi_IProducer_System_Byte____System_Int32_System_Int32_System_Double_Microsoft_Psi_DeliveryPolicy_System_Byte____System_String_" data-uid="Microsoft.Psi.Audio.Operators.FrameShift(Microsoft.Psi.IProducer{System.Byte[]},System.Int32,System.Int32,System.Double,Microsoft.Psi.DeliveryPolicy{System.Byte[]},System.String)">FrameShift(IProducer&lt;Byte[]&gt;, Int32, Int32, Double, DeliveryPolicy&lt;Byte[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>The frame shift operator.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;byte[]&gt; FrameShift(this IProducer&lt;byte[]&gt; source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, DeliveryPolicy&lt;byte[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;byte[]&gt; FrameShift(this IProducer&lt;byte[]&gt; source, int frameSizeInBytes, int frameShiftInBytes, double bytesPerSec, DeliveryPolicy&lt;byte[]&gt; deliveryPolicy = null, string name = &quot;FrameShift&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -339,6 +357,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -359,16 +383,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L188">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L180">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_FrequencyDomainEnergy_" data-uid="Microsoft.Psi.Audio.Operators.FrequencyDomainEnergy*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_FrequencyDomainEnergy_Microsoft_Psi_IProducer_System_Single____System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.FrequencyDomainEnergy(Microsoft.Psi.IProducer{System.Single[]},System.Int32,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]})">FrequencyDomainEnergy(IProducer&lt;Single[]&gt;, Int32, Int32, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_FrequencyDomainEnergy_Microsoft_Psi_IProducer_System_Single____System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.FrequencyDomainEnergy(Microsoft.Psi.IProducer{System.Single[]},System.Int32,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">FrequencyDomainEnergy(IProducer&lt;Single[]&gt;, Int32, Int32, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Computes the frequency domain energy from the FFT power spectra.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; FrequencyDomainEnergy(this IProducer&lt;float[]&gt; source, int start, int end, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; FrequencyDomainEnergy(this IProducer&lt;float[]&gt; source, int start, int end, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;FrequencyDomainEnergy&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -404,6 +428,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -424,16 +454,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L129">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L126">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_HanningWindow_" data-uid="Microsoft.Psi.Audio.Operators.HanningWindow*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_HanningWindow_Microsoft_Psi_IProducer_System_Single____System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.HanningWindow(Microsoft.Psi.IProducer{System.Single[]},System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]})">HanningWindow(IProducer&lt;Single[]&gt;, Int32, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_HanningWindow_Microsoft_Psi_IProducer_System_Single____System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.HanningWindow(Microsoft.Psi.IProducer{System.Single[]},System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">HanningWindow(IProducer&lt;Single[]&gt;, Int32, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Applies a Hanning window to input sample values.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; HanningWindow(this IProducer&lt;float[]&gt; source, int kernelLength, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; HanningWindow(this IProducer&lt;float[]&gt; source, int kernelLength, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;HanningWindow&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -463,6 +493,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -483,16 +519,16 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L164">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L158">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_LogEnergy_" data-uid="Microsoft.Psi.Audio.Operators.LogEnergy*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_LogEnergy_Microsoft_Psi_IProducer_System_Single____Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.LogEnergy(Microsoft.Psi.IProducer{System.Single[]},Microsoft.Psi.DeliveryPolicy{System.Single[]})">LogEnergy(IProducer&lt;Single[]&gt;, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_LogEnergy_Microsoft_Psi_IProducer_System_Single____Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.LogEnergy(Microsoft.Psi.IProducer{System.Single[]},Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">LogEnergy(IProducer&lt;Single[]&gt;, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Computes the log energy of a stream of input samples in the time domain.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; LogEnergy(this IProducer&lt;float[]&gt; source, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; LogEnergy(this IProducer&lt;float[]&gt; source, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;LogEnergy&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -516,6 +552,12 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -536,17 +578,17 @@ streams, streams of raw audio bytes, streams of floating-point audio samples as 
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L25">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_Reframe_" data-uid="Microsoft.Psi.Audio.Operators.Reframe*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_Reframe_Microsoft_Psi_IProducer_Microsoft_Psi_Audio_AudioBuffer__System_Int32_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Audio_AudioBuffer__" data-uid="Microsoft.Psi.Audio.Operators.Reframe(Microsoft.Psi.IProducer{Microsoft.Psi.Audio.AudioBuffer},System.Int32,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Audio.AudioBuffer})">Reframe(IProducer&lt;AudioBuffer&gt;, Int32, DeliveryPolicy&lt;AudioBuffer&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_Reframe_Microsoft_Psi_IProducer_Microsoft_Psi_Audio_AudioBuffer__System_Int32_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Audio_AudioBuffer__System_String_" data-uid="Microsoft.Psi.Audio.Operators.Reframe(Microsoft.Psi.IProducer{Microsoft.Psi.Audio.AudioBuffer},System.Int32,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Audio.AudioBuffer},System.String)">Reframe(IProducer&lt;AudioBuffer&gt;, Int32, DeliveryPolicy&lt;AudioBuffer&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Reframes the bytes in an <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a> stream, producing a new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>
 stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a> has a specified fixed size.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;AudioBuffer&gt; Reframe(this IProducer&lt;AudioBuffer&gt; source, int frameSizeInBytes, DeliveryPolicy&lt;AudioBuffer&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;AudioBuffer&gt; Reframe(this IProducer&lt;AudioBuffer&gt; source, int frameSizeInBytes, DeliveryPolicy&lt;AudioBuffer&gt; deliveryPolicy = null, string name = &quot;Reframe&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -576,6 +618,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -599,14 +647,14 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_Reframe_" data-uid="Microsoft.Psi.Audio.Operators.Reframe*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_Reframe_Microsoft_Psi_IProducer_Microsoft_Psi_Audio_AudioBuffer__TimeSpan_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Audio_AudioBuffer__" data-uid="Microsoft.Psi.Audio.Operators.Reframe(Microsoft.Psi.IProducer{Microsoft.Psi.Audio.AudioBuffer},TimeSpan,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Audio.AudioBuffer})">Reframe(IProducer&lt;AudioBuffer&gt;, TimeSpan, DeliveryPolicy&lt;AudioBuffer&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_Reframe_Microsoft_Psi_IProducer_Microsoft_Psi_Audio_AudioBuffer__TimeSpan_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Audio_AudioBuffer__System_String_" data-uid="Microsoft.Psi.Audio.Operators.Reframe(Microsoft.Psi.IProducer{Microsoft.Psi.Audio.AudioBuffer},TimeSpan,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Audio.AudioBuffer},System.String)">Reframe(IProducer&lt;AudioBuffer&gt;, TimeSpan, DeliveryPolicy&lt;AudioBuffer&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Reframes the bytes in an <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a> stream, producing a new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>
 stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a> has a specified fixed duration.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;AudioBuffer&gt; Reframe(this IProducer&lt;AudioBuffer&gt; source, TimeSpan frameDuration, DeliveryPolicy&lt;AudioBuffer&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;AudioBuffer&gt; Reframe(this IProducer&lt;AudioBuffer&gt; source, TimeSpan frameDuration, DeliveryPolicy&lt;AudioBuffer&gt; deliveryPolicy = null, string name = &quot;Reframe&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -636,6 +684,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -656,16 +710,16 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L201">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L192">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_SpectralEntropy_" data-uid="Microsoft.Psi.Audio.Operators.SpectralEntropy*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_SpectralEntropy_Microsoft_Psi_IProducer_System_Single____System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.SpectralEntropy(Microsoft.Psi.IProducer{System.Single[]},System.Int32,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]})">SpectralEntropy(IProducer&lt;Single[]&gt;, Int32, Int32, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_SpectralEntropy_Microsoft_Psi_IProducer_System_Single____System_Int32_System_Int32_Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.SpectralEntropy(Microsoft.Psi.IProducer{System.Single[]},System.Int32,System.Int32,Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">SpectralEntropy(IProducer&lt;Single[]&gt;, Int32, Int32, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Computes the spectral entropy within a frequency band.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; SpectralEntropy(this IProducer&lt;float[]&gt; source, int start, int end, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; SpectralEntropy(this IProducer&lt;float[]&gt; source, int start, int end, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;SpectralEntropy&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -701,6 +755,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -721,16 +781,16 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_ToAudioBuffer_" data-uid="Microsoft.Psi.Audio.Operators.ToAudioBuffer*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_ToAudioBuffer_Microsoft_Psi_IProducer_System_Byte____Microsoft_Psi_Audio_WaveFormat_Microsoft_Psi_DeliveryPolicy_System_Byte____" data-uid="Microsoft.Psi.Audio.Operators.ToAudioBuffer(Microsoft.Psi.IProducer{System.Byte[]},Microsoft.Psi.Audio.WaveFormat,Microsoft.Psi.DeliveryPolicy{System.Byte[]})">ToAudioBuffer(IProducer&lt;Byte[]&gt;, WaveFormat, DeliveryPolicy&lt;Byte[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_ToAudioBuffer_Microsoft_Psi_IProducer_System_Byte____Microsoft_Psi_Audio_WaveFormat_Microsoft_Psi_DeliveryPolicy_System_Byte____System_String_" data-uid="Microsoft.Psi.Audio.Operators.ToAudioBuffer(Microsoft.Psi.IProducer{System.Byte[]},Microsoft.Psi.Audio.WaveFormat,Microsoft.Psi.DeliveryPolicy{System.Byte[]},System.String)">ToAudioBuffer(IProducer&lt;Byte[]&gt;, WaveFormat, DeliveryPolicy&lt;Byte[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Transforms a stream of byte arrays containing raw audio to an <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a> stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;AudioBuffer&gt; ToAudioBuffer(this IProducer&lt;byte[]&gt; source, WaveFormat audioFormat, DeliveryPolicy&lt;byte[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;AudioBuffer&gt; ToAudioBuffer(this IProducer&lt;byte[]&gt; source, WaveFormat audioFormat, DeliveryPolicy&lt;byte[]&gt; deliveryPolicy = null, string name = &quot;ToAudioBuffer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -760,6 +820,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -780,16 +846,16 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_ToByteArray_" data-uid="Microsoft.Psi.Audio.Operators.ToByteArray*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_ToByteArray_Microsoft_Psi_IProducer_Microsoft_Psi_Audio_AudioBuffer__Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Audio_AudioBuffer__" data-uid="Microsoft.Psi.Audio.Operators.ToByteArray(Microsoft.Psi.IProducer{Microsoft.Psi.Audio.AudioBuffer},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Audio.AudioBuffer})">ToByteArray(IProducer&lt;AudioBuffer&gt;, DeliveryPolicy&lt;AudioBuffer&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_ToByteArray_Microsoft_Psi_IProducer_Microsoft_Psi_Audio_AudioBuffer__Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Audio_AudioBuffer__System_String_" data-uid="Microsoft.Psi.Audio.Operators.ToByteArray(Microsoft.Psi.IProducer{Microsoft.Psi.Audio.AudioBuffer},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Audio.AudioBuffer},System.String)">ToByteArray(IProducer&lt;AudioBuffer&gt;, DeliveryPolicy&lt;AudioBuffer&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Transforms an <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a> stream to a stream of byte arrays containing the raw audio.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;byte[]&gt; ToByteArray(this IProducer&lt;AudioBuffer&gt; source, DeliveryPolicy&lt;AudioBuffer&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;byte[]&gt; ToByteArray(this IProducer&lt;AudioBuffer&gt; source, DeliveryPolicy&lt;AudioBuffer&gt; deliveryPolicy = null, string name = &quot;ToByteArray&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -813,6 +879,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -833,16 +905,16 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L87">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L83">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_ToFloat_" data-uid="Microsoft.Psi.Audio.Operators.ToFloat*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_ToFloat_Microsoft_Psi_IProducer_System_Byte____Microsoft_Psi_Audio_WaveFormat_Microsoft_Psi_DeliveryPolicy_System_Byte____" data-uid="Microsoft.Psi.Audio.Operators.ToFloat(Microsoft.Psi.IProducer{System.Byte[]},Microsoft.Psi.Audio.WaveFormat,Microsoft.Psi.DeliveryPolicy{System.Byte[]})">ToFloat(IProducer&lt;Byte[]&gt;, WaveFormat, DeliveryPolicy&lt;Byte[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_ToFloat_Microsoft_Psi_IProducer_System_Byte____Microsoft_Psi_Audio_WaveFormat_Microsoft_Psi_DeliveryPolicy_System_Byte____System_String_" data-uid="Microsoft.Psi.Audio.Operators.ToFloat(Microsoft.Psi.IProducer{System.Byte[]},Microsoft.Psi.Audio.WaveFormat,Microsoft.Psi.DeliveryPolicy{System.Byte[]},System.String)">ToFloat(IProducer&lt;Byte[]&gt;, WaveFormat, DeliveryPolicy&lt;Byte[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts a stream of audio data to a stream of floating point values.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; ToFloat(this IProducer&lt;byte[]&gt; source, WaveFormat format, DeliveryPolicy&lt;byte[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float[]&gt; ToFloat(this IProducer&lt;byte[]&gt; source, WaveFormat format, DeliveryPolicy&lt;byte[]&gt; deliveryPolicy = null, string name = &quot;ToFloat&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -872,6 +944,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -892,16 +970,16 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L175">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/Operators.cs/#L168">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_Operators_ZeroCrossingRate_" data-uid="Microsoft.Psi.Audio.Operators.ZeroCrossingRate*"></a>
-  <h4 id="Microsoft_Psi_Audio_Operators_ZeroCrossingRate_Microsoft_Psi_IProducer_System_Single____Microsoft_Psi_DeliveryPolicy_System_Single____" data-uid="Microsoft.Psi.Audio.Operators.ZeroCrossingRate(Microsoft.Psi.IProducer{System.Single[]},Microsoft.Psi.DeliveryPolicy{System.Single[]})">ZeroCrossingRate(IProducer&lt;Single[]&gt;, DeliveryPolicy&lt;Single[]&gt;)</h4>
+  <h4 id="Microsoft_Psi_Audio_Operators_ZeroCrossingRate_Microsoft_Psi_IProducer_System_Single____Microsoft_Psi_DeliveryPolicy_System_Single____System_String_" data-uid="Microsoft.Psi.Audio.Operators.ZeroCrossingRate(Microsoft.Psi.IProducer{System.Single[]},Microsoft.Psi.DeliveryPolicy{System.Single[]},System.String)">ZeroCrossingRate(IProducer&lt;Single[]&gt;, DeliveryPolicy&lt;Single[]&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Computes the zero-crossing rate of input samples.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; ZeroCrossingRate(this IProducer&lt;float[]&gt; source, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;float&gt; ZeroCrossingRate(this IProducer&lt;float[]&gt; source, DeliveryPolicy&lt;float[]&gt; deliveryPolicy = null, string name = &quot;ZeroCrossingRate&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -923,6 +1001,12 @@ stream where each new <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html
         <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</td>
         <td><span class="parametername">deliveryPolicy</span></td>
         <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
 </td>
       </tr>
     </tbody>

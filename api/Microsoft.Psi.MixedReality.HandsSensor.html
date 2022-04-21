@@ -95,6 +95,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">ISourceComponent</span></div>
+    <div><span class="xref">IProducer</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="Microsoft.Psi.MixedReality.Hand.html">Hand</a>, <a class="xref" href="Microsoft.Psi.MixedReality.Hand.html">Hand</a>&gt;&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -107,27 +108,30 @@
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown">StereoKitComponent.Shutdown()</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_ToString">StereoKitComponent.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
   <h5 id="Microsoft_Psi_MixedReality_HandsSensor_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class HandsSensor : StereoKitComponent, ISourceComponent</code></pre>
+    <pre><code class="lang-csharp hljs">public class HandsSensor : StereoKitComponent, ISourceComponent, IProducer&lt;(Hand Left, Hand Right)&gt;</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_HandsSensor__ctor_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_HandsSensor__ctor_Pipeline_TimeSpan_System_Boolean_System_Boolean_Material_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.#ctor(Pipeline,TimeSpan,System.Boolean,System.Boolean,Material)">HandsSensor(Pipeline, TimeSpan, Boolean, Boolean, Material)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_HandsSensor__ctor_Pipeline_TimeSpan_System_String_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.#ctor(Pipeline,TimeSpan,System.String)">HandsSensor(Pipeline, TimeSpan, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.HandsSensor.html">HandsSensor</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public HandsSensor(Pipeline pipeline, TimeSpan interval = null, bool visible = true, bool solid = false, Material material = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public HandsSensor(Pipeline pipeline, TimeSpan interval = null, string name = &quot;HandsSensor&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -152,21 +156,9 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">visible</span></td>
-        <td><p>Optional value indicating whether hands should be rendered (default true).</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">solid</span></td>
-        <td><p>Optional value indicating whether hands participate in StereoKit physics (default true).</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Material</span></td>
-        <td><span class="parametername">material</span></td>
-        <td><p>Optional material used to render the hands (default <see cref="!:Default.MaterialHand"></see>).</p>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>
@@ -175,7 +167,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L42">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_HandsSensor_Left_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Left*"></a>
   <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Left" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Left">Left</h4>
@@ -203,16 +195,15 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L37">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_HandsSensor_Material_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Material*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Material" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Material">Material</h4>
-  <div class="markdown level1 summary"><p>Gets the receiver of the material used to render the hands.</p>
-</div>
+  <a id="Microsoft_Psi_MixedReality_HandsSensor_Out_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Out*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Out" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Out">Out</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Receiver&lt;Material&gt; Material { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Emitter&lt;(Hand Left, Hand Right)&gt; Out { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -224,18 +215,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Receiver</span>&lt;<span class="xref">Material</span>&gt;</td>
+        <td><span class="xref">Emitter</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="Microsoft.Psi.MixedReality.Hand.html">Hand</a>, <a class="xref" href="Microsoft.Psi.MixedReality.Hand.html">Hand</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_HandsSensor_Right_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Right*"></a>
   <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Right" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Right">Right</h4>
-  <div class="markdown level1 summary"><p>Gets the stream of left hand information.</p>
+  <div class="markdown level1 summary"><p>Gets the stream of right hand information.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -257,67 +248,11 @@
       </tr>
     </tbody>
   </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L64">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_HandsSensor_Solid_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Solid*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Solid" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Solid">Solid</h4>
-  <div class="markdown level1 summary"><p>Gets the receiver of a value indicating whether hands participate in physics.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Receiver&lt;bool&gt; Solid { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Receiver</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L59">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_HandsSensor_Visible_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Visible*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Visible" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Visible">Visible</h4>
-  <div class="markdown level1 summary"><p>Gets the receiver of a value indicating whether hands should be rendered.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Receiver&lt;bool&gt; Visible { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Receiver</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L72">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_HandsSensor_Start_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Start_Action_DateTime__" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -346,7 +281,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L86">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L64">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_HandsSensor_Step_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Step*"></a>
   <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Step" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Step">Step()</h4>
@@ -360,7 +295,7 @@
   <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Step">StereoKitComponent.Step()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L57">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_HandsSensor_Stop_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_HandsSensor_Stop_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.HandsSensor.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -396,6 +331,9 @@
   <div>
       <span class="xref">ISourceComponent</span>
   </div>
+  <div>
+      <span class="xref">IProducer&lt;&gt;</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -414,7 +352,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L13" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/HandsSensor.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

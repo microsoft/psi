@@ -91,26 +91,32 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">EncodedDepthImage</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IDepthImage.html">IDepthImage</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_EncodedDepthImage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EncodedDepthImage : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class EncodedDepthImage : object, IDepthImage, IImage, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L33">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage__ctor_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.#ctor(System.Int32,System.Int32)">EncodedDepthImage(Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage__ctor_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.#ctor(System.Int32,System.Int32,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">EncodedDepthImage(Int32, Int32, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImage.html">EncodedDepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EncodedDepthImage(int width, int height)</code></pre>
+    <pre><code class="lang-csharp hljs">public EncodedDepthImage(int width, int height, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -134,20 +140,32 @@
         <td><p>Height of encoded depth image in pixels.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L38">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage__ctor_System_Int32_System_Int32_System_Byte___" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.#ctor(System.Int32,System.Int32,System.Byte[])">EncodedDepthImage(Int32, Int32, Byte[])</h4>
+  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage__ctor_System_Int32_System_Int32_System_Byte___Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.#ctor(System.Int32,System.Int32,System.Byte[],Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">EncodedDepthImage(Int32, Int32, Byte[], DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImage.html">EncodedDepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EncodedDepthImage(int width, int height, byte[] contents)</code></pre>
+    <pre><code class="lang-csharp hljs">public EncodedDepthImage(int width, int height, byte[] contents, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -177,17 +195,85 @@
         <td><p>Byte array used to initialize the image data.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L73">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_EncodedDepthImage_DepthValueSemantics_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.DepthValueSemantics*"></a>
+  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_DepthValueSemantics" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.DepthValueSemantics">DepthValueSemantics</h4>
+  <div class="markdown level1 summary"><p>Gets depth value semantics.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthValueSemantics DepthValueSemantics { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L76">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_EncodedDepthImage_DepthValueToMetersScaleFactor_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.DepthValueToMetersScaleFactor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_DepthValueToMetersScaleFactor" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.DepthValueToMetersScaleFactor">DepthValueToMetersScaleFactor</h4>
+  <div class="markdown level1 summary"><p>Gets the scale factor to convert depth values to meters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double DepthValueToMetersScaleFactor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L67">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_Height_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Height*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_Height" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Height">Height</h4>
-  <div class="markdown level1 summary"><p>Gets the height of the depth image in pixels.</p>
+  <div class="markdown level1 summary"><p>Gets the height of the image in pixels.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -211,11 +297,11 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L70">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_PixelFormat_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.PixelFormat*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_PixelFormat" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.PixelFormat">PixelFormat</h4>
-  <div class="markdown level1 summary"><p>Gets the pixel format for the depth image.</p>
+  <div class="markdown level1 summary"><p>Gets image pixel format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -239,11 +325,11 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L64">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_Width_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Width*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_Width" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Width">Width</h4>
-  <div class="markdown level1 summary"><p>Gets the width of the depth image in pixels.</p>
+  <div class="markdown level1 summary"><p>Gets the width of the image in pixels.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -269,7 +355,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L131">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L150">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_Decode_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Decode*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_Decode_Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Decode(Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder)">Decode(IDepthImageFromStreamDecoder)</h4>
@@ -316,7 +402,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L66">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_Dispose_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Dispose*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_Dispose" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.Dispose">Dispose()</h4>
@@ -329,7 +415,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L115">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L130">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_EncodeFrom_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.EncodeFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_EncodeFrom_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.EncodeFrom(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Imaging.IDepthImageToStreamEncoder)">EncodeFrom(DepthImage, IDepthImageToStreamEncoder)</h4>
@@ -369,7 +455,7 @@
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L92">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_GetBuffer_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.GetBuffer*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_GetBuffer" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.GetBuffer">GetBuffer()</h4>
@@ -398,7 +484,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L103">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L118">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_SetBuffer_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.SetBuffer*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_SetBuffer_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.SetBuffer(System.Byte[],System.Int32,System.Int32)">SetBuffer(Byte[], Int32, Int32)</h4>
@@ -441,7 +527,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedDepthImage_ToStream_" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.ToStream*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedDepthImage_ToStream" data-uid="Microsoft.Psi.Imaging.EncodedDepthImage.ToStream">ToStream()</h4>
@@ -468,6 +554,16 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IDepthImage.html">IDepthImage</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -486,7 +582,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedDepthImage.cs/#L13" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

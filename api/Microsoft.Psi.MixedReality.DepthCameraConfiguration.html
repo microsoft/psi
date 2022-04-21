@@ -89,28 +89,62 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">DepthCameraConfiguration</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html">ResearchModeCameraConfiguration</a></div>
+    <div class="level2"><span class="xref">DepthCameraConfiguration</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputCameraIntrinsics">ResearchModeCameraConfiguration.OutputCameraIntrinsics</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputPose">ResearchModeCameraConfiguration.OutputPose</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputCalibrationPointsMap">ResearchModeCameraConfiguration.OutputCalibrationPointsMap</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputCalibrationPointsMapMinInterval">ResearchModeCameraConfiguration.OutputCalibrationPointsMapMinInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputMinInterval">ResearchModeCameraConfiguration.OutputMinInterval</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.UniversalWindows.dll</h6>
   <h5 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DepthCameraConfiguration : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class DepthCameraConfiguration : ResearchModeCameraConfiguration</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L17">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration__ctor_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration__ctor" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.#ctor">DepthCameraConfiguration()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.DepthCameraConfiguration.html">DepthCameraConfiguration</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthCameraConfiguration()</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L45">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_Mode_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.Mode*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_Mode" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.Mode">Mode</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the sensor mode.</p>
+  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_DepthSensorType_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.DepthSensorType*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_DepthSensorType" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.DepthSensorType">DepthSensorType</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the depth sensor type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ResearchModeSensorType Mode { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public ResearchModeSensorType DepthSensorType { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -127,21 +161,18 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_Mode_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Valid values are: DepthLongThrow or DepthAhat.</p>
-</div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L17">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L25">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputCalibration_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputCalibration*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputCalibration" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputCalibration">OutputCalibration</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the calibration settings are emitted.</p>
+  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputDepthImage_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputDepthImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputDepthImage" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputDepthImage">OutputDepthImage</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the component emits depth images.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputCalibration { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool OutputDepthImage { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -160,16 +191,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L22">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L30">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputCalibrationMap_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputCalibrationMap*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputCalibrationMap" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputCalibrationMap">OutputCalibrationMap</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the original map of points for calibration are emitted.</p>
+  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputDepthImageCameraView_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputDepthImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputDepthImageCameraView" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputDepthImageCameraView">OutputDepthImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the component emits depth image camera views.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputCalibrationMap { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool OutputDepthImageCameraView { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -188,44 +219,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L35">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputCalibrationMapInterval_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputCalibrationMapInterval*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputCalibrationMapInterval" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputCalibrationMapInterval">OutputCalibrationMapInterval</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the minimum interval between posting calibration map messages.</p>
+  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputInfraredImage_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputInfraredImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputInfraredImage" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputInfraredImage">OutputInfraredImage</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the component emits infrared images.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan OutputCalibrationMapInterval { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TimeSpan</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L37">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputDepth_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputDepth*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputDepth" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputDepth">OutputDepth</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the depth stream is emitted.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputDepth { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool OutputInfraredImage { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -244,44 +247,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L40">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputInfrared_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputInfrared*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputInfrared" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputInfrared">OutputInfrared</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the infrared stream is emitted.</p>
+  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputInfraredImageCameraView_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputInfraredImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputInfraredImageCameraView" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputInfraredImageCameraView">OutputInfraredImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the component emits infrared image camera views.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputInfrared { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/DepthCameraConfiguration.cs/#L32">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputPose_" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputPose*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_DepthCameraConfiguration_OutputPose" data-uid="Microsoft.Psi.MixedReality.DepthCameraConfiguration.OutputPose">OutputPose</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the camera pose stream is emitted.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputPose { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool OutputInfraredImageCameraView { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">

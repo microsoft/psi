@@ -102,6 +102,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Enabled">StereoKitComponent.Enabled</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_ToString">StereoKitComponent.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
@@ -116,16 +119,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L32">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone__ctor_" data-uid="Microsoft.Psi.MixedReality.Microphone.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_Microphone__ctor_Pipeline_Microsoft_Psi_MixedReality_MicrophoneConfiguration_" data-uid="Microsoft.Psi.MixedReality.Microphone.#ctor(Pipeline,Microsoft.Psi.MixedReality.MicrophoneConfiguration)">Microphone(Pipeline, MicrophoneConfiguration)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_Microphone__ctor_Pipeline_Microsoft_Psi_MixedReality_MicrophoneConfiguration_System_String_" data-uid="Microsoft.Psi.MixedReality.Microphone.#ctor(Pipeline,Microsoft.Psi.MixedReality.MicrophoneConfiguration,System.String)">Microphone(Pipeline, MicrophoneConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.Microphone.html">Microphone</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Microphone(Pipeline pipeline, MicrophoneConfiguration configuration = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public Microphone(Pipeline pipeline, MicrophoneConfiguration configuration = null, string name = &quot;Microphone&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -149,13 +152,19 @@
         <td><p>The configuration for the component.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone_Out_" data-uid="Microsoft.Psi.MixedReality.Microphone.Out*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Microphone_Out" data-uid="Microsoft.Psi.MixedReality.Microphone.Out">Out</h4>
@@ -184,7 +193,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone_Initialize_" data-uid="Microsoft.Psi.MixedReality.Microphone.Initialize*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Microphone_Initialize" data-uid="Microsoft.Psi.MixedReality.Microphone.Initialize">Initialize()</h4>
@@ -213,7 +222,7 @@
   <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Initialize">StereoKitComponent.Initialize()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L49">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone_Shutdown_" data-uid="Microsoft.Psi.MixedReality.Microphone.Shutdown*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Microphone_Shutdown" data-uid="Microsoft.Psi.MixedReality.Microphone.Shutdown">Shutdown()</h4>
@@ -227,7 +236,7 @@
   <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown">StereoKitComponent.Shutdown()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L52">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone_Start_" data-uid="Microsoft.Psi.MixedReality.Microphone.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Microphone_Start_Action_DateTime__" data-uid="Microsoft.Psi.MixedReality.Microphone.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -256,7 +265,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone_Step_" data-uid="Microsoft.Psi.MixedReality.Microphone.Step*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Microphone_Step" data-uid="Microsoft.Psi.MixedReality.Microphone.Step">Step()</h4>
@@ -270,7 +279,7 @@
   <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Step">StereoKitComponent.Step()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Microphone.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Microphone_Stop_" data-uid="Microsoft.Psi.MixedReality.Microphone.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Microphone_Stop_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.Microphone.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>

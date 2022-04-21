@@ -106,6 +106,9 @@
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_Stop_DateTime_Action_">Generator.Stop(DateTime, Action)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_ToString">Generator.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_GenerateNext_DateTime_">Generator.GenerateNext(DateTime)</a>
     </div>
   </div>
@@ -119,16 +122,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L63">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L62">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaSource__ctor_" data-uid="Microsoft.Psi.Media.MediaSource.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_MediaSource__ctor_Microsoft_Psi_Pipeline_System_IO_Stream_System_Nullable_System_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Media.MediaSource.#ctor(Microsoft.Psi.Pipeline,System.IO.Stream,System.Nullable{System.DateTime},System.Boolean)">MediaSource(Pipeline, Stream, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Media_MediaSource__ctor_Microsoft_Psi_Pipeline_System_IO_Stream_System_Nullable_System_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Media.MediaSource.#ctor(Microsoft.Psi.Pipeline,System.IO.Stream,System.Nullable{System.DateTime},System.Boolean,System.String)">MediaSource(Pipeline, Stream, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.MediaSource.html">MediaSource</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MediaSource(Pipeline pipeline, Stream input, DateTime? startTime = default(DateTime? ), bool dropOutOfOrderPackets = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public MediaSource(Pipeline pipeline, Stream input, DateTime? startTime = default(DateTime? ), bool dropOutOfOrderPackets = false, string name = &quot;MediaSource&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -164,20 +167,26 @@
         <td><p>Optional flag specifying whether to drop out of order packets (defaults to <code>false</code>).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L49">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaSource__ctor_" data-uid="Microsoft.Psi.Media.MediaSource.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_MediaSource__ctor_Microsoft_Psi_Pipeline_System_String_System_Boolean_" data-uid="Microsoft.Psi.Media.MediaSource.#ctor(Microsoft.Psi.Pipeline,System.String,System.Boolean)">MediaSource(Pipeline, String, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Media_MediaSource__ctor_Microsoft_Psi_Pipeline_System_String_System_Boolean_System_String_" data-uid="Microsoft.Psi.Media.MediaSource.#ctor(Microsoft.Psi.Pipeline,System.String,System.Boolean,System.String)">MediaSource(Pipeline, String, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.MediaSource.html">MediaSource</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MediaSource(Pipeline pipeline, string filename, bool dropOutOfOrderPackets = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public MediaSource(Pipeline pipeline, string filename, bool dropOutOfOrderPackets = false, string name = &quot;MediaSource&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -207,13 +216,19 @@
         <td><p>Optional flag specifying whether to drop out of order packets (defaults to <code>false</code>).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L83">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaSource_Audio_" data-uid="Microsoft.Psi.Media.MediaSource.Audio*"></a>
   <h4 id="Microsoft_Psi_Media_MediaSource_Audio" data-uid="Microsoft.Psi.Media.MediaSource.Audio">Audio</h4>
@@ -241,7 +256,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L78">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaSource_Image_" data-uid="Microsoft.Psi.Media.MediaSource.Image*"></a>
   <h4 id="Microsoft_Psi_Media_MediaSource_Image" data-uid="Microsoft.Psi.Media.MediaSource.Image">Image</h4>
@@ -271,7 +286,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L88">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaSource_Dispose_" data-uid="Microsoft.Psi.Media.MediaSource.Dispose*"></a>
   <h4 id="Microsoft_Psi_Media_MediaSource_Dispose" data-uid="Microsoft.Psi.Media.MediaSource.Dispose">Dispose()</h4>
@@ -284,7 +299,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaSource.cs/#L104">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaSource_GenerateNext_" data-uid="Microsoft.Psi.Media.MediaSource.GenerateNext*"></a>
   <h4 id="Microsoft_Psi_Media_MediaSource_GenerateNext_System_DateTime_" data-uid="Microsoft.Psi.Media.MediaSource.GenerateNext(System.DateTime)">GenerateNext(DateTime)</h4>

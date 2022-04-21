@@ -92,6 +92,11 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></div>
     <div class="level2"><span class="xref">Image</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -113,16 +118,16 @@
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Height">ImageBase.Height</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Stride">ImageBase.Stride</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_PixelFormat">ImageBase.PixelFormat</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Size">ImageBase.Size</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_BitsPerPixel">ImageBase.BitsPerPixel</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Stride">ImageBase.Stride</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_PixelFormat">ImageBase.PixelFormat</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_BitsPerPixel">ImageBase.BitsPerPixel</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Dispose">ImageBase.Dispose()</a>
@@ -153,7 +158,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_Image_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Image : ImageBase</code></pre>
+    <pre><code class="lang-csharp hljs">public class Image : ImageBase, IImage, IDisposable</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Imaging_Image_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Using this class it is possible as to allocate a new image in unmanaged memory,
@@ -1042,6 +1047,13 @@ data is made, and the bitmap data can be released right after the <a class="xref
   <div class="markdown level1 remarks"><p>For grayscale images (Gray_8bpp and Gray_16bpp), the pixel value is set using the <code data-dev-comment-type="paramref" class="paramref">r</code>
 parameter. The <code data-dev-comment-type="paramref" class="paramref">g</code>, <code data-dev-comment-type="paramref" class="paramref">b</code> and <code data-dev-comment-type="paramref" class="paramref">a</code> parameters are ignored.</p>
 </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_">CalibrationExtensions.CreateCameraIntrinsics(ImageBase, Double, Double)</a>

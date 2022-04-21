@@ -108,6 +108,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;AudioBuffer, Boolean&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;AudioBuffer, Boolean&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;AudioBuffer, Boolean&gt;.Receive(AudioBuffer, Envelope)</a>
     </div>
   </div>
@@ -130,16 +133,16 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L80">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemVoiceActivityDetector__ctor_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Speech_SystemVoiceActivityDetectorConfiguration_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Speech.SystemVoiceActivityDetectorConfiguration)">SystemVoiceActivityDetector(Pipeline, SystemVoiceActivityDetectorConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Speech_SystemVoiceActivityDetectorConfiguration_System_String_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Speech.SystemVoiceActivityDetectorConfiguration,System.String)">SystemVoiceActivityDetector(Pipeline, SystemVoiceActivityDetectorConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Speech.SystemVoiceActivityDetector.html">SystemVoiceActivityDetector</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SystemVoiceActivityDetector(Pipeline pipeline, SystemVoiceActivityDetectorConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public SystemVoiceActivityDetector(Pipeline pipeline, SystemVoiceActivityDetectorConfiguration configuration, string name = &quot;SystemVoiceActivityDetector&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -163,20 +166,26 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
         <td><p>The component configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L104">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L106">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemVoiceActivityDetector__ctor_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.#ctor(Microsoft.Psi.Pipeline,System.String)">SystemVoiceActivityDetector(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">SystemVoiceActivityDetector(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Speech.SystemVoiceActivityDetector.html">SystemVoiceActivityDetector</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SystemVoiceActivityDetector(Pipeline pipeline, string configurationFilename = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public SystemVoiceActivityDetector(Pipeline pipeline, string configurationFilename = null, string name = &quot;SystemVoiceActivityDetector&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -200,13 +209,19 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
         <td><p>The component configuration file.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L119">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L122">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Dispose_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Dispose*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Dispose" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Dispose">Dispose()</h4>
@@ -219,7 +234,7 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L148">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L151">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Receive_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Receive*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Receive_Microsoft_Psi_Audio_AudioBuffer_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Receive(Microsoft.Psi.Audio.AudioBuffer,Microsoft.Psi.Envelope)">Receive(AudioBuffer, Envelope)</h4>

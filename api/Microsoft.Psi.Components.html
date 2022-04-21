@@ -104,8 +104,8 @@ connectors instead of receivers.</p>
       <h4><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer&lt;TIn, TOut&gt;</a></h4>
       <section><p>This is the base class for any component that transforms an input type into an output type.
 Derive from thsi class if your component has more than one input or more than one output.
-Otherwise, use one of the the <see cref="!:Operators.Select&lt;TIn, TOut>(IProducer&lt;TIn>, System.Func&lt;TIn, Envelope, TOut>, DeliveryPolicy&lt;TIn>)"></see>
-or <see cref="!:Operators.Process&lt;TIn, TOut>(IProducer&lt;TIn>, System.Action&lt;TIn, Envelope, Emitter&lt;TOut>>, DeliveryPolicy&lt;TIn>)"></see> operators.</p>
+Otherwise, use one of the the <see cref="!:Operators.Select&lt;TIn, TOut>(IProducer&lt;TIn>, System.Func&lt;TIn, Envelope, TOut>, DeliveryPolicy&lt;TIn>, string)"></see>
+or <see cref="!:Operators.Process&lt;TIn, TOut>(IProducer&lt;TIn>, System.Action&lt;TIn, Envelope, Emitter&lt;TOut>>, DeliveryPolicy&lt;TIn>, string)"></see> operators.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Components.DynamicWindow-3.html">DynamicWindow&lt;TWindow, TInput, TOutput&gt;</a></h4>
       <section><p>Component that implements a dynamic window stream operator.</p>

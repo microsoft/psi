@@ -108,6 +108,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;TIn, TOut&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;TIn, TOut&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;TIn, TOut&gt;.Receive(TIn, Envelope)</a>
     </div>
   </div>
@@ -147,16 +150,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Aggregator.cs/#L25">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Aggregator.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Aggregator_3__ctor_" data-uid="Microsoft.Psi.Components.Aggregator`3.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Aggregator_3__ctor_Microsoft_Psi_Pipeline__0_Func__0__1_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter__2___0__" data-uid="Microsoft.Psi.Components.Aggregator`3.#ctor(Microsoft.Psi.Pipeline,`0,Func{`0,`1,Microsoft.Psi.Envelope,Microsoft.Psi.Emitter{`2},`0})">Aggregator(Pipeline, TState, Func&lt;TState, TIn, Envelope, Emitter&lt;TOut&gt;, TState&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Aggregator_3__ctor_Microsoft_Psi_Pipeline__0_Func__0__1_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter__2___0__System_String_" data-uid="Microsoft.Psi.Components.Aggregator`3.#ctor(Microsoft.Psi.Pipeline,`0,Func{`0,`1,Microsoft.Psi.Envelope,Microsoft.Psi.Emitter{`2},`0},System.String)">Aggregator(Pipeline, TState, Func&lt;TState, TIn, Envelope, Emitter&lt;TOut&gt;, TState&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Aggregator-3.html">Aggregator&lt;TState, TIn, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Aggregator(Pipeline pipeline, TState init, Func&lt;TState, TIn, Envelope, Emitter&lt;TOut&gt;, TState&gt; aggregator)</code></pre>
+    <pre><code class="lang-csharp hljs">public Aggregator(Pipeline pipeline, TState initialState, Func&lt;TState, TIn, Envelope, Emitter&lt;TOut&gt;, TState&gt; aggregator, string name = &quot;Aggregator&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -176,7 +179,7 @@
       </tr>
       <tr>
         <td><span class="xref">TState</span></td>
-        <td><span class="parametername">init</span></td>
+        <td><span class="parametername">initialState</span></td>
         <td><p>Initial state.</p>
 </td>
       </tr>
@@ -186,13 +189,19 @@
         <td><p>Aggregation function.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Aggregator.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Aggregator.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Aggregator_3_Dispose_" data-uid="Microsoft.Psi.Components.Aggregator`3.Dispose*"></a>
   <h4 id="Microsoft_Psi_Components_Aggregator_3_Dispose" data-uid="Microsoft.Psi.Components.Aggregator`3.Dispose">Dispose()</h4>
@@ -204,7 +213,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Aggregator.cs/#L39">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Aggregator.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Aggregator_3_Receive_" data-uid="Microsoft.Psi.Components.Aggregator`3.Receive*"></a>
   <h4 id="Microsoft_Psi_Components_Aggregator_3_Receive__1_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Components.Aggregator`3.Receive(`1,Microsoft.Psi.Envelope)">Receive(TIn, Envelope)</h4>

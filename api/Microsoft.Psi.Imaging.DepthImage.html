@@ -92,6 +92,12 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></div>
     <div class="level2"><span class="xref">DepthImage</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IDisposable</span></div>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IDepthImage.html">IDepthImage</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a></div>
+  </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
@@ -113,16 +119,16 @@
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Height">ImageBase.Height</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Stride">ImageBase.Stride</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_PixelFormat">ImageBase.PixelFormat</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Size">ImageBase.Size</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_BitsPerPixel">ImageBase.BitsPerPixel</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Stride">ImageBase.Stride</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_PixelFormat">ImageBase.PixelFormat</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_BitsPerPixel">ImageBase.BitsPerPixel</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_Dispose">ImageBase.Dispose()</a>
@@ -153,7 +159,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_DepthImage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DepthImage : ImageBase</code></pre>
+    <pre><code class="lang-csharp hljs">public class DepthImage : ImageBase, IDisposable, IDepthImage, IImage</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Imaging_DepthImage_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Using this class it is possible as to allocate a new depth image in unmanaged memory,
@@ -163,16 +169,16 @@ as to just wrap provided pointer to unmanaged memory, where an image is stored.<
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L87">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L113">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_BitmapData_System_Boolean_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(BitmapData,System.Boolean)">DepthImage(BitmapData, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_BitmapData_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_System_Boolean_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(BitmapData,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double,System.Boolean)">DepthImage(BitmapData, DepthValueSemantics, Double, Boolean)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DepthImage(BitmapData bitmapData, bool makeCopy = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public DepthImage(BitmapData bitmapData, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001, bool makeCopy = false)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -191,6 +197,18 @@ as to just wrap provided pointer to unmanaged memory, where an image is stored.<
 </td>
       </tr>
       <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">makeCopy</span></td>
         <td><p>Indicates whether a copy is made (default is false).</p>
@@ -198,7 +216,7 @@ as to just wrap provided pointer to unmanaged memory, where an image is stored.<
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_BitmapData_System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_BitmapData_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_System_Boolean__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the <code data-dev-comment-type="paramref" class="paramref">makeCopy</code> parameter is false (default), the depth image simply wraps
 the bitmap data. As such, the bitmap data must stay locked for the duration of using the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> object.
 </p>
@@ -208,16 +226,16 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_IntPtr_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(IntPtr,System.Int32,System.Int32,System.Int32)">DepthImage(IntPtr, Int32, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(IntPtr,System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">DepthImage(IntPtr, Int32, Int32, Int32, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DepthImage(IntPtr imageData, int width, int height, int stride)</code></pre>
+    <pre><code class="lang-csharp hljs">public DepthImage(IntPtr imageData, int width, int height, int stride, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -253,25 +271,37 @@ data is made, and the bitmap data can be released right after the <a class="xref
         <td><p>Depth image stride (line size in bytes).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_IntPtr_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
     and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
     this may lead to exceptions working with the unmanaged memory.</p></div></p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(Microsoft.Psi.Common.UnmanagedBuffer,System.Int32,System.Int32,System.Int32)">DepthImage(UnmanagedBuffer, Int32, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(Microsoft.Psi.Common.UnmanagedBuffer,System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">DepthImage(UnmanagedBuffer, Int32, Int32, Int32, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DepthImage(UnmanagedBuffer unmanagedBuffer, int width, int height, int stride)</code></pre>
+    <pre><code class="lang-csharp hljs">public DepthImage(UnmanagedBuffer unmanagedBuffer, int width, int height, int stride, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -307,25 +337,37 @@ data is made, and the bitmap data can be released right after the <a class="xref
         <td><p>Depth image stride (line size in bytes).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
     and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
     this may lead to exceptions working with the unmanaged memory.</p></div></p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L55">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L73">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(System.Int32,System.Int32)">DepthImage(Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(System.Int32,System.Int32,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">DepthImage(Int32, Int32, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DepthImage(int width, int height)</code></pre>
+    <pre><code class="lang-csharp hljs">public DepthImage(int width, int height, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -349,20 +391,32 @@ data is made, and the bitmap data can be released right after the <a class="xref
         <td><p>Depth image height in pixels.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth image semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage__ctor_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(System.Int32,System.Int32,System.Int32)">DepthImage(Int32, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImage.#ctor(System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">DepthImage(Int32, Int32, Int32, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DepthImage(int width, int height, int stride)</code></pre>
+    <pre><code class="lang-csharp hljs">public DepthImage(int width, int height, int stride, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -392,18 +446,88 @@ data is made, and the bitmap data can be released right after the <a class="xref
         <td><p>Depth image stride (line size in bytes).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage__ctor_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p><div class="NOTE"><h5>note</h5><p>Using this constructor, make sure all specified image attributes are correct
     and correspond to unmanaged memory buffer. If some attributes are specified incorrectly,
     this may lead to exceptions working with the unmanaged memory.</p></div></p>
 </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_DepthValueSemantics_" data-uid="Microsoft.Psi.Imaging.DepthImage.DepthValueSemantics*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_DepthValueSemantics" data-uid="Microsoft.Psi.Imaging.DepthImage.DepthValueSemantics">DepthValueSemantics</h4>
+  <div class="markdown level1 summary"><p>Gets depth value semantics.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public DepthValueSemantics DepthValueSemantics { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L125">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_DepthValueToMetersScaleFactor_" data-uid="Microsoft.Psi.Imaging.DepthImage.DepthValueToMetersScaleFactor*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_DepthValueToMetersScaleFactor" data-uid="Microsoft.Psi.Imaging.DepthImage.DepthValueToMetersScaleFactor">DepthValueToMetersScaleFactor</h4>
+  <div class="markdown level1 summary"><p>Gets the scale factor to convert depth values to meters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double DepthValueToMetersScaleFactor { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L145">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L181">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Bitmap)">CopyFrom(Bitmap)</h4>
@@ -438,7 +562,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L127">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L163">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_BitmapData_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(BitmapData)">CopyFrom(BitmapData)</h4>
@@ -474,7 +598,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L173">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L209">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Microsoft.Psi.Imaging.DepthImage)">CopyFrom(DepthImage)</h4>
@@ -505,11 +629,11 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   <h5 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_DepthImage__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The method copies the current depth image from the specified source depth image.
-    The size of the images must be the same.</p>
+    The images must have the same size, the same depth value sematics and the same depth value scale factor.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L184">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L217">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Microsoft.Psi.Imaging.Image)">CopyFrom(Image)</h4>
@@ -544,7 +668,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L223">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L257">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyTo_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo(Microsoft.Psi.Imaging.DepthImage)">CopyTo(DepthImage)</h4>
@@ -579,7 +703,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L234">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L278">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyTo_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo(Microsoft.Psi.Imaging.Image)">CopyTo(Image)</h4>
@@ -614,7 +738,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L355">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L397">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
@@ -645,16 +769,16 @@ data is made, and the bitmap data can be released right after the <a class="xref
   <div><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize">ImageBase.CreateEmptyOfSameSize()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L134">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CreateFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateFrom*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateFrom(Bitmap)">CreateFrom(Bitmap)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateFrom_Bitmap_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateFrom(Bitmap,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">CreateFrom(Bitmap, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Create a new <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a> from a specified bitmap.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static DepthImage CreateFrom(Bitmap bitmap)</code></pre>
+    <pre><code class="lang-csharp hljs">public static DepthImage CreateFrom(Bitmap bitmap, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -670,6 +794,18 @@ data is made, and the bitmap data can be released right after the <a class="xref
         <td><span class="xref">Bitmap</span></td>
         <td><span class="parametername">bitmap</span></td>
         <td><p>A bitmap to create the depth image from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
       </tr>
     </tbody>
@@ -692,7 +828,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L195">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L225">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.DecodeFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_Microsoft_Psi_Imaging_EncodedDepthImage_Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.DepthImage.DecodeFrom(Microsoft.Psi.Imaging.EncodedDepthImage,Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder)">DecodeFrom(EncodedDepthImage, IDepthImageFromStreamDecoder)</h4>
@@ -732,7 +868,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L210">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L244">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_Encode_" data-uid="Microsoft.Psi.Imaging.DepthImage.Encode*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_Encode_Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.DepthImage.Encode(Microsoft.Psi.Imaging.IDepthImageToStreamEncoder)">Encode(IDepthImageToStreamEncoder)</h4>
@@ -779,7 +915,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L271">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L313">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_GetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_GetPixel_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixel(System.Int32,System.Int32)">GetPixel(Int32, Int32)</h4>
@@ -832,7 +968,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L322">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L364">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_GetPixelRange_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixelRange*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_GetPixelRange" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixelRange">GetPixelRange()</h4>
@@ -861,7 +997,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L245">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L287">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_SetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_SetPixel_System_Int32_System_Int32_System_UInt16_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel(System.Int32,System.Int32,System.UInt16)">SetPixel(Int32, Int32, UInt16)</h4>
@@ -904,7 +1040,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L296">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L338">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_TryGetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.TryGetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_TryGetPixel_System_Int32_System_Int32_System_UInt16__" data-uid="Microsoft.Psi.Imaging.DepthImage.TryGetPixel(System.Int32,System.Int32,System.UInt16@)">TryGetPixel(Int32, Int32, out UInt16)</h4>
@@ -961,12 +1097,25 @@ data is made, and the bitmap data can be released right after the <a class="xref
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IDepthImage.html">IDepthImage</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_">CalibrationExtensions.CreateCameraIntrinsics(ImageBase, Double, Double)</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Compare_Microsoft_Psi_Imaging_ImageBase_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_Microsoft_Psi_Imaging_ImageError__">Operators.Compare(ImageBase, ImageBase, Double, Double, ref ImageError)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Compare_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage_System_Double_System_Double_Microsoft_Psi_Imaging_ImageError__">Operators.Compare(DepthImage, DepthImage, Double, Double, ref ImageError)</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Crop_Microsoft_Psi_Imaging_DepthImage_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_">Operators.Crop(DepthImage, Int32, Int32, Int32, Int32, Boolean)</a>
@@ -1003,7 +1152,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L19" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImagePool.cs/#L23">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImagePool.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImagePool_GetOrCreate_" data-uid="Microsoft.Psi.Imaging.DepthImagePool.GetOrCreate*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImagePool_GetOrCreate_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImagePool.GetOrCreate(System.Int32,System.Int32)">GetOrCreate(Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImagePool_GetOrCreate_System_Int32_System_Int32_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImagePool.GetOrCreate(System.Int32,System.Int32,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">GetOrCreate(Int32, Int32, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Gets or creates a depth image from the pool.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Shared&lt;DepthImage&gt; GetOrCreate(int width, int height)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Shared&lt;DepthImage&gt; GetOrCreate(int width, int height, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -134,6 +134,18 @@
         <td><p>The requested image height.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional requested depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -154,16 +166,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImagePool.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImagePool.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImagePool_GetOrCreateFrom_" data-uid="Microsoft.Psi.Imaging.DepthImagePool.GetOrCreateFrom*"></a>
-  <h4 id="Microsoft_Psi_Imaging_DepthImagePool_GetOrCreateFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.DepthImagePool.GetOrCreateFrom(Bitmap)">GetOrCreateFrom(Bitmap)</h4>
+  <h4 id="Microsoft_Psi_Imaging_DepthImagePool_GetOrCreateFrom_Bitmap_Microsoft_Psi_Imaging_DepthValueSemantics_System_Double_" data-uid="Microsoft.Psi.Imaging.DepthImagePool.GetOrCreateFrom(Bitmap,Microsoft.Psi.Imaging.DepthValueSemantics,System.Double)">GetOrCreateFrom(Bitmap, DepthValueSemantics, Double)</h4>
   <div class="markdown level1 summary"><p>Gets or creates a depth image from the pool and initializes it with a managed <see cref="!:Bitmap"></see> object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Shared&lt;DepthImage&gt; GetOrCreateFrom(Bitmap bitmap)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Shared&lt;DepthImage&gt; GetOrCreateFrom(Bitmap bitmap, DepthValueSemantics depthValueSemantics = default(DepthValueSemantics), double depthValueToMetersScaleFactor = 0.001)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -179,6 +191,18 @@
         <td><span class="xref">Bitmap</span></td>
         <td><span class="parametername">bitmap</span></td>
         <td><p>A bitmap from which to copy the image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></td>
+        <td><span class="parametername">depthValueSemantics</span></td>
+        <td><p>Optional depth value semantics.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
+        <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
       </tr>
     </tbody>

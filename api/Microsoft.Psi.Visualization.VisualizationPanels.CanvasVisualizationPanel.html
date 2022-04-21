@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel" class="text-break">Class CanvasVisualizationPanel
   </h1>
-  <div class="markdown level0 summary"><p>Represents a visualization panel that 2D visualizers can be rendered in.</p>
+  <div class="markdown level0 summary"><p>Represents a visualization panel that instant visualizers can be rendered in.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -92,8 +92,8 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
-    <div class="level4"><span class="xref">CanvasVisualizationPanel</span></div>
-      <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.html">XYVisualizationPanel</a></div>
+    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html">InstantVisualizationPanel</a></div>
+    <div class="level5"><span class="xref">CanvasVisualizationPanel</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -101,6 +101,18 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_DefaultCursorEpsilonNegMs">InstantVisualizationPanel.DefaultCursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_DefaultCursorEpsilonPosMs">InstantVisualizationPanel.DefaultCursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_RelativeWidth">InstantVisualizationPanel.RelativeWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_AddVisualizationObject_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">InstantVisualizationPanel.AddVisualizationObject(VisualizationObject)</a>
+    </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibilityCommand">VisualizationPanel.ToggleAllVisualizersVisibilityCommand</a>
     </div>
@@ -172,9 +184,6 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_DeleteVisualizationCommand">VisualizationPanel.DeleteVisualizationCommand</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_AddVisualizationObject_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.AddVisualizationObject(VisualizationObject)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_BringToFront_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.BringToFront(VisualizationObject)</a>
@@ -253,13 +262,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class CanvasVisualizationPanel : VisualizationPanel, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class CanvasVisualizationPanel : InstantVisualizationPanel, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.#ctor">CanvasVisualizationPanel()</h4>
@@ -274,7 +283,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_CompatiblePanelTypes_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.CompatiblePanelTypes*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_CompatiblePanelTypes" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.CompatiblePanelTypes">CompatiblePanelTypes</h4>
@@ -302,40 +311,11 @@
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CompatiblePanelTypes">VisualizationPanel.CompatiblePanelTypes</a></div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L32">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_RelativeWidth_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.RelativeWidth*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_RelativeWidth" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.RelativeWidth">RelativeWidth</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the name of the relative width for the panel.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
-public int RelativeWidth { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L28">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_CreateDefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.CreateDefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_CreateDefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.CreateDefaultViewTemplate">CreateDefaultViewTemplate()</h4>
@@ -386,7 +366,7 @@ public int RelativeWidth { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/CanvasVisualizationPanel.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -101,7 +101,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MixedReality_SpatialAnchorHelper_" data-uid="Microsoft.Psi.MixedReality.MixedReality.SpatialAnchorHelper*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MixedReality_SpatialAnchorHelper" data-uid="Microsoft.Psi.MixedReality.MixedReality.SpatialAnchorHelper">SpatialAnchorHelper</h4>
@@ -129,7 +129,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L23">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L21">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MixedReality_WorldSpatialCoordinateSystem_" data-uid="Microsoft.Psi.MixedReality.MixedReality.WorldSpatialCoordinateSystem*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MixedReality_WorldSpatialCoordinateSystem" data-uid="Microsoft.Psi.MixedReality.MixedReality.WorldSpatialCoordinateSystem">WorldSpatialCoordinateSystem</h4>
@@ -162,17 +162,36 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MixedReality_InitializeAsync_" data-uid="Microsoft.Psi.MixedReality.MixedReality.InitializeAsync*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_MixedReality_InitializeAsync" data-uid="Microsoft.Psi.MixedReality.MixedReality.InitializeAsync">InitializeAsync()</h4>
-  <div class="markdown level1 summary"><p>Initializes static members of the <a class="xref" href="Microsoft.Psi.MixedReality.MixedReality.html">MixedReality</a> class. Attempts to initialize
-the world coordinate system from a persisted spatial anchor. If one is not found, a stationary
-frame of reference is created at the current location and its position is used as the world
-coordinate system.</p>
+  <h4 id="Microsoft_Psi_MixedReality_MixedReality_InitializeAsync_Windows_Perception_Spatial_SpatialAnchor_" data-uid="Microsoft.Psi.MixedReality.MixedReality.InitializeAsync(Windows.Perception.Spatial.SpatialAnchor)">InitializeAsync(SpatialAnchor)</h4>
+  <div class="markdown level1 summary"><p>Initializes static members of the <a class="xref" href="Microsoft.Psi.MixedReality.MixedReality.html">MixedReality</a> class.
+Attempts to initialize the world coordinate system from a given spatial anchor.
+If no spatial anchor is given, it attempts to load a default spatial anchor.
+If the default spatial anchor is not found (e.g., if the app is being run for the first time),
+a stationary frame of reference for the world is created at the current location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Task InitializeAsync()</code></pre>
+    <pre><code class="lang-csharp hljs">public static Task InitializeAsync(SpatialAnchor worldSpatialAnchor = null)</code></pre>
   </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/uwp/api/windows.perception.spatial.spatialanchor">SpatialAnchor</a></td>
+        <td><span class="parametername">worldSpatialAnchor</span></td>
+        <td><p>A spatial anchor to use for the world (optional).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -189,7 +208,7 @@ coordinate system.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_MixedReality_MixedReality_InitializeAsync_remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_MixedReality_MixedReality_InitializeAsync_Windows_Perception_Spatial_SpatialAnchor__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method should be called after SK.Initialize.</p>
 </div>
 </article>
@@ -200,7 +219,7 @@ coordinate system.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L16" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MixedReality.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

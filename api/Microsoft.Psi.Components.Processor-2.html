@@ -113,6 +113,9 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;TIn, TOut&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;TIn, TOut&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;TIn, TOut&gt;.Receive(TIn, Envelope)</a>
     </div>
   </div>
@@ -147,16 +150,16 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L29">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Processor_2__ctor_" data-uid="Microsoft.Psi.Components.Processor`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Processor_2__ctor_Microsoft_Psi_Pipeline_Action__0_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter__1___Action_DateTime_Microsoft_Psi_Emitter__1___" data-uid="Microsoft.Psi.Components.Processor`2.#ctor(Microsoft.Psi.Pipeline,Action{`0,Microsoft.Psi.Envelope,Microsoft.Psi.Emitter{`1}},Action{DateTime,Microsoft.Psi.Emitter{`1}})">Processor(Pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt;, Action&lt;DateTime, Emitter&lt;TOut&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Processor_2__ctor_Microsoft_Psi_Pipeline_Action__0_Microsoft_Psi_Envelope_Microsoft_Psi_Emitter__1___Action_DateTime_Microsoft_Psi_Emitter__1___System_String_" data-uid="Microsoft.Psi.Components.Processor`2.#ctor(Microsoft.Psi.Pipeline,Action{`0,Microsoft.Psi.Envelope,Microsoft.Psi.Emitter{`1}},Action{DateTime,Microsoft.Psi.Emitter{`1}},System.String)">Processor(Pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt;, Action&lt;DateTime, Emitter&lt;TOut&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Processor-2.html">Processor&lt;TIn, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Processor(Pipeline pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt; transform, Action&lt;DateTime, Emitter&lt;TOut&gt;&gt; onClose = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public Processor(Pipeline pipeline, Action&lt;TIn, Envelope, Emitter&lt;TOut&gt;&gt; transform, Action&lt;DateTime, Emitter&lt;TOut&gt;&gt; onClose = null, string name = &quot;Processor&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -186,13 +189,19 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
         <td><p>An optional action to execute when the input stream closes.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Processor.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Processor_2_Receive_" data-uid="Microsoft.Psi.Components.Processor`2.Receive*"></a>
   <h4 id="Microsoft_Psi_Components_Processor_2_Receive__0_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Components.Processor`2.Receive(`0,Microsoft.Psi.Envelope)">Receive(TIn, Envelope)</h4>

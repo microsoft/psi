@@ -91,17 +91,22 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">EncodedImage</span></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_EncodedImage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EncodedImage : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class EncodedImage : object, IImage, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L34">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L35">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage__ctor_" data-uid="Microsoft.Psi.Imaging.EncodedImage.#ctor*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage__ctor_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.EncodedImage.#ctor(System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">EncodedImage(Int32, Int32, PixelFormat)</h4>
@@ -146,7 +151,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_Height_" data-uid="Microsoft.Psi.Imaging.EncodedImage.Height*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_Height" data-uid="Microsoft.Psi.Imaging.EncodedImage.Height">Height</h4>
@@ -174,11 +179,11 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L55">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_PixelFormat_" data-uid="Microsoft.Psi.Imaging.EncodedImage.PixelFormat*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_PixelFormat" data-uid="Microsoft.Psi.Imaging.EncodedImage.PixelFormat">PixelFormat</h4>
-  <div class="markdown level1 summary"><p>Gets the pixel format for the encoded image.</p>
+  <div class="markdown level1 summary"><p>Gets image pixel format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -202,7 +207,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L60">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_Size_" data-uid="Microsoft.Psi.Imaging.EncodedImage.Size*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_Size" data-uid="Microsoft.Psi.Imaging.EncodedImage.Size">Size</h4>
@@ -230,7 +235,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L44">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_Width_" data-uid="Microsoft.Psi.Imaging.EncodedImage.Width*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_Width" data-uid="Microsoft.Psi.Imaging.EncodedImage.Width">Width</h4>
@@ -260,7 +265,93 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L131">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_EncodedImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.EncodedImage.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_EncodedImage_CopyFrom_IntPtr_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.EncodedImage.CopyFrom(IntPtr,System.Int32,System.Int32)">CopyFrom(IntPtr, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copy the image data from a memory pointer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(IntPtr source, int offset, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Memory pointer from which to copy data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The offset at which to begin copying bytes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The maximum number of bytes to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_EncodedImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.EncodedImage.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_EncodedImage_CopyFrom_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.EncodedImage.CopyFrom(System.Byte[],System.Int32,System.Int32)">CopyFrom(Byte[], Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copy the image data from a byte array.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(byte[] source, int offset, int count)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Byte array containing the image data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">offset</span></td>
+        <td><p>The offset in buffer at which to begin copying bytes.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">count</span></td>
+        <td><p>The maximum number of bytes to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L139">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_Decode_" data-uid="Microsoft.Psi.Imaging.EncodedImage.Decode*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_Decode_Microsoft_Psi_Imaging_IImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.EncodedImage.Decode(Microsoft.Psi.Imaging.IImageFromStreamDecoder)">Decode(IImageFromStreamDecoder)</h4>
@@ -307,7 +398,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L60">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_Dispose_" data-uid="Microsoft.Psi.Imaging.EncodedImage.Dispose*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_Dispose" data-uid="Microsoft.Psi.Imaging.EncodedImage.Dispose">Dispose()</h4>
@@ -320,7 +411,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L114">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L122">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_EncodeFrom_" data-uid="Microsoft.Psi.Imaging.EncodedImage.EncodeFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_EncodeFrom_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Imaging_IImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.EncodedImage.EncodeFrom(Microsoft.Psi.Imaging.Image,Microsoft.Psi.Imaging.IImageToStreamEncoder)">EncodeFrom(Image, IImageToStreamEncoder)</h4>
@@ -360,7 +451,7 @@
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L91">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L86">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_GetBuffer_" data-uid="Microsoft.Psi.Imaging.EncodedImage.GetBuffer*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_GetBuffer" data-uid="Microsoft.Psi.Imaging.EncodedImage.GetBuffer">GetBuffer()</h4>
@@ -389,50 +480,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L102">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Imaging_EncodedImage_SetBuffer_" data-uid="Microsoft.Psi.Imaging.EncodedImage.SetBuffer*"></a>
-  <h4 id="Microsoft_Psi_Imaging_EncodedImage_SetBuffer_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.EncodedImage.SetBuffer(System.Byte[],System.Int32,System.Int32)">SetBuffer(Byte[], Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Sets the image data to byte array.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetBuffer(byte[] buffer, int offset, int count)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
-        <td><span class="parametername">buffer</span></td>
-        <td><p>Byte array containing the image data.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">offset</span></td>
-        <td><p>The offset in buffer at which to begin copying bytes.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">count</span></td>
-        <td><p>The maximum number of bytes to copy.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L75">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L70">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_EncodedImage_ToStream_" data-uid="Microsoft.Psi.Imaging.EncodedImage.ToStream*"></a>
   <h4 id="Microsoft_Psi_Imaging_EncodedImage_ToStream" data-uid="Microsoft.Psi.Imaging.EncodedImage.ToStream">ToStream()</h4>
@@ -459,6 +507,13 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -477,7 +532,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L13" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/EncodedImage.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/Operators.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/Operators.cs/#L28">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Face_Operators_RecognizeFace_" data-uid="Microsoft.Psi.CognitiveServices.Face.Operators.RecognizeFace*"></a>
-  <h4 id="Microsoft_Psi_CognitiveServices_Face_Operators_RecognizeFace_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.CognitiveServices.Face.Operators.RecognizeFace(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},Microsoft.Psi.CognitiveServices.Face.FaceRecognizerConfiguration,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">RecognizeFace(IProducer&lt;Shared&lt;Image&gt;&gt;, FaceRecognizerConfiguration, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_CognitiveServices_Face_Operators_RecognizeFace_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Face.Operators.RecognizeFace(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},Microsoft.Psi.CognitiveServices.Face.FaceRecognizerConfiguration,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">RecognizeFace(IProducer&lt;Shared&lt;Image&gt;&gt;, FaceRecognizerConfiguration, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Performs face recognition over a stream of images via <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;IList&lt;(string Name, double Confidence)&gt;&gt;&gt; RecognizeFace(this IProducer&lt;Shared&lt;Image&gt;&gt; source, FaceRecognizerConfiguration configuration, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;IList&lt;(string Name, double Confidence)&gt;&gt;&gt; RecognizeFace(this IProducer&lt;Shared&lt;Image&gt;&gt; source, FaceRecognizerConfiguration configuration, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;RecognizeFace&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -140,6 +140,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -158,7 +164,7 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_CognitiveServices_Face_Operators_RecognizeFace_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image____remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_CognitiveServices_Face_Operators_RecognizeFace_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/face/">Microsoft Cognitive Services Face API</a>
 subscription key is required to use this operators. In addition, a person group needs to be created ahead of time, and the id of the person group
 passed to the operator via the configuration. For more information, and to see how to create person groups, see the full direct API for.

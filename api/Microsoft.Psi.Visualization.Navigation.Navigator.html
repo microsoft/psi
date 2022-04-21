@@ -141,16 +141,16 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L106">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_CopyCursorTimeToClipboardCommand_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CopyCursorTimeToClipboardCommand*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_CopyCursorTimeToClipboardCommand" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CopyCursorTimeToClipboardCommand">CopyCursorTimeToClipboardCommand</h4>
-  <div class="markdown level1 summary"><p>Gets the command for copying the cursor time to clipboard.</p>
+  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_CopyToClipboardCommand_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CopyToClipboardCommand*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_CopyToClipboardCommand" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CopyToClipboardCommand">CopyToClipboardCommand</h4>
+  <div class="markdown level1 summary"><p>Gets the command for copying a string to clipboard.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[Browsable(false)]
 [IgnoreDataMember]
-public RelayCommand CopyCursorTimeToClipboardCommand { get; }</code></pre>
+public RelayCommand&lt;string&gt; CopyToClipboardCommand { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -162,7 +162,7 @@ public RelayCommand CopyCursorTimeToClipboardCommand { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span></td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -998,7 +998,7 @@ public double ZoomToSelectionPadding { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L650">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L721">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Navigation_Navigator_CanClearSelection_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanClearSelection*"></a>
   <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_CanClearSelection" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanClearSelection">CanClearSelection()</h4>
@@ -1114,7 +1114,65 @@ public double ZoomToSelectionPadding { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L635">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L648">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_CanMoveSelectionLeft_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanMoveSelectionLeft*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_CanMoveSelectionLeft" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanMoveSelectionLeft">CanMoveSelectionLeft()</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the selection can be moved left.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanMoveSelectionLeft()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the selection can be moved left.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L668">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_CanMoveSelectionRight_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanMoveSelectionRight*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_CanMoveSelectionRight" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanMoveSelectionRight">CanMoveSelectionRight()</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the selection can be moved right.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CanMoveSelectionRight()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the selection can be moved right.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L706">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Navigation_Navigator_CanZoomToSelection_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanZoomToSelection*"></a>
   <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_CanZoomToSelection" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.CanZoomToSelection">CanZoomToSelection()</h4>
@@ -1143,7 +1201,7 @@ public double ZoomToSelectionPadding { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L641">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L712">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Navigation_Navigator_ClearSelection_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.ClearSelection*"></a>
   <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_ClearSelection" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.ClearSelection">ClearSelection()</h4>
@@ -1291,6 +1349,32 @@ public double ZoomToSelectionPadding { get; set; }</code></pre>
   </div>
   
   <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L634">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_MoveSelectionLeft_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.MoveSelectionLeft*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_MoveSelectionLeft" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.MoveSelectionLeft">MoveSelectionLeft()</h4>
+  <div class="markdown level1 summary"><p>Move selection left.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MoveSelectionLeft()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L654">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_MoveSelectionRight_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.MoveSelectionRight*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_MoveSelectionRight" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.MoveSelectionRight">MoveSelectionRight()</h4>
+  <div class="markdown level1 summary"><p>Move selection right.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void MoveSelectionRight()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L526">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Navigation_Navigator_NotifyLiveMessageReceived_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.NotifyLiveMessageReceived*"></a>
@@ -1382,6 +1466,19 @@ public double ZoomToSelectionPadding { get; set; }</code></pre>
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L674">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Navigation_Navigator_ShiftViewRangeToAccomodateSelection_" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.ShiftViewRangeToAccomodateSelection*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Navigation_Navigator_ShiftViewRangeToAccomodateSelection" data-uid="Microsoft.Psi.Visualization.Navigation.Navigator.ShiftViewRangeToAccomodateSelection">ShiftViewRangeToAccomodateSelection()</h4>
+  <div class="markdown level1 summary"><p>Shift the view range to capture the selection.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void ShiftViewRangeToAccomodateSelection()</code></pre>
+  </div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Navigation/Navigator.cs/#L550">View Source</a>

@@ -107,6 +107,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;Single[], Single[]&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;Single[], Single[]&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;Single[], Single[]&gt;.Receive(Single[], Envelope)</a>
     </div>
   </div>
@@ -120,16 +123,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/AcousticFeatures/FFT.cs/#L22">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/AcousticFeatures/FFT.cs/#L23">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_FFT__ctor_" data-uid="Microsoft.Psi.Audio.FFT.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_FFT__ctor_Microsoft_Psi_Pipeline_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Audio.FFT.#ctor(Microsoft.Psi.Pipeline,System.Int32,System.Int32)">FFT(Pipeline, Int32, Int32)</h4>
+  <h4 id="Microsoft_Psi_Audio_FFT__ctor_Microsoft_Psi_Pipeline_System_Int32_System_Int32_System_String_" data-uid="Microsoft.Psi.Audio.FFT.#ctor(Microsoft.Psi.Pipeline,System.Int32,System.Int32,System.String)">FFT(Pipeline, Int32, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.FFT.html">FFT</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public FFT(Pipeline pipeline, int fftSize, int inputSize)</code></pre>
+    <pre><code class="lang-csharp hljs">public FFT(Pipeline pipeline, int fftSize, int inputSize, string name = &quot;FFT&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -159,13 +162,19 @@
         <td><p>The window size.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/AcousticFeatures/FFT.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/AcousticFeatures/FFT.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_FFT_Receive_" data-uid="Microsoft.Psi.Audio.FFT.Receive*"></a>
   <h4 id="Microsoft_Psi_Audio_FFT_Receive_System_Single___Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Audio.FFT.Receive(System.Single[],Microsoft.Psi.Envelope)">Receive(Single[], Envelope)</h4>

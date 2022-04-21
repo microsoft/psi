@@ -125,16 +125,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L98">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_Decode_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_Decode_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedDepthImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedDepthImage___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.Decode(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedDepthImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedDepthImage}})">Decode(IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;EncodedDepthImage&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_Decode_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedDepthImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedDepthImage___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.Decode(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedDepthImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedDepthImage}},System.String)">Decode(IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;EncodedDepthImage&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded depth image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;DepthImage&gt;&gt; Decode(this IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;EncodedDepthImage&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;DepthImage&gt;&gt; Decode(this IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;EncodedDepthImage&gt;&gt; deliveryPolicy = null, string name = &quot;Decode&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -158,6 +158,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -178,16 +184,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_Decode_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_Decode_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedImage___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.Decode(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedImage}})">Decode(IProducer&lt;Shared&lt;EncodedImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;EncodedImage&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_Decode_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_EncodedImage___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.Decode(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.EncodedImage}},System.String)">Decode(IProducer&lt;Shared&lt;EncodedImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;EncodedImage&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;Image&gt;&gt; Decode(this IProducer&lt;Shared&lt;EncodedImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;EncodedImage&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;Image&gt;&gt; Decode(this IProducer&lt;Shared&lt;EncodedImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;EncodedImage&gt;&gt; deliveryPolicy = null, string name = &quot;Decode&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -211,6 +217,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -231,16 +243,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L40">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_EncodeGZip_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeGZip*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodeGZip_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeGZip(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">EncodeGZip(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodeGZip_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeGZip(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">EncodeGZip(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image to a GZIP format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedImage&gt;&gt; EncodeGZip(this IProducer&lt;Shared&lt;Image&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedImage&gt;&gt; EncodeGZip(this IProducer&lt;Shared&lt;Image&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;EncodeGZip&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -264,6 +276,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -284,16 +302,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L18">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_EncodeJpeg_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeJpeg*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodeJpeg_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_Int32_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeJpeg(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.Int32,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">EncodeJpeg(IProducer&lt;Shared&lt;Image&gt;&gt;, Int32, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodeJpeg_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_Int32_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeJpeg(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.Int32,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">EncodeJpeg(IProducer&lt;Shared&lt;Image&gt;&gt;, Int32, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image to a JPEG format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedImage&gt;&gt; EncodeJpeg(this IProducer&lt;Shared&lt;Image&gt;&gt; source, int quality = 90, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedImage&gt;&gt; EncodeJpeg(this IProducer&lt;Shared&lt;Image&gt;&gt; source, int quality = 90, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -323,6 +341,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -343,16 +367,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_EncodePng_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodePng*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodePng_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodePng(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}})">EncodePng(IProducer&lt;Shared&lt;DepthImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodePng_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodePng(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}},System.String)">EncodePng(IProducer&lt;Shared&lt;DepthImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes a depth image to a PNG format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt; EncodePng(this IProducer&lt;Shared&lt;DepthImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt; EncodePng(this IProducer&lt;Shared&lt;DepthImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt; deliveryPolicy = null, string name = &quot;EncodePng&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -376,6 +400,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -396,16 +426,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L29">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L33">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_EncodePng_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodePng*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodePng_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodePng(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">EncodePng(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodePng_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodePng(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">EncodePng(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image to a PNG format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedImage&gt;&gt; EncodePng(this IProducer&lt;Shared&lt;Image&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedImage&gt;&gt; EncodePng(this IProducer&lt;Shared&lt;Image&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;EncodePng&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -429,6 +459,12 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -449,16 +485,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImagingOperators.cs/#L85">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagingOperators_EncodeTiff_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeTiff*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodeTiff_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeTiff(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}})">EncodeTiff(IProducer&lt;Shared&lt;DepthImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImagingOperators_EncodeTiff_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_DepthImage___System_String_" data-uid="Microsoft.Psi.Imaging.ImagingOperators.EncodeTiff(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}},Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.DepthImage}},System.String)">EncodeTiff(IProducer&lt;Shared&lt;DepthImage&gt;&gt;, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes a depth image to a TIFF format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt; EncodeTiff(this IProducer&lt;Shared&lt;DepthImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;Shared&lt;EncodedDepthImage&gt;&gt; EncodeTiff(this IProducer&lt;Shared&lt;DepthImage&gt;&gt; source, DeliveryPolicy&lt;Shared&lt;DepthImage&gt;&gt; deliveryPolicy = null, string name = &quot;EncodeTiff&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -480,6 +516,12 @@
         <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;&gt;</td>
         <td><span class="parametername">deliveryPolicy</span></td>
         <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
 </td>
       </tr>
     </tbody>

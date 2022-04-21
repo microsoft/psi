@@ -101,16 +101,16 @@ composing both a linear and angular velocity.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_CoordinateSystem_CoordinateSystem_TimeSpan_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor(CoordinateSystem,CoordinateSystem,TimeSpan)">CoordinateSystemVelocity3D(CoordinateSystem, CoordinateSystem, TimeSpan)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D__ctor_CoordinateSystem_CoordinateSystem_TimeSpan_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.#ctor(CoordinateSystem,CoordinateSystem,TimeSpan,System.Double)">CoordinateSystemVelocity3D(CoordinateSystem, CoordinateSystem, TimeSpan, Double)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a> struct.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CoordinateSystemVelocity3D(CoordinateSystem originCoordinateSystem, CoordinateSystem destinationCoordinateSystem, TimeSpan time)</code></pre>
+    <pre><code class="lang-csharp hljs">public CoordinateSystemVelocity3D(CoordinateSystem originCoordinateSystem, CoordinateSystem destinationCoordinateSystem, TimeSpan time, double angleEpsilon = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -138,6 +138,12 @@ composing both a linear and angular velocity.</p>
         <td><span class="xref">TimeSpan</span></td>
         <td><span class="parametername">time</span></td>
         <td><p>The time it took to reach the destination coordinate system.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">angleEpsilon</span></td>
+        <td><p>An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</p>
 </td>
       </tr>
     </tbody>
@@ -327,7 +333,7 @@ composing both a linear and angular velocity.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L128">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L130">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_ComputeDestination_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.ComputeDestination*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_ComputeDestination_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.ComputeDestination(System.Double)">ComputeDestination(Double)</h4>
@@ -377,7 +383,7 @@ composing both a linear and angular velocity.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L104">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals(Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D)">Equals(CoordinateSystemVelocity3D)</h4>
@@ -421,7 +427,7 @@ composing both a linear and angular velocity.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Equals_System_Object_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.Equals(System.Object)">Equals(Object)</h4>
@@ -465,7 +471,7 @@ composing both a linear and angular velocity.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L120">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L122">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetAngularVelocity_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetAngularVelocity*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetAngularVelocity" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetAngularVelocity">GetAngularVelocity()</h4>
@@ -494,7 +500,7 @@ composing both a linear and angular velocity.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L108">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L110">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetHashCode_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetHashCode*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetHashCode" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetHashCode">GetHashCode()</h4>
@@ -521,7 +527,7 @@ composing both a linear and angular velocity.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L114">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L116">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetLinearVelocity_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetLinearVelocity*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_GetLinearVelocity" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.GetLinearVelocity">GetLinearVelocity()</h4>
@@ -552,7 +558,7 @@ composing both a linear and angular velocity.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L91">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L93">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Equality_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Equality*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Equality_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Equality(Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D,Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D)">Equality(CoordinateSystemVelocity3D, CoordinateSystemVelocity3D)</h4>
@@ -605,7 +611,7 @@ composing both a linear and angular velocity.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L99">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CoordinateSystemVelocity3D.cs/#L101">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Inequality_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Inequality*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_op_Inequality_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_Microsoft_Psi_Spatial_Euclidean_CoordinateSystemVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.op_Inequality(Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D,Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D)">Inequality(CoordinateSystemVelocity3D, CoordinateSystemVelocity3D)</h4>

@@ -126,16 +126,16 @@ the order of stream ids.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L26">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L28">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Zip_1__ctor_" data-uid="Microsoft.Psi.Components.Zip`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Zip_1__ctor_Microsoft_Psi_Pipeline_" data-uid="Microsoft.Psi.Components.Zip`1.#ctor(Microsoft.Psi.Pipeline)">Zip(Pipeline)</h4>
+  <h4 id="Microsoft_Psi_Components_Zip_1__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Components.Zip`1.#ctor(Microsoft.Psi.Pipeline,System.String)">Zip(Pipeline, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Zip-1.html">Zip&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Zip(Pipeline pipeline)</code></pre>
+    <pre><code class="lang-csharp hljs">public Zip(Pipeline pipeline, string name = &quot;Zip&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -153,13 +153,19 @@ the order of stream ids.</p>
         <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L35">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Zip_1_Out_" data-uid="Microsoft.Psi.Components.Zip`1.Out*"></a>
   <h4 id="Microsoft_Psi_Components_Zip_1_Out" data-uid="Microsoft.Psi.Components.Zip`1.Out">Out</h4>
@@ -189,7 +195,7 @@ the order of stream ids.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Zip_1_AddInput_" data-uid="Microsoft.Psi.Components.Zip`1.AddInput*"></a>
   <h4 id="Microsoft_Psi_Components_Zip_1_AddInput_System_String_" data-uid="Microsoft.Psi.Components.Zip`1.AddInput(System.String)">AddInput(String)</h4>
@@ -231,6 +237,33 @@ the order of stream ids.</p>
         <td><a class="xref" href="Microsoft.Psi.Receiver-1.html">Receiver</a>&lt;T&gt;</td>
         <td><p>Receiver.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Zip.cs/#L65">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_Zip_1_ToString_" data-uid="Microsoft.Psi.Components.Zip`1.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_Zip_1_ToString" data-uid="Microsoft.Psi.Components.Zip`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

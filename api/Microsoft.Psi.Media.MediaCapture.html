@@ -101,9 +101,6 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
-    </div>
-    <div>
       <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
@@ -132,16 +129,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture__ctor_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_MediaCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Media_MediaCaptureConfiguration_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Media.MediaCaptureConfiguration)">MediaCapture(Pipeline, MediaCaptureConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Media_MediaCapture__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Media_MediaCaptureConfiguration_System_String_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Media.MediaCaptureConfiguration,System.String)">MediaCapture(Pipeline, MediaCaptureConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.MediaCapture.html">MediaCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public MediaCapture(Pipeline pipeline, MediaCaptureConfiguration configuration = null, string name = &quot;MediaCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -165,20 +162,26 @@
         <td><p>Describes how to configure the media capture device.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L84">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture__ctor_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_MediaCapture__ctor_Microsoft_Psi_Pipeline_System_Int32_System_Int32_System_Double_System_Boolean_System_String_System_Boolean_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor(Microsoft.Psi.Pipeline,System.Int32,System.Int32,System.Double,System.Boolean,System.String,System.Boolean)">MediaCapture(Pipeline, Int32, Int32, Double, Boolean, String, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Media_MediaCapture__ctor_Microsoft_Psi_Pipeline_System_Int32_System_Int32_System_Double_System_Boolean_System_String_System_Boolean_System_String_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor(Microsoft.Psi.Pipeline,System.Int32,System.Int32,System.Double,System.Boolean,System.String,System.Boolean,System.String)">MediaCapture(Pipeline, Int32, Int32, Double, Boolean, String, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.MediaCapture.html">MediaCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 30, bool captureAudio = false, string deviceId = null, bool useInSharedMode = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public MediaCapture(Pipeline pipeline, int width, int height, double framerate = 30, bool captureAudio = false, string deviceId = null, bool useInSharedMode = false, string name = &quot;MediaCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -232,20 +235,26 @@
         <td><p>Indicates whether camera is shared amongst multiple applications.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L43">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture__ctor_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Media_MediaCapture__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor(Microsoft.Psi.Pipeline,System.String)">MediaCapture(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Media_MediaCapture__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Media.MediaCapture.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">MediaCapture(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Media.MediaCapture.html">MediaCapture</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MediaCapture(Pipeline pipeline, string configurationFilename)</code></pre>
+    <pre><code class="lang-csharp hljs">public MediaCapture(Pipeline pipeline, string configurationFilename, string name = &quot;MediaCapture&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -269,13 +278,19 @@
         <td><p>Name of file containing media capture device configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L106">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_Audio_" data-uid="Microsoft.Psi.Media.MediaCapture.Audio*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_Audio" data-uid="Microsoft.Psi.Media.MediaCapture.Audio">Audio</h4>
@@ -303,7 +318,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L120">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L134">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_Out_" data-uid="Microsoft.Psi.Media.MediaCapture.Out*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_Out" data-uid="Microsoft.Psi.Media.MediaCapture.Out">Out</h4>
@@ -331,7 +346,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L115">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L129">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_Video_" data-uid="Microsoft.Psi.Media.MediaCapture.Video*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_Video" data-uid="Microsoft.Psi.Media.MediaCapture.Video">Video</h4>
@@ -361,7 +376,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L176">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L190">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_Dispose_" data-uid="Microsoft.Psi.Media.MediaCapture.Dispose*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_Dispose" data-uid="Microsoft.Psi.Media.MediaCapture.Dispose">Dispose()</h4>
@@ -374,7 +389,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L135">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L149">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_GetDeviceConfiguration_" data-uid="Microsoft.Psi.Media.MediaCapture.GetDeviceConfiguration*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_GetDeviceConfiguration" data-uid="Microsoft.Psi.Media.MediaCapture.GetDeviceConfiguration">GetDeviceConfiguration()</h4>
@@ -403,7 +418,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L126">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L140">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_GetDeviceInfo_" data-uid="Microsoft.Psi.Media.MediaCapture.GetDeviceInfo*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_GetDeviceInfo" data-uid="Microsoft.Psi.Media.MediaCapture.GetDeviceInfo">GetDeviceInfo()</h4>
@@ -432,7 +447,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L158">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L172">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_SetDeviceConfiguration_" data-uid="Microsoft.Psi.Media.MediaCapture.SetDeviceConfiguration*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_SetDeviceConfiguration_Microsoft_Psi_Media_MediaCaptureConfiguration_" data-uid="Microsoft.Psi.Media.MediaCapture.SetDeviceConfiguration(Microsoft.Psi.Media.MediaCaptureConfiguration)">SetDeviceConfiguration(MediaCaptureConfiguration)</h4>
@@ -463,7 +478,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L188">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L202">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_Start_" data-uid="Microsoft.Psi.Media.MediaCapture.Start*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_Start_System_Action_System_DateTime__" data-uid="Microsoft.Psi.Media.MediaCapture.Start(System.Action{System.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -492,7 +507,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L295">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L309">View Source</a>
   </span>
   <a id="Microsoft_Psi_Media_MediaCapture_Stop_" data-uid="Microsoft.Psi.Media.MediaCapture.Stop*"></a>
   <h4 id="Microsoft_Psi_Media_MediaCapture_Stop_System_DateTime_System_Action_" data-uid="Microsoft.Psi.Media.MediaCapture.Stop(System.DateTime,System.Action)">Stop(DateTime, Action)</h4>
@@ -524,6 +539,35 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Media/Microsoft.Psi.Media.Windows.x64/MediaCapture.cs/#L317">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Media_MediaCapture_ToString_" data-uid="Microsoft.Psi.Media.MediaCapture.ToString*"></a>
+  <h4 id="Microsoft_Psi_Media_MediaCapture_ToString" data-uid="Microsoft.Psi.Media.MediaCapture.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
@@ -542,13 +586,13 @@
       <a class="xref" href="Microsoft.Psi.Visualization.Extensions.VisualizationExtensions.html#Microsoft_Psi_Visualization_Extensions_VisualizationExtensions_ToArray__2_Microsoft_Psi_IProducer___1__Microsoft_Psi_DeliveryPolicy___1__">VisualizationExtensions.ToArray&lt;T, TEnumerable&gt;(IProducer&lt;TEnumerable&gt;, DeliveryPolicy&lt;TEnumerable&gt;)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html#Microsoft_Psi_Imaging_ImagingOperators_EncodeJpeg_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_Int32_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___">ImagingOperators.EncodeJpeg(IProducer&lt;Shared&lt;Image&gt;&gt;, Int32, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html#Microsoft_Psi_Imaging_ImagingOperators_EncodeJpeg_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_Int32_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_">ImagingOperators.EncodeJpeg(IProducer&lt;Shared&lt;Image&gt;&gt;, Int32, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html#Microsoft_Psi_Imaging_ImagingOperators_EncodePng_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___">ImagingOperators.EncodePng(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html#Microsoft_Psi_Imaging_ImagingOperators_EncodePng_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_">ImagingOperators.EncodePng(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</a>
   </div>
   <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html#Microsoft_Psi_Imaging_ImagingOperators_EncodeGZip_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___">ImagingOperators.EncodeGZip(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html#Microsoft_Psi_Imaging_ImagingOperators_EncodeGZip_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_">ImagingOperators.EncodeGZip(IProducer&lt;Shared&lt;Image&gt;&gt;, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>

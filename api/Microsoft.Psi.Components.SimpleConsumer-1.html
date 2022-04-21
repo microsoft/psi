@@ -123,16 +123,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L16">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_SimpleConsumer_1__ctor_" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_SimpleConsumer_1__ctor_Microsoft_Psi_Pipeline_" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.#ctor(Microsoft.Psi.Pipeline)">SimpleConsumer(Pipeline)</h4>
+  <h4 id="Microsoft_Psi_Components_SimpleConsumer_1__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.#ctor(Microsoft.Psi.Pipeline,System.String)">SimpleConsumer(Pipeline, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.SimpleConsumer-1.html">SimpleConsumer&lt;TIn&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SimpleConsumer(Pipeline pipeline)</code></pre>
+    <pre><code class="lang-csharp hljs">public SimpleConsumer(Pipeline pipeline, string name = &quot;SimpleConsumer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -150,13 +150,19 @@
         <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L22">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L26">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_SimpleConsumer_1_In_" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.In*"></a>
   <h4 id="Microsoft_Psi_Components_SimpleConsumer_1_In" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.In">In</h4>
@@ -186,7 +192,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L32">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_SimpleConsumer_1_Receive_" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.Receive*"></a>
   <h4 id="Microsoft_Psi_Components_SimpleConsumer_1_Receive_Microsoft_Psi_Message__0__" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.Receive(Microsoft.Psi.Message{`0})">Receive(Message&lt;TIn&gt;)</h4>
@@ -212,6 +218,33 @@
         <td><span class="parametername">message</span></td>
         <td><p>Message received.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/SimpleConsumer.cs/#L35">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_SimpleConsumer_1_ToString_" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_SimpleConsumer_1_ToString" data-uid="Microsoft.Psi.Components.SimpleConsumer`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

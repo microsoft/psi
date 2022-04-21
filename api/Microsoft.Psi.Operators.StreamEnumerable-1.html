@@ -125,13 +125,13 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_StreamEnumerable_1__ctor_" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Operators_StreamEnumerable_1__ctor_Microsoft_Psi_IProducer__0__Func__0_System_Boolean__Microsoft_Psi_DeliveryPolicy__0__" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.#ctor(Microsoft.Psi.IProducer{`0},Func{`0,System.Boolean},Microsoft.Psi.DeliveryPolicy{`0})">StreamEnumerable(IProducer&lt;T&gt;, Func&lt;T, Boolean&gt;, DeliveryPolicy&lt;T&gt;)</h4>
+  <h4 id="Microsoft_Psi_Operators_StreamEnumerable_1__ctor_Microsoft_Psi_IProducer__0__Func__0_System_Boolean__Microsoft_Psi_DeliveryPolicy__0__System_String_" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.#ctor(Microsoft.Psi.IProducer{`0},Func{`0,System.Boolean},Microsoft.Psi.DeliveryPolicy{`0},System.String)">StreamEnumerable(IProducer&lt;T&gt;, Func&lt;T, Boolean&gt;, DeliveryPolicy&lt;T&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Operators.StreamEnumerable-1.html">Operators.StreamEnumerable&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public StreamEnumerable(IProducer&lt;T&gt; source, Func&lt;T, bool&gt; predicate = null, DeliveryPolicy&lt;T&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public StreamEnumerable(IProducer&lt;T&gt; source, Func&lt;T, bool&gt; predicate = null, DeliveryPolicy&lt;T&gt; deliveryPolicy = null, string name = &quot;StreamEnumerable&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -161,13 +161,19 @@
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_StreamEnumerable_1_Dispose_" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.Dispose*"></a>
   <h4 id="Microsoft_Psi_Operators_StreamEnumerable_1_Dispose" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.Dispose">Dispose()</h4>
@@ -179,7 +185,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Operators_StreamEnumerable_1_GetEnumerator_" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.GetEnumerator*"></a>
   <h4 id="Microsoft_Psi_Operators_StreamEnumerable_1_GetEnumerator" data-uid="Microsoft.Psi.Operators.StreamEnumerable`1.GetEnumerator">GetEnumerator()</h4>
@@ -229,7 +235,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L38" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Enumerable.cs/#L37" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

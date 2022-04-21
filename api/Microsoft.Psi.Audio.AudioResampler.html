@@ -108,6 +108,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;AudioBuffer, AudioBuffer&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;AudioBuffer, AudioBuffer&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;AudioBuffer, AudioBuffer&gt;.Receive(AudioBuffer, Envelope)</a>
     </div>
   </div>
@@ -129,16 +132,16 @@ the form of a <a class="xref" href="Microsoft.Psi.Audio.WaveFormat.html">WaveFor
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioResampler__ctor_" data-uid="Microsoft.Psi.Audio.AudioResampler.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioResampler__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_AudioResamplerConfiguration_" data-uid="Microsoft.Psi.Audio.AudioResampler.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.AudioResamplerConfiguration)">AudioResampler(Pipeline, AudioResamplerConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioResampler__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_AudioResamplerConfiguration_System_String_" data-uid="Microsoft.Psi.Audio.AudioResampler.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.AudioResamplerConfiguration,System.String)">AudioResampler(Pipeline, AudioResamplerConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioResampler.html">AudioResampler</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioResampler(Pipeline pipeline, AudioResamplerConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioResampler(Pipeline pipeline, AudioResamplerConfiguration configuration, string name = &quot;AudioResampler&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -162,20 +165,26 @@ the form of a <a class="xref" href="Microsoft.Psi.Audio.WaveFormat.html">WaveFor
         <td><p>The component configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L78">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioResampler__ctor_" data-uid="Microsoft.Psi.Audio.AudioResampler.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioResampler__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Audio.AudioResampler.#ctor(Microsoft.Psi.Pipeline,System.String)">AudioResampler(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioResampler__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Audio.AudioResampler.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">AudioResampler(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioResampler.html">AudioResampler</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioResampler(Pipeline pipeline, string configurationFilename = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioResampler(Pipeline pipeline, string configurationFilename = null, string name = &quot;AudioResampler&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -199,13 +208,19 @@ the form of a <a class="xref" href="Microsoft.Psi.Audio.WaveFormat.html">WaveFor
         <td><p>The component configuration file.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L94">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L97">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioResampler_Dispose_" data-uid="Microsoft.Psi.Audio.AudioResampler.Dispose*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioResampler_Dispose" data-uid="Microsoft.Psi.Audio.AudioResampler.Dispose">Dispose()</h4>
@@ -218,7 +233,7 @@ the form of a <a class="xref" href="Microsoft.Psi.Audio.WaveFormat.html">WaveFor
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L108">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioResampler.cs/#L111">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioResampler_Receive_" data-uid="Microsoft.Psi.Audio.AudioResampler.Receive*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioResampler_Receive_Microsoft_Psi_Audio_AudioBuffer_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Audio.AudioResampler.Receive(Microsoft.Psi.Audio.AudioBuffer,Microsoft.Psi.Envelope)">Receive(AudioBuffer, Envelope)</h4>

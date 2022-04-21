@@ -109,6 +109,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Components.Timer.html#Microsoft_Psi_Components_Timer_Stop_DateTime_Action_">Timer.Stop(DateTime, Action)</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.Timer.html#Microsoft_Psi_Components_Timer_ToString">Timer.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Components.html">Microsoft.Psi.Components</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
@@ -136,16 +139,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer{TOut}.cs/#L22">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer{TOut}.cs/#L23">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_1__ctor_" data-uid="Microsoft.Psi.Components.Timer`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Timer_1__ctor_Microsoft_Psi_Pipeline_System_UInt32_Func_DateTime_TimeSpan__0__" data-uid="Microsoft.Psi.Components.Timer`1.#ctor(Microsoft.Psi.Pipeline,System.UInt32,Func{DateTime,TimeSpan,`0})">Timer(Pipeline, UInt32, Func&lt;DateTime, TimeSpan, TOut&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_Timer_1__ctor_Microsoft_Psi_Pipeline_System_UInt32_Func_DateTime_TimeSpan__0__System_String_" data-uid="Microsoft.Psi.Components.Timer`1.#ctor(Microsoft.Psi.Pipeline,System.UInt32,Func{DateTime,TimeSpan,`0},System.String)">Timer(Pipeline, UInt32, Func&lt;DateTime, TimeSpan, TOut&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Timer-1.html">Timer&lt;TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Timer(Pipeline pipeline, uint timerInterval, Func&lt;DateTime, TimeSpan, TOut&gt; generator)</code></pre>
+    <pre><code class="lang-csharp hljs">public Timer(Pipeline pipeline, uint timerInterval, Func&lt;DateTime, TimeSpan, TOut&gt; generator, string name = &quot;Timer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,13 +178,19 @@
         <td><p>Message generation function.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer{TOut}.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer{TOut}.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_1_Out_" data-uid="Microsoft.Psi.Components.Timer`1.Out*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_1_Out" data-uid="Microsoft.Psi.Components.Timer`1.Out">Out</h4>
@@ -211,7 +220,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer{TOut}.cs/#L37">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer{TOut}.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_1_Generate_" data-uid="Microsoft.Psi.Components.Timer`1.Generate*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_1_Generate_DateTime_TimeSpan_" data-uid="Microsoft.Psi.Components.Timer`1.Generate(DateTime,TimeSpan)">Generate(DateTime, TimeSpan)</h4>

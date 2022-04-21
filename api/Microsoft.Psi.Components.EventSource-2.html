@@ -127,10 +127,10 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L38">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_EventSource_2__ctor_" data-uid="Microsoft.Psi.Components.EventSource`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_EventSource_2__ctor_Microsoft_Psi_Pipeline_Action__0__Action__0__Func_Action__1___0__" data-uid="Microsoft.Psi.Components.EventSource`2.#ctor(Microsoft.Psi.Pipeline,Action{`0},Action{`0},Func{Action{`1},`0})">EventSource(Pipeline, Action&lt;TEventHandler&gt;, Action&lt;TEventHandler&gt;, Func&lt;Action&lt;TOut&gt;, TEventHandler&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_EventSource_2__ctor_Microsoft_Psi_Pipeline_Action__0__Action__0__Func_Action__1___0__System_String_" data-uid="Microsoft.Psi.Components.EventSource`2.#ctor(Microsoft.Psi.Pipeline,Action{`0},Action{`0},Func{Action{`1},`0},System.String)">EventSource(Pipeline, Action&lt;TEventHandler&gt;, Action&lt;TEventHandler&gt;, Func&lt;Action&lt;TOut&gt;, TEventHandler&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.EventSource-2.html">EventSource&lt;TEventHandler, TOut&gt;</a> class.
 The component will subscribe to an event on startup via the <code data-dev-comment-type="paramref" class="paramref">subscribe</code>
 delegate, using the supplied <code data-dev-comment-type="paramref" class="paramref">converter</code> function to transform the
@@ -140,7 +140,7 @@ event that is being subscribed to.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EventSource(Pipeline pipeline, Action&lt;TEventHandler&gt; subscribe, Action&lt;TEventHandler&gt; unsubscribe, Func&lt;Action&lt;TOut&gt;, TEventHandler&gt; converter)</code></pre>
+    <pre><code class="lang-csharp hljs">public EventSource(Pipeline pipeline, Action&lt;TEventHandler&gt; subscribe, Action&lt;TEventHandler&gt; unsubscribe, Func&lt;Action&lt;TOut&gt;, TEventHandler&gt; converter, string name = &quot;EventSource&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -178,13 +178,19 @@ handler of type <code data-dev-comment-type="typeparamref" class="typeparamref">
 external event by the <code data-dev-comment-type="paramref" class="paramref">subscribe</code> delegate.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L62">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_EventSource_2_Out_" data-uid="Microsoft.Psi.Components.EventSource`2.Out*"></a>
   <h4 id="Microsoft_Psi_Components_EventSource_2_Out" data-uid="Microsoft.Psi.Components.EventSource`2.Out">Out</h4>
@@ -214,7 +220,7 @@ external event by the <code data-dev-comment-type="paramref" class="paramref">su
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L65">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_EventSource_2_Start_" data-uid="Microsoft.Psi.Components.EventSource`2.Start*"></a>
   <h4 id="Microsoft_Psi_Components_EventSource_2_Start_Action_DateTime__" data-uid="Microsoft.Psi.Components.EventSource`2.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -252,7 +258,7 @@ should also notify with a completion time of <see cref="!:DateTime.MaxValue"></s
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L74">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_EventSource_2_Stop_" data-uid="Microsoft.Psi.Components.EventSource`2.Stop*"></a>
   <h4 id="Microsoft_Psi_Components_EventSource_2_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Components.EventSource`2.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -289,6 +295,33 @@ posting non-reactive source messages.</p>
 messages. This delegate should be called once the component has posted its last non-reactive source
 message, but only up to (and possibly including) <code data-dev-comment-type="paramref" class="paramref">finalOriginatingTime</code>.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/EventSource.cs/#L81">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_EventSource_2_ToString_" data-uid="Microsoft.Psi.Components.EventSource`2.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_EventSource_2_ToString" data-uid="Microsoft.Psi.Components.EventSource`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

@@ -89,169 +89,57 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">VisibleLightCameraConfiguration</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html">ResearchModeCameraConfiguration</a></div>
+    <div class="level2"><span class="xref">VisibleLightCameraConfiguration</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputCameraIntrinsics">ResearchModeCameraConfiguration.OutputCameraIntrinsics</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputPose">ResearchModeCameraConfiguration.OutputPose</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputCalibrationPointsMap">ResearchModeCameraConfiguration.OutputCalibrationPointsMap</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputCalibrationPointsMapMinInterval">ResearchModeCameraConfiguration.OutputCalibrationPointsMapMinInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCameraConfiguration.html#Microsoft_Psi_MixedReality_ResearchModeCameraConfiguration_OutputMinInterval">ResearchModeCameraConfiguration.OutputMinInterval</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.UniversalWindows.dll</h6>
   <h5 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class VisibleLightCameraConfiguration : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class VisibleLightCameraConfiguration : ResearchModeCameraConfiguration</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L17">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration__ctor_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration__ctor" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.#ctor">VisibleLightCameraConfiguration()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.html">VisibleLightCameraConfiguration</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public VisibleLightCameraConfiguration()</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L49">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_MinInterframeInterval_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.MinInterframeInterval*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_MinInterframeInterval" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.MinInterframeInterval">MinInterframeInterval</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the minumum inter-frame interval.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan MinInterframeInterval { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TimeSpan</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_MinInterframeInterval_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This value can be user to reduce the emitting framerate of the visible light camera.</p>
-</div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L43">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_Mode_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.Mode*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_Mode" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.Mode">Mode</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the sensor selection.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ResearchModeSensorType Mode { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">ResearchModeSensorType</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_Mode_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Valid values are: LeftFront, LeftLeft, RightFront, RightRight.</p>
-</div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L17">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputCalibration_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputCalibration*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputCalibration" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputCalibration">OutputCalibration</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the calibration settings are emitted.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputCalibration { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L22">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputCalibrationMap_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputCalibrationMap*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputCalibrationMap" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputCalibrationMap">OutputCalibrationMap</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the original map of points for calibration are emitted.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputCalibrationMap { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L27">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputCalibrationMapInterval_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputCalibrationMapInterval*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputCalibrationMapInterval" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputCalibrationMapInterval">OutputCalibrationMapInterval</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the minimum interval between posting calibration map messages.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeSpan OutputCalibrationMapInterval { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">TimeSpan</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L37">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputImage_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputImage*"></a>
   <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputImage" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputImage">OutputImage</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the grayscale image stream is emitted.</p>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the component emits grayscale images.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -275,16 +163,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L32">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L30">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputPose_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputPose*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputPose" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputPose">OutputPose</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the camera pose stream is emitted.</p>
+  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputImageCameraView_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_OutputImageCameraView" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.OutputImageCameraView">OutputImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the component emits grayscale image camera views.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OutputPose { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool OutputImageCameraView { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -297,6 +185,34 @@
     <tbody>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCameraConfiguration.cs/#L35">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_VisibleLightSensorType_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.VisibleLightSensorType*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_VisibleLightSensorType" data-uid="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.VisibleLightSensorType">VisibleLightSensorType</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the visible light sensor type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ResearchModeSensorType VisibleLightSensorType { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">ResearchModeSensorType</span></td>
         <td></td>
       </tr>
     </tbody>

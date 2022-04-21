@@ -103,6 +103,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Components.SimpleConsumer-1.html#Microsoft_Psi_Components_SimpleConsumer_1_In">SimpleConsumer&lt;AudioBuffer&gt;.In</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.SimpleConsumer-1.html#Microsoft_Psi_Components_SimpleConsumer_1_ToString">SimpleConsumer&lt;AudioBuffer&gt;.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Audio.html">Microsoft.Psi.Audio</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Audio.Windows.dll</h6>
@@ -123,16 +126,16 @@ enumerate the names of audio output devices currently available on the system.
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L38">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L39">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer__ctor_" data-uid="Microsoft.Psi.Audio.AudioPlayer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioPlayer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_AudioPlayerConfiguration_" data-uid="Microsoft.Psi.Audio.AudioPlayer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.AudioPlayerConfiguration)">AudioPlayer(Pipeline, AudioPlayerConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioPlayer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Audio_AudioPlayerConfiguration_System_String_" data-uid="Microsoft.Psi.Audio.AudioPlayer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Audio.AudioPlayerConfiguration,System.String)">AudioPlayer(Pipeline, AudioPlayerConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioPlayer.html">AudioPlayer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioPlayer(Pipeline pipeline, AudioPlayerConfiguration configuration, string name = &quot;AudioPlayer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -156,20 +159,26 @@ enumerate the names of audio output devices currently available on the system.
         <td><p>The component configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer__ctor_" data-uid="Microsoft.Psi.Audio.AudioPlayer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_AudioPlayer__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Audio.AudioPlayer.#ctor(Microsoft.Psi.Pipeline,System.String)">AudioPlayer(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Audio_AudioPlayer__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Audio.AudioPlayer.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">AudioPlayer(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.AudioPlayer.html">AudioPlayer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AudioPlayer(Pipeline pipeline, string configurationFilename = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AudioPlayer(Pipeline pipeline, string configurationFilename = null, string name = &quot;AudioPlayer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -193,13 +202,19 @@ enumerate the names of audio output devices currently available on the system.
         <td><p>The component configuration file.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_AudioLevel_" data-uid="Microsoft.Psi.Audio.AudioPlayer.AudioLevel*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_AudioLevel" data-uid="Microsoft.Psi.Audio.AudioPlayer.AudioLevel">AudioLevel</h4>
@@ -227,7 +242,7 @@ enumerate the names of audio output devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L74">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_AudioLevelInput_" data-uid="Microsoft.Psi.Audio.AudioPlayer.AudioLevelInput*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_AudioLevelInput" data-uid="Microsoft.Psi.Audio.AudioPlayer.AudioLevelInput">AudioLevelInput</h4>
@@ -257,7 +272,7 @@ enumerate the names of audio output devices currently available on the system.
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L131">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L134">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_Dispose_" data-uid="Microsoft.Psi.Audio.AudioPlayer.Dispose*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_Dispose" data-uid="Microsoft.Psi.Audio.AudioPlayer.Dispose">Dispose()</h4>
@@ -270,7 +285,7 @@ enumerate the names of audio output devices currently available on the system.
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L84">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L87">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_GetAvailableDevices_" data-uid="Microsoft.Psi.Audio.AudioPlayer.GetAvailableDevices*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_GetAvailableDevices" data-uid="Microsoft.Psi.Audio.AudioPlayer.GetAvailableDevices">GetAvailableDevices()</h4>
@@ -299,7 +314,7 @@ enumerate the names of audio output devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L105">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_Receive_" data-uid="Microsoft.Psi.Audio.AudioPlayer.Receive*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_Receive_Microsoft_Psi_Message_Microsoft_Psi_Audio_AudioBuffer__" data-uid="Microsoft.Psi.Audio.AudioPlayer.Receive(Microsoft.Psi.Message{Microsoft.Psi.Audio.AudioBuffer})">Receive(Message&lt;AudioBuffer&gt;)</h4>
@@ -332,7 +347,7 @@ enumerate the names of audio output devices currently available on the system.
   <div><span class="xref">Microsoft.Psi.Components.SimpleConsumer&lt;Microsoft.Psi.Audio.AudioBuffer&gt;.Receive(Microsoft.Psi.Message&lt;Microsoft.Psi.Audio.AudioBuffer&gt;)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_SetAudioLevel_" data-uid="Microsoft.Psi.Audio.AudioPlayer.SetAudioLevel*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_SetAudioLevel_Microsoft_Psi_Message_System_Double__" data-uid="Microsoft.Psi.Audio.AudioPlayer.SetAudioLevel(Microsoft.Psi.Message{System.Double})">SetAudioLevel(Message&lt;Double&gt;)</h4>
@@ -363,7 +378,7 @@ enumerate the names of audio output devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L139">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L142">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_Start_" data-uid="Microsoft.Psi.Audio.AudioPlayer.Start*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_Start_Action_DateTime__" data-uid="Microsoft.Psi.Audio.AudioPlayer.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -392,7 +407,7 @@ enumerate the names of audio output devices currently available on the system.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L161">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio.Windows/AudioPlayer.cs/#L164">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_AudioPlayer_Stop_" data-uid="Microsoft.Psi.Audio.AudioPlayer.Stop*"></a>
   <h4 id="Microsoft_Psi_Audio_AudioPlayer_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Audio.AudioPlayer.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>

@@ -91,12 +91,11 @@
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">StereoKitComponent</span></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.EyesSensor.html">EyesSensor</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.Handle.html">Handle</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.HandsSensor.html">HandsSensor</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.HeadSensor.html">HeadSensor</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.Microphone.html">Microphone</a></div>
-      <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.ModelBasedStereoKitRenderer.html">ModelBasedStereoKitRenderer</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.SpatialSound.html">SpatialSound</a></div>
+      <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitRenderer.html">StereoKitRenderer</a></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
@@ -108,16 +107,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L19">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L22">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_StereoKitComponent__ctor_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent__ctor_Pipeline_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.#ctor(Pipeline)">StereoKitComponent(Pipeline)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent__ctor_Pipeline_System_String_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.#ctor(Pipeline,System.String)">StereoKitComponent(Pipeline, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html">StereoKitComponent</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public StereoKitComponent(Pipeline pipeline)</code></pre>
+    <pre><code class="lang-csharp hljs">public StereoKitComponent(Pipeline pipeline, string name = &quot;StereoKitComponent&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -135,13 +134,19 @@
         <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L39">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L44">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_StereoKitComponent_Enabled_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Enabled*"></a>
   <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent_Enabled" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Enabled">Enabled</h4>
@@ -170,7 +175,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_StereoKitComponent_Initialize_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Initialize*"></a>
   <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent_Initialize" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Initialize">Initialize()</h4>
@@ -197,7 +202,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Shutdown*"></a>
   <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Shutdown">Shutdown()</h4>
@@ -209,7 +214,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_StereoKitComponent_Step_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Step*"></a>
   <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent_Step" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.Step">Step()</h4>
@@ -219,6 +224,33 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public virtual void Step()</code></pre>
   </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitComponent.cs/#L60">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKitComponent_ToString_" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.ToString*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKitComponent_ToString" data-uid="Microsoft.Psi.MixedReality.StereoKitComponent.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>

@@ -126,16 +126,16 @@ The following example shows how to implement a multi-stream generator:
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator__ctor_" data-uid="Microsoft.Psi.Components.Generator.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Generator__ctor_Microsoft_Psi_Pipeline_System_Boolean_" data-uid="Microsoft.Psi.Components.Generator.#ctor(Microsoft.Psi.Pipeline,System.Boolean)">Generator(Pipeline, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Components_Generator__ctor_Microsoft_Psi_Pipeline_System_Boolean_System_String_" data-uid="Microsoft.Psi.Components.Generator.#ctor(Microsoft.Psi.Pipeline,System.Boolean,System.String)">Generator(Pipeline, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Generator.html">Generator</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Generator(Pipeline pipeline, bool isInfiniteSource = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public Generator(Pipeline pipeline, bool isInfiniteSource = false, string name = &quot;Generator&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -160,13 +160,19 @@ The following example shows how to implement a multi-stream generator:
 If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L111">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L117">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_GenerateNext_" data-uid="Microsoft.Psi.Components.Generator.GenerateNext*"></a>
   <h4 id="Microsoft_Psi_Components_Generator_GenerateNext_DateTime_" data-uid="Microsoft.Psi.Components.Generator.GenerateNext(DateTime)">GenerateNext(DateTime)</h4>
@@ -215,7 +221,7 @@ The next call will occur only after this time (based on the pipeline clock).</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_Start_" data-uid="Microsoft.Psi.Components.Generator.Start*"></a>
   <h4 id="Microsoft_Psi_Components_Generator_Start_Action_DateTime__" data-uid="Microsoft.Psi.Components.Generator.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -253,7 +259,7 @@ should also notify with a completion time of <see cref="!:DateTime.MaxValue"></s
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L92">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_Stop_" data-uid="Microsoft.Psi.Components.Generator.Stop*"></a>
   <h4 id="Microsoft_Psi_Components_Generator_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Components.Generator.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -290,6 +296,33 @@ posting non-reactive source messages.</p>
 messages. This delegate should be called once the component has posted its last non-reactive source
 message, but only up to (and possibly including) <code data-dev-comment-type="paramref" class="paramref">finalOriginatingTime</code>.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_Generator_ToString_" data-uid="Microsoft.Psi.Components.Generator.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_Generator_ToString" data-uid="Microsoft.Psi.Components.Generator.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

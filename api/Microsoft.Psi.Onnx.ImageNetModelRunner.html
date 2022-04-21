@@ -92,7 +92,7 @@
     <div class="level1"><span class="xref">ImageNetModelRunner</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Onnx.html">Microsoft.Psi.Onnx</a></h6>
-  <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.ModelRunners.Gpu.dll</h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.ModelRunners.Cpu.dll</h6>
   <h5 id="Microsoft_Psi_Onnx_ImageNetModelRunner_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class ImageNetModelRunner : ConsumerProducer&lt;Shared&lt;Image&gt;, List&lt;LabeledPrediction&gt;&gt;</code></pre>
@@ -116,16 +116,16 @@ specified when creating the configuration.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelRunner.cs/#L46">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelRunner.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_ImageNetModelRunner__ctor_" data-uid="Microsoft.Psi.Onnx.ImageNetModelRunner.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Onnx_ImageNetModelRunner__ctor_Pipeline_Microsoft_Psi_Onnx_ImageNetModelRunnerConfiguration_" data-uid="Microsoft.Psi.Onnx.ImageNetModelRunner.#ctor(Pipeline,Microsoft.Psi.Onnx.ImageNetModelRunnerConfiguration)">ImageNetModelRunner(Pipeline, ImageNetModelRunnerConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Onnx_ImageNetModelRunner__ctor_Pipeline_Microsoft_Psi_Onnx_ImageNetModelRunnerConfiguration_System_String_" data-uid="Microsoft.Psi.Onnx.ImageNetModelRunner.#ctor(Pipeline,Microsoft.Psi.Onnx.ImageNetModelRunnerConfiguration,System.String)">ImageNetModelRunner(Pipeline, ImageNetModelRunnerConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Onnx.ImageNetModelRunner.html">ImageNetModelRunner</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImageNetModelRunner(Pipeline pipeline, ImageNetModelRunnerConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImageNetModelRunner(Pipeline pipeline, ImageNetModelRunnerConfiguration configuration, string name = &quot;ImageNetModelRunner&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -146,12 +146,18 @@ specified when creating the configuration.</p>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Onnx.ImageNetModelRunnerConfiguration.html">ImageNetModelRunnerConfiguration</a></td>
         <td><span class="parametername">configuration</span></td>
-        <td><p>The configuration for the compoinent.</p>
+        <td><p>The configuration for the component.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Onnx_ImageNetModelRunner__ctor_Pipeline_Microsoft_Psi_Onnx_ImageNetModelRunnerConfiguration__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Onnx_ImageNetModelRunner__ctor_Pipeline_Microsoft_Psi_Onnx_ImageNetModelRunnerConfiguration_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>To run on a GPU, use the Microsoft.Psi.Onnx.ModelRunners.Gpu library instead of Microsoft.Psi.Onnx.ModelRunners.Cpu, and set
 the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non-negative integer. Typical device ID values are 0 or 1.</p>
 </div>
@@ -159,7 +165,7 @@ the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelRunner.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/ImageNet/ImageNetModelRunner.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_ImageNetModelRunner_Receive_" data-uid="Microsoft.Psi.Onnx.ImageNetModelRunner.Receive*"></a>
   <h4 id="Microsoft_Psi_Onnx_ImageNetModelRunner_Receive_Shared_Microsoft_Psi_Imaging_Image__Envelope_" data-uid="Microsoft.Psi.Onnx.ImageNetModelRunner.Receive(Shared{Microsoft.Psi.Imaging.Image},Envelope)">Receive(Shared&lt;Image&gt;, Envelope)</h4>

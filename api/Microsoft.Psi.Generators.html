@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L95">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Once_" data-uid="Microsoft.Psi.Generators.Once*"></a>
-  <h4 id="Microsoft_Psi_Generators_Once__1_Microsoft_Psi_Pipeline___0_" data-uid="Microsoft.Psi.Generators.Once``1(Microsoft.Psi.Pipeline,``0)">Once&lt;T&gt;(Pipeline, T)</h4>
+  <h4 id="Microsoft_Psi_Generators_Once__1_Microsoft_Psi_Pipeline___0_System_String_" data-uid="Microsoft.Psi.Generators.Once``1(Microsoft.Psi.Pipeline,``0,System.String)">Once&lt;T&gt;(Pipeline, T, String)</h4>
   <div class="markdown level1 summary"><p>Generates stream containing a single message, and keeps the stream open afterwards.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Once&lt;T&gt;(Pipeline pipeline, T value)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Once&lt;T&gt;(Pipeline pipeline, T value, string name = &quot;Once&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -132,6 +132,12 @@
         <td><span class="xref">T</span></td>
         <td><span class="parametername">value</span></td>
         <td><p>The value to publish.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
 </td>
       </tr>
     </tbody>
@@ -168,21 +174,21 @@
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Once__1_Microsoft_Psi_Pipeline___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Once__1_Microsoft_Psi_Pipeline___0_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The generated stream stays open until the pipeline is shut down.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L164">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L157">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Range_" data-uid="Microsoft.Psi.Generators.Range*"></a>
-  <h4 id="Microsoft_Psi_Generators_Range_Microsoft_Psi_Pipeline_System_Int32_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Generators.Range(Microsoft.Psi.Pipeline,System.Int32,System.Int32,TimeSpan,System.Nullable{DateTime},System.Boolean)">Range(Pipeline, Int32, Int32, TimeSpan, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Generators_Range_Microsoft_Psi_Pipeline_System_Int32_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Generators.Range(Microsoft.Psi.Pipeline,System.Int32,System.Int32,TimeSpan,System.Nullable{DateTime},System.Boolean,System.String)">Range(Pipeline, Int32, Int32, TimeSpan, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Generates a stream of a finite range of integer values published at a regular interval.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;int&gt; Range(Pipeline pipeline, int start, int count, TimeSpan interval, DateTime? alignDateTime = null, bool keepOpen = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;int&gt; Range(Pipeline pipeline, int start, int count, TimeSpan interval, DateTime? alignDateTime = null, bool keepOpen = false, string name = &quot;Range&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -231,6 +237,12 @@ is non-null, the messages will have originating times that align with the specif
         <td><p>Indicates whether the stream should be kept open after the specified number of messages have been posted.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -249,21 +261,21 @@ is non-null, the messages will have originating times that align with the specif
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Range_Microsoft_Psi_Pipeline_System_Int32_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Range_Microsoft_Psi_Pipeline_System_Int32_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L130">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L125">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Repeat_" data-uid="Microsoft.Psi.Generators.Repeat*"></a>
-  <h4 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Generators.Repeat``1(Microsoft.Psi.Pipeline,``0,System.Int32,TimeSpan,System.Nullable{DateTime},System.Boolean)">Repeat&lt;T&gt;(Pipeline, T, Int32, TimeSpan, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Generators.Repeat``1(Microsoft.Psi.Pipeline,``0,System.Int32,TimeSpan,System.Nullable{DateTime},System.Boolean,System.String)">Repeat&lt;T&gt;(Pipeline, T, Int32, TimeSpan, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Generates a finite stream of constant values published at a regular interval.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Repeat&lt;T&gt;(Pipeline pipeline, T value, int count, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Repeat&lt;T&gt;(Pipeline pipeline, T value, int count, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false, string name = &quot;Repeat&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -313,6 +325,12 @@ specified alignment time.</p>
         <td><p>Indicates whether the stream should be kept open after the specified number of messages have been posted.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -347,21 +365,21 @@ specified alignment time.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline. The generated stream closes once the specified number of messages has been published.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L147">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L141">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Repeat_" data-uid="Microsoft.Psi.Generators.Repeat*"></a>
-  <h4 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_TimeSpan_System_Nullable_DateTime__" data-uid="Microsoft.Psi.Generators.Repeat``1(Microsoft.Psi.Pipeline,``0,TimeSpan,System.Nullable{DateTime})">Repeat&lt;T&gt;(Pipeline, T, TimeSpan, Nullable&lt;DateTime&gt;)</h4>
+  <h4 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_TimeSpan_System_Nullable_DateTime__System_String_" data-uid="Microsoft.Psi.Generators.Repeat``1(Microsoft.Psi.Pipeline,``0,TimeSpan,System.Nullable{DateTime},System.String)">Repeat&lt;T&gt;(Pipeline, T, TimeSpan, Nullable&lt;DateTime&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Generates an infinite stream of constant values published at a regular interval.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Repeat&lt;T&gt;(Pipeline pipeline, T value, TimeSpan interval, DateTime? alignmentDateTime = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Repeat&lt;T&gt;(Pipeline pipeline, T value, TimeSpan interval, DateTime? alignmentDateTime = null, string name = &quot;Repeat&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -399,6 +417,12 @@ is non-null, the messages will have originating times that align with (i.e., are
 specified alignment time.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -433,21 +457,21 @@ specified alignment time.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_TimeSpan_System_Nullable_DateTime___remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Repeat__1_Microsoft_Psi_Pipeline___0_TimeSpan_System_Nullable_DateTime__System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L111">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Return_" data-uid="Microsoft.Psi.Generators.Return*"></a>
-  <h4 id="Microsoft_Psi_Generators_Return__1_Microsoft_Psi_Pipeline___0_" data-uid="Microsoft.Psi.Generators.Return``1(Microsoft.Psi.Pipeline,``0)">Return&lt;T&gt;(Pipeline, T)</h4>
+  <h4 id="Microsoft_Psi_Generators_Return__1_Microsoft_Psi_Pipeline___0_System_String_" data-uid="Microsoft.Psi.Generators.Return``1(Microsoft.Psi.Pipeline,``0,System.String)">Return&lt;T&gt;(Pipeline, T, String)</h4>
   <div class="markdown level1 summary"><p>Generates stream containing a single message, and closes the stream afterwards.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Return&lt;T&gt;(Pipeline pipeline, T value)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Return&lt;T&gt;(Pipeline pipeline, T value, string name = &quot;Return&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -469,6 +493,12 @@ specified alignment time.</p>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">value</span></td>
         <td><p>The value to publish.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
 </td>
       </tr>
     </tbody>
@@ -505,21 +535,21 @@ specified alignment time.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Return__1_Microsoft_Psi_Pipeline___0__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Return__1_Microsoft_Psi_Pipeline___0_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The generated stream closes after the message is published.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L32">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Sequence_" data-uid="Microsoft.Psi.Generators.Sequence*"></a>
-  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,``0,Func{``0,``0},System.Int32,TimeSpan,System.Nullable{DateTime},System.Boolean)">Sequence&lt;T&gt;(Pipeline, T, Func&lt;T, T&gt;, Int32, TimeSpan, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,``0,Func{``0,``0},System.Int32,TimeSpan,System.Nullable{DateTime},System.Boolean,System.String)">Sequence&lt;T&gt;(Pipeline, T, Func&lt;T, T&gt;, Int32, TimeSpan, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Generates a finite stream of values published at a regular interval from a user-provided function.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, T initialValue, Func&lt;T, T&gt; generateNext, int count, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, T initialValue, Func&lt;T, T&gt; generateNext, int count, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false, string name = &quot;Sequence&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -575,6 +605,12 @@ specified alignment time.</p>
         <td><p>Indicates whether the stream should be kept open after all messages in the sequence have been posted.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -609,7 +645,7 @@ specified alignment time.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__System_Int32_TimeSpan_System_Nullable_DateTime__System_Boolean_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</p>
 </div>
   
@@ -617,13 +653,13 @@ specified alignment time.</p>
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L49">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Sequence_" data-uid="Microsoft.Psi.Generators.Sequence*"></a>
-  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__TimeSpan_System_Nullable_DateTime__" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,``0,Func{``0,``0},TimeSpan,System.Nullable{DateTime})">Sequence&lt;T&gt;(Pipeline, T, Func&lt;T, T&gt;, TimeSpan, Nullable&lt;DateTime&gt;)</h4>
+  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__TimeSpan_System_Nullable_DateTime__System_String_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,``0,Func{``0,``0},TimeSpan,System.Nullable{DateTime},System.String)">Sequence&lt;T&gt;(Pipeline, T, Func&lt;T, T&gt;, TimeSpan, Nullable&lt;DateTime&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Generates an infinite stream of values published at a regular interval from a user-provided function.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, T initialValue, Func&lt;T, T&gt; generateNext, TimeSpan interval, DateTime? alignmentDateTime = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, T initialValue, Func&lt;T, T&gt; generateNext, TimeSpan interval, DateTime? alignmentDateTime = null, string name = &quot;Sequence&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -667,6 +703,12 @@ is non-null, the messages will have originating times that align with (i.e., are
 specified alignment time.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -701,21 +743,21 @@ specified alignment time.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__TimeSpan_System_Nullable_DateTime___remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline___0_Func___0___0__TimeSpan_System_Nullable_DateTime__System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L67">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Sequence_" data-uid="Microsoft.Psi.Generators.Sequence*"></a>
-  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable___0__TimeSpan_System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,IEnumerable{``0},TimeSpan,System.Nullable{DateTime},System.Boolean)">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;T&gt;, TimeSpan, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable___0__TimeSpan_System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,IEnumerable{``0},TimeSpan,System.Nullable{DateTime},System.Boolean,System.String)">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;T&gt;, TimeSpan, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Generates a stream of values published at a regular interval from a specified enumerable.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, IEnumerable&lt;T&gt; enumerable, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, IEnumerable&lt;T&gt; enumerable, TimeSpan interval, DateTime? alignmentDateTime = null, bool keepOpen = false, string name = &quot;Sequence&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -759,6 +801,12 @@ specified alignment time.</p>
         <td><p>Indicates whether the stream should be kept open after all messages in the sequence have been posted.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -793,21 +841,21 @@ specified alignment time.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable___0__TimeSpan_System_Nullable_DateTime__System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable___0__TimeSpan_System_Nullable_DateTime__System_Boolean_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Generators.cs/#L83">View Source</a>
   </span>
   <a id="Microsoft_Psi_Generators_Sequence_" data-uid="Microsoft.Psi.Generators.Sequence*"></a>
-  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable_System_ValueTuple___0_DateTime___System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,IEnumerable{System.ValueTuple{``0,DateTime}},System.Nullable{DateTime},System.Boolean)">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;(T, DateTime)&gt;, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable_System_ValueTuple___0_DateTime___System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Generators.Sequence``1(Microsoft.Psi.Pipeline,IEnumerable{System.ValueTuple{``0,DateTime}},System.Nullable{DateTime},System.Boolean,System.String)">Sequence&lt;T&gt;(Pipeline, IEnumerable&lt;(T, DateTime)&gt;, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Generates a stream of values from a specified enumerable that provides the values and corresponding originating times.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, IEnumerable&lt;(T, DateTime)&gt; enumerable, DateTime? startTime = null, bool keepOpen = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Sequence&lt;T&gt;(Pipeline pipeline, IEnumerable&lt;(T, DateTime)&gt; enumerable, DateTime? startTime = null, bool keepOpen = false, string name = &quot;Sequence&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -846,6 +894,12 @@ account any other components in the pipeline which may have proposed replay time
         <td><p>Indicates whether the stream should be kept open after all the messages in the enumerable have been posted.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream generator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -880,7 +934,7 @@ account any other components in the pipeline which may have proposed replay time
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable_System_ValueTuple___0_DateTime___System_Nullable_DateTime__System_Boolean__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Generators_Sequence__1_Microsoft_Psi_Pipeline_IEnumerable_System_ValueTuple___0_DateTime___System_Nullable_DateTime__System_Boolean_System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>When the pipeline is in replay mode, the timing of the messages complies with the speed of the pipeline.</p>
 </div>
 </article>

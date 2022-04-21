@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/Operators.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/Operators.cs/#L49">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations*"></a>
-  <h4 id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations__1_Microsoft_Psi_IProducer_Dictionary___0_System_Boolean___Func___0_System_ValueTuple_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue____Microsoft_Psi_DeliveryPolicy_Dictionary___0_System_Boolean___" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations``1(Microsoft.Psi.IProducer{Dictionary{``0,System.Boolean}},Func{``0,System.ValueTuple{System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue}}},Microsoft.Psi.DeliveryPolicy{Dictionary{``0,System.Boolean}})">ToTimeIntervalAnnotations&lt;TKey&gt;(IProducer&lt;Dictionary&lt;TKey, Boolean&gt;&gt;, Func&lt;TKey, (String Track, Dictionary&lt;String, IAnnotationValue&gt; AttributeValues)&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, Boolean&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations__1_Microsoft_Psi_IProducer_Dictionary___0_System_Boolean___Func___0_System_ValueTuple_System_Boolean_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue____Microsoft_Psi_DeliveryPolicy_Dictionary___0_System_Boolean___System_String_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations``1(Microsoft.Psi.IProducer{Dictionary{``0,System.Boolean}},Func{``0,System.ValueTuple{System.Boolean,System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue}}},Microsoft.Psi.DeliveryPolicy{Dictionary{``0,System.Boolean}},System.String)">ToTimeIntervalAnnotations&lt;TKey&gt;(IProducer&lt;Dictionary&lt;TKey, Boolean&gt;&gt;, Func&lt;TKey, (Boolean Create, String Track, Dictionary&lt;String, IAnnotationValue&gt; AttributeValues)&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, Boolean&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts a stream of dictionaries with boolean values into a corresponding stream of time interval annotations.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeIntervalAnnotationSet&gt; ToTimeIntervalAnnotations&lt;TKey&gt;(this IProducer&lt;Dictionary&lt;TKey, bool&gt;&gt; source, Func&lt;TKey, (string Track, Dictionary&lt;string, IAnnotationValue&gt; AttributeValues)&gt; annotationConstructor, DeliveryPolicy&lt;Dictionary&lt;TKey, bool&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeIntervalAnnotationSet&gt; ToTimeIntervalAnnotations&lt;TKey&gt;(this IProducer&lt;Dictionary&lt;TKey, bool&gt;&gt; source, Func&lt;TKey, (bool Create, string Track, Dictionary&lt;string, IAnnotationValue&gt; AttributeValues)&gt; annotationConstructor, DeliveryPolicy&lt;Dictionary&lt;TKey, bool&gt;&gt; deliveryPolicy = null, string name = &quot;ToTimeIntervalAnnotations&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -129,15 +129,21 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a>&gt;&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a>&gt;&gt;&gt;</td>
         <td><span class="parametername">annotationConstructor</span></td>
-        <td><p>A function that, given a key, produces a track name and set of attribute values for the annotation.</p>
+        <td><p>A function that, given a key, produces a value indicating whether to create an annotation, a track name and set of attribute values for the annotation.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
         <td><span class="parametername">deliveryPolicy</span></td>
         <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
 </td>
       </tr>
     </tbody>
@@ -176,16 +182,183 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/Operators.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/Operators.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations*"></a>
-  <h4 id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations__2_Microsoft_Psi_IProducer_Dictionary___0___1___Func___0___1_System_ValueTuple_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue____Microsoft_Psi_DeliveryPolicy_Dictionary___0___1___" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations``2(Microsoft.Psi.IProducer{Dictionary{``0,``1}},Func{``0,``1,System.ValueTuple{System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue}}},Microsoft.Psi.DeliveryPolicy{Dictionary{``0,``1}})">ToTimeIntervalAnnotations&lt;TKey, TValue&gt;(IProducer&lt;Dictionary&lt;TKey, TValue&gt;&gt;, Func&lt;TKey, TValue, (String Track, Dictionary&lt;String, IAnnotationValue&gt; AttributeValues)&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, TValue&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations__1_Microsoft_Psi_IProducer_Dictionary___0_System_Boolean___Func___0_System_ValueTuple_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue____Microsoft_Psi_DeliveryPolicy_Dictionary___0_System_Boolean___System_String_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations``1(Microsoft.Psi.IProducer{Dictionary{``0,System.Boolean}},Func{``0,System.ValueTuple{System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue}}},Microsoft.Psi.DeliveryPolicy{Dictionary{``0,System.Boolean}},System.String)">ToTimeIntervalAnnotations&lt;TKey&gt;(IProducer&lt;Dictionary&lt;TKey, Boolean&gt;&gt;, Func&lt;TKey, (String Track, Dictionary&lt;String, IAnnotationValue&gt; AttributeValues)&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, Boolean&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Converts a stream of dictionaries with boolean values into a corresponding stream of time interval annotations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeIntervalAnnotationSet&gt; ToTimeIntervalAnnotations&lt;TKey&gt;(this IProducer&lt;Dictionary&lt;TKey, bool&gt;&gt; source, Func&lt;TKey, (string Track, Dictionary&lt;string, IAnnotationValue&gt; AttributeValues)&gt; annotationConstructor, DeliveryPolicy&lt;Dictionary&lt;TKey, bool&gt;&gt; deliveryPolicy = null, string name = &quot;ToTimeIntervalAnnotations&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a>&gt;&gt;&gt;</td>
+        <td><span class="parametername">annotationConstructor</span></td>
+        <td><p>A function that, given a key, produces a track name and set of attribute values for the annotation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</td>
+        <td><p>A time interval annotation stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TKey</span></td>
+        <td><p>The type of key in the source stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/Operators.cs/#L95">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations__2_Microsoft_Psi_IProducer_Dictionary___0___1___Func___0___1_System_ValueTuple_System_Boolean_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue____Microsoft_Psi_DeliveryPolicy_Dictionary___0___1___System_String_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations``2(Microsoft.Psi.IProducer{Dictionary{``0,``1}},Func{``0,``1,System.ValueTuple{System.Boolean,System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue}}},Microsoft.Psi.DeliveryPolicy{Dictionary{``0,``1}},System.String)">ToTimeIntervalAnnotations&lt;TKey, TValue&gt;(IProducer&lt;Dictionary&lt;TKey, TValue&gt;&gt;, Func&lt;TKey, TValue, (Boolean Create, String Track, Dictionary&lt;String, IAnnotationValue&gt; AttributeValues)&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, TValue&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts a stream of dictionaries into a corresponding stream of time interval annotations.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeIntervalAnnotationSet&gt; ToTimeIntervalAnnotations&lt;TKey, TValue&gt;(this IProducer&lt;Dictionary&lt;TKey, TValue&gt;&gt; source, Func&lt;TKey, TValue, (string Track, Dictionary&lt;string, IAnnotationValue&gt; AttributeValues)&gt; annotationConstructor, DeliveryPolicy&lt;Dictionary&lt;TKey, TValue&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeIntervalAnnotationSet&gt; ToTimeIntervalAnnotations&lt;TKey, TValue&gt;(this IProducer&lt;Dictionary&lt;TKey, TValue&gt;&gt; source, Func&lt;TKey, TValue, (bool Create, string Track, Dictionary&lt;string, IAnnotationValue&gt; AttributeValues)&gt; annotationConstructor, DeliveryPolicy&lt;Dictionary&lt;TKey, TValue&gt;&gt; deliveryPolicy = null, string name = &quot;ToTimeIntervalAnnotations&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, TValue&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Func</span>&lt;TKey, TValue, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a>&gt;&gt;&gt;</td>
+        <td><span class="parametername">annotationConstructor</span></td>
+        <td><p>A function that, given a key and value, produces a value indicating whether to create an annotation, a track name and set of attribute values for the annotation.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, TValue&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</td>
+        <td><p>A time interval annotation stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TKey</span></td>
+        <td><p>The type of key in the source stream.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="parametername">TValue</span></td>
+        <td><p>The type of values in the source stream.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Annotations/Operators.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations*"></a>
+  <h4 id="Microsoft_Psi_Data_Annotations_Operators_ToTimeIntervalAnnotations__2_Microsoft_Psi_IProducer_Dictionary___0___1___Func___0___1_System_ValueTuple_System_String_Dictionary_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue____Microsoft_Psi_DeliveryPolicy_Dictionary___0___1___System_String_" data-uid="Microsoft.Psi.Data.Annotations.Operators.ToTimeIntervalAnnotations``2(Microsoft.Psi.IProducer{Dictionary{``0,``1}},Func{``0,``1,System.ValueTuple{System.String,Dictionary{System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue}}},Microsoft.Psi.DeliveryPolicy{Dictionary{``0,``1}},System.String)">ToTimeIntervalAnnotations&lt;TKey, TValue&gt;(IProducer&lt;Dictionary&lt;TKey, TValue&gt;&gt;, Func&lt;TKey, TValue, (String Track, Dictionary&lt;String, IAnnotationValue&gt; AttributeValues)&gt;, DeliveryPolicy&lt;Dictionary&lt;TKey, TValue&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Converts a stream of dictionaries into a corresponding stream of time interval annotations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeIntervalAnnotationSet&gt; ToTimeIntervalAnnotations&lt;TKey, TValue&gt;(this IProducer&lt;Dictionary&lt;TKey, TValue&gt;&gt; source, Func&lt;TKey, TValue, (string Track, Dictionary&lt;string, IAnnotationValue&gt; AttributeValues)&gt; annotationConstructor, DeliveryPolicy&lt;Dictionary&lt;TKey, TValue&gt;&gt; deliveryPolicy = null, string name = &quot;ToTimeIntervalAnnotations&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -213,6 +386,12 @@
         <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<span class="xref">Dictionary</span>&lt;TKey, TValue&gt;&gt;</td>
         <td><span class="parametername">deliveryPolicy</span></td>
         <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
 </td>
       </tr>
     </tbody>

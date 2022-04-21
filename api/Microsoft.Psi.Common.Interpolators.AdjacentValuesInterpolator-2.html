@@ -138,16 +138,16 @@ that might arrive later.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L34">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L36">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2__ctor_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2__ctor_Func__0__0_System_Double__1__System_Boolean__1_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.#ctor(Func{`0,`0,System.Double,`1},System.Boolean,`1)">AdjacentValuesInterpolator(Func&lt;TIn, TIn, Double, TOut&gt;, Boolean, TOut)</h4>
+  <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2__ctor_Func__0__0_System_Double__1__System_Boolean__1_System_String_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.#ctor(Func{`0,`0,System.Double,`1},System.Boolean,`1,System.String)">AdjacentValuesInterpolator(Func&lt;TIn, TIn, Double, TOut&gt;, Boolean, TOut, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator-2.html">AdjacentValuesInterpolator&lt;TIn, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AdjacentValuesInterpolator(Func&lt;TIn, TIn, double, TOut&gt; interpolator, bool orDefault, TOut defaultValue = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AdjacentValuesInterpolator(Func&lt;TIn, TIn, double, TOut&gt; interpolator, bool orDefault, TOut defaultValue = null, string name = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -178,13 +178,19 @@ between them where the interpolation result should be produces the interpolation
         <td><p>An optional default value to use.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the interpolator (defaults to AdjacentValuesInterpolator).</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_Interpolate_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.Interpolate*"></a>
   <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_Interpolate_DateTime_IEnumerable_Microsoft_Psi_Message__0___System_Nullable_DateTime__" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.Interpolate(DateTime,IEnumerable{Microsoft.Psi.Message{`0}},System.Nullable{DateTime})">Interpolate(DateTime, IEnumerable&lt;Message&lt;TIn&gt;&gt;, Nullable&lt;DateTime&gt;)</h4>
@@ -243,6 +249,33 @@ between them where the interpolation result should be produces the interpolation
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">Microsoft.Psi.Interpolator&lt;TIn, TOut&gt;.Interpolate(DateTime, IEnumerable&lt;Microsoft.Psi.Message&lt;TIn&gt;&gt;, System.Nullable&lt;DateTime&gt;)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L121">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_ToString_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.ToString*"></a>
+  <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_ToString" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>

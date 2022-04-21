@@ -93,11 +93,16 @@
       <div class="level2"><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></div>
   </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a></div>
+    <div><span class="xref">IDisposable</span></div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_ImageBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class ImageBase : IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class ImageBase : object, IImage, IDisposable</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Imaging_ImageBase_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Using this class it is possible as to allocate a new image in unmanaged memory,
@@ -427,7 +432,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L160">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L159">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_BitsPerPixel_" data-uid="Microsoft.Psi.Imaging.ImageBase.BitsPerPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_BitsPerPixel" data-uid="Microsoft.Psi.Imaging.ImageBase.BitsPerPixel">BitsPerPixel</h4>
@@ -455,11 +460,11 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L145">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L141">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_Height_" data-uid="Microsoft.Psi.Imaging.ImageBase.Height*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_Height" data-uid="Microsoft.Psi.Imaging.ImageBase.Height">Height</h4>
-  <div class="markdown level1 summary"><p>Gets image height in pixels.</p>
+  <div class="markdown level1 summary"><p>Gets the height of the image in pixels.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -511,7 +516,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L165">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L144">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.PixelFormat*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_PixelFormat" data-uid="Microsoft.Psi.Imaging.ImageBase.PixelFormat">PixelFormat</h4>
@@ -539,7 +544,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L155">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L149">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_Size_" data-uid="Microsoft.Psi.Imaging.ImageBase.Size*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_Size" data-uid="Microsoft.Psi.Imaging.ImageBase.Size">Size</h4>
@@ -567,7 +572,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L150">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L154">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_Stride_" data-uid="Microsoft.Psi.Imaging.ImageBase.Stride*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_Stride" data-uid="Microsoft.Psi.Imaging.ImageBase.Stride">Stride</h4>
@@ -623,11 +628,11 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L140">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L138">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_Width_" data-uid="Microsoft.Psi.Imaging.ImageBase.Width*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_Width" data-uid="Microsoft.Psi.Imaging.ImageBase.Width">Width</h4>
-  <div class="markdown level1 summary"><p>Gets image width in pixels.</p>
+  <div class="markdown level1 summary"><p>Gets the width of the image in pixels.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -653,7 +658,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L394">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L388">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_IntPtr_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom(IntPtr)">CopyFrom(IntPtr)</h4>
@@ -688,7 +693,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L370">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L364">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom(System.Byte[])">CopyFrom(Byte[])</h4>
@@ -723,7 +728,7 @@ The image must be allocated and must have the same size.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L383">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L377">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyFrom_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyFrom(System.Byte[],System.Int32,System.Int32)">CopyFrom(Byte[], Int32, Int32)</h4>
@@ -770,7 +775,7 @@ the image. The image must be allocated and must have the same size.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L196">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L190">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_CopyTo_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyTo_IntPtr_System_Int32_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo(IntPtr,System.Int32,System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">CopyTo(IntPtr, Int32, Int32, Int32, PixelFormat)</h4>
@@ -825,7 +830,7 @@ the image. The image must be allocated and must have the same size.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L183">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L177">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_CopyTo_" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_CopyTo_System_Byte___" data-uid="Microsoft.Psi.Imaging.ImageBase.CopyTo(System.Byte[])">CopyTo(Byte[])</h4>
@@ -860,7 +865,7 @@ The buffer must be allocated and must have the same size.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L495">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L489">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.ImageBase.CreateEmptyOfSameSize*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.ImageBase.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
@@ -889,7 +894,7 @@ The buffer must be allocated and must have the same size.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L171">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L165">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_Dispose_" data-uid="Microsoft.Psi.Imaging.ImageBase.Dispose*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_Dispose" data-uid="Microsoft.Psi.Imaging.ImageBase.Dispose">Dispose()</h4>
@@ -905,7 +910,7 @@ The buffer must be allocated and must have the same size.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L486">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L480">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_ReadBytes_" data-uid="Microsoft.Psi.Imaging.ImageBase.ReadBytes*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_ReadBytes_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.ImageBase.ReadBytes(System.Int32,System.Int32)">ReadBytes(Int32, Int32)</h4>
@@ -958,7 +963,7 @@ The buffer must be allocated and must have the same size.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L408">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageBase.cs/#L402">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageBase_ToBitmap_" data-uid="Microsoft.Psi.Imaging.ImageBase.ToBitmap*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageBase_ToBitmap_System_Boolean_" data-uid="Microsoft.Psi.Imaging.ImageBase.ToBitmap(System.Boolean)">ToBitmap(Boolean)</h4>
@@ -1009,6 +1014,13 @@ creates a copy of the image, so the <see cref="!:Bitmap"></see> stays valid even
 image gets disposed. However, setting this parameter to <span class="xref">false</span> creates a <see cref="!:Bitmap"></see> image which is just a wrapper around the image data. In this case, if the image is disposed, the
 will no longer be valid and accessing it will generate an exception.</p>
 </div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_">CalibrationExtensions.CreateCameraIntrinsics(ImageBase, Double, Double)</a>

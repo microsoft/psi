@@ -114,10 +114,19 @@
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_RigNodeLocator">ResearchModeCamera.RigNodeLocator</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_Calibrate">ResearchModeCamera.Calibrate()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_CalibrateFromFileAsync_Windows_Storage_StorageFolder_">ResearchModeCamera.CalibrateFromFileAsync(StorageFolder)</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_Start_Action_Windows_Foundation_DateTime__">ResearchModeCamera.Start(Action&lt;DateTime&gt;)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_Stop_Windows_Foundation_DateTime_Action_">ResearchModeCamera.Stop(DateTime, Action)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_ToString">ResearchModeCamera.ToString()</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_ProcessSensorFrame_IResearchModeSensorFrame_ResearchModeSensorResolution_System_UInt64_Windows_Foundation_DateTime_">ResearchModeCamera.ProcessSensorFrame(IResearchModeSensorFrame, ResearchModeSensorResolution, UInt64, DateTime)</a>
@@ -127,6 +136,9 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_GetCalibrationPointsMap">ResearchModeCamera.GetCalibrationPointsMap()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_GetCameraPose">ResearchModeCamera.GetCameraPose()</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeCamera.html#Microsoft_Psi_MixedReality_ResearchModeCamera_ToCameraPose_Windows_Perception_Spatial_SpatialLocation_">ResearchModeCamera.ToCameraPose(SpatialLocation)</a>
@@ -142,16 +154,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L26">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L24">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_VisibleLightCamera__ctor_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCamera__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration)">VisibleLightCamera(Pipeline, VisibleLightCameraConfiguration)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCamera__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_VisibleLightCameraConfiguration_System_String_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration,System.String)">VisibleLightCamera(Pipeline, VisibleLightCameraConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.VisibleLightCamera.html">VisibleLightCamera</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public VisibleLightCamera(Pipeline pipeline, VisibleLightCameraConfiguration configuration = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public VisibleLightCamera(Pipeline pipeline, VisibleLightCameraConfiguration configuration = null, string name = &quot;VisibleLightCamera&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,13 +187,47 @@
         <td><p>The configuration for this component.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L44">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_VisibleLightCamera_Configuration_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.Configuration*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCamera_Configuration" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.Configuration">Configuration</h4>
+  <div class="markdown level1 summary"><p>Gets the visible light camera configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected VisibleLightCameraConfiguration Configuration { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.MixedReality.VisibleLightCameraConfiguration.html">VisibleLightCameraConfiguration</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_VisibleLightCamera_Image_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.Image*"></a>
   <h4 id="Microsoft_Psi_MixedReality_VisibleLightCamera_Image" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.Image">Image</h4>
@@ -207,11 +253,39 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L39">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_VisibleLightCamera_ImageCameraView_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.ImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_VisibleLightCamera_ImageCameraView" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.ImageCameraView">ImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets the grayscale image camera view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;ImageCameraView&gt; ImageCameraView { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageCameraView.html">ImageCameraView</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L52">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/VisibleLightCamera.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_VisibleLightCamera_ProcessSensorFrame_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.ProcessSensorFrame*"></a>
   <h4 id="Microsoft_Psi_MixedReality_VisibleLightCamera_ProcessSensorFrame_IResearchModeSensorFrame_ResearchModeSensorResolution_System_UInt64_DateTime_" data-uid="Microsoft.Psi.MixedReality.VisibleLightCamera.ProcessSensorFrame(IResearchModeSensorFrame,ResearchModeSensorResolution,System.UInt64,DateTime)">ProcessSensorFrame(IResearchModeSensorFrame, ResearchModeSensorResolution, UInt64, DateTime)</h4>

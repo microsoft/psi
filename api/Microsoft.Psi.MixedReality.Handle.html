@@ -90,7 +90,8 @@
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html">StereoKitComponent</a></div>
-    <div class="level2"><span class="xref">Handle</span></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitRenderer.html">StereoKitRenderer</a></div>
+    <div class="level3"><span class="xref">Handle</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -100,6 +101,9 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitRenderer.html#Microsoft_Psi_MixedReality_StereoKitRenderer_Step">StereoKitRenderer.Step()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Enabled">StereoKitComponent.Enabled</a>
     </div>
     <div>
@@ -108,12 +112,15 @@
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown">StereoKitComponent.Shutdown()</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_ToString">StereoKitComponent.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
   <h5 id="Microsoft_Psi_MixedReality_Handle_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Handle : StereoKitComponent, IProducer&lt;CoordinateSystem&gt;, ISourceComponent</code></pre>
+    <pre><code class="lang-csharp hljs">public class Handle : StereoKitRenderer, IProducer&lt;CoordinateSystem&gt;, ISourceComponent</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -200,7 +207,22 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Handle.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Handle.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_Handle_Render_" data-uid="Microsoft.Psi.MixedReality.Handle.Render*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_Handle_Render" data-uid="Microsoft.Psi.MixedReality.Handle.Render">Render()</h4>
+  <div class="markdown level1 summary"><p>All rendering/drawing that needs to happen on each frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Render()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitRenderer.html#Microsoft_Psi_MixedReality_StereoKitRenderer_Render">StereoKitRenderer.Render()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Handle.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Handle_Start_" data-uid="Microsoft.Psi.MixedReality.Handle.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Handle_Start_Action_DateTime__" data-uid="Microsoft.Psi.MixedReality.Handle.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -229,21 +251,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Handle.cs/#L48">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_Handle_Step_" data-uid="Microsoft.Psi.MixedReality.Handle.Step*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_Handle_Step" data-uid="Microsoft.Psi.MixedReality.Handle.Step">Step()</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override void Step()</code></pre>
-  </div>
-  <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Step">StereoKitComponent.Step()</a></div>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Handle.cs/#L66">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/Handle.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Handle_Stop_" data-uid="Microsoft.Psi.MixedReality.Handle.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Handle_Stop_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.Handle.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>

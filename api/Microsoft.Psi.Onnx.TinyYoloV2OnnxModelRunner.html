@@ -92,7 +92,7 @@
     <div class="level1"><span class="xref">TinyYoloV2OnnxModelRunner</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Onnx.html">Microsoft.Psi.Onnx</a></h6>
-  <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.ModelRunners.Gpu.dll</h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.ModelRunners.Cpu.dll</h6>
   <h5 id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class TinyYoloV2OnnxModelRunner : ConsumerProducer&lt;Shared&lt;Image&gt;, List&lt;TinyYoloV2Detection&gt;&gt;</code></pre>
@@ -112,16 +112,16 @@ be loaded from. The model is available in the ONNX Model Zoo at
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/TinyYoloV2/TinyYoloV2OnnxModelRunner.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/TinyYoloV2/TinyYoloV2OnnxModelRunner.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner__ctor_" data-uid="Microsoft.Psi.Onnx.TinyYoloV2OnnxModelRunner.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner__ctor_Pipeline_System_String_System_Nullable_System_Int32__" data-uid="Microsoft.Psi.Onnx.TinyYoloV2OnnxModelRunner.#ctor(Pipeline,System.String,System.Nullable{System.Int32})">TinyYoloV2OnnxModelRunner(Pipeline, String, Nullable&lt;Int32&gt;)</h4>
+  <h4 id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner__ctor_Pipeline_System_String_System_Nullable_System_Int32__System_String_" data-uid="Microsoft.Psi.Onnx.TinyYoloV2OnnxModelRunner.#ctor(Pipeline,System.String,System.Nullable{System.Int32},System.String)">TinyYoloV2OnnxModelRunner(Pipeline, String, Nullable&lt;Int32&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Onnx.TinyYoloV2OnnxModelRunner.html">TinyYoloV2OnnxModelRunner</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TinyYoloV2OnnxModelRunner(Pipeline pipeline, string modelFileName, int? gpuDeviceId = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public TinyYoloV2OnnxModelRunner(Pipeline pipeline, string modelFileName, int? gpuDeviceId = null, string name = &quot;TinyYoloV2OnnxModelRunner&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -151,9 +151,15 @@ be loaded from. The model is available in the ONNX Model Zoo at
         <td><p>The GPU device ID to run execution on, or null to run on CPU.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner__ctor_Pipeline_System_String_System_Nullable_System_Int32___remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner__ctor_Pipeline_System_String_System_Nullable_System_Int32__System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>To run on a GPU, use the Microsoft.Psi.Onnx.ModelRunners.Gpu library instead of Microsoft.Psi.Onnx.ModelRunners.Cpu, and set
 the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non-negative integer. Typical device ID values are 0 or 1.</p>
 </div>
@@ -161,7 +167,7 @@ the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/TinyYoloV2/TinyYoloV2OnnxModelRunner.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/TinyYoloV2/TinyYoloV2OnnxModelRunner.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner_Receive_" data-uid="Microsoft.Psi.Onnx.TinyYoloV2OnnxModelRunner.Receive*"></a>
   <h4 id="Microsoft_Psi_Onnx_TinyYoloV2OnnxModelRunner_Receive_Shared_Microsoft_Psi_Imaging_Image__Envelope_" data-uid="Microsoft.Psi.Onnx.TinyYoloV2OnnxModelRunner.Receive(Shared{Microsoft.Psi.Imaging.Image},Envelope)">Receive(Shared&lt;Image&gt;, Envelope)</h4>

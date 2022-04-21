@@ -109,17 +109,17 @@ clock component rather than registering a timer on their own.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L60">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer__ctor_" data-uid="Microsoft.Psi.Components.Timer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Timer__ctor_Microsoft_Psi_Pipeline_System_UInt32_" data-uid="Microsoft.Psi.Components.Timer.#ctor(Microsoft.Psi.Pipeline,System.UInt32)">Timer(Pipeline, UInt32)</h4>
+  <h4 id="Microsoft_Psi_Components_Timer__ctor_Microsoft_Psi_Pipeline_System_UInt32_System_String_" data-uid="Microsoft.Psi.Components.Timer.#ctor(Microsoft.Psi.Pipeline,System.UInt32,System.String)">Timer(Pipeline, UInt32, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Timer.html">Timer</a> class.
 The timer fires off messages at the rate specified  by timerInterval.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Timer(Pipeline pipeline, uint timerInterval)</code></pre>
+    <pre><code class="lang-csharp hljs">public Timer(Pipeline pipeline, uint timerInterval, string name = &quot;Timer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -143,13 +143,19 @@ The timer fires off messages at the rate specified  by timerInterval.</p>
         <td><p>The timer firing interval, in ms.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L82">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_Dispose_" data-uid="Microsoft.Psi.Components.Timer.Dispose*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_Dispose" data-uid="Microsoft.Psi.Components.Timer.Dispose">Dispose()</h4>
@@ -162,7 +168,7 @@ The timer fires off messages at the rate specified  by timerInterval.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L68">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_Finalize_" data-uid="Microsoft.Psi.Components.Timer.Finalize*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_Finalize" data-uid="Microsoft.Psi.Components.Timer.Finalize">Finalize()</h4>
@@ -176,7 +182,7 @@ Releases the underlying unmanaged timer.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L109">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L115">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_Generate_" data-uid="Microsoft.Psi.Components.Timer.Generate*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_Generate_DateTime_TimeSpan_" data-uid="Microsoft.Psi.Components.Timer.Generate(DateTime,TimeSpan)">Generate(DateTime, TimeSpan)</h4>
@@ -213,7 +219,7 @@ Releases the underlying unmanaged timer.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L88">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_Start_" data-uid="Microsoft.Psi.Components.Timer.Start*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_Start_Action_DateTime__" data-uid="Microsoft.Psi.Components.Timer.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -251,7 +257,7 @@ should also notify with a completion time of <see cref="!:DateTime.MaxValue"></s
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L101">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Timer_Stop_" data-uid="Microsoft.Psi.Components.Timer.Stop*"></a>
   <h4 id="Microsoft_Psi_Components_Timer_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Components.Timer.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -288,6 +294,33 @@ posting non-reactive source messages.</p>
 messages. This delegate should be called once the component has posted its last non-reactive source
 message, but only up to (and possibly including) <code data-dev-comment-type="paramref" class="paramref">finalOriginatingTime</code>.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Timer.cs/#L108">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_Timer_ToString_" data-uid="Microsoft.Psi.Components.Timer.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_Timer_ToString" data-uid="Microsoft.Psi.Components.Timer.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

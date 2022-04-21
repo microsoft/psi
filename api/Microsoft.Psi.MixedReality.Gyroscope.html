@@ -112,6 +112,9 @@
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeImu.html#Microsoft_Psi_MixedReality_ResearchModeImu_Stop_DateTime_Action_">ResearchModeImu.Stop(DateTime, Action)</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeImu.html#Microsoft_Psi_MixedReality_ResearchModeImu_ToString">ResearchModeImu.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.ResearchModeImu.html#Microsoft_Psi_MixedReality_ResearchModeImu_PostSamples__1_IResearchModeSensorFrame___0___Func___0_System_ValueTuple_System_Single_System_Single_System_Single___Func___0_System_UInt64__">ResearchModeImu.PostSamples&lt;T&gt;(IResearchModeSensorFrame, T[], Func&lt;T, ValueTuple&lt;Single, Single, Single&gt;&gt;, Func&lt;T, UInt64&gt;)</a>
     </div>
   </div>
@@ -125,16 +128,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/Gyroscope.cs/#L18">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/Gyroscope.cs/#L19">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Gyroscope__ctor_" data-uid="Microsoft.Psi.MixedReality.Gyroscope.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_Gyroscope__ctor_Microsoft_Psi_Pipeline_" data-uid="Microsoft.Psi.MixedReality.Gyroscope.#ctor(Microsoft.Psi.Pipeline)">Gyroscope(Pipeline)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_Gyroscope__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.MixedReality.Gyroscope.#ctor(Microsoft.Psi.Pipeline,System.String)">Gyroscope(Pipeline, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.Gyroscope.html">Gyroscope</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Gyroscope(Pipeline pipeline)</code></pre>
+    <pre><code class="lang-csharp hljs">public Gyroscope(Pipeline pipeline, string name = &quot;Gyroscope&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -152,13 +155,19 @@
         <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/Gyroscope.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/Gyroscope.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_Gyroscope_ProcessSensorFrame_" data-uid="Microsoft.Psi.MixedReality.Gyroscope.ProcessSensorFrame*"></a>
   <h4 id="Microsoft_Psi_MixedReality_Gyroscope_ProcessSensorFrame_IResearchModeSensorFrame_" data-uid="Microsoft.Psi.MixedReality.Gyroscope.ProcessSensorFrame(IResearchModeSensorFrame)">ProcessSensorFrame(IResearchModeSensorFrame)</h4>

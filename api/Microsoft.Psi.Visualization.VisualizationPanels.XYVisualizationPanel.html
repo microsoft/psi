@@ -92,7 +92,7 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
-    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.html">CanvasVisualizationPanel</a></div>
+    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html">InstantVisualizationPanel</a></div>
     <div class="level5"><span class="xref">XYVisualizationPanel</span></div>
   </div>
   <div classs="implements">
@@ -102,7 +102,16 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_RelativeWidth">CanvasVisualizationPanel.RelativeWidth</a>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_DefaultCursorEpsilonNegMs">InstantVisualizationPanel.DefaultCursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_DefaultCursorEpsilonPosMs">InstantVisualizationPanel.DefaultCursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_RelativeWidth">InstantVisualizationPanel.RelativeWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_AddVisualizationObject_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">InstantVisualizationPanel.AddVisualizationObject(VisualizationObject)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibilityCommand">VisualizationPanel.ToggleAllVisualizersVisibilityCommand</a>
@@ -177,9 +186,6 @@
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_DeleteVisualizationCommand">VisualizationPanel.DeleteVisualizationCommand</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_AddVisualizationObject_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.AddVisualizationObject(VisualizationObject)</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_BringToFront_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.BringToFront(VisualizationObject)</a>
     </div>
     <div>
@@ -250,13 +256,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class XYVisualizationPanel : CanvasVisualizationPanel, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class XYVisualizationPanel : InstantVisualizationPanel, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L62">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel__ctor" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.#ctor">XYVisualizationPanel()</h4>
@@ -271,7 +277,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_AxisComputeMode_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.AxisComputeMode*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_AxisComputeMode" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.AxisComputeMode">AxisComputeMode</h4>
@@ -300,7 +306,7 @@ public AxisComputeMode AxisComputeMode { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L187">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L184">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_CompatiblePanelTypes_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.CompatiblePanelTypes*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_CompatiblePanelTypes" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.CompatiblePanelTypes">CompatiblePanelTypes</h4>
@@ -327,10 +333,10 @@ public AxisComputeMode AxisComputeMode { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_CompatiblePanelTypes">CanvasVisualizationPanel.CompatiblePanelTypes</a></div>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CompatiblePanelTypes">VisualizationPanel.CompatiblePanelTypes</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L377">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L384">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseEnterCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseEnterCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseEnterCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseEnterCommand">MouseEnterCommand</h4>
@@ -360,7 +366,7 @@ public RelayCommand MouseEnterCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L395">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L402">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseLeaveCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseLeaveCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseLeaveCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseLeaveCommand">MouseLeaveCommand</h4>
@@ -390,7 +396,7 @@ public RelayCommand MouseLeaveCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L321">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L325">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseMoveCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseMoveCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseMoveCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseMoveCommand">MouseMoveCommand</h4>
@@ -420,7 +426,7 @@ public RelayCommand&lt;MouseEventArgs&gt; MouseMoveCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L173">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L170">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MousePosition_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MousePosition*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MousePosition" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MousePosition">MousePosition</h4>
@@ -450,7 +456,7 @@ public Point MousePosition { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L164">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L161">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MousePositionString_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MousePositionString*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MousePositionString" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MousePositionString">MousePositionString</h4>
@@ -479,7 +485,7 @@ public string MousePositionString { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L271">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L275">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonDownCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonDownCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonDownCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonDownCommand">MouseRightButtonDownCommand</h4>
@@ -509,7 +515,7 @@ public RelayCommand&lt;MouseButtonEventArgs&gt; MouseRightButtonDownCommand { ge
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L293">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L297">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonUpCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonUpCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonUpCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonUpCommand">MouseRightButtonUpCommand</h4>
@@ -539,7 +545,7 @@ public RelayCommand&lt;MouseButtonEventArgs&gt; MouseRightButtonUpCommand { get;
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L216">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L217">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseWheelCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseWheelCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseWheelCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseWheelCommand">MouseWheelCommand</h4>
@@ -569,7 +575,7 @@ public RelayCommand&lt;MouseWheelEventArgs&gt; MouseWheelCommand { get; }</code>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L431">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L438">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_SetAutoAxisComputeModeCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.SetAutoAxisComputeModeCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_SetAutoAxisComputeModeCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.SetAutoAxisComputeModeCommand">SetAutoAxisComputeModeCommand</h4>
@@ -599,7 +605,7 @@ public RelayCommand SetAutoAxisComputeModeCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L192">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L189">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportLoadedCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportLoadedCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportLoadedCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportLoadedCommand">ViewportLoadedCommand</h4>
@@ -629,7 +635,7 @@ public RelayCommand&lt;RoutedEventArgs&gt; ViewportLoadedCommand { get; }</code>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L153">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L150">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportPadding_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportPadding*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportPadding" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportPadding">ViewportPadding</h4>
@@ -659,7 +665,7 @@ public Thickness ViewportPadding { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L413">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L420">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportSizeChangedCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportSizeChangedCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportSizeChangedCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportSizeChangedCommand">ViewportSizeChangedCommand</h4>
@@ -689,7 +695,7 @@ public RelayCommand&lt;SizeChangedEventArgs&gt; ViewportSizeChangedCommand { get
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L103">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L100">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_XAxis_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.XAxis*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_XAxis" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.XAxis">XAxis</h4>
@@ -719,7 +725,7 @@ public Axis XAxis { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L114">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L111">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_XAxisPropertyBrowser_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.XAxisPropertyBrowser*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_XAxisPropertyBrowser" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.XAxisPropertyBrowser">XAxisPropertyBrowser</h4>
@@ -748,7 +754,7 @@ public Axis XAxisPropertyBrowser { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L128">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L125">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_YAxis_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.YAxis*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_YAxis" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.YAxis">YAxis</h4>
@@ -778,7 +784,7 @@ public Axis YAxis { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L139">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L136">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_YAxisPropertyBrowser_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.YAxisPropertyBrowser*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_YAxisPropertyBrowser" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.YAxisPropertyBrowser">YAxisPropertyBrowser</h4>
@@ -809,7 +815,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L472">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L479">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_CreateDefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.CreateDefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_CreateDefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.CreateDefaultViewTemplate">CreateDefaultViewTemplate()</h4>
@@ -837,10 +843,10 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.CanvasVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_CanvasVisualizationPanel_CreateDefaultViewTemplate">CanvasVisualizationPanel.CreateDefaultViewTemplate()</a></div>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CreateDefaultViewTemplate">VisualizationPanel.CreateDefaultViewTemplate()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L450">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L457">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectXValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectXValueRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectXValueRangeChanged_System_Object_System_EventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectXValueRangeChanged(System.Object,System.EventArgs)">OnVisualizationObjectXValueRangeChanged(Object, EventArgs)</h4>
@@ -879,7 +885,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnVisualizationObjectXValueRangeChanged_System_Object_System_EventArgs_">VisualizationPanel.OnVisualizationObjectXValueRangeChanged(Object, EventArgs)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L461">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L468">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectYValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectYValueRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectYValueRangeChanged_System_Object_System_EventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectYValueRangeChanged(System.Object,System.EventArgs)">OnVisualizationObjectYValueRangeChanged(Object, EventArgs)</h4>
@@ -918,7 +924,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnVisualizationObjectYValueRangeChanged_System_Object_System_EventArgs_">VisualizationPanel.OnVisualizationObjectYValueRangeChanged(Object, EventArgs)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L482">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L489">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnXAxisPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnXAxisPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnXAxisPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnXAxisPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnXAxisPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -955,7 +961,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L502">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L509">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnYAxisPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnYAxisPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnYAxisPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnYAxisPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnYAxisPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -1012,7 +1018,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L24" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L23" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

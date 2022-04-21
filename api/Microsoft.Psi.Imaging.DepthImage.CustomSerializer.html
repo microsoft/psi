@@ -99,19 +99,13 @@
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_Version">ImageBase.CustomSerializer&lt;DepthImage&gt;.Version</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_IsClearRequired">ImageBase.CustomSerializer&lt;DepthImage&gt;.IsClearRequired</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_Schema">ImageBase.CustomSerializer&lt;DepthImage&gt;.Schema</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_Initialize_Microsoft_Psi_Serialization_KnownSerializers_Microsoft_Psi_Serialization_TypeSchema_">ImageBase.CustomSerializer&lt;DepthImage&gt;.Initialize(KnownSerializers, TypeSchema)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_PrepareCloningTarget__0__0__Microsoft_Psi_Serialization_SerializationContext_">ImageBase.CustomSerializer&lt;DepthImage&gt;.PrepareCloningTarget(DepthImage, DepthImage, SerializationContext)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_Clone__0__0__Microsoft_Psi_Serialization_SerializationContext_">ImageBase.CustomSerializer&lt;DepthImage&gt;.Clone(DepthImage, DepthImage, SerializationContext)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_PrepareDeserializationTarget_Microsoft_Psi_Common_BufferReader__0__Microsoft_Psi_Serialization_SerializationContext_">ImageBase.CustomSerializer&lt;DepthImage&gt;.PrepareDeserializationTarget(BufferReader, DepthImage, SerializationContext)</a>
@@ -130,7 +124,52 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L380">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L502">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Clone_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Clone*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Clone_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Clone(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Imaging.DepthImage@,Microsoft.Psi.Serialization.SerializationContext)">Clone(DepthImage, ref DepthImage, SerializationContext)</h4>
+  <div class="markdown level1 summary"><p>Clone depth image.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void Clone(DepthImage instance, ref DepthImage target, SerializationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>Depth image instance to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Target depth image into which to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>Serialization context.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt;Microsoft.Psi.Imaging.DepthImage&gt;.Clone(Microsoft.Psi.Imaging.DepthImage, Microsoft.Psi.Imaging.DepthImage, Microsoft.Psi.Serialization.SerializationContext)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L420">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_ConfigureCompression_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.ConfigureCompression*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_ConfigureCompression_Microsoft_Psi_Imaging_IDepthImageCompressor_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.ConfigureCompression(Microsoft.Psi.Imaging.IDepthImageCompressor)">ConfigureCompression(IDepthImageCompressor)</h4>
@@ -161,11 +200,11 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L401">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L515">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Deserialize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Deserialize*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Deserialize_Microsoft_Psi_Common_BufferReader_Microsoft_Psi_Imaging_DepthImage__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Deserialize(Microsoft.Psi.Common.BufferReader,Microsoft.Psi.Imaging.DepthImage@,Microsoft.Psi.Serialization.SerializationContext)">Deserialize(BufferReader, ref DepthImage, SerializationContext)</h4>
-  <div class="markdown level1 summary"><p>Deserialize image.</p>
+  <div class="markdown level1 summary"><p>Deserialize depth image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -191,7 +230,8 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
         <td><span class="parametername">target</span></td>
-        <td></td>
+        <td><p>Target depth image into which to deserialize.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
@@ -205,11 +245,114 @@
   <div><span class="xref">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt;Microsoft.Psi.Imaging.DepthImage&gt;.Deserialize(Microsoft.Psi.Common.BufferReader, Microsoft.Psi.Imaging.DepthImage, Microsoft.Psi.Serialization.SerializationContext)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L386">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L426">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Initialize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Initialize*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Initialize_Microsoft_Psi_Serialization_KnownSerializers_Microsoft_Psi_Serialization_TypeSchema_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Initialize(Microsoft.Psi.Serialization.KnownSerializers,Microsoft.Psi.Serialization.TypeSchema)">Initialize(KnownSerializers, TypeSchema)</h4>
+  <div class="markdown level1 summary"><p>Initialize custom serializer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.KnownSerializers.html">KnownSerializers</a></td>
+        <td><span class="parametername">serializers</span></td>
+        <td><p>Known serializers.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a></td>
+        <td><span class="parametername">targetSchema</span></td>
+        <td><p>Target type schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a></td>
+        <td><p>Type schema.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt;Microsoft.Psi.Imaging.DepthImage&gt;.Initialize(Microsoft.Psi.Serialization.KnownSerializers, Microsoft.Psi.Serialization.TypeSchema)</span></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L482">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_PrepareCloningTarget_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.PrepareCloningTarget*"></a>
+  <h4 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_PrepareCloningTarget_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.PrepareCloningTarget(Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Imaging.DepthImage@,Microsoft.Psi.Serialization.SerializationContext)">PrepareCloningTarget(DepthImage, ref DepthImage, SerializationContext)</h4>
+  <div class="markdown level1 summary"><p>Prepare target for cloning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void PrepareCloningTarget(DepthImage instance, ref DepthImage target, SerializationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">instance</span></td>
+        <td><p>Depth image instance from which to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>Depth image into which to clone.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td><p>Serialization context.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt;Microsoft.Psi.Imaging.DepthImage&gt;.PrepareCloningTarget(Microsoft.Psi.Imaging.DepthImage, Microsoft.Psi.Imaging.DepthImage, Microsoft.Psi.Serialization.SerializationContext)</span></div>
+  <h5 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_PrepareCloningTarget_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Imaging_DepthImage__Microsoft_Psi_Serialization_SerializationContext__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Called before Clone, to ensure the target is valid.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L454">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Serialize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Serialize*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CustomSerializer_Serialize_Microsoft_Psi_Common_BufferWriter_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.Serialize(Microsoft.Psi.Common.BufferWriter,Microsoft.Psi.Imaging.DepthImage,Microsoft.Psi.Serialization.SerializationContext)">Serialize(BufferWriter, DepthImage, SerializationContext)</h4>
-  <div class="markdown level1 summary"><p>Serialize image.</p>
+  <div class="markdown level1 summary"><p>Serialize depth image.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -235,7 +378,8 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></td>
         <td><span class="parametername">instance</span></td>
-        <td></td>
+        <td><p>Depth image instance to serialize.</p>
+</td>
       </tr>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationContext.html">SerializationContext</a></td>
@@ -269,7 +413,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L372" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L412" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

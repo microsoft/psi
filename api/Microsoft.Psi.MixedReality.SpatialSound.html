@@ -107,6 +107,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown">StereoKitComponent.Shutdown()</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_ToString">StereoKitComponent.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
@@ -118,16 +121,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L29">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SpatialSound__ctor_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_SpatialSound__ctor_Pipeline_Point3D_System_Double_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.#ctor(Pipeline,Point3D,System.Double)">SpatialSound(Pipeline, Point3D, Double)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_SpatialSound__ctor_Pipeline_Point3D_System_Double_System_String_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.#ctor(Pipeline,Point3D,System.Double,System.String)">SpatialSound(Pipeline, Point3D, Double, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.SpatialSound.html">SpatialSound</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SpatialSound(Pipeline pipeline, Point3D initialPosition, double initialVolume = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public SpatialSound(Pipeline pipeline, Point3D initialPosition, double initialVolume = null, string name = &quot;SpatialSound&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -157,13 +160,19 @@
         <td><p>Intial audio volume (0-1, default 1).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L43">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SpatialSound_In_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.In*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SpatialSound_In" data-uid="Microsoft.Psi.MixedReality.SpatialSound.In">In</h4>
@@ -191,7 +200,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SpatialSound_PositionInput_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.PositionInput*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SpatialSound_PositionInput" data-uid="Microsoft.Psi.MixedReality.SpatialSound.PositionInput">PositionInput</h4>
@@ -219,7 +228,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L52">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SpatialSound_VolumeInput_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.VolumeInput*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SpatialSound_VolumeInput" data-uid="Microsoft.Psi.MixedReality.SpatialSound.VolumeInput">VolumeInput</h4>
@@ -249,7 +258,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L55">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/SpatialSound.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SpatialSound_Initialize_" data-uid="Microsoft.Psi.MixedReality.SpatialSound.Initialize*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SpatialSound_Initialize" data-uid="Microsoft.Psi.MixedReality.SpatialSound.Initialize">Initialize()</h4>

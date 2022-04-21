@@ -104,7 +104,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Timers.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_Timers_Timer_" data-uid="Microsoft.Psi.Timers.Timer*"></a>
-  <h4 id="Microsoft_Psi_Timers_Timer_Microsoft_Psi_Pipeline_TimeSpan_" data-uid="Microsoft.Psi.Timers.Timer(Microsoft.Psi.Pipeline,TimeSpan)">Timer(Pipeline, TimeSpan)</h4>
+  <h4 id="Microsoft_Psi_Timers_Timer_Microsoft_Psi_Pipeline_TimeSpan_System_String_" data-uid="Microsoft.Psi.Timers.Timer(Microsoft.Psi.Pipeline,TimeSpan,System.String)">Timer(Pipeline, TimeSpan, String)</h4>
   <div class="markdown level1 summary"><p>Generates a stream of <see cref="!:TimeSpan"></see> messages indicating the time elapsed from the start of the pipeline.
 Unlike the generators available in the <a class="xref" href="Microsoft.Psi.Generators.html">Generators</a> class,
 this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load.
@@ -114,7 +114,7 @@ but if the pipeline slows down, the interval between messages might not appear c
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeSpan&gt; Timer(Pipeline pipeline, TimeSpan interval)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;TimeSpan&gt; Timer(Pipeline pipeline, TimeSpan interval, string name = &quot;Timer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -138,6 +138,12 @@ but if the pipeline slows down, the interval between messages might not appear c
         <td><p>The interval at which to generate messages.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -158,10 +164,10 @@ but if the pipeline slows down, the interval between messages might not appear c
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Timers.cs/#L26">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Operators/Timers.cs/#L27">View Source</a>
   </span>
   <a id="Microsoft_Psi_Timers_Timer_" data-uid="Microsoft.Psi.Timers.Timer*"></a>
-  <h4 id="Microsoft_Psi_Timers_Timer__1_Microsoft_Psi_Pipeline_TimeSpan_Func_DateTime_TimeSpan___0__" data-uid="Microsoft.Psi.Timers.Timer``1(Microsoft.Psi.Pipeline,TimeSpan,Func{DateTime,TimeSpan,``0})">Timer&lt;T&gt;(Pipeline, TimeSpan, Func&lt;DateTime, TimeSpan, T&gt;)</h4>
+  <h4 id="Microsoft_Psi_Timers_Timer__1_Microsoft_Psi_Pipeline_TimeSpan_Func_DateTime_TimeSpan___0__System_String_" data-uid="Microsoft.Psi.Timers.Timer``1(Microsoft.Psi.Pipeline,TimeSpan,Func{DateTime,TimeSpan,``0},System.String)">Timer&lt;T&gt;(Pipeline, TimeSpan, Func&lt;DateTime, TimeSpan, T&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Generates a stream by invoking a user-provided function at a regular time interval.
 Unlike the generators available in the <a class="xref" href="Microsoft.Psi.Generators.html">Generators</a> class,
 this operator relies on an OS timer. This guarantees that messages are emitted at regular wall-clock intervals regardless of pipeline load.
@@ -171,7 +177,7 @@ but if the pipeline slows down, the interval between messages might not appear c
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Timer&lt;T&gt;(Pipeline pipeline, TimeSpan interval, Func&lt;DateTime, TimeSpan, T&gt; generatorFn)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;T&gt; Timer&lt;T&gt;(Pipeline pipeline, TimeSpan interval, Func&lt;DateTime, TimeSpan, T&gt; generatorFn, string name = &quot;Timer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -199,6 +205,12 @@ but if the pipeline slows down, the interval between messages might not appear c
         <td><span class="xref">Func</span>&lt;<span class="xref">DateTime</span>, <span class="xref">TimeSpan</span>, T&gt;</td>
         <td><span class="parametername">generatorFn</span></td>
         <td><p>The function generating the messages.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>

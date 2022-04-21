@@ -112,16 +112,16 @@ audio buffers which are &quot;played&quot; upon receiving a true input signal.</
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveStreamSampleSource.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveStreamSampleSource.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveStreamSampleSource__ctor_" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_WaveStreamSampleSource__ctor_Microsoft_Psi_Pipeline_Stream_" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.#ctor(Microsoft.Psi.Pipeline,Stream)">WaveStreamSampleSource(Pipeline, Stream)</h4>
+  <h4 id="Microsoft_Psi_Audio_WaveStreamSampleSource__ctor_Microsoft_Psi_Pipeline_Stream_System_String_" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.#ctor(Microsoft.Psi.Pipeline,Stream,System.String)">WaveStreamSampleSource(Pipeline, Stream, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.WaveStreamSampleSource.html">WaveStreamSampleSource</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WaveStreamSampleSource(Pipeline pipeline, Stream stream)</code></pre>
+    <pre><code class="lang-csharp hljs">public WaveStreamSampleSource(Pipeline pipeline, Stream stream, string name = &quot;WaveStreamSampleSource&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -145,13 +145,19 @@ audio buffers which are &quot;played&quot; upon receiving a true input signal.</
         <td><p>Audio stream in WAVE format (48KHz, 1-channel, IEEE Float).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveStreamSampleSource.cs/#L67">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveStreamSampleSource.cs/#L70">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveStreamSampleSource_In_" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.In*"></a>
   <h4 id="Microsoft_Psi_Audio_WaveStreamSampleSource_In" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.In">In</h4>
@@ -179,7 +185,7 @@ audio buffers which are &quot;played&quot; upon receiving a true input signal.</
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveStreamSampleSource.cs/#L72">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveStreamSampleSource.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveStreamSampleSource_Out_" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.Out*"></a>
   <h4 id="Microsoft_Psi_Audio_WaveStreamSampleSource_Out" data-uid="Microsoft.Psi.Audio.WaveStreamSampleSource.Out">Out</h4>

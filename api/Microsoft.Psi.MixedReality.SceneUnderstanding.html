@@ -107,6 +107,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_Stop_DateTime_Action_">Generator.Stop(DateTime, Action)</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_ToString">Generator.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.UniversalWindows.dll</h6>
@@ -118,16 +121,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L35">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L36">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding__ctor_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_SceneUnderstandingConfiguration_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.SceneUnderstandingConfiguration)">SceneUnderstanding(Pipeline, SceneUnderstandingConfiguration)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_SceneUnderstandingConfiguration_System_String_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.SceneUnderstandingConfiguration,System.String)">SceneUnderstanding(Pipeline, SceneUnderstandingConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.SceneUnderstanding.html">SceneUnderstanding</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SceneUnderstanding(Pipeline pipeline, SceneUnderstandingConfiguration configuration = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public SceneUnderstanding(Pipeline pipeline, SceneUnderstandingConfiguration configuration = null, string name = &quot;SceneUnderstanding&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -151,13 +154,19 @@
         <td><p>The configuration for the component.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L80">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_Enabled_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Enabled*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_Enabled" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Enabled">Enabled</h4>
@@ -184,7 +193,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L77">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_Out_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Out*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_Out" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Out">Out</h4>
@@ -212,7 +221,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_PlacementRectangleSizeInput_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.PlacementRectangleSizeInput*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_PlacementRectangleSizeInput" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.PlacementRectangleSizeInput">PlacementRectangleSizeInput</h4>
@@ -242,7 +251,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L92">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_Dispose_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Dispose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_Dispose" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Dispose">Dispose()</h4>
@@ -254,7 +263,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L102">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_GenerateNext_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.GenerateNext*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_GenerateNext_DateTime_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.GenerateNext(DateTime)">GenerateNext(DateTime)</h4>
@@ -298,7 +307,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L83">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_Initialize_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Initialize*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_Initialize" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Initialize">Initialize()</h4>
@@ -325,7 +334,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L87">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_Shutdown_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Shutdown*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_Shutdown" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Shutdown">Shutdown()</h4>
@@ -337,7 +346,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/SceneUnderstanding.cs/#L86">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_SceneUnderstanding_Step_" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Step*"></a>
   <h4 id="Microsoft_Psi_MixedReality_SceneUnderstanding_Step" data-uid="Microsoft.Psi.MixedReality.SceneUnderstanding.Step">Step()</h4>

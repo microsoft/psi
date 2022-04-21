@@ -101,16 +101,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L30">View Source</a>
   </span>
-  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_DetectObjects_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.DetectObjects*"></a>
-  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_DetectObjects_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.DetectObjects(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">DetectObjects(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Performs object detection on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetAdult_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetAdult*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetAdult_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetAdult(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetAdult(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the adult info on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;DetectedObject&gt;&gt; DetectObjects(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;AdultInfo&gt; GetAdult(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetAdult&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -144,6 +144,544 @@
         <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
         <td><span class="parametername">deliveryPolicy</span></td>
         <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">AdultInfo</span>&gt;</td>
+        <td><p>A stream of adult info.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetAdult_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L52">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetBrands_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetBrands*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetBrands_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetBrands(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetBrands(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the brands info on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;DetectedBrand&gt;&gt; GetBrands(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetBrands&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">IList</span>&lt;<span class="xref">DetectedBrand</span>&gt;&gt;</td>
+        <td><p>A stream of brands info.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetBrands_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetCategories_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetCategories*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetCategories_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetCategories(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetCategories(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the category info on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;Category&gt;&gt; GetCategories(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetCategories&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">IList</span>&lt;<span class="xref">Category</span>&gt;&gt;</td>
+        <td><p>A stream of category info.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetCategories_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L96">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetColor_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetColor*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetColor_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetColor(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetColor(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the color info on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;ColorInfo&gt; GetColor(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetColor&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">ColorInfo</span>&gt;</td>
+        <td><p>A stream of color info.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetColor_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetDescription_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetDescription*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetDescription_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetDescription(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetDescription(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the image description details on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageDescriptionDetails&gt; GetDescription(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetDescription&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">ImageDescriptionDetails</span>&gt;</td>
+        <td><p>A stream of image description details.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetDescription_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L140">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetFaces_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetFaces*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetFaces_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetFaces(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetFaces(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the face description results on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;FaceDescription&gt;&gt; GetFaces(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetFaces&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">IList</span>&lt;<span class="xref">FaceDescription</span>&gt;&gt;</td>
+        <td><p>A stream of face descriptions.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetFaces_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L162">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetImageType_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetImageType*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetImageType_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetImageType(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetImageType(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the image type info on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageType&gt; GetImageType(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetImageType&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">ImageType</span>&gt;</td>
+        <td><p>A stream of image image type info.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetImageType_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
+subscription key is required to use this operator. For more information, see the full direct API for.
+<a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L184">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetObjects_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetObjects*"></a>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetObjects_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetObjects(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetObjects(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the object detection results on a stream of images via the <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;DetectedObject&gt;&gt; GetObjects(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetObjects&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of images.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">subscriptionKey</span></td>
+        <td><p>The Azure subscription key to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">region</span></td>
+        <td><p>The region for the Azure subscription.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.DeliveryPolicy-1.html">DeliveryPolicy</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
 </td>
       </tr>
     </tbody>
@@ -159,28 +697,28 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">IList</span>&lt;<span class="xref">DetectedObject</span>&gt;&gt;</td>
-        <td><p>A stream of detected objects for each image.</p>
+        <td><p>A stream of detected objects.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_DetectObjects_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image____remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetObjects_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
 subscription key is required to use this operator. For more information, see the full direct API for.
 <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L206">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetTags_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetTags*"></a>
-  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetTags_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetTags(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">GetTags(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;)</h4>
-  <div class="markdown level1 summary"><p>Gets the tags associated with an images via <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
+  <h4 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetTags_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.CognitiveServices.Vision.Operators.GetTags(Microsoft.Psi.IProducer{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String,System.String,Microsoft.Psi.DeliveryPolicy{Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">GetTags(IProducer&lt;Shared&lt;Image&gt;&gt;, String, String, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Gets the tags on a stream of images via <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API.</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;ImageTag&gt;&gt; GetTags(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;IList&lt;ImageTag&gt;&gt; GetTags(this IProducer&lt;Shared&lt;Image&gt;&gt; source, string subscriptionKey, string region, DeliveryPolicy&lt;Shared&lt;Image&gt;&gt; deliveryPolicy = null, string name = &quot;GetTags&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -216,6 +754,12 @@ subscription key is required to use this operator. For more information, see the
         <td><p>An optional delivery policy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -229,12 +773,12 @@ subscription key is required to use this operator. For more information, see the
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<span class="xref">IList</span>&lt;<span class="xref">ImageTag</span>&gt;&gt;</td>
-        <td><p>A stream of tags for each image.</p>
+        <td><p>A stream of tags.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetTags_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image____remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_CognitiveServices_Vision_Operators_GetTags_Microsoft_Psi_IProducer_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_System_String_Microsoft_Psi_DeliveryPolicy_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>A <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a>
 subscription key is required to use this operator. For more information, see the full direct API for.
 <a href="https://azure.microsoft.com/en-us/services/cognitive-services/computer-vision/">Microsoft Cognitive Services Vision API</a></p>
@@ -247,7 +791,7 @@ subscription key is required to use this operator. For more information, see the
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Vision/Operators.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

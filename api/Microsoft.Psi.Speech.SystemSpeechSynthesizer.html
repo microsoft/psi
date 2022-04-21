@@ -109,6 +109,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;String, AudioBuffer&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;String, AudioBuffer&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;String, AudioBuffer&gt;.Receive(String, Envelope)</a>
     </div>
   </div>
@@ -126,16 +129,16 @@ stream of audio containing the synthesized speech.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer__ctor_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Speech_SystemSpeechSynthesizerConfiguration_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Speech.SystemSpeechSynthesizerConfiguration)">SystemSpeechSynthesizer(Pipeline, SystemSpeechSynthesizerConfiguration)</h4>
+  <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Speech_SystemSpeechSynthesizerConfiguration_System_String_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Speech.SystemSpeechSynthesizerConfiguration,System.String)">SystemSpeechSynthesizer(Pipeline, SystemSpeechSynthesizerConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Speech.SystemSpeechSynthesizer.html">SystemSpeechSynthesizer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SystemSpeechSynthesizer(Pipeline pipeline, SystemSpeechSynthesizerConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public SystemSpeechSynthesizer(Pipeline pipeline, SystemSpeechSynthesizerConfiguration configuration, string name = &quot;SystemSpeechSynthesizer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -159,20 +162,26 @@ stream of audio containing the synthesized speech.</p>
         <td><p>The component configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer__ctor_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.#ctor(Microsoft.Psi.Pipeline,System.String)">SystemSpeechSynthesizer(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">SystemSpeechSynthesizer(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Speech.SystemSpeechSynthesizer.html">SystemSpeechSynthesizer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SystemSpeechSynthesizer(Pipeline pipeline, string configurationFilename = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public SystemSpeechSynthesizer(Pipeline pipeline, string configurationFilename = null, string name = &quot;SystemSpeechSynthesizer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -196,13 +205,19 @@ stream of audio containing the synthesized speech.</p>
         <td><p>The component configuration file.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L100">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_BookmarkReached_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.BookmarkReached*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_BookmarkReached" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.BookmarkReached">BookmarkReached</h4>
@@ -230,7 +245,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L92">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L95">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_CancelAll_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.CancelAll*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_CancelAll" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.CancelAll">CancelAll</h4>
@@ -258,7 +273,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L105">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_PhonemeReached_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.PhonemeReached*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_PhonemeReached" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.PhonemeReached">PhonemeReached</h4>
@@ -286,7 +301,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L107">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L110">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakCompleted_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakCompleted*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakCompleted" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakCompleted">SpeakCompleted</h4>
@@ -314,7 +329,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L112">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L115">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakProgress_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakProgress*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakProgress" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakProgress">SpeakProgress</h4>
@@ -342,7 +357,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L87">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L90">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakSsml_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakSsml*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakSsml" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakSsml">SpeakSsml</h4>
@@ -370,7 +385,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L117">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakStarted_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakStarted*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_SpeakStarted" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.SpeakStarted">SpeakStarted</h4>
@@ -398,7 +413,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L122">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L125">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_StateChanged_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.StateChanged*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_StateChanged" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.StateChanged">StateChanged</h4>
@@ -426,7 +441,7 @@ stream of audio containing the synthesized speech.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L127">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L130">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_VisemeReached_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.VisemeReached*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_VisemeReached" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.VisemeReached">VisemeReached</h4>
@@ -456,7 +471,7 @@ stream of audio containing the synthesized speech.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L154">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L157">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Dispose_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Dispose*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Dispose" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Dispose">Dispose()</h4>
@@ -468,7 +483,7 @@ stream of audio containing the synthesized speech.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L186">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L189">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Receive_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Receive*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Receive_System_String_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Receive(System.String,Microsoft.Psi.Envelope)">Receive(String, Envelope)</h4>
@@ -509,7 +524,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   <div><span class="xref">Microsoft.Psi.Components.ConsumerProducer&lt;System.String, Microsoft.Psi.Audio.AudioBuffer&gt;.Receive(System.String, Microsoft.Psi.Envelope)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L164">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L167">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Start_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Start*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Start_System_Action_System_DateTime__" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Start(System.Action{System.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -538,7 +553,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L170">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L173">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Stop_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Stop*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Stop_System_DateTime_System_Action_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Stop(System.DateTime,System.Action)">Stop(DateTime, Action)</h4>
@@ -572,7 +587,7 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L142">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemSpeechSynthesizer.cs/#L145">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Write_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Write*"></a>
   <h4 id="Microsoft_Psi_Speech_SystemSpeechSynthesizer_Write_System_String_Microsoft_Psi_Data_Exporter_" data-uid="Microsoft.Psi.Speech.SystemSpeechSynthesizer.Write(System.String,Microsoft.Psi.Data.Exporter)">Write(String, Exporter)</h4>

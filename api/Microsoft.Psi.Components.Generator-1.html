@@ -108,6 +108,9 @@ at the pace dictated by the pipeline.</p>
     <div>
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_Stop_DateTime_Action_">Generator.Stop(DateTime, Action)</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_ToString">Generator.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Components.html">Microsoft.Psi.Components</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
@@ -139,16 +142,16 @@ and are designed to make the common cases easier.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_1__ctor_" data-uid="Microsoft.Psi.Components.Generator`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Generator_1__ctor_Microsoft_Psi_Pipeline_IEnumerator__0__TimeSpan_System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Components.Generator`1.#ctor(Microsoft.Psi.Pipeline,IEnumerator{`0},TimeSpan,System.Nullable{DateTime},System.Boolean)">Generator(Pipeline, IEnumerator&lt;T&gt;, TimeSpan, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Components_Generator_1__ctor_Microsoft_Psi_Pipeline_IEnumerator__0__TimeSpan_System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Components.Generator`1.#ctor(Microsoft.Psi.Pipeline,IEnumerator{`0},TimeSpan,System.Nullable{DateTime},System.Boolean,System.String)">Generator(Pipeline, IEnumerator&lt;T&gt;, TimeSpan, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Generator-1.html">Generator&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Generator(Pipeline pipeline, IEnumerator&lt;T&gt; enumerator, TimeSpan interval, DateTime? alignDateTime = null, bool isInfiniteSource = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public Generator(Pipeline pipeline, IEnumerator&lt;T&gt; enumerator, TimeSpan interval, DateTime? alignDateTime = null, bool isInfiniteSource = false, string name = &quot;Generator&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -192,20 +195,26 @@ is non-null, the messages will have originating times that align with the specif
 If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_1__ctor_" data-uid="Microsoft.Psi.Components.Generator`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_Generator_1__ctor_Microsoft_Psi_Pipeline_IEnumerator_System_ValueTuple__0_DateTime___System_Nullable_DateTime__System_Boolean_" data-uid="Microsoft.Psi.Components.Generator`1.#ctor(Microsoft.Psi.Pipeline,IEnumerator{System.ValueTuple{`0,DateTime}},System.Nullable{DateTime},System.Boolean)">Generator(Pipeline, IEnumerator&lt;(T, DateTime)&gt;, Nullable&lt;DateTime&gt;, Boolean)</h4>
+  <h4 id="Microsoft_Psi_Components_Generator_1__ctor_Microsoft_Psi_Pipeline_IEnumerator_System_ValueTuple__0_DateTime___System_Nullable_DateTime__System_Boolean_System_String_" data-uid="Microsoft.Psi.Components.Generator`1.#ctor(Microsoft.Psi.Pipeline,IEnumerator{System.ValueTuple{`0,DateTime}},System.Nullable{DateTime},System.Boolean,System.String)">Generator(Pipeline, IEnumerator&lt;(T, DateTime)&gt;, Nullable&lt;DateTime&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.Generator-1.html">Generator&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Generator(Pipeline pipeline, IEnumerator&lt;(T, DateTime)&gt; enumerator, DateTime? startTime = null, bool isInfiniteSource = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public Generator(Pipeline pipeline, IEnumerator&lt;(T, DateTime)&gt; enumerator, DateTime? startTime = null, bool isInfiniteSource = false, string name = &quot;Generator&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -245,13 +254,19 @@ account any other components in the pipeline which may have proposed replay time
 If false (default), it represents a finite source (e.g., Generating messages based on a finite file or IEnumerable).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L66">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L68">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_1_Out_" data-uid="Microsoft.Psi.Components.Generator`1.Out*"></a>
   <h4 id="Microsoft_Psi_Components_Generator_1_Out" data-uid="Microsoft.Psi.Components.Generator`1.Out">Out</h4>
@@ -281,7 +296,7 @@ If false (default), it represents a finite source (e.g., Generating messages bas
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_1_Dispose_" data-uid="Microsoft.Psi.Components.Generator`1.Dispose*"></a>
   <h4 id="Microsoft_Psi_Components_Generator_1_Dispose" data-uid="Microsoft.Psi.Components.Generator`1.Dispose">Dispose()</h4>
@@ -293,7 +308,7 @@ If false (default), it represents a finite source (e.g., Generating messages bas
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L79">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/Generator{T}.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_Generator_1_GenerateNext_" data-uid="Microsoft.Psi.Components.Generator`1.GenerateNext*"></a>
   <h4 id="Microsoft_Psi_Components_Generator_1_GenerateNext_DateTime_" data-uid="Microsoft.Psi.Components.Generator`1.GenerateNext(DateTime)">GenerateNext(DateTime)</h4>

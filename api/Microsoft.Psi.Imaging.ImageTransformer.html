@@ -107,6 +107,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;Shared&lt;Image&gt;, Shared&lt;Image&gt;&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;Shared&lt;Image&gt;, Shared&lt;Image&gt;&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;Shared&lt;Image&gt;, Shared&lt;Image&gt;&gt;.Receive(Shared&lt;Image&gt;, Envelope)</a>
     </div>
   </div>
@@ -120,16 +123,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageTransformer.cs/#L32">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageTransformer.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageTransformer__ctor_" data-uid="Microsoft.Psi.Imaging.ImageTransformer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImageTransformer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Imaging_TransformDelegate_Microsoft_Psi_Imaging_PixelFormat_System_Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___" data-uid="Microsoft.Psi.Imaging.ImageTransformer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Imaging.TransformDelegate,Microsoft.Psi.Imaging.PixelFormat,System.Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}})">ImageTransformer(Pipeline, TransformDelegate, PixelFormat, System.Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImageTransformer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Imaging_TransformDelegate_Microsoft_Psi_Imaging_PixelFormat_Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Imaging.ImageTransformer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Imaging.TransformDelegate,Microsoft.Psi.Imaging.PixelFormat,Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image}},System.String)">ImageTransformer(Pipeline, TransformDelegate, PixelFormat, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageTransformer.html">ImageTransformer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImageTransformer(Pipeline pipeline, TransformDelegate transformer, PixelFormat pixelFormat, System.Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public ImageTransformer(Pipeline pipeline, TransformDelegate transformer, PixelFormat pixelFormat, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;ImageTransformer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -160,9 +163,15 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.func-4">System.Func</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
         <td><span class="parametername">sharedImageAllocator</span></td>
         <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -170,7 +179,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageTransformer.cs/#L46">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageTransformer.cs/#L52">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageTransformer_Receive_" data-uid="Microsoft.Psi.Imaging.ImageTransformer.Receive*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageTransformer_Receive_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image__Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Imaging.ImageTransformer.Receive(Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image},Microsoft.Psi.Envelope)">Receive(Shared&lt;Image&gt;, Envelope)</h4>
@@ -235,7 +244,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageTransformer.cs/#L19" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageTransformer.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

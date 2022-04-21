@@ -102,6 +102,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Components.SimpleConsumer-1.html#Microsoft_Psi_Components_SimpleConsumer_1_In">SimpleConsumer&lt;AudioBuffer&gt;.In</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.SimpleConsumer-1.html#Microsoft_Psi_Components_SimpleConsumer_1_ToString">SimpleConsumer&lt;AudioBuffer&gt;.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Audio.html">Microsoft.Psi.Audio</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Audio.dll</h6>
@@ -113,16 +116,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileWriter.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileWriter.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveFileWriter__ctor_" data-uid="Microsoft.Psi.Audio.WaveFileWriter.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_WaveFileWriter__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Audio.WaveFileWriter.#ctor(Microsoft.Psi.Pipeline,System.String)">WaveFileWriter(Pipeline, String)</h4>
+  <h4 id="Microsoft_Psi_Audio_WaveFileWriter__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Audio.WaveFileWriter.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">WaveFileWriter(Pipeline, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.WaveFileWriter.html">WaveFileWriter</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WaveFileWriter(Pipeline pipeline, string filename)</code></pre>
+    <pre><code class="lang-csharp hljs">public WaveFileWriter(Pipeline pipeline, string filename, string name = &quot;WaveFileWriter&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -146,13 +149,19 @@
         <td><p>The path name of the Wave file.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileWriter.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileWriter.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveFileWriter_Dispose_" data-uid="Microsoft.Psi.Audio.WaveFileWriter.Dispose*"></a>
   <h4 id="Microsoft_Psi_Audio_WaveFileWriter_Dispose" data-uid="Microsoft.Psi.Audio.WaveFileWriter.Dispose">Dispose()</h4>
@@ -165,7 +174,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileWriter.cs/#L46">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileWriter.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveFileWriter_Receive_" data-uid="Microsoft.Psi.Audio.WaveFileWriter.Receive*"></a>
   <h4 id="Microsoft_Psi_Audio_WaveFileWriter_Receive_Microsoft_Psi_Message_Microsoft_Psi_Audio_AudioBuffer__" data-uid="Microsoft.Psi.Audio.WaveFileWriter.Receive(Microsoft.Psi.Message{Microsoft.Psi.Audio.AudioBuffer})">Receive(Message&lt;AudioBuffer&gt;)</h4>

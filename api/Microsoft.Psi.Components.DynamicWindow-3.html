@@ -107,6 +107,9 @@
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Out">ConsumerProducer&lt;TInput, TOutput&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;TInput, TOutput&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;TInput, TOutput&gt;.Receive(TInput, Envelope)</a>
     </div>
   </div>
@@ -152,16 +155,16 @@ to the window message and the computed buffer of messages on the input stream.</
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/DynamicWindow.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/DynamicWindow.cs/#L37">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_DynamicWindow_3__ctor_" data-uid="Microsoft.Psi.Components.DynamicWindow`3.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_DynamicWindow_3__ctor_Microsoft_Psi_Pipeline_Func_Microsoft_Psi_Message__0__System_ValueTuple_Microsoft_Psi_TimeInterval_DateTime___Func_Microsoft_Psi_Message__0__IEnumerable_Microsoft_Psi_Message__1____2__" data-uid="Microsoft.Psi.Components.DynamicWindow`3.#ctor(Microsoft.Psi.Pipeline,Func{Microsoft.Psi.Message{`0},System.ValueTuple{Microsoft.Psi.TimeInterval,DateTime}},Func{Microsoft.Psi.Message{`0},IEnumerable{Microsoft.Psi.Message{`1}},`2})">DynamicWindow(Pipeline, Func&lt;Message&lt;TWindow&gt;, (TimeInterval, DateTime)&gt;, Func&lt;Message&lt;TWindow&gt;, IEnumerable&lt;Message&lt;TInput&gt;&gt;, TOutput&gt;)</h4>
+  <h4 id="Microsoft_Psi_Components_DynamicWindow_3__ctor_Microsoft_Psi_Pipeline_Func_Microsoft_Psi_Message__0__System_ValueTuple_Microsoft_Psi_TimeInterval_DateTime___Func_Microsoft_Psi_Message__0__IEnumerable_Microsoft_Psi_Message__1____2__System_String_" data-uid="Microsoft.Psi.Components.DynamicWindow`3.#ctor(Microsoft.Psi.Pipeline,Func{Microsoft.Psi.Message{`0},System.ValueTuple{Microsoft.Psi.TimeInterval,DateTime}},Func{Microsoft.Psi.Message{`0},IEnumerable{Microsoft.Psi.Message{`1}},`2},System.String)">DynamicWindow(Pipeline, Func&lt;Message&lt;TWindow&gt;, (TimeInterval, DateTime)&gt;, Func&lt;Message&lt;TWindow&gt;, IEnumerable&lt;Message&lt;TInput&gt;&gt;, TOutput&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.DynamicWindow-3.html">DynamicWindow&lt;TWindow, TInput, TOutput&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public DynamicWindow(Pipeline pipeline, Func&lt;Message&lt;TWindow&gt;, (TimeInterval, DateTime)&gt; windowCreator, Func&lt;Message&lt;TWindow&gt;, IEnumerable&lt;Message&lt;TInput&gt;&gt;, TOutput&gt; outputCreator)</code></pre>
+    <pre><code class="lang-csharp hljs">public DynamicWindow(Pipeline pipeline, Func&lt;Message&lt;TWindow&gt;, (TimeInterval, DateTime)&gt; windowCreator, Func&lt;Message&lt;TWindow&gt;, IEnumerable&lt;Message&lt;TInput&gt;&gt;, TOutput&gt; outputCreator, string name = &quot;DynamicWindow&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -191,13 +194,19 @@ to the window message and the computed buffer of messages on the input stream.</
         <td><p>A function that creates output messages given a message on the window-defining stream and a buffer of messages on the source stream.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/DynamicWindow.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/DynamicWindow.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_DynamicWindow_3_WindowIn_" data-uid="Microsoft.Psi.Components.DynamicWindow`3.WindowIn*"></a>
   <h4 id="Microsoft_Psi_Components_DynamicWindow_3_WindowIn" data-uid="Microsoft.Psi.Components.DynamicWindow`3.WindowIn">WindowIn</h4>
@@ -227,7 +236,7 @@ to the window message and the computed buffer of messages on the input stream.</
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/DynamicWindow.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/DynamicWindow.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_DynamicWindow_3_Receive_" data-uid="Microsoft.Psi.Components.DynamicWindow`3.Receive*"></a>
   <h4 id="Microsoft_Psi_Components_DynamicWindow_3_Receive__1_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Components.DynamicWindow`3.Receive(`1,Microsoft.Psi.Envelope)">Receive(TInput, Envelope)</h4>

@@ -123,16 +123,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L43">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L44">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_TcpSource_1__ctor_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1__ctor_Microsoft_Psi_Pipeline_System_String_System_Int32_Microsoft_Psi_Interop_Serialization_IFormatDeserializer_System_Boolean_System_String_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.#ctor(Microsoft.Psi.Pipeline,System.String,System.Int32,Microsoft.Psi.Interop.Serialization.IFormatDeserializer,System.Boolean,System.String)">TcpSource(Pipeline, String, Int32, IFormatDeserializer, Boolean, String)</h4>
+  <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1__ctor_Microsoft_Psi_Pipeline_System_String_System_Int32_Microsoft_Psi_Interop_Serialization_IFormatDeserializer_Action__0__System_Boolean_System_String_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.#ctor(Microsoft.Psi.Pipeline,System.String,System.Int32,Microsoft.Psi.Interop.Serialization.IFormatDeserializer,Action{`0},System.Boolean,System.String)">TcpSource(Pipeline, String, Int32, IFormatDeserializer, Action&lt;T&gt;, Boolean, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Interop.Transport.TcpSource-1.html">TcpSource&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TcpSource(Pipeline pipeline, string address, int port, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public TcpSource(Pipeline pipeline, string address, int port, IFormatDeserializer deserializer, Action&lt;T&gt; deallocator = null, bool useSourceOriginatingTimes = true, string name = &quot;TcpSource&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -169,6 +169,12 @@
 </td>
       </tr>
       <tr>
+        <td><span class="xref">Action</span>&lt;T&gt;</td>
+        <td><span class="parametername">deallocator</span></td>
+        <td><p>An optional deallocator for the data.</p>
+</td>
+      </tr>
+      <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">useSourceOriginatingTimes</span></td>
         <td><p>An optional parameter indicating whether to use originating times from the source received over the network or to re-timestamp with the current pipeline time upon receiving.</p>
@@ -177,7 +183,7 @@
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
-        <td><p>An optional name for the TCP source.</p>
+        <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>
@@ -186,7 +192,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_TcpSource_1_Out_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Out*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1_Out" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Out">Out</h4>
@@ -216,7 +222,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_TcpSource_1_Dispose_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Dispose*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1_Dispose" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Dispose">Dispose()</h4>
@@ -228,7 +234,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L62">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L78">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_TcpSource_1_Start_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Start*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1_Start_Action_DateTime__" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -257,7 +263,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L86">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_TcpSource_1_Stop_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Stop*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1_Stop_DateTime_Action_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -291,7 +297,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/TcpSource.cs/#L98">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_TcpSource_1_ToString_" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.ToString*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_TcpSource_1_ToString" data-uid="Microsoft.Psi.Interop.Transport.TcpSource`1.ToString">ToString()</h4>

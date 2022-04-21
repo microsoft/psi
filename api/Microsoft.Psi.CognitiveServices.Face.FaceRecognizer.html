@@ -108,6 +108,9 @@
       <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html#Microsoft_Psi_Components_AsyncConsumerProducer_2_Out">AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(String Name, Double Confidence)&gt;&gt;&gt;.Out</a>
     </div>
     <div>
+      <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html#Microsoft_Psi_Components_AsyncConsumerProducer_2_ToString">AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(String Name, Double Confidence)&gt;&gt;&gt;.ToString()</a>
+    </div>
+    <div>
       <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html#Microsoft_Psi_Components_AsyncConsumerProducer_2_ReceiveAsync__0_Microsoft_Psi_Envelope_">AsyncConsumerProducer&lt;Shared&lt;Image&gt;, IList&lt;IList&lt;(String Name, Double Confidence)&gt;&gt;&gt;.ReceiveAsync(Shared&lt;Image&gt;, Envelope)</a>
     </div>
   </div>
@@ -128,16 +131,16 @@ passed to the component via the configuration. For more information, and to see 
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer__ctor_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.#ctor*"></a>
-  <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.CognitiveServices.Face.FaceRecognizerConfiguration)">FaceRecognizer(Pipeline, FaceRecognizerConfiguration)</h4>
+  <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_CognitiveServices_Face_FaceRecognizerConfiguration_System_String_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.CognitiveServices.Face.FaceRecognizerConfiguration,System.String)">FaceRecognizer(Pipeline, FaceRecognizerConfiguration, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.html">FaceRecognizer</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public FaceRecognizer(Pipeline pipeline, FaceRecognizerConfiguration configuration)</code></pre>
+    <pre><code class="lang-csharp hljs">public FaceRecognizer(Pipeline pipeline, FaceRecognizerConfiguration configuration, string name = &quot;FaceRecognizer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -161,13 +164,19 @@ passed to the component via the configuration. For more information, and to see 
         <td><p>The component configuration.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L74">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_RateLimitExceeded_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.RateLimitExceeded*"></a>
   <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_RateLimitExceeded" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.RateLimitExceeded">RateLimitExceeded</h4>
@@ -200,7 +209,7 @@ passed to the component via the configuration. For more information, and to see 
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L78">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_Dispose_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.Dispose*"></a>
   <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_Dispose" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.Dispose">Dispose()</h4>
@@ -213,7 +222,7 @@ passed to the component via the configuration. For more information, and to see 
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/CognitiveServices/Microsoft.Psi.CognitiveServices.Face/FaceRecognizer.cs/#L86">View Source</a>
   </span>
   <a id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_ReceiveAsync_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.ReceiveAsync*"></a>
   <h4 id="Microsoft_Psi_CognitiveServices_Face_FaceRecognizer_ReceiveAsync_Microsoft_Psi_Shared_Microsoft_Psi_Imaging_Image__Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.CognitiveServices.Face.FaceRecognizer.ReceiveAsync(Microsoft.Psi.Shared{Microsoft.Psi.Imaging.Image},Microsoft.Psi.Envelope)">ReceiveAsync(Shared&lt;Image&gt;, Envelope)</h4>

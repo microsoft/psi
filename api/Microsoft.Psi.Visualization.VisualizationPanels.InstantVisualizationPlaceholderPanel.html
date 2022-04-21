@@ -92,7 +92,8 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
     <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
-    <div class="level4"><span class="xref">InstantVisualizationPlaceholderPanel</span></div>
+    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html">InstantVisualizationPanel</a></div>
+    <div class="level5"><span class="xref">InstantVisualizationPlaceholderPanel</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
@@ -100,6 +101,18 @@
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_DefaultCursorEpsilonNegMs">InstantVisualizationPanel.DefaultCursorEpsilonNegMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_DefaultCursorEpsilonPosMs">InstantVisualizationPanel.DefaultCursorEpsilonPosMs</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_RelativeWidth">InstantVisualizationPanel.RelativeWidth</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_AddVisualizationObject_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">InstantVisualizationPanel.AddVisualizationObject(VisualizationObject)</a>
+    </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_ToggleAllVisualizersVisibilityCommand">VisualizationPanel.ToggleAllVisualizersVisibilityCommand</a>
     </div>
@@ -171,9 +184,6 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_DeleteVisualizationCommand">VisualizationPanel.DeleteVisualizationCommand</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_AddVisualizationObject_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.AddVisualizationObject(VisualizationObject)</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_BringToFront_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationObject_">VisualizationPanel.BringToFront(VisualizationObject)</a>
@@ -252,13 +262,13 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class InstantVisualizationPlaceholderPanel : VisualizationPanel, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class InstantVisualizationPlaceholderPanel : InstantVisualizationPanel, INotifyPropertyChanging</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L26">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel__ctor_Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationContainer_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.#ctor(Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationContainer)">InstantVisualizationPlaceholderPanel(InstantVisualizationContainer)</h4>
@@ -291,7 +301,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L39">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_CompatiblePanelTypes_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.CompatiblePanelTypes*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_CompatiblePanelTypes" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.CompatiblePanelTypes">CompatiblePanelTypes</h4>
@@ -321,36 +331,7 @@
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CompatiblePanelTypes">VisualizationPanel.CompatiblePanelTypes</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L42">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_RelativeWidth_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.RelativeWidth*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_RelativeWidth" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.RelativeWidth">RelativeWidth</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the name of the relative width for the panel.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
-public int RelativeWidth { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L35">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_RemoveCellCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.RemoveCellCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_RemoveCellCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.RemoveCellCommand">RemoveCellCommand</h4>
@@ -382,7 +363,7 @@ public RelayCommand RemoveCellCommand { get; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/InstantVisualizationPlaceholderPanel.cs/#L42">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_CreateDefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.CreateDefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPlaceholderPanel_CreateDefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPlaceholderPanel.CreateDefaultViewTemplate">CreateDefaultViewTemplate()</h4>

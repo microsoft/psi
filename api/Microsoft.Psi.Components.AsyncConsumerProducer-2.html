@@ -130,16 +130,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L20">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L23">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_AsyncConsumerProducer_2__ctor_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Components_AsyncConsumerProducer_2__ctor_Microsoft_Psi_Pipeline_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.#ctor(Microsoft.Psi.Pipeline)">AsyncConsumerProducer(Pipeline)</h4>
+  <h4 id="Microsoft_Psi_Components_AsyncConsumerProducer_2__ctor_Microsoft_Psi_Pipeline_System_String_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.#ctor(Microsoft.Psi.Pipeline,System.String)">AsyncConsumerProducer(Pipeline, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Components.AsyncConsumerProducer-2.html">AsyncConsumerProducer&lt;TIn, TOut&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AsyncConsumerProducer(Pipeline pipeline)</code></pre>
+    <pre><code class="lang-csharp hljs">public AsyncConsumerProducer(Pipeline pipeline, string name = &quot;AsyncConsumerProducer&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -157,13 +157,19 @@
         <td><p>The pipeline to add the component to.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_AsyncConsumerProducer_2_In_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.In*"></a>
   <h4 id="Microsoft_Psi_Components_AsyncConsumerProducer_2_In" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.In">In</h4>
@@ -191,7 +197,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L34">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_AsyncConsumerProducer_2_Out_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.Out*"></a>
   <h4 id="Microsoft_Psi_Components_AsyncConsumerProducer_2_Out" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.Out">Out</h4>
@@ -221,7 +227,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L38">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_Components_AsyncConsumerProducer_2_ReceiveAsync_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.ReceiveAsync*"></a>
   <h4 id="Microsoft_Psi_Components_AsyncConsumerProducer_2_ReceiveAsync__0_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.ReceiveAsync(`0,Microsoft.Psi.Envelope)">ReceiveAsync(TIn, Envelope)</h4>
@@ -269,6 +275,33 @@
         <td><span class="xref">Task</span></td>
         <td><p>Async task.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Components/AsyncConsumerProducer.cs/#L37">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Components_AsyncConsumerProducer_2_ToString_" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.ToString*"></a>
+  <h4 id="Microsoft_Psi_Components_AsyncConsumerProducer_2_ToString" data-uid="Microsoft.Psi.Components.AsyncConsumerProducer`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
       </tr>
     </tbody>
   </table>

@@ -94,7 +94,7 @@
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><span class="xref">IProducer</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</div>
+    <div><span class="xref">IProducer</span>&lt;<span class="xref">Ray3D</span>&gt;</div>
     <div><span class="xref">ISourceComponent</span></div>
   </div>
   <div class="inheritedMembers">
@@ -108,12 +108,15 @@
     <div>
       <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Shutdown">StereoKitComponent.Shutdown()</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_ToString">StereoKitComponent.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.html">Microsoft.Psi.MixedReality</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
   <h5 id="Microsoft_Psi_MixedReality_EyesSensor_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class EyesSensor : StereoKitComponent, IProducer&lt;CoordinateSystem&gt;, ISourceComponent</code></pre>
+    <pre><code class="lang-csharp hljs">public class EyesSensor : StereoKitComponent, IProducer&lt;Ray3D&gt;, ISourceComponent</code></pre>
   </div>
   <h5 id="Microsoft_Psi_MixedReality_EyesSensor_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Applications using this component must enable the Gaze Input capability in Package.appxmanifest.</p>
@@ -122,16 +125,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L28">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_EyesSensor__ctor_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.#ctor*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_EyesSensor__ctor_Pipeline_TimeSpan_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.#ctor(Pipeline,TimeSpan)">EyesSensor(Pipeline, TimeSpan)</h4>
+  <h4 id="Microsoft_Psi_MixedReality_EyesSensor__ctor_Pipeline_TimeSpan_System_String_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.#ctor(Pipeline,TimeSpan,System.String)">EyesSensor(Pipeline, TimeSpan, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.EyesSensor.html">EyesSensor</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EyesSensor(Pipeline pipeline, TimeSpan interval = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public EyesSensor(Pipeline pipeline, TimeSpan interval = null, string name = &quot;EyesSensor&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -155,13 +158,19 @@
         <td><p>Optional interval at which to poll eye tracking information (default 1/60th second).</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L44">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_EyesSensor_EyesTracked_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.EyesTracked*"></a>
   <h4 id="Microsoft_Psi_MixedReality_EyesSensor_EyesTracked" data-uid="Microsoft.Psi.MixedReality.EyesSensor.EyesTracked">EyesTracked</h4>
@@ -189,16 +198,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L39">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_EyesSensor_Out_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Out*"></a>
   <h4 id="Microsoft_Psi_MixedReality_EyesSensor_Out" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Out">Out</h4>
-  <div class="markdown level1 summary"><p>Gets the stream of tracked eyes pose.</p>
+  <div class="markdown level1 summary"><p>Gets the stream of tracked eyes pose as a <see cref="!:Ray3D"></see>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Emitter&lt;CoordinateSystem&gt; Out { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Emitter&lt;Ray3D&gt; Out { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -210,7 +219,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Emitter</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</td>
+        <td><span class="xref">Emitter</span>&lt;<span class="xref">Ray3D</span>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -219,7 +228,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_EyesSensor_Start_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_EyesSensor_Start_Action_DateTime__" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Start(Action{DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -248,7 +257,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L62">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_EyesSensor_Step_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Step*"></a>
   <h4 id="Microsoft_Psi_MixedReality_EyesSensor_Step" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Step">Step()</h4>
@@ -262,7 +271,7 @@
   <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKitComponent_Step">StereoKitComponent.Step()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/EyesSensor.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_EyesSensor_Stop_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_EyesSensor_Stop_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.EyesSensor.Stop(DateTime,Action)">Stop(DateTime, Action)</h4>

@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Data_Json_JsonGenerator" data-uid="Microsoft.Psi.Data.Json.JsonGenerator" class="text-break">Class JsonGenerator
   </h1>
-  <div class="markdown level0 summary"><p>Defines a component that plays back data from a JSON store.</p>
+  <div class="markdown level0 summary"><p>Component that plays back data from a JSON store.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -105,6 +105,9 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_Stop_DateTime_Action_">Generator.Stop(DateTime, Action)</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Components.Generator.html#Microsoft_Psi_Components_Generator_ToString">Generator.ToString()</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.Json.html">Microsoft.Psi.Data.Json</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Data.dll</h6>
@@ -116,16 +119,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L38">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_Json_JsonStoreReader_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Data.Json.JsonStoreReader)">JsonGenerator(Pipeline, JsonStoreReader)</h4>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_Json_JsonStoreReader_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Data.Json.JsonStoreReader,System.String)">JsonGenerator(Pipeline, JsonStoreReader, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Json.JsonGenerator.html">JsonGenerator</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected JsonGenerator(Pipeline pipeline, JsonStoreReader reader)</code></pre>
+    <pre><code class="lang-csharp hljs">protected JsonGenerator(Pipeline pipeline, JsonStoreReader reader, string name = &quot;JsonGenerator&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -149,20 +152,26 @@
         <td><p>The underlying store reader.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L28">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L29">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_Microsoft_Psi_Pipeline_System_String_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor(Microsoft.Psi.Pipeline,System.String,System.String)">JsonGenerator(Pipeline, String, String)</h4>
+  <h4 id="Microsoft_Psi_Data_Json_JsonGenerator__ctor_Microsoft_Psi_Pipeline_System_String_System_String_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.#ctor(Microsoft.Psi.Pipeline,System.String,System.String,System.String)">JsonGenerator(Pipeline, String, String, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.Json.JsonGenerator.html">JsonGenerator</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public JsonGenerator(Pipeline pipeline, string name, string path)</code></pre>
+    <pre><code class="lang-csharp hljs">public JsonGenerator(Pipeline pipeline, string storeName, string storePath, string name = &quot;JsonGenerator&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -182,14 +191,20 @@
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">name</span></td>
+        <td><span class="parametername">storeName</span></td>
         <td><p>The name of the application that generated the persisted files, or the root name of the files.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">path</span></td>
+        <td><span class="parametername">storePath</span></td>
         <td><p>The directory in which the main persisted file resides.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>
@@ -198,7 +213,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L63">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_AvailableStreams_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.AvailableStreams*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_AvailableStreams" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.AvailableStreams">AvailableStreams</h4>
@@ -226,7 +241,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_Name_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Name*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Name" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Name">Name</h4>
@@ -254,7 +269,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L66">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L68">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OriginatingTimeInterval*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_OriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OriginatingTimeInterval">OriginatingTimeInterval</h4>
@@ -282,7 +297,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L58">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_Path_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Path*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Path" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Path">Path</h4>
@@ -312,7 +327,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_Contains_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Contains*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Contains_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Contains(System.String)">Contains(String)</h4>
@@ -359,7 +374,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L78">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_Dispose_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Dispose*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_Dispose" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.Dispose">Dispose()</h4>
@@ -371,7 +386,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L131">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L133">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_GenerateNext_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GenerateNext*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_GenerateNext_DateTime_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GenerateNext(DateTime)">GenerateNext(DateTime)</h4>
@@ -418,7 +433,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L86">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L88">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_GetMetadata_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GetMetadata*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_GetMetadata_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.GetMetadata(System.String)">GetMetadata(String)</h4>
@@ -465,7 +480,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L94">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Json/JsonGenerator.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Json_JsonGenerator_OpenStream_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OpenStream*"></a>
   <h4 id="Microsoft_Psi_Data_Json_JsonGenerator_OpenStream__1_System_String_" data-uid="Microsoft.Psi.Data.Json.JsonGenerator.OpenStream``1(System.String)">OpenStream&lt;T&gt;(String)</h4>

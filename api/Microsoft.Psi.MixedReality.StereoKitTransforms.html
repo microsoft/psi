@@ -101,44 +101,17 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitTransforms.cs/#L16">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_MixedReality_StereoKitTransforms_StereoKitStartingPose_" data-uid="Microsoft.Psi.MixedReality.StereoKitTransforms.StereoKitStartingPose*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_StereoKitTransforms_StereoKitStartingPose" data-uid="Microsoft.Psi.MixedReality.StereoKitTransforms.StereoKitStartingPose">StereoKitStartingPose</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the starting pose of StereoKit (the headset) in the world (in \psi basis).</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CoordinateSystem StereoKitStartingPose { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">CoordinateSystem</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitTransforms.cs/#L21">View Source</a>
   </span>
-  <a id="Microsoft_Psi_MixedReality_StereoKitTransforms_StereoKitStartingPoseInverse_" data-uid="Microsoft.Psi.MixedReality.StereoKitTransforms.StereoKitStartingPoseInverse*"></a>
-  <h4 id="Microsoft_Psi_MixedReality_StereoKitTransforms_StereoKitStartingPoseInverse" data-uid="Microsoft.Psi.MixedReality.StereoKitTransforms.StereoKitStartingPoseInverse">StereoKitStartingPoseInverse</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the inverse of the StereoKit starting pose in the world.</p>
+  <a id="Microsoft_Psi_MixedReality_StereoKitTransforms_WorldHierarchy_" data-uid="Microsoft.Psi.MixedReality.StereoKitTransforms.WorldHierarchy*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKitTransforms_WorldHierarchy" data-uid="Microsoft.Psi.MixedReality.StereoKitTransforms.WorldHierarchy">WorldHierarchy</h4>
+  <div class="markdown level1 summary"><p>Gets the &quot;world hierarchy&quot; for rendering.
+Push this matrix onto StereoKit's <see cref="!:Hierarchy"></see> stack to render content coherently in the world.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static CoordinateSystem StereoKitStartingPoseInverse { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public static Matrix WorldHierarchy { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -150,11 +123,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="xref">Matrix</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_MixedReality_StereoKitTransforms_WorldHierarchy_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This matrix is pushed automatically by the <a class="xref" href="Microsoft.Psi.MixedReality.StereoKitRenderer.html">StereoKitRenderer</a> base class for new rendering components.</p>
+</div>
 </article>
           </div>
           
@@ -163,7 +139,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitTransforms.cs/#L11" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKitTransforms.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

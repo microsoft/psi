@@ -105,16 +105,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileAudioSource.cs/#L22">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileAudioSource.cs/#L25">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveFileAudioSource__ctor_" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Audio_WaveFileAudioSource__ctor_Microsoft_Psi_Pipeline_System_String_System_Nullable_DateTime__System_Int32_" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.#ctor(Microsoft.Psi.Pipeline,System.String,System.Nullable{DateTime},System.Int32)">WaveFileAudioSource(Pipeline, String, Nullable&lt;DateTime&gt;, Int32)</h4>
+  <h4 id="Microsoft_Psi_Audio_WaveFileAudioSource__ctor_Microsoft_Psi_Pipeline_System_String_System_Nullable_DateTime__System_Int32_System_String_" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.#ctor(Microsoft.Psi.Pipeline,System.String,System.Nullable{DateTime},System.Int32,System.String)">WaveFileAudioSource(Pipeline, String, Nullable&lt;DateTime&gt;, Int32, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Audio.WaveFileAudioSource.html">WaveFileAudioSource</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WaveFileAudioSource(Pipeline pipeline, string filename, DateTime? audioStartTime = null, int audioBufferSizeMs = 20)</code></pre>
+    <pre><code class="lang-csharp hljs">public WaveFileAudioSource(Pipeline pipeline, string path, DateTime? audioStartTime = null, int audioBufferSizeMs = 20, string name = &quot;WaveFileAudioSource&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -134,7 +134,7 @@
       </tr>
       <tr>
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">filename</span></td>
+        <td><span class="parametername">path</span></td>
         <td><p>The path name of the WAVE file.</p>
 </td>
       </tr>
@@ -150,13 +150,19 @@
         <td><p>The size of each data buffer to post, determined by the amount of audio data it can hold.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for this component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileAudioSource.cs/#L32">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileAudioSource.cs/#L37">View Source</a>
   </span>
   <a id="Microsoft_Psi_Audio_WaveFileAudioSource_Out_" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.Out*"></a>
   <h4 id="Microsoft_Psi_Audio_WaveFileAudioSource_Out" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.Out">Out</h4>
@@ -178,6 +184,35 @@
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Audio/Microsoft.Psi.Audio/WaveFileAudioSource.cs/#L40">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Audio_WaveFileAudioSource_ToString_" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.ToString*"></a>
+  <h4 id="Microsoft_Psi_Audio_WaveFileAudioSource_ToString" data-uid="Microsoft.Psi.Audio.WaveFileAudioSource.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>

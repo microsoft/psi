@@ -2165,16 +2165,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L25">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L27">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Windows_GetParameterWindow__ctor_" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow__ctor_System_Windows_Window_System_String_System_String_System_Func_System_String_System_ValueTuple_System_Boolean_System_String___" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.#ctor(System.Windows.Window,System.String,System.String,System.Func{System.String,System.ValueTuple{System.Boolean,System.String}})">GetParameterWindow(Window, String, String, Func&lt;String, (Boolean IsValid, String Error)&gt;)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow__ctor_System_Windows_Window_System_String_System_String_System_String_System_Func_System_String_System_ValueTuple_System_Boolean_System_String___" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.#ctor(System.Windows.Window,System.String,System.String,System.String,System.Func{System.String,System.ValueTuple{System.Boolean,System.String}})">GetParameterWindow(Window, String, String, String, Func&lt;String, (Boolean IsValid, String Error)&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Windows.GetParameterWindow.html">GetParameterWindow</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public GetParameterWindow(Window owner, string parameterName, string initialParameterValue, Func&lt;string, (bool IsValid, string Error)&gt; validator = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public GetParameterWindow(Window owner, string windowTitle, string parameterName, string initialParameterValue, Func&lt;string, (bool IsValid, string Error)&gt; validator = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2190,6 +2190,12 @@
         <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.window">Window</a></td>
         <td><span class="parametername">owner</span></td>
         <td><p>The window that owns this window.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">windowTitle</span></td>
+        <td><p>The title of the window.</p>
 </td>
       </tr>
       <tr>
@@ -2216,7 +2222,35 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L57">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_ErrorMessage_" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.ErrorMessage*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_ErrorMessage" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.ErrorMessage">ErrorMessage</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the error message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ErrorMessage { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_IsValid_" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.IsValid*"></a>
   <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_IsValid" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.IsValid">IsValid</h4>
@@ -2244,35 +2278,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L47">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_ParameterName_" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.ParameterName*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_ParameterName" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.ParameterName">ParameterName</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the parameter name.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string ParameterName { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L52">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_ParameterValue_" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.ParameterValue*"></a>
   <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_ParameterValue" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.ParameterValue">ParameterValue</h4>
@@ -2302,7 +2308,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/GetParameterWindow.xaml.cs/#L45">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_Windows_GetParameterWindow_PropertyChanged" data-uid="Microsoft.Psi.Visualization.Windows.GetParameterWindow.PropertyChanged">PropertyChanged</h4>
   <div class="markdown level1 summary"><p>Occurs when a property has changed.</p>

@@ -102,16 +102,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L32">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter__ctor_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter__ctor_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_Interop_Serialization_IFormatSerializer_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.#ctor(Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.Interop.Serialization.IFormatSerializer)">NetMQWriter(Pipeline, String, IFormatSerializer)</h4>
+  <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter__ctor_Microsoft_Psi_Pipeline_System_String_Microsoft_Psi_Interop_Serialization_IFormatSerializer_System_String_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.#ctor(Microsoft.Psi.Pipeline,System.String,Microsoft.Psi.Interop.Serialization.IFormatSerializer,System.String)">NetMQWriter(Pipeline, String, IFormatSerializer, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Interop.Transport.NetMQWriter.html">NetMQWriter</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NetMQWriter(Pipeline pipeline, string address, IFormatSerializer serializer)</code></pre>
+    <pre><code class="lang-csharp hljs">public NetMQWriter(Pipeline pipeline, string address, IFormatSerializer serializer, string name = &quot;NetMQWriter&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -141,13 +141,19 @@
         <td><p>Format serializer with which messages are serialized.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L42">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L45">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_Address_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Address*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_Address" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Address">Address</h4>
@@ -175,7 +181,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_Topics_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Topics*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_Topics" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Topics">Topics</h4>
@@ -205,7 +211,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_AddTopic_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.AddTopic*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_AddTopic__1_System_String_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.AddTopic``1(System.String)">AddTopic&lt;T&gt;(String)</h4>
@@ -268,7 +274,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L68">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_Dispose_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Dispose*"></a>
   <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_Dispose" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.Dispose">Dispose()</h4>
@@ -278,6 +284,33 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
   </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Transport/NetMQWriter.cs/#L78">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interop_Transport_NetMQWriter_ToString_" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.ToString*"></a>
+  <h4 id="Microsoft_Psi_Interop_Transport_NetMQWriter_ToString" data-uid="Microsoft.Psi.Interop.Transport.NetMQWriter.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Operators.html#Microsoft_Psi_Interop_Rendezvous_Operators_ToRendezvousEndpoint_Microsoft_Psi_Interop_Transport_NetMQWriter_">Operators.ToRendezvousEndpoint(NetMQWriter)</a>
