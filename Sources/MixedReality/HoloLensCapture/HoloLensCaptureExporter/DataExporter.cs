@@ -91,13 +91,14 @@ namespace HoloLensCaptureExporter
 
             // Export various encoded image camera views
             var pngEncoder = new ImageToPngStreamEncoder();
-            var gzipDecoder = new ImageFromStreamDecoder();
+            var decoder = new ImageFromStreamDecoder();
 
             void Export(
                 string name,
                 IProducer<ImageCameraView> imageCameraView,
                 IProducer<EncodedImageCameraView> encodedImageCameraView,
-                IProducer<EncodedImageCameraView> gzipImageCameraView = null)
+                IProducer<EncodedImageCameraView> gzipImageCameraView = null,
+                bool isNV12 = false)
             {
                 void VerifyMutualExclusivity(dynamic s0, dynamic s1)
                 {
@@ -116,21 +117,29 @@ namespace HoloLensCaptureExporter
 
                 if (encodedImageCameraView != null)
                 {
-                    // export encoded camera view as is
                     VerifyMutualExclusivity(imageCameraView, gzipImageCameraView);
-                    encodedImageCameraView.Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    if (isNV12)
+                    {
+                        // export NV12-encoded camera view as lossless PNG
+                        encodedImageCameraView?.Decode(decoder)?.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    }
+                    else
+                    {
+                        // export encoded camera view as is
+                        encodedImageCameraView.Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    }
                 }
 
                 if (gzipImageCameraView != null)
                 {
                     // export GZIP'd camera view as lossless PNG
                     VerifyMutualExclusivity(imageCameraView, encodedImageCameraView);
-                    gzipImageCameraView?.Decode(gzipDecoder)?.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    gzipImageCameraView?.Decode(decoder)?.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
                 }
             }
 
-            Export("Video", videoImageCameraView, videoEncodedImageCameraView);
-            Export("Preview", previewImageCameraView, previewEncodedImageCameraView);
+            Export("Video", videoImageCameraView, videoEncodedImageCameraView, isNV12: true);
+            Export("Preview", previewImageCameraView, previewEncodedImageCameraView, isNV12: true);
             Export("Infrared", infraredImageCameraView, infraredEncodedImageCameraView);
             Export("LeftFront", leftFrontImageCameraView, leftFrontEncodedImageCameraView, leftFrontGzipImageCameraView);
             Export("RightFront", rightFrontImageCameraView, rightFrontEncodedImageCameraView, rightFrontGzipImageCameraView);
@@ -166,7 +175,6 @@ namespace HoloLensCaptureExporter
             // Export scene understanding
             sceneUnderstanding?.Export("SceneUnderstanding", exportCommand.OutputPath, streamWritersToClose);
 
-            p.PipelineCompleted += (_, _) => Console.WriteLine("DONE.");
             p.RunAsync(ReplayDescriptor.ReplayAllRealTime, progress: new Progress<double>(p => Console.Write($"Progress: {p:P}\r")));
             p.WaitAll();
 
