@@ -3,10 +3,10 @@
 The HoloLensCaptureExporter is a tool to convert data within \psi stores that have been collected by the [HoloLensCaptureServer](..\HoloLensCaptureServer) to other formats. Example usage:
 
 ```bash
-> HoloLensCaptureExporter -p C:\data\Temp\HoloLensCapture.0009 -o C:\data\Temp\HoloLensCapture.0009\Export -v
+> HoloLensCaptureExporter -p C:\data\Temp\HoloLensCapture.0009 -o C:\data\Temp\HoloLensCapture.0009\Export
 ```
 
-This will open the store specified by `-p`, find and convert streams within, and export the results to the output directory given by `-o`. In this example, the `-v` flag has been given to indicate that video streams should be exported as individual image frames.
+This will open the store specified by `-p`, find and convert streams within, and export the results to the output directory given by `-o`.
 
 ## Options
 
@@ -17,7 +17,6 @@ The following options are available:
 | `p`    | `path`   | Path to the input Psi data store.                                     |
 | `o`    | `output` | Output path to export data to.                                        |
 | `n`    | `name`   | Optional name of the input Psi data store (default: HoloLensCapture). |
-| `v`    | `video`  | Optional flag indicating whether to export video.                     |
 
 ## Output Formats
 
