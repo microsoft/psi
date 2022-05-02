@@ -8,34 +8,34 @@ namespace Microsoft.Psi.Common.Interpolators
     using System.Linq;
 
     /// <summary>
-    /// Implements a interpolator based on the values adjacent to the interpolation time, i.e. the
+    /// Implements an interpolator based on the values adjacent to the interpolation time, i.e. the
     /// nearest values before and after the interpolation time.
     /// </summary>
     /// <typeparam name="TIn">The type of the messages to interpolate.</typeparam>
-    /// <typeparam name="TOut">The type of the output interpolation result.</typeparam>
+    /// <typeparam name="TResult">The type of the output interpolation result.</typeparam>
     /// <remarks>The interpolator results do not depend on the wall-clock time of the messages arriving
     /// on the secondary stream, i.e., they are based on originating times of messages. As a result,
     /// the interpolator might introduce an extra delay as it might have to wait for enough messages on the
     /// secondary stream to prove that the interpolation result is correct, irrespective of any other messages
     /// that might arrive later.</remarks>
-    public class AdjacentValuesInterpolator<TIn, TOut> : ReproducibleInterpolator<TIn, TOut>
+    public class AdjacentValuesInterpolator<TIn, TResult> : ReproducibleInterpolator<TIn, TResult>
     {
-        private readonly Func<TIn, TIn, double, TOut> interpolator;
+        private readonly Func<TIn, TIn, double, TResult> interpolatorFunc;
         private readonly bool orDefault;
-        private readonly TOut defaultValue;
+        private readonly TResult defaultValue;
         private readonly string name;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AdjacentValuesInterpolator{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="interpolator">An interpolator function which given the two nearest values and the ratio
+        /// <param name="interpolatorFunc">An interpolator function which given the two nearest values and the ratio
         /// between them where the interpolation result should be produces the interpolation result.</param>
         /// <param name="orDefault">Indicates whether to output a default value when no result is found.</param>
         /// <param name="defaultValue">An optional default value to use.</param>
-        /// <param name="name">An optional name for the interpolator (defaults to AdjacentValuesInterpolator).</param>
-        public AdjacentValuesInterpolator(Func<TIn, TIn, double, TOut> interpolator, bool orDefault, TOut defaultValue = default, string name = null)
+        /// <param name="name">An optional name for the interpolator (defaults to AdjacentValues).</param>
+        public AdjacentValuesInterpolator(Func<TIn, TIn, double, TResult> interpolatorFunc, bool orDefault, TResult defaultValue = default, string name = null)
         {
-            this.interpolator = interpolator;
+            this.interpolatorFunc = interpolatorFunc;
             this.orDefault = orDefault;
             this.defaultValue = defaultValue;
 
@@ -44,7 +44,7 @@ namespace Microsoft.Psi.Common.Interpolators
         }
 
         /// <inheritdoc/>
-        public override InterpolationResult<TOut> Interpolate(DateTime interpolationTime, IEnumerable<Message<TIn>> messages, DateTime? closedOriginatingTime)
+        public override InterpolationResult<TResult> Interpolate(DateTime interpolationTime, IEnumerable<Message<TIn>> messages, DateTime? closedOriginatingTime)
         {
             // If no messages available,
             if (messages.Count() == 0)
@@ -55,13 +55,13 @@ namespace Microsoft.Psi.Common.Interpolators
                     // Then no other value or better match will appear, so depending on orDefault,
                     // either create a default value or return does not exist.
                     return this.orDefault ?
-                        InterpolationResult<TOut>.Create(this.defaultValue, DateTime.MinValue) :
-                        InterpolationResult<TOut>.DoesNotExist(DateTime.MinValue);
+                        InterpolationResult<TResult>.Create(this.defaultValue, DateTime.MinValue) :
+                        InterpolationResult<TResult>.DoesNotExist(DateTime.MinValue);
                 }
                 else
                 {
                     // otherwise if the stream is not closed yet, insufficient data
-                    return InterpolationResult<TOut>.InsufficientData();
+                    return InterpolationResult<TResult>.InsufficientData();
                 }
             }
 
@@ -77,23 +77,22 @@ namespace Microsoft.Psi.Common.Interpolators
                     {
                         // Then interpolate and return the result
                         var ratio = (interpolationTime - lastMessage.OriginatingTime).Ticks / (double)(message.OriginatingTime - lastMessage.OriginatingTime).Ticks;
-                        return InterpolationResult<TOut>.Create(
-                            this.interpolator(lastMessage.Data, message.Data, ratio),
+                        return InterpolationResult<TResult>.Create(
+                            this.interpolatorFunc(lastMessage.Data, message.Data, ratio),
                             message.OriginatingTime == interpolationTime ? message.OriginatingTime : lastMessage.OriginatingTime);
                     }
                     else if (message.OriginatingTime == interpolationTime)
                     {
-                        // O/w if the message is right at the interpolation time, we don't need the previous
-                        // message
-                        return InterpolationResult<TOut>.Create(this.interpolator(default, message.Data, 1), message.OriginatingTime);
+                        // o/w if the message is right at the interpolation time, we don't need the previous message
+                        return InterpolationResult<TResult>.Create(this.interpolatorFunc(default, message.Data, 1), message.OriginatingTime);
                     }
                     else
                     {
-                        // o/w there since we have no previous message, depending on orDefault,
+                        // o/w since we have no previous message, depending on orDefault,
                         // either create a default value or return does not exist.
                         return this.orDefault ?
-                            InterpolationResult<TOut>.Create(this.defaultValue, DateTime.MinValue) :
-                            InterpolationResult<TOut>.DoesNotExist(DateTime.MinValue);
+                            InterpolationResult<TResult>.Create(this.defaultValue, DateTime.MinValue) :
+                            InterpolationResult<TResult>.DoesNotExist(DateTime.MinValue);
                     }
                 }
 
@@ -107,13 +106,13 @@ namespace Microsoft.Psi.Common.Interpolators
                 // Then we will never get enough data to interpolate, so depending on orDefault
                 // either create a default value or return does not exist.
                 return this.orDefault ?
-                    InterpolationResult<TOut>.Create(this.defaultValue, DateTime.MinValue) :
-                    InterpolationResult<TOut>.DoesNotExist(lastMessage != default ? lastMessage.OriginatingTime : DateTime.MinValue);
+                    InterpolationResult<TResult>.Create(this.defaultValue, DateTime.MinValue) :
+                    InterpolationResult<TResult>.DoesNotExist(lastMessage != default ? lastMessage.OriginatingTime : DateTime.MinValue);
             }
             else
             {
                 // O/w we might get more data so simply wait
-                return InterpolationResult<TOut>.InsufficientData();
+                return InterpolationResult<TResult>.InsufficientData();
             }
         }
 

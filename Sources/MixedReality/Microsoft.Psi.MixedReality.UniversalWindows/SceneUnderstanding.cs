@@ -240,7 +240,7 @@ namespace Microsoft.Psi.MixedReality
 
         private CoordinateSystem GetWorldPose(SceneObject sceneObject)
         {
-            var posePsiBasis = new CoordinateSystem(sceneObject.GetLocationAsMatrix().ToMathNetMatrix());
+            var posePsiBasis = sceneObject.GetLocationAsMatrix().RebaseToMathNetCoordinateSystem();
             return posePsiBasis.TransformBy(this.scenePoseInWorld);
         }
     }

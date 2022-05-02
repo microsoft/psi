@@ -5,10 +5,10 @@ namespace Microsoft.Psi.MixedReality
 {
     using System;
     using System.Numerics;
-    using MathNet.Numerics.LinearAlgebra.Double;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Spatial.Euclidean;
     using StereoKit;
+    using static Microsoft.Psi.Spatial.Euclidean.Operators;
     using StereoKitColor = StereoKit.Color;
     using StereoKitColor32 = StereoKit.Color32;
     using SystemDrawingColor = System.Drawing.Color;
@@ -34,7 +34,7 @@ namespace Microsoft.Psi.MixedReality
         public static CoordinateSystem ToCoordinateSystem(this StereoKit.Matrix stereoKitMatrix)
         {
             Matrix4x4 systemMatrix = stereoKitMatrix;
-            return new CoordinateSystem(systemMatrix.ToMathNetMatrix());
+            return systemMatrix.RebaseToMathNetCoordinateSystem();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Psi.MixedReality
         /// </remarks>
         public static StereoKit.Matrix ToStereoKitMatrix(this CoordinateSystem coordinateSystem)
         {
-            return new StereoKit.Matrix(coordinateSystem.ToHoloLensSystemMatrix());
+            return new StereoKit.Matrix(coordinateSystem.RebaseToHoloLensSystemMatrix());
         }
 
         /// <summary>
@@ -166,77 +166,87 @@ namespace Microsoft.Psi.MixedReality
                 name);
 
         /// <summary>
-        /// Gets the pipeline current time from OpenXR.
+        /// Gets the current StereoKit frame time from OpenXR as a \psi pipeline <see cref="DateTime"/>.
         /// </summary>
         /// <param name="pipeline">The pipeline to get the current time for.</param>
-        /// <returns>The current OpenXR time.</returns>
+        /// <returns>The current frame time.</returns>
         public static DateTime GetCurrentTimeFromOpenXr(this Pipeline pipeline)
         {
-            long currentSampleTicks = TimeHelper.ConvertXrTimeToHnsTicks(Backend.OpenXR.Time);
-            return pipeline.GetCurrentTimeFromElapsedTicks(currentSampleTicks);
+            return pipeline.ConvertTimeFromOpenXr(Backend.OpenXR.Time);
         }
 
         /// <summary>
-        /// Converts a MathNet <see cref="DenseMatrix"/> to a HoloLens <see cref="Matrix4x4"/>.
+        /// Converts a time from OpenXR into the equivalent \psi pipeline <see cref="DateTime"/>.
         /// </summary>
-        /// <param name="mathNetMatrix">The MathNet dense matrix.</param>
-        /// <returns>The HoloLens System.Numerics matrix.</returns>
-        /// <remarks>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.</remarks>
-        internal static Matrix4x4 ToHoloLensSystemMatrix(this DenseMatrix mathNetMatrix)
+        /// <param name="pipeline">The pipeline to convert the given time for.</param>
+        /// <param name="openXrTime">The OpenXR time to convert.</param>
+        /// <returns>The OpenXR time as a <see cref="DateTime"/>.</returns>
+        public static DateTime ConvertTimeFromOpenXr(this Pipeline pipeline, long openXrTime)
         {
-            var holoLensMatrix = HoloLensBasis * mathNetMatrix * HoloLensBasisInverted;
-            return new Matrix4x4(
-                (float)holoLensMatrix.Values[0],
-                (float)holoLensMatrix.Values[1],
-                (float)holoLensMatrix.Values[2],
-                (float)holoLensMatrix.Values[3],
-                (float)holoLensMatrix.Values[4],
-                (float)holoLensMatrix.Values[5],
-                (float)holoLensMatrix.Values[6],
-                (float)holoLensMatrix.Values[7],
-                (float)holoLensMatrix.Values[8],
-                (float)holoLensMatrix.Values[9],
-                (float)holoLensMatrix.Values[10],
-                (float)holoLensMatrix.Values[11],
-                (float)holoLensMatrix.Values[12],
-                (float)holoLensMatrix.Values[13],
-                (float)holoLensMatrix.Values[14],
-                (float)holoLensMatrix.Values[15]);
+            long sampleTicks = TimeHelper.ConvertXrTimeToHnsTicks(openXrTime);
+            return pipeline.GetCurrentTimeFromElapsedTicks(sampleTicks);
         }
 
         /// <summary>
-        /// Converts a HoloLens <see cref="Matrix4x4"/> to a MathNet <see cref="DenseMatrix"/>.
+        /// Interpolates between two <see cref="Hand"/> poses by interpolating the <see cref="CoordinateSystem"/>
+        /// poses of each joint. Spherical linear interpolation (<see cref="System.Numerics.Quaternion.Slerp"/>)
+        /// is used for rotation, and linear interpolation is used for translation.
         /// </summary>
-        /// <param name="holoLensMatrix">The System.Numerics matrix.</param>
-        /// <returns>The MathNet dense matrix.</returns>
-        /// <remarks>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
-        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.</remarks>
-        internal static DenseMatrix ToMathNetMatrix(this Matrix4x4 holoLensMatrix)
+        /// <param name="hand1">The first <see cref="Hand"/> pose.</param>
+        /// <param name="hand2">The second <see cref="Hand"/> pose.</param>
+        /// <param name="amount">The amount to interpolate between the two hand poses. A value of 0 will
+        /// effectively return the first hand pose, a value of 1 will effectively return the second
+        /// hand pose, and a value between 0 and 1 will return an interpolation between those two values.
+        /// A value outside the 0-1 range will generate an extrapolated result.</param>
+        /// <returns>The interpolated <see cref="Hand"/> pose.</returns>
+        public static Hand InterpolateHands(Hand hand1, Hand hand2, double amount)
         {
-            // Values are stored column-major.
-            var values = new double[]
+            int numJoints = (int)HandJointIndex.MaxIndex;
+
+            // Initialize a default pose if either input hand is null
+            hand1 ??= new Hand(false, false, false, new CoordinateSystem[numJoints]);
+            hand2 ??= new Hand(false, false, false, new CoordinateSystem[numJoints]);
+
+            // Interpolate each joint pose separately
+            var interpolatedJoints = new CoordinateSystem[numJoints];
+            for (int i = 0; i < numJoints; i++)
             {
-                holoLensMatrix.M11,
-                holoLensMatrix.M12,
-                holoLensMatrix.M13,
-                holoLensMatrix.M14,
-                holoLensMatrix.M21,
-                holoLensMatrix.M22,
-                holoLensMatrix.M23,
-                holoLensMatrix.M24,
-                holoLensMatrix.M31,
-                holoLensMatrix.M32,
-                holoLensMatrix.M33,
-                holoLensMatrix.M34,
-                holoLensMatrix.M41,
-                holoLensMatrix.M42,
-                holoLensMatrix.M43,
-                holoLensMatrix.M44,
-            };
+                interpolatedJoints[i] = InterpolateCoordinateSystems(hand1.Joints[i], hand2.Joints[i], amount);
+            }
 
-            var mathNetMatrix = new DenseMatrix(4, 4, values);
-            return HoloLensBasisInverted * mathNetMatrix * HoloLensBasis;
+            // If interpolating *any* non-zero amount of the pose of hand2 into the pose of hand1,
+            // then use values from hand2 for tracked, pinched, and gripped. Otherwise select from hand1.
+            return new Hand(
+                amount > 0 ? hand2.IsTracked : hand1.IsTracked,
+                amount > 0 ? hand2.IsPinched : hand1.IsPinched,
+                amount > 0 ? hand2.IsGripped : hand1.IsGripped,
+                interpolatedJoints);
+        }
+
+        /// <summary>
+        /// Converts and rebases a MathNet <see cref="CoordinateSystem"/> to a HoloLens <see cref="Matrix4x4"/>.
+        /// </summary>
+        /// <param name="coordinateSystem">The MathNet basis <see cref="CoordinateSystem"/>.</param>
+        /// <returns>The HoloLens basis <see cref="Matrix4x4"/>.</returns>
+        /// <remarks>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.</remarks>
+        internal static Matrix4x4 RebaseToHoloLensSystemMatrix(this CoordinateSystem coordinateSystem)
+        {
+            var rebased = new CoordinateSystem(HoloLensBasis * coordinateSystem * HoloLensBasisInverted);
+            return rebased.ToSystemNumericsMatrix();
+        }
+
+        /// <summary>
+        /// Converts and rebases a HoloLens <see cref="Matrix4x4"/> to a MathNet <see cref="CoordinateSystem"/>.
+        /// </summary>
+        /// <param name="holoLensMatrix">The HoloLens basis <see cref="Matrix4x4"/>.</param>
+        /// <returns>The MathNet basis <see cref="CoordinateSystem"/>.</returns>
+        /// <remarks>The HoloLens basis assumes that Forward=-Z, Left=-X, and Up=Y.
+        /// The MathNet basis assumes that Forward=X, Left=Y, and Up=Z.</remarks>
+        internal static CoordinateSystem RebaseToMathNetCoordinateSystem(this Matrix4x4 holoLensMatrix)
+        {
+            var cs = holoLensMatrix.ToCoordinateSystem();
+            return new CoordinateSystem(HoloLensBasisInverted * cs * HoloLensBasis);
         }
     }
 }

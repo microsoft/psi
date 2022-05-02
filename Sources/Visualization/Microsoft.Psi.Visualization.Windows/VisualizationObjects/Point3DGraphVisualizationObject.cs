@@ -170,15 +170,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             pipeVisual3D.BeginEdit();
 
-            if (this.EdgeVisibilityFunc(edge))
+            if (this.EdgeVisibilityFunc(edge) &&
+                this.NodesVisuals.TryGetVisual(edge.Start, out var startNode) &&
+                this.NodesVisuals.TryGetVisual(edge.End, out var endNode))
             {
                 if (pipeVisual3D.Diameter != this.EdgeDiameterMm / 1000.0)
                 {
                     pipeVisual3D.Diameter = this.EdgeDiameterMm / 1000.0;
                 }
 
-                var node1Position = this.NodesVisuals[edge.Start].Transform.Value;
-                var node2Position = this.NodesVisuals[edge.End].Transform.Value;
+                var node1Position = startNode.Transform.Value;
+                var node2Position = endNode.Transform.Value;
 
                 pipeVisual3D.Point1 = new Win3D.Point3D(node1Position.OffsetX, node1Position.OffsetY, node1Position.OffsetZ);
                 pipeVisual3D.Point2 = new Win3D.Point3D(node2Position.OffsetX, node2Position.OffsetY, node2Position.OffsetZ);
