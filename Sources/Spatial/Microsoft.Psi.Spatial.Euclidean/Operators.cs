@@ -4,8 +4,10 @@
 namespace Microsoft.Psi.Spatial.Euclidean
 {
     using System;
+    using System.Numerics;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using Quaternion = System.Numerics.Quaternion;
 
     /// <summary>
     /// Implements various operators for manipulating euclidean entities.
@@ -114,6 +116,90 @@ namespace Microsoft.Psi.Spatial.Euclidean
             rotationMatrix.SetColumn(1, left.ToVector());
             rotationMatrix.SetColumn(2, up.ToVector());
             return rotationMatrix;
+        }
+
+        /// <summary>
+        /// Convert a <see cref="CoordinateSystem"/> to the equivalent <see cref="Matrix4x4"/>.
+        /// </summary>
+        /// <param name="coordinateSystem">The <see cref="CoordinateSystem"/> to convert.</param>
+        /// <returns>The equivalent <see cref="Matrix4x4"/>.</returns>
+        public static Matrix4x4 ToSystemNumericsMatrix(this CoordinateSystem coordinateSystem)
+            => new ((float)coordinateSystem.Values[0],
+                    (float)coordinateSystem.Values[1],
+                    (float)coordinateSystem.Values[2],
+                    (float)coordinateSystem.Values[3],
+                    (float)coordinateSystem.Values[4],
+                    (float)coordinateSystem.Values[5],
+                    (float)coordinateSystem.Values[6],
+                    (float)coordinateSystem.Values[7],
+                    (float)coordinateSystem.Values[8],
+                    (float)coordinateSystem.Values[9],
+                    (float)coordinateSystem.Values[10],
+                    (float)coordinateSystem.Values[11],
+                    (float)coordinateSystem.Values[12],
+                    (float)coordinateSystem.Values[13],
+                    (float)coordinateSystem.Values[14],
+                    (float)coordinateSystem.Values[15]);
+
+        /// <summary>
+        /// Convert a <see cref="Matrix4x4"/> to the equivalent <see cref="CoordinateSystem"/>.
+        /// </summary>
+        /// <param name="matrix">The <see cref="Matrix4x4"/> to convert.</param>
+        /// <returns>The equivalent <see cref="CoordinateSystem"/>.</returns>
+        public static CoordinateSystem ToCoordinateSystem(this Matrix4x4 matrix)
+        {
+            var values = new double[]
+            {
+                matrix.M11,
+                matrix.M12,
+                matrix.M13,
+                matrix.M14,
+                matrix.M21,
+                matrix.M22,
+                matrix.M23,
+                matrix.M24,
+                matrix.M31,
+                matrix.M32,
+                matrix.M33,
+                matrix.M34,
+                matrix.M41,
+                matrix.M42,
+                matrix.M43,
+                matrix.M44,
+            };
+
+            return new CoordinateSystem(Matrix<double>.Build.Dense(4, 4, values));
+        }
+
+        /// <summary>
+        /// Interpolates between two <see cref="CoordinateSystem"/> poses, using spherical linear interpolation
+        /// (<see cref="Quaternion.Slerp"/>) for rotation, and linear interpolation for translation.
+        /// </summary>
+        /// <param name="cs1">The first <see cref="CoordinateSystem"/>.</param>
+        /// <param name="cs2">The second <see cref="CoordinateSystem"/>.</param>
+        /// <param name="amount">The amount to interpolate between the two coordinate systems. A value of 0 will
+        /// effectively return the first coordinate system, a value of 1 will effectively return the second
+        /// coordinate system, and a value between 0 and 1 will return an interpolation between those two values.
+        /// A value outside the 0-1 range will generate an extrapolated result.</param>
+        /// <returns>The interpolated <see cref="CoordinateSystem"/>.</returns>
+        public static CoordinateSystem InterpolateCoordinateSystems(CoordinateSystem cs1, CoordinateSystem cs2, double amount)
+        {
+            // We assume an identity coordinate system by default if either input happens to be null
+            cs1 ??= new CoordinateSystem();
+            cs2 ??= new CoordinateSystem();
+
+            // Extract translation as vectors
+            var t1 = cs1.Origin.ToVector3D();
+            var t2 = cs2.Origin.ToVector3D();
+
+            // Extract rotation as quaternions (zeroing out the translation)
+            var r1 = Quaternion.CreateFromRotationMatrix(cs1.SetTranslation(new Vector3D(0, 0, 0)).ToSystemNumericsMatrix());
+            var r2 = Quaternion.CreateFromRotationMatrix(cs2.SetTranslation(new Vector3D(0, 0, 0)).ToSystemNumericsMatrix());
+
+            // interpolate
+            var t = t1 + (amount * (t2 - t1));
+            var r = Quaternion.Slerp(r1, r2, (float)amount);
+            return Matrix4x4.CreateFromQuaternion(r).ToCoordinateSystem().SetTranslation(t);
         }
     }
 }

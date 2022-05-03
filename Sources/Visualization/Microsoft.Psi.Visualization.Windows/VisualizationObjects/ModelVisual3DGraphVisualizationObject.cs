@@ -97,19 +97,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         protected void UpdateVisuals()
         {
+            // update the nodes
             this.NodesVisuals.BeginUpdate();
-            this.EdgesVisuals.BeginUpdate();
 
             if (this.CurrentData != null)
             {
-                // update the joints
                 foreach (var nodeKey in this.CurrentData.Nodes.Keys)
                 {
                     var nodeVisualizationObject = this.NodesVisuals[nodeKey];
                     this.UpdateNodeVisuals(nodeVisualizationObject, nodeKey);
                 }
+            }
 
-                // update the edges
+            this.NodesVisuals.EndUpdate();
+
+            // update the edges
+            this.EdgesVisuals.BeginUpdate();
+
+            if (this.CurrentData != null)
+            {
                 foreach (var edge in this.CurrentData.Edges.Keys)
                 {
                     var edgeVisualizationObject = this.EdgesVisuals[edge];
@@ -117,7 +123,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
             }
 
-            this.NodesVisuals.EndUpdate();
             this.EdgesVisuals.EndUpdate();
         }
 

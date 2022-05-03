@@ -270,7 +270,7 @@ namespace Microsoft.Psi.MixedReality
             var cameraPose = CameraBasis * this.invertedCameraExtrinsics.Value * m;
 
             // Convert to \psi basis
-            return new CoordinateSystem(cameraPose.ToMathNetMatrix());
+            return cameraPose.RebaseToMathNetCoordinateSystem();
         }
 
         private void CaptureThread()

@@ -89,6 +89,26 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Try to get a visual that already exists for the given key, without updating anything.
+        /// </summary>
+        /// <param name="key">The key to try and get the visual for.</param>
+        /// <param name="visual">The visual corresponding to the given key, or null if there is no such visual.</param>
+        /// <returns>True if a visual exists for the key.</returns>
+        public bool TryGetVisual(TKey key, out TVisual3D visual)
+        {
+            if (this.visuals.ContainsKey(key))
+            {
+                visual = this.visuals[key];
+                return true;
+            }
+            else
+            {
+                visual = null;
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Begins an update of the elements of the collection.  Once all required elements have been updated call EndUpdate() to purge any surplus visuals.
         /// </summary>
         public void BeginUpdate()
