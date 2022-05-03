@@ -30,7 +30,7 @@ namespace Microsoft.Psi.MixedReality
         public static CoordinateSystem TryConvertSpatialCoordinateSystemToPsiCoordinateSystem(this SpatialCoordinateSystem spatialCoordinateSystem)
         {
             var worldPose = spatialCoordinateSystem.TryGetTransformTo(MixedReality.WorldSpatialCoordinateSystem);
-            return worldPose.HasValue ? new CoordinateSystem(worldPose.Value.ToMathNetMatrix()) : null;
+            return worldPose.HasValue ? worldPose.Value.RebaseToMathNetCoordinateSystem() : null;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Microsoft.Psi.MixedReality
         /// <returns>The <see cref="SpatialCoordinateSystem"/>.</returns>
         public static SpatialCoordinateSystem TryConvertPsiCoordinateSystemToSpatialCoordinateSystem(this CoordinateSystem coordinateSystem)
         {
-            var holoLensMatrix = coordinateSystem.ToHoloLensSystemMatrix();
+            var holoLensMatrix = coordinateSystem.RebaseToHoloLensSystemMatrix();
             var translation = holoLensMatrix.Translation;
             holoLensMatrix.Translation = Vector3.Zero;
             var rotation = Quaternion.CreateFromRotationMatrix(holoLensMatrix);

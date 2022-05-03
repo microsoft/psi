@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.MixedReality
 {
+    using System.Collections.Generic;
     using MathNet.Spatial.Euclidean;
 
     /// <summary>
@@ -24,6 +25,43 @@ namespace Microsoft.Psi.MixedReality
             this.IsGripped = isGripped;
             this.Joints = joints;
         }
+
+        /// <summary>
+        /// Gets the definition of bones connecting the hand joints.
+        /// </summary>
+        public static List<(HandJointIndex Start, HandJointIndex End)> Bones => new ()
+        {
+            (HandJointIndex.Wrist, HandJointIndex.Palm),
+
+            (HandJointIndex.Wrist, HandJointIndex.ThumbMetacarpal),
+            (HandJointIndex.ThumbMetacarpal, HandJointIndex.ThumbProximal),
+            (HandJointIndex.ThumbProximal, HandJointIndex.ThumbDistal),
+            (HandJointIndex.ThumbDistal, HandJointIndex.ThumbTip),
+
+            (HandJointIndex.Wrist, HandJointIndex.IndexMetacarpal),
+            (HandJointIndex.IndexMetacarpal, HandJointIndex.IndexProximal),
+            (HandJointIndex.IndexProximal, HandJointIndex.IndexIntermediate),
+            (HandJointIndex.IndexIntermediate, HandJointIndex.IndexDistal),
+            (HandJointIndex.IndexDistal, HandJointIndex.IndexTip),
+
+            (HandJointIndex.Wrist, HandJointIndex.MiddleMetacarpal),
+            (HandJointIndex.MiddleMetacarpal, HandJointIndex.MiddleProximal),
+            (HandJointIndex.MiddleProximal, HandJointIndex.MiddleIntermediate),
+            (HandJointIndex.MiddleIntermediate, HandJointIndex.MiddleDistal),
+            (HandJointIndex.MiddleDistal, HandJointIndex.MiddleTip),
+
+            (HandJointIndex.Wrist, HandJointIndex.RingMetacarpal),
+            (HandJointIndex.RingMetacarpal, HandJointIndex.RingProximal),
+            (HandJointIndex.RingProximal, HandJointIndex.RingIntermediate),
+            (HandJointIndex.RingIntermediate, HandJointIndex.RingDistal),
+            (HandJointIndex.RingDistal, HandJointIndex.RingTip),
+
+            (HandJointIndex.Wrist, HandJointIndex.PinkyMetacarpal),
+            (HandJointIndex.PinkyMetacarpal, HandJointIndex.PinkyProximal),
+            (HandJointIndex.PinkyProximal, HandJointIndex.PinkyIntermediate),
+            (HandJointIndex.PinkyIntermediate, HandJointIndex.PinkyDistal),
+            (HandJointIndex.PinkyDistal, HandJointIndex.PinkyTip),
+        };
 
         /// <summary>
         /// Gets a value indicating whether hand is being tracked.
