@@ -214,12 +214,12 @@ namespace Microsoft.Psi.MixedReality
                 interpolatedJoints[i] = InterpolateCoordinateSystems(hand1.Joints[i], hand2.Joints[i], amount);
             }
 
-            // If interpolating *any* non-zero amount of the pose of hand2 into the pose of hand1,
-            // then use values from hand2 for tracked, pinched, and gripped. Otherwise select from hand1.
+            // Use values from hand2 for tracked, pinched, and gripped, if the amount we are interpolating
+            // is greater than 0.5. Otherwise select from hand1.
             return new Hand(
-                amount > 0 ? hand2.IsTracked : hand1.IsTracked,
-                amount > 0 ? hand2.IsPinched : hand1.IsPinched,
-                amount > 0 ? hand2.IsGripped : hand1.IsGripped,
+                amount > 0.5 ? hand2.IsTracked : hand1.IsTracked,
+                amount > 0.5 ? hand2.IsPinched : hand1.IsPinched,
+                amount > 0.5 ? hand2.IsGripped : hand1.IsGripped,
                 interpolatedJoints);
         }
 

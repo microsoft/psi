@@ -141,7 +141,7 @@ namespace Microsoft.Psi.MixedReality.Visualization
         /// </summary>
         [DataMember]
         [DisplayName("Interpolate Hands")]
-        [Description("Interpolate hands to the camera message times?")]
+        [Description("Indicates whether to interpolate hands to the camera message times.")]
         public bool InterpolateHands
         {
             get => this.interpolateHands;
