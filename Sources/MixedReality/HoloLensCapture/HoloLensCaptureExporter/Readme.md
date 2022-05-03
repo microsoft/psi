@@ -165,6 +165,16 @@ The first three values are the flags indicating gripped/pinched/tracked state. I
 
 Audio buffers are persisted to a WAVE file (`Audio/Audio.wav`) containing IEEE float encoded, 48KHz, single channel data.
 
+Additionally, a set of audio buffer files in the form (`Audio000123.bin`) are persisted to the `Audio/Buffers` directory. Per-buffer originating timestamps are persisted to a `Timing.txt` file as a tab-separated pair of frame number and timestamp. For example:
+
+```text
+Frame  Originating Time
+-------------------------
+0      637835897126152279
+1      637835897132152359
+2      637835897142152493
+```
+
 #### Video
 
 The following camera streams are potentially available (depending on the configuration of the HoloLensCaptureApp):

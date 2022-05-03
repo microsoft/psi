@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HoloLensCaptureApp</RootNamespace>
     <AssemblyName>HoloLensCaptureApp</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>en</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.19041.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
@@ -21,6 +21,12 @@
     <AppxDefaultResourceQualifiers>Language=en</AppxDefaultResourceQualifiers>
     <CodeAnalysisRuleSet>..\..\..\..\Build\Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+    <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -66,11 +72,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Logo\SplashScreen.scale-100.png" />
     <Content Include="Assets\Logo\SplashScreen.scale-200.png" />
+    <Content Include="Assets\Logo\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Logo\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Logo\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Logo\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Logo\StoreLogo.png" />
+    <Content Include="Assets\Logo\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Logo\Wide310x150Logo.scale-200.png" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
