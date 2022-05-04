@@ -507,7 +507,7 @@ namespace Microsoft.Psi.MixedReality
 
                     // Compute the camera pose if needed
                     var cameraPose = default(CoordinateSystem);
-                    if (streamSettings.OutputPose)
+                    if (streamSettings.OutputPose || streamSettings.OutputEncodedImageCameraView)
                     {
                         // Convert the frame coordinate system to world pose in psi basis
                         cameraPose = frame.CoordinateSystem?.TryConvertSpatialCoordinateSystemToPsiCoordinateSystem();

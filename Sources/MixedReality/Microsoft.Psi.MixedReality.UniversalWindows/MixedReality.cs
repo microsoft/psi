@@ -33,11 +33,12 @@ namespace Microsoft.Psi.MixedReality
         /// a stationary frame of reference for the world is created at the current location.
         /// </summary>
         /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (optional).</param>
+        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Optional flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment (default: false).</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
         /// This method should be called after SK.Initialize.
         /// </remarks>
-        public static async Task InitializeAsync(SpatialAnchor worldSpatialAnchor = null)
+        public static async Task InitializeAsync(SpatialAnchor worldSpatialAnchor = null, bool regenerateDefaultWorldSpatialAnchorIfNeeded = false)
         {
             if (!SK.IsInitialized)
             {
@@ -47,7 +48,7 @@ namespace Microsoft.Psi.MixedReality
             // Create the spatial anchor helper
             SpatialAnchorHelper = new SpatialAnchorHelper(await SpatialAnchorManager.RequestStoreAsync());
 
-            InitializeWorldCoordinateSystem(worldSpatialAnchor);
+            InitializeWorldCoordinateSystem(worldSpatialAnchor, regenerateDefaultWorldSpatialAnchorIfNeeded);
 
             // By default, don't render the hands or register with StereoKit physics system.
             Input.HandVisible(Handed.Max, false);
@@ -60,9 +61,20 @@ namespace Microsoft.Psi.MixedReality
         /// world coordinate system will be consistent across application sessions, unless the associated
         /// spatial anchor is modified or deleted.
         /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (may be null).</param>
+        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment (default: false).</param>
         /// </summary>
-        private static void InitializeWorldCoordinateSystem(SpatialAnchor worldSpatialAnchor)
+        private static void InitializeWorldCoordinateSystem(SpatialAnchor worldSpatialAnchor, bool regenerateDefaultWorldSpatialAnchorIfNeeded)
         {
+            SpatialAnchor TryCreateDefaultWorldSpatialAnchor(SpatialStationaryFrameOfReference world)
+            {
+                // Save the world spatial coordinate system
+                WorldSpatialCoordinateSystem = world.CoordinateSystem;
+
+                // Create a spatial anchor to represent the world origin and persist it to the spatial
+                // anchor store to ensure that the origin remains coherent between sessions.
+                return SpatialAnchorHelper.TryCreateSpatialAnchor(DefaultWorldSpatialAnchorId, WorldSpatialCoordinateSystem);
+            }
+
             // If no world anchor was given, try to load the default world spatial anchor if it was previously persisted
             worldSpatialAnchor ??= SpatialAnchorHelper.TryGetSpatialAnchor(DefaultWorldSpatialAnchorId);
 
@@ -70,6 +82,27 @@ namespace Microsoft.Psi.MixedReality
             {
                 // Set the world spatial coordinate system using the spatial anchor
                 WorldSpatialCoordinateSystem = worldSpatialAnchor.CoordinateSystem;
+                if (regenerateDefaultWorldSpatialAnchorIfNeeded)
+                {
+                    var locator = SpatialLocator.GetDefault();
+                    if (locator == null)
+                    {
+                        throw new Exception($"Could not get spatial locator.");
+                    }
+
+                    // determine whether we can localize in the current environment
+                    var world = locator.CreateStationaryFrameOfReferenceAtCurrentLocation();
+                    var success = world.CoordinateSystem.TryGetTransformTo(WorldSpatialCoordinateSystem) != null;
+                    if (!success)
+                    {
+                        SpatialAnchorHelper.RemoveSpatialAnchor(DefaultWorldSpatialAnchorId);
+                        worldSpatialAnchor = TryCreateDefaultWorldSpatialAnchor(world);
+                        if (worldSpatialAnchor == null)
+                        {
+                            throw new Exception("Could not create the persistent world spatial anchor.");
+                        }
+                    }
+                }
             }
             else
             {
@@ -80,13 +113,7 @@ namespace Microsoft.Psi.MixedReality
                 {
                     // This creates a stationary frame of reference which we will use as our world origin
                     var world = locator.CreateStationaryFrameOfReferenceAtCurrentLocation();
-
-                    // Save the world spatial coordinate system
-                    WorldSpatialCoordinateSystem = world.CoordinateSystem;
-
-                    // Create a spatial anchor to represent the world origin and persist it to the spatial
-                    // anchor store to ensure that the origin remains coherent between sessions.
-                    worldSpatialAnchor = SpatialAnchorHelper.TryCreateSpatialAnchor(DefaultWorldSpatialAnchorId, WorldSpatialCoordinateSystem);
+                    worldSpatialAnchor = TryCreateDefaultWorldSpatialAnchor(world);
 
                     if (worldSpatialAnchor == null)
                     {

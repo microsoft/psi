@@ -147,25 +147,11 @@ namespace HoloLensCaptureApp
             }
 
             // Initialize MixedReality statics
-            await MixedReality.InitializeAsync();
+            await MixedReality.InitializeAsync(regenerateDefaultWorldSpatialAnchorIfNeeded: true);
 
             // Attempt to get server address from config file
-            const string configFile = "CaptureServerIP.txt";
             var docs = KnownFolders.DocumentsLibrary;
-            try
-            {
-                var config = await docs.GetFileAsync(configFile);
-                captureServerAddress = await FileIO.ReadTextAsync(config);
-            }
-            catch (FileNotFoundException)
-            {
-                // save new config file only if the server address has been changed from default
-                if (!string.Equals(captureServerAddress, "0.0.0.0"))
-                {
-                    var config = await docs.CreateFileAsync(configFile, CreationCollisionOption.FailIfExists);
-                    await FileIO.WriteTextAsync(config, captureServerAddress);
-                }
-            }
+            InitializeCaptureServerAddressAsync(docs, "CaptureServerIP.txt").GetAwaiter().GetResult();
 
             var pipeline = default(Pipeline);
 
@@ -841,6 +827,21 @@ namespace HoloLensCaptureApp
             pipeline?.Dispose();
 
             SK.Shutdown();
+        }
+
+        private static async Task InitializeCaptureServerAddressAsync(StorageFolder folder, string configFile)
+        {
+            try
+            {
+                var config = await folder.GetFileAsync(configFile);
+                captureServerAddress = await FileIO.ReadTextAsync(config);
+            }
+            catch (FileNotFoundException)
+            {
+                // use default and save sample settings file
+                var config = await folder.CreateFileAsync(configFile, CreationCollisionOption.FailIfExists);
+                await FileIO.WriteTextAsync(config, captureServerAddress);
+            }
         }
 
         private static void DrawFrame(Color32 color, string labelText = null)

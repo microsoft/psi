@@ -56,12 +56,12 @@ namespace HoloLensCaptureServer
             {
                 // Shared<Image>
                 SimplifyTypeName(typeof(Shared<Image>).FullName),
-                (s, t) => CaptureTcpStream<Shared<Image>>(s, t, Serializers.SharedImageFormat(), largeMessage: true)
+                (s, t) => ViewImageStream(CaptureTcpStream<Shared<Image>>(s, t, Serializers.SharedImageFormat(), largeMessage: true), s.StreamName)
             },
             {
                 // Shared<EncodedImage>
                 SimplifyTypeName(typeof(Shared<EncodedImage>).FullName),
-                (s, t) => CaptureTcpStream<Shared<EncodedImage>>(s, t, Serializers.SharedEncodedImageFormat(), largeMessage: true, persistFrameRate: true)
+                (s, t) => ViewImageStream(CaptureTcpStream<Shared<EncodedImage>>(s, t, Serializers.SharedEncodedImageFormat(), largeMessage: true, persistFrameRate: true).Decode(new ImageFromStreamDecoder(), DeliveryPolicy.LatestMessage), s.StreamName)
             },
             {
                 // Shared<DepthImage>
@@ -113,12 +113,12 @@ namespace HoloLensCaptureServer
             {
                 // EncodedImageCameraView
                 SimplifyTypeName(typeof(EncodedImageCameraView).FullName),
-                (s, t) => CaptureTcpStream<EncodedImageCameraView>(s, t, Serializers.EncodedImageCameraViewFormat(), true, t => t.Dispose(), true)
+                (s, t) => ViewImageStream(CaptureTcpStream<EncodedImageCameraView>(s, t, Serializers.EncodedImageCameraViewFormat(), true, t => t.Dispose(), true).Select(v => v.ViewedObject).Decode(new ImageFromStreamDecoder(), DeliveryPolicy.LatestMessage), s.StreamName)
             },
             {
                 // ImageCameraView
                 SimplifyTypeName(typeof(ImageCameraView).FullName),
-                (s, t) => CaptureTcpStream<ImageCameraView>(s, t, Serializers.ImageCameraViewFormat(), true, t => t.Dispose(), true)
+                (s, t) => ViewImageStream(CaptureTcpStream<ImageCameraView>(s, t, Serializers.ImageCameraViewFormat(), true, t => t.Dispose(), true).Select(v => v.ViewedObject), s.StreamName)
             },
             {
                 // DepthImageCameraView
@@ -132,6 +132,7 @@ namespace HoloLensCaptureServer
         private static PsiExporter captureServerStore = null;
         private static string logFile = null;
         private static Dictionary<string, StreamStatistics> statistics = null;
+        private static ImageViewer imageViewer = null;
 
         private static void Main(string[] args)
         {
@@ -186,11 +187,22 @@ namespace HoloLensCaptureServer
             Console.WriteLine("Be sure to check firewall settings (may need to enable Public).");
 
             // Wait to press a key to exit
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadKey();
-
-            RendezvousServer.Stop();
-            StopComputeServerPipeline("Server manually stopped");
+            Console.WriteLine("Press Q or ENTER key to exit.");
+            while (true)
+            {
+                switch (Console.ReadKey().Key)
+                {
+                    case ConsoleKey.Q:
+                    case ConsoleKey.Enter:
+                        RendezvousServer.Stop();
+                        StopComputeServerPipeline("Server manually stopped");
+                        Environment.Exit(0);
+                        break;
+                    case ConsoleKey.V:
+                        imageViewer?.ShowWindow();
+                        break;
+                }
+            }
         }
 
         private static void CreateAndRunComputeServerPipeline(Rendezvous.Process inputRendezvousProcess)
@@ -335,9 +347,11 @@ namespace HoloLensCaptureServer
             // Run the pipeline
             captureServerPipeline.RunAsync();
             Console.WriteLine("    Running...");
+            Console.WriteLine();
+            Console.WriteLine("Press V to view camera stream.");
         }
 
-        private static void CaptureTcpStream<T>(
+        private static IProducer<T> CaptureTcpStream<T>(
             Rendezvous.Stream stream,
             Rendezvous.TcpSourceEndpoint tcpEndpoint,
             IFormatDeserializer deserializer,
@@ -359,6 +373,8 @@ namespace HoloLensCaptureServer
                     .Select(b => b.Length / 3.0, DeliveryPolicy.SynchronousOrThrottle)
                     .Write($"{stream.StreamName}.AvgFrameRate", captureServerStore);
             }
+
+            return tcpSource;
         }
 
         private static void StopComputeServerPipeline(string message)
@@ -422,6 +438,15 @@ namespace HoloLensCaptureServer
         {
             Console.WriteLine();
             Console.WriteLine($"PROCESS REMOVED: {process.Name}");
+        }
+
+        private static void ViewImageStream(IProducer<Shared<Image>> stream, string title)
+        {
+            if (title.StartsWith("Video") /* not including preview, grey-cameras, etc. */)
+            {
+                imageViewer = new ImageViewer(captureServerPipeline, $"Image Viewer: {title}", false);
+                stream.PipeTo(imageViewer, DeliveryPolicy.LatestMessage);
+            }
         }
 
         /// <summary>

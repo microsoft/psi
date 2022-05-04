@@ -378,11 +378,34 @@ namespace HoloLensCaptureExporter
         /// <param name="streamWritersToClose">The collection of stream writers to be closed.</param>
         internal static void Export(this IProducer<AudioBuffer> source, string name, string outputPath, List<StreamWriter> streamWritersToClose)
         {
+            // export to .wav file
             source.PipeTo(
                 new WaveFileWriter(
                     source.Out.Pipeline,
                     DataExporter.EnsurePathExists(Path.Combine(outputPath, name, $"{name}.wav"))),
                 DeliveryPolicy.SynchronousOrThrottle);
+
+            // export individual raw audio buffers to `Audio000123.bin` files along with timing information
+            var buffersPath = Path.Combine(outputPath, name, "Buffers");
+            var timingFilePath = DataExporter.EnsurePathExists(Path.Combine(buffersPath, $"Timing.txt"));
+            var timingFile = File.CreateText(timingFilePath);
+            streamWritersToClose.Add(timingFile);
+            var bufferCounter = 0;
+            source
+                .Do(
+                    (buffer, envelope) =>
+                    {
+                        if (buffer.HasValidData)
+                        {
+                            var data = buffer.Data;
+                            var file = File.Create(DataExporter.EnsurePathExists(Path.Combine(buffersPath, $"Audio{bufferCounter:000000}.bin")));
+                            file.Write(data, 0, data.Length);
+                            file.Close();
+                            file.Dispose();
+                            timingFile.WriteLine($"{bufferCounter++}\t{envelope.OriginatingTime.ToText()}");
+                        }
+                    },
+                    DeliveryPolicy.SynchronousOrThrottle);
         }
 
         /// <summary>
