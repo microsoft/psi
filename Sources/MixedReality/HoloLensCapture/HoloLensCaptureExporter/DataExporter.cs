@@ -6,10 +6,13 @@ namespace HoloLensCaptureExporter
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Threading;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Imaging;
+    using Microsoft.Psi.Media;
     using Microsoft.Psi.MixedReality;
     using Microsoft.Psi.Spatial.Euclidean;
 
@@ -25,8 +28,15 @@ namespace HoloLensCaptureExporter
         /// <returns>An error code or 0 if success.</returns>
         public static int Run(Verbs.ExportCommand exportCommand)
         {
+            const string videoStreamName = "VideoImageCameraView";
+            const string videoEncodedStreamName = "VideoEncodedImageCameraView";
+            const string audioStreamName = "Audio";
+
+            var pngEncoder = new ImageToPngStreamEncoder();
+            var decoder = new ImageFromStreamDecoder();
+
             // Create a pipeline
-            using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle);
+            using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.Unlimited);
 
             // Open the psi store for reading
             var store = PsiStore.Open(p, exportCommand.StoreName, exportCommand.StorePath);
@@ -39,9 +49,9 @@ namespace HoloLensCaptureExporter
             var head = store.OpenStreamOrDefault<CoordinateSystem>("Head");
             var eyes = store.OpenStreamOrDefault<Ray3D>("Eyes");
             var hands = store.OpenStreamOrDefault<(Hand Left, Hand Right)>("Hands");
-            var audio = store.OpenStreamOrDefault<AudioBuffer>("Audio");
-            var videoEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("VideoEncodedImageCameraView");
-            var videoImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("VideoImageCameraView");
+            var audio = store.OpenStreamOrDefault<AudioBuffer>(audioStreamName);
+            var videoEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>(videoEncodedStreamName);
+            var videoImageCameraView = store.OpenStreamOrDefault<ImageCameraView>(videoStreamName);
             var previewEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("PreviewEncodedImageCameraView");
             var previewImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("PreviewImageCameraView");
             var depthImageCameraView = store.OpenStreamOrDefault<DepthImageCameraView>("DepthImageCameraView");
@@ -90,10 +100,7 @@ namespace HoloLensCaptureExporter
             var streamWritersToClose = new List<StreamWriter>();
 
             // Export various encoded image camera views
-            var pngEncoder = new ImageToPngStreamEncoder();
-            var decoder = new ImageFromStreamDecoder();
-
-            void Export(
+            IProducer<ImageCameraView> Export(
                 string name,
                 IProducer<ImageCameraView> imageCameraView,
                 IProducer<EncodedImageCameraView> encodedImageCameraView,
@@ -112,33 +119,41 @@ namespace HoloLensCaptureExporter
                 {
                     // export raw camera view as lossless PNG
                     VerifyMutualExclusivity(encodedImageCameraView, gzipImageCameraView);
-                    imageCameraView?.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    imageCameraView.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    return imageCameraView;
                 }
 
                 if (encodedImageCameraView != null)
                 {
                     VerifyMutualExclusivity(imageCameraView, gzipImageCameraView);
+                    var decoded = encodedImageCameraView.Decode(decoder);
                     if (isNV12)
                     {
                         // export NV12-encoded camera view as lossless PNG
-                        encodedImageCameraView?.Decode(decoder)?.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                        decoded.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
                     }
                     else
                     {
                         // export encoded camera view as is
                         encodedImageCameraView.Export(name, exportCommand.OutputPath, streamWritersToClose);
                     }
+
+                    return decoded;
                 }
 
                 if (gzipImageCameraView != null)
                 {
                     // export GZIP'd camera view as lossless PNG
                     VerifyMutualExclusivity(imageCameraView, encodedImageCameraView);
-                    gzipImageCameraView?.Decode(decoder)?.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    var decoded = gzipImageCameraView.Decode(decoder);
+                    decoded.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
+                    return decoded;
                 }
+
+                return null;
             }
 
-            Export("Video", videoImageCameraView, videoEncodedImageCameraView, isNV12: true);
+            var decodedVideo = Export("Video", videoImageCameraView, videoEncodedImageCameraView, isNV12: true);
             Export("Preview", previewImageCameraView, previewEncodedImageCameraView, isNV12: true);
             Export("Infrared", infraredImageCameraView, infraredEncodedImageCameraView);
             Export("LeftFront", leftFrontImageCameraView, leftFrontEncodedImageCameraView, leftFrontGzipImageCameraView);
@@ -171,6 +186,106 @@ namespace HoloLensCaptureExporter
 
             // Export audio
             audio?.Export("Audio", exportCommand.OutputPath, streamWritersToClose);
+
+            // Export video as MPEG
+            if (decodedVideo != null)
+            {
+                // determine video properties by examining the store up front
+                (int Width, int Height, long FrameCount, TimeSpan TimeSpan, WaveFormat audioFormat) GetAudioAndVideoInfo()
+                {
+                    using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle);
+                    var store = PsiStore.Open(p, exportCommand.StoreName, exportCommand.StorePath);
+                    IProducer<ImageCameraView> video = null;
+                    IStreamMetadata meta = null;
+                    if (store.Contains(videoStreamName))
+                    {
+                        video = store.OpenStream<ImageCameraView>(videoStreamName);
+                        meta = store.GetMetadata(videoStreamName);
+                    }
+                    else if (store.Contains(videoEncodedStreamName))
+                    {
+                        video = store.OpenStream<EncodedImageCameraView>(videoEncodedStreamName).Decode(decoder);
+                        meta = store.GetMetadata(videoEncodedStreamName);
+                    }
+                    else
+                    {
+                        return (0, 0, 0, TimeSpan.Zero, null);
+                    }
+
+                    // frame count and time extents can be determined directly from metadata
+                    var frameCount = meta.MessageCount;
+                    var frameTimeSpan = meta.LastMessageCreationTime - meta.FirstMessageOriginatingTime;
+
+                    // width and height must be determined by reading an actual frame
+                    var width = 0;
+                    var height = 0;
+                    WaveFormat audioFormat = null;
+                    var wait = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+                    var audio = store.OpenStreamOrDefault<AudioBuffer>(audioStreamName);
+                    audio?.Do(a =>
+                    {
+                        audioFormat = a.Format;
+                        if (width != 0 && height != 0)
+                        {
+                            wait.Set();
+                        }
+                    });
+
+                    video.Select(x => x.ViewedObject).Do(v =>
+                    {
+                        var i = v.Resource;
+                        if (i.PixelFormat != PixelFormat.BGRA_32bpp)
+                        {
+                            throw new ArgumentException($"Expected video stream of {PixelFormat.BGRA_32bpp} (found {i.PixelFormat}).");
+                        }
+
+                        width = i.Width;
+                        height = i.Height;
+                        if (audio == null || audioFormat != null)
+                        {
+                            wait.Set();
+                        }
+                    });
+
+                    p.RunAsync();
+                    wait.WaitOne(); // wait to see the first frame
+
+                    return (width, height, frameCount, frameTimeSpan, audioFormat);
+                }
+
+                (var width, var height, var frameCount, var frameTimeSpan, var audioFormat) = GetAudioAndVideoInfo();
+
+                if (frameCount > 0)
+                {
+                    var frameRateNumerator = (uint)(frameCount - 1);
+                    var frameRateDenominator = (uint)(frameTimeSpan.TotalSeconds + 0.5);
+                    var frameRate = frameRateNumerator / frameRateDenominator;
+                    var mpegFile = EnsurePathExists(Path.Combine(exportCommand.OutputPath, "Video", $"Video.mpeg"));
+                    var audioOutputFormat = WaveFormat.Create16BitPcm((int)(audioFormat?.SamplesPerSec ?? 0), audioFormat?.Channels ?? 0);
+                    var mpegWriter = new Mpeg4Writer(p, mpegFile, new Mpeg4WriterConfiguration()
+                    {
+                        ImageWidth = (uint)width,
+                        ImageHeight = (uint)height,
+                        FrameRateNumerator = (uint)(frameCount - 1),
+                        FrameRateDenominator = (uint)(frameTimeSpan.TotalSeconds + 0.5),
+                        PixelFormat = PixelFormat.BGRA_32bpp,
+                        TargetBitrate = 10000000,
+                        ContainsAudio = audioFormat != null,
+                        AudioBitsPerSample = audioOutputFormat.BitsPerSample,
+                        AudioChannels = audioOutputFormat.Channels,
+                        AudioSamplesPerSecond = audioOutputFormat.SamplesPerSec,
+                    });
+
+                    var frameClock = Generators.Repeat(p, 0, TimeSpan.FromSeconds(1.0 / frameRate));
+                    var interpolatedVideo = frameClock.Join(decodedVideo, Reproducible.Nearest<ImageCameraView>());
+                    interpolatedVideo.Select(x => x.Item2.ViewedObject).PipeTo(mpegWriter);
+
+                    audio
+                        ?.Resample(new AudioResamplerConfiguration() { OutputFormat = audioOutputFormat, })
+                        ?.PipeTo(mpegWriter.AudioIn);
+                }
+            }
 
             // Export scene understanding
             sceneUnderstanding?.Export("SceneUnderstanding", exportCommand.OutputPath, streamWritersToClose);
