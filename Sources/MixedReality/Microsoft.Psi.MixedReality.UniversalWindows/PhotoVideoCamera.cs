@@ -481,9 +481,6 @@ namespace Microsoft.Psi.MixedReality
             Emitter<CoordinateSystem> poseStream,
             Emitter<EncodedImageCameraView> encodedImageCameraViewStream)
         {
-            // Cache the intrinsics
-            ICameraIntrinsics cameraIntrinsics = null;
-
             return (sender, args) =>
             {
                 using var frame = sender.TryAcquireLatestFrame();
@@ -494,7 +491,8 @@ namespace Microsoft.Psi.MixedReality
                     var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(frameTimestamp);
 
                     // Compute the camera intrinsics if needed
-                    if (cameraIntrinsics == null && streamSettings.OutputCameraIntrinsics)
+                    var cameraIntrinsics = default(ICameraIntrinsics);
+                    if (streamSettings.OutputCameraIntrinsics || streamSettings.OutputEncodedImageCameraView)
                     {
                         cameraIntrinsics = this.GetCameraIntrinsics(frame);
                     }
