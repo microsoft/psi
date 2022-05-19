@@ -222,8 +222,7 @@ namespace HoloLensCaptureExporter
                         }
 
                         imageCounter++;
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -249,7 +248,7 @@ namespace HoloLensCaptureExporter
 
             var depthImageCounter = 0;
             source
-                .Encode(new DepthImageToPngStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle)
+                .Encode(new DepthImageToPngStreamEncoder())
                 .Do(
                     (edicv, envelope) =>
                     {
@@ -266,8 +265,7 @@ namespace HoloLensCaptureExporter
                         }
 
                         depthImageCounter++;
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -288,8 +286,7 @@ namespace HoloLensCaptureExporter
                     (vector, envelope) =>
                     {
                         file.WriteLine($"{envelope.OriginatingTime.ToText()}\t{vector.ToText()}");
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -309,8 +306,7 @@ namespace HoloLensCaptureExporter
                     (coordinateSystem, envelope) =>
                     {
                         file.WriteLine($"{envelope.OriginatingTime.ToText()}\t{coordinateSystem.ToText()}");
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -330,8 +326,7 @@ namespace HoloLensCaptureExporter
                     (ray3D, envelope) =>
                     {
                         file.WriteLine($"{envelope.OriginatingTime.ToText()}\t{ray3D.ToText()}");
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -365,8 +360,7 @@ namespace HoloLensCaptureExporter
                         }
 
                         file.WriteLine(result.ToString().TrimEnd('\t'));
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -382,8 +376,7 @@ namespace HoloLensCaptureExporter
             source.PipeTo(
                 new WaveFileWriter(
                     source.Out.Pipeline,
-                    DataExporter.EnsurePathExists(Path.Combine(outputPath, name, $"{name}.wav"))),
-                DeliveryPolicy.SynchronousOrThrottle);
+                    DataExporter.EnsurePathExists(Path.Combine(outputPath, name, $"{name}.wav"))));
 
             // export individual raw audio buffers to `Audio000123.bin` files along with timing information
             var buffersPath = Path.Combine(outputPath, name, "Buffers");
@@ -404,8 +397,7 @@ namespace HoloLensCaptureExporter
                             file.Dispose();
                             timingFile.WriteLine($"{bufferCounter++}\t{envelope.OriginatingTime.ToText()}");
                         }
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -435,8 +427,7 @@ namespace HoloLensCaptureExporter
                         }
 
                         file.WriteLine(result.ToString().TrimEnd('\t'));
-                    },
-                    DeliveryPolicy.SynchronousOrThrottle);
+                    });
         }
 
         /// <summary>
@@ -521,8 +512,7 @@ namespace HoloLensCaptureExporter
                             meshesFile.WriteLine($"{originatingTime}\t{s.Meshes.Count}\t{s.ColliderMeshes.Count}");
                             ExportMeshes(s.Meshes, nameof(SceneObjectCollection.SceneObject.Meshes), originatingTime);
                             ExportMeshes(s.ColliderMeshes, nameof(SceneObjectCollection.SceneObject.ColliderMeshes), originatingTime);
-                        },
-                        DeliveryPolicy.SynchronousOrThrottle);
+                        });
             }
 
             ExportScene(source.Select(s => s.Background), nameof(SceneObjectCollection.Background));

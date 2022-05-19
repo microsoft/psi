@@ -15,7 +15,7 @@ namespace Test.Psi
     public class EmitterTester
     {
         // make out local version of immediate, to make sure it's synchronous even in debug builds
-        private static readonly DeliveryPolicy Immediate = new DeliveryPolicy(1, int.MaxValue, null, true, true);
+        private static readonly DeliveryPolicy Immediate = new DeliveryPolicy(1, int.MaxValue, null, null, true);
 
         [TestMethod]
         [Timeout(60000)]

@@ -36,7 +36,7 @@ namespace HoloLensCaptureExporter
             var decoder = new ImageFromStreamDecoder();
 
             // Create a pipeline
-            using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.Unlimited);
+            using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.Throttle);
 
             // Open the psi store for reading
             var store = PsiStore.Open(p, exportCommand.StoreName, exportCommand.StorePath);
@@ -174,9 +174,9 @@ namespace HoloLensCaptureExporter
             rightRightCalibrationMap?.Export("RightRight", "CalibrationMap", exportCommand.OutputPath, streamWritersToClose);
 
             // Export IMU streams
-            accelerometer?.SelectManyImuSamples(DeliveryPolicy.SynchronousOrThrottle).Export("IMU", "Accelerometer", exportCommand.OutputPath, streamWritersToClose);
-            gyroscope?.SelectManyImuSamples(DeliveryPolicy.SynchronousOrThrottle).Export("IMU", "Gyroscope", exportCommand.OutputPath, streamWritersToClose);
-            magnetometer?.SelectManyImuSamples(DeliveryPolicy.SynchronousOrThrottle).Export("IMU", "Magnetometer", exportCommand.OutputPath, streamWritersToClose);
+            accelerometer?.SelectManyImuSamples().Export("IMU", "Accelerometer", exportCommand.OutputPath, streamWritersToClose);
+            gyroscope?.SelectManyImuSamples().Export("IMU", "Gyroscope", exportCommand.OutputPath, streamWritersToClose);
+            magnetometer?.SelectManyImuSamples().Export("IMU", "Magnetometer", exportCommand.OutputPath, streamWritersToClose);
 
             // Export head, eyes and hands streams
             head?.Export("Head", exportCommand.OutputPath, streamWritersToClose);
@@ -279,7 +279,15 @@ namespace HoloLensCaptureExporter
 
                     var frameClock = Generators.Repeat(p, 0, TimeSpan.FromSeconds(1.0 / frameRate));
                     var interpolatedVideo = frameClock.Join(decodedVideo, Reproducible.Nearest<ImageCameraView>());
-                    interpolatedVideo.Select(x => x.Item2.ViewedObject).PipeTo(mpegWriter);
+
+                    // The mpeg writer component processes input video frames and audio buffers, and writes to the output mpeg file.
+                    // Because of the way the component works internally, if both input streams use a delivery policy of Throttle,
+                    // the component ends up being much slower than if enough data is always queued at its inputs ready to be processed.
+                    // Since the video arrives at a slower rate than the audio at the inputs to the component, we relax the
+                    // throttling threshold at the video input such that as many video frames as possible (up to a maximum of 1000)
+                    // are available to be processed by the mpeg writer. This avoids constantly throttling and unthrottling the
+                    // video source, which was causing a significant slowdown in the mpeg file export.
+                    interpolatedVideo.Select(x => x.Item2.ViewedObject).PipeTo(mpegWriter, DeliveryPolicy.QueueSizeThrottled(1000));
 
                     audio
                         ?.Resample(new AudioResamplerConfiguration() { OutputFormat = audioOutputFormat, })
@@ -290,7 +298,7 @@ namespace HoloLensCaptureExporter
             // Export scene understanding
             sceneUnderstanding?.Export("SceneUnderstanding", exportCommand.OutputPath, streamWritersToClose);
 
-            p.RunAsync(ReplayDescriptor.ReplayAllRealTime, progress: new Progress<double>(p => Console.Write($"Progress: {p:P}\r")));
+            p.RunAsync(ReplayDescriptor.ReplayAll, progress: new Progress<double>(p => Console.Write($"Progress: {p:P}\r")));
             p.WaitAll();
 
             foreach (var sw in streamWritersToClose)

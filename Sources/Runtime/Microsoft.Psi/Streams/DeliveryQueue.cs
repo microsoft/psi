@@ -288,7 +288,7 @@ namespace Microsoft.Psi.Streams
 
             // update the local variables.
             this.isEmpty = count == 0;
-            this.isThrottling = this.policy.ThrottleWhenFull && count >= this.policy.MaximumQueueSize;
+            this.isThrottling = this.policy.ThrottleQueueSize.HasValue && count >= this.policy.ThrottleQueueSize.Value;
             this.nextMessageEnvelope = (count == 0) ? default : this.queue.Peek().Envelope;
 
             // create the Transition object by comparing the current and previous local state variables.
