@@ -77,10 +77,10 @@ namespace Microsoft.Psi.MicrosoftSpeech
             this.Configuration = configuration ?? new MicrosoftSpeechRecognizerConfiguration();
 
             // create receiver of grammar updates
-            this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars), true);
+            this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars));
 
             // create receiver of grammar updates by name
-            this.ReceiveGrammarNames = pipeline.CreateReceiver<string[]>(this, this.EnableGrammars, nameof(this.ReceiveGrammarNames), true);
+            this.ReceiveGrammarNames = pipeline.CreateReceiver<string[]>(this, this.EnableGrammars, nameof(this.ReceiveGrammarNames));
 
             // assign the default Out emitter to the RecognitionResults group
             this.originatingTimeConsistencyCheckGroup.Add(this.Out, EmitterGroup.RecognitionResults);
@@ -228,9 +228,9 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// Replace grammars with given.
         /// </summary>
         /// <param name="srgsXmlGrammars">A collection of XML-format speech grammars that conform to the SRGS 1.0 specification.</param>
-        public void SetGrammars(Message<IEnumerable<string>> srgsXmlGrammars)
+        public void SetGrammars(IEnumerable<string> srgsXmlGrammars)
         {
-            this.speechRecognitionEngine.RequestRecognizerUpdate(srgsXmlGrammars.Data.Select(g =>
+            this.speechRecognitionEngine.RequestRecognizerUpdate(srgsXmlGrammars.Select(g =>
             {
                 using (var xmlReader = XmlReader.Create(new StringReader(g)))
                 {
@@ -243,11 +243,11 @@ namespace Microsoft.Psi.MicrosoftSpeech
         /// Enable all the grammars indicated by name, disabling all others.
         /// </summary>
         /// <param name="grammarNames">Speech grammars.</param>
-        public void EnableGrammars(Message<string[]> grammarNames)
+        public void EnableGrammars(string[] grammarNames)
         {
             foreach (var g in this.speechRecognitionEngine.Grammars)
             {
-                g.Enabled = grammarNames.Data.Contains(g.Name) ? true : false;
+                g.Enabled = grammarNames.Contains(g.Name) ? true : false;
             }
         }
 

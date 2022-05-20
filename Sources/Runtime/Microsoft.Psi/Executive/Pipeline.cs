@@ -349,11 +349,10 @@ namespace Microsoft.Psi
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
         /// <param name="name">The debug name of the receiver.</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
         /// <returns>A new receiver.</returns>
-        public Receiver<T> CreateReceiver<T>(object owner, Action<T, Envelope> action, string name, bool autoClone = false)
+        public Receiver<T> CreateReceiver<T>(object owner, Action<T, Envelope> action, string name)
         {
-            return this.CreateReceiver<T>(owner, m => action(m.Data, m.Envelope), name, autoClone);
+            return this.CreateReceiver<T>(owner, m => action(m.Data, m.Envelope), name);
         }
 
         /// <summary>
@@ -364,11 +363,10 @@ namespace Microsoft.Psi
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
         /// <param name="name">The debug name of the receiver.</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
         /// <returns>A new receiver.</returns>
-        public Receiver<T> CreateReceiver<T>(object owner, Action<T> action, string name, bool autoClone = false)
+        public Receiver<T> CreateReceiver<T>(object owner, Action<T> action, string name)
         {
-            return this.CreateReceiver<T>(owner, m => action(m.Data), name, autoClone);
+            return this.CreateReceiver<T>(owner, m => action(m.Data), name);
         }
 
         /// <summary>
@@ -379,12 +377,11 @@ namespace Microsoft.Psi
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
         /// <param name="name">The debug name of the receiver.</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
         /// <returns>A new receiver.</returns>
-        public Receiver<T> CreateReceiver<T>(object owner, Action<Message<T>> action, string name, bool autoClone = false)
+        public Receiver<T> CreateReceiver<T>(object owner, Action<Message<T>> action, string name)
         {
             PipelineElement node = this.GetOrCreateNode(owner);
-            var receiver = new Receiver<T>(Interlocked.Increment(ref lastReceiverId), name, node, owner, action, node.SyncContext, this, autoClone);
+            var receiver = new Receiver<T>(Interlocked.Increment(ref lastReceiverId), name, node, owner, action, node.SyncContext, this);
             node.AddInput(name, receiver);
             return receiver;
         }
@@ -398,11 +395,10 @@ namespace Microsoft.Psi
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
         /// <param name="name">The debug name of the receiver.</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
         /// <returns>A new receiver.</returns>
-        public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<T, Envelope, Task> action, string name, bool autoClone = false)
+        public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<T, Envelope, Task> action, string name)
         {
-            return this.CreateReceiver<T>(owner, m => action(m.Data, m.Envelope).Wait(), name, autoClone);
+            return this.CreateReceiver<T>(owner, m => action(m.Data, m.Envelope).Wait(), name);
         }
 
         /// <summary>
@@ -414,11 +410,10 @@ namespace Microsoft.Psi
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
         /// <param name="name">The debug name of the receiver.</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
         /// <returns>A new receiver.</returns>
-        public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<T, Task> action, string name, bool autoClone = false)
+        public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<T, Task> action, string name)
         {
-            return this.CreateReceiver<T>(owner, m => action(m.Data).Wait(), name, autoClone);
+            return this.CreateReceiver<T>(owner, m => action(m.Data).Wait(), name);
         }
 
         /// <summary>
@@ -430,11 +425,10 @@ namespace Microsoft.Psi
         /// The receivers associated with the same owner are never executed concurrently.</param>
         /// <param name="action">The action to execute when a message is delivered to this receiver.</param>
         /// <param name="name">The debug name of the receiver.</param>
-        /// <param name="autoClone">If true, the receiver will clone the message before passing it to the action, which is then responsible for recycling it as needed (using receiver.Recycle).</param>
         /// <returns>A new receiver.</returns>
-        public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<Message<T>, Task> action, string name, bool autoClone = false)
+        public Receiver<T> CreateAsyncReceiver<T>(object owner, Func<Message<T>, Task> action, string name)
         {
-            return this.CreateReceiver<T>(owner, m => action(m).Wait(), name, autoClone);
+            return this.CreateReceiver<T>(owner, m => action(m).Wait(), name);
         }
 
         /// <summary>

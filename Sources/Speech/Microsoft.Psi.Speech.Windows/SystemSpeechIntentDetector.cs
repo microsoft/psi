@@ -45,7 +45,7 @@ namespace Microsoft.Psi.Speech
             this.speechRecognitionEngine = this.CreateSpeechRecognitionEngine();
 
             // create receivers and emitters
-            this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars), true);
+            this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars));
             this.LoadGrammarCompleted = pipeline.CreateEmitter<LoadGrammarCompletedEventArgs>(this, nameof(this.LoadGrammarCompleted));
         }
 
@@ -82,9 +82,9 @@ namespace Microsoft.Psi.Speech
         /// Replace grammars with given.
         /// </summary>
         /// <param name="srgsXmlGrammars">A collection of XML-format speech grammars that conform to the SRGS 1.0 specification.</param>
-        public void SetGrammars(Message<IEnumerable<string>> srgsXmlGrammars)
+        public void SetGrammars(IEnumerable<string> srgsXmlGrammars)
         {
-            this.speechRecognitionEngine.RequestRecognizerUpdate(srgsXmlGrammars.Data.Select(g =>
+            this.speechRecognitionEngine.RequestRecognizerUpdate(srgsXmlGrammars.Select(g =>
             {
                 using (var xmlReader = XmlReader.Create(new StringReader(g)))
                 {

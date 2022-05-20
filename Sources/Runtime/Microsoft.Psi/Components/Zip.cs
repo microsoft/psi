@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Components
             try
             {
                 Receiver<T> receiver = null; // captured in receiver action closure
-                receiver = this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, receiver.Recycler), name, true);
+                receiver = this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, receiver.Recycler), name);
                 receiver.Unsubscribed += _ => this.Publish();
                 this.inputs.Add(receiver);
                 return receiver;
@@ -64,8 +64,9 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc/>
         public override string ToString() => this.name;
 
-        private void Receive(T clonedData, Envelope envelope, IRecyclingPool<T> recycler)
+        private void Receive(T data, Envelope envelope, IRecyclingPool<T> recycler)
         {
+            var clonedData = data.DeepClone(recycler);
             this.buffer.Add((data: clonedData, envelope, recycler));
             this.Publish();
         }
