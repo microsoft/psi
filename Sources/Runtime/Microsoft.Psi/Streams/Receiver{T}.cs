@@ -41,7 +41,28 @@ namespace Microsoft.Psi
         private IPerfCounterCollection<ReceiverCounters> counters;
         private Func<T, int> computeDataSize = null;
 
-        internal Receiver(int id, string name, PipelineElement element, object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = false)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Receiver{T}"/> class.
+        /// </summary>
+        /// <param name="id">The unique receiver id.</param>
+        /// <param name="name">The debug name of the receiver.</param>
+        /// <param name="element">The pipeline element associated with the receiver.</param>
+        /// <param name="owner">The component that owns this receiver.</param>
+        /// <param name="onReceived">The action to execute when a message is delivered to the receiver.</param>
+        /// <param name="context">The synchronization context of the receiver.</param>
+        /// <param name="pipeline">The pipeline in which to create the receiver.</param>
+        /// <param name="enforceIsolation">A value indicating whether to enforce cloning of messages as they arrive at the receiver.</param>
+        /// <remarks>
+        /// The <paramref name="enforceIsolation"/> flag primarily affects synchronous delivery of messages, when the action is
+        /// executed on the same thread on which the message was posted. If this value is set to true, the runtime will enforce
+        /// isolation by cloning the message before passing it to the receiver action. If set to false, then the message will be
+        /// passed by reference to the action without cloning, if and only if the receiver action executes synchronously. This
+        /// should be used with caution, as any modifications that the action may make to the received message will be reflected
+        /// in the source message posted by the upstream component. When in doubt, keep this value set to true to ensure that
+        /// messages are always cloned. Regardless of the value set here, isolation is always enforced when messages are queued
+        /// and delivered asynchronously.
+        /// </remarks>
+        internal Receiver(int id, string name, PipelineElement element, object owner, Action<Message<T>> onReceived, SynchronizationLock context, Pipeline pipeline, bool enforceIsolation = true)
         {
             this.scheduler = pipeline.Scheduler;
             this.schedulerContext = pipeline.SchedulerContext;
@@ -237,8 +258,8 @@ namespace Microsoft.Psi
                 this.counters.RawValue(ReceiverCounters.AvailableRecycled, this.Recycler.AvailableAllocationCount);
             }
 
-            // First, only clone the message if the component requires isolation, to allow for clone-free operation on the fast path
-            // Optimization is release-only, to make sure the cloning path is exercised in tests
+            // First, only clone the message if the component requires isolation, to allow for clone-free
+            // operation on the synchronous execution path if enforceIsolation is set to false.
             if (this.enforceIsolation)
             {
                 message.Data = message.Data.DeepClone(this.Recycler);
@@ -274,6 +295,12 @@ namespace Microsoft.Psi
                         this.receiverDiagnosticsCollector.Value.UpdateDiagnosticState(this.Owner.ToString());
                     }
 
+                    if (this.enforceIsolation)
+                    {
+                        // recycle the cloned copy if synchronous execution succeeded
+                        this.Recycler.Recycle(message.Data);
+                    }
+
                     return;
                 }
             }
@@ -306,13 +333,6 @@ namespace Microsoft.Psi
                     // emitter was closed
                     this.OnUnsubscribed(message.OriginatingTime);
                     return;
-                }
-
-                // remember the object we dequeued, and make a clone if the component requests isolation (the component will have to recycle this clone when done)
-                var data = message.Data;
-                if (this.enforceIsolation)
-                {
-                    message.Data = message.Data.DeepClone(this.Recycler);
                 }
 
                 DateTime start = (this.counters != null) ? Time.GetCurrentTime() : default;
@@ -350,7 +370,7 @@ namespace Microsoft.Psi
                 }
 
                 // recycle the item we dequeued
-                this.Recycler.Recycle(data);
+                this.Recycler.Recycle(message.Data);
 
                 if (!stateTransition.ToEmpty)
                 {

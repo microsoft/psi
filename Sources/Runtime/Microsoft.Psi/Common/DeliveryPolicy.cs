@@ -22,7 +22,7 @@ namespace Microsoft.Psi
             initialQueueSize: DefaultInitialQueueSize,
             maximumQueueSize: int.MaxValue,
             maximumLatency: null,
-            throttleWhenFull: false,
+            throttleQueueSize: null,
             attemptSynchronous: false,
             nameof(Unlimited));
 
@@ -33,7 +33,7 @@ namespace Microsoft.Psi
             initialQueueSize: 1,
             maximumQueueSize: 1,
             maximumLatency: null,
-            throttleWhenFull: false,
+            throttleQueueSize: null,
             attemptSynchronous: false,
             nameof(LatestMessage));
 
@@ -43,9 +43,9 @@ namespace Microsoft.Psi
         /// </summary>
         private static readonly DeliveryPolicy ThrottlePolicy = new DeliveryPolicy(
             initialQueueSize: 1,
-            maximumQueueSize: 1,
+            maximumQueueSize: int.MaxValue,
             maximumLatency: null,
-            throttleWhenFull: true,
+            throttleQueueSize: 1,
             attemptSynchronous: false,
             nameof(Throttle));
 
@@ -54,9 +54,9 @@ namespace Microsoft.Psi
         /// </summary>
         private static readonly DeliveryPolicy SynchronousOrThrottlePolicy = new DeliveryPolicy(
             initialQueueSize: 1,
-            maximumQueueSize: 1,
+            maximumQueueSize: int.MaxValue,
             maximumLatency: null,
-            throttleWhenFull: true,
+            throttleQueueSize: 1,
             attemptSynchronous: true,
             nameof(SynchronousOrThrottle));
 
@@ -66,23 +66,23 @@ namespace Microsoft.Psi
         /// <param name="initialQueueSize">The initial receiver queue size.</param>
         /// <param name="maximumQueueSize">The maximum receiver queue size.</param>
         /// <param name="maximumLatency">The maximum latency allowable for messages to be delivered.</param>
-        /// <param name="throttleWhenFull">A value indicating whether to block the upstream producer if the receiver queue is full.</param>
+        /// <param name="throttleQueueSize">The number of messages in the receiver queue at and above which the upstream producer will be blocked.</param>
         /// <param name="attemptSynchronous">A value indicating whether to attempt synchronous delivery.</param>
         /// <param name="name">Name used for debugging and diagnostics.</param>
         internal DeliveryPolicy(
             int initialQueueSize = DefaultInitialQueueSize,
             int maximumQueueSize = int.MaxValue,
             TimeSpan? maximumLatency = null,
-            bool throttleWhenFull = false,
+            int? throttleQueueSize = null,
             bool attemptSynchronous = false,
             string name = null)
         {
             this.InitialQueueSize = initialQueueSize;
             this.MaximumQueueSize = maximumQueueSize;
             this.MaximumLatency = maximumLatency;
-            this.ThrottleWhenFull = throttleWhenFull;
+            this.ThrottleQueueSize = throttleQueueSize;
             this.AttemptSynchronousDelivery = attemptSynchronous;
-            this.Name = name ?? $"{nameof(DeliveryPolicy)}({nameof(initialQueueSize)}={initialQueueSize}, {nameof(maximumQueueSize)}={maximumQueueSize}, {nameof(maximumLatency)}={maximumLatency}, {nameof(throttleWhenFull)}={throttleWhenFull}, {nameof(attemptSynchronous)}={attemptSynchronous})";
+            this.Name = name ?? $"{nameof(DeliveryPolicy)}({nameof(initialQueueSize)}={initialQueueSize}, {nameof(maximumQueueSize)}={maximumQueueSize}, {nameof(maximumLatency)}={maximumLatency}, {nameof(throttleQueueSize)}={throttleQueueSize}, {nameof(attemptSynchronous)}={attemptSynchronous})";
         }
 
         /// <summary>
@@ -106,10 +106,10 @@ namespace Microsoft.Psi
         public static DeliveryPolicy SynchronousOrThrottle => DeliveryPolicy.SynchronousOrThrottlePolicy;
 
         /// <summary>
-        /// Gets a value indicating whether to block the upstream producer if the receiver queue is full.
+        /// Gets the number of messages in the receiver queue at and above which the upstream producer will be blocked.
         /// </summary>
         /// <remarks>Use with care, as it affects all other subscribers to the same producer and can introduce deadlocks (a blocked producer cannot process control messages anymore).</remarks>
-        public bool ThrottleWhenFull { get; private set; }
+        public int? ThrottleQueueSize { get; private set; }
 
         /// <summary>
         /// Gets the initial size of the receiver queue that holds the messages pending delivery.
@@ -147,7 +147,7 @@ namespace Microsoft.Psi
                 DefaultInitialQueueSize,
                 int.MaxValue,
                 maximumLatency,
-                false,
+                null,
                 false,
                 $"{nameof(LatencyConstrained)}({nameof(maximumLatency)}={maximumLatency})");
         }
@@ -166,9 +166,27 @@ namespace Microsoft.Psi
                 1,
                 maximumQueueSize,
                 null,
-                throttleWhenFull,
+                throttleWhenFull ? maximumQueueSize : null,
                 attemptSynchronous,
                 $"{nameof(QueueSizeConstrained)}({nameof(maximumQueueSize)}={maximumQueueSize})");
+        }
+
+        /// <summary>
+        /// Creates a queue-size throttled delivery policy. Messages will accumulate only up to the specified
+        /// maximum queue size, after which the upstream producer will be blocked until the number of messages
+        /// in the queue falls below this value.
+        /// </summary>
+        /// <param name="throttleQueueSize">A value indicating whether to block the upstream producer if the receiver queue is full.</param>
+        /// <returns>A queue-size throttled delivery policy.</returns>
+        public static DeliveryPolicy QueueSizeThrottled(int throttleQueueSize)
+        {
+            return new DeliveryPolicy(
+                1,
+                int.MaxValue,
+                null,
+                throttleQueueSize,
+                false,
+                $"{nameof(Throttle)}({nameof(throttleQueueSize)}={throttleQueueSize})");
         }
 
         /// <summary>
@@ -184,7 +202,7 @@ namespace Microsoft.Psi
                 DeliveryPolicy.DefaultInitialQueueSize,
                 deliveryPolicy.MaximumQueueSize,
                 deliveryPolicy.MaximumLatency,
-                deliveryPolicy.ThrottleWhenFull,
+                deliveryPolicy.ThrottleQueueSize,
                 deliveryPolicy.AttemptSynchronousDelivery,
                 guaranteeDelivery,
                 $"{deliveryPolicy.Name}.WithGuarantees");

@@ -9,13 +9,28 @@ namespace Test.Psi
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Psi;
+    using Microsoft.Psi.Executive;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class EmitterTester
     {
-        // make out local version of immediate, to make sure it's synchronous even in debug builds
-        private static readonly DeliveryPolicy Immediate = new DeliveryPolicy(1, int.MaxValue, null, true, true);
+        // custom delivery policy that attempts synchronous delivery for testing purposes
+        private static readonly DeliveryPolicy Immediate = new DeliveryPolicy(1, int.MaxValue, null, null, true);
+
+        // maintain our own receiver ids
+        private static int lastReceiverId = -1;
+
+        // creates a custom receiver that does not enforce isolation on synchronous delivery
+        private static Receiver<T> CreateNonIsolatedReceiver<T>(Pipeline pipeline, object owner, Action<Message<T>> action, string name)
+        {
+            PipelineElement node = pipeline.GetOrCreateNode(owner);
+
+            // create custom receivers with a negative receiver id to ensure they do not clash with those created by the public Pipeline methods
+            var receiver = new Receiver<T>(Interlocked.Decrement(ref lastReceiverId), name, node, owner, action, node.SyncContext, pipeline, enforceIsolation: false);
+            node.AddInput(name, receiver);
+            return receiver;
+        }
 
         [TestMethod]
         [Timeout(60000)]
@@ -49,7 +64,8 @@ namespace Test.Psi
             STClass result = null;
             using (var p = Pipeline.Create("ReceiveClassByRef", DeliveryPolicy.Unlimited, allowSchedulingOnExternalThreads: true))
             {
-                var receiver = p.CreateReceiver<STClass>(
+                var receiver = CreateNonIsolatedReceiver<STClass>(
+                    p,
                     this,
                     msg =>
                     {
@@ -101,7 +117,8 @@ namespace Test.Psi
 
             using (var p = Pipeline.Create("ReceiveStructByRef", DeliveryPolicy.Unlimited, allowSchedulingOnExternalThreads: true))
             {
-                var receiver = p.CreateReceiver<STStruct>(
+                var receiver = CreateNonIsolatedReceiver<STStruct>(
+                    p,
                     this,
                     msg =>
                     {

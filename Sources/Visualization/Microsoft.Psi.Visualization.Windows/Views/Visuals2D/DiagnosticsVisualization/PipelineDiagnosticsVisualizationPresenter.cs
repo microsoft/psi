@@ -515,7 +515,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             static bool IsLossy(string deliveryPolicyName)
                 => deliveryPolicyName != DeliveryPolicy.Unlimited.Name &&
                    deliveryPolicyName != DeliveryPolicy.SynchronousOrThrottle.Name &&
-                   deliveryPolicyName != DeliveryPolicy.Throttle.Name;
+                   !deliveryPolicyName.StartsWith(nameof(DeliveryPolicy.Throttle));
 
             var edge = new Edge(source, target, ConnectionToGraph.Connected);
             edge.Attr.Color = this.EdgeColor;

@@ -67,7 +67,7 @@ namespace Microsoft.Psi.Audio
             this.name = name;
             this.configuration = configuration;
             this.audioBuffers = pipeline.CreateEmitter<AudioBuffer>(this, "AudioBuffers");
-            this.AudioLevelInput = pipeline.CreateReceiver<double>(this, this.SetAudioLevel, nameof(this.AudioLevelInput), true);
+            this.AudioLevelInput = pipeline.CreateReceiver<double>(this, this.SetAudioLevel, nameof(this.AudioLevelInput));
             this.AudioLevel = pipeline.CreateEmitter<double>(this, nameof(this.AudioLevel));
 
             this.wasapiCapture = new WasapiCapture();
@@ -154,11 +154,11 @@ namespace Microsoft.Psi.Audio
         /// Sets the audio level.
         /// </summary>
         /// <param name="level">The audio level.</param>
-        public void SetAudioLevel(Message<double> level)
+        public void SetAudioLevel(double level)
         {
             if (this.wasapiCapture != null)
             {
-                this.wasapiCapture.AudioLevel = level.Data;
+                this.wasapiCapture.AudioLevel = level;
             }
         }
 

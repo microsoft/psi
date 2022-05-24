@@ -18,17 +18,20 @@ namespace Test.Psi
         [Timeout(60000)]
         public void ThrottledTimer()
         {
+            // Create a lossy policy that throttles and drops messages once the maximum queue size (1) is reached
+            var lossyThrottlePolicy = DeliveryPolicy.QueueSizeConstrained(1, true);
+
             int countA = 0, countB = 0, countC = 0;
             using (var p = Pipeline.Create())
             {
                 Timers.Timer(p, TimeSpan.FromMilliseconds(1), (dt, ts) => countA++)
-                    .Do(_ => countB++, DeliveryPolicy.Throttle)
+                    .Do(_ => countB++, lossyThrottlePolicy)
                     .Do(
                         _ =>
                         {
                             Thread.Sleep(5);
                             countC++;
-                        }, DeliveryPolicy.Throttle);
+                        }, lossyThrottlePolicy);
 
                 p.RunAsync();
                 p.WaitAll(100);
@@ -284,7 +287,7 @@ namespace Test.Psi
                 1,
                 1,
                 null,
-                false,
+                null,
                 false,
                 guaranteeDelivery: value => value == 2, // only guarantee message value is 2
                 "TestDeliveryPolicy");

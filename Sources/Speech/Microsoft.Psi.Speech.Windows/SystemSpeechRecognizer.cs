@@ -80,7 +80,7 @@ namespace Microsoft.Psi.Speech
             this.Configuration = configuration ?? new SystemSpeechRecognizerConfiguration();
 
             // create receiver of grammar updates
-            this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars), true);
+            this.ReceiveGrammars = pipeline.CreateReceiver<IEnumerable<string>>(this, this.SetGrammars, nameof(this.ReceiveGrammars));
 
             // assign the default Out emitter to the RecognitionResults group
             this.originatingTimeConsistencyCheckGroup.Add(this.Out, EmitterGroup.RecognitionResults);
@@ -225,9 +225,9 @@ namespace Microsoft.Psi.Speech
         /// Replace grammars with given.
         /// </summary>
         /// <param name="srgsXmlGrammars">A collection of XML-format speech grammars that conform to the SRGS 1.0 specification.</param>
-        public void SetGrammars(Message<IEnumerable<string>> srgsXmlGrammars)
+        public void SetGrammars(IEnumerable<string> srgsXmlGrammars)
         {
-            this.speechRecognitionEngine.RequestRecognizerUpdate(srgsXmlGrammars.Data.Select(g =>
+            this.speechRecognitionEngine.RequestRecognizerUpdate(srgsXmlGrammars.Select(g =>
             {
                 using (var xmlReader = XmlReader.Create(new StringReader(g)))
                 {
