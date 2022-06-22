@@ -64,14 +64,15 @@ namespace HoloLensCaptureApp
         private static readonly bool IncludeDepthCalibrationMap = false;
         private static readonly bool IncludeAhat = false;
         private static readonly bool IncludeAhatCalibrationMap = false;
-        private static readonly bool IncludeInfrared = false;
-        private static readonly bool EncodeInfrared = true;
+        private static readonly bool IncludeDepthInfrared = true;
+        private static readonly bool IncludeAhatInfrared = false;
+        private static readonly ImageEncode EncodeInfraredMethod = ImageEncode.Jpeg;
 
         private static readonly bool IncludeGrayFrontCameras = true;
         private static readonly bool IncludeGrayFrontCameraCalibrationMap = false;
         private static readonly bool IncludeGraySideCameras = false;
         private static readonly bool IncludeGraySideCameraCalibrationMap = false;
-        private static readonly GrayImageEncode EncodeGrayMethod = GrayImageEncode.Jpeg;
+        private static readonly ImageEncode EncodeGrayMethod = ImageEncode.Jpeg;
         private static readonly TimeSpan GrayInterval = TimeSpan.FromMilliseconds(100);
         private static readonly TimeSpan CalibrationMapInterval = TimeSpan.FromHours(1);
 
@@ -126,7 +127,7 @@ namespace HoloLensCaptureApp
             Exited, // app has exited
         }
 
-        private enum GrayImageEncode
+        private enum ImageEncode
         {
             None,
             Jpeg,
@@ -280,28 +281,30 @@ namespace HoloLensCaptureApp
                             : null;
 
                             // DEPTH CAMERA - LONG THROW
-                            depthCamera = IncludeDepth ? new DepthCamera(pipeline, new DepthCameraConfiguration
+                            depthCamera = (IncludeDepth || IncludeDepthInfrared || IncludeDepthCalibrationMap) ? new DepthCamera(pipeline, new DepthCameraConfiguration
                             {
                                 DepthSensorType = ResearchModeSensorType.DepthLongThrow,
                                 OutputCameraIntrinsics = false,
                                 OutputPose = false,
                                 OutputDepthImage = false,
-                                OutputDepthImageCameraView = true,
-                                OutputInfraredImage = IncludeInfrared,
+                                OutputInfraredImage = false,
+                                OutputDepthImageCameraView = IncludeDepth,
+                                OutputInfraredImageCameraView = IncludeDepthInfrared,
                                 OutputCalibrationPointsMap = IncludeDepthCalibrationMap,
                                 OutputCalibrationPointsMapMinInterval = CalibrationMapInterval,
                             })
                             : null;
 
                             // DEPTH CAMERA - AHAT
-                            depthAhatCamera = IncludeAhat ? new DepthCamera(pipeline, new DepthCameraConfiguration
+                            depthAhatCamera = (IncludeAhat || IncludeAhatInfrared || IncludeAhatCalibrationMap) ? new DepthCamera(pipeline, new DepthCameraConfiguration
                             {
                                 DepthSensorType = ResearchModeSensorType.DepthAhat,
                                 OutputCameraIntrinsics = false,
                                 OutputPose = false,
                                 OutputDepthImage = false,
-                                OutputDepthImageCameraView = true,
                                 OutputInfraredImage = false,
+                                OutputDepthImageCameraView = IncludeAhat,
+                                OutputInfraredImageCameraView = IncludeAhatInfrared,
                                 OutputCalibrationPointsMap = IncludeAhatCalibrationMap,
                                 OutputCalibrationPointsMapMinInterval = CalibrationMapInterval,
                             })
@@ -368,7 +371,7 @@ namespace HoloLensCaptureApp
                                 SceneQuerySettings = SceneUnderstandingSettings,
                             }) : null;
 
-                            if (IncludeDepth || IncludeAhat || IncludeGrayFrontCameras || IncludeGraySideCameras)
+                            if (IncludeDepth || IncludeAhat || IncludeDepthInfrared || IncludeAhatInfrared || IncludeGrayFrontCameras || IncludeGraySideCameras)
                             {
                                 state = State.CalibrateCameras;
                             }
@@ -531,53 +534,85 @@ namespace HoloLensCaptureApp
 
                                 if (IncludeDepth)
                                 {
-                                    var depthImageCameraView = depthCamera.DepthImageCameraView;
-                                    Write("DepthImageCameraView", depthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-
-                                    if (IncludeDepthCalibrationMap)
-                                    {
-                                        Write("DepthCalibrationMap", depthCamera.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
-                                    }
-
-                                    if (IncludeInfrared)
-                                    {
-                                        if (EncodeInfrared)
-                                        {
-                                            var infraredEncodedImageCameraView = depthCamera.InfraredImageCameraView
-                                                .Encode(new ImageToJpegStreamEncoder(InfraredImageJpegQuality), DeliveryPolicy.LatestMessage);
-                                            Write("InfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                        }
-                                        else
-                                        {
-                                            var infraredImageCameraView = depthCamera.InfraredImageCameraView;
-                                            Write("InfraredImageCameraView", infraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                        }
-                                    }
+                                    Write("DepthImageCameraView", depthCamera?.DepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 #if DEBUG
                                     Write("DepthDebugOutOfOrderFrames", depthCamera?.DebugOutOfOrderFrames, port++, Serializers.Int32Format(), DeliveryPolicy.Unlimited);
 #endif
                                 }
 
+                                if (IncludeDepthInfrared)
+                                {
+                                    var infraredCameraView = depthCamera?.InfraredImageCameraView;
+                                    switch (EncodeInfraredMethod)
+                                    {
+                                        case ImageEncode.Jpeg:
+                                            var infraredEncodedImageCameraView = infraredCameraView?
+                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
+                                                .Encode(new ImageToJpegStreamEncoder(InfraredImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
+                                            Write("DepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            break;
+
+                                        case ImageEncode.Gzip:
+                                            var infraredGzipEncodedImageCameraView = infraredCameraView?
+                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
+                                                .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
+                                            Write("DepthInfraredGZipEncodedImageCameraView", infraredGzipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            break;
+
+                                        case ImageEncode.None:
+                                            Write("DepthInfraredImageCameraView", infraredCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            break;
+                                    }
+                                }
+
+                                if (IncludeDepthCalibrationMap)
+                                {
+                                    Write("DepthCalibrationMap", depthCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                }
+
                                 if (IncludeAhat)
                                 {
-                                    var ahatDepthImageCameraView = depthAhatCamera.DepthImageCameraView;
-
-                                    Write("AhatDepthImageCameraView", ahatDepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-
-                                    if (IncludeAhatCalibrationMap)
-                                    {
-                                        Write("AhatDepthCalibrationMap", depthAhatCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
-                                    }
+                                    Write("AhatDepthImageCameraView", depthAhatCamera?.DepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 #if DEBUG
                                     Write("AhatDebugOutOfOrderFrames", depthAhatCamera?.DebugOutOfOrderFrames, port++, Serializers.Int32Format(), DeliveryPolicy.Unlimited);
 #endif
+                                }
+
+                                if (IncludeAhatInfrared)
+                                {
+                                    var infraredCameraView = depthAhatCamera?.InfraredImageCameraView;
+                                    switch (EncodeInfraredMethod)
+                                    {
+                                        case ImageEncode.Jpeg:
+                                            var infraredEncodedImageCameraView = infraredCameraView?
+                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
+                                                .Encode(new ImageToJpegStreamEncoder(InfraredImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
+                                            Write("AhatDepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            break;
+
+                                        case ImageEncode.Gzip:
+                                            var infraredGzipEncodedImageCameraView = infraredCameraView?
+                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
+                                                .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
+                                            Write("AhatDepthInfraredGZipEncodedImageCameraView", infraredGzipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            break;
+
+                                        case ImageEncode.None:
+                                            Write("AhatDepthInfraredImageCameraView", infraredCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            break;
+                                    }
+                                }
+
+                                if (IncludeAhatCalibrationMap)
+                                {
+                                    Write("AhatDepthCalibrationMap", depthAhatCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
                                 }
 
                                 if (IncludeGrayFrontCameras)
                                 {
                                     switch (EncodeGrayMethod)
                                     {
-                                        case GrayImageEncode.Jpeg:
+                                        case ImageEncode.Jpeg:
                                             var leftFrontJpegEncodedImageCameraView = leftFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
@@ -590,7 +625,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case GrayImageEncode.Gzip:
+                                        case ImageEncode.Gzip:
                                             var leftFrontGZipEncodedImageCameraView = leftFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
@@ -603,7 +638,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case GrayImageEncode.None:
+                                        case ImageEncode.None:
                                             var leftFrontImageView = leftFrontCamera.ImageCameraView;
                                             Write("LeftFrontImageView", leftFrontImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
@@ -624,7 +659,7 @@ namespace HoloLensCaptureApp
                                 {
                                     switch (EncodeGrayMethod)
                                     {
-                                        case GrayImageEncode.Jpeg:
+                                        case ImageEncode.Jpeg:
                                             var leftLeftJpegEncodedImageCameraView = leftLeftCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
@@ -637,7 +672,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case GrayImageEncode.Gzip:
+                                        case ImageEncode.Gzip:
                                             var leftLeftGZipEncodedImageCameraView = leftLeftCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
@@ -650,7 +685,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case GrayImageEncode.None:
+                                        case ImageEncode.None:
                                             var leftLeftImageView = leftLeftCamera.ImageCameraView;
                                             Write("LeftLeftImageView", leftLeftImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
