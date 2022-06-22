@@ -33,3 +33,11 @@ In progress... Complete!
 ## Deployment
 
 To deploy a build of the HoloLensCaptureServer, simply build in Visual Studio and copy the entire `Internal\Applications\HoloLensCapture\HoloLensCaptureServer\bin\<BUILD>\net472` folder. This contains the executable `HoloLensCaptureServer.exe` itself and all of its dependencies.
+
+## Visualization
+
+The server app persists all streams to a local \\psi store. This store can be opened in [PsiStudio](https://github.com/microsoft/psi/wiki/Psi-Studio) for visualization.
+
+Note that the visualizer for hand tracking data is defined in `Microsoft.Psi.MixedReality.Visualization.Windows`. The visualizers for 3D depth and image camera views are defined in `Microsoft.Psi.Spatial.Euclidean.Visualization.Windows`. Follow the instructions for [3rd Party Visualizers](https://github.com/microsoft/psi/wiki/3rd-Party-Visualizers) to add those projects' assemblies to `PsiStudioSettings.xml` in order to visualize 3D hands and camera views in PsiStudio. 
+
+You may need to double-click a stream (or right-click and select "Expand Members") in order to drill down into sub-streams that can be visualized. For example, hands may be persisted in a stream of tuples, which can be expanded to reveal derived sub-streams for the left and right hand (each of which can be visualized separately). Any of the `CameraView` streams can be similarly expanded into `CameraIntrinsics`, `CameraPose`, and `ViewedObject` members. Right-click on `ViewedObject` to reveal options for visualizing as a 2D image.
