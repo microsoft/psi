@@ -64,15 +64,15 @@ namespace HoloLensCaptureApp
         private static readonly bool IncludeDepthCalibrationMap = false;
         private static readonly bool IncludeAhat = false;
         private static readonly bool IncludeAhatCalibrationMap = false;
-        private static readonly bool IncludeDepthInfrared = true;
+        private static readonly bool IncludeDepthInfrared = false;
         private static readonly bool IncludeAhatInfrared = false;
-        private static readonly ImageEncode EncodeInfraredMethod = ImageEncode.Jpeg;
+        private static readonly bool EncodeInfrared = false;
 
         private static readonly bool IncludeGrayFrontCameras = true;
         private static readonly bool IncludeGrayFrontCameraCalibrationMap = false;
         private static readonly bool IncludeGraySideCameras = false;
         private static readonly bool IncludeGraySideCameraCalibrationMap = false;
-        private static readonly ImageEncode EncodeGrayMethod = ImageEncode.Jpeg;
+        private static readonly GrayImageEncode EncodeGrayMethod = GrayImageEncode.Jpeg;
         private static readonly TimeSpan GrayInterval = TimeSpan.FromMilliseconds(100);
         private static readonly TimeSpan CalibrationMapInterval = TimeSpan.FromHours(1);
 
@@ -127,7 +127,7 @@ namespace HoloLensCaptureApp
             Exited, // app has exited
         }
 
-        private enum ImageEncode
+        private enum GrayImageEncode
         {
             None,
             Jpeg,
@@ -542,26 +542,14 @@ namespace HoloLensCaptureApp
 
                                 if (IncludeDepthInfrared)
                                 {
-                                    var infraredCameraView = depthCamera?.InfraredImageCameraView;
-                                    switch (EncodeInfraredMethod)
+                                    if (EncodeInfrared)
                                     {
-                                        case ImageEncode.Jpeg:
-                                            var infraredEncodedImageCameraView = infraredCameraView?
-                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
-                                                .Encode(new ImageToJpegStreamEncoder(InfraredImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("DepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                            break;
-
-                                        case ImageEncode.Gzip:
-                                            var infraredGzipEncodedImageCameraView = infraredCameraView?
-                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
-                                                .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("DepthInfraredGZipEncodedImageCameraView", infraredGzipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                            break;
-
-                                        case ImageEncode.None:
-                                            Write("DepthInfraredImageCameraView", infraredCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                            break;
+                                        var infraredEncodedImageCameraView = depthCamera?.InfraredImageCameraView.Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.LatestMessage);
+                                        Write("DepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    }
+                                    else
+                                    {
+                                        Write("DepthInfraredImageCameraView", depthCamera?.InfraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                     }
                                 }
 
@@ -580,26 +568,14 @@ namespace HoloLensCaptureApp
 
                                 if (IncludeAhatInfrared)
                                 {
-                                    var infraredCameraView = depthAhatCamera?.InfraredImageCameraView;
-                                    switch (EncodeInfraredMethod)
+                                    if (EncodeInfrared)
                                     {
-                                        case ImageEncode.Jpeg:
-                                            var infraredEncodedImageCameraView = infraredCameraView?
-                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
-                                                .Encode(new ImageToJpegStreamEncoder(InfraredImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("AhatDepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                            break;
-
-                                        case ImageEncode.Gzip:
-                                            var infraredGzipEncodedImageCameraView = infraredCameraView?
-                                                .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
-                                                .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("AhatDepthInfraredGZipEncodedImageCameraView", infraredGzipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                            break;
-
-                                        case ImageEncode.None:
-                                            Write("AhatDepthInfraredImageCameraView", infraredCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                            break;
+                                        var infraredEncodedImageCameraView = depthAhatCamera?.InfraredImageCameraView.Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.LatestMessage);
+                                        Write("AhatDepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    }
+                                    else
+                                    {
+                                        Write("AhatDepthInfraredImageCameraView", depthAhatCamera?.InfraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                     }
                                 }
 
@@ -612,7 +588,7 @@ namespace HoloLensCaptureApp
                                 {
                                     switch (EncodeGrayMethod)
                                     {
-                                        case ImageEncode.Jpeg:
+                                        case GrayImageEncode.Jpeg:
                                             var leftFrontJpegEncodedImageCameraView = leftFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
@@ -625,7 +601,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case ImageEncode.Gzip:
+                                        case GrayImageEncode.Gzip:
                                             var leftFrontGZipEncodedImageCameraView = leftFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
@@ -638,7 +614,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case ImageEncode.None:
+                                        case GrayImageEncode.None:
                                             var leftFrontImageView = leftFrontCamera.ImageCameraView;
                                             Write("LeftFrontImageView", leftFrontImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
@@ -659,7 +635,7 @@ namespace HoloLensCaptureApp
                                 {
                                     switch (EncodeGrayMethod)
                                     {
-                                        case ImageEncode.Jpeg:
+                                        case GrayImageEncode.Jpeg:
                                             var leftLeftJpegEncodedImageCameraView = leftLeftCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
@@ -672,7 +648,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case ImageEncode.Gzip:
+                                        case GrayImageEncode.Gzip:
                                             var leftLeftGZipEncodedImageCameraView = leftLeftCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
@@ -685,7 +661,7 @@ namespace HoloLensCaptureApp
 
                                             break;
 
-                                        case ImageEncode.None:
+                                        case GrayImageEncode.None:
                                             var leftLeftImageView = leftLeftCamera.ImageCameraView;
                                             Write("LeftLeftImageView", leftLeftImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
