@@ -64,8 +64,9 @@ namespace HoloLensCaptureApp
         private static readonly bool IncludeDepthCalibrationMap = false;
         private static readonly bool IncludeAhat = false;
         private static readonly bool IncludeAhatCalibrationMap = false;
-        private static readonly bool IncludeInfrared = false;
-        private static readonly bool EncodeInfrared = true;
+        private static readonly bool IncludeDepthInfrared = false;
+        private static readonly bool IncludeAhatInfrared = false;
+        private static readonly bool EncodeInfrared = false;
 
         private static readonly bool IncludeGrayFrontCameras = true;
         private static readonly bool IncludeGrayFrontCameraCalibrationMap = false;
@@ -280,28 +281,30 @@ namespace HoloLensCaptureApp
                             : null;
 
                             // DEPTH CAMERA - LONG THROW
-                            depthCamera = IncludeDepth ? new DepthCamera(pipeline, new DepthCameraConfiguration
+                            depthCamera = (IncludeDepth || IncludeDepthInfrared || IncludeDepthCalibrationMap) ? new DepthCamera(pipeline, new DepthCameraConfiguration
                             {
                                 DepthSensorType = ResearchModeSensorType.DepthLongThrow,
                                 OutputCameraIntrinsics = false,
                                 OutputPose = false,
                                 OutputDepthImage = false,
-                                OutputDepthImageCameraView = true,
-                                OutputInfraredImage = IncludeInfrared,
+                                OutputInfraredImage = false,
+                                OutputDepthImageCameraView = IncludeDepth,
+                                OutputInfraredImageCameraView = IncludeDepthInfrared,
                                 OutputCalibrationPointsMap = IncludeDepthCalibrationMap,
                                 OutputCalibrationPointsMapMinInterval = CalibrationMapInterval,
                             })
                             : null;
 
                             // DEPTH CAMERA - AHAT
-                            depthAhatCamera = IncludeAhat ? new DepthCamera(pipeline, new DepthCameraConfiguration
+                            depthAhatCamera = (IncludeAhat || IncludeAhatInfrared || IncludeAhatCalibrationMap) ? new DepthCamera(pipeline, new DepthCameraConfiguration
                             {
                                 DepthSensorType = ResearchModeSensorType.DepthAhat,
                                 OutputCameraIntrinsics = false,
                                 OutputPose = false,
                                 OutputDepthImage = false,
-                                OutputDepthImageCameraView = true,
                                 OutputInfraredImage = false,
+                                OutputDepthImageCameraView = IncludeAhat,
+                                OutputInfraredImageCameraView = IncludeAhatInfrared,
                                 OutputCalibrationPointsMap = IncludeAhatCalibrationMap,
                                 OutputCalibrationPointsMapMinInterval = CalibrationMapInterval,
                             })
@@ -368,7 +371,7 @@ namespace HoloLensCaptureApp
                                 SceneQuerySettings = SceneUnderstandingSettings,
                             }) : null;
 
-                            if (IncludeDepth || IncludeAhat || IncludeGrayFrontCameras || IncludeGraySideCameras)
+                            if (IncludeDepth || IncludeAhat || IncludeDepthInfrared || IncludeAhatInfrared || IncludeGrayFrontCameras || IncludeGraySideCameras)
                             {
                                 state = State.CalibrateCameras;
                             }
@@ -531,46 +534,54 @@ namespace HoloLensCaptureApp
 
                                 if (IncludeDepth)
                                 {
-                                    var depthImageCameraView = depthCamera.DepthImageCameraView;
-                                    Write("DepthImageCameraView", depthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-
-                                    if (IncludeDepthCalibrationMap)
-                                    {
-                                        Write("DepthCalibrationMap", depthCamera.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
-                                    }
-
-                                    if (IncludeInfrared)
-                                    {
-                                        if (EncodeInfrared)
-                                        {
-                                            var infraredEncodedImageCameraView = depthCamera.InfraredImageCameraView
-                                                .Encode(new ImageToJpegStreamEncoder(InfraredImageJpegQuality), DeliveryPolicy.LatestMessage);
-                                            Write("InfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                        }
-                                        else
-                                        {
-                                            var infraredImageCameraView = depthCamera.InfraredImageCameraView;
-                                            Write("InfraredImageCameraView", infraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-                                        }
-                                    }
+                                    Write("DepthImageCameraView", depthCamera?.DepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 #if DEBUG
                                     Write("DepthDebugOutOfOrderFrames", depthCamera?.DebugOutOfOrderFrames, port++, Serializers.Int32Format(), DeliveryPolicy.Unlimited);
 #endif
                                 }
 
+                                if (IncludeDepthInfrared)
+                                {
+                                    if (EncodeInfrared)
+                                    {
+                                        var infraredEncodedImageCameraView = depthCamera?.InfraredImageCameraView.Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.LatestMessage);
+                                        Write("DepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    }
+                                    else
+                                    {
+                                        Write("DepthInfraredImageCameraView", depthCamera?.InfraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    }
+                                }
+
+                                if (IncludeDepthCalibrationMap)
+                                {
+                                    Write("DepthCalibrationMap", depthCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                }
+
                                 if (IncludeAhat)
                                 {
-                                    var ahatDepthImageCameraView = depthAhatCamera.DepthImageCameraView;
-
-                                    Write("AhatDepthImageCameraView", ahatDepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
-
-                                    if (IncludeAhatCalibrationMap)
-                                    {
-                                        Write("AhatDepthCalibrationMap", depthAhatCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
-                                    }
+                                    Write("AhatDepthImageCameraView", depthAhatCamera?.DepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 #if DEBUG
                                     Write("AhatDebugOutOfOrderFrames", depthAhatCamera?.DebugOutOfOrderFrames, port++, Serializers.Int32Format(), DeliveryPolicy.Unlimited);
 #endif
+                                }
+
+                                if (IncludeAhatInfrared)
+                                {
+                                    if (EncodeInfrared)
+                                    {
+                                        var infraredEncodedImageCameraView = depthAhatCamera?.InfraredImageCameraView.Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.LatestMessage);
+                                        Write("AhatDepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    }
+                                    else
+                                    {
+                                        Write("AhatDepthInfraredImageCameraView", depthAhatCamera?.InfraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    }
+                                }
+
+                                if (IncludeAhatCalibrationMap)
+                                {
+                                    Write("AhatDepthCalibrationMap", depthAhatCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
                                 }
 
                                 if (IncludeGrayFrontCameras)
