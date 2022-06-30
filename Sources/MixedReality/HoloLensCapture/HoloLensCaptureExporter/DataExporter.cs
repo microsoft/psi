@@ -56,8 +56,10 @@ namespace HoloLensCaptureExporter
             var previewImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("PreviewImageCameraView");
             var depthImageCameraView = store.OpenStreamOrDefault<DepthImageCameraView>("DepthImageCameraView");
             var depthCalibrationMap = store.OpenStreamOrDefault<CalibrationPointsMap>("DepthCalibrationMap");
-            var infraredEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("InfraredEncodedImageCameraView");
-            var infraredImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("InfraredImageCameraView");
+            var infraredEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("DepthInfraredEncodedImageCameraView");
+            var infraredImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("DepthInfraredImageCameraView");
+            var ahatInfraredEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("AhatDepthInfraredEncodedImageCameraView");
+            var ahatInfraredImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("AhatDepthInfraredImageCameraView");
             var ahatDepthImageCameraView = store.OpenStreamOrDefault<DepthImageCameraView>("AhatDepthImageCameraView");
             var ahatDepthCalibrationMap = store.OpenStreamOrDefault<CalibrationPointsMap>("AhatDepthCalibrationMap");
             var leftFrontEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("LeftFrontEncodedImageCameraView");
@@ -90,6 +92,7 @@ namespace HoloLensCaptureExporter
             VerifyMutualExclusivity(videoEncodedImageCameraView, videoImageCameraView, "video");
             VerifyMutualExclusivity(previewEncodedImageCameraView, previewImageCameraView, "preview");
             VerifyMutualExclusivity(infraredEncodedImageCameraView, infraredImageCameraView, "infrared");
+            VerifyMutualExclusivity(ahatInfraredEncodedImageCameraView, ahatInfraredImageCameraView, "ahat-infrared");
             VerifyMutualExclusivity(leftFrontEncodedImageCameraView, leftFrontImageCameraView, "left-front");
             VerifyMutualExclusivity(rightFrontEncodedImageCameraView, rightFrontImageCameraView, "right-front");
             VerifyMutualExclusivity(leftLeftEncodedImageCameraView, leftLeftImageCameraView, "left-left");
@@ -156,6 +159,7 @@ namespace HoloLensCaptureExporter
             var decodedVideo = Export("Video", videoImageCameraView, videoEncodedImageCameraView, isNV12: true);
             Export("Preview", previewImageCameraView, previewEncodedImageCameraView, isNV12: true);
             Export("Infrared", infraredImageCameraView, infraredEncodedImageCameraView);
+            Export("AhatInfrared", ahatInfraredImageCameraView, ahatInfraredEncodedImageCameraView);
             Export("LeftFront", leftFrontImageCameraView, leftFrontEncodedImageCameraView, leftFrontGzipImageCameraView);
             Export("RightFront", rightFrontImageCameraView, rightFrontEncodedImageCameraView, rightFrontGzipImageCameraView);
             Export("LeftLeft", leftLeftImageCameraView, leftLeftEncodedImageCameraView, leftLeftGzipImageCameraView);
