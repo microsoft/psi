@@ -188,7 +188,23 @@ namespace HoloLensCaptureExporter
             audio?.Export("Audio", exportCommand.OutputPath, streamWritersToClose);
 
             // Export video as MPEG
-            if (decodedVideo != null)
+            IStreamMetadata TryGetMetadata(string stream)
+            {
+                return store.Contains(stream) ? store.GetMetadata(stream) : null;
+            }
+
+            var audioMeta = TryGetMetadata(audioStreamName);
+            var videoMeta = TryGetMetadata(store.Contains(videoStreamName) ? videoStreamName : videoEncodedStreamName);
+
+            if (audio == null || audioMeta == null || audioMeta.MessageCount == 0)
+            {
+                Console.WriteLine("MISSING AUDIO: Not exporting MPEG");
+            }
+            else if (decodedVideo == null || videoMeta == null || videoMeta.MessageCount == 0)
+            {
+                Console.WriteLine("MISSING VIDEO: Not exporting MPEG");
+            }
+            else
             {
                 // determine video properties by examining the store up front
                 (int Width, int Height, long FrameCount, TimeSpan TimeSpan, WaveFormat audioFormat) GetAudioAndVideoInfo()
@@ -222,8 +238,7 @@ namespace HoloLensCaptureExporter
                     WaveFormat audioFormat = null;
                     var wait = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-                    var audio = store.OpenStreamOrDefault<AudioBuffer>(audioStreamName);
-                    audio?.Do(a =>
+                    audio.Do(a =>
                     {
                         audioFormat = a.Format;
                         if (width != 0 && height != 0)
