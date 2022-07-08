@@ -19,7 +19,7 @@ namespace Microsoft.Psi.MixedReality
         private readonly Pipeline pipeline;
         private readonly MicrophoneConfiguration configuration;
         private readonly WaveFormat audioFormat;
-        private readonly ManualResetEvent isStopping = new ManualResetEvent(false);
+        private readonly ManualResetEvent isStopping = new (false);
         private float[] buffer;
         private bool active;
 
@@ -43,21 +43,21 @@ namespace Microsoft.Psi.MixedReality
         public Emitter<AudioBuffer> Out { get; }
 
         /// <inheritdoc/>
-        public override bool Initialize() => SKMicrophone.Start();
-
-        /// <inheritdoc/>
-        public override void Shutdown() => SKMicrophone.Stop();
-
-        /// <inheritdoc/>
         public void Start(Action<DateTime> notifyCompletionTime)
         {
-            this.active = true;
+            this.active = SKMicrophone.Start();
+            if (!this.active)
+            {
+                throw new Exception($"Failed to access the system's default microphone.");
+            }
+
             notifyCompletionTime(DateTime.MaxValue);
         }
 
         /// <inheritdoc/>
         public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            SKMicrophone.Stop();
             this.active = false;
             notifyCompleted();
         }
@@ -68,8 +68,10 @@ namespace Microsoft.Psi.MixedReality
             int unreadSamples = SKMicrophone.Sound.UnreadSamples;
             var originatingTime = this.pipeline.GetCurrentTime();
 
-            // Check if there are samples to capture
-            if (this.active && unreadSamples > 0)
+            // Check if there are samples to capture.
+            // Note that we wait for more than 1 unread sample to be available, otherwise the
+            // ReadSamples() method below does not work as expected.
+            if (this.active && SKMicrophone.IsRecording && unreadSamples > 1)
             {
                 // Ensure that the sample buffer is large enough
                 if (unreadSamples > this.buffer.Length)
@@ -79,6 +81,13 @@ namespace Microsoft.Psi.MixedReality
 
                 // Read the audio samples
                 int samples = SKMicrophone.Sound.ReadSamples(ref this.buffer);
+
+                if (samples < unreadSamples && samples < this.buffer.Length)
+                {
+                    throw new Exception(
+                        "Error reading audio samples from the microphone.\n" +
+                        $"Expected at least {Math.Min(unreadSamples, this.buffer.Length)} samples but obtained {samples}.");
+                }
 
                 // Convert to bytes and post the AudioBuffer
                 byte[] audio = new byte[samples * this.audioFormat.BitsPerSample / 8];

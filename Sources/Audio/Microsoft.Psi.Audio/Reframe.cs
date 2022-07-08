@@ -103,8 +103,7 @@ namespace Microsoft.Psi.Audio
                     this.lastOriginatingTime = originatingTime;
 
                     // Post the completed frame
-                    byte[] frame = this.frameBuffer;
-                    this.Out.Post(new AudioBuffer(frame, audio.Format), originatingTime);
+                    this.Out.Post(new AudioBuffer(this.frameBuffer, audio.Format), originatingTime);
 
                     // Reset the frame
                     this.frameBytesRemaining = this.frameSizeInBytes;
