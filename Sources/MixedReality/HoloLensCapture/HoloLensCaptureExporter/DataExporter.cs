@@ -201,7 +201,7 @@ namespace HoloLensCaptureExporter
             {
                 var videoMeta = store.Contains(VideoStreamName) ? store.GetMetadata(VideoStreamName) : store.GetMetadata(VideoEncodedStreamName);
                 videoFrameCount = videoMeta.MessageCount;
-                videoFrameTimeSpan = videoMeta.LastMessageCreationTime - videoMeta.FirstMessageOriginatingTime;
+                videoFrameTimeSpan = videoMeta.LastMessageOriginatingTime - videoMeta.FirstMessageOriginatingTime;
             }
 
             Console.WriteLine($"Exporting {exportCommand.StoreName} to {exportCommand.OutputPath}");

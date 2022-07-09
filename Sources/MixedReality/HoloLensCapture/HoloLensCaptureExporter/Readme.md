@@ -253,7 +253,13 @@ W    H    P₀     P₁     ...  Pₙ
 640  480  0.123  0.456  ...  0.789
 ```
 
-##### Scene Understanding
+##### Video MPEG
+
+Image frames (just for the front-facing color camera) are also exported to a single `Video.mpeg` video file in the `Video/` folder. Audio is also included in the video if available.
+
+The start time of the video is recorded in `VideoMpegStartTime.txt`, corresponding to the earliest of the first video frame and first audio frame originating timestamps.
+
+#### Scene Understanding
 
 The [scene understanding](https://docs.microsoft.com/en-us/windows/mixed-reality/design/scene-understanding) stream contains information about observed surfaces in the environment. This includes integrated 3D meshes and rectangular "flat" areas. Sets of scene information is classified into the following categories:
 
