@@ -43,21 +43,29 @@ namespace Microsoft.Psi.MixedReality
         public Emitter<AudioBuffer> Out { get; }
 
         /// <inheritdoc/>
-        public void Start(Action<DateTime> notifyCompletionTime)
+        public override bool Initialize()
         {
-            this.active = SKMicrophone.Start();
-            if (!this.active)
+            if (!SKMicrophone.Start())
             {
-                throw new Exception($"Failed to access the system's default microphone.");
+                throw new Exception("Failed to access the system's default microphone.");
             }
 
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override void Shutdown() => SKMicrophone.Stop();
+
+        /// <inheritdoc/>
+        public void Start(Action<DateTime> notifyCompletionTime)
+        {
+            this.active = true;
             notifyCompletionTime(DateTime.MaxValue);
         }
 
         /// <inheritdoc/>
         public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
-            SKMicrophone.Stop();
             this.active = false;
             notifyCompleted();
         }
