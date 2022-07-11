@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.MixedReality
 {
     using System;
-    using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Components;
@@ -19,7 +18,6 @@ namespace Microsoft.Psi.MixedReality
         private readonly Pipeline pipeline;
         private readonly MicrophoneConfiguration configuration;
         private readonly WaveFormat audioFormat;
-        private readonly ManualResetEvent isStopping = new (false);
         private float[] buffer;
         private bool active;
 
