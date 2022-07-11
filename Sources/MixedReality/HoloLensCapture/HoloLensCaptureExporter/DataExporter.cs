@@ -21,6 +21,10 @@ namespace HoloLensCaptureExporter
     /// </summary>
     internal class DataExporter
     {
+        private const string VideoStreamName = "VideoImageCameraView";
+        private const string VideoEncodedStreamName = "VideoEncodedImageCameraView";
+        private const string AudioStreamName = "Audio";
+
         /// <summary>
         /// Exports data based on the specified export command.
         /// </summary>
@@ -28,10 +32,6 @@ namespace HoloLensCaptureExporter
         /// <returns>An error code or 0 if success.</returns>
         public static int Run(Verbs.ExportCommand exportCommand)
         {
-            const string videoStreamName = "VideoImageCameraView";
-            const string videoEncodedStreamName = "VideoEncodedImageCameraView";
-            const string audioStreamName = "Audio";
-
             var pngEncoder = new ImageToPngStreamEncoder();
             var decoder = new ImageFromStreamDecoder();
 
@@ -49,9 +49,9 @@ namespace HoloLensCaptureExporter
             var head = store.OpenStreamOrDefault<CoordinateSystem>("Head");
             var eyes = store.OpenStreamOrDefault<Ray3D>("Eyes");
             var hands = store.OpenStreamOrDefault<(Hand Left, Hand Right)>("Hands");
-            var audio = store.OpenStreamOrDefault<AudioBuffer>(audioStreamName);
-            var videoEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>(videoEncodedStreamName);
-            var videoImageCameraView = store.OpenStreamOrDefault<ImageCameraView>(videoStreamName);
+            var audio = store.OpenStreamOrDefault<AudioBuffer>(AudioStreamName);
+            var videoEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>(VideoEncodedStreamName);
+            var videoImageCameraView = store.OpenStreamOrDefault<ImageCameraView>(VideoStreamName);
             var previewEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("PreviewEncodedImageCameraView");
             var previewImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("PreviewImageCameraView");
             var depthImageCameraView = store.OpenStreamOrDefault<DepthImageCameraView>("DepthImageCameraView");
@@ -191,132 +191,20 @@ namespace HoloLensCaptureExporter
             // Export audio
             audio?.Export("Audio", exportCommand.OutputPath, streamWritersToClose);
 
-            // Export video as MPEG
-            IStreamMetadata TryGetMetadata(string stream)
-            {
-                return store.Contains(stream) ? store.GetMetadata(stream) : null;
-            }
-
-            var audioMeta = TryGetMetadata(audioStreamName);
-            var videoMeta = TryGetMetadata(store.Contains(videoStreamName) ? videoStreamName : videoEncodedStreamName);
-
-            if (audio == null || audioMeta == null || audioMeta.MessageCount == 0)
-            {
-                Console.WriteLine("MISSING AUDIO: Not exporting MPEG");
-            }
-            else if (decodedVideo == null || videoMeta == null || videoMeta.MessageCount == 0)
-            {
-                Console.WriteLine("MISSING VIDEO: Not exporting MPEG");
-            }
-            else
-            {
-                // determine video properties by examining the store up front
-                (int Width, int Height, long FrameCount, TimeSpan TimeSpan, WaveFormat audioFormat) GetAudioAndVideoInfo()
-                {
-                    using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle);
-                    var store = PsiStore.Open(p, exportCommand.StoreName, exportCommand.StorePath);
-                    IProducer<ImageCameraView> video = null;
-                    IStreamMetadata meta = null;
-                    if (store.Contains(videoStreamName))
-                    {
-                        video = store.OpenStream<ImageCameraView>(videoStreamName);
-                        meta = store.GetMetadata(videoStreamName);
-                    }
-                    else if (store.Contains(videoEncodedStreamName))
-                    {
-                        video = store.OpenStream<EncodedImageCameraView>(videoEncodedStreamName).Decode(decoder);
-                        meta = store.GetMetadata(videoEncodedStreamName);
-                    }
-                    else
-                    {
-                        return (0, 0, 0, TimeSpan.Zero, null);
-                    }
-
-                    // frame count and time extents can be determined directly from metadata
-                    var frameCount = meta.MessageCount;
-                    var frameTimeSpan = meta.LastMessageCreationTime - meta.FirstMessageOriginatingTime;
-
-                    // width and height must be determined by reading an actual frame
-                    var width = 0;
-                    var height = 0;
-                    WaveFormat audioFormat = null;
-                    var wait = new EventWaitHandle(false, EventResetMode.ManualReset);
-
-                    audio.Do(a =>
-                    {
-                        audioFormat = a.Format;
-                        if (width != 0 && height != 0)
-                        {
-                            wait.Set();
-                        }
-                    });
-
-                    video.Select(x => x.ViewedObject).Do(v =>
-                    {
-                        var i = v.Resource;
-                        if (i.PixelFormat != PixelFormat.BGRA_32bpp)
-                        {
-                            throw new ArgumentException($"Expected video stream of {PixelFormat.BGRA_32bpp} (found {i.PixelFormat}).");
-                        }
-
-                        width = i.Width;
-                        height = i.Height;
-                        if (audio == null || audioFormat != null)
-                        {
-                            wait.Set();
-                        }
-                    });
-
-                    p.RunAsync();
-                    wait.WaitOne(); // wait to see the first frame
-
-                    return (width, height, frameCount, frameTimeSpan, audioFormat);
-                }
-
-                (var width, var height, var frameCount, var frameTimeSpan, var audioFormat) = GetAudioAndVideoInfo();
-
-                if (frameCount > 0)
-                {
-                    var frameRateNumerator = (uint)(frameCount - 1);
-                    var frameRateDenominator = (uint)(frameTimeSpan.TotalSeconds + 0.5);
-                    var frameRate = frameRateNumerator / frameRateDenominator;
-                    var mpegFile = EnsurePathExists(Path.Combine(exportCommand.OutputPath, "Video", $"Video.mpeg"));
-                    var audioOutputFormat = WaveFormat.Create16BitPcm((int)(audioFormat?.SamplesPerSec ?? 0), audioFormat?.Channels ?? 0);
-                    var mpegWriter = new Mpeg4Writer(p, mpegFile, new Mpeg4WriterConfiguration()
-                    {
-                        ImageWidth = (uint)width,
-                        ImageHeight = (uint)height,
-                        FrameRateNumerator = (uint)(frameCount - 1),
-                        FrameRateDenominator = (uint)(frameTimeSpan.TotalSeconds + 0.5),
-                        PixelFormat = PixelFormat.BGRA_32bpp,
-                        TargetBitrate = 10000000,
-                        ContainsAudio = audioFormat != null,
-                        AudioBitsPerSample = audioOutputFormat.BitsPerSample,
-                        AudioChannels = audioOutputFormat.Channels,
-                        AudioSamplesPerSecond = audioOutputFormat.SamplesPerSec,
-                    });
-
-                    var frameClock = Generators.Repeat(p, 0, TimeSpan.FromSeconds(1.0 / frameRate));
-                    var interpolatedVideo = frameClock.Join(decodedVideo, Reproducible.Nearest<ImageCameraView>());
-
-                    // The mpeg writer component processes input video frames and audio buffers, and writes to the output mpeg file.
-                    // Because of the way the component works internally, if both input streams use a delivery policy of Throttle,
-                    // the component ends up being much slower than if enough data is always queued at its inputs ready to be processed.
-                    // Since the video arrives at a slower rate than the audio at the inputs to the component, we relax the
-                    // throttling threshold at the video input such that as many video frames as possible (up to a maximum of 1000)
-                    // are available to be processed by the mpeg writer. This avoids constantly throttling and unthrottling the
-                    // video source, which was causing a significant slowdown in the mpeg file export.
-                    interpolatedVideo.Select(x => x.Item2.ViewedObject).PipeTo(mpegWriter, DeliveryPolicy.QueueSizeThrottled(1000));
-
-                    audio
-                        ?.Resample(new AudioResamplerConfiguration() { OutputFormat = audioOutputFormat, })
-                        ?.PipeTo(mpegWriter.AudioIn);
-                }
-            }
-
             // Export scene understanding
             sceneUnderstanding?.Export("SceneUnderstanding", exportCommand.OutputPath, streamWritersToClose);
 
+            // If we have any video frames, we will export to MPEG in a new pipeline later
+            long videoFrameCount = 0;
+            var videoFrameTimeSpan = default(TimeSpan);
+            if (decodedVideo is not null)
+            {
+                var videoMeta = store.Contains(VideoStreamName) ? store.GetMetadata(VideoStreamName) : store.GetMetadata(VideoEncodedStreamName);
+                videoFrameCount = videoMeta.MessageCount;
+                videoFrameTimeSpan = videoMeta.LastMessageOriginatingTime - videoMeta.FirstMessageOriginatingTime;
+            }
+
+            Console.WriteLine($"Exporting {exportCommand.StoreName} to {exportCommand.OutputPath}");
             p.RunAsync(ReplayDescriptor.ReplayAll, progress: new Progress<double>(p => Console.Write($"Progress: {p:P}\r")));
             p.WaitAll();
 
@@ -325,7 +213,74 @@ namespace HoloLensCaptureExporter
                 sw.Close();
             }
 
+            Console.WriteLine();
             Console.WriteLine("Done.");
+
+            // Export MPEG video
+            if (videoFrameCount > 0)
+            {
+                // Create a new pipeline
+                using var mpegPipeline = Pipeline.Create(deliveryPolicy: DeliveryPolicy.Throttle);
+
+                // Open the psi store for reading
+                store = PsiStore.Open(mpegPipeline, exportCommand.StoreName, exportCommand.StorePath);
+
+                // Get info needed for the mpeg writer
+                (var width, var height, var mpegStartTime, var audioFormat) = GetAudioAndVideoInfo(exportCommand.StoreName, exportCommand.StorePath);
+
+                // Write the "start time" of the mpeg to file (the minimum time of the first video message and first audio message)
+                var mpegTimingFile = File.CreateText(EnsurePathExists(Path.Combine(exportCommand.OutputPath, "Video", "VideoMpegStartTime.txt")));
+                mpegTimingFile.WriteLine($"{mpegStartTime.ToText()}");
+                mpegTimingFile.Close();
+
+                // Configure and initialize the mpeg writer
+                var frameRateNumerator = (uint)(videoFrameCount - 1);
+                var frameRateDenominator = (uint)(videoFrameTimeSpan.TotalSeconds + 0.5);
+                var frameRate = frameRateNumerator / frameRateDenominator;
+                var mpegFile = EnsurePathExists(Path.Combine(exportCommand.OutputPath, "Video", $"Video.mpeg"));
+                var audioOutputFormat = WaveFormat.Create16BitPcm((int)(audioFormat?.SamplesPerSec ?? 0), audioFormat?.Channels ?? 0);
+                var mpegWriter = new Mpeg4Writer(mpegPipeline, mpegFile, new Mpeg4WriterConfiguration()
+                {
+                    ImageWidth = (uint)width,
+                    ImageHeight = (uint)height,
+                    FrameRateNumerator = frameRateNumerator,
+                    FrameRateDenominator = frameRateDenominator,
+                    PixelFormat = PixelFormat.BGRA_32bpp,
+                    TargetBitrate = 10000000,
+                    ContainsAudio = audioFormat != null,
+                    AudioBitsPerSample = audioOutputFormat.BitsPerSample,
+                    AudioChannels = audioOutputFormat.Channels,
+                    AudioSamplesPerSecond = audioOutputFormat.SamplesPerSec,
+                });
+
+                // Audio
+                store.OpenStreamOrDefault<AudioBuffer>(AudioStreamName)
+                    ?.Resample(new AudioResamplerConfiguration() { OutputFormat = audioOutputFormat, })
+                    ?.PipeTo(mpegWriter.AudioIn);
+
+                // Video
+                decodedVideo = store.OpenStreamOrDefault<ImageCameraView>(VideoStreamName) ??
+                    store.OpenStreamOrDefault<EncodedImageCameraView>(VideoEncodedStreamName).Decode(decoder);
+                var frameClock = Generators.Repeat(mpegPipeline, 0, TimeSpan.FromSeconds(1.0 / frameRate));
+                var interpolatedVideo = frameClock.Join(decodedVideo, Reproducible.Nearest<ImageCameraView>());
+
+                // The mpeg writer component processes input video frames and audio buffers, and writes to the output mpeg file.
+                // Because of the way the component works internally, if both input streams use a delivery policy of Throttle,
+                // the component ends up being much slower than if enough data is always queued at its inputs ready to be processed.
+                // Since the video arrives at a slower rate than the audio at the inputs to the component, we relax the
+                // throttling threshold at the video input such that as many video frames as possible (up to a maximum of 1000)
+                // are available to be processed by the mpeg writer. This avoids constantly throttling and unthrottling the
+                // video source, which was causing a significant slowdown in the mpeg file export.
+                interpolatedVideo.Select(x => x.Item2.ViewedObject).PipeTo(mpegWriter, DeliveryPolicy.QueueSizeThrottled(1000));
+
+                // Execute the pipeline
+                Console.WriteLine("Exporting MPEG video");
+                mpegPipeline.RunAsync(ReplayDescriptor.ReplayAll, progress: new Progress<double>(p => Console.Write($"Progress: {p:P}\r")));
+                mpegPipeline.WaitAll();
+                Console.WriteLine();
+                Console.WriteLine("Done.");
+            }
+
             return 0;
         }
 
@@ -343,6 +298,96 @@ namespace HoloLensCaptureExporter
             }
 
             return path;
+        }
+
+        private static (int Width, int Height, DateTime StartTime, WaveFormat audioFormat) GetAudioAndVideoInfo(string storeName, string storePath)
+        {
+            // determine properties for the mpeg writer by peeking at the first video and audio messages
+            using var p = Pipeline.Create();
+            var store = PsiStore.Open(p, storeName, storePath);
+
+            // Get the image width and height by looking at the first message of the video stream.
+            // Also record the time of that first message.
+            var width = 0;
+            var height = 0;
+            var videoStartTime = default(DateTime);
+            var videoWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+            if (store.Contains(VideoStreamName))
+            {
+                store.OpenStream<ImageCameraView>(VideoStreamName).First().Do((v, env) =>
+                {
+                    (width, height) = GetWidthAndHeight(v.ViewedObject.Resource);
+                    videoStartTime = env.OriginatingTime;
+                    videoWaitHandle.Set();
+                });
+            }
+            else
+            {
+                store.OpenStream<EncodedImageCameraView>(VideoEncodedStreamName).First().Do((v, env) =>
+                {
+                    (width, height) = GetWidthAndHeight(v.ViewedObject.Resource);
+                    videoStartTime = env.OriginatingTime;
+                    videoWaitHandle.Set();
+                });
+            }
+
+            // Get the audio format by examining the first audio message (if one exists).
+            // Also record the time of that first message.
+            WaveFormat audioFormat = null;
+            var audioStartTime = default(DateTime);
+            var audioWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
+
+            bool TryGetMetadata(string stream, out IStreamMetadata meta)
+            {
+                if (store.Contains(stream))
+                {
+                    meta = store.GetMetadata(stream);
+                    return true;
+                }
+                else
+                {
+                    meta = null;
+                    return false;
+                }
+            }
+
+            if (TryGetMetadata(AudioStreamName, out var audioMeta) && audioMeta.MessageCount > 0)
+            {
+                store.OpenStream<AudioBuffer>(AudioStreamName).First().Do((a, env) =>
+                {
+                    audioFormat = a.Format;
+                    audioStartTime = env.OriginatingTime;
+                    audioWaitHandle.Set();
+                });
+            }
+            else
+            {
+                audioWaitHandle.Set();
+            }
+
+            // Run the pipeline, just until we've read the first video and audio message
+            p.RunAsync();
+            WaitHandle.WaitAll(new WaitHandle[2] { videoWaitHandle, audioWaitHandle });
+
+            // Determine the earlier of the two start times
+            var startTime = videoStartTime;
+            if (audioStartTime != default && audioStartTime < videoStartTime)
+            {
+                startTime = audioStartTime;
+            }
+
+            return (width, height, startTime, audioFormat);
+        }
+
+        private static (int Width, int Height) GetWidthAndHeight(IImage image)
+        {
+            if (image.PixelFormat != PixelFormat.BGRA_32bpp)
+            {
+                throw new ArgumentException($"Expected video stream of {PixelFormat.BGRA_32bpp} (found {image.PixelFormat}).");
+            }
+
+            return (image.Width, image.Height);
         }
     }
 }

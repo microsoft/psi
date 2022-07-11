@@ -12,13 +12,12 @@ namespace Microsoft.Psi.MixedReality
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Spatial.Euclidean;
     using StereoKit;
-    using StereoKit.Framework;
     using Windows.Perception.Spatial.Preview;
 
     /// <summary>
     /// Component representing perceived scene understanding.
     /// </summary>
-    public class SceneUnderstanding : Generator, IProducer<SceneObjectCollection>, IStepper, IDisposable
+    public class SceneUnderstanding : Generator, IProducer<SceneObjectCollection>, IDisposable
     {
         private readonly Pipeline pipeline;
         private readonly SceneUnderstandingConfiguration configuration;
@@ -43,23 +42,6 @@ namespace Microsoft.Psi.MixedReality
             }
 
             this.pipeline = pipeline;
-
-            // Defer call to SK.AddStepper(this) to PipelineRun to ensure derived classes have finished construction!
-            // Otherwise IStepper.Initialize() could get called before this object is fully constructed.
-            this.pipeline.PipelineRun += (_, _) =>
-            {
-                if (SK.AddStepper(this) == default)
-                {
-                    throw new Exception($"Unable to add {this} as a Stepper to StereoKit.");
-                }
-            };
-
-            // Remove this stepper when pipeline is no longer running, otherwise Step() will continue to be called!
-            this.pipeline.PipelineCompleted += (_, _) =>
-            {
-                SK.RemoveStepper(this);
-            };
-
             this.configuration = configuration ??= new ();
             this.placementRectangleSize = this.configuration.InitialPlacementRectangleSize;
             this.PlacementRectangleSizeInput = pipeline.CreateReceiver<(int Height, int Width)>(this, this.UpdatePlacementRectangleSize, nameof(this.PlacementRectangleSizeInput));
@@ -75,22 +57,6 @@ namespace Microsoft.Psi.MixedReality
         /// Gets the stream of scene understanding.
         /// </summary>
         public Emitter<SceneObjectCollection> Out { get; private set; }
-
-        /// <inheritdoc />
-        public bool Enabled => true;
-
-        /// <inheritdoc />
-        public virtual bool Initialize() => true;
-
-        /// <inheritdoc />
-        public virtual void Step()
-        {
-        }
-
-        /// <inheritdoc />
-        public virtual void Shutdown()
-        {
-        }
 
         /// <inheritdoc />
         public void Dispose()
