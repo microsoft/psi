@@ -197,9 +197,10 @@ namespace HoloLensCaptureExporter
             // If we have any video frames, we will export to MPEG in a new pipeline later
             long videoFrameCount = 0;
             var videoFrameTimeSpan = default(TimeSpan);
+            IStreamMetadata videoMeta = null;
             if (decodedVideo is not null)
             {
-                var videoMeta = store.Contains(VideoStreamName) ? store.GetMetadata(VideoStreamName) : store.GetMetadata(VideoEncodedStreamName);
+                videoMeta = store.Contains(VideoStreamName) ? store.GetMetadata(VideoStreamName) : store.GetMetadata(VideoEncodedStreamName);
                 videoFrameCount = videoMeta.MessageCount;
                 videoFrameTimeSpan = videoMeta.LastMessageOriginatingTime - videoMeta.FirstMessageOriginatingTime;
             }
@@ -261,7 +262,23 @@ namespace HoloLensCaptureExporter
                 // Video
                 decodedVideo = store.OpenStreamOrDefault<ImageCameraView>(VideoStreamName) ??
                     store.OpenStreamOrDefault<EncodedImageCameraView>(VideoEncodedStreamName).Decode(decoder);
-                var frameClock = Generators.Repeat(mpegPipeline, 0, TimeSpan.FromSeconds(1.0 / frameRate));
+
+                // interpolate with a frame clock for a consistent frame rate into the Mpeg4Writer
+                var audioMeta = store.GetMetadata(AudioStreamName);
+                var firstMediaOriginatingTime = (videoMeta.FirstMessageOriginatingTime < audioMeta.FirstMessageOriginatingTime ? videoMeta : audioMeta).FirstMessageOriginatingTime;
+                var lastMediaOriginatingTime = (videoMeta.LastMessageOriginatingTime > audioMeta.LastMessageOriginatingTime ? videoMeta : audioMeta).LastMessageOriginatingTime;
+                var frameClockInterval = TimeSpan.FromSeconds(1.0 / frameRate);
+                var frameClockTime = firstMediaOriginatingTime;
+                IEnumerable<(int, DateTime)> FrameClockTicks()
+                {
+                    while (frameClockTime < lastMediaOriginatingTime)
+                    {
+                        yield return (0, frameClockTime);
+                        frameClockTime += frameClockInterval;
+                    }
+                }
+
+                var frameClock = Generators.Sequence(mpegPipeline, FrameClockTicks());
                 var interpolatedVideo = frameClock.Join(decodedVideo, Reproducible.Nearest<ImageCameraView>());
 
                 // The mpeg writer component processes input video frames and audio buffers, and writes to the output mpeg file.
