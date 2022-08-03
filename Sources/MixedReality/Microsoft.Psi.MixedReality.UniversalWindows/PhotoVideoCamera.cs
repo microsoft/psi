@@ -108,6 +108,9 @@ namespace Microsoft.Psi.MixedReality
         /// <inheritdoc/>
         public void Dispose()
         {
+            // ensure mediaCapture isn't disposed during initialization task
+            this.initMediaCaptureTask.Wait();
+
             if (this.mediaCapture != null)
             {
                 this.mediaCapture.Dispose();
