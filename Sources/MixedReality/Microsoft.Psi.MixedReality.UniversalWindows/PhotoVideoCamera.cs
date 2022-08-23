@@ -17,8 +17,11 @@ namespace Microsoft.Psi.MixedReality
     using Microsoft.Psi.Spatial.Euclidean;
     using Windows.Foundation;
     using Windows.Graphics.Imaging;
+    using Windows.Media;
     using Windows.Media.Capture;
     using Windows.Media.Capture.Frames;
+    using Windows.Media.MediaProperties;
+    using AudioBuffer = Microsoft.Psi.Audio.AudioBuffer;
 
     /// <summary>
     /// Photo/video (PV) camera source component.
@@ -33,8 +36,10 @@ namespace Microsoft.Psi.MixedReality
         private MediaCapture mediaCapture;
         private MediaFrameReader videoFrameReader;
         private MediaFrameReader previewFrameReader;
+        private MediaFrameReader audioFrameReader;
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> videoFrameHandler;
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> previewFrameHandler;
+        private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> audioFrameHandler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhotoVideoCamera"/> class.
@@ -56,6 +61,7 @@ namespace Microsoft.Psi.MixedReality
             this.PreviewIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.PreviewIntrinsics));
             this.PreviewPose = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.PreviewPose));
             this.PreviewEncodedImageCameraView = pipeline.CreateEmitter<EncodedImageCameraView>(this, nameof(this.PreviewEncodedImageCameraView));
+            this.AudioBuffer = pipeline.CreateEmitter<AudioBuffer>(this, nameof(this.AudioBuffer));
 
             // Call this here (rather than in the Start() method, which is executed on the thread pool) to
             // ensure that MediaCapture.InitializeAsync() is called from an STA thread (this constructor must
@@ -104,6 +110,11 @@ namespace Microsoft.Psi.MixedReality
         /// Gets the original preview NV12-encoded image camera view.
         /// </summary>
         public Emitter<EncodedImageCameraView> PreviewEncodedImageCameraView { get; }
+
+        /// <summary>
+        /// Gets the original video's audio stream.
+        /// </summary>
+        public Emitter<AudioBuffer> AudioBuffer { get; }
 
         /// <inheritdoc/>
         public void Dispose()
@@ -186,6 +197,22 @@ namespace Microsoft.Psi.MixedReality
 
                 this.previewFrameReader.FrameArrived += this.previewFrameHandler;
             }
+
+            // Start the media frame reader for the Audio stream, if configured
+            if (this.audioFrameReader != null)
+            {
+                var status = await this.audioFrameReader.StartAsync();
+                if (status != MediaFrameReaderStartStatus.Success)
+                {
+                    throw new InvalidOperationException($"Audio stream media frame reader failed to start: {status}");
+                }
+
+                this.audioFrameHandler = this.CreateMediaFrameHandler(
+                    this.configuration.AudioStreamSettings,
+                    this.AudioBuffer);
+
+                this.audioFrameReader.FrameArrived += this.audioFrameHandler;
+            }
         }
 
         /// <inheritdoc/>
@@ -207,6 +234,15 @@ namespace Microsoft.Psi.MixedReality
                 await this.previewFrameReader.StopAsync();
                 this.previewFrameReader.Dispose();
                 this.previewFrameReader = null;
+            }
+
+            if (this.audioFrameReader != null)
+            {
+                this.audioFrameReader.FrameArrived -= this.audioFrameHandler;
+
+                await this.audioFrameReader.StopAsync();
+                this.audioFrameReader.Dispose();
+                this.audioFrameReader = null;
             }
 
             notifyCompleted();
@@ -289,6 +325,16 @@ namespace Microsoft.Psi.MixedReality
                     throw new InvalidOperationException("Could not create a frame reader for the requested preview settings.");
                 }
             }
+
+            if (this.configuration.AudioStreamSettings != null)
+            {
+                this.audioFrameReader = await this.CreateMediaFrameReaderAsync(MediaStreamType.Audio);
+
+                if (this.audioFrameReader == null)
+                {
+                    throw new InvalidOperationException("Could not create a frame reader for the requested audio source.");
+                }
+            }
         }
 
         /// <summary>
@@ -339,6 +385,13 @@ namespace Microsoft.Psi.MixedReality
             MediaCaptureVideoProfile profile = null;
             MediaCaptureVideoProfileMediaDescription videoDesc = null;
             MediaCaptureVideoProfileMediaDescription previewDesc = null;
+
+            StreamingCaptureMode captureMode = StreamingCaptureMode.Video;
+
+            if (this.configuration.AudioStreamSettings != null)
+            {
+                captureMode = StreamingCaptureMode.AudioAndVideo;
+            }
 
             var mediaFrameSourceGroups = await MediaFrameSourceGroup.FindAllAsync();
 
@@ -419,7 +472,7 @@ namespace Microsoft.Psi.MixedReality
                             RecordMediaDescription = videoDesc,
                             PreviewMediaDescription = previewDesc,
                             VideoDeviceId = selectedSourceGroup.Id,
-                            StreamingCaptureMode = StreamingCaptureMode.Video,
+                            StreamingCaptureMode = captureMode,
                             MemoryPreference = MediaCaptureMemoryPreference.Cpu,
                             SharingMode = MediaCaptureSharingMode.ExclusiveControl,
                             SourceGroup = selectedSourceGroup,
@@ -465,6 +518,24 @@ namespace Microsoft.Psi.MixedReality
             }
 
             // No frame source was found for the requested format
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a MediaFrameReader from the first frame source for the given target stream type.
+        /// </summary>
+        /// <param name="targetStreamType">The requested capture stream type.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        private async Task<MediaFrameReader> CreateMediaFrameReaderAsync(MediaStreamType targetStreamType)
+        {
+            foreach (var sourceInfo in this.mediaCapture.FrameSources
+                .Where(si => si.Value.Info.MediaStreamType == targetStreamType))
+            {
+                var frameSource = this.mediaCapture.FrameSources[sourceInfo.Value.Info.Id];
+                return await this.mediaCapture.CreateFrameReaderAsync(frameSource);
+            }
+
+            // No frame source was found for the requested stream type.
             return null;
         }
 
@@ -557,6 +628,85 @@ namespace Microsoft.Psi.MixedReality
                         {
                             using var encodedImageCameraView = new EncodedImageCameraView(sharedEncodedImage, cameraIntrinsics, cameraPose);
                             encodedImageCameraViewStream.Post(encodedImageCameraView, originatingTime);
+                        }
+                    }
+                }
+            };
+        }
+
+        /// <summary>
+        /// Creates an event handler that handles the FrameArrived event of the MediaFrameReader.
+        /// </summary>
+        /// <param name="audioSettings">The stream settings.</param>
+        /// <param name="audioStream">The stream on which to post the audio buffer.</param>
+        /// <returns>The event handler.</returns>
+        private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> CreateMediaFrameHandler(
+            PhotoVideoCameraConfiguration.AudioSettings audioSettings,
+            Emitter<AudioBuffer> audioStream)
+        {
+            return (sender, args) =>
+            {
+                using var frame = sender.TryAcquireLatestFrame();
+                if (frame != null)
+                {
+                    // Convert frame QPC time to pipeline time
+                    var frameTimestamp = frame.SystemRelativeTime.Value.Ticks;
+                    var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(frameTimestamp);
+
+                    // Post the audio buffer stream if requested
+                    if (audioSettings.OutputAudio)
+                    {
+                        using MediaFrameReference mediaFrame = frame.AudioMediaFrame.FrameReference;
+                        using AudioFrame audioFrame = frame.AudioMediaFrame.GetAudioFrame();
+
+                        AudioEncodingProperties audioEncodingProperties = mediaFrame.AudioMediaFrame.AudioEncodingProperties;
+
+                        unsafe
+                        {
+                            using Windows.Media.AudioBuffer buffer = audioFrame.LockBuffer(AudioBufferAccessMode.Read);
+                            using IMemoryBufferReference reference = buffer.CreateReference();
+                            ((UnsafeNative.IMemoryBufferByteAccess)reference).GetBuffer(out byte* audioDataIn, out uint capacity);
+
+                            uint frameDurMs = (uint)mediaFrame.Duration.TotalMilliseconds;
+                            uint sampleRate = audioEncodingProperties.SampleRate;
+                            uint sampleCount = (frameDurMs * sampleRate) / 1000;
+
+                            uint numAudioChannels = audioEncodingProperties.ChannelCount;
+                            uint bytesPerSample = audioEncodingProperties.BitsPerSample / 8;
+
+                            // Buffer size is (number of samples) * (size of each sample)
+                            byte[] audioDataOut = new byte[sampleCount * bytesPerSample];
+
+                            // Convert to bytes
+                            if (numAudioChannels > 1)
+                            {
+                                // Data is interlaced, so we need to change the multi-channel input
+                                // to the supported single-channel output for StereoKit to consume
+                                uint inPos = 0;
+                                uint outPos = 0;
+
+                                while (outPos < audioDataOut.Length)
+                                {
+                                    byte* src = &audioDataIn[inPos];
+                                    fixed (byte* dst = &audioDataOut[outPos])
+                                    {
+                                        Buffer.MemoryCopy(src, dst, bytesPerSample, bytesPerSample);
+                                    }
+
+                                    inPos += bytesPerSample * numAudioChannels;
+                                    outPos += bytesPerSample;
+                                }
+                            }
+                            else
+                            {
+                                byte* src = audioDataIn;
+                                fixed (byte* dst = audioDataOut)
+                                {
+                                    Buffer.MemoryCopy(src, dst, audioDataOut.Length, audioDataOut.Length);
+                                }
+                            }
+
+                            audioStream.Post(new AudioBuffer(audioDataOut, audioSettings.MicrophoneConfiguration.AudioFormat), originatingTime);
                         }
                     }
                 }

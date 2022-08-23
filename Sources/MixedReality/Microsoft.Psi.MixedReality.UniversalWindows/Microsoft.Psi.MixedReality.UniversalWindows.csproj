@@ -106,6 +106,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj">
+      <Project>{F5E5CA39-C5FD-455D-82B3-E16977CA7EDF}</Project>
+      <Name>Microsoft.Psi.Audio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Calibration\Microsoft.Psi.Calibration\Microsoft.Psi.Calibration.csproj">
       <Project>{84ce1fe5-8141-4c2a-ac30-21bdc87f5d0a}</Project>
       <Name>Microsoft.Psi.Calibration</Name>
