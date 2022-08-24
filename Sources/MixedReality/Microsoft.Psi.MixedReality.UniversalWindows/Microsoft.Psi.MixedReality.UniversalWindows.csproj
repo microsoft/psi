@@ -58,6 +58,8 @@
     <Compile Include="Magnetometer.cs" />
     <Compile Include="Gyroscope.cs" />
     <Compile Include="Accelerometer.cs" />
+    <Compile Include="MediaCaptureMicrophone.cs" />
+    <Compile Include="MediaCaptureMicrophoneConfiguration.cs" />
     <Compile Include="MixedRealityCapturePerspective.cs" />
     <Compile Include="ResearchModeCamera.cs" />
     <Compile Include="PhotoVideoCamera.cs" />

@@ -19,11 +19,6 @@ namespace Microsoft.Psi.MixedReality
         public StreamSettings PreviewStreamSettings { get; set; } = null;
 
         /// <summary>
-        /// Gets or sets the settings for the <see cref="PhotoVideoCamera.AudioBuffer"/> stream, or null to omit.
-        /// </summary>
-        public AudioSettings AudioStreamSettings { get; set; } = null;
-
-        /// <summary>
         /// Defines the capture settings for the Video or Preview streams.
         /// </summary>
         /// <remarks>
@@ -130,29 +125,6 @@ namespace Microsoft.Psi.MixedReality
             /// Gets or sets the settings for mixed reality capture, or null to omit holograms on this stream.
             /// </summary>
             public MixedRealityCaptureVideoEffect MixedRealityCapture { get; set; } = null;
-        }
-
-        /// <summary>
-        /// Defines the capture settings for the Audio stream.
-        /// </summary>
-        public class AudioSettings
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="AudioSettings"/> class.
-            /// </summary>
-            public AudioSettings()
-            {
-            }
-
-            /// <summary>
-            /// Gets or sets a value indicating whether the audio is emitted.
-            /// </summary>
-            public bool OutputAudio { get; set; } = true;
-
-            /// <summary>
-            /// Gets or sets the settings for the Microphone.
-            /// </summary>
-            public MicrophoneConfiguration MicrophoneConfiguration { get; set; } = new MicrophoneConfiguration();
         }
     }
 }
