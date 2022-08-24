@@ -17,7 +17,7 @@ namespace Microsoft.Psi.MixedReality
     using AudioBuffer = Microsoft.Psi.Audio.AudioBuffer;
 
     /// <summary>
-    /// Photo/video (PV) camera source component.
+    /// Microphone source component with MediaCapture.
     /// </summary>
     public class MediaCaptureMicrophone : ISourceComponent, IDisposable
     {
