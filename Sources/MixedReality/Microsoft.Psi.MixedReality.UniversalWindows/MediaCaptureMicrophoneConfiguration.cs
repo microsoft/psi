@@ -19,7 +19,7 @@ namespace Microsoft.Psi.MixedReality
         public MicrophoneConfiguration MicrophoneConfiguration { get; set; } = new MicrophoneConfiguration();
 
         /// <summary>
-        /// Gets or sets the index of the outputted audio channel if more than one
+        /// Gets or sets the outputted audio channel number if more than one
         /// channels are available.
         /// </summary>
         public uint AudioChannelNumber { get; set; } = 1;
