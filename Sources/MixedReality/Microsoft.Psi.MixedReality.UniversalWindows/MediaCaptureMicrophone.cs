@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.MixedReality
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.Psi;
@@ -26,11 +27,82 @@ namespace Microsoft.Psi.MixedReality
         private readonly string name;
         private readonly Task initMediaCaptureTask;
 
-        private readonly WaveFormat audioFormat;
-
         private MediaCapture mediaCapture;
         private MediaFrameReader audioFrameReader;
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> audioFrameHandler;
+
+        private WaveFormat audioFormat;
+
+        /// <summary>
+        /// Gets the AudioEncodingProperties subtype as a WaveFormatTag.
+        /// Please see the link below for the most recently updated list of subtypes:
+        /// https://docs.microsoft.com/en-us/uwp/api/windows.media.mediaproperties.audioencodingproperties.subtype?view=winrt-22621.
+        /// </summary>
+        private Dictionary<string, WaveFormatTag> getSubtypeAsWaveFormatTag = new ()
+        {
+            // Advanced Audio Coding (AAC). The stream can contain either raw AAC data or AAC data in an Audio Data Transport Stream (ADTS) stream.
+            { "AAC", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Dolby Digital audio (AC-3).
+            { "AC3", WaveFormatTag.WAVE_FORMAT_DOLBY_AC3_SPDIF },
+
+            // Advanced Audio Coding (AAC) audio in Audio Data Transport Stream (ADTS) format.
+            { "AACADTS", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // AAC in High-Bandwidth Digital Content Protection (HDCP) format.
+            { "AACHDCP", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Dolby AC-3 audio over Sony/Philips Digital Interface (S/PDIF).
+            { "AC3SPDIF", WaveFormatTag.WAVE_FORMAT_DOLBY_AC3_SPDIF },
+
+            // Dolby AC-3 in High-Bandwidth Digital Content Protection (HDCP) format.
+            { "AC3HDCP", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Audio Data Transport Stream
+            { "ADTS", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Apple Lossless Audio Codec
+            { "ALAC", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Adaptive Multi-Rate audio codec (AMR-NB)
+            { "AMRNB", WaveFormatTag.WAVE_FORMAT_NOKIA_ADAPTIVE_MULTIRATE },
+
+            // Adaptive Multi-Rate Wideband audio codec (AMR-WB)
+            { "AWRWB", WaveFormatTag.WAVE_FORMAT_GSM_ADAPTIVE_MULTIRATE_WB },
+
+            // Digital Theater Systems (DTS)
+            { "DTS", WaveFormatTag.WAVE_FORMAT_DTS },
+
+            // Dolby Digital Plus audio (E-AC-3).
+            { "EAC3", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Free Lossless Audio Codec
+            { "FLAC", WaveFormatTag.WAVE_FORMAT_FLAC },
+
+            // Uncompressed 32-bit float PCM audio.
+            { "Float", WaveFormatTag.WAVE_FORMAT_IEEE_FLOAT },
+
+            // MPEG Audio Layer-3 (MP3).
+            { "MP3", WaveFormatTag.WAVE_FORMAT_MPEGLAYER3 },
+
+            // MPEG-1 audio payload.
+            { "MPEG", WaveFormatTag.WAVE_FORMAT_MPEG },
+
+            // Opus
+            { "OPUS", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Uncompressed 16-bit PCM audio.
+            { "PCM", WaveFormatTag.WAVE_FORMAT_PCM },
+
+            // Windows Media Audio 8 codec, Windows Media Audio 9 codec, or Windows Media Audio 9.1 codec.
+            { "WMA8", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Windows Media Audio 9 Professional codec or Windows Media Audio 9.1 Professional codec.
+            { "WMA9", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+
+            // Vorbis codec
+            { "Vorbis", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
+        };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaCaptureMicrophone"/> class.
@@ -43,7 +115,6 @@ namespace Microsoft.Psi.MixedReality
             this.name = name;
             this.pipeline = pipeline;
             this.configuration = configuration ?? new MediaCaptureMicrophoneConfiguration();
-            this.audioFormat = this.configuration.MicrophoneConfiguration.AudioFormat;
 
             this.Out = pipeline.CreateEmitter<AudioBuffer>(this, nameof(this.Out));
 
@@ -70,6 +141,9 @@ namespace Microsoft.Psi.MixedReality
             {
                 this.mediaCapture.Dispose();
                 this.mediaCapture = null;
+
+                // Reset the audio properties for the current media capture.
+                this.audioFormat = null;
             }
         }
 
@@ -169,8 +243,8 @@ namespace Microsoft.Psi.MixedReality
         /// <param name="audioStream">The stream on which to post the audio buffer.</param>
         /// <returns>The event handler.</returns>
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> CreateMediaFrameHandler(
-            MediaCaptureMicrophoneConfiguration audioSettings,
-            Emitter<AudioBuffer> audioStream)
+                    MediaCaptureMicrophoneConfiguration audioSettings,
+                    Emitter<AudioBuffer> audioStream)
         {
             return (sender, args) =>
             {
@@ -189,6 +263,45 @@ namespace Microsoft.Psi.MixedReality
 
                         AudioEncodingProperties audioEncodingProperties = mediaFrame.AudioMediaFrame.AudioEncodingProperties;
 
+                        if (this.audioFormat == null)
+                        {
+                            ushort channelCount = (ushort)audioEncodingProperties.ChannelCount;
+
+                            if (this.configuration.AudioChannelNumber > channelCount)
+                            {
+                                throw new Exception(
+                                    $"The audio channel requested, Channel {this.configuration.AudioChannelNumber}, exceeds " +
+                                    $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
+                            }
+
+                            // The audio buffer output should be the contents of one channel.
+                            if (this.configuration.SingleChannel)
+                            {
+                                channelCount = 1;
+                            }
+
+                            int samplingRate = (int)audioEncodingProperties.SampleRate;
+                            ushort bitsPerSample = (ushort)audioEncodingProperties.BitsPerSample;
+                            ushort blockAlign = (ushort)(channelCount * (bitsPerSample / 8));
+                            int avgBytesPerSec = samplingRate * blockAlign;
+
+                            string subtype = audioEncodingProperties.Subtype ?? string.Empty;
+
+                            bool waveFormatTagExists = this.getSubtypeAsWaveFormatTag.TryGetValue(subtype, out WaveFormatTag formatTag);
+                            if (!waveFormatTagExists)
+                            {
+                                formatTag = WaveFormatTag.WAVE_FORMAT_UNKNOWN;
+                            }
+
+                            this.audioFormat = WaveFormat.Create(
+                                formatTag,
+                                samplingRate,
+                                bitsPerSample,
+                                channelCount,
+                                blockAlign,
+                                avgBytesPerSec);
+                        }
+
                         unsafe
                         {
                             using Windows.Media.AudioBuffer buffer = audioFrame.LockBuffer(AudioBufferAccessMode.Read);
@@ -205,18 +318,10 @@ namespace Microsoft.Psi.MixedReality
                             // Buffer size is (number of samples) * (size of each sample)
                             byte[] audioDataOut = new byte[sampleCount * bytesPerSample];
 
-                            // Convert to bytes
-                            if (numAudioChannels > this.audioFormat.Channels)
+                            // If the single-channel buffer output is requested and the incoming
+                            // audio data has multiple channels, we downsample the interlaced data.
+                            if (this.configuration.SingleChannel && numAudioChannels > 1)
                             {
-                                // Data is interlaced, so we need to change the multi-channel input
-                                // to the supported single-channel output for StereoKit to consume.
-                                if (this.configuration.AudioChannelNumber > numAudioChannels)
-                                {
-                                    throw new Exception(
-                                        $"The audio channel requested, #{this.configuration.AudioChannelNumber}, exceeds " +
-                                        $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
-                                }
-
                                 // Start the index position for the requested audio channel's buffer.
                                 uint inPos = bytesPerSample * (this.configuration.AudioChannelNumber - 1);
                                 uint outPos = 0;
@@ -235,7 +340,7 @@ namespace Microsoft.Psi.MixedReality
                             }
                             else
                             {
-                                // Copy the raw audio data to the buffer.
+                                // Copy the incoming raw audio data to the buffer.
                                 byte* src = audioDataIn;
                                 fixed (byte* dst = audioDataOut)
                                 {

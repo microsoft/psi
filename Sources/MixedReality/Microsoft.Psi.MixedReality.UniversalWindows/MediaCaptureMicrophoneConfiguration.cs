@@ -14,13 +14,12 @@ namespace Microsoft.Psi.MixedReality
         public bool OutputAudio { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the settings for the Microphone.
+        /// Gets or sets a value indicating whether the audio buffer should output single-channel data.
         /// </summary>
-        public MicrophoneConfiguration MicrophoneConfiguration { get; set; } = new MicrophoneConfiguration();
+        public bool SingleChannel { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets the outputted audio channel number if more than one
-        /// channels are available.
+        /// Gets or sets the outputted audio channel number if more than one channels are available.
         /// </summary>
         public uint AudioChannelNumber { get; set; } = 1;
     }
