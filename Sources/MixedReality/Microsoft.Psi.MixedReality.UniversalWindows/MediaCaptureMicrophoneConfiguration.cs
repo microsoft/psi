@@ -9,7 +9,7 @@ namespace Microsoft.Psi.MixedReality
     public class MediaCaptureMicrophoneConfiguration
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the audio is emitted.
+        /// Gets or sets a value indicating whether the audio buffer is emitted.
         /// </summary>
         public bool OutputAudio { get; set; } = true;
 
@@ -17,5 +17,11 @@ namespace Microsoft.Psi.MixedReality
         /// Gets or sets the settings for the Microphone.
         /// </summary>
         public MicrophoneConfiguration MicrophoneConfiguration { get; set; } = new MicrophoneConfiguration();
+
+        /// <summary>
+        /// Gets or sets the index of the outputted audio channel if more than one
+        /// channels are available.
+        /// </summary>
+        public uint AudioChannelNumber { get; set; } = 1;
     }
 }

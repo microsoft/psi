@@ -19,7 +19,7 @@ namespace Microsoft.Psi.MixedReality
     /// <summary>
     /// Microphone source component with MediaCapture.
     /// </summary>
-    public class MediaCaptureMicrophone : ISourceComponent, IDisposable
+    public class MediaCaptureMicrophone : ISourceComponent, IProducer<AudioBuffer>, IDisposable
     {
         private readonly MediaCaptureMicrophoneConfiguration configuration;
         private readonly Pipeline pipeline;
@@ -45,7 +45,7 @@ namespace Microsoft.Psi.MixedReality
             this.configuration = configuration ?? new MediaCaptureMicrophoneConfiguration();
             this.audioFormat = this.configuration.MicrophoneConfiguration.AudioFormat;
 
-            this.AudioBuffer = pipeline.CreateEmitter<AudioBuffer>(this, nameof(this.AudioBuffer));
+            this.Out = pipeline.CreateEmitter<AudioBuffer>(this, nameof(this.Out));
 
             // Call this here (rather than in the Start() method, which is executed on the thread pool) to
             // ensure that MediaCapture.InitializeAsync() is called from an STA thread (this constructor must
@@ -58,7 +58,7 @@ namespace Microsoft.Psi.MixedReality
         /// <summary>
         /// Gets the microphone's audio buffer stream.
         /// </summary>
-        public Emitter<AudioBuffer> AudioBuffer { get; }
+        public Emitter<AudioBuffer> Out { get; }
 
         /// <inheritdoc/>
         public void Dispose()
@@ -93,7 +93,7 @@ namespace Microsoft.Psi.MixedReality
 
                 this.audioFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration,
-                    this.AudioBuffer);
+                    this.Out);
 
                 this.audioFrameReader.FrameArrived += this.audioFrameHandler;
             }
@@ -188,6 +188,14 @@ namespace Microsoft.Psi.MixedReality
                         using AudioFrame audioFrame = frame.AudioMediaFrame.GetAudioFrame();
 
                         AudioEncodingProperties audioEncodingProperties = mediaFrame.AudioMediaFrame.AudioEncodingProperties;
+                        uint numAudioChannels = audioEncodingProperties.ChannelCount;
+
+                        if (this.configuration.AudioChannelNumber > numAudioChannels)
+                        {
+                            throw new Exception(
+                                $"The audio channel requested, #{this.configuration.AudioChannelNumber}, exceeds " +
+                                $"the {audioEncodingProperties.ChannelCount} channels available for this audio source.");
+                        }
 
                         unsafe
                         {
@@ -199,18 +207,17 @@ namespace Microsoft.Psi.MixedReality
                             uint sampleRate = audioEncodingProperties.SampleRate;
                             uint sampleCount = (frameDurMs * sampleRate) / 1000;
 
-                            uint numAudioChannels = audioEncodingProperties.ChannelCount;
                             uint bytesPerSample = audioEncodingProperties.BitsPerSample / 8;
 
                             // Buffer size is (number of samples) * (size of each sample)
                             byte[] audioDataOut = new byte[sampleCount * bytesPerSample];
 
                             // Convert to bytes
-                            if (numAudioChannels > 1)
+                            if (numAudioChannels > this.audioFormat.Channels)
                             {
                                 // Data is interlaced, so we need to change the multi-channel input
                                 // to the supported single-channel output for StereoKit to consume
-                                uint inPos = 0;
+                                uint inPos = bytesPerSample * (this.configuration.AudioChannelNumber - 1);
                                 uint outPos = 0;
 
                                 while (outPos < audioDataOut.Length)
