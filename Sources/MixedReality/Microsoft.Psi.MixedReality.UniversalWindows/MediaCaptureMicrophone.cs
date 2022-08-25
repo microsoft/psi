@@ -38,7 +38,7 @@ namespace Microsoft.Psi.MixedReality
         /// Please see the link below for the most recently updated list of subtypes:
         /// https://docs.microsoft.com/en-us/uwp/api/windows.media.mediaproperties.audioencodingproperties.subtype?view=winrt-22621.
         /// </summary>
-        private Dictionary<string, WaveFormatTag> getSubtypeAsWaveFormatTag = new ()
+        private Dictionary<string, WaveFormatTag> findSubtypeAsWaveFormatTag = new ()
         {
             // Advanced Audio Coding (AAC). The stream can contain either raw AAC data or AAC data in an Audio Data Transport Stream (ADTS) stream.
             { "AAC", WaveFormatTag.WAVE_FORMAT_UNKNOWN },
@@ -243,8 +243,8 @@ namespace Microsoft.Psi.MixedReality
         /// <param name="audioStream">The stream on which to post the audio buffer.</param>
         /// <returns>The event handler.</returns>
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> CreateMediaFrameHandler(
-                    MediaCaptureMicrophoneConfiguration audioSettings,
-                    Emitter<AudioBuffer> audioStream)
+            MediaCaptureMicrophoneConfiguration audioSettings,
+            Emitter<AudioBuffer> audioStream)
         {
             return (sender, args) =>
             {
@@ -287,7 +287,7 @@ namespace Microsoft.Psi.MixedReality
 
                             string subtype = audioEncodingProperties.Subtype ?? string.Empty;
 
-                            bool waveFormatTagExists = this.getSubtypeAsWaveFormatTag.TryGetValue(subtype, out WaveFormatTag formatTag);
+                            bool waveFormatTagExists = this.findSubtypeAsWaveFormatTag.TryGetValue(subtype, out WaveFormatTag formatTag);
                             if (!waveFormatTagExists)
                             {
                                 formatTag = WaveFormatTag.WAVE_FORMAT_UNKNOWN;
