@@ -188,14 +188,6 @@ namespace Microsoft.Psi.MixedReality
                         using AudioFrame audioFrame = frame.AudioMediaFrame.GetAudioFrame();
 
                         AudioEncodingProperties audioEncodingProperties = mediaFrame.AudioMediaFrame.AudioEncodingProperties;
-                        uint numAudioChannels = audioEncodingProperties.ChannelCount;
-
-                        if (this.configuration.AudioChannelNumber > numAudioChannels)
-                        {
-                            throw new Exception(
-                                $"The audio channel requested, #{this.configuration.AudioChannelNumber}, exceeds " +
-                                $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
-                        }
 
                         unsafe
                         {
@@ -208,6 +200,7 @@ namespace Microsoft.Psi.MixedReality
                             uint sampleCount = (frameDurMs * sampleRate) / 1000;
 
                             uint bytesPerSample = audioEncodingProperties.BitsPerSample / 8;
+                            uint numAudioChannels = audioEncodingProperties.ChannelCount;
 
                             // Buffer size is (number of samples) * (size of each sample)
                             byte[] audioDataOut = new byte[sampleCount * bytesPerSample];
@@ -216,7 +209,15 @@ namespace Microsoft.Psi.MixedReality
                             if (numAudioChannels > this.audioFormat.Channels)
                             {
                                 // Data is interlaced, so we need to change the multi-channel input
-                                // to the supported single-channel output for StereoKit to consume
+                                // to the supported single-channel output for StereoKit to consume.
+                                if (this.configuration.AudioChannelNumber > numAudioChannels)
+                                {
+                                    throw new Exception(
+                                        $"The audio channel requested, #{this.configuration.AudioChannelNumber}, exceeds " +
+                                        $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
+                                }
+
+                                // Start the index position for the requested audio channel's buffer.
                                 uint inPos = bytesPerSample * (this.configuration.AudioChannelNumber - 1);
                                 uint outPos = 0;
 
@@ -234,6 +235,7 @@ namespace Microsoft.Psi.MixedReality
                             }
                             else
                             {
+                                // Copy the raw audio data to the buffer.
                                 byte* src = audioDataIn;
                                 fixed (byte* dst = audioDataOut)
                                 {
