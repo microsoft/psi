@@ -194,7 +194,7 @@ namespace Microsoft.Psi.MixedReality
                         {
                             throw new Exception(
                                 $"The audio channel requested, #{this.configuration.AudioChannelNumber}, exceeds " +
-                                $"the {audioEncodingProperties.ChannelCount} channels available for this audio source.");
+                                $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
                         }
 
                         unsafe
