@@ -315,8 +315,8 @@ namespace Microsoft.Psi.MixedReality
                             uint bytesPerSample = audioEncodingProperties.BitsPerSample / 8;
                             uint numAudioChannels = audioEncodingProperties.ChannelCount;
 
-                            // Buffer size is (number of samples) * (size of each sample)
-                            byte[] audioDataOut = new byte[sampleCount * bytesPerSample];
+                            // Buffer size is (number of samples) * (size of each sample * number of channels)
+                            byte[] audioDataOut = new byte[sampleCount * this.audioFormat.BlockAlign];
 
                             // If the single-channel buffer output is requested and the incoming
                             // audio data has multiple channels, we downsample the interlaced data.
