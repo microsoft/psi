@@ -769,6 +769,49 @@ namespace Test.Psi
 
         [TestMethod]
         [Timeout(60000)]
+        public void RuntimeInfoTest()
+        {
+            // Test serialization/deserialization of RuntimeInfo with default parameters
+            var writer = new BufferWriter(0);
+            new RuntimeInfo().Serialize(writer);
+
+            var reader = new BufferReader(writer.Buffer);
+            var runtimeInfo = (RuntimeInfo)Metadata.Deserialize(reader);
+
+            Assert.AreEqual(RuntimeInfo.RuntimeName.FullName, runtimeInfo.Name);
+            Assert.AreEqual(0, runtimeInfo.Id);
+            Assert.AreEqual(default(string), runtimeInfo.TypeName);
+            Assert.AreEqual((RuntimeInfo.RuntimeName.Version.Major << 16) | RuntimeInfo.RuntimeName.Version.Minor, runtimeInfo.Version);
+            Assert.AreEqual(default(string), runtimeInfo.SerializerTypeName);
+            Assert.AreEqual(RuntimeInfo.CurrentRuntimeVersion, runtimeInfo.SerializerVersion);
+            Assert.AreEqual(0, runtimeInfo.CustomFlags);
+            Assert.AreEqual(MetadataKind.RuntimeInfo, runtimeInfo.Kind);
+
+            // Test serialization/deserialization of RuntimeInfo with explicit parameters
+            writer = new BufferWriter(0);
+            new RuntimeInfo(
+                name: "Some Name",
+                id: 1,
+                typeName: "Some Type Name",
+                version: 2,
+                serializerTypeName: "Some Serializer Type Name",
+                serializerVersion: 7).Serialize(writer);
+
+            reader = new BufferReader(writer.Buffer);
+            runtimeInfo = (RuntimeInfo)Metadata.Deserialize(reader);
+
+            Assert.AreEqual("Some Name", runtimeInfo.Name);
+            Assert.AreEqual(1, runtimeInfo.Id);
+            Assert.AreEqual("Some Type Name", runtimeInfo.TypeName);
+            Assert.AreEqual(2, runtimeInfo.Version);
+            Assert.AreEqual("Some Serializer Type Name", runtimeInfo.SerializerTypeName);
+            Assert.AreEqual(7, runtimeInfo.SerializerVersion);
+            Assert.AreEqual(0, runtimeInfo.CustomFlags);
+            Assert.AreEqual(MetadataKind.RuntimeInfo, runtimeInfo.Kind);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void PsiStreamMetadataTest()
         {
             var messageCount = 42L;

@@ -17,16 +17,6 @@ namespace Microsoft.Psi.Common
         public const int CurrentRuntimeVersion = 2;
 
         /// <summary>
-        /// Gets the NetBIOS name of the local machine.
-        /// </summary>
-        public static readonly string MachineName = Environment.MachineName;
-
-        /// <summary>
-        /// Get the command line for the process.
-        /// </summary>
-        public static readonly string CmdLine = Environment.CommandLine;
-
-        /// <summary>
         /// Gets name of the executing assembly.
         /// </summary>
         public static readonly AssemblyName RuntimeName = Assembly.GetExecutingAssembly().GetName();
@@ -38,11 +28,11 @@ namespace Microsoft.Psi.Common
 
         internal RuntimeInfo(int serializationSystemVersion = CurrentRuntimeVersion)
             : this(
-                  name: CmdLine,
+                  name: RuntimeName.FullName,
                   id: 0,
-                  typeName: RuntimeName.FullName,
+                  typeName: default(string),
                   version: (RuntimeName.Version.Major << 16) | RuntimeName.Version.Minor,
-                  serializerTypeName: MachineName,
+                  serializerTypeName: default(string),
                   serializerVersion: serializationSystemVersion)
         {
         }
