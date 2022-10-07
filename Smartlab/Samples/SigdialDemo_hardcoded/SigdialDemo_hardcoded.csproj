@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04282937-8186-4C5E-9CA0-6E5AB15662B5}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>SigdialDemo</RootNamespace>
+    <AssemblyName>SigdialDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <NoWarn>FS2003</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>FS2003</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Apache.NMS, Version=1.8.0.0, Culture=neutral, PublicKeyToken=82756feee3957618, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Apache.NMS.1.8.0\lib\net40\Apache.NMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Apache.NMS.ActiveMQ, Version=1.7.2.4108, Culture=neutral, PublicKeyToken=82756feee3957618, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Apache.NMS.ActiveMQ.1.7.2\lib\net40\Apache.NMS.ActiveMQ.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Kinect.2.0.1410.19000\lib\net45\Microsoft.Kinect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Psi, Version=0.15.49.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Psi.Runtime.0.15.49.1-beta\lib\netstandard2.0\Microsoft.Psi.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Psi.IL, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Psi.Runtime.0.15.49.1-beta\lib\netstandard2.0\Microsoft.Psi.IL.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Collections.Immutable.1.7.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Drawing.Common.5.0.0-preview.3.20214.6\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Sources\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj">
+      <Project>{80c75a20-920a-4b30-b05e-970be844456a}</Project>
+      <Name>Microsoft.Psi.Audio.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj">
+      <Project>{ac5745da-570c-4e57-9ae4-d1974f629428}</Project>
+      <Name>Microsoft.Psi.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj">
+      <Project>{02a92f0e-98f1-4b42-883a-761272bac185}</Project>
+      <Name>Microsoft.Psi.Imaging.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj">
+      <Project>{9bf2e5ef-186a-4179-b753-ae11ee90e026}</Project>
+      <Name>Microsoft.Psi.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Speech\Microsoft.Psi.CognitiveServices.Speech.csproj">
+      <Project>{cfb5e6d3-c2fd-4d46-b8ac-7e39634e2ca9}</Project>
+      <Name>Microsoft.Psi.CognitiveServices.Speech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Kinect\Microsoft.Psi.Kinect.Windows\Microsoft.Psi.Kinect.Windows.csproj">
+      <Project>{855FD8BE-6938-4784-B1EE-D90A8B5B2496}</Project>
+      <Name>Microsoft.Psi.Kinect.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Media\Microsoft.Psi.Media.Windows.x64\Microsoft.Psi.Media.Windows.x64.csproj">
+      <Project>{16b58ae0-0e00-46fb-b114-72600df6a78a}</Project>
+      <Name>Microsoft.Psi.Media.Windows.x64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Media\Microsoft.Psi.Media_Interop.Windows.x64\Microsoft.Psi.Media_Interop.Windows.x64.vcxproj">
+      <Project>{5348a94f-7b3a-4b42-8555-2a1491971090}</Project>
+      <Name>Microsoft.Psi.Media_Interop.Windows.x64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Speech\Microsoft.Psi.Speech.Windows\Microsoft.Psi.Speech.Windows.csproj">
+      <Project>{3fb6cd31-0941-4372-9bdb-9e6830385dd4}</Project>
+      <Name>Microsoft.Psi.Speech.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj">
+      <Project>{c048e3fb-cdc4-4577-a40e-8c9b1b7cedf1}</Project>
+      <Name>Microsoft.Psi.Speech</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sources\Communication\CMU.Smartlab.Communication.csproj">
+      <Project>{01198793-5bf9-4d28-a2af-f8f1d780d263}</Project>
+      <Name>CMU.Smartlab.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sources\Identity\CMU.Smartlab.Identity.csproj">
+      <Project>{d093ee34-08f1-4a54-9690-6ae964795ad2}</Project>
+      <Name>CMU.Smartlab.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sources\Media\CMU.Smartlab.RtspCapture\CMU.Smartlab.Rtsp.csproj">
+      <Project>{fdeea121-60b4-4a2e-8fd0-cfa9f0fdfade}</Project>
+      <Name>CMU.Smartlab.Rtsp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(SolutionDir)\Smartlab\Sources\Media\CMU.Smartlab.RtspCapture\x64\*.dll" "$(TargetDir)" /Y /E /C /F
+xcopy "$(SolutionDir)\Smartlab\Sources\Media\libffmpeghelper\x64\$(Configuration)\libffmpeghelper.dll" "$(TargetDir)" /Y /E /C /F</PostBuildEvent>
+  </PropertyGroup>
+</Project>

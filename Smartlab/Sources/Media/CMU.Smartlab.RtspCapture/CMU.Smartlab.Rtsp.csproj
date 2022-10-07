@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FDEEA121-60B4-4A2E-8FD0-CFA9F0FDFADE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CMU.Smartlab.RtspCapture</RootNamespace>
+    <AssemblyName>CMU.Smartlab.RtspCapture</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>FS2003</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <NoWarn>FS2003</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RtspClientSharp, Version=1.3.3.0, Culture=neutral, PublicKeyToken=af963665c791e92e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\RtspClientSharp.1.3.3\lib\netstandard2.0\RtspClientSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\System.Drawing.Common.5.0.2\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RtspCapture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\AudioConversionParameters.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecodedFrames\AudioFrameFormat.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecodedFrames\DecodedAudioFrame.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecodedFrames\DecodedVideoFrame.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecodedFrames\IDecodedAudioFrame.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecodedFrames\IDecodedVideoFrame.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecodedVideoFrameParameters.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\DecoderException.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\FFmpeg\FFmpegAudioCodecId.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\FFmpeg\FFmpegAudioDecoder.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\FFmpeg\FFmpegAudioPInvoke.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\FFmpeg\FFmpegDecodedVideoScaler.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\FFmpeg\FFmpegVideoDecoder.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\FFmpeg\FFmpegVideoPInvoke.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\PixelFormat.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\ScalingPolicy.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\ScalingQuality.cs" />
+    <Compile Include="RtspDecoder\RawFramesDecoding\TransformParameters.cs" />
+    <Compile Include="RtspDecoder\RawFramesReceiving\IRawFramesSource.cs" />
+    <Compile Include="RtspDecoder\RawFramesReceiving\RawFramesSource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Sources\Audio\Microsoft.Psi.Audio.Windows\Microsoft.Psi.Audio.Windows.csproj">
+      <Project>{80c75a20-920a-4b30-b05e-970be844456a}</Project>
+      <Name>Microsoft.Psi.Audio.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Sources\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj">
+      <Project>{ac5745da-570c-4e57-9ae4-d1974f629428}</Project>
+      <Name>Microsoft.Psi.Audio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Sources\Imaging\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj">
+      <Project>{02a92f0e-98f1-4b42-883a-761272bac185}</Project>
+      <Name>Microsoft.Psi.Imaging.Windows</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Sources\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj">
+      <Project>{9bf2e5ef-186a-4179-b753-ae11ee90e026}</Project>
+      <Name>Microsoft.Psi.Imaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Sources\Media\Microsoft.Psi.Media.Windows.x64\Microsoft.Psi.Media.Windows.x64.csproj">
+      <Project>{16b58ae0-0e00-46fb-b114-72600df6a78a}</Project>
+      <Name>Microsoft.Psi.Media.Windows.x64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Sources\Media\Microsoft.Psi.Media_Interop.Windows.x64\Microsoft.Psi.Media_Interop.Windows.x64.vcxproj">
+      <Project>{5348a94f-7b3a-4b42-8555-2a1491971090}</Project>
+      <Name>Microsoft.Psi.Media_Interop.Windows.x64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\Sources\Runtime\Microsoft.Psi\Microsoft.Psi.csproj">
+      <Project>{04147400-0ab0-4f07-9975-d4b7e58150db}</Project>
+      <Name>Microsoft.Psi</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="x64\avcodec-58.dll" />
+    <Content Include="x64\avdevice-58.dll" />
+    <Content Include="x64\avfilter-7.dll" />
+    <Content Include="x64\avformat-58.dll" />
+    <Content Include="x64\avutil-56.dll" />
+    <Content Include="x64\postproc-55.dll" />
+    <Content Include="x64\swresample-3.dll" />
+    <Content Include="x64\swscale-5.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

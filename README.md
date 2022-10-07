@@ -1,3 +1,8 @@
+# NOTE for TELEDIA:
+Original PSI code has been left unaltered. 
+All smartlab related codes have been added as a directory - 'SmartLab/'
+Changes have also been made to Psi.sln file.
+
 # Platform for Situated Intelligence
 
 ![Build status](https://dev.azure.com/msresearch/psi/_apis/build/status/psi-github-ci?branchName=master)
