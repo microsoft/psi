@@ -535,7 +535,7 @@
                 // var audio = store.OpenStream<AudioBuffer>("Audio");
                 var audioConfig = new AudioCaptureConfiguration()
                 {
-                    OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm(),
+                    // OutputFormat = WaveFormat.Create16kHz1Channel16BitPcm(),
                     DropOutOfOrderPackets = true
                 };
                 IProducer<AudioBuffer> audio = new AudioCapture(pipeline, audioConfig);
