@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class AdjacentValuesInterpolator&lt;TIn, TOut&gt;
+    <title>Class AdjacentValuesInterpolator&lt;TIn, TResult&gt;
    | Platform for Situated Intelligence </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class AdjacentValuesInterpolator&lt;TIn, TOut&gt;
+    <meta name="title" content="Class AdjacentValuesInterpolator&lt;TIn, TResult&gt;
    | Platform for Situated Intelligence ">
     <meta name="generator" content="docfx 2.56.2.0">
     
@@ -81,30 +81,30 @@
             <article class="content wrap" id="_content" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2">
   
   
-  <h1 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2" class="text-break">Class AdjacentValuesInterpolator&lt;TIn, TOut&gt;
+  <h1 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2" class="text-break">Class AdjacentValuesInterpolator&lt;TIn, TResult&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Implements a interpolator based on the values adjacent to the interpolation time, i.e. the
+  <div class="markdown level0 summary"><p>Implements an interpolator based on the values adjacent to the interpolation time, i.e. the
 nearest values before and after the interpolation time.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Interpolator-2.html">Interpolator</a>&lt;TIn, TOut&gt;</div>
-    <div class="level2"><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TIn, TOut&gt;</div>
-    <div class="level3"><span class="xref">AdjacentValuesInterpolator&lt;TIn, TOut&gt;</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Interpolator-2.html">Interpolator</a>&lt;TIn, TResult&gt;</div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.ReproducibleInterpolator-2.html">ReproducibleInterpolator</a>&lt;TIn, TResult&gt;</div>
+    <div class="level3"><span class="xref">AdjacentValuesInterpolator&lt;TIn, TResult&gt;</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Interpolator-2.html#Microsoft_Psi_Interpolator_2_Interpolate_DateTime_IEnumerable_Microsoft_Psi_Message__0___System_Nullable_DateTime__">Interpolator&lt;TIn, TOut&gt;.Interpolate(DateTime, IEnumerable&lt;Message&lt;TIn&gt;&gt;, Nullable&lt;DateTime&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Interpolator-2.html#Microsoft_Psi_Interpolator_2_Interpolate_DateTime_IEnumerable_Microsoft_Psi_Message__0___System_Nullable_DateTime__">Interpolator&lt;TIn, TResult&gt;.Interpolate(DateTime, IEnumerable&lt;Message&lt;TIn&gt;&gt;, Nullable&lt;DateTime&gt;)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.Interpolators.html">Microsoft.Psi.Common.Interpolators</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
   <h5 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class AdjacentValuesInterpolator&lt;TIn, TOut&gt; : ReproducibleInterpolator&lt;TIn, TOut&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class AdjacentValuesInterpolator&lt;TIn, TResult&gt; : ReproducibleInterpolator&lt;TIn, TResult&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -121,7 +121,7 @@ nearest values before and after the interpolation time.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="parametername">TOut</span></td>
+        <td><span class="parametername">TResult</span></td>
         <td><p>The type of the output interpolation result.</p>
 </td>
       </tr>
@@ -138,16 +138,16 @@ that might arrive later.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator{TIn,TResult}.cs/#L36">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2__ctor_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2__ctor_Func__0__0_System_Double__1__System_Boolean__1_System_String_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.#ctor(Func{`0,`0,System.Double,`1},System.Boolean,`1,System.String)">AdjacentValuesInterpolator(Func&lt;TIn, TIn, Double, TOut&gt;, Boolean, TOut, String)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator-2.html">AdjacentValuesInterpolator&lt;TIn, TOut&gt;</a> class.</p>
+  <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2__ctor_Func__0__0_System_Double__1__System_Boolean__1_System_String_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.#ctor(Func{`0,`0,System.Double,`1},System.Boolean,`1,System.String)">AdjacentValuesInterpolator(Func&lt;TIn, TIn, Double, TResult&gt;, Boolean, TResult, String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator-2.html">AdjacentValuesInterpolator&lt;TIn, TResult&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AdjacentValuesInterpolator(Func&lt;TIn, TIn, double, TOut&gt; interpolator, bool orDefault, TOut defaultValue = null, string name = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AdjacentValuesInterpolator(Func&lt;TIn, TIn, double, TResult&gt; interpolatorFunc, bool orDefault, TResult defaultValue = null, string name = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -160,28 +160,28 @@ that might arrive later.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Func</span>&lt;TIn, TIn, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>, TOut&gt;</td>
-        <td><span class="parametername">interpolator</span></td>
-        <td><p>An interpolator function which given the two nearest values and the ratio
-between them where the interpolation result should be produces the interpolation result.</p>
+        <td><span class="xref">Func</span>&lt;TIn, TIn, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>, TResult&gt;</td>
+        <td><span class="parametername">interpolatorFunc</span></td>
+        <td><p>A function which produces an interpolation result, given the two nearest values
+and the ratio between them.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">orDefault</span></td>
         <td><p>Indicates whether to output a default value when no result is found.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">TOut</span></td>
+        <td><span class="xref">TResult</span></td>
         <td><span class="parametername">defaultValue</span></td>
         <td><p>An optional default value to use.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
-        <td><p>An optional name for the interpolator (defaults to AdjacentValuesInterpolator).</p>
+        <td><p>An optional name for the interpolator (defaults to AdjacentValues).</p>
 </td>
       </tr>
     </tbody>
@@ -190,7 +190,7 @@ between them where the interpolation result should be produces the interpolation
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L47">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator{TIn,TResult}.cs/#L47">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_Interpolate_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.Interpolate*"></a>
   <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_Interpolate_DateTime_IEnumerable_Microsoft_Psi_Message__0___System_Nullable_DateTime__" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.Interpolate(DateTime,IEnumerable{Microsoft.Psi.Message{`0}},System.Nullable{DateTime})">Interpolate(DateTime, IEnumerable&lt;Message&lt;TIn&gt;&gt;, Nullable&lt;DateTime&gt;)</h4>
@@ -199,7 +199,7 @@ between them where the interpolation result should be produces the interpolation
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override InterpolationResult&lt;TOut&gt; Interpolate(DateTime interpolationTime, IEnumerable&lt;Message&lt;TIn&gt;&gt; messages, DateTime? closedOriginatingTime)</code></pre>
+    <pre><code class="lang-csharp hljs">public override InterpolationResult&lt;TResult&gt; Interpolate(DateTime interpolationTime, IEnumerable&lt;Message&lt;TIn&gt;&gt; messages, DateTime? closedOriginatingTime)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -224,7 +224,7 @@ between them where the interpolation result should be produces the interpolation
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">DateTime</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">DateTime</span>&gt;</td>
         <td><span class="parametername">closedOriginatingTime</span></td>
         <td><p>An optional date-time that, when present, indicates at what time the stream was closed.</p>
 </td>
@@ -241,17 +241,17 @@ between them where the interpolation result should be produces the interpolation
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.InterpolationResult-1.html">InterpolationResult</a>&lt;TOut&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.InterpolationResult-1.html">InterpolationResult</a>&lt;TResult&gt;</td>
         <td><p>An interpolation result <a class="xref" href="Microsoft.Psi.InterpolationResult-1.html">InterpolationResult&lt;T&gt;</a>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Interpolator&lt;TIn, TOut&gt;.Interpolate(DateTime, IEnumerable&lt;Microsoft.Psi.Message&lt;TIn&gt;&gt;, System.Nullable&lt;DateTime&gt;)</span></div>
+  <div><span class="xref">Microsoft.Psi.Interpolator&lt;TIn, TResult&gt;.Interpolate(DateTime, IEnumerable&lt;Microsoft.Psi.Message&lt;TIn&gt;&gt;, System.Nullable&lt;DateTime&gt;)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L121">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator{TIn,TResult}.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_ToString_" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.ToString*"></a>
   <h4 id="Microsoft_Psi_Common_Interpolators_AdjacentValuesInterpolator_2_ToString" data-uid="Microsoft.Psi.Common.Interpolators.AdjacentValuesInterpolator`2.ToString">ToString()</h4>
@@ -271,7 +271,7 @@ between them where the interpolation result should be produces the interpolation
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -294,7 +294,7 @@ between them where the interpolation result should be produces the interpolation
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator.cs/#L21" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Interpolators/AdjacentValuesInterpolator{TIn,TResult}.cs/#L21" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -83,36 +83,36 @@
   
   <h1 id="Microsoft_Psi_Visualization_Data_StreamBinding" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding" class="text-break">Class StreamBinding
   </h1>
-  <div class="markdown level0 summary"><p>Represents information needed to uniquely identify and open a stream.</p>
+  <div class="markdown level0 summary"><p>Represents information needed to uniquely identify a source or derived stream.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">StreamBinding</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Data.html">Microsoft.Psi.Visualization.Data</a></h6>
@@ -123,20 +123,27 @@
 [DataContract]
 public class StreamBinding</code></pre>
   </div>
+  <h5 id="Microsoft_Psi_Visualization_Data_StreamBinding_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>A stream binding contains an overall stream adapter that is formed by chaining
+a derived stream adapter (used to compute the values for the derived stream from
+the source stream) and a visualizer adapter (used to adapt the values produced by
+the stream to the visualizer that the binding connects to). In addition, the
+binding contains information about the summarizer used by the bound visualizer.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L32">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L44">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamBinding__ctor_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding__ctor_System_String_System_String_System_String_System_Type_System_Object___System_Type_System_Object___System_Boolean_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.#ctor(System.String,System.String,System.String,System.Type,System.Object[],System.Type,System.Object[],System.Boolean)">StreamBinding(String, String, String, Type, Object[], Type, Object[], Boolean)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding__ctor_System_String_System_String_System_String_System_Type_System_Object___System_Type_System_Object___System_Type_System_Object___" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.#ctor(System.String,System.String,System.String,System.Type,System.Object[],System.Type,System.Object[],System.Type,System.Object[])">StreamBinding(String, String, String, Type, Object[], Type, Object[], Type, Object[])</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Data.StreamBinding.html">StreamBinding</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public StreamBinding(string streamName, string partitionName, string nodePath, Type streamAdapterType = null, object[] streamAdapterArguments = null, Type summarizerType = null, object[] summarizerArguments = null, bool isDerived = false)</code></pre>
+    <pre><code class="lang-csharp hljs">public StreamBinding(string sourceStreamName, string partitionName, string streamName = null, Type derivedStreamAdapterType = null, object[] derivedStreamAdapterArguments = null, Type visualizerStreamAdapterType = null, object[] visualizerStreamAdapterArguments = null, Type visualizerSummarizerType = null, object[] visualizerSummarizerArguments = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -149,51 +156,57 @@ public class StreamBinding</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">streamName</span></td>
-        <td><p>The stream name.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">sourceStreamName</span></td>
+        <td><p>The source stream name.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">partitionName</span></td>
         <td><p>The partition name.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">nodePath</span></td>
-        <td><p>The path of the node in the tree that has generated this stream binding.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">streamName</span></td>
+        <td><p>An optional parameter specifying the name of the stream (if not specified, defaults to the source stream name).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
-        <td><span class="parametername">streamAdapterType</span></td>
-        <td><p>The type of the stream adapter, null if there is none.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">derivedStreamAdapterType</span></td>
+        <td><p>An optional parameter specifying the type of the stream adapter used to compute the derived stream, null if there is none.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
-        <td><span class="parametername">streamAdapterArguments</span></td>
-        <td><p>The arguments used when constructing the stream adapter, null if there are none.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">derivedStreamAdapterArguments</span></td>
+        <td><p>An optional parameter specifying the arguments for constructing the stream adapter used to compute the derived stream, null if there are none.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
-        <td><span class="parametername">summarizerType</span></td>
-        <td><p>The type of the stream summarizer, null if there is none.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">visualizerStreamAdapterType</span></td>
+        <td><p>An optional parameter specifying the type of the stream adapter used to couple the stream to the visualizer, null if there is none.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
-        <td><span class="parametername">summarizerArguments</span></td>
-        <td><p>The arguments used when constructing the stream summarizer, null if there are none.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">visualizerStreamAdapterArguments</span></td>
+        <td><p>An optional parameter specifying the arguments for constructing the stream adapter used to couple the stream to the visualizer, null if there are none.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
-        <td><span class="parametername">isDerived</span></td>
-        <td><p>True if this stream binding represents a binding to a derived stream rather than to the stream itself, otherwise false.</p>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><span class="parametername">visualizerSummarizerType</span></td>
+        <td><p>An optional parameter specifying the type of the stream summarizer used by the visualizer, null if there is none.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><span class="parametername">visualizerSummarizerArguments</span></td>
+        <td><p>An optional parameter specifying the arguments used when constructing the stream summarizer used by the visualizer, null if there are none.</p>
 </td>
       </tr>
     </tbody>
@@ -202,17 +215,17 @@ public class StreamBinding</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L118">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L163">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_IsDerived_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.IsDerived*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_IsDerived" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.IsDerived">IsDerived</h4>
-  <div class="markdown level1 summary"><p>Gets a value indicating whether this stream binding represents a binding to a member of the data in the stream rather than to the stream itself.</p>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.DerivedStreamAdapter*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapter" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.DerivedStreamAdapter">DerivedStreamAdapter</h4>
+  <div class="markdown level1 summary"><p>Gets the derived stream adapter.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
-public bool IsDerived { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public IStreamAdapter DerivedStreamAdapter { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -224,24 +237,28 @@ public bool IsDerived { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapter_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The derived stream adapter is used to compute values for the derived
+stream based on the source stream.</p>
+</div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L82">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L206">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_NodePath_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.NodePath*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_NodePath" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.NodePath">NodePath</h4>
-  <div class="markdown level1 summary"><p>Gets the node path.</p>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapterArguments_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.DerivedStreamAdapterArguments*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapterArguments" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.DerivedStreamAdapterArguments">DerivedStreamAdapterArguments</h4>
+  <div class="markdown level1 summary"><p>Gets the derived stream adapter arguments.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[DataMember]
-public string NodePath { get; }</code></pre>
+public object[] DerivedStreamAdapterArguments { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -253,18 +270,76 @@ public string NodePath { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L180">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapterType_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.DerivedStreamAdapterType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_DerivedStreamAdapterType" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.DerivedStreamAdapterType">DerivedStreamAdapterType</h4>
+  <div class="markdown level1 summary"><p>Gets the derived stream adapter type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public Type DerivedStreamAdapterType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L106">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_IsBindingToDerivedStream_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.IsBindingToDerivedStream*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_IsBindingToDerivedStream" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.IsBindingToDerivedStream">IsBindingToDerivedStream</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the binding is to a derived stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public bool IsBindingToDerivedStream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L84">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamBinding_PartitionName_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.PartitionName*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_PartitionName" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.PartitionName">PartitionName</h4>
-  <div class="markdown level1 summary"><p>Gets partition name.</p>
+  <div class="markdown level1 summary"><p>Gets the partition name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -282,18 +357,47 @@ public string PartitionName { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L88">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L90">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_SourceStreamName_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.SourceStreamName*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_SourceStreamName" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.SourceStreamName">SourceStreamName</h4>
+  <div class="markdown level1 summary"><p>Gets the source stream name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public string SourceStreamName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L116">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamAdapter*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapter" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamAdapter">StreamAdapter</h4>
-  <div class="markdown level1 summary"><p>Gets stream adapter.</p>
+  <div class="markdown level1 summary"><p>Gets the end-to-end stream adapter.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -316,71 +420,17 @@ public IStreamAdapter StreamAdapter { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L112">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapterArguments_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamAdapterArguments*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapterArguments" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamAdapterArguments">StreamAdapterArguments</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the stream adapter arguments needed by the ctor of the stream adapter.</p>
+  <h5 id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapter_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The end-to-end stream adapter for the binding composes any existing
+derived stream adapter and visualizer adapter.</p>
 </div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
-public object[] StreamAdapterArguments { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L124">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapterType_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamAdapterType*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamAdapterType" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamAdapterType">StreamAdapterType</h4>
-  <div class="markdown level1 summary"><p>Gets stream adapter type.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
-public Type StreamAdapterType { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L100">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamName_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamName*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamName" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.StreamName">StreamName</h4>
-  <div class="markdown level1 summary"><p>Gets stream name.</p>
+  <div class="markdown level1 summary"><p>Gets the stream name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -398,18 +448,22 @@ public string StreamName { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 id="Microsoft_Psi_Visualization_Data_StreamBinding_StreamName_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In the case of derived streams, the stream name is different from the source
+stream name.</p>
+</div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L150">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L265">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamBinding_Summarizer_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.Summarizer*"></a>
   <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_Summarizer" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.Summarizer">Summarizer</h4>
-  <div class="markdown level1 summary"><p>Gets summarizer.</p>
+  <div class="markdown level1 summary"><p>Gets the summarizer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -434,17 +488,17 @@ public ISummarizer Summarizer { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L174">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L216">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_SummarizerArguments_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.SummarizerArguments*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_SummarizerArguments" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.SummarizerArguments">SummarizerArguments</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the summarizer arguments.</p>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapter_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerStreamAdapter*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapter" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerStreamAdapter">VisualizerStreamAdapter</h4>
+  <div class="markdown level1 summary"><p>Gets visualizer stream adapter.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[DataMember]
-public object[] SummarizerArguments { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public IStreamAdapter VisualizerStreamAdapter { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -456,24 +510,57 @@ public object[] SummarizerArguments { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamAdapter.html">IStreamAdapter</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapter_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The visualizer stream adapter is used to adapt the values of the stream
+to the visualizer used.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L259">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapterArguments_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerStreamAdapterArguments*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapterArguments" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerStreamAdapterArguments">VisualizerStreamAdapterArguments</h4>
+  <div class="markdown level1 summary"><p>Gets the visualizer stream adapter arguments.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public object[] VisualizerStreamAdapterArguments { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L180">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L233">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_SummarizerType_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.SummarizerType*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_SummarizerType" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.SummarizerType">SummarizerType</h4>
-  <div class="markdown level1 summary"><p>Gets summarizer type.</p>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapterType_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerStreamAdapterType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerStreamAdapterType" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerStreamAdapterType">VisualizerStreamAdapterType</h4>
+  <div class="markdown level1 summary"><p>Gets visualizer stream adapter type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">[IgnoreDataMember]
-public Type SummarizerType { get; }</code></pre>
+public Type VisualizerStreamAdapterType { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -485,7 +572,65 @@ public Type SummarizerType { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L315">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerSummarizerArguments_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerSummarizerArguments*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerSummarizerArguments" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerSummarizerArguments">VisualizerSummarizerArguments</h4>
+  <div class="markdown level1 summary"><p>Gets the summarizer arguments.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DataMember]
+public object[] VisualizerSummarizerArguments { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L289">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerSummarizerType_" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerSummarizerType*"></a>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamBinding_VisualizerSummarizerType" data-uid="Microsoft.Psi.Visualization.Data.StreamBinding.VisualizerSummarizerType">VisualizerSummarizerType</h4>
+  <div class="markdown level1 summary"><p>Gets the summarizer type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[IgnoreDataMember]
+public Type VisualizerSummarizerType { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -508,7 +653,7 @@ public Type SummarizerType { get; }</code></pre>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamBinding.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

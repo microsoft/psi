@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Metadata.html">Metadata</a></div>
     <div class="level2"><span class="xref">PsiStreamMetadata</span></div>
   </div>
@@ -105,22 +105,13 @@
       <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Id">Metadata.Id</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_TypeName">Metadata.TypeName</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerTypeName">Metadata.SerializerTypeName</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Version">Metadata.Version</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerVersion">Metadata.SerializerVersion</a>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializationSystemVersion">Metadata.SerializationSystemVersion</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Kind">Metadata.Kind</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_CustomFlags">Metadata.CustomFlags</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
@@ -133,7 +124,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L113">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_AverageMessageLatencyMs_" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageMessageLatencyMs*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_AverageMessageLatencyMs" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageMessageLatencyMs">AverageMessageLatencyMs</h4>
@@ -154,14 +145,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L110">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_AverageMessageSize_" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageMessageSize*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_AverageMessageSize" data-uid="Microsoft.Psi.PsiStreamMetadata.AverageMessageSize">AverageMessageSize</h4>
@@ -182,14 +173,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L68">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L76">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_ClosedTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.ClosedTime*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_ClosedTime" data-uid="Microsoft.Psi.PsiStreamMetadata.ClosedTime">ClosedTime</h4>
@@ -217,7 +208,35 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L77">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L66">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_CustomFlags_" data-uid="Microsoft.Psi.PsiStreamMetadata.CustomFlags*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_CustomFlags" data-uid="Microsoft.Psi.PsiStreamMetadata.CustomFlags">CustomFlags</h4>
+  <div class="markdown level1 summary"><p>Gets the custom flags implemented in derived types.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort CustomFlags { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L85">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_FirstMessageCreationTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageCreationTime*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_FirstMessageCreationTime" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageCreationTime">FirstMessageCreationTime</h4>
@@ -249,7 +268,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L83">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L91">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_FirstMessageOriginatingTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageOriginatingTime*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_FirstMessageOriginatingTime" data-uid="Microsoft.Psi.PsiStreamMetadata.FirstMessageOriginatingTime">FirstMessageOriginatingTime</h4>
@@ -281,7 +300,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L115">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L123">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_IsClosed_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsClosed*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_IsClosed" data-uid="Microsoft.Psi.PsiStreamMetadata.IsClosed">IsClosed</h4>
@@ -302,14 +321,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L133">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L141">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_IsIndexed_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsIndexed*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_IsIndexed" data-uid="Microsoft.Psi.PsiStreamMetadata.IsIndexed">IsIndexed</h4>
@@ -330,14 +349,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L124">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L132">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_IsPersisted_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPersisted*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_IsPersisted" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPersisted">IsPersisted</h4>
@@ -358,14 +377,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L142">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L150">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_IsPolymorphic_" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPolymorphic*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_IsPolymorphic" data-uid="Microsoft.Psi.PsiStreamMetadata.IsPolymorphic">IsPolymorphic</h4>
@@ -386,14 +405,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L80">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L88">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_LastMessageCreationTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageCreationTime*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_LastMessageCreationTime" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageCreationTime">LastMessageCreationTime</h4>
@@ -425,7 +444,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L86">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L94">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_LastMessageOriginatingTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageOriginatingTime*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_LastMessageOriginatingTime" data-uid="Microsoft.Psi.PsiStreamMetadata.LastMessageOriginatingTime">LastMessageOriginatingTime</h4>
@@ -457,7 +476,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L99">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_LatencyCumulativeSum_" data-uid="Microsoft.Psi.PsiStreamMetadata.LatencyCumulativeSum*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_LatencyCumulativeSum" data-uid="Microsoft.Psi.PsiStreamMetadata.LatencyCumulativeSum">LatencyCumulativeSum</h4>
@@ -478,14 +497,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L89">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L97">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_MessageCount_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCount*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageCount" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCount">MessageCount</h4>
@@ -506,14 +525,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L168">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L176">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCreationTimeInterval*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageCreationTimeInterval" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
@@ -542,7 +561,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L174">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L182">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageOriginatingTimeInterval*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
@@ -571,7 +590,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L94">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L102">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_MessageSizeCumulativeSum_" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageSizeCumulativeSum*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_MessageSizeCumulativeSum" data-uid="Microsoft.Psi.PsiStreamMetadata.MessageSizeCumulativeSum">MessageSizeCumulativeSum</h4>
@@ -592,14 +611,14 @@ If the stream contains no messages, an empty interval is returned.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L63">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_OpenedTime_" data-uid="Microsoft.Psi.PsiStreamMetadata.OpenedTime*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_OpenedTime" data-uid="Microsoft.Psi.PsiStreamMetadata.OpenedTime">OpenedTime</h4>
@@ -627,7 +646,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L110">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L118">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_RuntimeTypes_" data-uid="Microsoft.Psi.PsiStreamMetadata.RuntimeTypes*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_RuntimeTypes" data-uid="Microsoft.Psi.PsiStreamMetadata.RuntimeTypes">RuntimeTypes</h4>
@@ -648,14 +667,14 @@ If the stream contains no messages, an empty interval is returned.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="xref">Dictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_StoreName_" data-uid="Microsoft.Psi.PsiStreamMetadata.StoreName*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_StoreName" data-uid="Microsoft.Psi.PsiStreamMetadata.StoreName">StoreName</h4>
@@ -676,14 +695,14 @@ If the stream contains no messages, an empty interval is returned.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L82">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_StorePath_" data-uid="Microsoft.Psi.PsiStreamMetadata.StorePath*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_StorePath" data-uid="Microsoft.Psi.PsiStreamMetadata.StorePath">StorePath</h4>
@@ -704,14 +723,14 @@ If the stream contains no messages, an empty interval is returned.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L162">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L170">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_StreamTimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.StreamTimeInterval*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_StreamTimeInterval" data-uid="Microsoft.Psi.PsiStreamMetadata.StreamTimeInterval">StreamTimeInterval</h4>
@@ -739,7 +758,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L157">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L165">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_SupplementalMetadataTypeName_" data-uid="Microsoft.Psi.PsiStreamMetadata.SupplementalMetadataTypeName*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_SupplementalMetadataTypeName" data-uid="Microsoft.Psi.PsiStreamMetadata.SupplementalMetadataTypeName">SupplementalMetadataTypeName</h4>
@@ -760,7 +779,35 @@ If the stream contains no messages, an empty interval is returned.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStreamMetadata_TypeName_" data-uid="Microsoft.Psi.PsiStreamMetadata.TypeName*"></a>
+  <h4 id="Microsoft_Psi_PsiStreamMetadata_TypeName" data-uid="Microsoft.Psi.PsiStreamMetadata.TypeName">TypeName</h4>
+  <div class="markdown level1 summary"><p>Gets the name of the type of data contained in the stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string TypeName { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -769,7 +816,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L228">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L236">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata_" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata__1" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata``1">GetSupplementalMetadata&lt;T&gt;()</h4>
@@ -814,7 +861,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L208">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L216">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata_" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_GetSupplementalMetadata__1_Microsoft_Psi_Serialization_KnownSerializers_" data-uid="Microsoft.Psi.PsiStreamMetadata.GetSupplementalMetadata``1(Microsoft.Psi.Serialization.KnownSerializers)">GetSupplementalMetadata&lt;T&gt;(KnownSerializers)</h4>
@@ -877,7 +924,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L177">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L185">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_Update_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_Update_Microsoft_Psi_Envelope_System_Int32_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update(Microsoft.Psi.Envelope,System.Int32)">Update(Envelope, Int32)</h4>
@@ -905,7 +952,7 @@ If the stream contains no messages, an empty interval is returned.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">size</span></td>
         <td><p>The size.</p>
 </td>
@@ -914,7 +961,7 @@ If the stream contains no messages, an empty interval is returned.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L193">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L201">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStreamMetadata_Update_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update*"></a>
   <h4 id="Microsoft_Psi_PsiStreamMetadata_Update_Microsoft_Psi_TimeInterval_Microsoft_Psi_TimeInterval_" data-uid="Microsoft.Psi.PsiStreamMetadata.Update(Microsoft.Psi.TimeInterval,Microsoft.Psi.TimeInterval)">Update(TimeInterval, TimeInterval)</h4>
@@ -971,7 +1018,7 @@ If the stream contains no messages, an empty interval is returned.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L41" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/PsiStreamMetadata.cs/#L40" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

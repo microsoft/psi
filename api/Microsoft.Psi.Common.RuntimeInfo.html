@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Metadata.html">Metadata</a></div>
     <div class="level2"><span class="xref">RuntimeInfo</span></div>
   </div>
@@ -101,22 +101,13 @@
       <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Id">Metadata.Id</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_TypeName">Metadata.TypeName</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerTypeName">Metadata.SerializerTypeName</a>
-    </div>
-    <div>
       <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Version">Metadata.Version</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializerVersion">Metadata.SerializerVersion</a>
+      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_SerializationSystemVersion">Metadata.SerializationSystemVersion</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_Kind">Metadata.Kind</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Metadata.html#Microsoft_Psi_Metadata_CustomFlags">Metadata.CustomFlags</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.html">Microsoft.Psi.Common</a></h6>
@@ -131,40 +122,13 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/RuntimeInfo.cs/#L27">View Source</a>
   </span>
-  <h4 id="Microsoft_Psi_Common_RuntimeInfo_CmdLine" data-uid="Microsoft.Psi.Common.RuntimeInfo.CmdLine">CmdLine</h4>
-  <div class="markdown level1 summary"><p>Get the command line for the process.</p>
+  <h4 id="Microsoft_Psi_Common_RuntimeInfo_Latest" data-uid="Microsoft.Psi.Common.RuntimeInfo.Latest">Latest</h4>
+  <div class="markdown level1 summary"><p>Gets the latest (current) runtime info.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly string CmdLine</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/RuntimeInfo.cs/#L37">View Source</a>
-  </span>
-  <h4 id="Microsoft_Psi_Common_RuntimeInfo_Current" data-uid="Microsoft.Psi.Common.RuntimeInfo.Current">Current</h4>
-  <div class="markdown level1 summary"><p>Gets the current runtime info.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly RuntimeInfo Current</code></pre>
+    <pre><code class="lang-csharp hljs">public static readonly RuntimeInfo Latest</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,13 +149,13 @@
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/RuntimeInfo.cs/#L17">View Source</a>
   </span>
-  <h4 id="Microsoft_Psi_Common_RuntimeInfo_CurrentRuntimeVersion" data-uid="Microsoft.Psi.Common.RuntimeInfo.CurrentRuntimeVersion">CurrentRuntimeVersion</h4>
-  <div class="markdown level1 summary"><p>The current version of the serialization subsystem. This is the default.</p>
+  <h4 id="Microsoft_Psi_Common_RuntimeInfo_LatestSerializationSystemVersion" data-uid="Microsoft.Psi.Common.RuntimeInfo.LatestSerializationSystemVersion">LatestSerializationSystemVersion</h4>
+  <div class="markdown level1 summary"><p>The latest version of the serialization subsystem.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const int CurrentRuntimeVersion = null</code></pre>
+    <pre><code class="lang-csharp hljs">public const int LatestSerializationSystemVersion = null</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -203,7 +167,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -211,33 +175,6 @@
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/RuntimeInfo.cs/#L22">View Source</a>
-  </span>
-  <h4 id="Microsoft_Psi_Common_RuntimeInfo_MachineName" data-uid="Microsoft.Psi.Common.RuntimeInfo.MachineName">MachineName</h4>
-  <div class="markdown level1 summary"><p>Gets the NetBIOS name of the local machine.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static readonly string MachineName</code></pre>
-  </div>
-  <h5 class="fieldValue">Field Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/RuntimeInfo.cs/#L32">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Common_RuntimeInfo_RuntimeName" data-uid="Microsoft.Psi.Common.RuntimeInfo.RuntimeName">RuntimeName</h4>
   <div class="markdown level1 summary"><p>Gets name of the executing assembly.</p>

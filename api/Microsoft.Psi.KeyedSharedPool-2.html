@@ -89,7 +89,7 @@ interchangeable objects as well as a parameter to the object allocation function
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">KeyedSharedPool&lt;T, TKey&gt;</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
@@ -123,7 +123,7 @@ interchangeable objects as well as a parameter to the object allocation function
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L27">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L28">View Source</a>
   </span>
   <a id="Microsoft_Psi_KeyedSharedPool_2__ctor_" data-uid="Microsoft.Psi.KeyedSharedPool`2.#ctor*"></a>
   <h4 id="Microsoft_Psi_KeyedSharedPool_2__ctor_Func__1__0__System_Int32_" data-uid="Microsoft.Psi.KeyedSharedPool`2.#ctor(Func{`1,`0},System.Int32)">KeyedSharedPool(Func&lt;TKey, T&gt;, Int32)</h4>
@@ -151,7 +151,7 @@ interchangeable objects as well as a parameter to the object allocation function
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">initialSize</span></td>
         <td><p>Initial size of each pool.</p>
 </td>
@@ -162,7 +162,7 @@ interchangeable objects as well as a parameter to the object allocation function
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L44">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L65">View Source</a>
   </span>
   <a id="Microsoft_Psi_KeyedSharedPool_2_Dispose_" data-uid="Microsoft.Psi.KeyedSharedPool`2.Dispose*"></a>
   <h4 id="Microsoft_Psi_KeyedSharedPool_2_Dispose" data-uid="Microsoft.Psi.KeyedSharedPool`2.Dispose">Dispose()</h4>
@@ -174,7 +174,7 @@ interchangeable objects as well as a parameter to the object allocation function
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L38">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_KeyedSharedPool_2_GetOrCreate_" data-uid="Microsoft.Psi.KeyedSharedPool`2.GetOrCreate*"></a>
   <h4 id="Microsoft_Psi_KeyedSharedPool_2_GetOrCreate__1_" data-uid="Microsoft.Psi.KeyedSharedPool`2.GetOrCreate(`1)">GetOrCreate(TKey)</h4>
@@ -219,6 +219,68 @@ interchangeable objects as well as a parameter to the object allocation function
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L42">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_KeyedSharedPool_2_Reset_" data-uid="Microsoft.Psi.KeyedSharedPool`2.Reset*"></a>
+  <h4 id="Microsoft_Psi_KeyedSharedPool_2_Reset_System_Boolean_" data-uid="Microsoft.Psi.KeyedSharedPool`2.Reset(System.Boolean)">Reset(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Resets the keyed shared pool.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Reset(bool clearLiveObjects = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">clearLiveObjects</span></td>
+        <td><p>Indicates whether to clear any live objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_KeyedSharedPool_2_Reset_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the clearLiveObjects flag is false, an exception is thrown if a reset is attempted while the pool
+still contains live objects.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_KeyedSharedPool_2_ToString_" data-uid="Microsoft.Psi.KeyedSharedPool`2.ToString*"></a>
+  <h4 id="Microsoft_Psi_KeyedSharedPool_2_ToString" data-uid="Microsoft.Psi.KeyedSharedPool`2.ToString">ToString()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -237,7 +299,7 @@ interchangeable objects as well as a parameter to the object allocation function
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L15" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/KeyedSharedPool.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

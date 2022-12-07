@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Operators</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
@@ -101,10 +101,69 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L101">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ComputeVelocity_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ComputeVelocity*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ComputeVelocity_IProducer_CoordinateSystem__DeliveryPolicy_CoordinateSystem__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ComputeVelocity(IProducer{CoordinateSystem},DeliveryPolicy{CoordinateSystem},System.String)">ComputeVelocity(IProducer&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;CoordinateSystem&gt;, String)</h4>
+  <div class="markdown level1 summary"><p>Computes the velocity (with linear and angular components) of streaming <see cref="!:CoordinateSystem"></see> poses.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;CoordinateSystemVelocity3D&gt; ComputeVelocity(this IProducer&lt;CoordinateSystem&gt; source, DeliveryPolicy&lt;CoordinateSystem&gt; deliveryPolicy = null, string name = &quot;ComputeVelocity&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</td>
+        <td><span class="parametername">source</span></td>
+        <td><p>The source stream of <see cref="!:CoordinateSystem"></see> poses.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">DeliveryPolicy</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</td>
+        <td><span class="parametername">deliveryPolicy</span></td>
+        <td><p>An optional delivery policy parameter.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the stream operator.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CoordinateSystemVelocity3D.html">CoordinateSystemVelocity3D</a>&gt;</td>
+        <td><p>A stream containing the computed velocities.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Convert_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Convert*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Convert_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Microsoft_Psi_Imaging_PixelFormat_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Convert(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Microsoft.Psi.Imaging.PixelFormat,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Shared{Microsoft.Psi.Imaging.Image}},System.String)">Convert(IProducer&lt;ImageCameraView&gt;, PixelFormat, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Convert_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__PixelFormat_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_PixelFormat_Shared_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Convert(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},PixelFormat,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,PixelFormat,Shared{Image}},System.String)">Convert(IProducer&lt;ImageCameraView&gt;, PixelFormat, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts the stream of image camera views to a different pixel format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -129,7 +188,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
+        <td><span class="xref">PixelFormat</span></td>
         <td><span class="parametername">pixelFormat</span></td>
         <td><p>The pixel format to convert to.</p>
 </td>
@@ -141,13 +200,13 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <span class="xref">PixelFormat</span>, <span class="xref">Shared</span>&lt;<span class="xref">Image</span>&gt;&gt;</td>
         <td><span class="parametername">sharedImageAllocator</span></td>
         <td><p>Optional image allocator for creating new shared images.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -175,7 +234,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L202">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},System.String)">Decode(IProducer&lt;EncodedDepthImageCameraView&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},System.String)">Decode(IProducer&lt;EncodedDepthImageCameraView&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded depth image camera view using a specified image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -200,7 +259,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></td>
+        <td><span class="xref">IDepthImageFromStreamDecoder</span></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The depth image decoder to use.</p>
 </td>
@@ -212,7 +271,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -240,7 +299,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L104">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedDepthImageRectangle3D&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedDepthImageRectangle3D&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded depth image image rectangle using a specified depth image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -265,7 +324,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></td>
+        <td><span class="xref">IDepthImageFromStreamDecoder</span></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The depth image decoder to use.</p>
 </td>
@@ -277,7 +336,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -305,7 +364,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L175">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__Microsoft_Psi_Imaging_IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},Microsoft.Psi.Imaging.IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},System.String)">Decode(IProducer&lt;EncodedImageCameraView&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},System.String)">Decode(IProducer&lt;EncodedImageCameraView&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded image camera view using a specified image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -330,7 +389,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a></td>
+        <td><span class="xref">IImageFromStreamDecoder</span></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The image decoder to use.</p>
 </td>
@@ -342,7 +401,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -370,7 +429,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L78">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__Microsoft_Psi_Imaging_IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},Microsoft.Psi.Imaging.IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedImageRectangle3D&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedImageRectangle3D&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded image image rectangle using a specified image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -395,7 +454,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a></td>
+        <td><span class="xref">IImageFromStreamDecoder</span></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The image decoder to use.</p>
 </td>
@@ -407,7 +466,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -435,7 +494,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L144">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},Microsoft.Psi.Imaging.IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},System.String)">Encode(IProducer&lt;DepthImageCameraView&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},System.String)">Encode(IProducer&lt;DepthImageCameraView&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes a depth image camera view using a specified image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -460,7 +519,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></td>
+        <td><span class="xref">IDepthImageToStreamEncoder</span></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The image encoder to use.</p>
 </td>
@@ -472,7 +531,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -500,7 +559,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},Microsoft.Psi.Imaging.IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},System.String)">Encode(IProducer&lt;DepthImageRectangle3D&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},System.String)">Encode(IProducer&lt;DepthImageRectangle3D&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes a depth image rectangle using a specified depth image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -525,7 +584,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></td>
+        <td><span class="xref">IDepthImageToStreamEncoder</span></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The depth image encoder to use.</p>
 </td>
@@ -537,7 +596,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -565,7 +624,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L117">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Microsoft_Psi_Imaging_IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Microsoft.Psi.Imaging.IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.String)">Encode(IProducer&lt;ImageCameraView&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.String)">Encode(IProducer&lt;ImageCameraView&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image camera view using a specified image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -590,7 +649,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></td>
+        <td><span class="xref">IImageToStreamEncoder</span></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The image encoder to use.</p>
 </td>
@@ -602,7 +661,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -630,7 +689,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L22">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__Microsoft_Psi_Imaging_IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},Microsoft.Psi.Imaging.IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},System.String)">Encode(IProducer&lt;ImageRectangle3D&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},System.String)">Encode(IProducer&lt;ImageRectangle3D&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image rectangle using a specified image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -655,7 +714,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></td>
+        <td><span class="xref">IImageToStreamEncoder</span></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The image encoder to use.</p>
 </td>
@@ -667,7 +726,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -692,7 +751,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D_IProducer_CoordinateSystem__DeliveryPolicy_CoordinateSystem__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D(IProducer{CoordinateSystem},DeliveryPolicy{CoordinateSystem},System.String)">GetLinearVelocity3D(IProducer&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;CoordinateSystem&gt;, String)</h4>
@@ -726,7 +785,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -743,7 +802,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a>&gt;&gt;</td>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a>&gt;&gt;</td>
         <td><p>A stream containing the linear velocity of the specified point.</p>
 </td>
       </tr>
@@ -751,7 +810,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L70">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L73">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_GetLinearVelocity3D__1_IProducer___0__Func___0_System_Nullable_Point3D___DeliveryPolicy___0__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.GetLinearVelocity3D``1(IProducer{``0},Func{``0,System.Nullable{Point3D}},DeliveryPolicy{``0},System.String)">GetLinearVelocity3D&lt;T&gt;(IProducer&lt;T&gt;, Func&lt;T, Nullable&lt;Point3D&gt;&gt;, DeliveryPolicy&lt;T&gt;, String)</h4>
@@ -779,7 +838,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;T, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;T, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Point3D</span>&gt;&gt;</td>
         <td><span class="parametername">getLocation</span></td>
         <td><p>A function that specifies the location of the object.</p>
 </td>
@@ -791,7 +850,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -808,7 +867,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a>&gt;&gt;</td>
+        <td><span class="xref">IProducer</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.LinearVelocity3D.html">LinearVelocity3D</a>&gt;&gt;</td>
         <td><p>A stream containing the linear velocity of the specified point.</p>
 </td>
       </tr>
@@ -832,16 +891,81 @@
   </table>
   
   <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_InterpolateCoordinateSystems_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.InterpolateCoordinateSystems*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_InterpolateCoordinateSystems_CoordinateSystem_CoordinateSystem_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.InterpolateCoordinateSystems(CoordinateSystem,CoordinateSystem,System.Double)">InterpolateCoordinateSystems(CoordinateSystem, CoordinateSystem, Double)</h4>
+  <div class="markdown level1 summary"><p>Interpolates between two <see cref="!:CoordinateSystem"></see> poses, using spherical linear interpolation
+(<see cref="!:Quaternion.Slerp"></see>) for rotation, and linear interpolation for translation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CoordinateSystem InterpolateCoordinateSystems(CoordinateSystem cs1, CoordinateSystem cs2, double amount)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">cs1</span></td>
+        <td><p>The first <see cref="!:CoordinateSystem"></see>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">cs2</span></td>
+        <td><p>The second <see cref="!:CoordinateSystem"></see>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="parametername">amount</span></td>
+        <td><p>The amount to interpolate between the two coordinate systems.
+A value between 0 and 1 will return an interpolation between the two values.
+A value outside the 0-1 range will generate an extrapolated result.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><p>The interpolated <see cref="!:CoordinateSystem"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_InterpolateCoordinateSystems_CoordinateSystem_CoordinateSystem_System_Double__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Returns null if either input value is null.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L27">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Scale_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Scale*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Scale_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_Single_System_Single_Microsoft_Psi_Imaging_SamplingMode_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Scale(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.Single,System.Single,Microsoft.Psi.Imaging.SamplingMode,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Shared{Microsoft.Psi.Imaging.Image}},System.String)">Scale(IProducer&lt;ImageCameraView&gt;, Single, Single, SamplingMode, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Scale_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_Single_System_Single_SamplingMode_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_PixelFormat_Shared_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Scale(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.Single,System.Single,SamplingMode,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,PixelFormat,Shared{Image}},System.String)">Scale(IProducer&lt;ImageCameraView&gt;, Single, Single, SamplingMode, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts the stream of image camera views to a different pixel format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageCameraView&gt; Scale(this IProducer&lt;ImageCameraView&gt; source, float scaleX, float scaleY, SamplingMode samplingMode = SamplingMode.Bilinear, DeliveryPolicy&lt;ImageCameraView&gt; deliveryPolicy = null, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;Scale&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageCameraView&gt; Scale(this IProducer&lt;ImageCameraView&gt; source, float scaleX, float scaleY, SamplingMode samplingMode = null, DeliveryPolicy&lt;ImageCameraView&gt; deliveryPolicy = null, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;Scale&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -860,19 +984,19 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a></td>
         <td><span class="parametername">scaleX</span></td>
         <td><p>Scale factor for X.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a></td>
         <td><span class="parametername">scaleY</span></td>
         <td><p>Scale factor for Y.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Imaging.SamplingMode.html">SamplingMode</a></td>
+        <td><span class="xref">SamplingMode</span></td>
         <td><span class="parametername">samplingMode</span></td>
         <td><p>Method for sampling pixels when rescaling.</p>
 </td>
@@ -884,13 +1008,13 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <span class="xref">PixelFormat</span>, <span class="xref">Shared</span>&lt;<span class="xref">Image</span>&gt;&gt;</td>
         <td><span class="parametername">sharedImageAllocator</span></td>
         <td><p>Optional image allocator for creating new shared images.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the stream operator.</p>
 </td>
@@ -915,16 +1039,63 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L164">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ToCoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToCoordinateSystem*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToCoordinateSystem_Matrix4x4_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToCoordinateSystem(Matrix4x4)">ToCoordinateSystem(Matrix4x4)</h4>
+  <div class="markdown level1 summary"><p>Convert a <see cref="!:Matrix4x4"></see> to the equivalent <see cref="!:CoordinateSystem"></see>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static CoordinateSystem ToCoordinateSystem(this Matrix4x4 matrix)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix4x4</span></td>
+        <td><span class="parametername">matrix</span></td>
+        <td><p>The <see cref="!:Matrix4x4"></see> to convert.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><p>The equivalent <see cref="!:CoordinateSystem"></see>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L120">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_UnitVector3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix(UnitVector3D)">ToRotationMatrix(UnitVector3D)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_UnitVector3D_System_Nullable_UnitVector3D__" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix(UnitVector3D,System.Nullable{UnitVector3D})">ToRotationMatrix(UnitVector3D, Nullable&lt;UnitVector3D&gt;)</h4>
   <div class="markdown level1 summary"><p>Gets a rotation matrix corresponding to a forward vector.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Matrix&lt;double&gt; ToRotationMatrix(this UnitVector3D forward)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Matrix&lt;double&gt; ToRotationMatrix(this UnitVector3D forwardVector3D, UnitVector3D? worldUpVector3D = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -938,8 +1109,15 @@
     <tbody>
       <tr>
         <td><span class="xref">UnitVector3D</span></td>
-        <td><span class="parametername">forward</span></td>
+        <td><span class="parametername">forwardVector3D</span></td>
         <td><p>The specified forward vector.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">UnitVector3D</span>&gt;</td>
+        <td><span class="parametername">worldUpVector3D</span></td>
+        <td><p>Optional world &quot;up&quot; vector to use as reference when computing the rotation.
+Defaults to <see cref="!:UnitVector3D.ZAxis"></see>.</p>
 </td>
       </tr>
     </tbody>
@@ -954,27 +1132,27 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>The corresponding rotation matrix.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_UnitVector3D__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_UnitVector3D_System_Nullable_UnitVector3D___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>The X axis of the matrix will correspond to the specified forward vector.</p>
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L141">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_Vector3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToRotationMatrix(Vector3D)">ToRotationMatrix(Vector3D)</h4>
-  <div class="markdown level1 summary"><p>Gets a rotation matrix corresponding to a forward vector.</p>
+  <a id="Microsoft_Psi_Spatial_Euclidean_Operators_ToSystemNumericsMatrix_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToSystemNumericsMatrix*"></a>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToSystemNumericsMatrix_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.ToSystemNumericsMatrix(CoordinateSystem)">ToSystemNumericsMatrix(CoordinateSystem)</h4>
+  <div class="markdown level1 summary"><p>Convert a <see cref="!:CoordinateSystem"></see> to the equivalent <see cref="!:Matrix4x4"></see>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static Matrix&lt;double&gt; ToRotationMatrix(this Vector3D forward)</code></pre>
+    <pre><code class="lang-csharp hljs">public static Matrix4x4 ToSystemNumericsMatrix(this CoordinateSystem coordinateSystem)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -987,9 +1165,9 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Vector3D</span></td>
-        <td><span class="parametername">forward</span></td>
-        <td><p>The specified forward vector.</p>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">coordinateSystem</span></td>
+        <td><p>The <see cref="!:CoordinateSystem"></see> to convert.</p>
 </td>
       </tr>
     </tbody>
@@ -1004,18 +1182,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><p>The corresponding rotation matrix.</p>
+        <td><span class="xref">Matrix4x4</span></td>
+        <td><p>The equivalent <see cref="!:Matrix4x4"></see>.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Spatial_Euclidean_Operators_ToRotationMatrix_Vector3D__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The X axis of the matrix will correspond to the specified forward vector.</p>
-</div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_CoordinateSystem_Microsoft_Psi_Spatial_Euclidean_Box3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform(CoordinateSystem,Microsoft.Psi.Spatial.Euclidean.Box3D)">Transform(CoordinateSystem, Box3D)</h4>
@@ -1068,7 +1243,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L21">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L24">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_CoordinateSystem_Microsoft_Psi_Spatial_Euclidean_PointCloud3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform(CoordinateSystem,Microsoft.Psi.Spatial.Euclidean.PointCloud3D)">Transform(CoordinateSystem, PointCloud3D)</h4>
@@ -1121,7 +1296,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L33">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Transform_CoordinateSystem_Microsoft_Psi_Spatial_Euclidean_Rectangle3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Transform(CoordinateSystem,Microsoft.Psi.Spatial.Euclidean.Rectangle3D)">Transform(CoordinateSystem, Rectangle3D)</h4>
@@ -1180,7 +1355,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L13" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/Operators.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

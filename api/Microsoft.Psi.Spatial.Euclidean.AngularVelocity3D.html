@@ -83,8 +83,7 @@
   
   <h1 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D" class="text-break">Struct AngularVelocity3D
   </h1>
-  <div class="markdown level0 summary"><p>Represents an angular 3D velocity, starting from an original rotation,
-around a particular axis of rotation.</p>
+  <div class="markdown level0 summary"><p>Represents an angular velocity, rotating around a particular axis from a starting rotation.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div classs="implements">
@@ -101,16 +100,16 @@ around a particular axis of rotation.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L67">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_CoordinateSystem_CoordinateSystem_TimeSpan_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor(CoordinateSystem,CoordinateSystem,TimeSpan,System.Double)">AngularVelocity3D(CoordinateSystem, CoordinateSystem, TimeSpan, Double)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_Matrix_System_Double__Matrix_System_Double__TimeSpan_System_Nullable_Angle__" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor(Matrix{System.Double},Matrix{System.Double},TimeSpan,System.Nullable{Angle})">AngularVelocity3D(Matrix&lt;Double&gt;, Matrix&lt;Double&gt;, TimeSpan, Nullable&lt;Angle&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.html">AngularVelocity3D</a> struct.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AngularVelocity3D(CoordinateSystem originCoordinateSystem, CoordinateSystem destinationCoordinateSystem, TimeSpan time, double angleEpsilon = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public AngularVelocity3D(Matrix&lt;double&gt; originRotation, Matrix&lt;double&gt; destinationRotation, TimeSpan time, Angle? angleEpsilon = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -123,62 +122,13 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">CoordinateSystem</span></td>
-        <td><span class="parametername">originCoordinateSystem</span></td>
-        <td><p>The origin coordinate system.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">CoordinateSystem</span></td>
-        <td><span class="parametername">destinationCoordinateSystem</span></td>
-        <td><p>The destination coordinate system.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">TimeSpan</span></td>
-        <td><span class="parametername">time</span></td>
-        <td><p>The time it took to reach the destination coordinate system.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">angleEpsilon</span></td>
-        <td><p>An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L62">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_Matrix_System_Double__Matrix_System_Double__TimeSpan_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor(Matrix{System.Double},Matrix{System.Double},TimeSpan,System.Double)">AngularVelocity3D(Matrix&lt;Double&gt;, Matrix&lt;Double&gt;, TimeSpan, Double)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.html">AngularVelocity3D</a> struct.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AngularVelocity3D(Matrix&lt;double&gt; originRotation, Matrix&lt;double&gt; destinationRotation, TimeSpan time, double angleEpsilon = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">originRotation</span></td>
-        <td><p>The origin of rotation.</p>
+        <td><p>The starting rotation.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">destinationRotation</span></td>
         <td><p>A destination rotation.</p>
 </td>
@@ -190,25 +140,26 @@ around a particular axis of rotation.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">Angle</span>&gt;</td>
         <td><span class="parametername">angleEpsilon</span></td>
-        <td><p>An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</p>
+        <td><p>An optional angle epsilon parameter used to determine when
+the computed rotation matrix contains a zero-rotation (by default 0.01 degrees).</p>
 </td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L50">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_Matrix_System_Double__UnitVector3D_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor(Matrix{System.Double},UnitVector3D,System.Double)">AngularVelocity3D(Matrix&lt;Double&gt;, UnitVector3D, Double)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_Matrix_System_Double__UnitVector3D_Angle_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor(Matrix{System.Double},UnitVector3D,Angle)">AngularVelocity3D(Matrix&lt;Double&gt;, UnitVector3D, Angle)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.html">AngularVelocity3D</a> struct.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AngularVelocity3D(Matrix&lt;double&gt; originRotation, UnitVector3D axis, double speed)</code></pre>
+    <pre><code class="lang-csharp hljs">public AngularVelocity3D(Matrix&lt;double&gt; originRotation, UnitVector3D axisDirection, Angle magnitude)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -221,58 +172,21 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><span class="parametername">originRotation</span></td>
-        <td><p>The origin of rotation.</p>
+        <td><p>The starting rotation.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">UnitVector3D</span></td>
-        <td><span class="parametername">axis</span></td>
-        <td><p>The axis of velocity.</p>
+        <td><span class="parametername">axisDirection</span></td>
+        <td><p>The axis of the angular direction of motion.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">speed</span></td>
-        <td><p>The angular speed (radians/time).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L32">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D__ctor_Matrix_System_Double__Vector3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.#ctor(Matrix{System.Double},Vector3D)">AngularVelocity3D(Matrix&lt;Double&gt;, Vector3D)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.html">AngularVelocity3D</a> struct.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AngularVelocity3D(Matrix&lt;double&gt; originRotation, Vector3D axisAngleVector)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td><span class="parametername">originRotation</span></td>
-        <td><p>The origin of rotation.</p>
-</td>
-      </tr>
-      <tr>
-        <td><span class="xref">Vector3D</span></td>
-        <td><span class="parametername">axisAngleVector</span></td>
-        <td><p>The axis-angle representation of velocity.</p>
+        <td><span class="xref">Angle</span></td>
+        <td><span class="parametername">magnitude</span></td>
+        <td><p>The magnitude (per-second speed) of the velocity.</p>
 </td>
       </tr>
     </tbody>
@@ -281,15 +195,15 @@ around a particular axis of rotation.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L25">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L28">View Source</a>
   </span>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_AxisAngleVector" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.AxisAngleVector">AxisAngleVector</h4>
-  <div class="markdown level1 summary"><p>The axis of angular velocity, along with the radians/time speed (length of the vector).</p>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_AxisDirection" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.AxisDirection">AxisDirection</h4>
+  <div class="markdown level1 summary"><p>The axis of the angular direction of motion for this velocity.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Vector3D AxisAngleVector</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly UnitVector3D AxisDirection</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -301,17 +215,44 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Vector3D</span></td>
+        <td><span class="xref">UnitVector3D</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L20">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L33">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Magnitude" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Magnitude">Magnitude</h4>
+  <div class="markdown level1 summary"><p>Gets the magnitude (per-second speed) of the velocity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly Angle Magnitude</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Angle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L23">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_OriginRotation" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.OriginRotation">OriginRotation</h4>
-  <div class="markdown level1 summary"><p>The origin of rotation.</p>
+  <div class="markdown level1 summary"><p>The starting rotation of origin.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -328,37 +269,7 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="properties">Properties
-  </h3>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L97">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Speed_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Speed*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Speed" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Speed">Speed</h4>
-  <div class="markdown level1 summary"><p>Gets the magnitude of the velocity.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Speed { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -367,16 +278,16 @@ around a particular axis of rotation.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L130">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L116">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_ComputeDestination_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.ComputeDestination*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_ComputeDestination_System_Double_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.ComputeDestination(System.Double)">ComputeDestination(Double)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_ComputeDestination_TimeSpan_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.ComputeDestination(TimeSpan)">ComputeDestination(TimeSpan)</h4>
   <div class="markdown level1 summary"><p>Computes the destination rotation, if this velocity is followed for a given amount of time.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Matrix&lt;double&gt; ComputeDestination(double time)</code></pre>
+    <pre><code class="lang-csharp hljs">public Matrix&lt;double&gt; ComputeDestination(TimeSpan time)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -389,7 +300,7 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><span class="xref">TimeSpan</span></td>
         <td><span class="parametername">time</span></td>
         <td><p>The span of time to compute over.</p>
 </td>
@@ -406,18 +317,15 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
+        <td><span class="xref">Matrix</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</td>
         <td><p>The destination rotation.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_ComputeDestination_System_Double__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The unit of time should be the same as assumed for the axis-angle velocity vector (e.g., seconds).</p>
-</div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L116">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L100">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Equals*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Equals_Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Equals(Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D)">Equals(AngularVelocity3D)</h4>
@@ -454,14 +362,14 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L119">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L106">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Equals_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Equals*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Equals_System_Object_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.Equals(System.Object)">Equals(Object)</h4>
@@ -482,7 +390,7 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">obj</span></td>
         <td></td>
       </tr>
@@ -498,14 +406,14 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L122">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_GetHashCode_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.GetHashCode*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_GetHashCode" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.GetHashCode">GetHashCode()</h4>
@@ -525,7 +433,7 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -534,7 +442,7 @@ around a particular axis of rotation.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L105">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L89">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_op_Equality_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.op_Equality*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_op_Equality_Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.op_Equality(Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D,Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D)">Equality(AngularVelocity3D, AngularVelocity3D)</h4>
@@ -579,7 +487,7 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if the velocities are the same; otherwise false.</p>
 </td>
       </tr>
@@ -587,7 +495,7 @@ around a particular axis of rotation.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L113">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L97">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_op_Inequality_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.op_Inequality*"></a>
   <h4 id="Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_op_Inequality_Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_Microsoft_Psi_Spatial_Euclidean_AngularVelocity3D_" data-uid="Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D.op_Inequality(Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D,Microsoft.Psi.Spatial.Euclidean.AngularVelocity3D)">Inequality(AngularVelocity3D, AngularVelocity3D)</h4>
@@ -632,7 +540,7 @@ around a particular axis of rotation.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if the velocities are different; otherwise false.</p>
 </td>
       </tr>
@@ -660,7 +568,7 @@ around a particular axis of rotation.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L15" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/AngularVelocity3D.cs/#L17" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

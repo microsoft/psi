@@ -1,0 +1,690 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class MeshRenderer
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class MeshRenderer
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer">
+  
+  
+  <h1 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer" class="text-break">Class MeshRenderer
+  </h1>
+  <div class="markdown level0 summary"><p>Component that visually renders a single <see cref="!:global::StereoKit.Mesh"></see>.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitComponent.html">StereoKitComponent</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitRenderer.html">StereoKitRenderer</a></div>
+    <div class="level3"><span class="xref">MeshRenderer</span></div>
+      <div class="level4"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.Box3DRenderer.html">Box3DRenderer</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.Mesh3DRenderer.html">Mesh3DRenderer</a></div>
+      <div class="level4"><a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.Rectangle3DRenderer.html">Rectangle3DRenderer</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitRenderer.html#Microsoft_Psi_MixedReality_StereoKit_StereoKitRenderer_Step">StereoKitRenderer.Step()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKit_StereoKitComponent_Enabled">StereoKitComponent.Enabled</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKit_StereoKitComponent_Initialize">StereoKitComponent.Initialize()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKit_StereoKitComponent_Shutdown">StereoKitComponent.Shutdown()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitComponent.html#Microsoft_Psi_MixedReality_StereoKit_StereoKitComponent_ToString">StereoKitComponent.ToString()</a>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.html">Microsoft.Psi.MixedReality.StereoKit</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.dll</h6>
+  <h5 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class MeshRenderer : StereoKitRenderer</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer__ctor_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer__ctor_Pipeline_Mesh_CoordinateSystem_Vector3D_System_Drawing_Color_System_Boolean_System_Boolean_System_String_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.#ctor(Pipeline,Mesh,CoordinateSystem,Vector3D,System.Drawing.Color,System.Boolean,System.Boolean,System.String)">MeshRenderer(Pipeline, Mesh, CoordinateSystem, Vector3D, System.Drawing.Color, Boolean, Boolean, String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.html">MeshRenderer</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MeshRenderer(Pipeline pipeline, Mesh mesh, CoordinateSystem pose, Vector3D scale, System.Drawing.Color color, bool wireframe = false, bool visible = true, string name = &quot;MeshRenderer&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Pipeline</span></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Mesh</span></td>
+        <td><span class="parametername">mesh</span></td>
+        <td><p>The mesh to render.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">CoordinateSystem</span></td>
+        <td><span class="parametername">pose</span></td>
+        <td><p>Geometry pose.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Vector3D</span></td>
+        <td><span class="parametername">scale</span></td>
+        <td><p>Geometry scale.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a></td>
+        <td><span class="parametername">color</span></td>
+        <td><p>Material color.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">wireframe</span></td>
+        <td><p>Whether to render mesh as wireframe only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">visible</span></td>
+        <td><p>Visibility.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L61">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer__ctor_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer__ctor_Pipeline_Mesh_System_Drawing_Color_System_Boolean_System_Boolean_System_String_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.#ctor(Pipeline,Mesh,System.Drawing.Color,System.Boolean,System.Boolean,System.String)">MeshRenderer(Pipeline, Mesh, System.Drawing.Color, Boolean, Boolean, String)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.html">MeshRenderer</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MeshRenderer(Pipeline pipeline, Mesh mesh, System.Drawing.Color color, bool wireframe = false, bool visible = true, string name = &quot;MeshRenderer&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Pipeline</span></td>
+        <td><span class="parametername">pipeline</span></td>
+        <td><p>The pipeline to add the component to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Mesh</span></td>
+        <td><span class="parametername">mesh</span></td>
+        <td><p>The mesh to render.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">Color</a></td>
+        <td><span class="parametername">color</span></td>
+        <td><p>Material color.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">wireframe</span></td>
+        <td><p>Whether to render mesh as wireframe only.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">visible</span></td>
+        <td><p>Visibility.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>An optional name for the component.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L84">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Color_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Color*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Color" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Color">Color</h4>
+  <div class="markdown level1 summary"><p>Gets receiver for material color.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;System.Drawing.Color&gt; Color { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Receiver</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.drawing.color">System.Drawing.Color</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L114">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_IsVisible_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.IsVisible*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_IsVisible" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.IsVisible">IsVisible</h4>
+  <div class="markdown level1 summary"><p>Gets a value indicating whether the renderer should be currently visibile or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected bool IsVisible { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L109">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Material_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Material*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Material" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Material">Material</h4>
+  <div class="markdown level1 summary"><p>Gets the material used for rendering the mesh.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Material Material { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Material</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L94">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Mesh_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Mesh*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Mesh" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Mesh">Mesh</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the mesh to be rendered.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Mesh Mesh { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Mesh</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L104">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_MeshTransform_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.MeshTransform*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_MeshTransform" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.MeshTransform">MeshTransform</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the transform for drawing the mesh (relative to the overall render transform).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Matrix MeshTransform { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L69">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Pose_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Pose*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Pose" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Pose">Pose</h4>
+  <div class="markdown level1 summary"><p>Gets receiver for geometry pose (in \psi basis).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;CoordinateSystem&gt; Pose { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Receiver</span>&lt;<span class="xref">CoordinateSystem</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L99">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_RenderTransform_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.RenderTransform*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_RenderTransform" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.RenderTransform">RenderTransform</h4>
+  <div class="markdown level1 summary"><p>Gets the overall render transform (scale * pose).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected Matrix RenderTransform { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Matrix</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Scale_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Scale*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Scale" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Scale">Scale</h4>
+  <div class="markdown level1 summary"><p>Gets receiver for geometry scale (in \psi basis).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;Vector3D&gt; Scale { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Receiver</span>&lt;<span class="xref">Vector3D</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L79">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Visible_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Visible*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Visible" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Visible">Visible</h4>
+  <div class="markdown level1 summary"><p>Gets receiver for visibility.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;bool&gt; Visible { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Receiver</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Wireframe_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Wireframe*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Wireframe" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Wireframe">Wireframe</h4>
+  <div class="markdown level1 summary"><p>Gets receiver for wireframe indicator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Receiver&lt;bool&gt; Wireframe { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Receiver</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L121">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_CreateMeshFromEmbeddedResource_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.CreateMeshFromEmbeddedResource*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_CreateMeshFromEmbeddedResource_System_String_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.CreateMeshFromEmbeddedResource(System.String)">CreateMeshFromEmbeddedResource(String)</h4>
+  <div class="markdown level1 summary"><p>Get a mesh from an embedded resource asset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Mesh CreateMeshFromEmbeddedResource(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Name of resource.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Mesh</span></td>
+        <td><p>StereoKit Mesh.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L145">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_ReceiveVisible_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.ReceiveVisible*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_ReceiveVisible_System_Boolean_Envelope_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.ReceiveVisible(System.Boolean,Envelope)">ReceiveVisible(Boolean, Envelope)</h4>
+  <div class="markdown level1 summary"><p>Update visibility.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void ReceiveVisible(bool visible, Envelope envelope)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">visible</span></td>
+        <td><p>Desired visibility.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">Envelope</span></td>
+        <td><span class="parametername">envelope</span></td>
+        <td><p>Message envelope.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L130">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Render_" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Render*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_StereoKit_MeshRenderer_Render" data-uid="Microsoft.Psi.MixedReality.StereoKit.MeshRenderer.Render">Render()</h4>
+  <div class="markdown level1 summary"><p>All rendering/drawing that needs to happen on each frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Render()</code></pre>
+  </div>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.MixedReality.StereoKit.StereoKitRenderer.html#Microsoft_Psi_MixedReality_StereoKit_StereoKitRenderer_Render">StereoKitRenderer.Render()</a></div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality/StereoKit/Renderers/MeshRenderer.cs/#L15" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

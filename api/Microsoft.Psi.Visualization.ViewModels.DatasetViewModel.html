@@ -88,14 +88,9 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
-    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
-    <div class="level3"><span class="xref">DatasetViewModel</span></div>
-  </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><span class="xref">INotifyPropertyChanging</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level2"><span class="xref">DatasetViewModel</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -105,27 +100,12 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DatasetViewModel : ObservableTreeNodeObject, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class DatasetViewModel : ObservableTreeNodeObject</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -147,7 +127,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/DatasetViewModel.cs/#L333">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_Microsoft_Psi_Data_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor(Microsoft.Psi.Data.Dataset)">DatasetViewModel(Dataset)</h4>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_DatasetViewModel__ctor_Dataset_" data-uid="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.#ctor(Dataset)">DatasetViewModel(Dataset)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -166,7 +146,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a></td>
+        <td><span class="xref">Dataset</span></td>
         <td><span class="parametername">dataset</span></td>
         <td><p>The dataset for which to create the view model.</p>
 </td>
@@ -289,7 +269,7 @@ public string AuxiliaryInfo { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -318,7 +298,7 @@ public RelayCommand&lt;Grid&gt; ContextMenuOpeningCommand { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.controls.grid">Grid</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.grid">Grid</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -406,7 +386,7 @@ public Dataset Dataset { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a></td>
+        <td><span class="xref">Dataset</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -434,7 +414,7 @@ public Dataset Dataset { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -462,7 +442,7 @@ public Dataset Dataset { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -520,7 +500,7 @@ public ReadOnlyObservableCollection&lt;SessionViewModel&gt; SessionViewModels { 
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.readonlyobservablecollection-1">ReadOnlyObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.readonlyobservablecollection-1">ReadOnlyObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.SessionViewModel.html">SessionViewModel</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -669,7 +649,7 @@ public TimeSpan TotalDuration { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.timespan">TimeSpan</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -700,13 +680,13 @@ public TimeSpan TotalDuration { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
         <td><p>The name of the file that contains the dataset to be loaded.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">autoSave</span></td>
         <td><p>A value to indicate whether to enable the autosave feature.</p>
 </td>
@@ -729,10 +709,6 @@ public TimeSpan TotalDuration { get; }</code></pre>
       </tr>
     </tbody>
   </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <span class="xref">INotifyPropertyChanging</span>
-  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>

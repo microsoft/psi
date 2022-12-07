@@ -88,16 +88,16 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer</a>&lt;<span class="xref">AudioBuffer</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
     <div class="level2"><span class="xref">SystemVoiceActivityDetector</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
-    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>&gt;</div>
-    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
+    <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;<span class="xref">AudioBuffer</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;<span class="xref">AudioBuffer</span>&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>&gt;</div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -122,7 +122,7 @@
   </div>
   <h5 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This component monitors an input audio stream and outputs a boolean flag for each input message indicating
-whether or not voice activity was present in the corresponding <a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>. It relies on the
+whether or not voice activity was present in the corresponding <see cref="!:AudioBuffer"></see>. It relies on the
 System.Speech.Recognition.SpeechRecognitionEngine in .NET and uses its AudioStateChanged event to estimate
 when speech activity begins and ends. It estimates the originating times of these events using the current
 audio position of the underlying speech recognition engine to obtain an estimate of the time the event occurred.
@@ -167,7 +167,7 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the component.</p>
 </td>
@@ -204,13 +204,13 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">configurationFilename</span></td>
         <td><p>The component configuration file.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the component.</p>
 </td>
@@ -237,7 +237,7 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech.Windows/SystemVoiceActivityDetector.cs/#L151">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Receive_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Receive*"></a>
-  <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Receive_Microsoft_Psi_Audio_AudioBuffer_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Receive(Microsoft.Psi.Audio.AudioBuffer,Microsoft.Psi.Envelope)">Receive(AudioBuffer, Envelope)</h4>
+  <h4 id="Microsoft_Psi_Speech_SystemVoiceActivityDetector_Receive_AudioBuffer_Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Speech.SystemVoiceActivityDetector.Receive(AudioBuffer,Microsoft.Psi.Envelope)">Receive(AudioBuffer, Envelope)</h4>
   <div class="markdown level1 summary"><p>Receiver for audio data.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -256,7 +256,7 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a></td>
+        <td><span class="xref">AudioBuffer</span></td>
         <td><span class="parametername">audioBuffer</span></td>
         <td><p>A buffer containing the next chunk of audio data.</p>
 </td>
@@ -270,7 +270,7 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Components.ConsumerProducer&lt;Microsoft.Psi.Audio.AudioBuffer, System.Boolean&gt;.Receive(Microsoft.Psi.Audio.AudioBuffer, Microsoft.Psi.Envelope)</span></div>
+  <div><span class="xref">Microsoft.Psi.Components.ConsumerProducer&lt;AudioBuffer, System.Boolean&gt;.Receive(AudioBuffer, Microsoft.Psi.Envelope)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer&lt;TIn, TOut&gt;</a>
@@ -282,7 +282,7 @@ and VoiceActivityEndOffsetMs configuration parameters, which are added to the in
       <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
   </div>
   <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

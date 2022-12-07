@@ -1,0 +1,911 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PsiStudioSettingsViewModel
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PsiStudioSettingsViewModel
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel">
+  
+  
+  <h1 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel" class="text-break">Class PsiStudioSettingsViewModel
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a view model for Psi Studio settings.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">PsiStudioSettingsViewModel</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifydataerrorinfo">INotifyDataErrorInfo</a></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.PsiStudio.html">Microsoft.Psi.PsiStudio</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.PsiStudio.dll</h6>
+  <h5 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class PsiStudioSettingsViewModel : ObservableObject, INotifyDataErrorInfo</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L27">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel__ctor_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.#ctor*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel__ctor_Microsoft_Psi_PsiStudio_PsiStudioSettings_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.#ctor(Microsoft.Psi.PsiStudio.PsiStudioSettings)">PsiStudioSettingsViewModel(PsiStudioSettings)</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.html">PsiStudioSettingsViewModel</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public PsiStudioSettingsViewModel(PsiStudioSettings psiStudioSettings)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStudio.PsiStudioSettings.html">PsiStudioSettings</a></td>
+        <td><span class="parametername">psiStudioSettings</span></td>
+        <td><p>The current psi studio settings.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L110">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_AdditionalAssembliesAsStringList_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.AdditionalAssembliesAsStringList*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_AdditionalAssembliesAsStringList" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.AdditionalAssembliesAsStringList">AdditionalAssembliesAsStringList</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the list of additional assemblies to load.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; AdditionalAssembliesAsStringList { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L158">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_AutoLoadMostRecentlyUsedDatasetOnStartUp_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.AutoLoadMostRecentlyUsedDatasetOnStartUp*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_AutoLoadMostRecentlyUsedDatasetOnStartUp" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.AutoLoadMostRecentlyUsedDatasetOnStartUp">AutoLoadMostRecentlyUsedDatasetOnStartUp</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to automatically load the most recently used dataset upon startup.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AutoLoadMostRecentlyUsedDatasetOnStartUp { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L150">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_AutoSaveDatasets_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.AutoSaveDatasets*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_AutoSaveDatasets" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.AutoSaveDatasets">AutoSaveDatasets</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to set any open dataset object into autosave mode.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool AutoSaveDatasets { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L104">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_DatasetsTabHeight_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.DatasetsTabHeight*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_DatasetsTabHeight" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.DatasetsTabHeight">DatasetsTabHeight</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the height of the datasets tab.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string DatasetsTabHeight { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L208">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_Error_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.Error*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_Error" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.Error">Error</h4>
+  <div class="markdown level1 summary"><p>Gets the validation errors for this object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string Error { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L235">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_HasErrors_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.HasErrors*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_HasErrors" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.HasErrors">HasErrors</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public bool HasErrors { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L142">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_MostRecentlyUsedDatasetFilenames_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.MostRecentlyUsedDatasetFilenames*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_MostRecentlyUsedDatasetFilenames" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.MostRecentlyUsedDatasetFilenames">MostRecentlyUsedDatasetFilenames</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the list of most recently used dataset filenames.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; MostRecentlyUsedDatasetFilenames { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L134">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_MostRecentlyUsedLayoutName_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.MostRecentlyUsedLayoutName*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_MostRecentlyUsedLayoutName" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.MostRecentlyUsedLayoutName">MostRecentlyUsedLayoutName</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the name of the most recently used layout.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string MostRecentlyUsedLayoutName { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L98">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_PropertiesPanelWidth_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.PropertiesPanelWidth*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_PropertiesPanelWidth" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.PropertiesPanelWidth">PropertiesPanelWidth</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the width of the properties panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string PropertiesPanelWidth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L166">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowAbsoluteTiming_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowAbsoluteTiming*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowAbsoluteTiming" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowAbsoluteTiming">ShowAbsoluteTiming</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the show absolute timing button should be pressed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowAbsoluteTiming { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L200">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowErrorLogOnLoadingAdditionalAssemblies_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowErrorLogOnLoadingAdditionalAssemblies*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowErrorLogOnLoadingAdditionalAssemblies" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowErrorLogOnLoadingAdditionalAssemblies">ShowErrorLogOnLoadingAdditionalAssemblies</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the error log when errors occur
+while loading third party assemblies or code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowErrorLogOnLoadingAdditionalAssemblies { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L191">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowSecurityWarningOnLoadingThirdPartyCode_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowSecurityWarningOnLoadingThirdPartyCode*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowSecurityWarningOnLoadingThirdPartyCode" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowSecurityWarningOnLoadingThirdPartyCode">ShowSecurityWarningOnLoadingThirdPartyCode</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to skip the security warning when loading
+third party assemblies or code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowSecurityWarningOnLoadingThirdPartyCode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L182">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowTimingRelativeToSelectionStart_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowTimingRelativeToSelectionStart*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowTimingRelativeToSelectionStart" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowTimingRelativeToSelectionStart">ShowTimingRelativeToSelectionStart</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the show timing relative to selection start button should be pressed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowTimingRelativeToSelectionStart { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L174">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowTimingRelativeToSessionStart_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowTimingRelativeToSessionStart*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ShowTimingRelativeToSessionStart" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ShowTimingRelativeToSessionStart">ShowTimingRelativeToSessionStart</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the show timing relative to session start button should be pressed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowTimingRelativeToSessionStart { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L92">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_TreeViewPanelWidth_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.TreeViewPanelWidth*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_TreeViewPanelWidth" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.TreeViewPanelWidth">TreeViewPanelWidth</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the width of the tree views panel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string TreeViewPanelWidth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L118">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_TypeMappingsAsStringList_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.TypeMappingsAsStringList*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_TypeMappingsAsStringList" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.TypeMappingsAsStringList">TypeMappingsAsStringList</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the string representation of the type mappings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; TypeMappingsAsStringList { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L80">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowHeight_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowHeight*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowHeight" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowHeight">WindowHeight</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the main window height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string WindowHeight { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L62">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowPositionLeft_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowPositionLeft*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowPositionLeft" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowPositionLeft">WindowPositionLeft</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the main window left position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string WindowPositionLeft { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L68">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowPositionTop_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowPositionTop*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowPositionTop" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowPositionTop">WindowPositionTop</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the main window top position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string WindowPositionTop { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L86">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowState_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowState*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowState" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowState">WindowState</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the window state (normal, minimized, maximized).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string WindowState { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowWidth_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowWidth*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_WindowWidth" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.WindowWidth">WindowWidth</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the main window width.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public string WindowWidth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L239">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_GetErrors_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.GetErrors*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_GetErrors_System_String_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.GetErrors(System.String)">GetErrors(String)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable GetErrors(string propertyName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">propertyName</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.ienumerable">IEnumerable</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L249">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_UpdateSettings_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.UpdateSettings*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_UpdateSettings_Microsoft_Psi_PsiStudio_PsiStudioSettings_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.UpdateSettings(Microsoft.Psi.PsiStudio.PsiStudioSettings)">UpdateSettings(PsiStudioSettings)</h4>
+  <div class="markdown level1 summary"><p>Updates the supplied PsiStudio settings object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool UpdateSettings(PsiStudioSettings settings)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.PsiStudio.PsiStudioSettings.html">PsiStudioSettings</a></td>
+        <td><span class="parametername">settings</span></td>
+        <td><p>The PsiStudio settings object to update.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><p>True if the configuration update requires a PsiStudio restart.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L57">View Source</a>
+  </span>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettingsViewModel_ErrorsChanged" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettingsViewModel.ErrorsChanged">ErrorsChanged</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;DataErrorsChangedEventArgs&gt; ErrorsChanged</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.dataerrorschangedeventargs">DataErrorsChangedEventArgs</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifydataerrorinfo">System.ComponentModel.INotifyDataErrorInfo</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettingsViewModel.cs/#L18" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

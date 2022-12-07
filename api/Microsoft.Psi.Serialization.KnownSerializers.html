@@ -93,7 +93,7 @@ compatible with the store being open.</p>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">KnownSerializers</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Serialization.html">Microsoft.Psi.Serialization</a></h6>
@@ -124,7 +124,7 @@ and can only instantiate the correct deserializer if one of the following is tru
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L140">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L143">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers__ctor_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.#ctor*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers__ctor_Microsoft_Psi_Common_RuntimeInfo_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.#ctor(Microsoft.Psi.Common.RuntimeInfo)">KnownSerializers(RuntimeInfo)</h4>
@@ -133,7 +133,7 @@ and can only instantiate the correct deserializer if one of the following is tru
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public KnownSerializers(RuntimeInfo runtimeVersion = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public KnownSerializers(RuntimeInfo runtimeInfo = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,7 +147,7 @@ and can only instantiate the correct deserializer if one of the following is tru
     <tbody>
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></td>
-        <td><span class="parametername">runtimeVersion</span></td>
+        <td><span class="parametername">runtimeInfo</span></td>
         <td><p>The version of the runtime to be compatible with. This dictates the behavior of automatic serialization.</p>
 </td>
       </tr>
@@ -187,16 +187,16 @@ Custom serializers can be added directly to this set.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L195">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L198">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RuntimeVersion*"></a>
-  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_RuntimeVersion" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RuntimeVersion">RuntimeVersion</h4>
-  <div class="markdown level1 summary"><p>Gets the version of the serialization subsystem this serializer set is compatible with.</p>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_RuntimeInfo_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RuntimeInfo*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_RuntimeInfo" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RuntimeInfo">RuntimeInfo</h4>
+  <div class="markdown level1 summary"><p>Gets the runtime info, including the version of the serialization subsystem.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RuntimeInfo RuntimeVersion { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public RuntimeInfo RuntimeInfo { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -215,7 +215,7 @@ Custom serializers can be added directly to this set.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L200">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L203">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_Schemas_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Schemas*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Schemas" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Schemas">Schemas</h4>
@@ -236,7 +236,35 @@ Custom serializers can be added directly to this set.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IDictionary</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a>&gt;</td>
+        <td><span class="xref">IDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="Microsoft.Psi.Serialization.TypeSchema.html">TypeSchema</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L208">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_TypeNameSynonyms_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.TypeNameSynonyms*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_TypeNameSynonyms" data-uid="Microsoft.Psi.Serialization.KnownSerializers.TypeNameSynonyms">TypeNameSynonyms</h4>
+  <div class="markdown level1 summary"><p>Gets the set of type name synonyms.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IDictionary&lt;string, string&gt; TypeNameSynonyms { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IDictionary</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -245,7 +273,56 @@ Custom serializers can be added directly to this set.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L218">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L323">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_GetHandler_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.GetHandler*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_GetHandler__1" data-uid="Microsoft.Psi.Serialization.KnownSerializers.GetHandler``1">GetHandler&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Gets the serialization handler for a specified type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SerializationHandler&lt;T&gt; GetHandler&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Serialization.SerializationHandler-1.html">SerializationHandler</a>&lt;T&gt;</td>
+        <td><p>The serialization handler for a specified type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type to get the serialization handler for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Serialization_KnownSerializers_GetHandler__1_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is the slow-ish path, called at codegen time, from custom serializers that want to cache a handler
+and for polymorphic fields, the first time the id is encountered.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L226">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register_Type_System_String_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register(Type,System.String,Microsoft.Psi.Serialization.CloningFlags)">Register(Type, String, CloningFlags)</h4>
@@ -274,7 +351,7 @@ Use this overload to deserialize data persisted before a type name change.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">contractName</span></td>
         <td><p>The name to remap. This can be a full type name or a contract name.</p>
 </td>
@@ -289,7 +366,7 @@ Use this overload to deserialize data persisted before a type name change.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L251">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L259">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__1_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``1(Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T&gt;(CloningFlags)</h4>
@@ -342,7 +419,7 @@ Pre-registering the type allows the runtime to find it in such circumstances.</p
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L209">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L217">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__1_System_String_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``1(System.String,Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T&gt;(String, CloningFlags)</h4>
@@ -365,7 +442,7 @@ Use this overload to deserialize data persisted before a type name change.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">contractName</span></td>
         <td><p>The name to remap. This can be a full type name or a contract name.</p>
 </td>
@@ -396,7 +473,7 @@ Use this overload to deserialize data persisted before a type name change.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L262">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L270">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__2_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``2(Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T, TSerializer&gt;(CloningFlags)</h4>
@@ -450,7 +527,7 @@ Use this overload to register a custom implementation of <a class="xref" href="M
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L275">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L283">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_Register_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_Register__2_System_String_Microsoft_Psi_Serialization_CloningFlags_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.Register``2(System.String,Microsoft.Psi.Serialization.CloningFlags)">Register&lt;T, TSerializer&gt;(String, CloningFlags)</h4>
@@ -474,7 +551,7 @@ Use this overload to deserialize data persisted before a type name change.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">contractName</span></td>
         <td><p>The previous contract name of type T.</p>
 </td>
@@ -510,7 +587,44 @@ Use this overload to deserialize data persisted before a type name change.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L288">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L309">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Serialization_KnownSerializers_RegisterDynamicTypeSchemaNameSynonym_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RegisterDynamicTypeSchemaNameSynonym*"></a>
+  <h4 id="Microsoft_Psi_Serialization_KnownSerializers_RegisterDynamicTypeSchemaNameSynonym_System_String_System_String_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RegisterDynamicTypeSchemaNameSynonym(System.String,System.String)">RegisterDynamicTypeSchemaNameSynonym(String, String)</h4>
+  <div class="markdown level1 summary"><p>Register synonym for fully-qualified type name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RegisterDynamicTypeSchemaNameSynonym(string synonym, string fullyQualifiedTypeName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">synonym</span></td>
+        <td><p>Synonym used in type-schema info.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">fullyQualifiedTypeName</span></td>
+        <td><p>Fully-qualified .NET type name.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L296">View Source</a>
   </span>
   <a id="Microsoft_Psi_Serialization_KnownSerializers_RegisterGenericSerializer_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RegisterGenericSerializer*"></a>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_RegisterGenericSerializer_Type_" data-uid="Microsoft.Psi.Serialization.KnownSerializers.RegisterGenericSerializer(Type)">RegisterGenericSerializer(Type)</h4>
@@ -544,7 +658,7 @@ The generic serializer must implement <a class="xref" href="Microsoft.Psi.Serial
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L190">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Serialization/KnownSerializers.cs/#L193">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Serialization_KnownSerializers_SchemaAdded" data-uid="Microsoft.Psi.Serialization.KnownSerializers.SchemaAdded">SchemaAdded</h4>
   <div class="markdown level1 summary"><p>Event which fires when each new type schema has been added.</p>

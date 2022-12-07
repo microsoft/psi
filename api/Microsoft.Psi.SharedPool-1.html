@@ -89,7 +89,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">SharedPool&lt;T&gt;</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.html">Microsoft.Psi</a></h6>
@@ -146,7 +146,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">initialSize</span></td>
         <td><p>The initial size of the pool. The size will be adjusted up as needed, but never down.</p>
 </td>
@@ -167,7 +167,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
   </span>
   <a id="Microsoft_Psi_SharedPool_1_AvailableCount_" data-uid="Microsoft.Psi.SharedPool`1.AvailableCount*"></a>
   <h4 id="Microsoft_Psi_SharedPool_1_AvailableCount" data-uid="Microsoft.Psi.SharedPool`1.AvailableCount">AvailableCount</h4>
-  <div class="markdown level1 summary"><p>Gets the number of objects available in the pool.</p>
+  <div class="markdown level1 summary"><p>Gets the number of objects available, i.e., that are not live, in the pool.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -184,7 +184,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -212,7 +212,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -221,7 +221,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L124">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L162">View Source</a>
   </span>
   <a id="Microsoft_Psi_SharedPool_1_Dispose_" data-uid="Microsoft.Psi.SharedPool`1.Dispose*"></a>
   <h4 id="Microsoft_Psi_SharedPool_1_Dispose" data-uid="Microsoft.Psi.SharedPool`1.Dispose">Dispose()</h4>
@@ -234,7 +234,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L107">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L145">View Source</a>
   </span>
   <a id="Microsoft_Psi_SharedPool_1_GetOrCreate_" data-uid="Microsoft.Psi.SharedPool`1.GetOrCreate*"></a>
   <h4 id="Microsoft_Psi_SharedPool_1_GetOrCreate" data-uid="Microsoft.Psi.SharedPool`1.GetOrCreate">GetOrCreate()</h4>
@@ -263,7 +263,42 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L74">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_SharedPool_1_Reset_" data-uid="Microsoft.Psi.SharedPool`1.Reset*"></a>
+  <h4 id="Microsoft_Psi_SharedPool_1_Reset_System_Boolean_" data-uid="Microsoft.Psi.SharedPool`1.Reset(System.Boolean)">Reset(Boolean)</h4>
+  <div class="markdown level1 summary"><p>Resets the shared pool.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Reset(bool clearLiveObjects = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">clearLiveObjects</span></td>
+        <td><p>Indicates whether to clear any live objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_SharedPool_1_Reset_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the clearLiveObjects flag is false, an exception is thrown if a reset is attempted while the pool
+still contains live objects.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_SharedPool_1_TryGet_" data-uid="Microsoft.Psi.SharedPool`1.TryGet*"></a>
   <h4 id="Microsoft_Psi_SharedPool_1_TryGet__0__" data-uid="Microsoft.Psi.SharedPool`1.TryGet(`0@)">TryGet(out T)</h4>
@@ -302,7 +337,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if an unused object was available, false otherwise.</p>
 </td>
       </tr>
@@ -310,7 +345,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L91">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/SharedPool.cs/#L129">View Source</a>
   </span>
   <a id="Microsoft_Psi_SharedPool_1_TryGet_" data-uid="Microsoft.Psi.SharedPool`1.TryGet*"></a>
   <h4 id="Microsoft_Psi_SharedPool_1_TryGet_Microsoft_Psi_Shared__0___" data-uid="Microsoft.Psi.SharedPool`1.TryGet(Microsoft.Psi.Shared{`0}@)">TryGet(out Shared&lt;T&gt;)</h4>
@@ -349,7 +384,7 @@ Use this class in conjunction with <a class="xref" href="Microsoft.Psi.Shared-1.
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if an unused object was available, false otherwise.</p>
 </td>
       </tr>

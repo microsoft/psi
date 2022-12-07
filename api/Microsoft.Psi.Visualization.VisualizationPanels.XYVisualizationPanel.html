@@ -88,16 +88,15 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
-    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
-    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
-    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html">InstantVisualizationPanel</a></div>
-    <div class="level5"><span class="xref">XYVisualizationPanel</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html">VisualizationPanel</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html">InstantVisualizationPanel</a></div>
+    <div class="level4"><span class="xref">XYVisualizationPanel</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><span class="xref">INotifyPropertyChanging</span></div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -236,27 +235,12 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.html">Microsoft.Psi.Visualization.VisualizationPanels</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class XYVisualizationPanel : InstantVisualizationPanel, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class XYVisualizationPanel : InstantVisualizationPanel, IContextMenuItemsSource</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -327,7 +311,7 @@ public AxisComputeMode AxisComputeMode { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanelType.html">VisualizationPanelType</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanelType.html">VisualizationPanelType</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -336,7 +320,7 @@ public AxisComputeMode AxisComputeMode { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CompatiblePanelTypes">VisualizationPanel.CompatiblePanelTypes</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L384">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L330">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseEnterCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseEnterCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseEnterCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseEnterCommand">MouseEnterCommand</h4>
@@ -366,7 +350,7 @@ public RelayCommand MouseEnterCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L402">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L338">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseLeaveCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseLeaveCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseLeaveCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseLeaveCommand">MouseLeaveCommand</h4>
@@ -396,7 +380,7 @@ public RelayCommand MouseLeaveCommand { get; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L325">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L281">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseMoveCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseMoveCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseMoveCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseMoveCommand">MouseMoveCommand</h4>
@@ -419,7 +403,7 @@ public RelayCommand&lt;MouseEventArgs&gt; MouseMoveCommand { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.input.mouseeventargs">MouseEventArgs</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.input.mouseeventargs">MouseEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -449,7 +433,7 @@ public Point MousePosition { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.point">Point</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.point">Point</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -478,14 +462,14 @@ public string MousePositionString { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L275">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L255">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonDownCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonDownCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonDownCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonDownCommand">MouseRightButtonDownCommand</h4>
@@ -508,14 +492,14 @@ public RelayCommand&lt;MouseButtonEventArgs&gt; MouseRightButtonDownCommand { ge
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.input.mousebuttoneventargs">MouseButtonEventArgs</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.input.mousebuttoneventargs">MouseButtonEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L297">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L263">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonUpCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonUpCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseRightButtonUpCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseRightButtonUpCommand">MouseRightButtonUpCommand</h4>
@@ -538,14 +522,14 @@ public RelayCommand&lt;MouseButtonEventArgs&gt; MouseRightButtonUpCommand { get;
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.input.mousebuttoneventargs">MouseButtonEventArgs</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.input.mousebuttoneventargs">MouseButtonEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L217">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L207">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseWheelCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseWheelCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_MouseWheelCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.MouseWheelCommand">MouseWheelCommand</h4>
@@ -568,14 +552,14 @@ public RelayCommand&lt;MouseWheelEventArgs&gt; MouseWheelCommand { get; }</code>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.input.mousewheeleventargs">MouseWheelEventArgs</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.input.mousewheeleventargs">MouseWheelEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L438">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L354">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_SetAutoAxisComputeModeCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.SetAutoAxisComputeModeCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_SetAutoAxisComputeModeCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.SetAutoAxisComputeModeCommand">SetAutoAxisComputeModeCommand</h4>
@@ -628,7 +612,7 @@ public RelayCommand&lt;RoutedEventArgs&gt; ViewportLoadedCommand { get; }</code>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.routedeventargs">RoutedEventArgs</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.routedeventargs">RoutedEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -658,14 +642,14 @@ public Thickness ViewportPadding { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.thickness">Thickness</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.thickness">Thickness</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L420">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L346">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportSizeChangedCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportSizeChangedCommand*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ViewportSizeChangedCommand" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ViewportSizeChangedCommand">ViewportSizeChangedCommand</h4>
@@ -688,7 +672,7 @@ public RelayCommand&lt;SizeChangedEventArgs&gt; ViewportSizeChangedCommand { get
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.sizechangedeventargs">SizeChangedEventArgs</a>&gt;</td>
+        <td><span class="xref">RelayCommand</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.sizechangedeventargs">SizeChangedEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -815,7 +799,38 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L479">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L360">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ContextMenuItemsInfo_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ContextMenuItemsInfo*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_ContextMenuItemsInfo" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.ContextMenuItemsInfo">ContextMenuItemsInfo()</h4>
+  <div class="markdown level1 summary"><p>Gets the set of context menu items.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override List&lt;ContextMenuItemInfo&gt; ContextMenuItemsInfo()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ContextMenuItemInfo.html">ContextMenuItemInfo</a>&gt;</td>
+        <td><p>The set of context menu items.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.InstantVisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_InstantVisualizationPanel_ContextMenuItemsInfo">InstantVisualizationPanel.ContextMenuItemsInfo()</a></div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L398">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_CreateDefaultViewTemplate_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.CreateDefaultViewTemplate*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_CreateDefaultViewTemplate" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.CreateDefaultViewTemplate">CreateDefaultViewTemplate()</h4>
@@ -836,7 +851,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.windows.datatemplate">DataTemplate</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.datatemplate">DataTemplate</a></td>
         <td><p>The template for the view.</p>
 </td>
       </tr>
@@ -846,7 +861,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_CreateDefaultViewTemplate">VisualizationPanel.CreateDefaultViewTemplate()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L457">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L376">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectXValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectXValueRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectXValueRangeChanged_System_Object_System_EventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectXValueRangeChanged(System.Object,System.EventArgs)">OnVisualizationObjectXValueRangeChanged(Object, EventArgs)</h4>
@@ -868,13 +883,13 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">sender</span></td>
         <td><p>The sender of the event.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">EventArgs</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventargs">EventArgs</a></td>
         <td><span class="parametername">e</span></td>
         <td><p>The event args for the event.</p>
 </td>
@@ -885,7 +900,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnVisualizationObjectXValueRangeChanged_System_Object_System_EventArgs_">VisualizationPanel.OnVisualizationObjectXValueRangeChanged(Object, EventArgs)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L468">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L387">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectYValueRangeChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectYValueRangeChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnVisualizationObjectYValueRangeChanged_System_Object_System_EventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnVisualizationObjectYValueRangeChanged(System.Object,System.EventArgs)">OnVisualizationObjectYValueRangeChanged(Object, EventArgs)</h4>
@@ -907,13 +922,13 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">sender</span></td>
         <td><p>The sender of the event.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventargs">EventArgs</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventargs">EventArgs</a></td>
         <td><span class="parametername">e</span></td>
         <td><p>The event args for the event.</p>
 </td>
@@ -924,7 +939,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel.html#Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_OnVisualizationObjectYValueRangeChanged_System_Object_System_EventArgs_">VisualizationPanel.OnVisualizationObjectYValueRangeChanged(Object, EventArgs)</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L489">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L408">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnXAxisPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnXAxisPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnXAxisPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnXAxisPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnXAxisPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -946,13 +961,13 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">sender</span></td>
         <td><p>The sender of the event.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
         <td><p>The event args for the event.</p>
 </td>
@@ -961,7 +976,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L509">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationPanels/XYVisualizationPanel.cs/#L428">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnYAxisPropertyChanged_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnYAxisPropertyChanged*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationPanels_XYVisualizationPanel_OnYAxisPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs_" data-uid="Microsoft.Psi.Visualization.VisualizationPanels.XYVisualizationPanel.OnYAxisPropertyChanged(System.Object,System.ComponentModel.PropertyChangedEventArgs)">OnYAxisPropertyChanged(Object, PropertyChangedEventArgs)</h4>
@@ -983,13 +998,13 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">sender</span></td>
         <td><p>The sender of the event.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventargs">PropertyChangedEventArgs</a></td>
         <td><span class="parametername">e</span></td>
         <td><p>The event args for the event.</p>
 </td>
@@ -998,7 +1013,7 @@ public Axis YAxisPropertyBrowser { get; set; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">INotifyPropertyChanging</span>
+      <a class="xref" href="Microsoft.Psi.Visualization.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

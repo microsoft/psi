@@ -88,38 +88,18 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
-    <div class="level2"><span class="xref">TimeIntervalAnnotationDisplayData</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">TimeIntervalAnnotationDisplayData</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><span class="xref">INotifyPropertyChanging</span></div>
-    <div><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">ICustomTypeDescriptor</a></div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">ICustomTypeDescriptor</a></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TimeIntervalAnnotationDisplayData : ObservableObject, INotifyPropertyChanging, ICustomTypeDescriptor</code></pre>
+    <pre><code class="lang-csharp hljs">public class TimeIntervalAnnotationDisplayData : ObservableObject, ICustomTypeDescriptor</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -128,7 +108,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationDisplayData.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData__ctor_Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_Microsoft_Psi_Message_Microsoft_Psi_Data_Annotations_TimeIntervalAnnotationSet__System_String_System_Int32_Microsoft_Psi_Data_Annotations_AnnotationSchema_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject,Microsoft.Psi.Message{Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet},System.String,System.Int32,Microsoft.Psi.Data.Annotations.AnnotationSchema)">TimeIntervalAnnotationDisplayData(TimeIntervalAnnotationVisualizationObject, Message&lt;TimeIntervalAnnotationSet&gt;, String, Int32, AnnotationSchema)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData__ctor_Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_Microsoft_Psi_Message_TimeIntervalAnnotationSet__System_String_System_Int32_AnnotationSchema_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject,Microsoft.Psi.Message{TimeIntervalAnnotationSet},System.String,System.Int32,AnnotationSchema)">TimeIntervalAnnotationDisplayData(TimeIntervalAnnotationVisualizationObject, Message&lt;TimeIntervalAnnotationSet&gt;, String, Int32, AnnotationSchema)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.html">TimeIntervalAnnotationDisplayData</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -153,25 +133,25 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<span class="xref">TimeIntervalAnnotationSet</span>&gt;</td>
         <td><span class="parametername">annotationSetMessage</span></td>
         <td><p>The annotation set message.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">track</span></td>
         <td><p>The track name.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">trackIndex</span></td>
         <td><p>The track index.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema.html">AnnotationSchema</a></td>
+        <td><span class="xref">AnnotationSchema</span></td>
         <td><span class="parametername">annotationSchema</span></td>
         <td><p>The annotation schema.</p>
 </td>
@@ -204,7 +184,7 @@ public TimeIntervalAnnotation Annotation { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.html">TimeIntervalAnnotation</a></td>
+        <td><span class="xref">TimeIntervalAnnotation</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -233,7 +213,7 @@ public AnnotationSchema AnnotationSchema { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema.html">AnnotationSchema</a></td>
+        <td><span class="xref">AnnotationSchema</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -261,7 +241,7 @@ public AnnotationSchema AnnotationSchema { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -289,7 +269,7 @@ public AnnotationSchema AnnotationSchema { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -318,7 +298,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -346,7 +326,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -374,7 +354,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -402,7 +382,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -431,7 +411,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.attributecollection">AttributeCollection</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.attributecollection">AttributeCollection</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -460,7 +440,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">attribute</span></td>
         <td><p>The name of the attribute to get the value for.</p>
 </td>
@@ -477,7 +457,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><p>The value for the specified attribute.</p>
 </td>
       </tr>
@@ -505,7 +485,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -532,7 +512,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -559,7 +539,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.typeconverter">TypeConverter</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.typeconverter">TypeConverter</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -586,7 +566,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.eventdescriptor">EventDescriptor</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.eventdescriptor">EventDescriptor</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -613,7 +593,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertydescriptor">PropertyDescriptor</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertydescriptor">PropertyDescriptor</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -641,7 +621,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><span class="parametername">editorBaseType</span></td>
         <td></td>
       </tr>
@@ -657,7 +637,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -684,7 +664,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.eventdescriptorcollection">EventDescriptorCollection</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.eventdescriptorcollection">EventDescriptorCollection</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -712,7 +692,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.attribute">Attribute</a>[]</td>
         <td><span class="parametername">attributes</span></td>
         <td></td>
       </tr>
@@ -728,7 +708,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.eventdescriptorcollection">EventDescriptorCollection</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.eventdescriptorcollection">EventDescriptorCollection</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -755,7 +735,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertydescriptorcollection">PropertyDescriptorCollection</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertydescriptorcollection">PropertyDescriptorCollection</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -783,7 +763,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.attribute">Attribute</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.attribute">Attribute</a>[]</td>
         <td><span class="parametername">attributes</span></td>
         <td></td>
       </tr>
@@ -799,7 +779,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertydescriptorcollection">PropertyDescriptorCollection</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertydescriptorcollection">PropertyDescriptorCollection</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -827,7 +807,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.propertydescriptor">PropertyDescriptor</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertydescriptor">PropertyDescriptor</a></td>
         <td><span class="parametername">pd</span></td>
         <td></td>
       </tr>
@@ -843,7 +823,7 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -853,7 +833,7 @@ public bool IsSelected { get; set; }</code></pre>
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationDisplayData.cs/#L175">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_SetAttributeValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.SetAttributeValue*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_SetAttributeValue_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.SetAttributeValue(System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue)">SetAttributeValue(String, IAnnotationValue)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_SetAttributeValue_System_String_IAnnotationValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.SetAttributeValue(System.String,IAnnotationValue)">SetAttributeValue(String, IAnnotationValue)</h4>
   <div class="markdown level1 summary"><p>Sets the value for a specified attribute.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -872,13 +852,13 @@ public bool IsSelected { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">attribute</span></td>
         <td><p>The name of the attribute to set the value for.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a></td>
+        <td><span class="xref">IAnnotationValue</span></td>
         <td><span class="parametername">annotationValue</span></td>
         <td><p>The new value.</p>
 </td>
@@ -887,10 +867,7 @@ public bool IsSelected { get; set; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">INotifyPropertyChanging</span>
-  </div>
-  <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">System.ComponentModel.ICustomTypeDescriptor</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">System.ComponentModel.ICustomTypeDescriptor</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

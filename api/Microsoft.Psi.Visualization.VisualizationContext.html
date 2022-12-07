@@ -88,43 +88,24 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
-    <div class="level2"><span class="xref">VisualizationContext</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">VisualizationContext</span></div>
   </div>
   <div classs="implements">
     <h5>Implements</h5>
-    <div><span class="xref">INotifyPropertyChanging</span></div>
-  </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
-    </div>
+    <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.html">Microsoft.Psi.Visualization</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_VisualizationContext_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class VisualizationContext : ObservableObject, INotifyPropertyChanging</code></pre>
+    <pre><code class="lang-csharp hljs">public class VisualizationContext : ObservableObject, IDisposable</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L70">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModel_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModel*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModel" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModel">DatasetViewModel</h4>
@@ -152,7 +133,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L64">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L65">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModels_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModels*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_DatasetViewModels" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DatasetViewModels">DatasetViewModels</h4>
@@ -173,14 +154,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1">ObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.objectmodel.observablecollection-1">ObservableCollection</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.ViewModels.DatasetViewModel.html">DatasetViewModel</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_Instance_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.Instance*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_Instance" data-uid="Microsoft.Psi.Visualization.VisualizationContext.Instance">Instance</h4>
@@ -208,7 +189,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L91">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L88">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonImage_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonImage*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonImage" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonImage">PlayPauseButtonImage</h4>
@@ -229,14 +210,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L96">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L93">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonToolTip_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonToolTip*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PlayPauseButtonToolTip" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayPauseButtonToolTip">PlayPauseButtonToolTip</h4>
@@ -257,14 +238,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L60">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_PluginMap_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PluginMap*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PluginMap" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PluginMap">PluginMap</h4>
@@ -292,7 +273,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L78">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_VisualizationContainer_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizationContainer*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_VisualizationContainer" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizationContainer">VisualizationContainer</h4>
@@ -322,7 +303,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L141">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L180">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_ClearLayout_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ClearLayout*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_ClearLayout" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ClearLayout">ClearLayout()</h4>
@@ -335,7 +316,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L424">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L467">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_DisplayObjectProperties_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DisplayObjectProperties*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_DisplayObjectProperties_System_Object_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.DisplayObjectProperties(System.Object)">DisplayObjectProperties(Object)</h4>
@@ -357,7 +338,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></td>
         <td><span class="parametername">requestingObject</span></td>
         <td><p>The object that is requesting its properties be displayed.</p>
 </td>
@@ -366,7 +347,19 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L153">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L96">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Visualization_VisualizationContext_Dispose_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_Dispose" data-uid="Microsoft.Psi.Visualization.VisualizationContext.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L192">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_GetDataType_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.GetDataType*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_GetDataType_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.GetDataType(System.String)">GetDataType(String)</h4>
@@ -390,7 +383,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">typeName</span></td>
         <td><p>The type name.</p>
 </td>
@@ -407,7 +400,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.type">Type</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></td>
         <td><p>The type of messages in the stream.</p>
 </td>
       </tr>
@@ -415,7 +408,7 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L390">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L430">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_IsDatasetLoaded_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.IsDatasetLoaded*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_IsDatasetLoaded" data-uid="Microsoft.Psi.Visualization.VisualizationContext.IsDatasetLoaded">IsDatasetLoaded()</h4>
@@ -436,7 +429,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if a dataset is currently loaded, otherwise false.</p>
 </td>
       </tr>
@@ -444,7 +437,7 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L303">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L343">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_OpenDatasetAsync_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenDatasetAsync*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_OpenDatasetAsync_System_String_System_Boolean_System_Boolean_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenDatasetAsync(System.String,System.Boolean,System.Boolean)">OpenDatasetAsync(String, Boolean, Boolean)</h4>
@@ -466,19 +459,19 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
         <td><p>Fully qualified path to dataset file.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">showStatusWindow</span></td>
         <td><p>Indicates whether to show the status window.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">autoSave</span></td>
         <td><p>Indicates whether to enable autosave.</p>
 </td>
@@ -495,7 +488,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
         <td><p>A task that represents the asynchronous operation.</p>
 </td>
       </tr>
@@ -503,16 +496,16 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L104">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L108">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_OpenLayout_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenLayout*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_OpenLayout_System_String_System_String_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenLayout(System.String,System.String)">OpenLayout(String, String)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_OpenLayout_System_String_System_String_System_Boolean__" data-uid="Microsoft.Psi.Visualization.VisualizationContext.OpenLayout(System.String,System.String,System.Boolean@)">OpenLayout(String, String, ref Boolean)</h4>
   <div class="markdown level1 summary"><p>Opens a previously persisted layout file.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool OpenLayout(string path, string name)</code></pre>
+    <pre><code class="lang-csharp hljs">public bool OpenLayout(string path, string name, ref bool userConsented)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -525,15 +518,21 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">path</span></td>
         <td><p>The path to the layout to open.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>The name of the layout to open.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">userConsented</span></td>
+        <td><p>A flag indicating whether consent to apply this layout was explicitly given. This only applies to layouts containing scripts.</p>
 </td>
       </tr>
     </tbody>
@@ -548,7 +547,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if the layout was successfully loaded, otherwise false.</p>
 </td>
       </tr>
@@ -556,7 +555,7 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L373">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L413">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_PlayOrPause_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayOrPause*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_PlayOrPause" data-uid="Microsoft.Psi.Visualization.VisualizationContext.PlayOrPause">PlayOrPause()</h4>
@@ -569,10 +568,10 @@ we return the generic object type.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L164">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L204">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_RunDatasetBatchProcessingTaskAsync_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunDatasetBatchProcessingTaskAsync*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RunDatasetBatchProcessingTaskAsync_Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Microsoft_Psi_Data_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunDatasetBatchProcessingTaskAsync(Microsoft.Psi.Visualization.ViewModels.DatasetViewModel,Microsoft.Psi.Data.BatchProcessingTaskMetadata)">RunDatasetBatchProcessingTaskAsync(DatasetViewModel, BatchProcessingTaskMetadata)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RunDatasetBatchProcessingTaskAsync_Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunDatasetBatchProcessingTaskAsync(Microsoft.Psi.Visualization.ViewModels.DatasetViewModel,BatchProcessingTaskMetadata)">RunDatasetBatchProcessingTaskAsync(DatasetViewModel, BatchProcessingTaskMetadata)</h4>
   <div class="markdown level1 summary"><p>Asychronously runs a specified batch processing task over a dataset.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -597,7 +596,7 @@ we return the generic object type.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></td>
+        <td><span class="xref">BatchProcessingTaskMetadata</span></td>
         <td><span class="parametername">batchProcessingTaskMetadata</span></td>
         <td><p>Batch task processing metadata.</p>
 </td>
@@ -614,7 +613,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
         <td><p>A task that represents the asynchronous batch processing operation.</p>
 </td>
       </tr>
@@ -622,10 +621,10 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L196">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L236">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_RunSessionBatchProcessingTask_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunSessionBatchProcessingTask*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RunSessionBatchProcessingTask_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Microsoft_Psi_Data_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunSessionBatchProcessingTask(Microsoft.Psi.Visualization.ViewModels.SessionViewModel,Microsoft.Psi.Data.BatchProcessingTaskMetadata)">RunSessionBatchProcessingTask(SessionViewModel, BatchProcessingTaskMetadata)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RunSessionBatchProcessingTask_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RunSessionBatchProcessingTask(Microsoft.Psi.Visualization.ViewModels.SessionViewModel,BatchProcessingTaskMetadata)">RunSessionBatchProcessingTask(SessionViewModel, BatchProcessingTaskMetadata)</h4>
   <div class="markdown level1 summary"><p>Runs a specified batch processing task over a session.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -650,7 +649,7 @@ we return the generic object type.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></td>
+        <td><span class="xref">BatchProcessingTaskMetadata</span></td>
         <td><span class="parametername">batchProcessingTaskMetadata</span></td>
         <td><p>Batch task processing metadata.</p>
 </td>
@@ -667,7 +666,7 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.threading.tasks.task">Task</a></td>
         <td><p>A task that represents the asynchronous batch processing operation.</p>
 </td>
       </tr>
@@ -675,7 +674,7 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L398">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L438">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_ToggleLiveMode_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ToggleLiveMode*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_ToggleLiveMode" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ToggleLiveMode">ToggleLiveMode()</h4>
@@ -688,7 +687,7 @@ we return the generic object type.</p>
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L228">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L268">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_VisualizeStream_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizeStream*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_VisualizeStream_Microsoft_Psi_Visualization_ViewModels_StreamTreeNode_Microsoft_Psi_Visualization_VisualizerMetadata_Microsoft_Psi_Visualization_VisualizationPanels_VisualizationPanel_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.VisualizeStream(Microsoft.Psi.Visualization.ViewModels.StreamTreeNode,Microsoft.Psi.Visualization.VisualizerMetadata,Microsoft.Psi.Visualization.VisualizationPanels.VisualizationPanel)">VisualizeStream(StreamTreeNode, VisualizerMetadata, VisualizationPanel)</h4>
@@ -731,7 +730,7 @@ we return the generic object type.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L415">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L455">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationContext_ZoomToStreamExtents_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ZoomToStreamExtents*"></a>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_ZoomToStreamExtents_Microsoft_Psi_Visualization_ViewModels_StreamTreeNode_" data-uid="Microsoft.Psi.Visualization.VisualizationContext.ZoomToStreamExtents(Microsoft.Psi.Visualization.ViewModels.StreamTreeNode)">ZoomToStreamExtents(StreamTreeNode)</h4>
@@ -764,7 +763,7 @@ we return the generic object type.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L50">View Source</a>
   </span>
   <h4 id="Microsoft_Psi_Visualization_VisualizationContext_RequestDisplayObjectProperties" data-uid="Microsoft.Psi.Visualization.VisualizationContext.RequestDisplayObjectProperties">RequestDisplayObjectProperties</h4>
   <div class="markdown level1 summary"><p>An event that fires when an object requests that its properties be displayed.</p>
@@ -784,14 +783,14 @@ we return the generic object type.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.RequestDisplayObjectPropertiesEventArgs.html">RequestDisplayObjectPropertiesEventArgs</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.eventhandler-1">EventHandler</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.RequestDisplayObjectPropertiesEventArgs.html">RequestDisplayObjectPropertiesEventArgs</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
-      <span class="xref">INotifyPropertyChanging</span>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -811,7 +810,7 @@ we return the generic object type.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L25" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationContext.cs/#L26" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

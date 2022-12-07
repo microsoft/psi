@@ -1,0 +1,442 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class PhotoVideoCameraConfiguration.StreamSettings
+   | Platform for Situated Intelligence </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class PhotoVideoCameraConfiguration.StreamSettings
+   | Platform for Situated Intelligence ">
+    <meta name="generator" content="docfx 2.56.2.0">
+    
+    <link rel="shortcut icon" href="../images/Psi.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="https://github.com/microsoft/psi">
+                <img id="logo" class="svg" src="../images/Psi.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings">
+  
+  
+  <h1 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings" class="text-break">Class PhotoVideoCameraConfiguration.StreamSettings
+  </h1>
+  <div class="markdown level0 summary"><p>Defines the capture settings for the Video or Preview streams.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><span class="xref">PhotoVideoCameraConfiguration.StreamSettings</span></div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.MixedReality.MediaCapture.html">Microsoft.Psi.MixedReality.MediaCapture</a></h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.UniversalWindows.dll</h6>
+  <h5 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class StreamSettings : object</code></pre>
+  </div>
+  <h5 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>If capturing both the Video and Preview streams, the requested resolutions must both
+be supported by the same profile. Valid capture profiles for HoloLens2 are as follows.</p>
+<p>Profile 6B52B017-42C7-4A21-BFE3-23F009149887:
+2272x1278 (15,30fps, Video, Preview)
+896x504 (15,30fps, Video, Preview)
+Profile 6B52B017-42C7-4A21-BFE3-23F009149887:
+2284x1284 (24fps, Video only)
+2284x1284 (15,30fps, Video, Preview)
+1522x856 (24fps, Video only)
+1522x856 (15,30fps, Video, Preview)
+Profile 6B52B017-42C7-4A21-BFE3-23F009149887:
+1952x1100 (15,30fps, Video, Preview)
+1920x1080 (15,30fps, Video, Preview)
+1504x846 (5fps, Video only)
+1504x846 (15,30fps, Video, Preview)
+1280x720 (15,30fps, Video, Preview)
+1128x636 (15,30fps, Video only)
+960x540 (15,30fps, Video only)
+760x428 (15,30fps, Video only)
+640x360 (15,30fps, Video only)
+500x282 (15,30fps, Video only)
+424x240 (15,30fps, Video only)
+Profile B4894D81-62B7-4EEC-8740-80658C4A9D3E:
+2272x1278 (15,30fps, Video, Preview)
+896x504 (15,30fps, Video, Preview)
+Profile C5444A88-E1BF-4597-B2DD-9E1EAD864BB8:
+1952x1100 (60fps, Video only)
+1952x1100 (15,30fps, Video, Preview)
+1920x1080 (15,30fps, Video, Preview)
+1504x846 (5,60fps, Video only)
+1504x846 (15,30fps, Video, Preview)
+1280x720 (15,30fps, Video, Preview)
+1128x636 (15,30fps, Video only)
+960x540 (15,30fps, Video only)
+760x428 (15,30fps, Video only)
+640x360 (15,30fps, Video only)
+500x282 (15,30fps, Video only)
+424x240 (15,30fps, Video only)
+Profile CDF68AD0-7B8D-4DE3-BB64-AC1CE06DA333:
+2284x1284 (24fps, Video only)
+2284x1284 (15,30fps, Video, Preview)
+1522x856 (24fps, Video only)
+1522x856 (15,30fps, Video, Preview)</p>
+<p>For more info,
+see <a href="https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/locatable-camera#hololens-2">https://docs.microsoft.com/en-us/windows/mixed-reality/develop/platform-capabilities-and-apis/locatable-camera#hololens-2</a>.</p>
+<p>Each stream represents a virtual camera in the camera profile and therefore each has its own Instrinsics and Pose streams.
+For the HoloLens, since the Video and Preview streams both ultimately originate from the PV camera, the data on the Pose
+streams will be identical, representing the PV camera pose. It is therefore only necessary to capture one of the Pose
+streams when both Video and Preview capture are enabled. The Intrinsics may be different if the capture resolutions are
+different. You may configure whether or not to emit the Pose and/or Intrinsics stream on the Video and Preview streams
+by setting the respective OutputPose and OutputIntrinsics configuration parameter.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L85">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings__ctor_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.#ctor*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings__ctor" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.#ctor">StreamSettings()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.html">PhotoVideoCameraConfiguration.StreamSettings</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public StreamSettings()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L92">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_FrameRate_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.FrameRate*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_FrameRate" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.FrameRate">FrameRate</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the capture frame rate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int FrameRate { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L102">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_ImageHeight_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.ImageHeight*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_ImageHeight" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.ImageHeight">ImageHeight</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the capture image height.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ImageHeight { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_ImageWidth_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.ImageWidth*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_ImageWidth" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.ImageWidth">ImageWidth</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the capture image width.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ImageWidth { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L127">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_MixedRealityCapture_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.MixedRealityCapture*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_MixedRealityCapture" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.MixedRealityCapture">MixedRealityCapture</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the settings for mixed reality capture, or null to omit holograms on this stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MixedRealityCaptureVideoEffect MixedRealityCapture { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.MixedReality.MediaCapture.MixedRealityCaptureVideoEffect.html">MixedRealityCaptureVideoEffect</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L112">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputCameraIntrinsics_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputCameraIntrinsics*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputCameraIntrinsics" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputCameraIntrinsics">OutputCameraIntrinsics</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the camera intrinsics are emitted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OutputCameraIntrinsics { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L107">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputEncodedImage_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputEncodedImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputEncodedImage" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputEncodedImage">OutputEncodedImage</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the original NV12-encoded image is emitted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OutputEncodedImage { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L122">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputEncodedImageCameraView_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputEncodedImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputEncodedImageCameraView" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputEncodedImageCameraView">OutputEncodedImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the original NV12-encoded camera view is emitted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OutputEncodedImageCameraView { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L117">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputPose_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputPose*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_StreamSettings_OutputPose" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.OutputPose">OutputPose</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether the camera pose is emitted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool OutputPose { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_Microsoft_Psi_IRecyclingPool___0__">Serializer.DeepClone&lt;T&gt;(T, IRecyclingPool&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0_">Serializer.DeepClone&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCameraConfiguration.cs/#L80" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            <span><a href="https://go.microsoft.com/fwlink/?LinkId=521839">Privacy & Cookies</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=246338">Terms Of Use</a> | <a href="https://go.microsoft.com/fwlink/?LinkId=506942">Trademarks</a> | © Microsoft<br>Generated by <strong>DocFX</strong></span>
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

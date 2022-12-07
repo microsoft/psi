@@ -88,31 +88,31 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">PsiStudioSettings</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
     </div>
     <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.PsiStudio.html">Microsoft.Psi.PsiStudio</a></h6>
@@ -121,26 +121,44 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class PsiStudioSettings</code></pre>
   </div>
-  <h3 id="constructors">Constructors
+  <h3 id="fields">Fields
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L27">View Source</a>
   </span>
-  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings__ctor_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.#ctor*"></a>
-  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings__ctor" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.#ctor">PsiStudioSettings()</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.PsiStudio.PsiStudioSettings.html">PsiStudioSettings</a> class.</p>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_CurrentVersion" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.CurrentVersion">CurrentVersion</h4>
+  <div class="markdown level1 summary"><p>Current version of serialized settings file.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public PsiStudioSettings()</code></pre>
+    <pre><code class="lang-csharp hljs">public const int CurrentVersion = 2</code></pre>
   </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_CurrentVersion_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>It is not necessary to bump the version when adding or removing properties unless the serialized
+schema for an existing property has changed in a way which necessitates special handling.</p>
+</div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L123">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L126">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AdditionalAssemblies_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AdditionalAssemblies*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AdditionalAssemblies" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AdditionalAssemblies">AdditionalAssemblies</h4>
@@ -149,7 +167,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string AdditionalAssemblies { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; AdditionalAssemblies { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -161,51 +179,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L128">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L114">View Source</a>
   </span>
-  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AdditionalAssembliesList_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AdditionalAssembliesList*"></a>
-  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AdditionalAssembliesList" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AdditionalAssembliesList">AdditionalAssembliesList</h4>
-  <div class="markdown level1 summary"><p>Gets the list of add-in components.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;string&gt; AdditionalAssembliesList { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L113">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AutoLoadMRUDatasetOnStartUp_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AutoLoadMRUDatasetOnStartUp*"></a>
-  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AutoLoadMRUDatasetOnStartUp" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AutoLoadMRUDatasetOnStartUp">AutoLoadMRUDatasetOnStartUp</h4>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AutoLoadMostRecentlyUsedDatasetOnStartUp_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AutoLoadMostRecentlyUsedDatasetOnStartUp*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AutoLoadMostRecentlyUsedDatasetOnStartUp" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AutoLoadMostRecentlyUsedDatasetOnStartUp">AutoLoadMostRecentlyUsedDatasetOnStartUp</h4>
   <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to automatically load the most recently used dataset upon startup.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool AutoLoadMRUDatasetOnStartUp { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public bool AutoLoadMostRecentlyUsedDatasetOnStartUp { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -217,14 +207,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L108">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AutoSaveDatasets_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AutoSaveDatasets*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AutoSaveDatasets" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AutoSaveDatasets">AutoSaveDatasets</h4>
@@ -245,42 +235,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L88">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_CurrentLayoutName_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.CurrentLayoutName*"></a>
-  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_CurrentLayoutName" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.CurrentLayoutName">CurrentLayoutName</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the current layout.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string CurrentLayoutName { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L83">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L84">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_DatasetsTabHeight_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.DatasetsTabHeight*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_DatasetsTabHeight" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.DatasetsTabHeight">DatasetsTabHeight</h4>
@@ -301,23 +263,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L118">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L119">View Source</a>
   </span>
-  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_MRUDatasetFilename_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.MRUDatasetFilename*"></a>
-  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_MRUDatasetFilename" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.MRUDatasetFilename">MRUDatasetFilename</h4>
-  <div class="markdown level1 summary"><p>Gets or sets a value indicating the most recently used dataset filename.</p>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_MostRecentlyUsedDatasetFilenames_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.MostRecentlyUsedDatasetFilenames*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_MostRecentlyUsedDatasetFilenames" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.MostRecentlyUsedDatasetFilenames">MostRecentlyUsedDatasetFilenames</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the list of most recently used dataset filenames.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string MRUDatasetFilename { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; MostRecentlyUsedDatasetFilenames { get; set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -329,14 +291,42 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L78">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L89">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_MostRecentlyUsedLayoutName_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.MostRecentlyUsedLayoutName*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_MostRecentlyUsedLayoutName" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.MostRecentlyUsedLayoutName">MostRecentlyUsedLayoutName</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the name of the most recently used layout.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string MostRecentlyUsedLayoutName { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L79">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_PropertiesPanelWidth_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.PropertiesPanelWidth*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_PropertiesPanelWidth" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.PropertiesPanelWidth">PropertiesPanelWidth</h4>
@@ -357,14 +347,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L93">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L94">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowAbsoluteTiming_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowAbsoluteTiming*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowAbsoluteTiming" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowAbsoluteTiming">ShowAbsoluteTiming</h4>
@@ -385,14 +375,72 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L103">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L176">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowErrorLogOnLoadingAdditionalAssemblies_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowErrorLogOnLoadingAdditionalAssemblies*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowErrorLogOnLoadingAdditionalAssemblies" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowErrorLogOnLoadingAdditionalAssemblies">ShowErrorLogOnLoadingAdditionalAssemblies</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the error log when loading
+third party assemblies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowErrorLogOnLoadingAdditionalAssemblies { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L170">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowSecurityWarningOnLoadingThirdPartyCode_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowSecurityWarningOnLoadingThirdPartyCode*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowSecurityWarningOnLoadingThirdPartyCode" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowSecurityWarningOnLoadingThirdPartyCode">ShowSecurityWarningOnLoadingThirdPartyCode</h4>
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether to show the security warning when loading
+third party assemblies or code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool ShowSecurityWarningOnLoadingThirdPartyCode { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L104">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowTimingRelativeToSelectionStart_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowTimingRelativeToSelectionStart*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowTimingRelativeToSelectionStart" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowTimingRelativeToSelectionStart">ShowTimingRelativeToSelectionStart</h4>
@@ -413,14 +461,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L98">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L99">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowTimingRelativeToSessionStart_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowTimingRelativeToSessionStart*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_ShowTimingRelativeToSessionStart" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.ShowTimingRelativeToSessionStart">ShowTimingRelativeToSessionStart</h4>
@@ -441,14 +489,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L73">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L74">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_TreeViewPanelWidth_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.TreeViewPanelWidth*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_TreeViewPanelWidth" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.TreeViewPanelWidth">TreeViewPanelWidth</h4>
@@ -469,14 +517,107 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L63">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L133">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_TypeMappings_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.TypeMappings*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_TypeMappings" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.TypeMappings">TypeMappings</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the set of type mappings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, string&gt; TypeMappings { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L162">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_TypeMappingsAsStringList_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.TypeMappingsAsStringList*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_TypeMappingsAsStringList" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.TypeMappingsAsStringList">TypeMappingsAsStringList</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the string representation of the type mappings.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public List&lt;string&gt; TypeMappingsAsStringList { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L43">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Version_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Version*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Version" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Version">Version</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the version of the settings object for serialization.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Version { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Version_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This defaults to 0 unless explicitly set in order to distinguish between older versions
+of the settings file (which did not have the Version attribute), and newer versions which
+which will contain the Version attribute set to CurrentVersion. Note that it is not necessary
+to bump CurrentVersion every time changes are made to PsiStudioSettings unless the serialized
+schema of an existing property has changed between versions and special handling is required
+for it. Simply adding or removing properties should not require a version change provided
+default values are provided for any added properties.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L64">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowHeight_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowHeight*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowHeight" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowHeight">WindowHeight</h4>
@@ -497,14 +638,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L48">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L49">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowPositionLeft_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowPositionLeft*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowPositionLeft" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowPositionLeft">WindowPositionLeft</h4>
@@ -525,14 +666,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L53">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L54">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowPositionTop_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowPositionTop*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowPositionTop" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowPositionTop">WindowPositionTop</h4>
@@ -553,14 +694,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L68">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L69">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowState_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowState*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowState" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowState">WindowState</h4>
@@ -581,14 +722,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L58">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L59">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowWidth_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowWidth*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_WindowWidth" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.WindowWidth">WindowWidth</h4>
@@ -609,7 +750,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -618,16 +759,17 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L136">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L261">View Source</a>
   </span>
-  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Load_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Load*"></a>
-  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Load_System_String_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Load(System.String)">Load(String)</h4>
-  <div class="markdown level1 summary"><p>Loads the settings from file.</p>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AddRecentlyUsedDatasetFilename_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AddRecentlyUsedDatasetFilename*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_AddRecentlyUsedDatasetFilename_System_String_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.AddRecentlyUsedDatasetFilename(System.String)">AddRecentlyUsedDatasetFilename(String)</h4>
+  <div class="markdown level1 summary"><p>Adds the most recently used dataset filename to the most recently used list.
+Will promote it to the top if already present in the list.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static PsiStudioSettings Load(string settingsFilename)</code></pre>
+    <pre><code class="lang-csharp hljs">public void AddRecentlyUsedDatasetFilename(string filename)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -640,8 +782,39 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">settingsFilename</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">filename</span></td>
+        <td><p>The dataset filename to add to the most recently used list.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L183">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Load_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Load*"></a>
+  <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Load_System_String_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Load(System.String)">Load(String)</h4>
+  <div class="markdown level1 summary"><p>Loads the settings from file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static PsiStudioSettings Load(string psiStudioSettingsFilename)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">psiStudioSettingsFilename</span></td>
         <td><p>The full name and path of the settings file.</p>
 </td>
       </tr>
@@ -665,7 +838,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L160">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L219">View Source</a>
   </span>
   <a id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Save_" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Save*"></a>
   <h4 id="Microsoft_Psi_PsiStudio_PsiStudioSettings_Save" data-uid="Microsoft.Psi.PsiStudio.PsiStudioSettings.Save">Save()</h4>
@@ -694,7 +867,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Tools/PsiStudio/Microsoft.Psi.PsiStudio/PsiStudioSettings.cs/#L18" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

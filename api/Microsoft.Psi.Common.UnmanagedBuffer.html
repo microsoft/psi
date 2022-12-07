@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">UnmanagedBuffer</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Common.html">Microsoft.Psi.Common</a></h6>
@@ -150,7 +150,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -181,7 +181,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">size</span></td>
         <td><p>Size (bytes) to allocate.</p>
 </td>
@@ -235,7 +235,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L237">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L261">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(IntPtr,System.Int32)">CopyFrom(IntPtr, Int32)</h4>
@@ -263,7 +263,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">size</span></td>
         <td><p>Size (bytes) to copy.</p>
 </td>
@@ -272,16 +272,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L189">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L205">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
-  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_Microsoft_Psi_Common_UnmanagedBuffer_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(Microsoft.Psi.Common.UnmanagedBuffer)">CopyFrom(UnmanagedBuffer)</h4>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(Microsoft.Psi.Common.UnmanagedBuffer,System.Int32)">CopyFrom(UnmanagedBuffer, Int32)</h4>
   <div class="markdown level1 summary"><p>Copy from unmanaged buffer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CopyFrom(UnmanagedBuffer source)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CopyFrom(UnmanagedBuffer source, int size)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -299,11 +299,17 @@
         <td><p>Unmanaged buffer from which to copy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Size (bytes) to copy.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L207">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L227">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_System_Byte___" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(System.Byte[])">CopyFrom(Byte[])</h4>
@@ -325,7 +331,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
         <td><span class="parametername">source</span></td>
         <td><p>Managed array from which to copy.</p>
 </td>
@@ -334,7 +340,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L218">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L238">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyFrom_System_Byte___System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyFrom(System.Byte[],System.Int32,System.Int32)">CopyFrom(Byte[], Int32, Int32)</h4>
@@ -356,19 +362,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
         <td><span class="parametername">source</span></td>
         <td><p>Managed array from which to copy.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">offset</span></td>
         <td><p>The zero-based index in the source array where copying should start.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">length</span></td>
         <td><p>The number of bytes to copy.</p>
 </td>
@@ -377,7 +383,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L175">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L190">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(IntPtr,System.Int32)">CopyTo(IntPtr, Int32)</h4>
@@ -405,7 +411,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">size</span></td>
         <td><p>Size (bytes) to copy.</p>
 </td>
@@ -414,16 +420,16 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L123">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L124">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo*"></a>
-  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_Microsoft_Psi_Common_UnmanagedBuffer_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(Microsoft.Psi.Common.UnmanagedBuffer)">CopyTo(UnmanagedBuffer)</h4>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_Microsoft_Psi_Common_UnmanagedBuffer_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(Microsoft.Psi.Common.UnmanagedBuffer,System.Int32)">CopyTo(UnmanagedBuffer, Int32)</h4>
   <div class="markdown level1 summary"><p>Copy this unmanaged buffer to another instance.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CopyTo(UnmanagedBuffer destination)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CopyTo(UnmanagedBuffer destination, int size)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -441,20 +447,26 @@
         <td><p>Destination instance to which to copy.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Size (bytes) to copy.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L156">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L167">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo*"></a>
-  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_System_Byte___" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(System.Byte[])">CopyTo(Byte[])</h4>
+  <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_CopyTo_System_Byte___System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.CopyTo(System.Byte[],System.Int32)">CopyTo(Byte[], Int32)</h4>
   <div class="markdown level1 summary"><p>Copy unmanaged buffer to managed array.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CopyTo(byte[] destination)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CopyTo(byte[] destination, int size)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -467,9 +479,15 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
         <td><span class="parametername">destination</span></td>
         <td><p>Destination array to which to copy.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>Size (bytes) to copy.</p>
 </td>
       </tr>
     </tbody>
@@ -504,7 +522,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">size</span></td>
         <td><p>Data size (bytes).</p>
 </td>
@@ -551,7 +569,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
         <td><span class="parametername">data</span></td>
         <td><p>Data to be copied.</p>
 </td>
@@ -576,7 +594,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L248">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L272">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_Dispose_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Dispose*"></a>
   <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_Dispose" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.Dispose">Dispose()</h4>
@@ -601,7 +619,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L145">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/UnmanagedBuffer.cs/#L150">View Source</a>
   </span>
   <a id="Microsoft_Psi_Common_UnmanagedBuffer_ReadBytes_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.ReadBytes*"></a>
   <h4 id="Microsoft_Psi_Common_UnmanagedBuffer_ReadBytes_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Common.UnmanagedBuffer.ReadBytes(System.Int32,System.Int32)">ReadBytes(Int32, Int32)</h4>
@@ -623,13 +641,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">count</span></td>
         <td><p>Count of bytes to copy.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">offset</span></td>
         <td><p>Offset into buffer.</p>
 </td>
@@ -646,7 +664,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.byte">Byte</a>[]</td>
         <td><p>Bytes having been copied.</p>
 </td>
       </tr>
@@ -682,7 +700,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">size</span></td>
         <td><p>Data size (bytes).</p>
 </td>

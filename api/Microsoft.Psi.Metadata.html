@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Metadata</span></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Common.RuntimeInfo.html">RuntimeInfo</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.PsiStreamMetadata.html">PsiStreamMetadata</a></div>
@@ -98,50 +98,22 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
   <h5 id="Microsoft_Psi_Metadata_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Metadata : object</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class Metadata : object</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L90">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Metadata_CustomFlags_" data-uid="Microsoft.Psi.Metadata.CustomFlags*"></a>
-  <h4 id="Microsoft_Psi_Metadata_CustomFlags" data-uid="Microsoft.Psi.Metadata.CustomFlags">CustomFlags</h4>
-  <div class="markdown level1 summary"><p>Gets or sets custom flags implemented in derived types.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ushort CustomFlags { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_Metadata_Id_" data-uid="Microsoft.Psi.Metadata.Id*"></a>
   <h4 id="Microsoft_Psi_Metadata_Id" data-uid="Microsoft.Psi.Metadata.Id">Id</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the id of the object the metadata represents.</p>
+  <div class="markdown level1 summary"><p>Gets the id of the object the metadata represents.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int Id { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int Id { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -153,23 +125,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L85">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L69">View Source</a>
   </span>
   <a id="Microsoft_Psi_Metadata_Kind_" data-uid="Microsoft.Psi.Metadata.Kind*"></a>
   <h4 id="Microsoft_Psi_Metadata_Kind" data-uid="Microsoft.Psi.Metadata.Kind">Kind</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the metadata kind.</p>
+  <div class="markdown level1 summary"><p>Gets the metadata kind.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MetadataKind Kind { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public MetadataKind Kind { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -192,16 +164,16 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Metadata_Name_" data-uid="Microsoft.Psi.Metadata.Name*"></a>
   <h4 id="Microsoft_Psi_Metadata_Name" data-uid="Microsoft.Psi.Metadata.Name">Name</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the name of the object the metadata represents.</p>
+  <div class="markdown level1 summary"><p>Gets the name of the object the metadata represents.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Name { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -213,23 +185,23 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L69">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L63">View Source</a>
   </span>
-  <a id="Microsoft_Psi_Metadata_SerializerTypeName_" data-uid="Microsoft.Psi.Metadata.SerializerTypeName*"></a>
-  <h4 id="Microsoft_Psi_Metadata_SerializerTypeName" data-uid="Microsoft.Psi.Metadata.SerializerTypeName">SerializerTypeName</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the metadata serializer type name.</p>
+  <a id="Microsoft_Psi_Metadata_SerializationSystemVersion_" data-uid="Microsoft.Psi.Metadata.SerializationSystemVersion*"></a>
+  <h4 id="Microsoft_Psi_Metadata_SerializationSystemVersion" data-uid="Microsoft.Psi.Metadata.SerializationSystemVersion">SerializationSystemVersion</h4>
+  <div class="markdown level1 summary"><p>Gets the serialization system version number.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string SerializerTypeName { get; protected set; }</code></pre>
+    <pre><code class="lang-csharp hljs">public int SerializationSystemVersion { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -241,74 +213,18 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L79">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Metadata_SerializerVersion_" data-uid="Microsoft.Psi.Metadata.SerializerVersion*"></a>
-  <h4 id="Microsoft_Psi_Metadata_SerializerVersion" data-uid="Microsoft.Psi.Metadata.SerializerVersion">SerializerVersion</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the metadata serializer version number.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int SerializerVersion { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L64">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Metadata_TypeName_" data-uid="Microsoft.Psi.Metadata.TypeName*"></a>
-  <h4 id="Microsoft_Psi_Metadata_TypeName" data-uid="Microsoft.Psi.Metadata.TypeName">TypeName</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the name of the type of data contained in the object the metadata represents.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TypeName { get; protected set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L74">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L58">View Source</a>
   </span>
   <a id="Microsoft_Psi_Metadata_Version_" data-uid="Microsoft.Psi.Metadata.Version*"></a>
   <h4 id="Microsoft_Psi_Metadata_Version" data-uid="Microsoft.Psi.Metadata.Version">Version</h4>
-  <div class="markdown level1 summary"><p>Gets or sets the metadata version number.</p>
+  <div class="markdown level1 summary"><p>Gets or sets the version number.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -325,7 +241,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -348,7 +264,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L33" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi/Common/Metadata.cs/#L34" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

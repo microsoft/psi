@@ -83,12 +83,12 @@
   
   <h1 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint" class="text-break">Class Rendezvous.TcpSourceEndpoint
   </h1>
-  <div class="markdown level0 summary"><p>Represents a simple TCP source endpoint providing remoted data streams.</p>
+  <div class="markdown level0 summary"><p>Represents a simple TCP source endpoint providing a single remoted data stream.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Endpoint.html">Rendezvous.Endpoint</a></div>
     <div class="level2"><span class="xref">Rendezvous.TcpSourceEndpoint</span></div>
   </div>
@@ -96,9 +96,6 @@
     <h5>Inherited Members</h5>
     <div>
       <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Endpoint.html#Microsoft_Psi_Interop_Rendezvous_Rendezvous_Endpoint_Streams">Rendezvous.Endpoint.Streams</a>
-    </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Endpoint.html#Microsoft_Psi_Interop_Rendezvous_Rendezvous_Endpoint_AddStream_Microsoft_Psi_Interop_Rendezvous_Rendezvous_Stream_">Rendezvous.Endpoint.AddStream(Rendezvous.Stream)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.html">Microsoft.Psi.Interop.Rendezvous</a></h6>
@@ -111,53 +108,16 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L228">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint__ctor_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint__ctor_System_String_System_Int32_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.#ctor(System.String,System.Int32)">TcpSourceEndpoint(String, Int32)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.html">Rendezvous.TcpSourceEndpoint</a> class.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TcpSourceEndpoint(string host, int port)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
-        <td><span class="parametername">host</span></td>
-        <td><p>Host name used by the endpoint.</p>
-</td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
-        <td><span class="parametername">port</span></td>
-        <td><p>Port number used by the endpoint.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L211">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint__ctor_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint__ctor_System_String_System_Int32_IEnumerable_Microsoft_Psi_Interop_Rendezvous_Rendezvous_Stream__" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.#ctor(System.String,System.Int32,IEnumerable{Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream})">TcpSourceEndpoint(String, Int32, IEnumerable&lt;Rendezvous.Stream&gt;)</h4>
+  <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint__ctor_System_String_System_Int32_Microsoft_Psi_Interop_Rendezvous_Rendezvous_Stream_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.#ctor(System.String,System.Int32,Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream)">TcpSourceEndpoint(String, Int32, Rendezvous.Stream)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.html">Rendezvous.TcpSourceEndpoint</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TcpSourceEndpoint(string host, int port, IEnumerable&lt;Rendezvous.Stream&gt; streams)</code></pre>
+    <pre><code class="lang-csharp hljs">public TcpSourceEndpoint(string host, int port, Rendezvous.Stream stream = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -170,21 +130,21 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">host</span></td>
         <td><p>Host name used by the endpoint.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">port</span></td>
         <td><p>Port number used by the endpoint.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerable</span>&lt;<a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream.html">Rendezvous.Stream</a>&gt;</td>
-        <td><span class="parametername">streams</span></td>
-        <td><p>Endpoint streams.</p>
+        <td><a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream.html">Rendezvous.Stream</a></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>Endpoint stream.</p>
 </td>
       </tr>
     </tbody>
@@ -193,7 +153,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L236">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L226">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Host_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.Host*"></a>
   <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Host" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.Host">Host</h4>
@@ -214,14 +174,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L241">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L231">View Source</a>
   </span>
   <a id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Port_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.Port*"></a>
   <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Port" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.Port">Port</h4>
@@ -242,11 +202,74 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L236">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Stream_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.Stream*"></a>
+  <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Stream" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.Stream">Stream</h4>
+  <div class="markdown level1 summary"><p>Gets the stream (Tcp endpoints have only one).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rendezvous.Stream Stream { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream.html">Rendezvous.Stream</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Runtime/Microsoft.Psi.Interop/Rendezvous/Rendezvous.cs/#L239">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_AddStream_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.AddStream*"></a>
+  <h4 id="Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_AddStream_Microsoft_Psi_Interop_Rendezvous_Rendezvous_Stream_" data-uid="Microsoft.Psi.Interop.Rendezvous.Rendezvous.TcpSourceEndpoint.AddStream(Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream)">AddStream(Rendezvous.Stream)</h4>
+  <div class="markdown level1 summary"><p>Add new stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void AddStream(Rendezvous.Stream stream)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Stream.html">Rendezvous.Stream</a></td>
+        <td><span class="parametername">stream</span></td>
+        <td><p>Endpoint stream to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Rendezvous.Endpoint.html#Microsoft_Psi_Interop_Rendezvous_Rendezvous_Endpoint_AddStream_Microsoft_Psi_Interop_Rendezvous_Rendezvous_Stream_">Rendezvous.Endpoint.AddStream(Rendezvous.Stream)</a></div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Interop.Rendezvous.Operators.html#Microsoft_Psi_Interop_Rendezvous_Operators_ToTcpSource__1_Microsoft_Psi_Interop_Rendezvous_Rendezvous_TcpSourceEndpoint_Microsoft_Psi_Pipeline_Microsoft_Psi_Interop_Serialization_IFormatDeserializer_Action___0__System_Boolean_System_String_">Operators.ToTcpSource&lt;T&gt;(Rendezvous.TcpSourceEndpoint, Pipeline, IFormatDeserializer, Action&lt;T&gt;, Boolean, String)</a>
