@@ -28,8 +28,8 @@ namespace Microsoft.Psi.Common.Interpolators
         /// <summary>
         /// Initializes a new instance of the <see cref="AdjacentValuesInterpolator{TIn, TOut}"/> class.
         /// </summary>
-        /// <param name="interpolatorFunc">An interpolator function which given the two nearest values and the ratio
-        /// between them where the interpolation result should be produces the interpolation result.</param>
+        /// <param name="interpolatorFunc">A function which produces an interpolation result, given the two nearest values
+        /// and the ratio between them.</param>
         /// <param name="orDefault">Indicates whether to output a default value when no result is found.</param>
         /// <param name="defaultValue">An optional default value to use.</param>
         /// <param name="name">An optional name for the interpolator (defaults to AdjacentValues).</param>

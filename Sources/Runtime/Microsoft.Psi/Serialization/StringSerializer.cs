@@ -10,14 +10,12 @@ namespace Microsoft.Psi.Serialization
     /// </summary>
     internal sealed class StringSerializer : ISerializer<string>
     {
-        private const int Version = 0;
-
         /// <inheritdoc />
         public bool? IsClearRequired => false;
 
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
-            return targetSchema ?? TypeSchema.FromType(typeof(string), serializers.RuntimeVersion, this.GetType(), Version);
+            return targetSchema ?? TypeSchema.FromType(typeof(string), this.GetType().AssemblyQualifiedName, serializers.RuntimeInfo.SerializationSystemVersion);
         }
 
         public void Clone(string instance, ref string target, SerializationContext context)

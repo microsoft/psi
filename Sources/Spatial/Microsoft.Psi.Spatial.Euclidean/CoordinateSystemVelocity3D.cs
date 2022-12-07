@@ -5,60 +5,54 @@ namespace Microsoft.Psi.Spatial.Euclidean
 {
     using System;
     using MathNet.Spatial.Euclidean;
-    using static Microsoft.Psi.Calibration.CalibrationExtensions;
+    using MathNet.Spatial.Units;
+    using Microsoft.Psi.Common;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
-    /// Represents a coordinate system velocity from a particular starting pose,
-    /// composing both a linear and angular velocity.
+    /// Represents a coordinate system velocity composing both a linear and angular velocity.
     /// </summary>
+    [Serializer(typeof(CoordinateSystemVelocity3D.CustomSerializer))]
     public readonly struct CoordinateSystemVelocity3D : IEquatable<CoordinateSystemVelocity3D>
     {
         /// <summary>
-        /// The origin coordinate system.
+        /// The angular velocity corresponding to the speed and direction of rotation.
         /// </summary>
-        public readonly CoordinateSystem OriginCoordinateSystem;
+        public readonly AngularVelocity3D Angular;
 
         /// <summary>
-        /// The axis of angular velocity, along with the radians/time speed (length of the vector).
+        /// The linear velocity corresponding to the speed and direction of translation.
         /// </summary>
-        public readonly Vector3D AxisAngleVector;
-
-        /// <summary>
-        /// The linear velocity vector. Describes the direction of motion as well as the speed (length of the vector).
-        /// </summary>
-        public readonly Vector3D LinearVector;
+        public readonly LinearVelocity3D Linear;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CoordinateSystemVelocity3D"/> struct.
         /// </summary>
-        /// <param name="originCoordinateSystem">The origin coordinate system.</param>
-        /// <param name="axisAngleVector">The axis-angle representation of angular velocity.</param>
-        /// <param name="linearVector">The linear velocity vector.</param>
-        public CoordinateSystemVelocity3D(
-            CoordinateSystem originCoordinateSystem,
-            Vector3D axisAngleVector,
-            Vector3D linearVector)
+        /// <param name="angularVelocity">The angular velocity component.</param>
+        /// <param name="linearVelocity">The linear velocity component.</param>
+        public CoordinateSystemVelocity3D(AngularVelocity3D angularVelocity, LinearVelocity3D linearVelocity)
         {
-            this.OriginCoordinateSystem = originCoordinateSystem;
-            this.AxisAngleVector = axisAngleVector;
-            this.LinearVector = linearVector;
+            this.Angular = angularVelocity;
+            this.Linear = linearVelocity;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CoordinateSystemVelocity3D"/> struct.
         /// </summary>
-        /// <param name="originCoordinateSystem">The origin coordinate system.</param>
-        /// <param name="angularAxis">The axis of angular velocity.</param>
-        /// <param name="angularSpeed">The angular speed around the axis.</param>
+        /// <param name="originCoordinateSystem">The starting coordinate system.</param>
+        /// <param name="rotationAxisDirection">The axis direction of rotation for the angular velocity.</param>
+        /// <param name="angularVelocityMagnitude">The magnitude (per-second speed) of the angular velocity.</param>
         /// <param name="linearDirection">The direction of linear velocity.</param>
-        /// <param name="linearSpeed">The linear speed.</param>
+        /// <param name="linearVelocityMagnitude">The magnitude (per-second speed) of the linear velocity.</param>
         public CoordinateSystemVelocity3D(
             CoordinateSystem originCoordinateSystem,
-            UnitVector3D angularAxis,
-            double angularSpeed,
+            UnitVector3D rotationAxisDirection,
+            Angle angularVelocityMagnitude,
             UnitVector3D linearDirection,
-            double linearSpeed)
-            : this(originCoordinateSystem, angularAxis.ScaleBy(angularSpeed), linearDirection.ScaleBy(linearSpeed))
+            double linearVelocityMagnitude)
+            : this(
+                  new AngularVelocity3D(originCoordinateSystem.GetRotationSubMatrix(), rotationAxisDirection, angularVelocityMagnitude),
+                  new LinearVelocity3D(originCoordinateSystem.Origin, linearDirection, linearVelocityMagnitude))
         {
         }
 
@@ -68,20 +62,16 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="originCoordinateSystem">The origin coordinate system.</param>
         /// <param name="destinationCoordinateSystem">A destination coordinate system.</param>
         /// <param name="time">The time it took to reach the destination coordinate system.</param>
-        /// <param name="angleEpsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</param>
+        /// <param name="angleEpsilon">An optional angle epsilon parameter used to determine when
+        /// the computed rotation matrix contains a zero-rotation (by default 0.01 degrees).</param>
         public CoordinateSystemVelocity3D(
             CoordinateSystem originCoordinateSystem,
             CoordinateSystem destinationCoordinateSystem,
             TimeSpan time,
-            double angleEpsilon = 0.01 * Math.PI / 180)
+            Angle? angleEpsilon = null)
         {
-            this.OriginCoordinateSystem = originCoordinateSystem;
-            var coordinateDifference = destinationCoordinateSystem.TransformBy(originCoordinateSystem.Invert());
-            var timeInSeconds = time.TotalSeconds;
-            this.LinearVector = coordinateDifference.Origin.ToVector3D().ScaleBy(1.0 / timeInSeconds);
-            var axisAngleDistance = Vector3D.OfVector(MatrixToAxisAngle(coordinateDifference.GetRotationSubMatrix(), angleEpsilon));
-            var angularSpeed = axisAngleDistance.Length / timeInSeconds;
-            this.AxisAngleVector = angularSpeed == 0 ? default : axisAngleDistance.Normalize().ScaleBy(angularSpeed);
+            this.Angular = new AngularVelocity3D(originCoordinateSystem.GetRotationSubMatrix(), destinationCoordinateSystem.GetRotationSubMatrix(), time, angleEpsilon);
+            this.Linear = new LinearVelocity3D(originCoordinateSystem.Origin, destinationCoordinateSystem.Origin, time);
         }
 
         /// <summary>
@@ -101,37 +91,80 @@ namespace Microsoft.Psi.Spatial.Euclidean
         public static bool operator !=(CoordinateSystemVelocity3D left, CoordinateSystemVelocity3D right) => !left.Equals(right);
 
         /// <inheritdoc/>
-        public bool Equals(CoordinateSystemVelocity3D other) => this.OriginCoordinateSystem.Equals(other.OriginCoordinateSystem) && this.AxisAngleVector == other.AxisAngleVector && this.LinearVector == other.LinearVector;
+        public bool Equals(CoordinateSystemVelocity3D other) => this.Angular.Equals(other.Angular) && this.Linear.Equals(other.Linear);
 
         /// <inheritdoc/>
         public override bool Equals(object obj) => obj is CoordinateSystemVelocity3D other && this.Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.OriginCoordinateSystem, this.AxisAngleVector, this.LinearVector);
-
-        /// <summary>
-        /// Get the linear velocity component of this coordinate system velocity.
-        /// </summary>
-        /// <returns>The linear velocity.</returns>
-        public LinearVelocity3D GetLinearVelocity() => new (this.OriginCoordinateSystem.Origin, this.LinearVector);
-
-        /// <summary>
-        /// Get the angular velocity component of this coordinate system velocity.
-        /// </summary>
-        /// <returns>The angular velocity.</returns>
-        public AngularVelocity3D GetAngularVelocity() => new (this.OriginCoordinateSystem.GetRotationSubMatrix(), this.AxisAngleVector);
+        public override int GetHashCode() => HashCode.Combine(this.Angular, this.Linear);
 
         /// <summary>
         /// Computes the destination coordinate system, if this velocity is followed for a given amount of time.
         /// </summary>
         /// <param name="time">The span of time to compute over.</param>
         /// <returns>The destination coordinate system.</returns>
-        /// <remarks>The unit of time should be the same as assumed for the linear and angular velocity vector (e.g., seconds).</remarks>
-        public CoordinateSystem ComputeDestination(double time)
+        public CoordinateSystem ComputeDestination(TimeSpan time) =>
+            CoordinateSystem.Translation(this.Linear.ComputeDestination(time).ToVector3D())
+                            .SetRotationSubMatrix(this.Angular.ComputeDestination(time));
+
+        /// <summary>
+        /// Provides custom read- backcompat serialization for <see cref="CoordinateSystemVelocity3D"/> objects.
+        /// </summary>
+        public class CustomSerializer : BackCompatStructSerializer<CoordinateSystemVelocity3D>
         {
-            var destinationPoint = this.GetLinearVelocity().ComputeDestination(time);
-            var destinationRotation = this.GetAngularVelocity().ComputeDestination(time);
-            return new CoordinateSystem(destinationPoint, UnitVector3D.XAxis, UnitVector3D.YAxis, UnitVector3D.ZAxis).SetRotationSubMatrix(destinationRotation);
+            // When introducing a custom serializer, the LatestSchemaVersion
+            // is set to be one above the auto-generated schema version (given by
+            // RuntimeInfo.LatestSerializationSystemVersion, which was 2 at the time)
+            private const int LatestSchemaVersion = 3;
+            private SerializationHandler<CoordinateSystem> coordinateSystemHandler;
+            private SerializationHandler<Vector3D> vector3DHandler;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CustomSerializer"/> class.
+            /// </summary>
+            public CustomSerializer()
+                : base(LatestSchemaVersion)
+            {
+            }
+
+            /// <inheritdoc/>
+            public override void InitializeBackCompatSerializationHandlers(int schemaVersion, KnownSerializers serializers, TypeSchema targetSchema)
+            {
+                if (schemaVersion <= 2)
+                {
+                    this.coordinateSystemHandler = serializers.GetHandler<CoordinateSystem>();
+                    this.vector3DHandler = serializers.GetHandler<Vector3D>();
+                }
+                else
+                {
+                    throw new NotSupportedException($"{nameof(CoordinateSystemVelocity3D.CustomSerializer)} only supports schema versions 2 and 3.");
+                }
+            }
+
+            /// <inheritdoc/>
+            public override void BackCompatDeserialize(int schemaVersion, BufferReader reader, ref CoordinateSystemVelocity3D target, SerializationContext context)
+            {
+                if (schemaVersion <= 2)
+                {
+                    var originCoordinateSystem = default(CoordinateSystem);
+                    var axisAngleVector = default(Vector3D);
+                    var linearVector = default(Vector3D);
+                    this.coordinateSystemHandler.Deserialize(reader, ref originCoordinateSystem, context);
+                    this.vector3DHandler.Deserialize(reader, ref axisAngleVector, context);
+                    this.vector3DHandler.Deserialize(reader, ref linearVector, context);
+                    target = new CoordinateSystemVelocity3D(
+                        originCoordinateSystem ?? new CoordinateSystem(),
+                        axisAngleVector.Length >= float.Epsilon ? axisAngleVector.Normalize() : default,
+                        Angle.FromRadians(axisAngleVector.Length),
+                        linearVector.Length >= float.Epsilon ? linearVector.Normalize() : default,
+                        linearVector.Length);
+                }
+                else
+                {
+                    throw new NotSupportedException($"{nameof(CoordinateSystemVelocity3D.CustomSerializer)} only supports schema versions 2 and 3.");
+                }
+            }
         }
     }
 }

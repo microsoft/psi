@@ -4,7 +4,10 @@
 namespace Microsoft.Psi.Data
 {
     using System.ComponentModel;
+    using System.IO;
     using System.Runtime.Serialization;
+    using Microsoft.Psi.Data.Helpers;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Represents a configuration for a batch processing task.
@@ -101,6 +104,53 @@ namespace Microsoft.Psi.Data
         {
             get => this.outputPartitionName;
             set { this.Set(nameof(this.OutputPartitionName), ref this.outputPartitionName, value); }
+        }
+
+        /// <summary>
+        /// Loads a configuration from the specified file.
+        /// </summary>
+        /// <param name="fileName">The full path name of the configuration file.</param>
+        /// <returns>The loaded configuration.</returns>
+        public static BatchProcessingTaskConfiguration Load(string fileName)
+        {
+            var serializer = JsonSerializer.Create(
+                new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    SerializationBinder = new SafeSerializationBinder(),
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                });
+
+            using var jsonFile = File.OpenText(fileName);
+            using var jsonReader = new JsonTextReader(jsonFile);
+            return serializer.Deserialize<BatchProcessingTaskConfiguration>(jsonReader);
+        }
+
+        /// <summary>
+        /// Saves the configuration to a file.
+        /// </summary>
+        /// <param name="fileName">The full path name of the configuration file.</param>
+        public void Save(string fileName)
+        {
+            var serializer = JsonSerializer.Create(
+                new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                    SerializationBinder = new SafeSerializationBinder(),
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+                });
+
+            using var jsonFile = File.CreateText(fileName);
+            using var jsonWriter = new JsonTextWriter(jsonFile);
+            serializer.Serialize(jsonWriter, this, typeof(BatchProcessingTaskConfiguration));
         }
 
         /// <summary>

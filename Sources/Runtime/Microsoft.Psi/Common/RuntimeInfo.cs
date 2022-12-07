@@ -12,9 +12,9 @@ namespace Microsoft.Psi.Common
     public class RuntimeInfo : Metadata
     {
         /// <summary>
-        /// The current version of the serialization subsystem. This is the default.
+        /// The latest version of the serialization subsystem.
         /// </summary>
-        public const int CurrentRuntimeVersion = 2;
+        public const int LatestSerializationSystemVersion = 2;
 
         /// <summary>
         /// Gets name of the executing assembly.
@@ -22,24 +22,35 @@ namespace Microsoft.Psi.Common
         public static readonly AssemblyName RuntimeName = Assembly.GetExecutingAssembly().GetName();
 
         /// <summary>
-        /// Gets the current runtime info.
+        /// Gets the latest (current) runtime info.
         /// </summary>
-        public static readonly RuntimeInfo Current = new ();
+        public static readonly RuntimeInfo Latest = new ();
 
-        internal RuntimeInfo(int serializationSystemVersion = CurrentRuntimeVersion)
+        internal RuntimeInfo(int serializationSystemVersion = LatestSerializationSystemVersion)
             : this(
-                  name: RuntimeName.FullName,
-                  id: 0,
-                  typeName: default(string),
+                  RuntimeName.FullName,
                   version: (RuntimeName.Version.Major << 16) | RuntimeName.Version.Minor,
-                  serializerTypeName: default(string),
-                  serializerVersion: serializationSystemVersion)
+                  serializationSystemVersion: serializationSystemVersion)
         {
         }
 
-        internal RuntimeInfo(string name, int id, string typeName, int version, string serializerTypeName, int serializerVersion)
-        : base(MetadataKind.RuntimeInfo, name, id, typeName, version, serializerTypeName, serializerVersion, 0)
+        internal RuntimeInfo(string name, int version, int serializationSystemVersion)
+            : base (MetadataKind.RuntimeInfo, name, 0, version, serializationSystemVersion)
         {
+        }
+
+        internal override void Serialize(BufferWriter metadataBuffer)
+        {
+            // Serialization follows a legacy pattern of fields, as described
+            // in the comments at the top of the Metadata.Deserialize method.
+            metadataBuffer.Write(this.Name);
+            metadataBuffer.Write(this.Id);
+            metadataBuffer.Write(default(string));      // this metadata field is not used by RuntimeInfo
+            metadataBuffer.Write(this.Version);
+            metadataBuffer.Write(default(string));      // this metadata field is not used by RuntimeInfo
+            metadataBuffer.Write(this.SerializationSystemVersion);
+            metadataBuffer.Write(default(ushort));      // this metadata field is not used by RuntimeInfo
+            metadataBuffer.Write((ushort)this.Kind);
         }
     }
 }

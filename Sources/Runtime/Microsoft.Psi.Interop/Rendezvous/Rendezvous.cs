@@ -191,14 +191,14 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// Add new stream.
             /// </summary>
             /// <param name="stream">Endpoint stream to add.</param>
-            public void AddStream(Stream stream)
+            public virtual void AddStream(Stream stream)
             {
                 this.streams.TryAdd(stream.StreamName, stream);
             }
         }
 
         /// <summary>
-        /// Represents a simple TCP source endpoint providing remoted data streams.
+        /// Represents a simple TCP source endpoint providing a single remoted data stream.
         /// </summary>
         public class TcpSourceEndpoint : Endpoint
         {
@@ -207,9 +207,9 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// </summary>
             /// <param name="host">Host name used by the endpoint.</param>
             /// <param name="port">Port number used by the endpoint.</param>
-            /// <param name="streams">Endpoint streams.</param>
-            public TcpSourceEndpoint(string host, int port, IEnumerable<Stream> streams)
-                : base(streams)
+            /// <param name="stream">Endpoint stream.</param>
+            public TcpSourceEndpoint(string host, int port, Stream stream = null)
+                : base(stream is null ? Enumerable.Empty<Stream>() : new[] { stream })
             {
                 if (string.IsNullOrEmpty(host))
                 {
@@ -221,16 +221,6 @@ namespace Microsoft.Psi.Interop.Rendezvous
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="TcpSourceEndpoint"/> class.
-            /// </summary>
-            /// <param name="host">Host name used by the endpoint.</param>
-            /// <param name="port">Port number used by the endpoint.</param>
-            public TcpSourceEndpoint(string host, int port)
-                : this(host, port, Enumerable.Empty<Stream>())
-            {
-            }
-
-            /// <summary>
             /// Gets the endpoint address.
             /// </summary>
             public string Host { get; private set; }
@@ -239,6 +229,22 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// Gets the endpoint port number.
             /// </summary>
             public int Port { get; private set; }
+
+            /// <summary>
+            /// Gets the stream (Tcp endpoints have only one).
+            /// </summary>
+            public Stream Stream => this.Streams.FirstOrDefault();
+
+            /// <inheritdoc/>
+            public override void AddStream(Stream stream)
+            {
+                if (this.Streams.Count() > 0)
+                {
+                    throw new InvalidOperationException($"Cannot add more than one stream to a single {nameof(TcpSourceEndpoint)}");
+                }
+
+                base.AddStream(stream);
+            }
         }
 
         /// <summary>
@@ -347,6 +353,12 @@ namespace Microsoft.Psi.Interop.Rendezvous
             /// Gets the endpoint port.
             /// </summary>
             public int Port { get; private set; }
+
+            /// <inheritdoc/>
+            public override void AddStream(Stream stream)
+            {
+                throw new InvalidOperationException($"Cannot add streams to a {nameof(RemoteClockExporterEndpoint)}");
+            }
         }
 
         /// <summary>

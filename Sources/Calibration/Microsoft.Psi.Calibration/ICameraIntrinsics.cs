@@ -77,6 +77,8 @@ namespace Microsoft.Psi.Calibration
         /// <param name="distort">Indicates whether to apply distortion.</param>
         /// <param name="nullIfOutsideFieldOfView">Optional flag indicating whether to return null if point is outside the field of view (default true).</param>
         /// <returns>Point containing the pixel position.</returns>
+        /// <remarks>Points that are behind the camera, i.e., with the X value below zero lead to null returns,
+        /// regardless of value of the <paramref name="nullIfOutsideFieldOfView"/> parameter.</remarks>
         Point2D? GetPixelPosition(Point3D point3D, bool distort, bool nullIfOutsideFieldOfView = true);
 
         /// <summary>
@@ -87,6 +89,8 @@ namespace Microsoft.Psi.Calibration
         /// <param name="pixelPosition">Output point containing the pixel position.</param>
         /// <param name="nullIfOutsideFieldOfView">Optional flag indicating whether to return null if point is outside the field of view (default true).</param>
         /// <returns>True if <paramref name="pixelPosition"/> is within field of view, otherwise false.</returns>
+        /// <remarks>Points that are behind the camera, i.e., with the X value below zero lead to a return value of false,
+        /// regardless of value of the <paramref name="nullIfOutsideFieldOfView"/> parameter.</remarks>
         bool TryGetPixelPosition(Point3D point3D, bool distort, out Point2D pixelPosition, bool nullIfOutsideFieldOfView = true);
 
         /// <summary>

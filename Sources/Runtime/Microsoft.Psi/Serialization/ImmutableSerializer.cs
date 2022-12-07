@@ -12,7 +12,6 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal class ImmutableSerializer<T> : ISerializer<T>
     {
-        private const int Version = 1;
         private SerializeDelegate<T> serializeImpl;
         private DeserializeDelegate<T> deserializeImpl;
 
@@ -25,7 +24,7 @@ namespace Microsoft.Psi.Serialization
 
         public TypeSchema Initialize(KnownSerializers serializers, TypeSchema targetSchema)
         {
-            var runtimeSchema = TypeSchema.FromType(typeof(T), serializers.RuntimeVersion, this.GetType(), Version);
+            var runtimeSchema = TypeSchema.FromType(typeof(T), this.GetType().AssemblyQualifiedName, serializers.RuntimeInfo.SerializationSystemVersion);
             var members = runtimeSchema.GetCompatibleMemberSet(targetSchema);
 
             this.serializeImpl = Generator.GenerateSerializeMethod<T>(il => Generator.EmitSerializeFields(typeof(T), serializers, il, members));

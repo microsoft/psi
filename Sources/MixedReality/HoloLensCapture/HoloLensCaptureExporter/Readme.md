@@ -123,16 +123,16 @@ Originating Time    P[x]      P[y]       P[z]      V[x]      V[y]      V[z]
 
 #### Hands
 
-Hand pose data is persisted to two text files (`Hands/Left.txt`, `Hands/Right.txt`) containing newline delimited records, each containing the originating timestamp (see above), the `IsGripped`, `IsPinched`, and `IsTracked` flags as booleans (`0` = false, `1` = true), and the pose of each joint (if tracked). For example:
+Hand pose data is persisted to two text files (`Hands/Left.txt`, `Hands/Right.txt`) containing newline delimited records, each containing the originating timestamp (see above), the `IsActive` boolean flag (`0` = false, `1` = true), the pose of each joint, the valid state of each joint, and the tracked state for each joint. For example:
 
 ```text
-Originating Time    Gripped  Pinched  Tracked  M₀₀        M₀₁        M₀₂       M₀₃       M₁₀        M₁₁        M₁₂        M₁₃       M₂₀       M₂₁        M₂₂        M₂₃        M₃₀ M₃₁ M₃₂ M₃₃  M₀₀       M₀₁        M₀₂       ...
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-637835897125443909  0        1        1        -0.214...  -0.336...  0.916...  0.201...  -0.531...  -0.747...  -0.399...  0.110...  0.819...  -0.573...  -0.018...  -0.460...  0   0   0   1    0.916...  -0.336...  0.214...  ...
-637835897125447654  0        0        0
+Originating Time    Active  M₀₀        M₀₁        M₀₂       M₀₃       M₁₀        M₁₁        M₁₂        M₁₃       M₂₀       M₂₁        M₂₂        M₂₃        M₃₀ M₃₁ M₃₂ M₃₃  M₀₀       M₀₁        M₀₂       ...  V₁ V₂ ... V₂₆  T₁ T₂ ... T₂₆
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+637835897125443909  1       -0.214...  -0.336...  0.916...  0.201...  -0.531...  -0.747...  -0.399...  0.110...  0.819...  -0.573...  -0.018...  -0.460...  0   0   0   1    0.916...  -0.336...  0.214...  ...  1  1  ... 1    1  1  ... 1
+637835897125447654  0       NaN        NaN        NaN       NaN       NaN        NaN        NaN        NaN       NaN       NaN        NaN        NaN        NaN NaN NaN NaN  NaN       NaN        NaN       ...  0  0  ... 0    0  0  ... 0
 ```
 
-The first three values are the flags indicating gripped/pinched/tracked state. If the hand is tracked, then the remaining are sets of 16 doubles for each of the following 26 joints (416 values).
+The first value is the flag indicating active state. This is followed by sets of 16 doubles for each of the following 26 joints (416 values), followed by 26 boolean values (`0` or `1`) for the valid state of each joint (Vⱼ), followed by 26 boolean values (`0` or `1`) for the tracked state of each joint (Tⱼ). Note that missing/invalid joint values may be represented by `NaN` as in the second record above.
 
 - Palm
 - Wrist
@@ -165,7 +165,7 @@ The first three values are the flags indicating gripped/pinched/tracked state. I
 
 Audio buffers are persisted to a WAVE file (`Audio/Audio.wav`) containing IEEE float encoded, 48KHz, single channel data.
 
-Additionally, a set of audio buffer files in the form (`Audio000123.bin`) are persisted to the `Audio/Buffers` directory. Per-buffer originating timestamps are persisted to a `Timing.txt` file as a tab-separated pair of frame number and timestamp. For example:
+Additionally, a set of audio buffer files in the form (`Audio000123.bin`) are persisted to the `Audio/Buffers` directory. Per-buffer originating timestamps are persisted to a `Timing.txt` file as a tab-separated pair of frame number and timestamp. The originating times listed within `Timing.txt` represent the *ending* time of each buffer. For example:
 
 ```text
 Frame  Originating Time
@@ -257,7 +257,7 @@ W    H    P₀     P₁     ...  Pₙ
 
 Image frames (just for the front-facing color camera) are also exported to a single `Video.mpeg` video file in the `Video/` folder. Audio is also included in the video if available.
 
-The start time of the video is recorded in `VideoMpegStartTime.txt`, corresponding to the earliest of the first video frame and first audio frame originating timestamps.
+The start and end times of the MPEG video are recorded in `VideoMpegTiming.txt`, containing two lines corresponding to the starting ticks (earliest of the first video frame and start of the first audio buffer originating timestamps) and the ending ticks (latest of the last video frame and end of the last audio buffer). Note that the audio begins at the *start* of the first buffer and ends at the *end* of the last buffer. Also note that audio is resampled from 32-bit IEEE Float format to 16-bit PCM and so audio buffers written to the MPEG have different sizes (1920 bytes vs. 16384 bytes) compared to those of the source audio stream and the timings listed in `VideoMpegTiming.txt` may not exactly match with information in the `Audio\Buffers\Timing.txt` file.
 
 #### Scene Understanding
 

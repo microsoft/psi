@@ -195,9 +195,26 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public abstract string GetStringValue(TData data);
 
         /// <inheritdoc/>
-        protected override int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
         {
-            return IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex);
+            var items = base.ContextMenuItemsInfo();
+
+            if (this.MarkerStyle == MarkerStyle.None)
+            {
+                items.Add(new ContextMenuItemInfo(
+                    null,
+                    "Show Markers",
+                    new VisualizationCommand(() => this.MarkerStyle = MarkerStyle.Circle)));
+            }
+            else
+            {
+                items.Add(new ContextMenuItemInfo(
+                    null,
+                    "Hide Markers",
+                    new VisualizationCommand(() => this.MarkerStyle = MarkerStyle.None)));
+            }
+
+            return items;
         }
 
         /// <inheritdoc />

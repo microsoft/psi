@@ -21,6 +21,9 @@ namespace HoloLensCaptureServer
     using Microsoft.Psi.Interop.Transport;
     using Microsoft.Psi.MixedReality;
     using Microsoft.Psi.Spatial.Euclidean;
+    using OpenXRHand = Microsoft.Psi.MixedReality.OpenXR.Hand;
+    using StereoKitHand = Microsoft.Psi.MixedReality.StereoKit.Hand;
+    using WinRTEyes = Microsoft.Psi.MixedReality.WinRT.Eyes;
 
     /// <summary>
     /// Capture server to persist streams from the accompanying HoloLencCaptureApp.
@@ -31,75 +34,85 @@ namespace HoloLensCaptureServer
         private const string Version = "v1";
 
         // capture actions to execute for expected stream types
-        private static readonly Dictionary<string, Action<Rendezvous.Stream, Rendezvous.TcpSourceEndpoint>> CaptureStreamAction = new ()
+        private static readonly Dictionary<string, Action<Rendezvous.TcpSourceEndpoint>> CaptureStreamAction = new ()
         {
             {
                 // CoordinateSystem
                 SimplifyTypeName(typeof(CoordinateSystem).FullName),
-                (s, t) => CaptureTcpStream<CoordinateSystem>(s, t, Serializers.CoordinateSystemFormat())
+                (t) => CaptureTcpStream<CoordinateSystem>(t, Serializers.CoordinateSystemFormat())
             },
             {
                 // Ray3D
                 SimplifyTypeName(typeof(Ray3D).FullName),
-                (s, t) => CaptureTcpStream<Ray3D>(s, t, Serializers.Ray3DFormat())
+                (t) => CaptureTcpStream<Ray3D>(t, Serializers.Ray3DFormat())
             },
             {
-                // Hand
-                SimplifyTypeName(typeof(Hand).FullName),
-                (s, t) => CaptureTcpStream<Hand>(s, t, Serializers.HandFormat())
+                // StereoKit Hand
+                SimplifyTypeName(typeof(StereoKitHand).FullName),
+                (t) => CaptureTcpStream<StereoKitHand>(t, Serializers.StereoKitHandFormat())
+            },
+            {
+                // OpenXR Hand
+                SimplifyTypeName(typeof(OpenXRHand).FullName),
+                (t) => CaptureTcpStream<OpenXRHand>(t, Serializers.OpenXRHandFormat())
+            },
+            {
+                // WinRT Eyes
+                SimplifyTypeName(typeof(WinRTEyes).FullName),
+                (t) => CaptureTcpStream<WinRTEyes>(t, Serializers.WinRTEyesFormat(), persistFrameRate: true)
             },
             {
                 // AudioBuffer
                 SimplifyTypeName(typeof(AudioBuffer).FullName),
-                (s, t) => CaptureTcpStream<AudioBuffer>(s, t, Serializers.AudioBufferFormat())
+                (t) => CaptureTcpStream<AudioBuffer>(t, Serializers.AudioBufferFormat())
             },
             {
                 // Shared<Image>
                 SimplifyTypeName(typeof(Shared<Image>).FullName),
-                (s, t) => ViewImageStream(CaptureTcpStream<Shared<Image>>(s, t, Serializers.SharedImageFormat(), largeMessage: true), s.StreamName)
+                (t) => ViewImageStream(CaptureTcpStream<Shared<Image>>(t, Serializers.SharedImageFormat(), largeMessage: true), t.Stream.StreamName)
             },
             {
                 // Shared<EncodedImage>
                 SimplifyTypeName(typeof(Shared<EncodedImage>).FullName),
-                (s, t) => ViewImageStream(CaptureTcpStream<Shared<EncodedImage>>(s, t, Serializers.SharedEncodedImageFormat(), largeMessage: true, persistFrameRate: true).Decode(new ImageFromStreamDecoder(), DeliveryPolicy.LatestMessage), s.StreamName)
+                (t) => ViewImageStream(CaptureTcpStream<Shared<EncodedImage>>(t, Serializers.SharedEncodedImageFormat(), largeMessage: true, persistFrameRate: true).Decode(new ImageFromStreamDecoder(), DeliveryPolicy.LatestMessage), t.Stream.StreamName)
             },
             {
                 // Shared<DepthImage>
                 SimplifyTypeName(typeof(Shared<DepthImage>).FullName),
-                (s, t) => CaptureTcpStream<Shared<DepthImage>>(s, t, Serializers.SharedDepthImageFormat(), largeMessage: true, persistFrameRate: true)
+                (t) => CaptureTcpStream<Shared<DepthImage>>(t, Serializers.SharedDepthImageFormat(), largeMessage: true, persistFrameRate: true)
             },
             {
                 // CameraIntrinsics
                 SimplifyTypeName(typeof(CameraIntrinsics).FullName),
-                (s, t) => CaptureTcpStream<CameraIntrinsics>(s, t, Serializers.CameraIntrinsicsFormat())
+                (t) => CaptureTcpStream<CameraIntrinsics>(t, Serializers.CameraIntrinsicsFormat())
             },
             {
                 // CalibrationPointsMap
                 SimplifyTypeName(typeof(CalibrationPointsMap).FullName),
-                (s, t) => CaptureTcpStream<CalibrationPointsMap>(s, t, Serializers.CalibrationPointsMapFormat(), largeMessage: true)
+                (t) => CaptureTcpStream<CalibrationPointsMap>(t, Serializers.CalibrationPointsMapFormat(), largeMessage: true)
             },
             {
                 // SceneObjectCollection
                 SimplifyTypeName(typeof(SceneObjectCollection).FullName),
-                (s, t) => CaptureTcpStream<SceneObjectCollection>(s, t, Serializers.SceneObjectCollectionFormat(), largeMessage: true)
+                (t) => CaptureTcpStream<SceneObjectCollection>(t, Serializers.SceneObjectCollectionFormat(), largeMessage: true)
             },
             {
                 // PipelineDiagnostics
                 SimplifyTypeName(typeof(PipelineDiagnostics).FullName),
-                (s, t) => CaptureTcpStream<PipelineDiagnostics>(s, t, Serializers.PipelineDiagnosticsFormat())
+                (t) => CaptureTcpStream<PipelineDiagnostics>(t, Serializers.PipelineDiagnosticsFormat())
             },
             {
                 // int
                 SimplifyTypeName(typeof(int).FullName),
-                (s, t) => CaptureTcpStream<int>(s, t, Serializers.Int32Format())
+                (t) => CaptureTcpStream<int>(t, Serializers.Int32Format())
             },
             {
                 // (Vector3D, DateTime)[]
                 SimplifyTypeName(typeof((Vector3D, DateTime)[]).FullName),
-                (s, t) =>
+                (t) =>
                 {
                     // relay *frames* of IMU samples
-                    CaptureTcpStream<(Vector3D, DateTime)[]>(s, t, Serializers.ImuFormat());
+                    CaptureTcpStream<(Vector3D, DateTime)[]>(t, Serializers.ImuFormat());
 
                     // relay *individual* IMU samples
                     // GetTcpStream<(Vector3D, DateTime)[]>(Serializers.ImuFormat()).SelectManyImuSamples().Write(stream.StreamName, store);
@@ -107,23 +120,28 @@ namespace HoloLensCaptureServer
             },
             {
                 // (Hand Left, Hand Right)
-                SimplifyTypeName(typeof((Hand Left, Hand Right)).FullName),
-                (s, t) => CaptureTcpStream<(Hand Left, Hand Right)>(s, t, Serializers.HandsFormat(), persistFrameRate: true)
+                SimplifyTypeName(typeof((StereoKitHand Left, StereoKitHand Right)).FullName),
+                (t) => CaptureTcpStream<(StereoKitHand Left, StereoKitHand Right)>(t, Serializers.StereoKitHandsFormat(), persistFrameRate: true)
+            },
+            {
+                // (HandXR Left, HandXR Right)
+                SimplifyTypeName(typeof((OpenXRHand Left, OpenXRHand Right)).FullName),
+                (t) => CaptureTcpStream<(OpenXRHand Left, OpenXRHand Right)>(t, Serializers.OpenXRHandsFormat(), persistFrameRate: true)
             },
             {
                 // EncodedImageCameraView
                 SimplifyTypeName(typeof(EncodedImageCameraView).FullName),
-                (s, t) => ViewImageStream(CaptureTcpStream<EncodedImageCameraView>(s, t, Serializers.EncodedImageCameraViewFormat(), true, t => t.Dispose(), true).Select(v => v.ViewedObject).Decode(new ImageFromStreamDecoder(), DeliveryPolicy.LatestMessage), s.StreamName)
+                (t) => ViewImageStream(CaptureTcpStream<EncodedImageCameraView>(t, Serializers.EncodedImageCameraViewFormat(), true, t => t.Dispose(), true).Select(v => v.ViewedObject).Decode(new ImageFromStreamDecoder(), DeliveryPolicy.LatestMessage), t.Stream.StreamName)
             },
             {
                 // ImageCameraView
                 SimplifyTypeName(typeof(ImageCameraView).FullName),
-                (s, t) => ViewImageStream(CaptureTcpStream<ImageCameraView>(s, t, Serializers.ImageCameraViewFormat(), true, t => t.Dispose(), true).Select(v => v.ViewedObject), s.StreamName)
+                (t) => ViewImageStream(CaptureTcpStream<ImageCameraView>(t, Serializers.ImageCameraViewFormat(), true, t => t.Dispose(), true).Select(v => v.ViewedObject), t.Stream.StreamName)
             },
             {
                 // DepthImageCameraView
                 SimplifyTypeName(typeof(DepthImageCameraView).FullName),
-                (s, t) => CaptureTcpStream<DepthImageCameraView>(s, t, Serializers.DepthImageCameraViewFormat(), true, t => t.Dispose(), true)
+                (t) => CaptureTcpStream<DepthImageCameraView>(t, Serializers.DepthImageCameraViewFormat(), true, t => t.Dispose(), true)
             },
         };
 
@@ -228,17 +246,6 @@ namespace HoloLensCaptureServer
 
             captureServerPipeline.Diagnostics.Write("ServerDiagnostics", captureServerStore);
 
-            // Detect app disconnect
-            var lastAppHeartBeat = DateTime.MaxValue;
-            var appHeartBeatTimeout = TimeSpan.FromSeconds(20);
-            Timers.Timer(captureServerPipeline, TimeSpan.FromSeconds(1)).Do(_ =>
-            {
-                if (DateTime.UtcNow - lastAppHeartBeat > appHeartBeatTimeout)
-                {
-                    StopComputeServerPipeline("APPLICATION HEARTBEAT LOST");
-                }
-            });
-
             // Connect to remote clock on the client app to synchronize clocks
             foreach (var endpoint in inputRendezvousProcess.Endpoints)
             {
@@ -259,21 +266,18 @@ namespace HoloLensCaptureServer
             statistics = new ();
             foreach (var endpoint in inputRendezvousProcess.Endpoints)
             {
-                if (endpoint is Rendezvous.TcpSourceEndpoint tcpEndpoint)
+                if (endpoint is Rendezvous.TcpSourceEndpoint tcpEndpoint && tcpEndpoint.Stream is not null)
                 {
-                    foreach (var stream in tcpEndpoint.Streams)
+                    // Determine the correct action to execute for capturing the rendezvous stream,
+                    // based on a simplified version of the stream's type name.
+                    var simpleTypeName = SimplifyTypeName(tcpEndpoint.Stream.TypeName);
+
+                    if (!CaptureStreamAction.ContainsKey(simpleTypeName))
                     {
-                        // Determine the correct action to execute for capturing the rendezvous stream,
-                        // based on a simplified version of the stream's type name.
-                        var simpleTypeName = SimplifyTypeName(stream.TypeName);
-
-                        if (!CaptureStreamAction.ContainsKey(simpleTypeName))
-                        {
-                            throw new Exception($"Unknown stream type: {stream.StreamName} ({stream.TypeName})");
-                        }
-
-                        CaptureStreamAction[simpleTypeName](stream, tcpEndpoint);
+                        throw new Exception($"Unknown stream type: {tcpEndpoint.Stream.StreamName} ({tcpEndpoint.Stream.TypeName})");
                     }
+
+                    CaptureStreamAction[simpleTypeName](tcpEndpoint);
                 }
                 else if (endpoint is not Rendezvous.RemoteClockExporterEndpoint)
                 {
@@ -352,26 +356,26 @@ namespace HoloLensCaptureServer
         }
 
         private static IProducer<T> CaptureTcpStream<T>(
-            Rendezvous.Stream stream,
             Rendezvous.TcpSourceEndpoint tcpEndpoint,
             IFormatDeserializer deserializer,
             bool largeMessage = false,
             Action<T> deallocator = null,
             bool persistFrameRate = false)
         {
+            var streamName = tcpEndpoint.Stream.StreamName;
             var tcpSource = tcpEndpoint.ToTcpSource<T>(captureServerPipeline, deserializer, deallocator: deallocator);
             var stats = new StreamStatistics();
-            statistics.Add(stream.StreamName, stats);
+            statistics.Add(streamName, stats);
             tcpSource
                 .Do((_, e) => stats.ReportMessage(e.OriginatingTime))
-                .Write(stream.StreamName, captureServerStore, largeMessage);
+                .Write(streamName, captureServerStore, largeMessage);
 
             if (persistFrameRate)
             {
                 tcpSource
                     .Window(TimeSpan.FromSeconds(-3), TimeSpan.Zero, DeliveryPolicy.SynchronousOrThrottle)
                     .Select(b => b.Length / 3.0, DeliveryPolicy.SynchronousOrThrottle)
-                    .Write($"{stream.StreamName}.AvgFrameRate", captureServerStore);
+                    .Write($"{streamName}.AvgFrameRate", captureServerStore);
             }
 
             return tcpSource;

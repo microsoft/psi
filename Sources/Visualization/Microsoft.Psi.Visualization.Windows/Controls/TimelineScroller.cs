@@ -7,8 +7,8 @@ namespace Microsoft.Psi.Visualization.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Data;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Visualization.Controls
                 // find the timestamp of the message that's temporally closest to the mouse pointer.
                 if (VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject streamVisualizationObject)
                 {
-                    snappedTime = DataManager.Instance.GetTimeOfNearestMessage(streamVisualizationObject.StreamSource, time, NearestMessageType.Nearest);
+                    snappedTime = DataManager.Instance.GetTimeOfNearestMessage(streamVisualizationObject.StreamSource, time, NearestType.Nearest);
                 }
 
                 if (snappedTime.HasValue)

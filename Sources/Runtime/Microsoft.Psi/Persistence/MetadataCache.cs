@@ -10,17 +10,17 @@ namespace Microsoft.Psi.Persistence
 
     internal class MetadataCache : IDisposable
     {
-        private readonly object syncRoot = new object();
+        private readonly object syncRoot = new ();
         private readonly string name;
         private readonly string path;
-        private volatile Dictionary<string, PsiStreamMetadata> streamDescriptors = new Dictionary<string, PsiStreamMetadata>();
-        private volatile Dictionary<int, PsiStreamMetadata> streamDescriptorsById = new Dictionary<int, PsiStreamMetadata>();
+        private readonly Action<IEnumerable<Metadata>, RuntimeInfo> entriesAdded;
+        private volatile Dictionary<string, PsiStreamMetadata> streamDescriptors = new ();
+        private volatile Dictionary<int, PsiStreamMetadata> streamDescriptorsById = new ();
         private InfiniteFileReader catalogReader;
         private TimeInterval messageCreationTimeInterval;
         private TimeInterval messageOriginatingTimeInterval;
         private TimeInterval streamTimeInterval;
-        private Action<IEnumerable<Metadata>, RuntimeInfo> entriesAdded;
-        private RuntimeInfo runtimeVersion;
+        private RuntimeInfo runtimeInfo;
 
         public MetadataCache(string name, string path, Action<IEnumerable<Metadata>, RuntimeInfo> entriesAdded)
         {
@@ -30,11 +30,11 @@ namespace Microsoft.Psi.Persistence
             this.entriesAdded = entriesAdded;
 
             // assume v0 for backwards compat. Update will fix this up if the file is newer.
-            this.runtimeVersion = new RuntimeInfo(0);
+            this.runtimeInfo = new RuntimeInfo(0);
             this.Update();
         }
 
-        public RuntimeInfo RuntimeVersion => this.runtimeVersion;
+        public RuntimeInfo RuntimeInfo => this.runtimeInfo;
 
         public IEnumerable<PsiStreamMetadata> AvailableStreams
         {
@@ -132,7 +132,7 @@ namespace Microsoft.Psi.Persistence
                     if (meta.Kind == MetadataKind.RuntimeInfo)
                     {
                         // we expect this to be first in the file (or completely missing in v0 files)
-                        this.runtimeVersion = meta as RuntimeInfo;
+                        this.runtimeInfo = meta as RuntimeInfo;
 
                         // Need to review this. The issue was that the RemoteExporter is not writing
                         // out the RuntimeInfo to the stream. This causes the RemoteImporter side of things to
@@ -178,7 +178,7 @@ namespace Microsoft.Psi.Persistence
                 // let the registered delegates know about the change
                 if (newMetadata.Count > 0 && this.entriesAdded != null)
                 {
-                    this.entriesAdded(newMetadata, this.runtimeVersion);
+                    this.entriesAdded(newMetadata, this.runtimeInfo);
                 }
             }
         }

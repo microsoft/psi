@@ -21,12 +21,19 @@ namespace HoloLensCaptureApp
     using Microsoft.Psi.Interop.Serialization;
     using Microsoft.Psi.Interop.Transport;
     using Microsoft.Psi.MixedReality;
+    using Microsoft.Psi.MixedReality.MediaCapture;
+    using Microsoft.Psi.MixedReality.ResearchMode;
+    using Microsoft.Psi.MixedReality.StereoKit;
+    using Microsoft.Psi.MixedReality.WinRT;
     using Microsoft.Psi.Remoting;
     using Microsoft.Psi.Spatial.Euclidean;
     using StereoKit;
     using Windows.Storage;
     using Color = System.Drawing.Color;
-    using Microphone = Microsoft.Psi.MixedReality.Microphone;
+    using Microphone = Microsoft.Psi.MixedReality.StereoKit.Microphone;
+    using OpenXRHandsSensor = Microsoft.Psi.MixedReality.OpenXR.HandsSensor;
+    using StereoKitHeadSensor = Microsoft.Psi.MixedReality.StereoKit.HeadSensor;
+    using WinRTGazeSensor = Microsoft.Psi.MixedReality.WinRT.GazeSensor;
 
     /// <summary>
     /// Capture app used to stream sensor data to the accompanying HoloLensCaptureServer.
@@ -83,9 +90,9 @@ namespace HoloLensCaptureApp
         private static readonly bool IncludeHead = true;
         private static readonly TimeSpan HeadInterval = TimeSpan.FromMilliseconds(20);
         private static readonly bool IncludeEyes = true;
-        private static readonly TimeSpan EyesInterval = TimeSpan.FromMilliseconds(20);
+        private static readonly TimeSpan EyesInterval = TimeSpan.FromSeconds(1.0 / 45.0);
         private static readonly bool IncludeHands = true;
-        private static readonly TimeSpan HandsInterval = TimeSpan.FromMilliseconds(20);
+        private static readonly TimeSpan HandsInterval = TimeSpan.FromSeconds(1.0 / 45.0);
 
         private static readonly bool IncludeAudio = true;
 
@@ -101,7 +108,7 @@ namespace HoloLensCaptureApp
         };
 
         private static readonly Rectangle3D FrameRectangle = new (
-            new Point3D(FrameDistance, 0, 0),
+            new (FrameDistance, 0, 0),
             UnitVector3D.YAxis.Negate(),
             UnitVector3D.ZAxis,
             -(FrameWidth / 2),
@@ -109,7 +116,7 @@ namespace HoloLensCaptureApp
             FrameWidth,
             FrameHeight - FrameBottomClip);
 
-        private static readonly Vec2 LabelSize = new Vec2(FrameWidth - FrameLabelInset * 2f, 0.008f);
+        private static readonly Vec2 LabelSize = new (FrameWidth - FrameLabelInset * 2f, 0.008f);
 
         private static string captureServerAddress = "0.0.0.0";
 
@@ -134,7 +141,7 @@ namespace HoloLensCaptureApp
             Gzip,
         }
 
-        private static async Task Main(string[] args)
+        private static void Main()
         {
             // Initialize StereoKit
             if (!SK.Initialize(
@@ -148,7 +155,7 @@ namespace HoloLensCaptureApp
             }
 
             // Initialize MixedReality statics
-            await MixedReality.InitializeAsync(regenerateDefaultWorldSpatialAnchorIfNeeded: true);
+            MixedReality.Initialize(regenerateDefaultWorldSpatialAnchorIfNeeded: true);
 
             // Attempt to get server address from config file
             var docs = KnownFolders.DocumentsLibrary;
@@ -167,9 +174,9 @@ namespace HoloLensCaptureApp
             var rightFrontCamera = default(VisibleLightCamera);
             var leftLeftCamera = default(VisibleLightCamera);
             var rightRightCamera = default(VisibleLightCamera);
-            var head = default(HeadSensor);
-            var eyes = default(EyesSensor);
-            var hands = default(HandsSensor);
+            var head = default(StereoKitHeadSensor);
+            var eyes = default(WinRTGazeSensor);
+            var hands = default(OpenXRHandsSensor);
             IProducer<AudioBuffer> audio = null;
 
             string errorMessage = null;
@@ -244,9 +251,15 @@ namespace HoloLensCaptureApp
                             magnetometer = IncludeImu ? new Magnetometer(pipeline) : null;
 
                             // HEAD, EYES, AND HANDS
-                            head = IncludeHead ? new HeadSensor(pipeline, HeadInterval) : null;
-                            eyes = IncludeEyes ? new EyesSensor(pipeline, EyesInterval) : null;
-                            hands = IncludeHands ? new HandsSensor(pipeline, HandsInterval) : null;
+                            head = IncludeHead ? new StereoKitHeadSensor(pipeline, HeadInterval) : null;
+                            eyes = IncludeEyes ? new WinRTGazeSensor(pipeline, new GazeSensorConfiguration()
+                            {
+                                OutputEyeGaze = true,
+                                OutputHeadGaze = false,
+                                Interval = EyesInterval,
+                            }) : null;
+
+                            hands = IncludeHands ? new OpenXRHandsSensor(pipeline, HandsInterval) : null;
 
                             // AUDIO
                             audio = IncludeAudio ? new Microphone(pipeline).Reframe(16384, DeliveryPolicy.Unlimited) : null;
@@ -509,12 +522,12 @@ namespace HoloLensCaptureApp
 
                                 if (IncludeEyes)
                                 {
-                                    Write("Eyes", eyes?.Out, port++, Serializers.Ray3DFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Eyes", eyes?.Eyes, port++, Serializers.WinRTEyesFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeHands)
                                 {
-                                    Write("Hands", hands?.Out, port++, Serializers.HandsFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Hands", hands?.Out, port++, Serializers.OpenXRHandsFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeAudio)
@@ -797,6 +810,11 @@ namespace HoloLensCaptureApp
                             UI.Label($"{labelText} ({lastServerHeartBeat.ToLocalTime()})");
                             videoFps = 0;
                             depthFps = 0;
+                        }
+                        else if (StereoKitTransforms.WorldHierarchy == null)
+                        {
+                            frameColor = Color.Red;
+                            labelText = "Localization temporarily lost! Re-localizing...";
                         }
                         else if (errorMessage == null)
                         {

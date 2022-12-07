@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
@@ -23,6 +24,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationPanels;
     using Microsoft.Psi.Visualization.Windows;
+
+    /// <summary>
+    /// Defines which tracks to show.
+    /// </summary>
+    public enum ShowTracks
+    {
+        /// <summary>
+        /// Shows all tracks.
+        /// </summary>
+        All,
+
+        /// <summary>
+        /// Shows all tracks with events in view.
+        /// </summary>
+        WithEventsInView,
+
+        /// <summary>
+        /// Shows all selected tracks.
+        /// </summary>
+        Selected,
+    }
 
     /// <summary>
     /// Implements a visualization object for time interval annotations.
@@ -48,7 +70,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private double lineWidth = 2;
         private double fontSize = 10;
         private string legendValue = string.Empty;
-        private bool showOnlyTracksWithEventsInView = false;
+        private ShowTracks showTracks = ShowTracks.All;
+        private ObservableCollection<string> showTracksSelection = null;
 
         private RelayCommand<MouseButtonEventArgs> mouseLeftButtonDownCommand;
         private RelayCommand<MouseButtonEventArgs> mouseRightButtonDownCommand;
@@ -157,15 +180,41 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to show only tracks with events in view.
+        /// Gets or sets a value indicating which tracks to show.
         /// </summary>
         [DataMember]
-        [DisplayName("Show Only Tracks with Events in View")]
-        [Description("If true, the visualizer shows only the tracks containing events in view.")]
-        public bool ShowOnlyTracksWithEventsInView
+        [DisplayName("Show Tracks")]
+        [Description("Specifies which tracks to show.")]
+        public ShowTracks ShowTracks
         {
-            get { return this.showOnlyTracksWithEventsInView; }
-            set { this.Set(nameof(this.ShowOnlyTracksWithEventsInView), ref this.showOnlyTracksWithEventsInView, value); }
+            get { return this.showTracks; }
+            set { this.Set(nameof(this.ShowTracks), ref this.showTracks, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the set of tracks to display when Show Tracks is set to Selected.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Show Tracks Selection")]
+        [Description("Set of tracks to display when Show Tracks is set to Selected.")]
+        public ObservableCollection<string> ShowTracksSelection
+        {
+            get { return this.showTracksSelection; }
+
+            set
+            {
+                if (this.showTracksSelection != null)
+                {
+                    this.showTracksSelection.CollectionChanged -= this.OnSelectedTracksCollectionChanged;
+                }
+
+                this.Set(nameof(this.showTracksSelection), ref this.showTracksSelection, value);
+
+                if (this.showTracksSelection != null)
+                {
+                    this.showTracksSelection.CollectionChanged += this.OnSelectedTracksCollectionChanged;
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -185,6 +234,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public List<TimeIntervalAnnotationDisplayData> DisplayData { get; private set; } = new List<TimeIntervalAnnotationDisplayData>();
+
+        /// <summary>
+        /// Gets the current set of tracks.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public IEnumerable<string> Tracks => this.trackIndex.Keys;
 
         /// <summary>
         /// Gets the current number of tracks.
@@ -260,6 +316,91 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [IgnoreDataMember]
         public TimelineVisualizationPanel TimelineVisualizationPanel => this.Panel as TimelineVisualizationPanel;
 
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = new List<ContextMenuItemInfo>();
+
+            // Get the track under the cursor
+            var trackUnderCursor = this.GetTrackByIndex(this.TrackUnderMouseIndex);
+
+            // Add the add annotation (on current track) context menu item
+            var newAnnotationOnCurrentTrackCommand = this.GetCreateAnnotationOnTrackCommand(trackUnderCursor);
+            items.Add(
+                new ContextMenuItemInfo(
+                    IconSourcePath.Annotation,
+                    "New Annotation",
+                    newAnnotationOnCurrentTrackCommand,
+                    isEnabled: newAnnotationOnCurrentTrackCommand != null));
+
+            // Add the add annotation on new track context menu item
+            var newAnnotationOnNewTrackCommand = this.GetNewAnnotationOnNewTrackCommand();
+            items.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "New Annotation on New Track",
+                    newAnnotationOnNewTrackCommand,
+                    isEnabled: newAnnotationOnNewTrackCommand != null));
+
+            // Add the set annotation time interval to selection boundaries menu item
+            var setAnnotationTimeIntervalToSelectionCommand = this.GetSetAnnotationTimeIntervalToSelectionCommand(this.Navigator.Cursor, trackUnderCursor);
+            items.Add(
+                new ContextMenuItemInfo(
+                    IconSourcePath.SetAnnotationToSelection,
+                    "Adjust Annotation to Selection Boundaries",
+                    setAnnotationTimeIntervalToSelectionCommand,
+                    isEnabled: setAnnotationTimeIntervalToSelectionCommand != null));
+
+            // Add the delete annotation context menu item
+            var deleteCommand = this.GetDeleteAnnotationOnTrackCommand(this.Navigator.Cursor, trackUnderCursor);
+            items.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Delete Annotation",
+                    deleteCommand,
+                    isEnabled: deleteCommand != null));
+
+            // Add the delete annotation context menu item
+            var deleteAllAnnotationsOnTrackCommand = this.GetDeleteAllAnnotationsOnTrackCommand(trackUnderCursor);
+            items.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    $"Delete All Annotations on Curent Track ({trackUnderCursor})",
+                    deleteAllAnnotationsOnTrackCommand,
+                    isEnabled: deleteAllAnnotationsOnTrackCommand != null));
+
+            // Add the delete annotation context menu item
+            var renameCurrentTrackCommand = this.GetRenameTrackCommand(trackUnderCursor);
+            items.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    $"Rename Curent Track ({trackUnderCursor})",
+                    renameCurrentTrackCommand,
+                    isEnabled: renameCurrentTrackCommand != null));
+
+            // Add the command to show all tracks
+            var showAllTracksCommand = this.GetShowAllTracksCommand();
+            if (showAllTracksCommand != null)
+            {
+                items.Add(new ContextMenuItemInfo(null, $"Show All Tracks", showAllTracksCommand));
+            }
+
+            // Add the command to show only tracks with events in view
+            var showOnlyTracksWithEventsInViewCommand = this.GetShowOnlyTracksWithEventsInViewCommand();
+            if (showOnlyTracksWithEventsInViewCommand != null)
+            {
+                items.Add(new ContextMenuItemInfo(null, $"Show Only Tracks with Events in View", showOnlyTracksWithEventsInViewCommand));
+            }
+
+            // Add a separator
+            items.Add(null);
+
+            // Add the base visualization object commands
+            items.AddRange(base.ContextMenuItemsInfo());
+
+            return items;
+        }
+
         /// <summary>
         /// Update the specified annotation set message.
         /// </summary>
@@ -274,11 +415,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets the command for adding an annotation to the specified track.
+        /// Gets the command for adding a new annotation on a specified track.
         /// </summary>
-        /// <param name="track">The track name.</param>
-        /// <returns>The command for adding an annotation to the specified track.</returns>
-        public ICommand GetAddAnnotationOnTrackCommand(string track)
+        /// <param name="track">The track to add the annotation on.</param>
+        /// <returns>The command for adding a new annotation to the specified track.</returns>
+        public ICommand GetCreateAnnotationOnTrackCommand(string track)
         {
             if (track == null)
             {
@@ -310,19 +451,62 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return this.CreateEditAnnotationErrorCommand(ErrorSelectionMarkersUnset);
             }
 
-            if (this.TrackHasAnnotationsOverlappingWith(track, selectionTimeInterval))
+            if (this.Data != null && this.Data.Select(m => m.Data).GetAnnotationTimeIntervalOverlappingWith(track, selectionTimeInterval, out var _))
             {
                 return this.CreateEditAnnotationErrorCommand(ErrorOverlappingAnnotations);
             }
 
-            return new PsiCommand(() => this.AddAnnotation(selectionTimeInterval, track));
+            return new PsiCommand(() => this.CreateAnnotation(selectionTimeInterval, track));
+        }
+
+        /// <summary>
+        /// Gets the command for adding a specified annotation.
+        /// </summary>
+        /// <param name="annotation">The annotation to add.</param>
+        /// <returns>The command for adding an annotation to the specified track.</returns>
+        public ICommand GetAddAnnotationCommand(TimeIntervalAnnotation annotation)
+        {
+            if (annotation == null)
+            {
+                return null;
+            }
+
+            // All of the following must be true to allow an annotation to be added:
+            //
+            // 1) We must be bound to a source
+            // 2) Add/Delete annotations must be enabled.
+            // 3) Both selection markers must be set.
+            // 4) There must be no annotations between the selection markers.
+            //
+            // If one of these conditions does not hold, display an error message
+            if (!this.IsBound)
+            {
+                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+            }
+
+            if (!this.AllowAddOrDeleteAnnotation)
+            {
+                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+            }
+
+            if ((annotation.Interval.Left <= DateTime.MinValue) || (annotation.Interval.Right >= DateTime.MaxValue))
+            {
+                return this.CreateEditAnnotationErrorCommand(ErrorSelectionMarkersUnset);
+            }
+
+            if (this.Data != null && this.Data.Select(m => m.Data).GetAnnotationTimeIntervalOverlappingWith(annotation.Track, annotation.Interval, out var _))
+            {
+                return this.CreateEditAnnotationErrorCommand(ErrorOverlappingAnnotations);
+            }
+
+            return new PsiCommand(() => this.AddAnnotation(annotation));
         }
 
         /// <summary>
         /// Gets the command for adding an annotation to a new track.
         /// </summary>
         /// <returns>The command for adding an annotation to a new track.</returns>
-        public ICommand GetAddAnnotationOnNewTrackCommand()
+        public ICommand GetNewAnnotationOnNewTrackCommand()
         {
             // All of the following must be true to allow an annotation to be added:
             //
@@ -348,15 +532,69 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return this.CreateEditAnnotationErrorCommand(ErrorSelectionMarkersUnset);
             }
 
-            return new PsiCommand(() => this.AddAnnotation(selectionTimeInterval, null));
+            return new PsiCommand(() => this.CreateAnnotation(selectionTimeInterval, null));
+        }
+
+        /// <summary>
+        /// Gets the command for setting the annotation time interval to the selection boundaries.
+        /// </summary>
+        /// <param name="cursorTime">The cursor time.</param>
+        /// <param name="track">The track name.</param>
+        /// <returns>The command for setting the annotation time interval to the selection boundaries.</returns>
+        public ICommand GetSetAnnotationTimeIntervalToSelectionCommand(DateTime cursorTime, string track)
+{
+            if (this.Navigator.SelectionRange.StartTime == DateTime.MinValue || this.Navigator.SelectionRange.EndTime == DateTime.MaxValue)
+            {
+                return null;
+            }
+
+            // All of the following must be true to edit the annotation boundaries:
+            //
+            // 1) We must be bound to a source
+            // 2) EditAnnotationBoundaries annotations must be enabled.
+            // 3) The mouse cursor must be above an existing annotation.
+            // 4) There must be no other annotation on the specified track between
+            //    the selection markers.
+            var selectionTimeInterval = this.Container.Navigator.SelectionRange.AsTimeInterval;
+
+            if (!this.IsBound)
+            {
+                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+            }
+
+            if (!this.AllowEditAnnotationBoundaries)
+            {
+                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+            }
+
+            // Get the annotation under the cursor on the specified track
+            var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, track);
+
+            if (annotation == null)
+            {
+                return null;
+            }
+
+            // Check if there is a different annotation overlapping on the same track
+            if (this.Data != null && this.Data.Select(m => m.Data).GetAnnotationTimeIntervalOverlappingWith(track, selectionTimeInterval, out var intersectingTimeInterval))
+            {
+                if ((intersectingTimeInterval.Left != annotation.Interval.Left) ||
+                    (intersectingTimeInterval.Right != annotation.Interval.Right))
+                {
+                    return this.CreateEditAnnotationErrorCommand(ErrorOverlappingAnnotations);
+                }
+            }
+
+            return new PsiCommand(() => this.EditAnnotationTimeInterval(annotation, this.Navigator.SelectionRange.AsTimeInterval));
         }
 
         /// <summary>
         /// Gets the command for deleting the annotation on a specified track.
         /// </summary>
+        /// <param name="cursorTime">The cursor time.</param>
         /// <param name="track">The track name.</param>
         /// <returns>The command for deleting the annotation on a specified track.</returns>
-        public ICommand GetDeleteAnnotationOnTrackCommand(string track)
+        public ICommand GetDeleteAnnotationOnTrackCommand(DateTime cursorTime, string track)
         {
             if (track == null)
             {
@@ -381,8 +619,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             // Get the index of the annotation under the cursor on the specified track
-            var index = this.GetAnnotationIndex(this.Container.Navigator.Cursor, track);
-            return (index >= 0) ? new PsiCommand(() => this.DeleteAnnotation(index, track)) : null;
+            var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, track);
+            return (annotation != null) ? new PsiCommand(() => this.DeleteAnnotation(annotation)) : null;
         }
 
         /// <summary>
@@ -415,14 +653,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         /// <returns>The command to show all tracks.</returns>
         public ICommand GetShowAllTracksCommand()
-            => this.ShowOnlyTracksWithEventsInView ? new PsiCommand(() => this.ShowOnlyTracksWithEventsInView = false) : null;
+            => this.ShowTracks != ShowTracks.All ? new PsiCommand(() => this.ShowTracks = ShowTracks.All) : null;
 
         /// <summary>
         /// Gets the command to show only tracks with events in view.
         /// </summary>
         /// <returns>The command to show tracks with events in view.</returns>
         public ICommand GetShowOnlyTracksWithEventsInViewCommand()
-            => !this.ShowOnlyTracksWithEventsInView ? new PsiCommand(() => this.ShowOnlyTracksWithEventsInView = true) : null;
+            => this.ShowTracks != ShowTracks.WithEventsInView ? new PsiCommand(() => this.ShowTracks = ShowTracks.WithEventsInView) : null;
 
         /// <summary>
         /// Gets the name of a track with the specified index.
@@ -445,6 +683,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 throw new Exception("Cannot find annotation schema.");
             }
 
+            this.UpdateDisplayData();
             this.GenerateLegendValue();
         }
 
@@ -467,7 +706,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnPropertyChanged(sender, e);
 
-            if (e.PropertyName == nameof(this.ShowOnlyTracksWithEventsInView))
+            if (e.PropertyName == nameof(this.ShowTracks))
             {
                 this.UpdateDisplayData();
             }
@@ -478,7 +717,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnViewRangeChanged(sender, e);
 
-            if (this.ShowOnlyTracksWithEventsInView)
+            if (this.ShowTracks == ShowTracks.WithEventsInView)
             {
                 this.UpdateDisplayData();
             }
@@ -488,18 +727,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             => new (() => new MessageBoxWindow(Application.Current.MainWindow, "Error Editing Annotation", errorMessage, "Close", null).ShowDialog());
 
         /// <summary>
-        /// Adds a new annotation on a specified track.
+        /// Creates a new annotation on a specified track.
         /// </summary>
         /// <param name="timeInterval">The time interval for the annotation.</param>
         /// <param name="track">The track for the annotation. If null, a new track is generated.</param>
-        private void AddAnnotation(TimeInterval timeInterval, string track)
+        private void CreateAnnotation(TimeInterval timeInterval, string track)
         {
-            // If the track name is not specified
-            if (track == null)
-            {
-                // Then create a new track
-                track = this.CreateNewTrack();
-            }
+            // Create a new track if one is not specified
+            track ??= this.CreateNewTrack();
 
             // Create the annotation using the annotation schema
             var annotation = this.AnnotationSchema.CreateDefaultTimeIntervalAnnotation(timeInterval, track);
@@ -529,14 +764,43 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Deletes an existing annotation, specified by a data index and a track name.
+        /// Adds a specified annotation.
         /// </summary>
-        /// <param name="index">The data index.</param>
-        /// <param name="track">The track name.</param>
-        private void DeleteAnnotation(int index, string track)
+        /// <param name="annotation">The annotation to add.</param>
+        private void AddAnnotation(TimeIntervalAnnotation annotation)
         {
-            var annotationSetMessage = this.Data[index];
-            var annotation = annotationSetMessage.Data[track];
+            // Now find if we need to alter an existing annotation set, or create a new one
+            var existingAnnotationSetMessage = this.Data.FirstOrDefault(m => m.OriginatingTime == annotation.Interval.Right);
+            if (existingAnnotationSetMessage != default)
+            {
+                existingAnnotationSetMessage.Data.AddAnnotation(annotation);
+                var streamUpdate = new StreamUpdate<TimeIntervalAnnotationSet>[] { new (StreamUpdateType.Replace, existingAnnotationSetMessage) };
+                DataManager.Instance.UpdateStream(this.StreamSource, streamUpdate);
+            }
+            else
+            {
+                // Create a message for the annotation
+                var annotationSet = new TimeIntervalAnnotationSet(annotation);
+                var newAnnotationSetMessage = new Message<TimeIntervalAnnotationSet>(annotationSet, annotation.Interval.Right, annotation.Interval.Right, 0, 0);
+                var streamUpdate = new StreamUpdate<TimeIntervalAnnotationSet>[] { new (StreamUpdateType.Add, newAnnotationSetMessage) };
+                DataManager.Instance.UpdateStream(this.StreamSource, streamUpdate);
+            }
+
+            // Update the data
+            this.UpdateDisplayData();
+
+            // Display the properties of the new annotation
+            this.SelectAnnotation(annotation);
+        }
+
+        /// <summary>
+        /// Deletes an existing annotation.
+        /// </summary>
+        /// <param name="annotation">The annotation to delete.</param>
+        private void DeleteAnnotation(TimeIntervalAnnotation annotation)
+        {
+            // Find the corresponding annotation set message
+            var annotationSetMessage = this.FindTimeIntervalAnnotationSetMessageContaining(annotation);
 
             // If the annotation is currently selected, then deselect it
             if (this.selectedDisplayDataItem != null && this.selectedDisplayDataItem.Annotation == annotation)
@@ -556,11 +820,43 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             else
             {
                 // otherwise remove the annotation from the annotation set
-                annotationSetMessage.Data.RemoveAnnotation(track);
+                annotationSetMessage.Data.RemoveAnnotation(annotation.Track);
 
                 // and update the annotation set
                 updates.Add(new StreamUpdate<TimeIntervalAnnotationSet>(StreamUpdateType.Replace, annotationSetMessage));
             }
+
+            // Update the stream
+            DataManager.Instance.UpdateStream(this.StreamSource, updates);
+
+            // Update the view
+            this.UpdateDisplayData();
+        }
+
+        /// <summary>
+        /// Edits the boundaries of an existing annotation.
+        /// </summary>
+        /// <param name="annotation">The annotation to edit.</param>
+        /// <param name="timeInterval">The new time interval for the annotation.</param>
+        private void EditAnnotationTimeInterval(TimeIntervalAnnotation annotation, TimeInterval timeInterval)
+        {
+            // Find the corresponding annotation set message
+            var annotationSetMessage = this.FindTimeIntervalAnnotationSetMessageContaining(annotation);
+
+            // If the annotation is currently selected, then deselect it
+            if (this.selectedDisplayDataItem != null && this.selectedDisplayDataItem.Annotation == annotation)
+            {
+                this.SelectAnnotation(null);
+            }
+
+            // Create the list of stream updates
+            var updates = new List<StreamUpdate<TimeIntervalAnnotationSet>>();
+
+            // Set the time interval
+            annotation.Interval = timeInterval.DeepClone();
+
+            // and update the annotation set
+            updates.Add(new StreamUpdate<TimeIntervalAnnotationSet>(StreamUpdateType.Replace, annotationSetMessage));
 
             // Update the stream
             DataManager.Instance.UpdateStream(this.StreamSource, updates);
@@ -655,80 +951,54 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        /// <summary>
-        /// Determines whether any annotation on the specified track intersects with the specified time interval.
-        /// </summary>
-        /// <param name="track">The track name.</param>
-        /// <param name="timeInterval">The time interval.</param>
-        /// <returns>True if any annotation on the specified track intersects with the specified time interval, otherwise false.</returns>
-        private bool TrackHasAnnotationsOverlappingWith(string track, TimeInterval timeInterval)
-        {
-            // Start by building up a list of indices where the annotation set has an annotation on
-            // the specified track. (We will need to search among the annotations for these indices)
-            var indexList = this.GetDataIndexListForTrack(track);
-
-            // If there's no annotations at all, we're done and there's no intersection.
-            if (indexList.Count == 0)
-            {
-                return false;
-            }
-
-            // Find the nearest annotation to the left edge of the interval
-            int index = IndexHelper.GetIndexForTime(timeInterval.Left, indexList.Count, i => this.Data[indexList[i]].Data[track].Interval.Right, NearestMessageType.Nearest);
-
-            // Check if the annotation intersects with the interval, then keep walking to the right until
-            // we find an annotation within the interval or we go past the right hand side of the interval.
-            while (index < indexList.Count)
-            {
-                var annotation = this.Data[indexList[index]].Data[track];
-
-                // Check if the annotation is completely to the left of the interval
-                // NOTE: By default time intervals are inclusive of their endpoints, so abutting time intervals will
-                // test as intersecting. Use a non-inclusive time interval so that we can let annotations abut.
-                if (timeInterval.IntersectsWith(new TimeInterval(annotation.Interval.Left, false, annotation.Interval.Right, false)))
-                {
-                    return true;
-                }
-
-                // Check if the annotation is completely to the right of the interval
-                if (timeInterval.Right <= annotation.Interval.Left)
-                {
-                    return false;
-                }
-
-                index++;
-            }
-
-            return false;
-        }
-
         private void UpdateDisplayData()
         {
             // Rebuild the data
             this.RaisePropertyChanging(nameof(this.DisplayData));
             this.DisplayData.Clear();
-            this.trackIndex.Clear();
 
-            // Compute the tracks
-            var viewInterval = default(TimeInterval);
             if (this.IsBound && this.Data != null)
             {
-                // Compute the view interval
-                viewInterval = new TimeInterval(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime);
+                // Get the view interval
+                var viewInterval = new TimeInterval(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime);
 
-                // Go through the messages and update the track index
+                // Then recompute the track index
+                this.trackIndex.Clear();
+
+                // Go through the messages and figure out all the tracks and which ones have events in view
+                var tracks = new Dictionary<string, bool>();
                 foreach (var annotationsMessage in this.Data)
                 {
                     foreach (var track in annotationsMessage.Data.Tracks)
                     {
-                        if (!this.ShowOnlyTracksWithEventsInView || annotationsMessage.Data[track].Interval.IntersectsWith(viewInterval))
+                        var eventInView = annotationsMessage.Data[track].Interval.IntersectsWith(viewInterval);
+                        if (!tracks.ContainsKey(track))
                         {
-                            if (!this.trackIndex.ContainsKey(track))
-                            {
-                                this.trackIndex.Add(track, this.trackIndex.Count);
-                            }
+                            tracks.Add(track, eventInView);
+                        }
+                        else if (eventInView)
+                        {
+                            tracks[track] = true;
                         }
                     }
+                }
+
+                // If we are showing tracks with events in view
+                if (this.ShowTracks == ShowTracks.WithEventsInView)
+                {
+                    // Sort the tracks that have events in view alphabetically
+                    this.ShowTracksSelection = new ObservableCollection<string>(tracks.Keys.Where(t => tracks[t]).OrderBy(x => x).ToList());
+                }
+                else if (this.ShowTracks == ShowTracks.All)
+                {
+                    // O/w if we are showing all tracks sort the tracks alphabetically
+                    this.ShowTracksSelection = new ObservableCollection<string>(tracks.Keys.OrderBy(x => x).ToList());
+                }
+
+                // Now build the tracks index from the selected tracks
+                foreach (var track in this.ShowTracksSelection)
+                {
+                    this.trackIndex.Add(track, this.trackIndex.Count);
                 }
             }
 
@@ -739,14 +1009,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             // Now compute the display data
-            if (this.IsBound && this.Data != null)
+            if (this.IsBound && this.Data != null && this.AnnotationSchema != null)
             {
+                // Get the view interval
+                var viewInterval = new TimeInterval(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime);
+
                 // Finally, reconstruct the items to be displayed
                 foreach (var annotationsMessage in this.Data)
                 {
                     foreach (var track in annotationsMessage.Data.Tracks)
                     {
-                        if (!this.ShowOnlyTracksWithEventsInView || annotationsMessage.Data[track].Interval.IntersectsWith(viewInterval))
+                        if (this.ShowTracks == ShowTracks.All ||
+                            (this.ShowTracks == ShowTracks.WithEventsInView && annotationsMessage.Data[track].Interval.IntersectsWith(viewInterval)) ||
+                            (this.ShowTracks == ShowTracks.Selected && this.trackIndex.ContainsKey(track)))
                         {
                             this.DisplayData.Add(new TimeIntervalAnnotationDisplayData(this, annotationsMessage, track, this.trackIndex[track], this.AnnotationSchema));
                         }
@@ -768,19 +1043,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Get the time at the mouse cursor
             var cursorTime = (this.Panel as TimelineVisualizationPanel).GetTimeAtMousePointer(e, false);
 
-            // Get the item (if any) that straddles this time
-            int index = this.GetAnnotationIndex(cursorTime, trackUnderMouse);
-            if (index > -1)
+            // Get the annotation (if any) that straddles this time
+            var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, trackUnderMouse);
+            if (annotation != null)
             {
                 // Set the navigator selection to the bounds of the annotation
-                var annotationTimeInterval = this.Data[index].Data[trackUnderMouse].Interval;
-                this.Navigator.SelectionRange.Set(annotationTimeInterval);
+                this.Navigator.SelectionRange.Set(annotation.Interval);
 
                 // If the shift key was down, then also zoom to the annotation (with 10% empty space to the left and right)
                 if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                 {
-                    double bufferSeconds = annotationTimeInterval.Span.TotalSeconds * 0.1d;
-                    this.Navigator.ViewRange.Set(annotationTimeInterval.Left.AddSeconds(-bufferSeconds), annotationTimeInterval.Right.AddSeconds(bufferSeconds));
+                    double bufferSeconds = annotation.Interval.Span.TotalSeconds * 0.1d;
+                    this.Navigator.ViewRange.Set(annotation.Interval.Left.AddSeconds(-bufferSeconds), annotation.Interval.Right.AddSeconds(bufferSeconds));
                 }
             }
         }
@@ -798,19 +1072,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             var timelineScroller = this.TimelineVisualizationPanel.GetTimelineScroller(e.Source);
 
             var annotationSetMessage = default(Message<TimeIntervalAnnotationSet>);
-            var annotation = default(TimeIntervalAnnotation);
+            var annotationSetMessageIndex = -1;
             var annotationEdge = AnnotationEdge.None;
 
-            // Get the item (if any) that straddles this time
-            int index = this.GetAnnotationIndex(cursorTime, trackUnderMouse);
+            // Get the annotation (if any) that straddles this time
+            var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, trackUnderMouse);
 
-            if (index > -1 && trackUnderMouse != null)
+            if (annotation != null && trackUnderMouse != null)
             {
-                // Get the annotation set
-                annotationSetMessage = this.Data[index];
+                // Set the corresponding annotation set message
+                annotationSetMessage = this.FindTimeIntervalAnnotationSetMessageContaining(annotation);
 
-                // Get the annotation that was hit
-                annotation = annotationSetMessage.Data[trackUnderMouse];
+                // Set the corresponding annotation set message index
+                annotationSetMessageIndex = this.Data.IndexOf(annotationSetMessage);
 
                 // Check if the mouse is over an edge of the annotation
                 annotationEdge = this.GetMouseOverAnnotationEdge(cursorTime, annotation, timelineScroller);
@@ -861,12 +1135,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 {
                     // Get the previous and next annotation sets containing an annotation for the current track (if any)
                     // and check if they abut the annotation whose edge we're going to drag
-                    Message<TimeIntervalAnnotationSet> previousAnnotationSet = this.Data.Take(index).LastOrDefault(a => a.Data.ContainsTrack(annotation.Track));
+                    Message<TimeIntervalAnnotationSet> previousAnnotationSet = this.Data.Take(annotationSetMessageIndex).LastOrDefault(a => a.Data.ContainsTrack(annotation.Track));
                     Message<TimeIntervalAnnotationSet>? previousAnnotationSetNullable = previousAnnotationSet != default ? previousAnnotationSet : default;
                     bool previousAnnotationSetFound = previousAnnotationSet != default;
                     bool previousAnnotationAbuts = previousAnnotationSetFound && previousAnnotationSet.Data[annotation.Track].Interval.Right == annotation.Interval.Left;
 
-                    Message<TimeIntervalAnnotationSet> nextAnnotationSet = this.Data.Skip(index + 1).FirstOrDefault(a => a.Data.ContainsTrack(annotation.Track));
+                    Message<TimeIntervalAnnotationSet> nextAnnotationSet = this.Data.Skip(annotationSetMessageIndex + 1).FirstOrDefault(a => a.Data.ContainsTrack(annotation.Track));
                     Message<TimeIntervalAnnotationSet>? nextAnnotationSetNullable = nextAnnotationSet != default ? nextAnnotationSet : default;
                     bool nextAnnotationSetFound = nextAnnotationSet != default;
                     bool nextAnnotationAbuts = nextAnnotationSetFound && nextAnnotationSet.Data[annotation.Track].Interval.Left == annotation.Interval.Right;
@@ -951,16 +1225,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Get the time at the mouse cursor
             DateTime cursorTime = this.TimelineVisualizationPanel.GetTimeAtMousePointer(e, false);
 
-            var annotation = default(TimeIntervalAnnotation);
             var annotationEdge = AnnotationEdge.None;
 
-            // Get the item (if any) that straddles this time
-            int index = this.GetAnnotationIndex(cursorTime, trackUnderMouse);
-            if (index > -1 && trackUnderMouse != null)
+            // Get the annotation (if any) that straddles this time
+            var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, trackUnderMouse);
+            if (annotation != null && trackUnderMouse != null)
             {
-                // Get the annotation that was hit
-                annotation = this.Data[index].Data[trackUnderMouse];
-
                 // Check if the mouse is over an edge of the annotation
                 annotationEdge = this.GetMouseOverAnnotationEdge(cursorTime, annotation, this.TimelineVisualizationPanel.GetTimelineScroller(e.Source));
             }
@@ -999,12 +1269,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.AllowEditAnnotationBoundaries)
                 {
                     // Get the item (if any) that straddles this time
-                    int index = this.GetAnnotationIndex(timeAtMousePointer, trackUnderMouse);
-                    if (index > -1 && trackUnderMouse != null)
+                    var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(timeAtMousePointer, trackUnderMouse);
+                    if (annotation != null && trackUnderMouse != null)
                     {
-                        // Get the annotation that was hit
-                        var annotation = this.Data[index].Data[trackUnderMouse];
-
                         // Check if the mouse is over an edge of the annotation
                         var annotationEdge = this.GetMouseOverAnnotationEdge(timeAtMousePointer, annotation, this.TimelineVisualizationPanel.GetTimelineScroller(e.Source));
 
@@ -1142,74 +1409,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             DataManager.Instance.UpdateStream(this.StreamSource, updates);
         }
 
-        private int GetAnnotationIndex(DateTime time, string track)
-        {
-            if (track == null)
-            {
-                return -1;
-            }
-
-            var indexList = this.GetDataIndexListForTrack(track);
-
-            if (indexList.Count > 0)
-            {
-                var index = this.GetTimeIntervalItemIndexByTime(
-                    time,
-                    indexList.Count,
-                    i => this.Data[indexList[i]].Data[track].Interval.Left,
-                    i => this.Data[indexList[i]].Data[track].Interval.Right);
-                return index == -1 ? -1 : indexList[index];
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        private int GetTimeIntervalItemIndexByTime(DateTime time, int count, Func<int, DateTime> startTimeAtIndex, Func<int, DateTime> endTimeAtIndex)
-        {
-            if (count < 1)
-            {
-                return -1;
-            }
-
-            int lo = 0;
-            int hi = count - 1;
-            while ((lo != hi - 1) && (lo != hi))
-            {
-                var val = (lo + hi) / 2;
-                if (endTimeAtIndex(val) < time)
-                {
-                    lo = val;
-                }
-                else if (startTimeAtIndex(val) > time)
-                {
-                    hi = val;
-                }
-                else
-                {
-                    return val;
-                }
-            }
-
-            // If lo and hi differ by 1, then either of those value could be straddled by the first or last
-            // annotation. If lo and hi are both 0 then there's only 1 element so we should test it as well.
-            if (hi - lo <= 1)
-            {
-                if ((endTimeAtIndex(hi) >= time) && (startTimeAtIndex(hi) <= time))
-                {
-                    return hi;
-                }
-
-                if ((endTimeAtIndex(lo) >= time) && (startTimeAtIndex(lo) <= time))
-                {
-                    return lo;
-                }
-            }
-
-            return -1;
-        }
-
         private AnnotationEdge GetMouseOverAnnotationEdge(DateTime cursorTime, TimeIntervalAnnotation annotation, TimelineScroller timelineScroller)
         {
             // Work out what time interval is expressed in 3 pixels at the current zoom
@@ -1299,29 +1498,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.RaisePropertyChanged(nameof(this.AttributeCount));
         }
 
-        /// <summary>
-        /// Gets the list of indices for annotation set messages that contain an annotation on the specified track.
-        /// </summary>
-        /// <param name="track">The track name.</param>
-        /// <returns>The list of indices for annotation set messages that contain an annotation on the specified track.</returns>
-        private List<int> GetDataIndexListForTrack(string track)
-        {
-            var indexList = new List<int>();
-
-            if (this.Data != null)
-            {
-                for (int i = 0; i < this.Data.Count; i++)
-                {
-                    if (this.Data[i].Data.ContainsTrack(track))
-                    {
-                        indexList.Add(i);
-                    }
-                }
-            }
-
-            return indexList;
-        }
-
         private string CreateNewTrack()
         {
             while (this.trackIndex.ContainsKey($"Track:{this.newTrackId}"))
@@ -1333,6 +1509,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.trackIndex.Add(track, this.trackIndex.Count);
 
             return track;
+        }
+
+        private Message<TimeIntervalAnnotationSet> FindTimeIntervalAnnotationSetMessageContaining(TimeIntervalAnnotation annotation)
+            => this.Data.First(asm => asm.Data.ContainsTrack(annotation.Track) && asm.Data[annotation.Track] == annotation);
+
+        private void OnSelectedTracksCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // If the selected tracks collection has changed, switch the show tracks mode to selected
+            this.ShowTracks = ShowTracks.Selected;
+
+            // An update the data
+            this.UpdateDisplayData();
         }
     }
 }

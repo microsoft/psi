@@ -25,6 +25,7 @@ namespace Microsoft.Psi.Media
             AudioBitsPerSample = 16,
             AudioSamplesPerSecond = 48000,
             AudioChannels = 2,
+            DisableThrottling = false,
         };
 
         /// <summary>
@@ -184,6 +185,22 @@ namespace Microsoft.Psi.Media
             set
             {
                 this.Config.numChannels = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the MP4 writer should throttle the incoming data.
+        /// </summary>
+        public bool DisableThrottling
+        {
+            get
+            {
+                return this.Config.disableThrottling;
+            }
+
+            set
+            {
+                this.Config.disableThrottling = value;
             }
         }
 

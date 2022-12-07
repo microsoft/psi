@@ -8,12 +8,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Linq;
-    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Media;
     using System.Windows.Shapes;
     using Microsoft.Psi.Visualization.Data;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
@@ -34,7 +32,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         where TPlotSeriesVisualizationObject : PlotSeriesVisualizationObject<TKey, TData>, new()
     {
         private readonly PlotVisualizationObjectViewHelper<TKey, TData> helper;
-        private readonly Dictionary<TKey, int> seriesKeyColorPaletteIndex = new Dictionary<TKey, int>();
+        private readonly Dictionary<TKey, int> seriesKeyColorPaletteIndex = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlotSeriesVisualizationObjectView{TTimelineVisualizationObject, TKey, TData}"/> class.
@@ -61,30 +59,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
         /// <inheritdoc/>
         public double MarkerSize => this.PlotSeriesVisualizationObject.MarkerSize;
-
-        /// <inheritdoc/>
-        public override void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            base.AppendContextMenuItems(menuItems);
-
-            if (this.DataContext is PlotSeriesVisualizationObject<TKey, TData> plotSeriesVisualizationObject)
-            {
-                if (plotSeriesVisualizationObject.MarkerStyle == MarkerStyle.None)
-                {
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(
-                        null,
-                        "Show Markers",
-                        new VisualizationCommand(() => plotSeriesVisualizationObject.MarkerStyle = MarkerStyle.Circle)));
-                }
-                else
-                {
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(
-                        null,
-                        "Hide Markers",
-                        new VisualizationCommand(() => plotSeriesVisualizationObject.MarkerStyle = MarkerStyle.None)));
-                }
-            }
-        }
 
         /// <inheritdoc/>
         public void CreateBindings(TKey seriesKey, Path linePath, Path markerPath, Path rangePath)

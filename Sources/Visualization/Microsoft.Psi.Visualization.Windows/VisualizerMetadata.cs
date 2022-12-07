@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Visualization
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>
-    /// Represents a metadata object for visualizing a stream.
+    /// Represents a metadata object that describes a stream visualizer.
     /// </summary>
     public class VisualizerMetadata
     {
@@ -23,7 +23,9 @@ namespace Microsoft.Psi.Visualization
             Type dataType,
             Type visualizationObjectType,
             Type streamAdapterType,
+            object[] streamAdapterArguments,
             Type summarizerType,
+            object[] summarizerArguments,
             string commandText,
             string iconSourcePath,
             VisualizationPanelType visualizationPanelType,
@@ -37,7 +39,9 @@ namespace Microsoft.Psi.Visualization
             this.VisualizationPanelType = visualizationPanelType;
             this.IconSourcePath = iconSourcePath;
             this.StreamAdapterType = streamAdapterType;
+            this.StreamAdapterArguments = streamAdapterArguments;
             this.SummarizerType = summarizerType;
+            this.SummarizerArguments = summarizerArguments;
             this.VisualizationFormatString = visualizationFormatString;
             this.IsInNewPanel = isInNewPanel;
             this.IsUniversalVisualizer = isUniversalVisualizer;
@@ -69,14 +73,24 @@ namespace Microsoft.Psi.Visualization
         public string IconSourcePath { get; private set; }
 
         /// <summary>
-        /// Gets the stream adapter.
+        /// Gets the stream adapter type.
         /// </summary>
         public Type StreamAdapterType { get; private set; }
 
         /// <summary>
-        /// Gets the summarizer.
+        /// Gets the stream adapter arguments.
+        /// </summary>
+        public object[] StreamAdapterArguments { get; private set; }
+
+        /// <summary>
+        /// Gets the summarizer type.
         /// </summary>
         public Type SummarizerType { get; private set; }
+
+        /// <summary>
+        /// Gets the summarizer arguments.
+        /// </summary>
+        public object[] SummarizerArguments { get; private set; }
 
         /// <summary>
         /// Gets format for the name of the visualization object.
@@ -97,11 +111,15 @@ namespace Microsoft.Psi.Visualization
         /// Creates one or two visualizer metadatas depending on whether a "Visualize in new panel" icon source path was suplied by the visualization object.
         /// </summary>
         /// <param name="visualizationObjectType">The visualization object type.</param>
-        /// <param name="summarizers">The list of known summarizers.</param>
-        /// <param name="dataAdapters">The list of known data adapters.</param>
+        /// <param name="summarizers">The dictionary of all known summarizers, keyed by type.</param>
+        /// <param name="streamAdapters">The list of all known stream adapters.</param>
         /// <param name="logWriter">The log writer where errors should be written to.</param>
         /// <returns>A list of visualizer metadatas.</returns>
-        public static List<VisualizerMetadata> Create(Type visualizationObjectType, Dictionary<Type, SummarizerMetadata> summarizers, List<StreamAdapterMetadata> dataAdapters, VisualizationLogWriter logWriter)
+        public static List<VisualizerMetadata> Create(
+            Type visualizationObjectType,
+            Dictionary<Type, SummarizerMetadata> summarizers,
+            List<StreamAdapterMetadata> streamAdapters,
+            VisualizationLogWriter logWriter)
         {
             // Get the visualization object attribute
             var visualizationObjectAttribute = GetVisualizationObjectAttribute(visualizationObjectType, logWriter);
@@ -159,21 +177,21 @@ namespace Microsoft.Psi.Visualization
             // 2) Otherwise, use the visualization object's data type
             Type dataType = summarizerMetadata != null ? summarizerMetadata.InputType : visualizationObjectDataType;
 
-            var metadatas = new List<VisualizerMetadata>();
+            var visualizers = new List<VisualizerMetadata>();
 
             // Add the visualization metadata using no adapter
-            Create(metadatas, dataType, visualizationObjectType, visualizationObjectAttribute, visualizationPanelTypeAttribute, null);
+            Create(visualizers, dataType, visualizationObjectType, visualizationObjectAttribute, visualizationPanelTypeAttribute, null);
 
             // Find all the adapters that have an output type that's the same as the visualization object's data type (or summarizer input type)
-            List<StreamAdapterMetadata> usableAdapters = dataAdapters.FindAll(a => dataType == a.OutputType || dataType.IsSubclassOf(a.OutputType));
+            var applicableStreamAdapters = streamAdapters.FindAll(a => dataType == a.OutputType || dataType.IsSubclassOf(a.OutputType));
 
             // Add the visualization metadata using each of the compatible adapters
-            foreach (StreamAdapterMetadata adapterMetadata in usableAdapters)
+            foreach (var streamAdapter in applicableStreamAdapters)
             {
-                Create(metadatas, adapterMetadata.InputType, visualizationObjectType, visualizationObjectAttribute, visualizationPanelTypeAttribute, adapterMetadata);
+                Create(visualizers, streamAdapter.InputType, visualizationObjectType, visualizationObjectAttribute, visualizationPanelTypeAttribute, streamAdapter);
             }
 
-            return metadatas;
+            return visualizers;
         }
 
         /// <summary>
@@ -198,12 +216,12 @@ namespace Microsoft.Psi.Visualization
         }
 
         private static void Create(
-            List<VisualizerMetadata> metadatas,
+            List<VisualizerMetadata> visualizers,
             Type dataType,
             Type visualizationObjectType,
             VisualizationObjectAttribute visualizationObjectAttribute,
             VisualizationPanelTypeAttribute visualizationPanelTypeAttribute,
-            StreamAdapterMetadata adapterMetadata)
+            StreamAdapterMetadata streamAdapterMetadata)
         {
             // First, check for the case where the list of visualizer metadatas already contains a
             // visualizer with an adapter with the same type signature. If so, we need to generate
@@ -229,22 +247,22 @@ namespace Microsoft.Psi.Visualization
                 return false;
             }
 
-            var sameAdapterVisualizerMetadatas = metadatas.Where(m => HasSameAdapterTypes(m.StreamAdapterType, adapterMetadata?.AdapterType));
+            var sameAdapterVisualizers = visualizers.Where(m => HasSameAdapterTypes(m.StreamAdapterType, streamAdapterMetadata?.AdapterType));
 
             var commandTitle = default(string);
             var inNewPanelCommandTitle = default(string);
 
             // If there are other stream adapters with the same type signature
-            if (sameAdapterVisualizerMetadatas.Any())
+            if (sameAdapterVisualizers.Any())
             {
                 // Then elaborate the name of the command to include the name of the stream adapter.
-                var streamAdapterAttribute = adapterMetadata.AdapterType.GetCustomAttribute<StreamAdapterAttribute>();
+                var streamAdapterAttribute = streamAdapterMetadata.AdapterType.GetCustomAttribute<StreamAdapterAttribute>();
                 var viaStreamAdapterName = string.IsNullOrEmpty(streamAdapterAttribute.Name) ? " (via unnamed adapter)" : $" (via {streamAdapterAttribute.Name} adapter)";
                 commandTitle = $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText}{viaStreamAdapterName}";
                 inNewPanelCommandTitle = $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText} in New Panel{viaStreamAdapterName}";
 
                 // Also for all the matching adapters, elaborate the names of the corresponding commands
-                foreach (var sameAdapterOtherVisualizerMetadata in sameAdapterVisualizerMetadatas)
+                foreach (var sameAdapterOtherVisualizerMetadata in sameAdapterVisualizers)
                 {
                     var otherStreamAdapterAttribute = sameAdapterOtherVisualizerMetadata.StreamAdapterType.GetCustomAttribute<StreamAdapterAttribute>();
                     var viaOtherStreamAdapterName = string.IsNullOrEmpty(otherStreamAdapterAttribute.Name) ? " (via unnamed adapter)" : $" (via {otherStreamAdapterAttribute.Name} adapter)";
@@ -257,37 +275,43 @@ namespace Microsoft.Psi.Visualization
             }
             else
             {
-                commandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
+                commandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || streamAdapterMetadata == null) ?
                     $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText}" :
                     $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText}";
-                inNewPanelCommandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || adapterMetadata == null) ?
+                inNewPanelCommandTitle = (visualizationObjectAttribute.IsUniversalVisualizer || streamAdapterMetadata == null) ?
                     $"{ContextMenuName.Visualize} {visualizationObjectAttribute.CommandText} in New Panel" :
                     $"{ContextMenuName.VisualizeAs} {visualizationObjectAttribute.CommandText} in New Panel";
             }
 
-            metadatas.Add(new VisualizerMetadata(
-                dataType,
-                visualizationObjectType,
-                adapterMetadata?.AdapterType,
-                visualizationObjectAttribute.SummarizerType,
-                commandTitle,
-                visualizationObjectAttribute.IconSourcePath,
-                visualizationPanelTypeAttribute.VisualizationPanelType,
-                visualizationObjectAttribute.VisualizationFormatString,
-                false,
-                visualizationObjectAttribute.IsUniversalVisualizer));
+            visualizers.Add(
+                new VisualizerMetadata(
+                    dataType,
+                    visualizationObjectType,
+                    streamAdapterMetadata?.AdapterType,
+                    new object[] { },
+                    visualizationObjectAttribute.SummarizerType,
+                    new object[] { },
+                    commandTitle,
+                    visualizationObjectAttribute.IconSourcePath,
+                    visualizationPanelTypeAttribute.VisualizationPanelType,
+                    visualizationObjectAttribute.VisualizationFormatString,
+                    false,
+                    visualizationObjectAttribute.IsUniversalVisualizer));
 
-            metadatas.Add(new VisualizerMetadata(
-                dataType,
-                visualizationObjectType,
-                adapterMetadata?.AdapterType,
-                visualizationObjectAttribute.SummarizerType,
-                inNewPanelCommandTitle,
-                visualizationObjectAttribute.NewPanelIconSourcePath,
-                visualizationPanelTypeAttribute.VisualizationPanelType,
-                visualizationObjectAttribute.VisualizationFormatString,
-                true,
-                visualizationObjectAttribute.IsUniversalVisualizer));
+            visualizers.Add(
+                new VisualizerMetadata(
+                    dataType,
+                    visualizationObjectType,
+                    streamAdapterMetadata?.AdapterType,
+                    new object[] { },
+                    visualizationObjectAttribute.SummarizerType,
+                    new object[] { },
+                    inNewPanelCommandTitle,
+                    visualizationObjectAttribute.NewPanelIconSourcePath,
+                    visualizationPanelTypeAttribute.VisualizationPanelType,
+                    visualizationObjectAttribute.VisualizationFormatString,
+                    true,
+                    visualizationObjectAttribute.IsUniversalVisualizer));
         }
 
         private static VisualizationObjectAttribute GetVisualizationObjectAttribute(Type visualizationObjectType, VisualizationLogWriter logWriter)

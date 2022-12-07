@@ -85,9 +85,9 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         {
             if (this.CurrentData != null)
             {
-                if (this.CurrentData.Speed > 0)
+                if (this.CurrentData.Magnitude > 0)
                 {
-                    var endPoint = this.CurrentData.Origin + this.CurrentData.Vector;
+                    var endPoint = this.CurrentData.Origin + this.CurrentData.Direction;
 
                     this.velocityArrow.BeginEdit();
                     this.velocityArrow.Point1 = new Win3D.Point3D(this.CurrentData.Origin.X, this.CurrentData.Origin.Y, this.CurrentData.Origin.Z);
@@ -99,7 +99,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.velocityArrow, this.Visible && this.CurrentData != null && this.CurrentData.Speed > 0);
+            this.UpdateChildVisibility(this.velocityArrow, this.Visible && this.CurrentData != null && this.CurrentData.Magnitude > 0);
         }
     }
 }

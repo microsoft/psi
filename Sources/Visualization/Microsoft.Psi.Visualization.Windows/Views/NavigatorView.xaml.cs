@@ -8,11 +8,7 @@ namespace Microsoft.Psi.Visualization.Views
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
-    using System.Windows.Media;
-    using Microsoft.Psi.Visualization.Data;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
-    using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Interaction logic for NavigatorView.xaml.

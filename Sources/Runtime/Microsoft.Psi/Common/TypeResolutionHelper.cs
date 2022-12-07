@@ -4,6 +4,8 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Text.RegularExpressions;
@@ -13,6 +15,8 @@ namespace Microsoft.Psi
     /// </summary>
     public static class TypeResolutionHelper
     {
+        private static readonly ConcurrentDictionary<string, Type> TypeCache = new ();
+
         /// <summary>
         /// Gets a type by its type name.  This method will only return types from loaded
         /// assemblies, i.e. assemblies explicitly referenced or loaded by this application.
@@ -21,6 +25,11 @@ namespace Microsoft.Psi
         /// <returns>The requested type, or null if the type was not found.</returns>
         public static Type GetVerifiedType(string typeName)
         {
+            if (TypeCache.ContainsKey(typeName))
+            {
+                return TypeCache[typeName];
+            }
+
             var type = Type.GetType(typeName, AssemblyResolver, null);
 
             if (type == null)
@@ -31,6 +40,11 @@ namespace Microsoft.Psi
                 // mscorlib/System.Private.CoreLib or the currently executing assembly.
                 typeName = RemoveCoreAssemblyName(typeName);
                 type = Type.GetType(typeName, AssemblyResolver, null);
+            }
+
+            if (type != null)
+            {
+                TypeCache.TryAdd(typeName, type);
             }
 
             return type;

@@ -11,8 +11,23 @@ namespace Microsoft.Psi.Imaging
     /// </summary>
     public static class ImagePool
     {
-        private static readonly KeyedSharedPool<Image, (int, int, PixelFormat)> Instance =
-            new KeyedSharedPool<Image, (int width, int height, PixelFormat format)>(key => new Image(key.width, key.height, key.format));
+        private static readonly KeyedSharedPool<Image, int> Instance = new (allocationSize => new Image(allocationSize));
+        private static int imageAllocationBlockSize = 1;
+
+        /// <summary>
+        /// Resets the pool of shared images.
+        /// </summary>
+        /// <param name="imageAllocationBlockSize">The image allocation block size to use.</param>
+        /// <param name="clearLiveObjects">Indicates whether to clear any live objects.</param>
+        /// <remarks>
+        /// If the clearLiveObjects flag is false, an exception is thrown if a reset is attempted while the pool
+        /// still contains live objects.
+        /// </remarks>
+        public static void Reset(int imageAllocationBlockSize, bool clearLiveObjects = false)
+        {
+            Instance.Reset(clearLiveObjects);
+            ImagePool.imageAllocationBlockSize = imageAllocationBlockSize;
+        }
 
         /// <summary>
         /// Gets or creates an image from the pool.
@@ -23,7 +38,11 @@ namespace Microsoft.Psi.Imaging
         /// <returns>A shared image from the pool.</returns>
         public static Shared<Image> GetOrCreate(int width, int height, PixelFormat pixelFormat)
         {
-            return Instance.GetOrCreate((width, height, pixelFormat));
+            var size = height * 4 * ((width * pixelFormat.GetBytesPerPixel() + 3) / 4);
+            var allocationSize = ((size + imageAllocationBlockSize - 1) / imageAllocationBlockSize) * imageAllocationBlockSize;
+            var sharedImage = Instance.GetOrCreate(allocationSize);
+            sharedImage.Resource.Initialize(width, height, pixelFormat);
+            return sharedImage;
         }
 
         /// <summary>

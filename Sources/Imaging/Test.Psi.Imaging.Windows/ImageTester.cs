@@ -16,49 +16,49 @@ namespace Test.Psi.Imaging
     [TestClass]
     public class ImageTester
     {
-        private Image testImage_Gray = Image.FromBitmap(Properties.Resources.TestImage_Gray);
-        private Image testImage_GrayDrawCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawCircle);
-        private Image testImage_GrayDrawLine = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawLine);
-        private Image testImage_GrayDrawRect = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawRect);
-        private Image testImage_GrayDrawText = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawText);
-        private Image testImage_GrayFillRect = Image.FromBitmap(Properties.Resources.TestImage_GrayFillRect);
-        private Image testImage_GrayFillCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayFillCircle);
-        private Image testImage_GrayDrawTextWithBackground = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawTextWithBackground);
-        private Image testImage_GrayFlip = Image.FromBitmap(Properties.Resources.TestImage_GrayFlip);
-        private Image testImage_GrayResized = Image.FromBitmap(Properties.Resources.TestImage_GrayResized);
-        private Image testImage_GrayRotate = Image.FromBitmap(Properties.Resources.TestImage_GrayRotate);
-        private Image testImage_GraySetPixel = Image.FromBitmap(Properties.Resources.TestImage_GraySetPixel);
-        private Image testImage_SetPixel = Image.FromBitmap(Properties.Resources.TestImage_SetPixel);
-        private Image testImage = Image.FromBitmap(Properties.Resources.TestImage);
-        private Image testImage2 = Image.FromBitmap(Properties.Resources.TestImage2);
-        private Image testImage2_Threshold = Image.FromBitmap(Properties.Resources.TestImage2_Threshold);
-        private Image testImage2_RedChannel = Image.FromBitmap(Properties.Resources.TestImage2_RedChannel);
-        private Image testImage2_GreenChannel = Image.FromBitmap(Properties.Resources.TestImage2_GreenChannel);
-        private Image testImage2_BlueChannel = Image.FromBitmap(Properties.Resources.TestImage2_BlueChannel);
-        private Image testImage2_CopyImage = Image.FromBitmap(Properties.Resources.TestImage2_CopyImage);
-        private Image testImage2_Invert = Image.FromBitmap(Properties.Resources.TestImage2_Invert);
-        private Image testImage2_Mask = Image.FromBitmap(Properties.Resources.TestImage2_Mask);
-        private Image testImage2_FlipHoriz = Image.FromBitmap(Properties.Resources.TestImage2_FlipHoriz);
-        private Image testImage2_FlipVert = Image.FromBitmap(Properties.Resources.TestImage2_FlipVert);
-        private Image testImage2_Rotate_Neg10 = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_Neg10);
-        private Image testImage2_Rotate_Neg10_Loose = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_Neg10_Loose);
-        private Image testImage2_Rotate_110 = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_110);
-        private Image testImage2_Rotate_110_Loose = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_110_Loose);
-        private Image testImage2_DrawRect = Image.FromBitmap(Properties.Resources.TestImage2_DrawRect);
-        private Image testImage2_DrawLine = Image.FromBitmap(Properties.Resources.TestImage2_DrawLine);
-        private Image testImage2_DrawCircle = Image.FromBitmap(Properties.Resources.TestImage2_DrawCircle);
-        private Image testImage2_DrawText = Image.FromBitmap(Properties.Resources.TestImage2_DrawText);
-        private Image testImage2_FillRect = Image.FromBitmap(Properties.Resources.TestImage2_FillRect);
-        private Image testImage2_FillCircle = Image.FromBitmap(Properties.Resources.TestImage2_FillCircle);
-        private Image testImage2_DrawTextWithBackground = Image.FromBitmap(Properties.Resources.TestImage2_DrawTextWithBackground);
-        private Image testImage2_AbsDiff = Image.FromBitmap(Properties.Resources.TestImage2_AbsDiff);
-        private Image testImage_0_0_200_100 = Image.FromBitmap(Properties.Resources.TestImage_Crop_0_0_200_100);
-        private Image testImage_153_57_103_199 = Image.FromBitmap(Properties.Resources.TestImage_Crop_153_57_103_199);
-        private Image testImage_73_41_59_37 = Image.FromBitmap(Properties.Resources.TestImage_Crop_73_41_59_37);
-        private Image testImage_50_25_Cubic = Image.FromBitmap(Properties.Resources.TestImage_Scale_50_25_Cubic);
-        private Image testImage_150_125_Point = Image.FromBitmap(Properties.Resources.TestImage_Scale_150_125_Point);
-        private Image testImage_25_200_Linear = Image.FromBitmap(Properties.Resources.TestImage_Scale_25_200_Linear);
-        private Image solidColorsImage = Image.FromBitmap(Properties.Resources.SolidColors);
+        private readonly Image testImage_Gray = Image.FromBitmap(Properties.Resources.TestImage_Gray);
+        private readonly Image testImage_GrayDrawCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawCircle);
+        private readonly Image testImage_GrayDrawLine = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawLine);
+        private readonly Image testImage_GrayDrawRect = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawRect);
+        private readonly Image testImage_GrayDrawText = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawText);
+        private readonly Image testImage_GrayFillRect = Image.FromBitmap(Properties.Resources.TestImage_GrayFillRect);
+        private readonly Image testImage_GrayFillCircle = Image.FromBitmap(Properties.Resources.TestImage_GrayFillCircle);
+        private readonly Image testImage_GrayDrawTextWithBackground = Image.FromBitmap(Properties.Resources.TestImage_GrayDrawTextWithBackground);
+        private readonly Image testImage_GrayFlip = Image.FromBitmap(Properties.Resources.TestImage_GrayFlip);
+        private readonly Image testImage_GrayResized = Image.FromBitmap(Properties.Resources.TestImage_GrayResized);
+        private readonly Image testImage_GrayRotate = Image.FromBitmap(Properties.Resources.TestImage_GrayRotate);
+        private readonly Image testImage_GraySetPixel = Image.FromBitmap(Properties.Resources.TestImage_GraySetPixel);
+        private readonly Image testImage_SetPixel = Image.FromBitmap(Properties.Resources.TestImage_SetPixel);
+        private readonly Image testImage = Image.FromBitmap(Properties.Resources.TestImage);
+        private readonly Image testImage2 = Image.FromBitmap(Properties.Resources.TestImage2);
+        private readonly Image testImage2_Threshold = Image.FromBitmap(Properties.Resources.TestImage2_Threshold);
+        private readonly Image testImage2_RedChannel = Image.FromBitmap(Properties.Resources.TestImage2_RedChannel);
+        private readonly Image testImage2_GreenChannel = Image.FromBitmap(Properties.Resources.TestImage2_GreenChannel);
+        private readonly Image testImage2_BlueChannel = Image.FromBitmap(Properties.Resources.TestImage2_BlueChannel);
+        private readonly Image testImage2_CopyImage = Image.FromBitmap(Properties.Resources.TestImage2_CopyImage);
+        private readonly Image testImage2_Invert = Image.FromBitmap(Properties.Resources.TestImage2_Invert);
+        private readonly Image testImage2_Mask = Image.FromBitmap(Properties.Resources.TestImage2_Mask);
+        private readonly Image testImage2_FlipHoriz = Image.FromBitmap(Properties.Resources.TestImage2_FlipHoriz);
+        private readonly Image testImage2_FlipVert = Image.FromBitmap(Properties.Resources.TestImage2_FlipVert);
+        private readonly Image testImage2_Rotate_Neg10 = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_Neg10);
+        private readonly Image testImage2_Rotate_Neg10_Loose = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_Neg10_Loose);
+        private readonly Image testImage2_Rotate_110 = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_110);
+        private readonly Image testImage2_Rotate_110_Loose = Image.FromBitmap(Properties.Resources.TestImage2_Rotate_110_Loose);
+        private readonly Image testImage2_DrawRect = Image.FromBitmap(Properties.Resources.TestImage2_DrawRect);
+        private readonly Image testImage2_DrawLine = Image.FromBitmap(Properties.Resources.TestImage2_DrawLine);
+        private readonly Image testImage2_DrawCircle = Image.FromBitmap(Properties.Resources.TestImage2_DrawCircle);
+        private readonly Image testImage2_DrawText = Image.FromBitmap(Properties.Resources.TestImage2_DrawText);
+        private readonly Image testImage2_FillRect = Image.FromBitmap(Properties.Resources.TestImage2_FillRect);
+        private readonly Image testImage2_FillCircle = Image.FromBitmap(Properties.Resources.TestImage2_FillCircle);
+        private readonly Image testImage2_DrawTextWithBackground = Image.FromBitmap(Properties.Resources.TestImage2_DrawTextWithBackground);
+        private readonly Image testImage2_AbsDiff = Image.FromBitmap(Properties.Resources.TestImage2_AbsDiff);
+        private readonly Image testImage_0_0_200_100 = Image.FromBitmap(Properties.Resources.TestImage_Crop_0_0_200_100);
+        private readonly Image testImage_153_57_103_199 = Image.FromBitmap(Properties.Resources.TestImage_Crop_153_57_103_199);
+        private readonly Image testImage_73_41_59_37 = Image.FromBitmap(Properties.Resources.TestImage_Crop_73_41_59_37);
+        private readonly Image testImage_50_25_Cubic = Image.FromBitmap(Properties.Resources.TestImage_Scale_50_25_Cubic);
+        private readonly Image testImage_150_125_Point = Image.FromBitmap(Properties.Resources.TestImage_Scale_150_125_Point);
+        private readonly Image testImage_25_200_Linear = Image.FromBitmap(Properties.Resources.TestImage_Scale_25_200_Linear);
+        private readonly Image solidColorsImage = Image.FromBitmap(Properties.Resources.SolidColors);
 
         [TestMethod]
         [Timeout(60000)]
@@ -795,30 +795,26 @@ namespace Test.Psi.Imaging
         public void Image_CropViaOperator()
         {
             // Test that the pipeline's operator Crop() works on a stream of images and random rectangles
-            using (var pipeline = Pipeline.Create("CropViaOperator"))
-            {
-                var generator = Generators.Sequence(pipeline, 1, x => x + 1, 100, TimeSpan.FromTicks(1));
-                var p = Microsoft.Psi.Operators.Process<int, (Shared<Image>, System.Drawing.Rectangle)>(
-                    generator,
-                    (d, e, s) =>
+            using var pipeline = Pipeline.Create("CropViaOperator");
+            var generator = Generators.Sequence(pipeline, 1, x => x + 1, 100, TimeSpan.FromTicks(1));
+            var p = Microsoft.Psi.Operators.Process<int, (Shared<Image>, System.Drawing.Rectangle)>(
+                generator,
+                (d, e, s) =>
+                {
+                    var r = new Random();
+                    var rect = default(System.Drawing.Rectangle);
+                    rect.X = r.Next() % this.testImage.Width;
+                    rect.Y = r.Next() % this.testImage.Height;
+                    rect.Width = r.Next() % (this.testImage.Width - rect.X);
+                    rect.Height = r.Next() % (this.testImage.Height - rect.Y);
+                    if (rect.Width > 0 && rect.Height > 0)
                     {
-                        Random r = new Random();
-                        System.Drawing.Rectangle rect = default(System.Drawing.Rectangle);
-                        rect.X = r.Next() % this.testImage.Width;
-                        rect.Y = r.Next() % this.testImage.Height;
-                        rect.Width = r.Next() % (this.testImage.Width - rect.X);
-                        rect.Height = r.Next() % (this.testImage.Height - rect.Y);
-                        if (rect.Width > 0 && rect.Height > 0)
-                        {
-                            using (var sharedImage = ImagePool.GetOrCreate(this.testImage.Width, this.testImage.Height, this.testImage.PixelFormat))
-                            {
-                                this.testImage.CopyTo(sharedImage.Resource);
-                                s.Post((sharedImage, rect), e.OriginatingTime);
-                            }
-                        }
-                    }).Crop();
-                pipeline.Run();
-            }
+                        using var sharedImage = ImagePool.GetOrCreate(this.testImage.Width, this.testImage.Height, this.testImage.PixelFormat);
+                        this.testImage.CopyTo(sharedImage.Resource);
+                        s.Post((sharedImage, rect), e.OriginatingTime);
+                    }
+                }).Crop();
+            pipeline.Run();
         }
 
         [TestMethod]
@@ -826,35 +822,31 @@ namespace Test.Psi.Imaging
         public void Image_CropViaJoinOperator()
         {
             // Test that the pipeline's operator Crop() works on a stream of images and random rectangles
-            using (var pipeline = Pipeline.Create("CropViaOperator"))
-            {
-                using (var sharedImage = ImagePool.GetOrCreate(this.testImage.Width, this.testImage.Height, this.testImage.PixelFormat))
-                {
-                    this.testImage.CopyTo(sharedImage.Resource);
+            using var pipeline = Pipeline.Create("CropViaOperator");
+            using var sharedImage = ImagePool.GetOrCreate(this.testImage.Width, this.testImage.Height, this.testImage.PixelFormat);
+            this.testImage.CopyTo(sharedImage.Resource);
 
-                    // Use a non-insignificant interval for both Sequences to ensure that the Join processes all
-                    // messages from both streams (default interval of 1-tick is too small to guarantee this).
-                    var images = Generators.Sequence(pipeline, sharedImage, x => sharedImage, 100, TimeSpan.FromMilliseconds(1));
-                    var rects = Generators.Sequence(
-                        pipeline,
-                        new System.Drawing.Rectangle(0, 0, 1, 1),
-                        x =>
-                            {
-                                Random r = new Random();
-                                System.Drawing.Rectangle rect = default(System.Drawing.Rectangle);
-                                rect.X = r.Next(0, this.testImage.Width);
-                                rect.Y = r.Next(0, this.testImage.Height);
-                                rect.Width = r.Next(1, this.testImage.Width - rect.X);
-                                rect.Height = r.Next(1, this.testImage.Height - rect.Y);
+            // Use a non-insignificant interval for both Sequences to ensure that the Join processes all
+            // messages from both streams (default interval of 1-tick is too small to guarantee this).
+            var images = Generators.Sequence(pipeline, sharedImage, x => sharedImage, 100, TimeSpan.FromMilliseconds(1));
+            var rects = Generators.Sequence(
+                pipeline,
+                new System.Drawing.Rectangle(0, 0, 1, 1),
+                x =>
+                    {
+                        var r = new Random();
+                        var rect = default(System.Drawing.Rectangle);
+                        rect.X = r.Next(0, this.testImage.Width);
+                        rect.Y = r.Next(0, this.testImage.Height);
+                        rect.Width = r.Next(1, this.testImage.Width - rect.X);
+                        rect.Height = r.Next(1, this.testImage.Height - rect.Y);
 
-                                return rect;
-                            },
-                        100,
-                        TimeSpan.FromMilliseconds(1));
-                    images.Join(rects, Reproducible.Nearest<System.Drawing.Rectangle>()).Crop();
-                    pipeline.Run();
-                }
-            }
+                        return rect;
+                    },
+                100,
+                TimeSpan.FromMilliseconds(1));
+            images.Join(rects, Reproducible.Nearest<System.Drawing.Rectangle>()).Crop();
+            pipeline.Run();
         }
 
         [TestMethod]
@@ -903,13 +895,11 @@ namespace Test.Psi.Imaging
         public void Image_CropDifferentRegions()
         {
             // Crop a slightly different interior region of the same size and verify that the data is different (as a sanity check)
-            using (var croppedImage = this.testImage.Crop(74, 42, 59, 37))
-            {
-                var croppedImage_74_42_59_37 = croppedImage;
-                CollectionAssert.AreNotEqual(
-                    this.testImage_73_41_59_37.ReadBytes(this.testImage_73_41_59_37.Size),
-                    croppedImage_74_42_59_37.ReadBytes(croppedImage_74_42_59_37.Size));
-            }
+            using var croppedImage = this.testImage.Crop(74, 42, 59, 37);
+            var croppedImage_74_42_59_37 = croppedImage;
+            CollectionAssert.AreNotEqual(
+                this.testImage_73_41_59_37.ReadBytes(this.testImage_73_41_59_37.Size),
+                croppedImage_74_42_59_37.ReadBytes(croppedImage_74_42_59_37.Size));
         }
 
         [TestMethod]
@@ -1014,7 +1004,7 @@ namespace Test.Psi.Imaging
         {
             this.AssertAreImagesEqual(this.testImage, this.testImage);
             this.AssertAreImagesEqual(this.testImage_Gray, this.testImage_Gray);
-            ImageError err = new ImageError();
+            var err = new ImageError();
             Assert.IsFalse(this.testImage2.Compare(this.testImage2_DrawRect, 2.0, 0.01, ref err));
         }
 
@@ -1068,7 +1058,7 @@ namespace Test.Psi.Imaging
             Serializer.Serialize(writer, this.testImage, context);
 
             // verify the image type schema
-            string contract = TypeSchema.GetContractName(typeof(Image), knownSerializers.RuntimeVersion);
+            string contract = TypeSchema.GetContractName(typeof(Image), knownSerializers.RuntimeInfo.SerializationSystemVersion);
             Assert.IsTrue(knownSerializers.Schemas.ContainsKey(contract));
 
             // deserialize the image and verify the data
@@ -1096,7 +1086,7 @@ namespace Test.Psi.Imaging
             Serializer.Serialize(writer, testDepthImage, context);
 
             // verify the image type schema
-            string contract = TypeSchema.GetContractName(typeof(DepthImage), knownSerializers.RuntimeVersion);
+            string contract = TypeSchema.GetContractName(typeof(DepthImage), knownSerializers.RuntimeInfo.SerializationSystemVersion);
             Assert.IsTrue(knownSerializers.Schemas.ContainsKey(contract));
 
             // deserialize the image and verify the data
@@ -1150,22 +1140,20 @@ namespace Test.Psi.Imaging
                     sourceImage.Save(filename);
 
                     // Load the image from file and compare
-                    using (var testImage = Image.FromFile(filename))
+                    using var testImage = Image.FromFile(filename);
+                    if (pixelFormat == PixelFormat.RGB_24bpp)
                     {
-                        if (pixelFormat == PixelFormat.RGB_24bpp)
-                        {
-                            // RGB_24bpp images are converted to BGR_24bpp before saving
-                            this.AssertAreImagesEqual(sourceImage.Convert(PixelFormat.BGR_24bpp), testImage);
-                        }
-                        else if (pixelFormat == PixelFormat.BGRX_32bpp)
-                        {
-                            // BGRX_32bpp images are converted to BGRA_32bpp before saving
-                            this.AssertAreImagesEqual(sourceImage.Convert(PixelFormat.BGRA_32bpp), testImage);
-                        }
-                        else
-                        {
-                            this.AssertAreImagesEqual(sourceImage, testImage);
-                        }
+                        // RGB_24bpp images are converted to BGR_24bpp before saving
+                        this.AssertAreImagesEqual(sourceImage.Convert(PixelFormat.BGR_24bpp), testImage);
+                    }
+                    else if (pixelFormat == PixelFormat.BGRX_32bpp)
+                    {
+                        // BGRX_32bpp images are converted to BGRA_32bpp before saving
+                        this.AssertAreImagesEqual(sourceImage.Convert(PixelFormat.BGRA_32bpp), testImage);
+                    }
+                    else
+                    {
+                        this.AssertAreImagesEqual(sourceImage, testImage);
                     }
                 }
             }
@@ -1175,9 +1163,35 @@ namespace Test.Psi.Imaging
             }
         }
 
+        [TestMethod]
+        [Timeout(60000)]
+        public void SharedImagePoolCollisionTest()
+        {
+            var bmp57 = new System.Drawing.Bitmap(5, 7);
+            var bmp75 = new System.Drawing.Bitmap(7, 5);
+
+            Assert.AreEqual<int>(5, bmp57.Width);
+            Assert.AreEqual<int>(7, bmp57.Height);
+            Assert.AreEqual<int>(7, bmp75.Width);
+            Assert.AreEqual<int>(5, bmp75.Height);
+
+            var shared57 = ImagePool.GetOrCreateFromBitmap(bmp57);
+            Assert.AreEqual<int>(5, shared57.Resource.Width);
+            Assert.AreEqual<int>(7, shared57.Resource.Height);
+
+            // Ensure that the ImagePool is not recycling images based solely on the product of
+            // width*height (i.e. the same number of pixels but different dimensions), as the
+            // stride and total size of the recycled image could be incorrect.
+
+            shared57.Dispose(); // release to be recycled
+            var shared75 = ImagePool.GetOrCreateFromBitmap(bmp75); // should *not* get the recycled image
+            Assert.AreEqual<int>(7, shared75.Resource.Width);
+            Assert.AreEqual<int>(5, shared75.Resource.Height);
+        }
+
         private void AssertAreImagesEqual(ImageBase referenceImage, ImageBase subjectImage, double tolerance = 6.0, double percentOutliersAllowed = 0.01)
         {
-            ImageError err = new ImageError();
+            var err = new ImageError();
             Assert.AreEqual(referenceImage.Stride, subjectImage.Stride); // also check for consistency in the strides of allocated Images
             Assert.IsTrue(
                 referenceImage.Compare(subjectImage, tolerance, percentOutliersAllowed, ref err),

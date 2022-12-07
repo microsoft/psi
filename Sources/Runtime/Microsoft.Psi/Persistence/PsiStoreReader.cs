@@ -18,12 +18,12 @@ namespace Microsoft.Psi.Persistence
     /// </summary>
     public sealed class PsiStoreReader : IDisposable
     {
-        private readonly Dictionary<int, bool> isIndexedStream = new Dictionary<int, bool>();
+        private readonly Dictionary<int, bool> isIndexedStream = new ();
         private readonly MessageReader messageReader;
         private readonly MessageReader largeMessageReader;
         private readonly Shared<MetadataCache> metadataCache;
         private readonly Shared<PageIndexCache> indexCache;
-        private readonly HashSet<int> enabledStreams = new HashSet<int>();
+        private readonly HashSet<int> enabledStreams = new ();
 
         private TimeInterval replayInterval = TimeInterval.Empty;
         private bool useOriginatingTime = false;
@@ -111,9 +111,9 @@ namespace Microsoft.Psi.Persistence
         public int StreamCount => this.metadataCache.Resource.AvailableStreams.Count();
 
         /// <summary>
-        /// Gets the version of the runtime used to write to this store.
+        /// Gets info about the runtime that was used to write to this store.
         /// </summary>
-        public RuntimeInfo RuntimeVersion => this.metadataCache.Resource.RuntimeVersion;
+        public RuntimeInfo RuntimeInfo => this.metadataCache.Resource.RuntimeInfo;
 
         /// <summary>
         /// Opens the specified stream for reading.
@@ -365,7 +365,11 @@ namespace Microsoft.Psi.Persistence
 
                 var extentId = indexEntry.ExtentId - int.MinValue;
                 this.largeMessageReader.Seek(extentId, indexEntry.Position);
-                this.largeMessageReader.MoveNext();
+                if (!this.largeMessageReader.MoveNext())
+                {
+                    throw new ArgumentException($"Invalid index entry (extent: {extentId}, position: {indexEntry.Position}, current: {this.largeMessageReader.CurrentExtentId})");
+                }
+
                 return this.largeMessageReader.Read(ref buffer);
             }
 
@@ -385,12 +389,20 @@ namespace Microsoft.Psi.Persistence
             {
                 var extentId = indexEntry.ExtentId - int.MinValue;
                 this.largeMessageReader.Seek(extentId, indexEntry.Position);
-                this.largeMessageReader.MoveNext();
+                if (!this.largeMessageReader.MoveNext())
+                {
+                    throw new ArgumentException($"Invalid index entry (extent: {indexEntry.ExtentId - int.MinValue}, position: {indexEntry.Position}, current: {this.largeMessageReader.CurrentExtentId})");
+                }
+
                 return this.largeMessageReader.Read(ref buffer);
             }
 
             this.messageReader.Seek(indexEntry.ExtentId, indexEntry.Position);
-            this.messageReader.MoveNext();
+            if (!this.messageReader.MoveNext())
+            {
+                throw new ArgumentException($"Invalid index entry (extent: {indexEntry.ExtentId}, position: {indexEntry.Position}, current: {this.messageReader.CurrentExtentId})");
+            }
+
             return this.messageReader.Read(ref buffer);
         }
 

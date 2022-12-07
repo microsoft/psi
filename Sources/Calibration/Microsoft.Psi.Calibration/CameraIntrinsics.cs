@@ -141,6 +141,13 @@ namespace Microsoft.Psi.Calibration
         public Point2D? GetPixelPosition(Point3D point3D, bool distort, bool nullIfOutsideFieldOfView = true)
         {
             // X points in the depth dimension. Y points to the left, and Z points up.
+
+            // If the point is not in front of the camera, we cannot compute the projection
+            if (point3D.X <= 0)
+            {
+                return null;
+            }
+
             var point2D = new Point2D(-point3D.Y / point3D.X, -point3D.Z / point3D.X);
             if (distort)
             {

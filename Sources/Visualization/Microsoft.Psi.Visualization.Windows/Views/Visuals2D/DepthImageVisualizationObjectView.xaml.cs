@@ -3,15 +3,11 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.Windows;
-    using System.Windows.Controls;
-    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -37,39 +33,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <summary>
         /// Gets the depth image visualization object.
         /// </summary>
-        public DepthImageVisualizationObject DepthImageVisualizationObject =>
-            this.VisualizationObject as DepthImageVisualizationObject;
-
-        /// <inheritdoc/>
-        public override void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            base.AppendContextMenuItems(menuItems);
-
-            // Add Set Cursor Epsilon menu with sub-menu items
-            var rangeModeMenuItem = MenuItemHelper.CreateMenuItem(
-                string.Empty,
-                "Set Range Mode",
-                null,
-                true);
-
-            rangeModeMenuItem.Items.Add(
-                MenuItemHelper.CreateMenuItem(
-                    string.Empty,
-                    DepthImageRangeMode.Auto.ToString(),
-                    new RelayCommand(
-                        () => this.DepthImageVisualizationObject.RangeMode = DepthImageRangeMode.Auto),
-                    true));
-
-            rangeModeMenuItem.Items.Add(
-                MenuItemHelper.CreateMenuItem(
-                    string.Empty,
-                    DepthImageRangeMode.Maximum.ToString(),
-                    new RelayCommand(
-                        () => this.DepthImageVisualizationObject.RangeMode = DepthImageRangeMode.Maximum),
-                    true));
-
-            menuItems.Add(rangeModeMenuItem);
-        }
+        public DepthImageVisualizationObject DepthImageVisualizationObject => this.VisualizationObject as DepthImageVisualizationObject;
 
         /// <inheritdoc/>
         protected override void UpdateView()

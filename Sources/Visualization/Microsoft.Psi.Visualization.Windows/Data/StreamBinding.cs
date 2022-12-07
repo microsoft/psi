@@ -5,43 +5,56 @@ namespace Microsoft.Psi.Visualization.Data
 {
     using System;
     using System.Runtime.Serialization;
+    using Microsoft.Psi.Visualization.Adapters;
 
     /// <summary>
-    /// Represents information needed to uniquely identify and open a stream.
+    /// Represents information needed to uniquely identify a source or derived stream.
     /// </summary>
+    /// <remarks>
+    /// A stream binding contains an overall stream adapter that is formed by chaining
+    /// a derived stream adapter (used to compute the values for the derived stream from
+    /// the source stream) and a visualizer adapter (used to adapt the values produced by
+    /// the stream to the visualizer that the binding connects to). In addition, the
+    /// binding contains information about the summarizer used by the bound visualizer.
+    /// </remarks>
     [Serializable]
     [DataContract]
     public class StreamBinding
     {
         private IStreamAdapter streamAdapter;
-        private Type streamAdapterType;
-        private ISummarizer summarizer;
-        private Type summarizerType;
+        private IStreamAdapter derivedStreamAdapter;
+        private Type derivedStreamAdapterType;
+        private IStreamAdapter visualizerStreamAdapter;
+        private Type visualizerStreamAdapterType;
+        private ISummarizer visualizerSummarizer;
+        private Type visualizerSummarizerType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StreamBinding"/> class.
         /// </summary>
-        /// <param name="streamName">The stream name.</param>
+        /// <param name="sourceStreamName">The source stream name.</param>
         /// <param name="partitionName">The partition name.</param>
-        /// <param name="nodePath">The path of the node in the tree that has generated this stream binding.</param>
-        /// <param name="streamAdapterType">The type of the stream adapter, null if there is none.</param>
-        /// <param name="streamAdapterArguments">The arguments used when constructing the stream adapter, null if there are none.</param>
-        /// <param name="summarizerType">The type of the stream summarizer, null if there is none.</param>
-        /// <param name="summarizerArguments">The arguments used when constructing the stream summarizer, null if there are none.</param>
-        /// <param name="isDerived">True if this stream binding represents a binding to a derived stream rather than to the stream itself, otherwise false.</param>
+        /// <param name="streamName">An optional parameter specifying the name of the stream (if not specified, defaults to the source stream name).</param>
+        /// <param name="derivedStreamAdapterType">An optional parameter specifying the type of the stream adapter used to compute the derived stream, null if there is none.</param>
+        /// <param name="derivedStreamAdapterArguments">An optional parameter specifying the arguments for constructing the stream adapter used to compute the derived stream, null if there are none.</param>
+        /// <param name="visualizerStreamAdapterType">An optional parameter specifying the type of the stream adapter used to couple the stream to the visualizer, null if there is none.</param>
+        /// <param name="visualizerStreamAdapterArguments">An optional parameter specifying the arguments for constructing the stream adapter used to couple the stream to the visualizer, null if there are none.</param>
+        /// <param name="visualizerSummarizerType">An optional parameter specifying the type of the stream summarizer used by the visualizer, null if there is none.</param>
+        /// <param name="visualizerSummarizerArguments">An optional parameter specifying the arguments used when constructing the stream summarizer used by the visualizer, null if there are none.</param>
         public StreamBinding(
-            string streamName,
+            string sourceStreamName,
             string partitionName,
-            string nodePath,
-            Type streamAdapterType = null,
-            object[] streamAdapterArguments = null,
-            Type summarizerType = null,
-            object[] summarizerArguments = null,
-            bool isDerived = false)
+            string streamName = null,
+            Type derivedStreamAdapterType = null,
+            object[] derivedStreamAdapterArguments = null,
+            Type visualizerStreamAdapterType = null,
+            object[] visualizerStreamAdapterArguments = null,
+            Type visualizerSummarizerType = null,
+            object[] visualizerSummarizerArguments = null)
         {
-            if (string.IsNullOrWhiteSpace(streamName))
+            if (string.IsNullOrWhiteSpace(sourceStreamName))
             {
-                throw new ArgumentNullException(nameof(streamName));
+                throw new ArgumentNullException(nameof(sourceStreamName));
             }
 
             if (string.IsNullOrWhiteSpace(partitionName))
@@ -49,14 +62,15 @@ namespace Microsoft.Psi.Visualization.Data
                 throw new ArgumentNullException(nameof(partitionName));
             }
 
-            this.StreamName = streamName;
             this.PartitionName = partitionName;
-            this.NodePath = nodePath;
-            this.StreamAdapterType = streamAdapterType;
-            this.StreamAdapterArguments = streamAdapterArguments;
-            this.SummarizerType = summarizerType;
-            this.SummarizerArguments = summarizerArguments;
-            this.IsDerived = isDerived;
+            this.SourceStreamName = sourceStreamName;
+            this.StreamName = streamName ?? sourceStreamName;
+            this.DerivedStreamAdapterType = derivedStreamAdapterType;
+            this.DerivedStreamAdapterArguments = derivedStreamAdapterArguments;
+            this.VisualizerStreamAdapterType = visualizerStreamAdapterType;
+            this.VisualizerStreamAdapterArguments = visualizerStreamAdapterArguments;
+            this.VisualizerSummarizerType = visualizerSummarizerType;
+            this.VisualizerSummarizerArguments = visualizerSummarizerArguments;
         }
 
         private StreamBinding()
@@ -65,26 +79,40 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <summary>
-        /// Gets stream name.
+        /// Gets the partition name.
         /// </summary>
         [DataMember]
-        public string StreamName { get; internal set; }
+        public string PartitionName { get; }
 
         /// <summary>
-        /// Gets partition name.
+        /// Gets the source stream name.
         /// </summary>
         [DataMember]
-        public string PartitionName { get; private set; }
+        public string SourceStreamName { get; }
 
         /// <summary>
-        /// Gets the node path.
+        /// Gets the stream name.
         /// </summary>
+        /// <remarks>
+        /// In the case of derived streams, the stream name is different from the source
+        /// stream name.
+        /// </remarks>
         [DataMember]
-        public string NodePath { get; private set; }
+        public string StreamName { get; }
 
         /// <summary>
-        /// Gets stream adapter.
+        /// Gets a value indicating whether the binding is to a derived stream.
         /// </summary>
+        [IgnoreDataMember]
+        public bool IsBindingToDerivedStream => this.DerivedStreamAdapter != null;
+
+        /// <summary>
+        /// Gets the end-to-end stream adapter.
+        /// </summary>
+        /// <remarks>
+        /// The end-to-end stream adapter for the binding composes any existing
+        /// derived stream adapter and visualizer adapter.
+        /// </remarks>
         [IgnoreDataMember]
         public IStreamAdapter StreamAdapter
         {
@@ -92,122 +120,215 @@ namespace Microsoft.Psi.Visualization.Data
             {
                 if (this.streamAdapter == null)
                 {
-                    this.streamAdapter = this.StreamAdapterType != null ? (IStreamAdapter)Activator.CreateInstance(this.StreamAdapterType, this.StreamAdapterArguments) : null;
+                    Type streamAdapterType;
+                    object[] streamAdapterArguments;
+                    if (this.DerivedStreamAdapterType != null)
+                    {
+                        if (this.VisualizerStreamAdapterType != null)
+                        {
+                            streamAdapterType = typeof(ChainedStreamAdapter<,,,,>).MakeGenericType(
+                                this.DerivedStreamAdapter.SourceType,
+                                this.DerivedStreamAdapter.DestinationType,
+                                this.VisualizerStreamAdapter.DestinationType,
+                                this.DerivedStreamAdapterType,
+                                this.VisualizerStreamAdapterType);
+                            streamAdapterArguments = new object[] { this.DerivedStreamAdapterArguments, this.VisualizerStreamAdapterArguments };
+                        }
+                        else
+                        {
+                            streamAdapterType = this.DerivedStreamAdapterType;
+                            streamAdapterArguments = this.DerivedStreamAdapterArguments;
+                        }
+                    }
+                    else
+                    {
+                        streamAdapterType = this.VisualizerStreamAdapterType;
+                        streamAdapterArguments = this.VisualizerStreamAdapterArguments;
+                    }
+
+                    this.streamAdapter = streamAdapterType != null ? (IStreamAdapter)Activator.CreateInstance(streamAdapterType, streamAdapterArguments) : null;
                 }
 
                 return this.streamAdapter;
             }
+        }
 
-            private set
+        /// <summary>
+        /// Gets the derived stream adapter.
+        /// </summary>
+        /// <remarks>
+        /// The derived stream adapter is used to compute values for the derived
+        /// stream based on the source stream.
+        /// </remarks>
+        [IgnoreDataMember]
+        public IStreamAdapter DerivedStreamAdapter
+        {
+            get
             {
-                // update value and update type (and type name) as well
-                this.streamAdapter = value;
-                this.StreamAdapterType = this.streamAdapter?.GetType();
+                if (this.derivedStreamAdapter == null)
+                {
+                    this.derivedStreamAdapter = this.DerivedStreamAdapterType != null ? (IStreamAdapter)Activator.CreateInstance(this.DerivedStreamAdapterType, this.DerivedStreamAdapterArguments) : null;
+                }
+
+                return this.derivedStreamAdapter;
             }
         }
 
         /// <summary>
-        /// Gets or sets the stream adapter arguments needed by the ctor of the stream adapter.
-        /// </summary>
-        [DataMember]
-        public object[] StreamAdapterArguments { get; set; }
-
-        /// <summary>
-        /// Gets a value indicating whether this stream binding represents a binding to a member of the data in the stream rather than to the stream itself.
-        /// </summary>
-        [DataMember]
-        public bool IsDerived { get; private set; }
-
-        /// <summary>
-        /// Gets stream adapter type.
+        /// Gets the derived stream adapter type.
         /// </summary>
         [IgnoreDataMember]
-        public Type StreamAdapterType
+        public Type DerivedStreamAdapterType
         {
             get
             {
-                if (this.streamAdapterType == null && this.StreamAdapterTypeName != null)
+                if (this.derivedStreamAdapterType == null && this.DerivedStreamAdapterTypeName != null)
                 {
-                    this.streamAdapterType = TypeResolutionHelper.GetVerifiedType(this.StreamAdapterTypeName);
+                    this.derivedStreamAdapterType = TypeResolutionHelper.GetVerifiedType(this.DerivedStreamAdapterTypeName);
                 }
 
-                return this.streamAdapterType;
+                return this.derivedStreamAdapterType;
             }
 
             private set
             {
                 // update value and update type name
-                this.streamAdapterType = value;
+                this.derivedStreamAdapterType = value;
 
                 // use assembly-qualified name as stream adapter may be in a different assembly
-                this.StreamAdapterTypeName = this.streamAdapterType?.AssemblyQualifiedName;
+                this.DerivedStreamAdapterTypeName = this.derivedStreamAdapterType?.AssemblyQualifiedName;
             }
         }
 
         /// <summary>
-        /// Gets summarizer.
+        /// Gets the derived stream adapter arguments.
+        /// </summary>
+        [DataMember]
+        public object[] DerivedStreamAdapterArguments { get; }
+
+        /// <summary>
+        /// Gets visualizer stream adapter.
+        /// </summary>
+        /// <remarks>
+        /// The visualizer stream adapter is used to adapt the values of the stream
+        /// to the visualizer used.
+        /// </remarks>
+        [IgnoreDataMember]
+        public IStreamAdapter VisualizerStreamAdapter
+        {
+            get
+            {
+                if (this.visualizerStreamAdapter == null)
+                {
+                    this.visualizerStreamAdapter = this.VisualizerStreamAdapterType != null ? (IStreamAdapter)Activator.CreateInstance(this.VisualizerStreamAdapterType, this.VisualizerStreamAdapterArguments) : null;
+                }
+
+                return this.visualizerStreamAdapter;
+            }
+        }
+
+        /// <summary>
+        /// Gets visualizer stream adapter type.
+        /// </summary>
+        [IgnoreDataMember]
+        public Type VisualizerStreamAdapterType
+        {
+            get
+            {
+                if (this.visualizerStreamAdapterType == null && this.VisualizerStreamAdapterTypeName != null)
+                {
+                    this.visualizerStreamAdapterType = TypeResolutionHelper.GetVerifiedType(this.VisualizerStreamAdapterTypeName);
+                }
+
+                return this.visualizerStreamAdapterType;
+            }
+
+            private set
+            {
+                // update value and update type name
+                this.visualizerStreamAdapterType = value;
+
+                // use assembly-qualified name as stream adapter may be in a different assembly
+                this.VisualizerStreamAdapterTypeName = this.visualizerStreamAdapterType?.AssemblyQualifiedName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the visualizer stream adapter arguments.
+        /// </summary>
+        [DataMember]
+        public object[] VisualizerStreamAdapterArguments { get; }
+
+        /// <summary>
+        /// Gets the summarizer.
         /// </summary>
         [IgnoreDataMember]
         public ISummarizer Summarizer
         {
             get
             {
-                if (this.summarizer == null)
+                if (this.visualizerSummarizer == null)
                 {
-                    this.summarizer = this.SummarizerType != null ? (ISummarizer)Activator.CreateInstance(this.SummarizerType, this.SummarizerArguments) : null;
+                    this.visualizerSummarizer = this.VisualizerSummarizerType != null ? (ISummarizer)Activator.CreateInstance(this.VisualizerSummarizerType, this.VisualizerSummarizerArguments) : null;
                 }
 
-                return this.summarizer;
+                return this.visualizerSummarizer;
             }
 
             private set
             {
                 // update value and update type (and type name) as well
-                this.summarizer = value;
-                this.SummarizerType = this.summarizer?.GetType();
+                this.visualizerSummarizer = value;
+                this.VisualizerSummarizerType = this.visualizerSummarizer?.GetType();
             }
         }
 
         /// <summary>
-        /// Gets or sets the summarizer arguments.
-        /// </summary>
-        [DataMember]
-        public object[] SummarizerArguments { get; set; }
-
-        /// <summary>
-        /// Gets summarizer type.
+        /// Gets the summarizer type.
         /// </summary>
         [IgnoreDataMember]
-        public Type SummarizerType
+        public Type VisualizerSummarizerType
         {
             get
             {
-                if (this.summarizerType == null && this.SummarizerTypeName != null)
+                if (this.visualizerSummarizerType == null && this.SummarizerTypeName != null)
                 {
-                    this.summarizerType = TypeResolutionHelper.GetVerifiedType(this.SummarizerTypeName);
+                    this.visualizerSummarizerType = TypeResolutionHelper.GetVerifiedType(this.SummarizerTypeName);
                 }
 
-                return this.summarizerType;
+                return this.visualizerSummarizerType;
             }
 
             private set
             {
                 // update value and update type name
-                this.summarizerType = value;
+                this.visualizerSummarizerType = value;
 
                 // use assembly-qualified name as stream reader may be in a different assembly
-                this.SummarizerTypeName = this.summarizerType?.AssemblyQualifiedName;
+                this.SummarizerTypeName = this.visualizerSummarizerType?.AssemblyQualifiedName;
             }
         }
 
         /// <summary>
-        /// Gets or sets stream adapter type name.
+        /// Gets the summarizer arguments.
         /// </summary>
         [DataMember]
-        private string StreamAdapterTypeName { get; set; }
+        public object[] VisualizerSummarizerArguments { get; }
 
         /// <summary>
-        /// Gets or sets summarizer type name.
+        /// Gets or sets the derived stream adapter type name.
+        /// </summary>
+        [DataMember]
+        private string DerivedStreamAdapterTypeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the visualizer stream adapter type name.
+        /// </summary>
+        [DataMember]
+        private string VisualizerStreamAdapterTypeName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the summarizer type name.
         /// </summary>
         [DataMember]
         private string SummarizerTypeName { get; set; }

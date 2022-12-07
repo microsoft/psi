@@ -5,7 +5,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Reflection;
     using System.Runtime.Serialization;
 
     /// <summary>

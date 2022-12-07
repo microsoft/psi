@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma warning disable SA1305 // Variable should not use Hungarian notation
-
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System.ComponentModel;

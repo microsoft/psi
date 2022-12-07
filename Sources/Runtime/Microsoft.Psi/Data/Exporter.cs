@@ -50,7 +50,7 @@ namespace Microsoft.Psi.Data
             this.pipeline.PipelineRun += (_, e) => this.writer.InitializeStreamOpenedTimes(e.StartOriginatingTime);
 
             // write the version info
-            this.writer.WriteToCatalog(this.serializers.RuntimeVersion);
+            this.writer.WriteToCatalog(this.serializers.RuntimeInfo);
 
             // copy the schemas present so far and also make sure the catalog captures schemas added in the future
             this.serializers.SchemaAdded += (o, e) => this.writer.WriteToCatalog(e);

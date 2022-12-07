@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// </summary>
     public partial class PipelineDiagnosticsVisualizationModel
     {
-        private Stack<int> navStack = new Stack<int>();
+        private readonly Stack<int> navStack = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PipelineDiagnosticsVisualizationModel"/> class.

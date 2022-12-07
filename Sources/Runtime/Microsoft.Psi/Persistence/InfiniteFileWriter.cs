@@ -71,7 +71,11 @@ namespace Microsoft.Psi.Persistence
                 }
                 catch (ObjectDisposedException)
                 {
-                    // ignore
+                    // ignore if localWritePulse was disposed
+                }
+                catch (AbandonedMutexException)
+                {
+                    // ignore if globalWritePulse was disposed
                 }
             })) { IsBackground = true }.Start();
 

@@ -15,17 +15,19 @@
     xmlns:xctk="clr-namespace:Xceed.Wpf.Toolkit.PropertyGrid;assembly=Xceed.Wpf.Toolkit"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     Title="{Binding TitleText}"
-    WindowState="{Binding AppSettings.WindowState, Mode=TwoWay}"
-    Top="{Binding AppSettings.WindowPositionTop, Mode=TwoWay}"
-    Left="{Binding AppSettings.WindowPositionLeft, Mode=TwoWay}"
-    Height="{Binding AppSettings.WindowHeight, Mode=TwoWay}"
-    Width="{Binding AppSettings.WindowWidth, Mode=TwoWay}"
+    WindowState="{Binding Settings.WindowState, Mode=TwoWay}"
+    Top="{Binding Settings.WindowPositionTop, Mode=TwoWay}"
+    Left="{Binding Settings.WindowPositionLeft, Mode=TwoWay}"
+    Height="{Binding Settings.WindowHeight, Mode=TwoWay}"
+    Width="{Binding Settings.WindowWidth, Mode=TwoWay}"
     Background="{StaticResource WindowBackgroundBrush}">
     
     <Window.InputBindings>
         <KeyBinding Command="{Binding PlayPauseCommand}" Key="F10" />
         <KeyBinding Command="{Binding GoToTimeCommand}" Key="G" Modifiers="Ctrl" />
-        <KeyBinding Command="{Binding ToggleCursorFollowsMouseComand}" Key="F" Modifiers="Alt" />
+        <KeyBinding Command="{Binding ZoomToSessionExtentsCommand}" Key="A" Modifiers="Ctrl" />
+        <KeyBinding Command="{Binding ZoomToSelectionCommand}" Key="S" Modifiers="Ctrl" />
+        <KeyBinding Command="{Binding ToggleCursorFollowsMouseCommand}" Key="F" Modifiers="Alt" />
         <KeyBinding Command="{Binding MoveSelectionLeftCommand}" Key="Left" Modifiers="Alt" />
         <KeyBinding Command="{Binding MoveSelectionRightCommand}" Key="Right" Modifiers="Alt" />
         <KeyBinding Command="{Binding ClearSelectionCommand}" Key="C" Modifiers="Alt" />
@@ -68,14 +70,32 @@
                         <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=dataset-open.png}" Height="16" Margin="4,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
+                <!-- https://stackoverflow.com/questions/17830587/bind-items-to-menuitem-use-command -->
+                <MenuItem Header="Open _Recently Used Dataset" ItemsSource="{Binding Settings.MostRecentlyUsedDatasetFilenames}" Height="25">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}, Path=DataContext.OpenRecentlyUsedDatasetCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                            <Setter Property="Height" Value="25"/>
+                            <Setter Property="HeaderTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Header, RelativeSource={RelativeSource x:AncestorType=MenuItem}}"/>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
                 <MenuItem Header="_Save Dataset As" Command="{Binding SaveDatasetAsCommand}" Height="25">
                     <MenuItem.Icon>
                         <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=dataset-save.png}" Height="16" Margin="4,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Auto Save Da_taset" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoSaveDatasets}"/>
-                <MenuItem Header="Auto Load Most _Recently Used Dataset" Height="25" IsCheckable="True" IsChecked="{Binding AppSettings.AutoLoadMRUDatasetOnStartUp}"/>
+                <MenuItem Header="Edit Se_ttings ..." Height="25" Command="{Binding EditSettingsCommand}"/>
+                <Separator />
+                <MenuItem Header="_View Additional Assembly Load Error Log ..." Height="25" Command="{Binding ViewAdditionalAssemblyLoadErrorLogCommand}"/>
                 <Separator />
                 <MenuItem Header="_Exit" Command="{Binding ExitCommand}" Height="25"/>
             </MenuItem>
@@ -120,10 +140,10 @@
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=timing-relative-selection.png}"/>
                 </ToggleButton>
                 <Separator Margin="4,2,4,2" Background="{StaticResource SeparatorColorBrush}" AutomationProperties.IsOffscreenBehavior="Offscreen"/>
-                <Button Command="{Binding ZoomToSessionExtentsCommand}" Margin="1" ToolTip="Zoom to Session Extents" AutomationProperties.Name="ZoomToSessionExtentsButton">
+                <Button Command="{Binding ZoomToSessionExtentsCommand}" Margin="1" ToolTip="Zoom to Session Extents (Ctrl+A)" AutomationProperties.Name="ZoomToSessionExtentsButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=zoom-to-session.png}"/>
                 </Button>
-                <Button Command="{Binding ZoomToSelectionCommand}" Margin="1" ToolTip="Zoom to Selection" AutomationProperties.Name="ZoomToSelectionButton">
+                <Button Command="{Binding ZoomToSelectionCommand}" Margin="1" ToolTip="Zoom to Selection (Ctrl+S)" AutomationProperties.Name="ZoomToSelectionButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=zoom-to-selection.png}"/>
                 </Button>
                 <Button Command="{Binding MoveSelectionLeftCommand}" Margin="1" ToolTip="Move Selection Left (Alt+Left)" AutomationProperties.Name="MoveSelectionLeftButton">
@@ -203,28 +223,28 @@
                 <Button Command="{Binding GoToTimeCommand}" Margin="1" ToolTip="Go To Time ... (Ctrl+G)" AutomationProperties.Name="GoToTimeButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=go-to-time.png}"/>
                 </Button>
-                <ToggleButton Command="{Binding ToggleCursorFollowsMouseComand}" IsChecked="{Binding VisualizationContainer.Navigator.CursorFollowsMouse, Mode=OneWay}" Margin="1" ToolTip="Cursor Follows Mouse (Alt+F)" AutomationProperties.Name="CursorFollowsMouseToggleButton">
+                <ToggleButton Command="{Binding ToggleCursorFollowsMouseCommand}" IsChecked="{Binding VisualizationContainer.Navigator.CursorFollowsMouse, Mode=OneWay}" Margin="1" ToolTip="Cursor Follows Mouse (Alt+F)" AutomationProperties.Name="CursorFollowsMouseToggleButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=cursor-follow.png}"/>
                 </ToggleButton>
-                <!--Separator AutomationProperties.IsOffscreenBehavior="Offscreen"/>
-                <Button Command="{Binding ShowSettingsWindowComand}" ToolTip="PsiStudio Settings" AutomationProperties.Name="ShowSettingsWindowButton">
+                <Separator AutomationProperties.IsOffscreenBehavior="Offscreen"/>
+                <Button Command="{Binding EditSettingsCommand}" ToolTip="Edit Settings" AutomationProperties.Name="EditSettingsButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=settings.png}"/>
-                </Button-->
+                </Button>
             </ToolBar>
         </ToolBarTray>
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding AppSettings.TreeViewPanelWidth, Mode=TwoWay}"/>
+                <ColumnDefinition Width="{Binding Settings.TreeViewPanelWidth, Mode=TwoWay}"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*" MinWidth="100"/>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="{Binding AppSettings.PropertiesPanelWidth, Mode=TwoWay}"/>
+                <ColumnDefinition Width="{Binding Settings.PropertiesPanelWidth, Mode=TwoWay}"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="{Binding AppSettings.DatasetsTabHeight, Mode=TwoWay}" MinHeight="100"/>
+                    <RowDefinition Height="{Binding Settings.DatasetsTabHeight, Mode=TwoWay}" MinHeight="100"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -311,7 +331,7 @@
                                             </ContentControl>
                                         </HierarchicalDataTemplate>
 
-                                        <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding StreamTreeRoot.Children}">
+                                        <HierarchicalDataTemplate x:Key="PartitionTemplate" ItemsSource="{Binding RootStreamTreeNode.Children}">
                                             <ContentControl>
                                                 <Grid Name="Grid" Opacity="{Binding UiElementOpacity}" HorizontalAlignment="Stretch">
                                                     <Grid.ContextMenu>
@@ -352,7 +372,7 @@
                                                         <RowDefinition></RowDefinition>
                                                     </Grid.RowDefinitions>
                                                     <Image Grid.Column="0" Source="{Binding IconSource}"/>
-                                                    <TextBlock Grid.Column="1" Text="{Binding DisplayName}" Margin="3,0,0,0" Foreground="{Binding ForegroundBrush}"/>
+                                                    <TextBlock Grid.Column="1" Text="{Binding DisplayString}" Margin="3,0,0,0" Foreground="{Binding ForegroundBrush}"/>
                                                     <TextBlock Grid.Column="2" Text="{Binding AuxiliaryInfo}" Margin="0,0,5,0" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
                                                 </Grid>
                                                 <i:Interaction.Triggers>

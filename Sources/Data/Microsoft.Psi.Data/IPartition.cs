@@ -23,7 +23,17 @@ namespace Microsoft.Psi.Data
         /// <summary>
         /// Gets the originating time interval (earliest to latest) of the messages in this partition.
         /// </summary>
-        TimeInterval OriginatingTimeInterval { get; }
+        TimeInterval MessageOriginatingTimeInterval { get; }
+
+        /// <summary>
+        /// Gets the creation time interval (earliest to latest) of the messages in this partition.
+        /// </summary>
+        TimeInterval MessageCreationTimeInterval { get; }
+
+        /// <summary>
+        /// Gets the time interval between open and closed time for all streams in this partition.
+        /// </summary>
+        TimeInterval TimeInterval { get; }
 
         /// <summary>
         /// Gets the size of the partition in bytes, if known.
