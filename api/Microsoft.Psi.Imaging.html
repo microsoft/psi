@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.Psi.Imaging
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -87,8 +87,168 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a></h4>
+      <section><p>Represents a depth image, stored in unmanaged memory.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.html">DepthImage.CustomSerializer</a></h4>
+      <section><p>Custom serializer used for reading/writing depth images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImageCompressor.html">DepthImageCompressor</a></h4>
+      <section><p>Implements a compressor used by the serialization layer for compressing streams
+of depth images in a generic fashion. This object should not be called directly,
+but instead is used by the <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.CustomSerializer.html">DepthImage.CustomSerializer</a> class.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImageDecoder.html">DepthImageDecoder</a></h4>
+      <section><p>Component that decodes a depth image using a specified <a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImageEncoder.html">DepthImageEncoder</a></h4>
+      <section><p>Component that encodes an image using a specified <a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImageFromStreamDecoder.html">DepthImageFromStreamDecoder</a></h4>
+      <section><p>Implements a depth image decoder.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImagePool.html">DepthImagePool</a></h4>
+      <section><p>Provides a pool of shared depth images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImageToPngStreamEncoder.html">DepthImageToPngStreamEncoder</a></h4>
+      <section><p>Implements a depth image encoder for PNG format.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthImageToTiffStreamEncoder.html">DepthImageToTiffStreamEncoder</a></h4>
+      <section><p>Implements a depth image encoder for TIFF format.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImage.html">EncodedDepthImage</a></h4>
+      <section><p>Defines an encoded depth image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.EncodedDepthImagePool.html">EncodedDepthImagePool</a></h4>
+      <section><p>Provides a pool of shared encoded depth images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.EncodedImage.html">EncodedImage</a></h4>
+      <section><p>Defines an encoded image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.EncodedImagePool.html">EncodedImagePool</a></h4>
+      <section><p>Provides a pool of shared encoded images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></h4>
+      <section><p>Represents an image, stored in unmanaged memory.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.Image.CustomSerializer.html">Image.CustomSerializer</a></h4>
+      <section><p>Custom serializer used for reading/writing images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></h4>
+      <section><p>Represents an image, stored in unmanaged memory.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html">ImageBase.CustomSerializer&lt;TImage&gt;</a></h4>
+      <section><p>Custom serializer used for reading/writing images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageCompressor.html">ImageCompressor</a></h4>
+      <section><p>Implements a compressor used by the serialization layer for compressing streams
+of images in a generic fashion. This object should not be called directly, but
+instead is used by the <a class="xref" href="Microsoft.Psi.Imaging.Image.CustomSerializer.html">Image.CustomSerializer</a> class.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageDecoder.html">ImageDecoder</a></h4>
+      <section><p>Component that decodes an image using a specified <a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageEncoder.html">ImageEncoder</a></h4>
+      <section><p>Component that encodes an image using a specified <a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageError.html">ImageError</a></h4>
+      <section><p>Defines error metrics returned by Image.Compare().</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageFromBitmapStreamDecoder.html">ImageFromBitmapStreamDecoder</a></h4>
+      <section><p>Implements a general bitmap image decoder.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageFromGZipStreamDecoder.html">ImageFromGZipStreamDecoder</a></h4>
+      <section><p>Implements a GZip image decoder.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageFromNV12StreamDecoder.html">ImageFromNV12StreamDecoder</a></h4>
+      <section><p>Implements an NV12 image decoder.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageFromStreamDecoder.html">ImageFromStreamDecoder</a></h4>
+      <section><p>Implements an image decoder.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImagePool.html">ImagePool</a></h4>
+      <section><p>Provides a pool of shared images.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageToGZipStreamEncoder.html">ImageToGZipStreamEncoder</a></h4>
+      <section><p>Implements an image encoder for GZip format.</p>
+</section>
       <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.html">ImageToJpegStreamEncoder</a></h4>
-      <section><p>Implements a JPEG image encoder.</p>
+      <section><p>Implements an image encoder for JPEG format.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageToPngStreamEncoder.html">ImageToPngStreamEncoder</a></h4>
+      <section><p>Implements an image encoder for PNG format.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImageTransformer.html">ImageTransformer</a></h4>
+      <section><p>Component that transforms an image given a specified transformer.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.ImagingOperators.html">ImagingOperators</a></h4>
+      <section><p>Implements stream operator methods for Imaging.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.Operators.html">Operators</a></h4>
+      <section><p>Various imaging operators.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.PixelFormatExtensions.html">PixelFormatExtensions</a></h4>
+      <section><p>Defines a set of extensions for getting info about a PixelFormat.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.PixelFormatHelpers.html">PixelFormatHelpers</a></h4>
+      <section><p>Implements helper functions for manipulating <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a> instances.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IDepthImage.html">IDepthImage</a></h4>
+      <section><p>Interface that defines a depth image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageCompressor.html">IDepthImageCompressor</a></h4>
+      <section><p>Defines a interface for depth image compressors.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></h4>
+      <section><p>Defines a class that can decode a depth image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></h4>
+      <section><p>Defines a class that can encode a depth image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IImage.html">IImage</a></h4>
+      <section><p>Interface that defines an image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IImageCompressor.html">IImageCompressor</a></h4>
+      <section><p>Defines a interface for image compressors.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a></h4>
+      <section><p>Defines a class that can decode an image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></h4>
+      <section><p>Defines a class that can encode an image.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.CompressionMethod.html">CompressionMethod</a></h4>
+      <section><p>Defines type of compression to use when serializing out a <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthCompressionMethod.html">DepthCompressionMethod</a></h4>
+      <section><p>Defines type of compression to use when serializing out a <a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.DepthValueSemantics.html">DepthValueSemantics</a></h4>
+      <section><p>Defines how depth values should be interpreted.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.FlipMode.html">FlipMode</a></h4>
+      <section><p>Axis along which to flip an image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></h4>
+      <section><p>Defines the various pixel formats supported by the <a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a> type.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.RotationFitMode.html">RotationFitMode</a></h4>
+      <section><p>Mode for determining final output size when rotating an image.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.SamplingMode.html">SamplingMode</a></h4>
+      <section><p>Sampling mode used by various imaging operators.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.Threshold.html">Threshold</a></h4>
+      <section><p>Thresholding modes.</p>
+</section>
+    <h3 id="delegates">Delegates
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Imaging.TransformDelegate.html">TransformDelegate</a></h4>
+      <section><p>Defines the delegate used to perform an image transformation.</p>
 </section>
 </article>
           </div>
@@ -100,7 +260,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

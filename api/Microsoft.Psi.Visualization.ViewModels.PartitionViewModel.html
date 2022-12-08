@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class PartitionViewModel
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,11 +89,13 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
-    <div class="level2"><span class="xref">PartitionViewModel</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><span class="xref">PartitionViewModel</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
   <div class="inheritedMembers">
@@ -103,6 +105,21 @@
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.html">Microsoft.Psi.Visualization.ViewModels</a></h6>
@@ -118,7 +135,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L77">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel__ctor_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_IPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.#ctor(Microsoft.Psi.Visualization.ViewModels.SessionViewModel,IPartition)">PartitionViewModel(SessionViewModel, IPartition)</h4>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel__ctor_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Microsoft_Psi_Data_IPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.#ctor(Microsoft.Psi.Visualization.ViewModels.SessionViewModel,Microsoft.Psi.Data.IPartition)">PartitionViewModel(SessionViewModel, IPartition)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.html">PartitionViewModel</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -143,7 +160,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IPartition</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.IPartition.html">IPartition</a></td>
         <td><span class="parametername">partition</span></td>
         <td><p>The partition for which to create the view model.</p>
 </td>
@@ -1138,7 +1155,7 @@ has unsaved changes, the user will be prompted to save them before continuing.</
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/ViewModels/PartitionViewModel.cs/#L348">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Update_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Update*"></a>
-  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Update_IPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Update(IPartition)">Update(IPartition)</h4>
+  <h4 id="Microsoft_Psi_Visualization_ViewModels_PartitionViewModel_Update_Microsoft_Psi_Data_IPartition_" data-uid="Microsoft.Psi.Visualization.ViewModels.PartitionViewModel.Update(Microsoft.Psi.Data.IPartition)">Update(IPartition)</h4>
   <div class="markdown level1 summary"><p>Updates the partition view model based on the latest version of the corresponding session.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1157,7 +1174,7 @@ has unsaved changes, the user will be prompted to save them before continuing.</
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">IPartition</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.IPartition.html">IPartition</a></td>
         <td><span class="parametername">partition</span></td>
         <td><p>The partition to point to.</p>
 </td>
@@ -1165,6 +1182,9 @@ has unsaved changes, the user will be prompted to save them before continuing.</
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">INotifyPropertyChanging</span>
+  </div>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">System.IDisposable</a>
   </div>
@@ -1191,7 +1211,8 @@ has unsaved changes, the user will be prompted to save them before continuing.</
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

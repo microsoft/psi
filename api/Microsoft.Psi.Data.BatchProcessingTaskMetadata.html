@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class BatchProcessingTaskMetadata
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,7 +89,7 @@ and provides functionality for configuring and executing the task.</p>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">BatchProcessingTaskMetadata</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.html">Microsoft.Psi.Data</a></h6>
@@ -102,16 +102,16 @@ and provides functionality for configuring and executing the task.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L35">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L40">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata__ctor_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata__ctor_MethodInfo_Microsoft_Psi_Data_BatchProcessingTaskAttribute_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.#ctor(MethodInfo,Microsoft.Psi.Data.BatchProcessingTaskAttribute)">BatchProcessingTaskMetadata(MethodInfo, BatchProcessingTaskAttribute)</h4>
+  <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata__ctor_MethodInfo_Microsoft_Psi_Data_BatchProcessingTaskAttribute_System_String_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.#ctor(MethodInfo,Microsoft.Psi.Data.BatchProcessingTaskAttribute,System.String)">BatchProcessingTaskMetadata(MethodInfo, BatchProcessingTaskAttribute, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BatchProcessingTaskMetadata(MethodInfo batchProcessingTaskMethodInfo, BatchProcessingTaskAttribute batchProcessingTaskAttribute)</code></pre>
+    <pre><code class="lang-csharp hljs">public BatchProcessingTaskMetadata(MethodInfo batchProcessingTaskMethodInfo, BatchProcessingTaskAttribute batchProcessingTaskAttribute, string batchProcessingTaskConfigurationsPath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -135,20 +135,26 @@ and provides functionality for configuring and executing the task.</p>
         <td><p>The batch processing task attribute.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">batchProcessingTaskConfigurationsPath</span></td>
+        <td><p>The folder in which batch processing task configurations are saved.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L27">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata__ctor_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata__ctor_Type_Microsoft_Psi_Data_BatchProcessingTaskAttribute_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.#ctor(Type,Microsoft.Psi.Data.BatchProcessingTaskAttribute)">BatchProcessingTaskMetadata(Type, BatchProcessingTaskAttribute)</h4>
+  <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata__ctor_Type_Microsoft_Psi_Data_BatchProcessingTaskAttribute_System_String_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.#ctor(Type,Microsoft.Psi.Data.BatchProcessingTaskAttribute,System.String)">BatchProcessingTaskMetadata(Type, BatchProcessingTaskAttribute, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public BatchProcessingTaskMetadata(Type batchProcessingTaskType, BatchProcessingTaskAttribute batchProcessingTaskAttribute)</code></pre>
+    <pre><code class="lang-csharp hljs">public BatchProcessingTaskMetadata(Type batchProcessingTaskType, BatchProcessingTaskAttribute batchProcessingTaskAttribute, string batchProcessingTaskConfigurationsPath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -172,13 +178,47 @@ and provides functionality for configuring and executing the task.</p>
         <td><p>The batch processing task attribute.</p>
 </td>
       </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="parametername">batchProcessingTaskConfigurationsPath</span></td>
+        <td><p>The folder in which batch processing task configurations are saved.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L49">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L65">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_ConfigurationsPath_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.ConfigurationsPath*"></a>
+  <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_ConfigurationsPath" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.ConfigurationsPath">ConfigurationsPath</h4>
+  <div class="markdown level1 summary"><p>Gets the folder under which configurations for this batch processing task should be stored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ConfigurationsPath { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_Description_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.Description*"></a>
   <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_Description" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.Description">Description</h4>
@@ -199,14 +239,14 @@ and provides functionality for configuring and executing the task.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L54">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L60">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_IconSourcePath_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.IconSourcePath*"></a>
   <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_IconSourcePath" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.IconSourcePath">IconSourcePath</h4>
@@ -227,14 +267,42 @@ and provides functionality for configuring and executing the task.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L44">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L70">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_MostRecentlyUsedConfiguration_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.MostRecentlyUsedConfiguration*"></a>
+  <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_MostRecentlyUsedConfiguration" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.MostRecentlyUsedConfiguration">MostRecentlyUsedConfiguration</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the name of the most recently used configuration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string MostRecentlyUsedConfiguration { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L50">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_Name_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.Name*"></a>
   <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_Name" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.Name">Name</h4>
@@ -255,7 +323,7 @@ and provides functionality for configuring and executing the task.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -264,7 +332,7 @@ and provides functionality for configuring and executing the task.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_GetDefaultConfiguration_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.GetDefaultConfiguration*"></a>
   <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_GetDefaultConfiguration" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.GetDefaultConfiguration">GetDefaultConfiguration()</h4>
@@ -293,7 +361,7 @@ and provides functionality for configuring and executing the task.</p>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L92">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L108">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_Run_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.Run*"></a>
   <h4 id="Microsoft_Psi_Data_BatchProcessingTaskMetadata_Run_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter_Microsoft_Psi_Data_BatchProcessingTaskConfiguration_" data-uid="Microsoft.Psi.Data.BatchProcessingTaskMetadata.Run(Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter,Microsoft.Psi.Data.BatchProcessingTaskConfiguration)">Run(Pipeline, SessionImporter, Exporter, BatchProcessingTaskConfiguration)</h4>
@@ -358,12 +426,13 @@ and provides functionality for configuring and executing the task.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L13" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/BatchProcessingTaskMetadata.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

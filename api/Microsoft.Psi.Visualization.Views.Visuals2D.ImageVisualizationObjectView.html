@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ImageVisualizationObjectView
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -98,13 +98,13 @@
     <div class="level7"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
     <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html">VisualizationObjectView</a></div>
-    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html">ImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<span class="xref">Image</span>&gt;&gt;</div>
-    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamValueVisualizationObjectCanvasView-2.html">StreamValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html">ImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<span class="xref">Image</span>&gt;&gt;</div>
-    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView-2.html">XYValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html">ImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<span class="xref">Image</span>&gt;&gt;</div>
+    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html">ImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</div>
+    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamValueVisualizationObjectCanvasView-2.html">StreamValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html">ImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</div>
+    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView-2.html">XYValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject.html">ImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</div>
     <div class="level13"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.ImageVisualizationObjectViewBase.html">ImageVisualizationObjectViewBase</a></div>
     <div class="level14"><span class="xref">ImageVisualizationObjectView</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">IAnimatable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.iframeworkinputelement">IFrameworkInputElement</a></div>
@@ -2046,7 +2046,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_ImageVisualizationObjectView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ImageVisualizationObjectView : ImageVisualizationObjectViewBase, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public class ImageVisualizationObjectView : ImageVisualizationObjectViewBase, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IQueryAmbient, IAddChild</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -2161,7 +2161,7 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject, Microsoft.Psi.Shared&lt;Image&gt;&gt;.OnVisualizationObjectPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject, Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.Image&gt;&gt;.OnVisualizationObjectPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_ImageVisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method will be called on the application dispatcher thread.</p>
 </div>
@@ -2179,7 +2179,7 @@
     <pre><code class="lang-csharp hljs">protected override void UpdateView()</code></pre>
   </div>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject, Microsoft.Psi.Shared&lt;Image&gt;&gt;.UpdateView()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.ImageVisualizationObject, Microsoft.Psi.Shared&lt;Microsoft.Psi.Imaging.Image&gt;&gt;.UpdateView()</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
@@ -2225,7 +2225,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

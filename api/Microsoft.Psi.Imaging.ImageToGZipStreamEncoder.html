@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ImageToGZipStreamEncoder
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,52 +88,29 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">ImageToGZipStreamEncoder</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></div>
   </div>
-  <div class="inheritedMembers">
-    <h5>Inherited Members</h5>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
-    </div>
-  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
-  <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.Windows.dll</h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_ImageToGZipStreamEncoder_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ImageToGZipStreamEncoder : IImageToStreamEncoder</code></pre>
+    <pre><code class="lang-csharp hljs">public class ImageToGZipStreamEncoder : object, IImageToStreamEncoder</code></pre>
   </div>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToGZipStreamEncoder.cs/#L15">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageToGzipStreamEncoder.cs/#L15">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageToGZipStreamEncoder_Description_" data-uid="Microsoft.Psi.Imaging.ImageToGZipStreamEncoder.Description*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageToGZipStreamEncoder_Description" data-uid="Microsoft.Psi.Imaging.ImageToGZipStreamEncoder.Description">Description</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets the description of the encoder.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -149,7 +126,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -158,11 +135,12 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToGZipStreamEncoder.cs/#L18">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageToGzipStreamEncoder.cs/#L18">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageToGZipStreamEncoder_EncodeToStream_" data-uid="Microsoft.Psi.Imaging.ImageToGZipStreamEncoder.EncodeToStream*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImageToGZipStreamEncoder_EncodeToStream_Microsoft_Psi_Imaging_Image_System_IO_Stream_" data-uid="Microsoft.Psi.Imaging.ImageToGZipStreamEncoder.EncodeToStream(Microsoft.Psi.Imaging.Image,System.IO.Stream)">EncodeToStream(Image, Stream)</h4>
-  <div class="markdown level1 summary"></div>
+  <h4 id="Microsoft_Psi_Imaging_ImageToGZipStreamEncoder_EncodeToStream_Microsoft_Psi_Imaging_Image_Stream_" data-uid="Microsoft.Psi.Imaging.ImageToGZipStreamEncoder.EncodeToStream(Microsoft.Psi.Imaging.Image,Stream)">EncodeToStream(Image, Stream)</h4>
+  <div class="markdown level1 summary"><p>Encodes an image into a stream.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -181,12 +159,14 @@
       <tr>
         <td><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></td>
         <td><span class="parametername">image</span></td>
-        <td></td>
+        <td><p>Image to be encoded.</p>
+</td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
+        <td><span class="xref">Stream</span></td>
         <td><span class="parametername">stream</span></td>
-        <td></td>
+        <td><p>Stream to encode the image into.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -212,12 +192,13 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToGZipStreamEncoder.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImageToGzipStreamEncoder.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ResearchModeCamera
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -93,7 +93,7 @@
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.ResearchMode.DepthCamera.html">DepthCamera</a></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.MixedReality.ResearchMode.VisibleLightCamera.html">VisibleLightCamera</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
   </div>
@@ -201,7 +201,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<span class="xref">ICameraIntrinsics</span>&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -344,7 +344,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;bool&gt; CalibrateFromFileAsync(StorageFolder calibrationFolder = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public async Task&lt;bool&gt; CalibrateFromFileAsync(StorageFolder calibrationFolder = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -439,7 +439,7 @@ If the files do not already exist, they will be created, and calibration will be
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">CameraIntrinsics</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.CameraIntrinsics.html">CameraIntrinsics</a></td>
         <td><p>The camera's intrinsics.</p>
 </td>
       </tr>
@@ -687,7 +687,8 @@ If the files do not already exist, they will be created, and calibration will be
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

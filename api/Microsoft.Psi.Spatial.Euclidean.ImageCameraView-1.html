@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ImageCameraView&lt;TImage&gt;
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -96,7 +96,7 @@
       <div class="level3"><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView.html">EncodedImageCameraView</a></div>
       <div class="level3"><a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageCameraView.html">ImageCameraView</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">IDisposable</span></div>
   </div>
@@ -115,14 +115,14 @@
       <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CameraView-1.html#Microsoft_Psi_Spatial_Euclidean_CameraView_1_GetPixelPosition_Point3D_System_Boolean_System_Boolean_">CameraView&lt;Shared&lt;TImage&gt;&gt;.GetPixelPosition(Point3D, Boolean, Boolean)</a>
     </div>
     <div>
-      <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CameraView-1.html#Microsoft_Psi_Spatial_Euclidean_CameraView_1_CreateProducer__2_Func___0_ICameraIntrinsics_CoordinateSystem___1__IProducer___0__IProducer_ICameraIntrinsics__IProducer_CoordinateSystem__Interpolator_ICameraIntrinsics__Interpolator_CoordinateSystem__DeliveryPolicy___0__DeliveryPolicy_ICameraIntrinsics__DeliveryPolicy_CoordinateSystem__DeliveryPolicy_System_ValueTuple___0_ICameraIntrinsics___">CameraView&lt;Shared&lt;TImage&gt;&gt;.CreateProducer&lt;TViewedObject, TCameraView&gt;(Func&lt;TViewedObject, ICameraIntrinsics, CoordinateSystem, TCameraView&gt;, IProducer&lt;TViewedObject&gt;, IProducer&lt;ICameraIntrinsics&gt;, IProducer&lt;CoordinateSystem&gt;, Interpolator&lt;ICameraIntrinsics&gt;, Interpolator&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;TViewedObject&gt;, DeliveryPolicy&lt;ICameraIntrinsics&gt;, DeliveryPolicy&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;ValueTuple&lt;TViewedObject, ICameraIntrinsics&gt;&gt;)</a>
+      <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.CameraView-1.html#Microsoft_Psi_Spatial_Euclidean_CameraView_1_CreateProducer__2_Func___0_Microsoft_Psi_Calibration_ICameraIntrinsics_CoordinateSystem___1__IProducer___0__IProducer_Microsoft_Psi_Calibration_ICameraIntrinsics__IProducer_CoordinateSystem__Interpolator_Microsoft_Psi_Calibration_ICameraIntrinsics__Interpolator_CoordinateSystem__DeliveryPolicy___0__DeliveryPolicy_Microsoft_Psi_Calibration_ICameraIntrinsics__DeliveryPolicy_CoordinateSystem__DeliveryPolicy_System_ValueTuple___0_Microsoft_Psi_Calibration_ICameraIntrinsics___">CameraView&lt;Shared&lt;TImage&gt;&gt;.CreateProducer&lt;TViewedObject, TCameraView&gt;(Func&lt;TViewedObject, ICameraIntrinsics, CoordinateSystem, TCameraView&gt;, IProducer&lt;TViewedObject&gt;, IProducer&lt;ICameraIntrinsics&gt;, IProducer&lt;CoordinateSystem&gt;, Interpolator&lt;ICameraIntrinsics&gt;, Interpolator&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;TViewedObject&gt;, DeliveryPolicy&lt;ICameraIntrinsics&gt;, DeliveryPolicy&lt;CoordinateSystem&gt;, DeliveryPolicy&lt;(, )&lt;TViewedObject, ICameraIntrinsics&gt;&gt;)</a>
     </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.html">Microsoft.Psi.Spatial.Euclidean</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Spatial.Euclidean.dll</h6>
   <h5 id="Microsoft_Psi_Spatial_Euclidean_ImageCameraView_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ImageCameraView&lt;TImage&gt; : CameraView&lt;Shared&lt;TImage&gt;&gt;, IDisposable where TImage : class, IImage</code></pre>
+    <pre><code class="lang-csharp hljs">public class ImageCameraView&lt;TImage&gt; : CameraView&lt;Shared&lt;TImage&gt;&gt; where TImage : class, IImage</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -147,7 +147,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/ImageCameraView{TImage}.cs/#L24">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_ImageCameraView_1__ctor_" data-uid="Microsoft.Psi.Spatial.Euclidean.ImageCameraView`1.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_ImageCameraView_1__ctor_Shared__0__ICameraIntrinsics_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.ImageCameraView`1.#ctor(Shared{`0},ICameraIntrinsics,CoordinateSystem)">ImageCameraView(Shared&lt;TImage&gt;, ICameraIntrinsics, CoordinateSystem)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_ImageCameraView_1__ctor_Shared__0__Microsoft_Psi_Calibration_ICameraIntrinsics_CoordinateSystem_" data-uid="Microsoft.Psi.Spatial.Euclidean.ImageCameraView`1.#ctor(Shared{`0},Microsoft.Psi.Calibration.ICameraIntrinsics,CoordinateSystem)">ImageCameraView(Shared&lt;TImage&gt;, ICameraIntrinsics, CoordinateSystem)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageCameraView-1.html">ImageCameraView&lt;TImage&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -172,7 +172,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">ICameraIntrinsics</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Calibration.ICameraIntrinsics.html">ICameraIntrinsics</a></td>
         <td><span class="parametername">cameraIntrinsics</span></td>
         <td><p>The camera intrinsics.</p>
 </td>
@@ -226,7 +226,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

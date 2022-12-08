@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Generator&lt;T&gt;
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -94,7 +94,7 @@ at the pace dictated by the pipeline.</p>
     <div class="level2"><span class="xref">Generator&lt;T&gt;</span></div>
       <div class="level3"><a class="xref" href="Microsoft.Psi.Interop.Transport.FileSource-1.html">FileSource&lt;T&gt;</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Components.ISourceComponent.html">ISourceComponent</a></div>
     <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;T&gt;</div>
@@ -116,7 +116,7 @@ at the pace dictated by the pipeline.</p>
   <h6><strong>Assembly</strong>: Microsoft.Psi.dll</h6>
   <h5 id="Microsoft_Psi_Components_Generator_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Generator&lt;T&gt; : Generator, ISourceComponent, IProducer&lt;T&gt;, IDisposable</code></pre>
+    <pre><code class="lang-csharp hljs">public class Generator&lt;T&gt; : Generator, ISourceComponent, IProducer&lt;T&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -233,7 +233,7 @@ If false (default), it represents a finite source (e.g., Generating messages bas
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;T, <span class="xref">DateTime</span>&gt;&gt;</td>
+        <td><span class="xref">IEnumerator</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;T, <span class="xref">DateTime</span>&gt;&gt;</td>
         <td><span class="parametername">enumerator</span></td>
         <td><p>A lazy enumerator of data.</p>
 </td>
@@ -388,7 +388,8 @@ If false (default), it represents a finite source (e.g., Generating messages bas
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

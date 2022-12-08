@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Image.CustomSerializer
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,18 +88,18 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html">ImageBase.CustomSerializer</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;</div>
     <div class="level2"><span class="xref">Image.CustomSerializer</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Serialization.ISerializer-1.html">ISerializer</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_Version">ImageBase.CustomSerializer&lt;Image&gt;.Version</a>
+      <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_LatestSchemaVersion">ImageBase.CustomSerializer&lt;Image&gt;.LatestSchemaVersion</a>
     </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Imaging.ImageBase.CustomSerializer-1.html#Microsoft_Psi_Imaging_ImageBase_CustomSerializer_1_IsClearRequired">ImageBase.CustomSerializer&lt;Image&gt;.IsClearRequired</a>
@@ -133,7 +133,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L476">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L475">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CustomSerializer_ConfigureCompression_" data-uid="Microsoft.Psi.Imaging.Image.CustomSerializer.ConfigureCompression*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CustomSerializer_ConfigureCompression_Microsoft_Psi_Imaging_IImageCompressor_" data-uid="Microsoft.Psi.Imaging.Image.CustomSerializer.ConfigureCompression(Microsoft.Psi.Imaging.IImageCompressor)">ConfigureCompression(IImageCompressor)</h4>
@@ -164,7 +164,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L497">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L496">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CustomSerializer_Deserialize_" data-uid="Microsoft.Psi.Imaging.Image.CustomSerializer.Deserialize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CustomSerializer_Deserialize_Microsoft_Psi_Common_BufferReader_Microsoft_Psi_Imaging_Image__Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Imaging.Image.CustomSerializer.Deserialize(Microsoft.Psi.Common.BufferReader,Microsoft.Psi.Imaging.Image@,Microsoft.Psi.Serialization.SerializationContext)">Deserialize(BufferReader, ref Image, SerializationContext)</h4>
@@ -208,7 +208,7 @@
   <div><span class="xref">Microsoft.Psi.Imaging.ImageBase.CustomSerializer&lt;Microsoft.Psi.Imaging.Image&gt;.Deserialize(Microsoft.Psi.Common.BufferReader, Microsoft.Psi.Imaging.Image, Microsoft.Psi.Serialization.SerializationContext)</span></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L482">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L481">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CustomSerializer_Serialize_" data-uid="Microsoft.Psi.Imaging.Image.CustomSerializer.Serialize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CustomSerializer_Serialize_Microsoft_Psi_Common_BufferWriter_Microsoft_Psi_Imaging_Image_Microsoft_Psi_Serialization_SerializationContext_" data-uid="Microsoft.Psi.Imaging.Image.CustomSerializer.Serialize(Microsoft.Psi.Common.BufferWriter,Microsoft.Psi.Imaging.Image,Microsoft.Psi.Serialization.SerializationContext)">Serialize(BufferWriter, Image, SerializationContext)</h4>
@@ -272,12 +272,13 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L468" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L467" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

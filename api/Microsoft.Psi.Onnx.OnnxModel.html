@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class OnnxModel
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,14 +88,14 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">OnnxModel</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Onnx.html">Microsoft.Psi.Onnx</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.Cpu.dll</h6>
   <h5 id="Microsoft_Psi_Onnx_OnnxModel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class OnnxModel : object</code></pre>
+    <pre><code class="lang-csharp hljs">public class OnnxModel : IDisposable</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Onnx_OnnxModel_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This class implements the ability to run a specified ONNX model.
@@ -107,7 +107,7 @@ time provides information about where to load the network from, etc.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L30">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L31">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_OnnxModel__ctor_" data-uid="Microsoft.Psi.Onnx.OnnxModel.#ctor*"></a>
   <h4 id="Microsoft_Psi_Onnx_OnnxModel__ctor_Microsoft_Psi_Onnx_OnnxModelConfiguration_" data-uid="Microsoft.Psi.Onnx.OnnxModel.#ctor(Microsoft.Psi.Onnx.OnnxModelConfiguration)">OnnxModel(OnnxModelConfiguration)</h4>
@@ -140,7 +140,19 @@ time provides information about where to load the network from, etc.</p>
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L60">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L57">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Onnx_OnnxModel_Dispose_" data-uid="Microsoft.Psi.Onnx.OnnxModel.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Onnx_OnnxModel_Dispose" data-uid="Microsoft.Psi.Onnx.OnnxModel.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L68">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_OnnxModel_GetPrediction_" data-uid="Microsoft.Psi.Onnx.OnnxModel.GetPrediction*"></a>
   <h4 id="Microsoft_Psi_Onnx_OnnxModel_GetPrediction_System_Single___" data-uid="Microsoft.Psi.Onnx.OnnxModel.GetPrediction(System.Single[])">GetPrediction(Single[])</h4>
@@ -162,7 +174,7 @@ time provides information about where to load the network from, etc.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
         <td><span class="parametername">input</span></td>
         <td><p>The input vector.</p>
 </td>
@@ -179,7 +191,7 @@ time provides information about where to load the network from, etc.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
         <td><p>The output vector produced by the ONNX model.</p>
 </td>
       </tr>
@@ -203,12 +215,13 @@ time provides information about where to load the network from, etc.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L19" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModel.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class SpeechRecognitionResult
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -92,7 +92,7 @@
     <div class="level1"><span class="xref">SpeechRecognitionResult</span></div>
       <div class="level2"><a class="xref" href="Microsoft.Psi.Speech.StreamingSpeechRecognitionResult.html">StreamingSpeechRecognitionResult</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Speech.ISpeechRecognitionResult.html">ISpeechRecognitionResult</a></div>
   </div>
@@ -109,7 +109,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Speech/Microsoft.Psi.Speech/SpeechRecognitionResult.cs/#L27">View Source</a>
   </span>
   <a id="Microsoft_Psi_Speech_SpeechRecognitionResult__ctor_" data-uid="Microsoft.Psi.Speech.SpeechRecognitionResult.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Speech_SpeechRecognitionResult__ctor_System_String_System_Nullable_System_Double__IEnumerable_Microsoft_Psi_Speech_SpeechRecognitionAlternate__System_Nullable_AudioBuffer__System_Nullable_TimeSpan__" data-uid="Microsoft.Psi.Speech.SpeechRecognitionResult.#ctor(System.String,System.Nullable{System.Double},IEnumerable{Microsoft.Psi.Speech.SpeechRecognitionAlternate},System.Nullable{AudioBuffer},System.Nullable{TimeSpan})">SpeechRecognitionResult(String, Nullable&lt;Double&gt;, IEnumerable&lt;SpeechRecognitionAlternate&gt;, Nullable&lt;AudioBuffer&gt;, Nullable&lt;TimeSpan&gt;)</h4>
+  <h4 id="Microsoft_Psi_Speech_SpeechRecognitionResult__ctor_System_String_System_Nullable_System_Double__IEnumerable_Microsoft_Psi_Speech_SpeechRecognitionAlternate__System_Nullable_Microsoft_Psi_Audio_AudioBuffer__System_Nullable_TimeSpan__" data-uid="Microsoft.Psi.Speech.SpeechRecognitionResult.#ctor(System.String,System.Nullable{System.Double},IEnumerable{Microsoft.Psi.Speech.SpeechRecognitionAlternate},System.Nullable{Microsoft.Psi.Audio.AudioBuffer},System.Nullable{TimeSpan})">SpeechRecognitionResult(String, Nullable&lt;Double&gt;, IEnumerable&lt;SpeechRecognitionAlternate&gt;, Nullable&lt;AudioBuffer&gt;, Nullable&lt;TimeSpan&gt;)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Speech.SpeechRecognitionResult.html">SpeechRecognitionResult</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -146,7 +146,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<span class="xref">AudioBuffer</span>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>&gt;</td>
         <td><span class="parametername">audio</span></td>
         <td><p>The audio buffer that formed this result.</p>
 </td>
@@ -213,7 +213,7 @@ where the audio is not available.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">AudioBuffer</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -360,7 +360,8 @@ where the audio is not available.</p>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

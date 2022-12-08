@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class MaskRCNNModelRunner
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,8 +88,12 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">MaskRCNNModelRunner</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">IDisposable</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Onnx.html">Microsoft.Psi.Onnx</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.ModelRunners.Cpu.dll</h6>
@@ -114,16 +118,16 @@ and the classes file is available here:
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L59">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L81">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_Pipeline_Microsoft_Psi_Onnx_MaskRCNNModelConfiguration_System_String_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.#ctor(Pipeline,Microsoft.Psi.Onnx.MaskRCNNModelConfiguration,System.String)">MaskRCNNModelRunner(Pipeline, MaskRCNNModelConfiguration, String)</h4>
+  <h4 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_Pipeline_Microsoft_Psi_Onnx_MaskRCNNModelConfiguration_Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.#ctor(Pipeline,Microsoft.Psi.Onnx.MaskRCNNModelConfiguration,Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Shared{Microsoft.Psi.Imaging.Image}},System.String)">MaskRCNNModelRunner(Pipeline, MaskRCNNModelConfiguration, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Onnx.MaskRCNNModelRunner.html">MaskRCNNModelRunner</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MaskRCNNModelRunner(Pipeline pipeline, MaskRCNNModelConfiguration configuration, string name = &quot;MaskRCNNModelRunner&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public MaskRCNNModelRunner(Pipeline pipeline, MaskRCNNModelConfiguration configuration, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;MaskRCNNModelRunner&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -148,7 +152,13 @@ and the classes file is available here:
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">sharedImageAllocator</span></td>
+        <td><p>Optional image allocator to create new shared image.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the component.</p>
 </td>
@@ -157,16 +167,16 @@ and the classes file is available here:
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L46">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L54">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_Pipeline_System_String_System_String_System_Int32_System_Int32_System_Nullable_System_Int32__System_String_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.#ctor(Pipeline,System.String,System.String,System.Int32,System.Int32,System.Nullable{System.Int32},System.String)">MaskRCNNModelRunner(Pipeline, String, String, Int32, Int32, Nullable&lt;Int32&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_Pipeline_System_String_System_String_System_Single_System_Int32_System_Int32_System_Nullable_System_Int32__Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.#ctor(Pipeline,System.String,System.String,System.Single,System.Int32,System.Int32,System.Nullable{System.Int32},Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Shared{Microsoft.Psi.Imaging.Image}},System.String)">MaskRCNNModelRunner(Pipeline, String, String, Single, Int32, Int32, Nullable&lt;Int32&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Onnx.MaskRCNNModelRunner.html">MaskRCNNModelRunner</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public MaskRCNNModelRunner(Pipeline pipeline, string modelFileName, string classesFileName, int imageWidth, int imageHeight, int? gpuDeviceId = null, string name = &quot;MaskRCNNModelRunner&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public MaskRCNNModelRunner(Pipeline pipeline, string modelFileName, string classesFileName, float confidenceThreshold, int imageWidth, int imageHeight, int? gpuDeviceId = null, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;MaskRCNNModelRunner&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -185,44 +195,56 @@ and the classes file is available here:
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">modelFileName</span></td>
         <td><p>The name of the model file (see remarks on <a class="xref" href="Microsoft.Psi.Onnx.MaskRCNNModelRunner.html">MaskRCNNModelRunner</a>).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">classesFileName</span></td>
         <td><p>The name of the file containing class names (see remarks on <a class="xref" href="Microsoft.Psi.Onnx.MaskRCNNModelRunner.html">MaskRCNNModelRunner</a>).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a></td>
+        <td><span class="parametername">confidenceThreshold</span></td>
+        <td><p>The confidence threshold to use in filtering results.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">imageWidth</span></td>
-        <td><p>Image wigth (should be between 800 and 1312, inclusive, and divisible by 32).</p>
+        <td><p>Image width to resize to before sending to Mask R-CNN (should be between 800 and 1312, inclusive, and divisible by 32).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">imageHeight</span></td>
-        <td><p>Image height (should be between 800 and 1312, inclusive, and divisible by 32).</p>
+        <td><p>Image height to resize to before sending to Mask R-CNN (should be between 800 and 1312, inclusive, and divisible by 32).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td><span class="parametername">gpuDeviceId</span></td>
         <td><p>The GPU device ID to run execution on, or null to run on CPU.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td><span class="parametername">sharedImageAllocator</span></td>
+        <td><p>An optional image allocator used to create shared images for passing to MaskRCNN.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the component.</p>
 </td>
       </tr>
     </tbody>
   </table>
-  <h5 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_Pipeline_System_String_System_String_System_Int32_System_Int32_System_Nullable_System_Int32__System_String__remarks">Remarks</h5>
+  <h5 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner__ctor_Pipeline_System_String_System_String_System_Single_System_Int32_System_Int32_System_Nullable_System_Int32__Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>To run on a GPU, use the Microsoft.Psi.Onnx.ModelRunners.Gpu library instead of Microsoft.Psi.Onnx.ModelRunners.Cpu, and set
 the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non-negative integer. Typical device ID values are 0 or 1.</p>
 </div>
@@ -230,7 +252,19 @@ the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L65">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L100">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Onnx_MaskRCNNModelRunner_Dispose_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.Dispose*"></a>
+  <h4 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner_Dispose" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L107">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_MaskRCNNModelRunner_Receive_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.Receive*"></a>
   <h4 id="Microsoft_Psi_Onnx_MaskRCNNModelRunner_Receive_Shared_Microsoft_Psi_Imaging_Image__Envelope_" data-uid="Microsoft.Psi.Onnx.MaskRCNNModelRunner.Receive(Shared{Microsoft.Psi.Imaging.Image},Envelope)">Receive(Shared&lt;Image&gt;, Envelope)</h4>
@@ -262,6 +296,10 @@ the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">IDisposable</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -280,12 +318,13 @@ the value of the <pararef name="gpuDeviceId"></pararef> parameter to a valid non
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L27" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/ModelRunners/MaskRCNN/MaskRCNNModelRunner.cs/#L28" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

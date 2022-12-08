@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Interface IPartition
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -96,7 +96,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L61">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L71">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_AvailableStreams_" data-uid="Microsoft.Psi.Data.IPartition.AvailableStreams*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_AvailableStreams" data-uid="Microsoft.Psi.Data.IPartition.AvailableStreams">AvailableStreams</h4>
@@ -145,7 +145,63 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L31">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_IPartition_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.Data.IPartition.MessageCreationTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_IPartition_MessageCreationTimeInterval" data-uid="Microsoft.Psi.Data.IPartition.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the creation time interval (earliest to latest) of the messages in this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TimeInterval MessageCreationTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L26">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_IPartition_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.IPartition.MessageOriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_IPartition_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.Data.IPartition.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TimeInterval MessageOriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -173,42 +229,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L26">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_IPartition_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.IPartition.OriginatingTimeInterval*"></a>
-  <h4 id="Microsoft_Psi_Data_IPartition_OriginatingTimeInterval" data-uid="Microsoft.Psi.Data.IPartition.OriginatingTimeInterval">OriginatingTimeInterval</h4>
-  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this partition.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">TimeInterval OriginatingTimeInterval { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L41">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_Session_" data-uid="Microsoft.Psi.Data.IPartition.Session*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_Session" data-uid="Microsoft.Psi.Data.IPartition.Session">Session</h4>
@@ -236,7 +264,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L31">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L41">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_Size_" data-uid="Microsoft.Psi.Data.IPartition.Size*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_Size" data-uid="Microsoft.Psi.Data.IPartition.Size">Size</h4>
@@ -257,14 +285,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L46">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L56">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_StoreName_" data-uid="Microsoft.Psi.Data.IPartition.StoreName*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_StoreName" data-uid="Microsoft.Psi.Data.IPartition.StoreName">StoreName</h4>
@@ -285,14 +313,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L51">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L61">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_StorePath_" data-uid="Microsoft.Psi.Data.IPartition.StorePath*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_StorePath" data-uid="Microsoft.Psi.Data.IPartition.StorePath">StorePath</h4>
@@ -313,14 +341,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_StreamCount_" data-uid="Microsoft.Psi.Data.IPartition.StreamCount*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_StreamCount" data-uid="Microsoft.Psi.Data.IPartition.StreamCount">StreamCount</h4>
@@ -341,14 +369,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L56">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L66">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_IPartition_StreamReaderTypeName_" data-uid="Microsoft.Psi.Data.IPartition.StreamReaderTypeName*"></a>
   <h4 id="Microsoft_Psi_Data_IPartition_StreamReaderTypeName" data-uid="Microsoft.Psi.Data.IPartition.StreamReaderTypeName">StreamReaderTypeName</h4>
@@ -369,7 +397,35 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/IPartition.cs/#L36">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_IPartition_TimeInterval_" data-uid="Microsoft.Psi.Data.IPartition.TimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_IPartition_TimeInterval" data-uid="Microsoft.Psi.Data.IPartition.TimeInterval">TimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the time interval between open and closed time for all streams in this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">TimeInterval TimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -397,7 +453,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DynamicWindow&lt;TWindow, TInput, TOutput&gt;
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -92,7 +92,7 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer</a>&lt;TInput, TOutput&gt;</div>
     <div class="level2"><span class="xref">DynamicWindow&lt;TWindow, TInput, TOutput&gt;</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;TInput, TOutput&gt;</div>
     <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;TInput&gt;</div>
@@ -183,7 +183,7 @@ to the window message and the computed buffer of messages on the input stream.</
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;TWindow&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a>, <span class="xref">DateTime</span>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;TWindow&gt;, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a>, <span class="xref">DateTime</span>&gt;&gt;</td>
         <td><span class="parametername">windowCreator</span></td>
         <td><p>The function that creates the actual window to use at every point, and specified the time point previous to which no future windows will extend.</p>
 </td>
@@ -308,7 +308,8 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

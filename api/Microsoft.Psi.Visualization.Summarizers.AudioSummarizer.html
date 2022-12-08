@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class AudioSummarizer
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,12 +89,12 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Data.Summarizer-2.html">Summarizer</a>&lt;<span class="xref">AudioBuffer</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Data.Summarizer-2.html">Summarizer</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div class="level2"><span class="xref">AudioSummarizer</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.Psi.Visualization.Data.ISummarizer-2.html">ISummarizer</a>&lt;<span class="xref">AudioBuffer</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.Visualization.Data.ISummarizer-2.html">ISummarizer</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;</div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.ISummarizer.html">ISummarizer</a></div>
   </div>
   <div class="inheritedMembers">
@@ -241,7 +241,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Summarizers/AudioSummarizer.cs/#L51">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Summarizers_AudioSummarizer_Summarizer_" data-uid="Microsoft.Psi.Visualization.Summarizers.AudioSummarizer.Summarizer*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Summarizers_AudioSummarizer_Summarizer_System_Collections_Generic_IEnumerable_Microsoft_Psi_Message_AudioBuffer___System_TimeSpan_System_UInt16_" data-uid="Microsoft.Psi.Visualization.Summarizers.AudioSummarizer.Summarizer(System.Collections.Generic.IEnumerable{Microsoft.Psi.Message{AudioBuffer}},System.TimeSpan,System.UInt16)">Summarizer(IEnumerable&lt;Message&lt;AudioBuffer&gt;&gt;, TimeSpan, UInt16)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Summarizers_AudioSummarizer_Summarizer_System_Collections_Generic_IEnumerable_Microsoft_Psi_Message_Microsoft_Psi_Audio_AudioBuffer___System_TimeSpan_System_UInt16_" data-uid="Microsoft.Psi.Visualization.Summarizers.AudioSummarizer.Summarizer(System.Collections.Generic.IEnumerable{Microsoft.Psi.Message{Microsoft.Psi.Audio.AudioBuffer}},System.TimeSpan,System.UInt16)">Summarizer(IEnumerable&lt;Message&lt;AudioBuffer&gt;&gt;, TimeSpan, UInt16)</h4>
   <div class="markdown level1 summary"><p>Summarizes an enumerable of audio buffer messages into summarized audio data.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -260,7 +260,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<span class="xref">AudioBuffer</span>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<a class="xref" href="Microsoft.Psi.Audio.AudioBuffer.html">AudioBuffer</a>&gt;&gt;</td>
         <td><span class="parametername">messages</span></td>
         <td><p>Enumerable of audio buffer messages.</p>
 </td>
@@ -325,7 +325,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

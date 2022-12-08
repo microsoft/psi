@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TimeIntervalAnnotationDisplayData
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,11 +89,31 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">TimeIntervalAnnotationDisplayData</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><span class="xref">TimeIntervalAnnotationDisplayData</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">ICustomTypeDescriptor</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
@@ -108,7 +128,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationDisplayData.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData__ctor_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData__ctor_Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_Microsoft_Psi_Message_TimeIntervalAnnotationSet__System_String_System_Int32_AnnotationSchema_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject,Microsoft.Psi.Message{TimeIntervalAnnotationSet},System.String,System.Int32,AnnotationSchema)">TimeIntervalAnnotationDisplayData(TimeIntervalAnnotationVisualizationObject, Message&lt;TimeIntervalAnnotationSet&gt;, String, Int32, AnnotationSchema)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData__ctor_Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_Microsoft_Psi_Message_Microsoft_Psi_Data_Annotations_TimeIntervalAnnotationSet__System_String_System_Int32_Microsoft_Psi_Data_Annotations_AnnotationSchema_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject,Microsoft.Psi.Message{Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet},System.String,System.Int32,Microsoft.Psi.Data.Annotations.AnnotationSchema)">TimeIntervalAnnotationDisplayData(TimeIntervalAnnotationVisualizationObject, Message&lt;TimeIntervalAnnotationSet&gt;, String, Int32, AnnotationSchema)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.html">TimeIntervalAnnotationDisplayData</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -133,7 +153,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<span class="xref">TimeIntervalAnnotationSet</span>&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</td>
         <td><span class="parametername">annotationSetMessage</span></td>
         <td><p>The annotation set message.</p>
 </td>
@@ -151,7 +171,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">AnnotationSchema</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema.html">AnnotationSchema</a></td>
         <td><span class="parametername">annotationSchema</span></td>
         <td><p>The annotation schema.</p>
 </td>
@@ -184,7 +204,7 @@ public TimeIntervalAnnotation Annotation { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TimeIntervalAnnotation</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.html">TimeIntervalAnnotation</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -213,7 +233,7 @@ public AnnotationSchema AnnotationSchema { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">AnnotationSchema</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema.html">AnnotationSchema</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -833,7 +853,7 @@ public bool IsSelected { get; set; }</code></pre>
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationDisplayData.cs/#L175">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_SetAttributeValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.SetAttributeValue*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_SetAttributeValue_System_String_IAnnotationValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.SetAttributeValue(System.String,IAnnotationValue)">SetAttributeValue(String, IAnnotationValue)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationDisplayData_SetAttributeValue_System_String_Microsoft_Psi_Data_Annotations_IAnnotationValue_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationDisplayData.SetAttributeValue(System.String,Microsoft.Psi.Data.Annotations.IAnnotationValue)">SetAttributeValue(String, IAnnotationValue)</h4>
   <div class="markdown level1 summary"><p>Sets the value for a specified attribute.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -858,7 +878,7 @@ public bool IsSelected { get; set; }</code></pre>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IAnnotationValue</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.IAnnotationValue.html">IAnnotationValue</a></td>
         <td><span class="parametername">annotationValue</span></td>
         <td><p>The new value.</p>
 </td>
@@ -866,6 +886,9 @@ public bool IsSelected { get; set; }</code></pre>
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">INotifyPropertyChanging</span>
+  </div>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.icustomtypedescriptor">System.ComponentModel.ICustomTypeDescriptor</a>
   </div>
@@ -892,7 +915,8 @@ public bool IsSelected { get; set; }</code></pre>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

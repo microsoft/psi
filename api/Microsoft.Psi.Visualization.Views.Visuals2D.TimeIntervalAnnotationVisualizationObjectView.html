@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TimeIntervalAnnotationVisualizationObjectView
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -98,12 +98,12 @@
     <div class="level7"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
     <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html">VisualizationObjectView</a></div>
-    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html">TimeIntervalAnnotationVisualizationObject</a>, <span class="xref">TimeIntervalAnnotationSet</span>&gt;</div>
-    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html">StreamIntervalVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html">TimeIntervalAnnotationVisualizationObject</a>, <span class="xref">TimeIntervalAnnotationSet</span>&gt;</div>
-    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html">StreamIntervalVisualizationObjectTimelineCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html">TimeIntervalAnnotationVisualizationObject</a>, <span class="xref">TimeIntervalAnnotationSet</span>&gt;</div>
+    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html">TimeIntervalAnnotationVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</div>
+    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html">StreamIntervalVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html">TimeIntervalAnnotationVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</div>
+    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html">StreamIntervalVisualizationObjectTimelineCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.html">TimeIntervalAnnotationVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</div>
     <div class="level13"><span class="xref">TimeIntervalAnnotationVisualizationObjectView</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">IAnimatable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.iframeworkinputelement">IFrameworkInputElement</a></div>
@@ -2057,7 +2057,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalAnnotationVisualizationObjectView_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class TimeIntervalAnnotationVisualizationObjectView : StreamIntervalVisualizationObjectTimelineCanvasView&lt;TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet&gt;, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public class TimeIntervalAnnotationVisualizationObjectView : StreamIntervalVisualizationObjectTimelineCanvasView&lt;TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet&gt;, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IQueryAmbient, IAddChild</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -2114,7 +2114,7 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet&gt;.OnDataContextChanged(System.Object, System.Windows.DependencyPropertyChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnDataContextChanged(System.Object, System.Windows.DependencyPropertyChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalAnnotationVisualizationObjectView.xaml.cs/#L106">View Source</a>
@@ -2142,7 +2142,7 @@
     <pre><code class="lang-csharp hljs">protected override void OnTransformsChanged()</code></pre>
   </div>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet&gt;.OnTransformsChanged()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnTransformsChanged()</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Views/Visuals2D/TimeIntervalAnnotationVisualizationObjectView.xaml.cs/#L85">View Source</a>
@@ -2181,7 +2181,7 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet&gt;.OnVisualizationObjectPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnVisualizationObjectPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_TimeIntervalAnnotationVisualizationObjectView_OnVisualizationObjectPropertyChanged_System_Object_System_ComponentModel_PropertyChangedEventArgs__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method will be called on the application dispatcher thread.</p>
 </div>
@@ -2199,7 +2199,7 @@
     <pre><code class="lang-csharp hljs">protected override void UpdateView()</code></pre>
   </div>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, TimeIntervalAnnotationSet&gt;.UpdateView()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView&lt;Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject, Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.UpdateView()</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">System.Windows.Media.Animation.IAnimatable</a>
@@ -2245,7 +2245,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

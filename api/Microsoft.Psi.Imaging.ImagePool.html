@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ImagePool
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">ImagePool</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
@@ -101,7 +101,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImagePool.cs/#L24">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImagePool.cs/#L39">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagePool_GetOrCreate_" data-uid="Microsoft.Psi.Imaging.ImagePool.GetOrCreate*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImagePool_GetOrCreate_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_" data-uid="Microsoft.Psi.Imaging.ImagePool.GetOrCreate(System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat)">GetOrCreate(Int32, Int32, PixelFormat)</h4>
@@ -123,13 +123,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">width</span></td>
         <td><p>The requested image width.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">height</span></td>
         <td><p>The requested image height.</p>
 </td>
@@ -160,7 +160,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImagePool.cs/#L34">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImagePool.cs/#L53">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImagePool_GetOrCreateFromBitmap_" data-uid="Microsoft.Psi.Imaging.ImagePool.GetOrCreateFromBitmap*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImagePool_GetOrCreateFromBitmap_Bitmap_" data-uid="Microsoft.Psi.Imaging.ImagePool.GetOrCreateFromBitmap(Bitmap)">GetOrCreateFromBitmap(Bitmap)</h4>
@@ -205,6 +205,47 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/ImagePool.cs/#L26">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImagePool_Reset_" data-uid="Microsoft.Psi.Imaging.ImagePool.Reset*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImagePool_Reset_System_Int32_System_Boolean_" data-uid="Microsoft.Psi.Imaging.ImagePool.Reset(System.Int32,System.Boolean)">Reset(Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Resets the pool of shared images.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Reset(int imageAllocationBlockSize, bool clearLiveObjects = false)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">imageAllocationBlockSize</span></td>
+        <td><p>The image allocation block size to use.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="parametername">clearLiveObjects</span></td>
+        <td><p>Indicates whether to clear any live objects.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_ImagePool_Reset_System_Int32_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If the clearLiveObjects flag is false, an exception is thrown if a reset is attempted while the pool
+still contains live objects.</p>
+</div>
 </article>
           </div>
           
@@ -218,7 +259,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

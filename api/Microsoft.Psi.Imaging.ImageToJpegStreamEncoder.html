@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class ImageToJpegStreamEncoder
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -83,7 +83,7 @@
   
   <h1 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder" class="text-break">Class ImageToJpegStreamEncoder
   </h1>
-  <div class="markdown level0 summary"><p>Implements a JPEG image encoder.</p>
+  <div class="markdown level0 summary"><p>Implements an image encoder for JPEG format.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -91,50 +91,45 @@
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">ImageToJpegStreamEncoder</span></div>
   </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring#system-object-tostring">Object.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">Object.Equals(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">Object.Equals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals#system-object-referenceequals(system-object-system-object)">Object.ReferenceEquals(Object, Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode#system-object-gethashcode">Object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype#system-object-gettype">Object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone#system-object-memberwiseclone">Object.MemberwiseClone()</a>
+    </div>
+  </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Imaging.html">Microsoft.Psi.Imaging</a></h6>
-  <h6><strong>Assembly</strong>: Microsoft.Psi.MixedReality.UniversalWindows.dll</h6>
+  <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_syntax">Syntax</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class ImageToJpegStreamEncoder : IImageToStreamEncoder</code></pre>
   </div>
-  <h3 id="constructors">Constructors
-  </h3>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ImageToJpegStreamEncoder.cs/#L23">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder__ctor_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder__ctor_System_Double_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.#ctor(System.Double)">ImageToJpegStreamEncoder(Double)</h4>
-  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.html">ImageToJpegStreamEncoder</a> class.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ImageToJpegStreamEncoder(double imageQuality = 1)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
-        <td><span class="parametername">imageQuality</span></td>
-        <td><p>Optional image quality (0.0 - 1.0, default 1.0).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="properties">Properties
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ImageToJpegStreamEncoder.cs/#L33">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToJpegStreamEncoder.cs/#L15">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_Description_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.Description*"></a>
   <h4 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_Description" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.Description">Description</h4>
@@ -159,14 +154,42 @@
       </tr>
     </tbody>
   </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToJpegStreamEncoder.cs/#L20">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_QualityLevel_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.QualityLevel*"></a>
+  <h4 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_QualityLevel" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.QualityLevel">QualityLevel</h4>
+  <div class="markdown level1 summary"><p>Gets or sets JPEG image quality (0-100).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int QualityLevel { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="methods">Methods
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ImageToJpegStreamEncoder.cs/#L36">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToJpegStreamEncoder.cs/#L23">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_EncodeToStream_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.EncodeToStream*"></a>
-  <h4 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_EncodeToStream_Image_Stream_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.EncodeToStream(Image,Stream)">EncodeToStream(Image, Stream)</h4>
+  <h4 id="Microsoft_Psi_Imaging_ImageToJpegStreamEncoder_EncodeToStream_Microsoft_Psi_Imaging_Image_System_IO_Stream_" data-uid="Microsoft.Psi.Imaging.ImageToJpegStreamEncoder.EncodeToStream(Microsoft.Psi.Imaging.Image,System.IO.Stream)">EncodeToStream(Image, Stream)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -184,17 +207,21 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">Image</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a></td>
         <td><span class="parametername">image</span></td>
         <td></td>
       </tr>
       <tr>
-        <td><span class="xref">Stream</span></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.io.stream">Stream</a></td>
         <td><span class="parametername">stream</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -213,12 +240,13 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/ImageToJpegStreamEncoder.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging.Windows/ImageToJpegStreamEncoder.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

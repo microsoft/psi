@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Operators
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -163,7 +163,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L72">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Convert_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Convert*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Convert_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__PixelFormat_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_PixelFormat_Shared_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Convert(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},PixelFormat,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,PixelFormat,Shared{Image}},System.String)">Convert(IProducer&lt;ImageCameraView&gt;, PixelFormat, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Convert_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Microsoft_Psi_Imaging_PixelFormat_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Convert(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Microsoft.Psi.Imaging.PixelFormat,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Shared{Microsoft.Psi.Imaging.Image}},System.String)">Convert(IProducer&lt;ImageCameraView&gt;, PixelFormat, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts the stream of image camera views to a different pixel format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -188,7 +188,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">PixelFormat</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a></td>
         <td><span class="parametername">pixelFormat</span></td>
         <td><p>The pixel format to convert to.</p>
 </td>
@@ -200,7 +200,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <span class="xref">PixelFormat</span>, <span class="xref">Shared</span>&lt;<span class="xref">Image</span>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
         <td><span class="parametername">sharedImageAllocator</span></td>
         <td><p>Optional image allocator for creating new shared images.</p>
 </td>
@@ -234,7 +234,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L202">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},System.String)">Decode(IProducer&lt;EncodedDepthImageCameraView&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageCameraView},System.String)">Decode(IProducer&lt;EncodedDepthImageCameraView&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded depth image camera view using a specified image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -259,7 +259,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDepthImageFromStreamDecoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The depth image decoder to use.</p>
 </td>
@@ -299,7 +299,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L104">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedDepthImageRectangle3D&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedDepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedDepthImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedDepthImageRectangle3D&gt;, IDepthImageFromStreamDecoder, DeliveryPolicy&lt;EncodedDepthImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded depth image image rectangle using a specified depth image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -324,7 +324,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDepthImageFromStreamDecoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder.html">IDepthImageFromStreamDecoder</a></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The depth image decoder to use.</p>
 </td>
@@ -364,7 +364,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L175">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},System.String)">Decode(IProducer&lt;EncodedImageCameraView&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__Microsoft_Psi_Imaging_IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},Microsoft.Psi.Imaging.IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageCameraView},System.String)">Decode(IProducer&lt;EncodedImageCameraView&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded image camera view using a specified image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -389,7 +389,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IImageFromStreamDecoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The image decoder to use.</p>
 </td>
@@ -429,7 +429,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L78">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedImageRectangle3D&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Decode_IProducer_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__Microsoft_Psi_Imaging_IImageFromStreamDecoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_EncodedImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Decode(IProducer{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},Microsoft.Psi.Imaging.IImageFromStreamDecoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.EncodedImageRectangle3D},System.String)">Decode(IProducer&lt;EncodedImageRectangle3D&gt;, IImageFromStreamDecoder, DeliveryPolicy&lt;EncodedImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Decodes an encoded image image rectangle using a specified image decoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -454,7 +454,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IImageFromStreamDecoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageFromStreamDecoder.html">IImageFromStreamDecoder</a></td>
         <td><span class="parametername">decoder</span></td>
         <td><p>The image decoder to use.</p>
 </td>
@@ -494,7 +494,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L144">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},System.String)">Encode(IProducer&lt;DepthImageCameraView&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},Microsoft.Psi.Imaging.IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageCameraView},System.String)">Encode(IProducer&lt;DepthImageCameraView&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes a depth image camera view using a specified image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -519,7 +519,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDepthImageToStreamEncoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The image encoder to use.</p>
 </td>
@@ -559,7 +559,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L48">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},System.String)">Encode(IProducer&lt;DepthImageRectangle3D&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_DepthImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},Microsoft.Psi.Imaging.IDepthImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.DepthImageRectangle3D},System.String)">Encode(IProducer&lt;DepthImageRectangle3D&gt;, IDepthImageToStreamEncoder, DeliveryPolicy&lt;DepthImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes a depth image rectangle using a specified depth image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -584,7 +584,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IDepthImageToStreamEncoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IDepthImageToStreamEncoder.html">IDepthImageToStreamEncoder</a></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The depth image encoder to use.</p>
 </td>
@@ -624,7 +624,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L117">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.String)">Encode(IProducer&lt;ImageCameraView&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageCameraView&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Microsoft_Psi_Imaging_IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Microsoft.Psi.Imaging.IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.String)">Encode(IProducer&lt;ImageCameraView&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageCameraView&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image camera view using a specified image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -649,7 +649,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IImageToStreamEncoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The image encoder to use.</p>
 </td>
@@ -689,7 +689,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/ImageRectangles/Operators.cs/#L22">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},System.String)">Encode(IProducer&lt;ImageRectangle3D&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageRectangle3D&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Encode_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__Microsoft_Psi_Imaging_IImageToStreamEncoder_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageRectangle3D__System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Encode(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},Microsoft.Psi.Imaging.IImageToStreamEncoder,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageRectangle3D},System.String)">Encode(IProducer&lt;ImageRectangle3D&gt;, IImageToStreamEncoder, DeliveryPolicy&lt;ImageRectangle3D&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Encodes an image rectangle using a specified image encoder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -714,7 +714,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IImageToStreamEncoder</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.IImageToStreamEncoder.html">IImageToStreamEncoder</a></td>
         <td><span class="parametername">encoder</span></td>
         <td><p>The image encoder to use.</p>
 </td>
@@ -959,13 +959,13 @@ A value outside the 0-1 range will generate an extrapolated result.</p>
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Spatial/Microsoft.Psi.Spatial.Euclidean/CameraViews/Operators.cs/#L27">View Source</a>
   </span>
   <a id="Microsoft_Psi_Spatial_Euclidean_Operators_Scale_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Scale*"></a>
-  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Scale_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_Single_System_Single_SamplingMode_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_PixelFormat_Shared_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Scale(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.Single,System.Single,SamplingMode,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,PixelFormat,Shared{Image}},System.String)">Scale(IProducer&lt;ImageCameraView&gt;, Single, Single, SamplingMode, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
+  <h4 id="Microsoft_Psi_Spatial_Euclidean_Operators_Scale_IProducer_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__System_Single_System_Single_Microsoft_Psi_Imaging_SamplingMode_DeliveryPolicy_Microsoft_Psi_Spatial_Euclidean_ImageCameraView__Func_System_Int32_System_Int32_Microsoft_Psi_Imaging_PixelFormat_Shared_Microsoft_Psi_Imaging_Image___System_String_" data-uid="Microsoft.Psi.Spatial.Euclidean.Operators.Scale(IProducer{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},System.Single,System.Single,Microsoft.Psi.Imaging.SamplingMode,DeliveryPolicy{Microsoft.Psi.Spatial.Euclidean.ImageCameraView},Func{System.Int32,System.Int32,Microsoft.Psi.Imaging.PixelFormat,Shared{Microsoft.Psi.Imaging.Image}},System.String)">Scale(IProducer&lt;ImageCameraView&gt;, Single, Single, SamplingMode, DeliveryPolicy&lt;ImageCameraView&gt;, Func&lt;Int32, Int32, PixelFormat, Shared&lt;Image&gt;&gt;, String)</h4>
   <div class="markdown level1 summary"><p>Converts the stream of image camera views to a different pixel format.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageCameraView&gt; Scale(this IProducer&lt;ImageCameraView&gt; source, float scaleX, float scaleY, SamplingMode samplingMode = null, DeliveryPolicy&lt;ImageCameraView&gt; deliveryPolicy = null, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;Scale&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IProducer&lt;ImageCameraView&gt; Scale(this IProducer&lt;ImageCameraView&gt; source, float scaleX, float scaleY, SamplingMode samplingMode = SamplingMode.Bilinear, DeliveryPolicy&lt;ImageCameraView&gt; deliveryPolicy = null, Func&lt;int, int, PixelFormat, Shared&lt;Image&gt;&gt; sharedImageAllocator = null, string name = &quot;Scale&quot;)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -996,7 +996,7 @@ A value outside the 0-1 range will generate an extrapolated result.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">SamplingMode</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Imaging.SamplingMode.html">SamplingMode</a></td>
         <td><span class="parametername">samplingMode</span></td>
         <td><p>Method for sampling pixels when rescaling.</p>
 </td>
@@ -1008,7 +1008,7 @@ A value outside the 0-1 range will generate an extrapolated result.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <span class="xref">PixelFormat</span>, <span class="xref">Shared</span>&lt;<span class="xref">Image</span>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>, <a class="xref" href="Microsoft.Psi.Imaging.PixelFormat.html">PixelFormat</a>, <span class="xref">Shared</span>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
         <td><span class="parametername">sharedImageAllocator</span></td>
         <td><p>Optional image allocator for creating new shared images.</p>
 </td>
@@ -1360,7 +1360,8 @@ Defaults to <see cref="!:UnitVector3D.ZAxis"></see>.</p>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

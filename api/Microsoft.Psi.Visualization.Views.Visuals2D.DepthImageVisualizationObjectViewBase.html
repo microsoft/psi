@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DepthImageVisualizationObjectViewBase
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -98,13 +98,13 @@
     <div class="level7"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.contentcontrol">ContentControl</a></div>
     <div class="level8"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.controls.usercontrol">UserControl</a></div>
     <div class="level9"><a class="xref" href="Microsoft.Psi.Visualization.Views.VisualizationObjectView.html">VisualizationObjectView</a></div>
-    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DepthImageVisualizationObject.html">DepthImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<span class="xref">DepthImage</span>&gt;&gt;</div>
-    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamValueVisualizationObjectCanvasView-2.html">StreamValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DepthImageVisualizationObject.html">DepthImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<span class="xref">DepthImage</span>&gt;&gt;</div>
-    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView-2.html">XYValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DepthImageVisualizationObject.html">DepthImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<span class="xref">DepthImage</span>&gt;&gt;</div>
+    <div class="level10"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html">StreamVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DepthImageVisualizationObject.html">DepthImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;&gt;</div>
+    <div class="level11"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.StreamValueVisualizationObjectCanvasView-2.html">StreamValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DepthImageVisualizationObject.html">DepthImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;&gt;</div>
+    <div class="level12"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView-2.html">XYValueVisualizationObjectCanvasView</a>&lt;<a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.DepthImageVisualizationObject.html">DepthImageVisualizationObject</a>, <a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.DepthImage.html">DepthImage</a>&gt;&gt;</div>
     <div class="level13"><span class="xref">DepthImageVisualizationObjectViewBase</span></div>
       <div class="level14"><a class="xref" href="Microsoft.Psi.Visualization.Views.Visuals2D.DepthImageVisualizationObjectView.html">DepthImageVisualizationObjectView</a></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.media.animation.ianimatable">IAnimatable</a></div>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.windows.iframeworkinputelement">IFrameworkInputElement</a></div>
@@ -2049,7 +2049,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
   <h5 id="Microsoft_Psi_Visualization_Views_Visuals2D_DepthImageVisualizationObjectViewBase_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class DepthImageVisualizationObjectViewBase : XYValueVisualizationObjectCanvasView&lt;DepthImageVisualizationObject, Shared&lt;DepthImage&gt;&gt;, DUCE.IResource, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IHaveResources, IQueryAmbient, IAddChild</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class DepthImageVisualizationObjectViewBase : XYValueVisualizationObjectCanvasView&lt;DepthImageVisualizationObject, Shared&lt;DepthImage&gt;&gt;, IAnimatable, IFrameworkInputElement, IInputElement, ISupportInitialize, IQueryAmbient, IAddChild</code></pre>
   </div>
   <h3 id="implements">Implements</h3>
   <div>
@@ -2096,7 +2096,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

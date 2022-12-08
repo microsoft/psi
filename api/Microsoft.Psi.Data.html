@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Namespace Microsoft.Psi.Data
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -87,6 +87,28 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTask-1.html">BatchProcessingTask&lt;TBatchProcessingTaskConfiguration&gt;</a></h4>
+      <section><p>Defines an abstract base class for batch processing tasks.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskAttribute.html">BatchProcessingTaskAttribute</a></h4>
+      <section><p>Represents a batch processing task attribute.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskConfiguration.html">BatchProcessingTaskConfiguration</a></h4>
+      <section><p>Represents a configuration for a batch processing task.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></h4>
+      <section><p>Represents metadata about a dynamically loaded batch processing task
+and provides functionality for configuring and executing the task.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskOperators.html">BatchProcessingTaskOperators</a></h4>
+      <section><p>Provides static extension methods related to batch processing tasks.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.Dataset.html">Dataset</a></h4>
+      <section><p>Represents a dataset (collection of sessions) to be reasoned over.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.DatasetExtensions.html">DatasetExtensions</a></h4>
+      <section><p>Represents helper methods for working with \psi store datasets.</p>
+</section>
       <h4><a class="xref" href="Microsoft.Psi.Data.Exporter.html">Exporter</a></h4>
       <section><p>Component that writes messages to a multi-stream store.</p>
 </section>
@@ -96,6 +118,15 @@
       <h4><a class="xref" href="Microsoft.Psi.Data.Importer.html">Importer</a></h4>
       <section><p>Component that reads messages via a specified <a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a> and publishes them on streams.</p>
 </section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.IndexHelper.html">IndexHelper</a></h4>
+      <section><p>Represents helper methods for psi indices.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></h4>
+      <section><p>Provides an implementation of <see cref="!:INotifyPropertyChanged"></see> and <see cref="!:INotifyPropertyChanging"></see> for use in implementing bindable objects.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.Partition-1.html">Partition&lt;TStreamReader&gt;</a></h4>
+      <section><p>Defines a base class of partitions that can be added to a session.</p>
+</section>
       <h4><a class="xref" href="Microsoft.Psi.Data.PsiExporter.html">PsiExporter</a></h4>
       <section><p>Component that writes messages to a multi-stream \psi store.</p>
 </section>
@@ -104,6 +135,12 @@
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Data.PsiStoreStreamReader.html">PsiStoreStreamReader</a></h4>
       <section><p>Implements a reader of multiple streams of typed messages from a single store.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a></h4>
+      <section><p>Represents a session (collection of partitions) to be reasoned over.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.SessionImporter.html">SessionImporter</a></h4>
+      <section><p>Defines a class used in importing data into a session.</p>
 </section>
       <h4><a class="xref" href="Microsoft.Psi.Data.StreamReader.html">StreamReader</a></h4>
       <section><p>Represents factory for dynamically creating stream readers.</p>
@@ -118,8 +155,19 @@
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Data.IPartition.html">IPartition</a></h4>
+      <section><p>Defines a partition that can be added to a session.</p>
+</section>
+      <h4><a class="xref" href="Microsoft.Psi.Data.ISimpleWriter.html">ISimpleWriter</a></h4>
+      <section><p>Defines an interface for all simple writers of data stores.</p>
+</section>
       <h4><a class="xref" href="Microsoft.Psi.Data.IStreamReader.html">IStreamReader</a></h4>
       <section><p>Represents a reader of multiple streams of typed messages.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="Microsoft.Psi.Data.NearestType.html">NearestType</a></h4>
+      <section><p>Defines various modes for finding a nearest message to a specified time.</p>
 </section>
 </article>
           </div>
@@ -131,7 +179,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

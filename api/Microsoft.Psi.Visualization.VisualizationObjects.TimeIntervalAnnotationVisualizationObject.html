@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class TimeIntervalAnnotationVisualizationObject
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,14 +89,16 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
-    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
-    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<span class="xref">TimeIntervalAnnotationSet</span>&gt;</div>
-    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html">StreamIntervalVisualizationObject</a>&lt;<span class="xref">TimeIntervalAnnotationSet</span>&gt;</div>
-    <div class="level5"><span class="xref">TimeIntervalAnnotationVisualizationObject</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html">ObservableTreeNodeObject</a></div>
+    <div class="level3"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.VisualizationObject.html">VisualizationObject</a></div>
+    <div class="level4"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject-1.html">StreamVisualizationObject</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</div>
+    <div class="level5"><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject-1.html">StreamIntervalVisualizationObject</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</div>
+    <div class="level6"><span class="xref">TimeIntervalAnnotationVisualizationObject</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.IContextMenuItemsSource.html">IContextMenuItemsSource</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.IStreamVisualizationObject.html">IStreamVisualizationObject</a></div>
   </div>
@@ -273,6 +275,21 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Visualization.Base.ObservableTreeNodeObject.html#Microsoft_Psi_Visualization_Base_ObservableTreeNodeObject_IsTreeNodeSelected">ObservableTreeNodeObject.IsTreeNodeSelected</a>
     </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.VisualizationObjects.html">Microsoft.Psi.Visualization.VisualizationObjects</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
@@ -396,7 +413,7 @@ public AnnotationSchema AnnotationSchema { get; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">AnnotationSchema</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.AnnotationSchema.html">AnnotationSchema</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -551,7 +568,7 @@ public double FontSize { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.IconSource</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.IconSource</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L221">View Source</a>
@@ -582,7 +599,7 @@ public override Color LegendColor { get; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.LegendColor</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.LegendColor</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L264">View Source</a>
@@ -612,7 +629,7 @@ public override Color LegendColor { get; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.LegendValue</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.LegendValue</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L113">View Source</a>
@@ -845,7 +862,7 @@ public double Padding { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.RequiresSupplementalMetadata</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.RequiresSupplementalMetadata</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L185">View Source</a>
@@ -1056,13 +1073,13 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.ContextMenuItemsInfo()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.ContextMenuItemsInfo()</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L467">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_GetAddAnnotationCommand_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.GetAddAnnotationCommand*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_GetAddAnnotationCommand_TimeIntervalAnnotation_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.GetAddAnnotationCommand(TimeIntervalAnnotation)">GetAddAnnotationCommand(TimeIntervalAnnotation)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_GetAddAnnotationCommand_Microsoft_Psi_Data_Annotations_TimeIntervalAnnotation_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.GetAddAnnotationCommand(Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation)">GetAddAnnotationCommand(TimeIntervalAnnotation)</h4>
   <div class="markdown level1 summary"><p>Gets the command for adding a specified annotation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1081,7 +1098,7 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TimeIntervalAnnotation</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotation.html">TimeIntervalAnnotation</a></td>
         <td><span class="parametername">annotation</span></td>
         <td><p>The annotation to add.</p>
 </td>
@@ -1461,14 +1478,14 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(T1, T2)</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;</td>
         <td><p>The time interval of stream messages required for visualization.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.GetTimeInterval()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.GetTimeInterval()</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L670">View Source</a>
@@ -1548,7 +1565,7 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.OnDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnDataCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L705">View Source</a>
@@ -1587,7 +1604,7 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.OnPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnPropertyChanged(System.Object, System.ComponentModel.PropertyChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L676">View Source</a>
@@ -1602,7 +1619,7 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     <pre><code class="lang-csharp hljs">protected override void OnStreamBound()</code></pre>
   </div>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.OnStreamBound()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnStreamBound()</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L691">View Source</a>
@@ -1617,7 +1634,7 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     <pre><code class="lang-csharp hljs">protected override void OnStreamUnbound()</code></pre>
   </div>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.OnStreamUnbound()</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnStreamUnbound()</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L716">View Source</a>
@@ -1656,13 +1673,13 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;TimeIntervalAnnotationSet&gt;.OnViewRangeChanged(System.Object, Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.VisualizationObjects.StreamIntervalVisualizationObject&lt;Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet&gt;.OnViewRangeChanged(System.Object, Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs)</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/VisualizationObjects/Annotations/TimeIntervalAnnotationVisualizationObject.cs/#L408">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_UpdateAnnotationSetMessage_" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.UpdateAnnotationSetMessage*"></a>
-  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_UpdateAnnotationSetMessage_Microsoft_Psi_Message_TimeIntervalAnnotationSet__" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.UpdateAnnotationSetMessage(Microsoft.Psi.Message{TimeIntervalAnnotationSet})">UpdateAnnotationSetMessage(Message&lt;TimeIntervalAnnotationSet&gt;)</h4>
+  <h4 id="Microsoft_Psi_Visualization_VisualizationObjects_TimeIntervalAnnotationVisualizationObject_UpdateAnnotationSetMessage_Microsoft_Psi_Message_Microsoft_Psi_Data_Annotations_TimeIntervalAnnotationSet__" data-uid="Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationVisualizationObject.UpdateAnnotationSetMessage(Microsoft.Psi.Message{Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet})">UpdateAnnotationSetMessage(Message&lt;TimeIntervalAnnotationSet&gt;)</h4>
   <div class="markdown level1 summary"><p>Update the specified annotation set message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1681,7 +1698,7 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<span class="xref">TimeIntervalAnnotationSet</span>&gt;</td>
+        <td><a class="xref" href="Microsoft.Psi.Message-1.html">Message</a>&lt;<a class="xref" href="Microsoft.Psi.Data.Annotations.TimeIntervalAnnotationSet.html">TimeIntervalAnnotationSet</a>&gt;</td>
         <td><span class="parametername">annotationSetMessage</span></td>
         <td><p>The annotation set message to update.</p>
 </td>
@@ -1746,6 +1763,9 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
   </table>
   <h3 id="implements">Implements</h3>
   <div>
+      <span class="xref">INotifyPropertyChanging</span>
+  </div>
+  <div>
       <a class="xref" href="Microsoft.Psi.Visualization.IContextMenuItemsSource.html">IContextMenuItemsSource</a>
   </div>
   <div>
@@ -1774,7 +1794,8 @@ public int TrackUnderMouseIndex { get; set; }</code></pre>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

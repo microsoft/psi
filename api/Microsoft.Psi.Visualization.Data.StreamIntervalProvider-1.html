@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class StreamIntervalProvider&lt;T&gt;
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -92,7 +92,7 @@
     <div class="level1"><a class="xref" href="Microsoft.Psi.Visualization.Data.StreamDataProvider-1.html">StreamDataProvider</a>&lt;T&gt;</div>
     <div class="level2"><span class="xref">StreamIntervalProvider&lt;T&gt;</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamIntervalProvider.html">IStreamIntervalProvider</a></div>
     <div><a class="xref" href="Microsoft.Psi.Visualization.Data.IStreamDataProvider.html">IStreamDataProvider</a></div>
@@ -337,7 +337,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamIntervalProvider.cs/#L102">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_StreamIntervalProvider_1_GetTimeOfNearestMessage_" data-uid="Microsoft.Psi.Visualization.Data.StreamIntervalProvider`1.GetTimeOfNearestMessage*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_StreamIntervalProvider_1_GetTimeOfNearestMessage_System_DateTime_NearestType_" data-uid="Microsoft.Psi.Visualization.Data.StreamIntervalProvider`1.GetTimeOfNearestMessage(System.DateTime,NearestType)">GetTimeOfNearestMessage(DateTime, NearestType)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Data_StreamIntervalProvider_1_GetTimeOfNearestMessage_System_DateTime_Microsoft_Psi_Data_NearestType_" data-uid="Microsoft.Psi.Visualization.Data.StreamIntervalProvider`1.GetTimeOfNearestMessage(System.DateTime,Microsoft.Psi.Data.NearestType)">GetTimeOfNearestMessage(DateTime, NearestType)</h4>
   <div class="markdown level1 summary"><p>Gets the time of the nearest message to a specified time.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -362,7 +362,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">NearestType</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.NearestType.html">NearestType</a></td>
         <td><span class="parametername">nearestType</span></td>
         <td><p>The type of nearest message to find.</p>
 </td>
@@ -386,7 +386,7 @@
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Visualization.Data.StreamDataProvider&lt;T&gt;.GetTimeOfNearestMessage(System.DateTime, NearestType)</span></div>
+  <div><span class="xref">Microsoft.Psi.Visualization.Data.StreamDataProvider&lt;T&gt;.GetTimeOfNearestMessage(System.DateTime, Microsoft.Psi.Data.NearestType)</span></div>
   
   <span class="small pull-right mobile-hide">
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/StreamIntervalProvider.cs/#L300">View Source</a>
@@ -410,7 +410,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-3">ValueTuple</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-3">(T1, T2, T3)</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.datetime">DateTime</a>&gt;&gt;</td>
         <td><p>A collection of updates to the stream.  If the boolean value is true then the update is an upsert operation, otherwise it's a delete operation.</p>
 </td>
       </tr>
@@ -797,7 +797,8 @@ TailRange - sliding dynamic range that includes the tail of the underlying data 
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

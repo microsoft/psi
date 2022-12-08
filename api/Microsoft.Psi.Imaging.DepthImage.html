@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DepthImage
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,11 +88,11 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html">ImageBase</a></div>
     <div class="level2"><span class="xref">DepthImage</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><span class="xref">IDisposable</span></div>
     <div><a class="xref" href="Microsoft.Psi.Imaging.IDepthImage.html">IDepthImage</a></div>
@@ -159,7 +159,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Imaging.dll</h6>
   <h5 id="Microsoft_Psi_Imaging_DepthImage_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class DepthImage : ImageBase, IDisposable, IDepthImage, IImage</code></pre>
+    <pre><code class="lang-csharp hljs">public class DepthImage : ImageBase, IDepthImage, IImage</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Imaging_DepthImage_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Using this class it is possible as to allocate a new depth image in unmanaged memory,
@@ -203,13 +203,13 @@ as to just wrap provided pointer to unmanaged memory, where an image is stored.<
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
         <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">makeCopy</span></td>
         <td><p>Indicates whether a copy is made (default is false).</p>
 </td>
@@ -254,19 +254,19 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">width</span></td>
         <td><p>Depth image width in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">height</span></td>
         <td><p>Depth image height in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">stride</span></td>
         <td><p>Depth image stride (line size in bytes).</p>
 </td>
@@ -278,7 +278,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
         <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
@@ -320,19 +320,19 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">width</span></td>
         <td><p>Depth image width in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">height</span></td>
         <td><p>Depth image height in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">stride</span></td>
         <td><p>Depth image stride (line size in bytes).</p>
 </td>
@@ -344,7 +344,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
         <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
@@ -380,13 +380,13 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">width</span></td>
         <td><p>Depth image width in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">height</span></td>
         <td><p>Depth image height in pixels.</p>
 </td>
@@ -398,7 +398,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
         <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
@@ -429,19 +429,19 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">width</span></td>
         <td><p>Depth image width in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">height</span></td>
         <td><p>Depth image height in pixels.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">stride</span></td>
         <td><p>Depth image stride (line size in bytes).</p>
 </td>
@@ -453,7 +453,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
         <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
@@ -518,7 +518,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -527,7 +527,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L181">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L176">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Bitmap)">CopyFrom(Bitmap)</h4>
@@ -598,7 +598,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L209">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L199">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Microsoft.Psi.Imaging.DepthImage)">CopyFrom(DepthImage)</h4>
@@ -633,7 +633,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L217">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L207">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyFrom_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyFrom(Microsoft.Psi.Imaging.Image)">CopyFrom(Image)</h4>
@@ -668,7 +668,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L257">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L247">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyTo_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo(Microsoft.Psi.Imaging.DepthImage)">CopyTo(DepthImage)</h4>
@@ -703,7 +703,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L278">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L268">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CopyTo_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CopyTo_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.DepthImage.CopyTo(Microsoft.Psi.Imaging.Image)">CopyTo(Image)</h4>
@@ -738,7 +738,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L397">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L387">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.DepthImage.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
@@ -803,7 +803,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a></td>
         <td><span class="parametername">depthValueToMetersScaleFactor</span></td>
         <td><p>Optional scale factor to convert from depth values to meters.</p>
 </td>
@@ -828,7 +828,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L225">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L215">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_" data-uid="Microsoft.Psi.Imaging.DepthImage.DecodeFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_DecodeFrom_Microsoft_Psi_Imaging_EncodedDepthImage_Microsoft_Psi_Imaging_IDepthImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.DepthImage.DecodeFrom(Microsoft.Psi.Imaging.EncodedDepthImage,Microsoft.Psi.Imaging.IDepthImageFromStreamDecoder)">DecodeFrom(EncodedDepthImage, IDepthImageFromStreamDecoder)</h4>
@@ -868,7 +868,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L244">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L234">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_Encode_" data-uid="Microsoft.Psi.Imaging.DepthImage.Encode*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_Encode_Microsoft_Psi_Imaging_IDepthImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.DepthImage.Encode(Microsoft.Psi.Imaging.IDepthImageToStreamEncoder)">Encode(IDepthImageToStreamEncoder)</h4>
@@ -915,7 +915,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L313">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L303">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_GetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_GetPixel_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixel(System.Int32,System.Int32)">GetPixel(Int32, Int32)</h4>
@@ -937,13 +937,13 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">x</span></td>
         <td><p>Pixel's X coordinate.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">y</span></td>
         <td><p>Pixel's Y coordinate.</p>
 </td>
@@ -960,7 +960,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
         <td><p>The value of the pixel at the specified coordinates.</p>
 </td>
       </tr>
@@ -968,7 +968,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L364">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L354">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_GetPixelRange_" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixelRange*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_GetPixelRange" data-uid="Microsoft.Psi.Imaging.DepthImage.GetPixelRange">GetPixelRange()</h4>
@@ -989,7 +989,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">UInt16</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">UInt16</a>&gt;</td>
         <td><p>A tuple describing the range of values in the depth image.</p>
 </td>
       </tr>
@@ -997,7 +997,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L287">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L277">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_SetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_SetPixel_System_Int32_System_Int32_System_UInt16_" data-uid="Microsoft.Psi.Imaging.DepthImage.SetPixel(System.Int32,System.Int32,System.UInt16)">SetPixel(Int32, Int32, UInt16)</h4>
@@ -1019,19 +1019,19 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">x</span></td>
         <td><p>Pixel's X coordinate.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">y</span></td>
         <td><p>Pixel's Y coordinate.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
         <td><span class="parametername">gray</span></td>
         <td><p>Gray value to set pixel to.</p>
 </td>
@@ -1040,7 +1040,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L338">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/DepthImage.cs/#L328">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_DepthImage_TryGetPixel_" data-uid="Microsoft.Psi.Imaging.DepthImage.TryGetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_DepthImage_TryGetPixel_System_Int32_System_Int32_System_UInt16__" data-uid="Microsoft.Psi.Imaging.DepthImage.TryGetPixel(System.Int32,System.Int32,System.UInt16@)">TryGetPixel(Int32, Int32, out UInt16)</h4>
@@ -1062,19 +1062,19 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">x</span></td>
         <td><p>Pixel's X coordinate.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
         <td><span class="parametername">y</span></td>
         <td><p>Pixel's Y coordinate.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.uint16">UInt16</a></td>
         <td><span class="parametername">value</span></td>
         <td><p>The output value of the pixel.</p>
 </td>
@@ -1091,7 +1091,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><p>True if a pixel value is returned, otherwise false.</p>
 </td>
       </tr>
@@ -1110,6 +1110,9 @@ data is made, and the bitmap data can be released right after the <a class="xref
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_CreateCameraIntrinsics_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_">CalibrationExtensions.CreateCameraIntrinsics(ImageBase, Double, Double)</a>
+  </div>
+  <div>
+      <a class="xref" href="Microsoft.Psi.Calibration.CalibrationExtensions.html#Microsoft_Psi_Calibration_CalibrationExtensions_ComputeRayIntersection_Microsoft_Psi_Imaging_DepthImage_Microsoft_Psi_Calibration_ICameraIntrinsics_Ray3D_System_Double_System_Double_System_Boolean_">CalibrationExtensions.ComputeRayIntersection(DepthImage, ICameraIntrinsics, Ray3D, Double, Double, Boolean)</a>
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.Imaging.Operators.html#Microsoft_Psi_Imaging_Operators_Compare_Microsoft_Psi_Imaging_ImageBase_Microsoft_Psi_Imaging_ImageBase_System_Double_System_Double_Microsoft_Psi_Imaging_ImageError__">Operators.Compare(ImageBase, ImageBase, Double, Double, ref ImageError)</a>
@@ -1157,7 +1160,8 @@ data is made, and the bitmap data can be released right after the <a class="xref
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

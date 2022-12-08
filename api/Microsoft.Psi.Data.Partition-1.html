@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Partition&lt;TStreamReader&gt;
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,10 +88,10 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Partition&lt;TStreamReader&gt;</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="Microsoft.Psi.Data.IPartition.html">IPartition</a></div>
     <div><span class="xref">IDisposable</span></div>
@@ -100,7 +100,7 @@
   <h6><strong>Assembly</strong>: Microsoft.Psi.Data.dll</h6>
   <h5 id="Microsoft_Psi_Data_Partition_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class Partition&lt;TStreamReader&gt; : object, IPartition, IDisposable where TStreamReader : IStreamReader</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class Partition&lt;TStreamReader&gt; : object, IPartition where TStreamReader : IStreamReader</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -156,7 +156,7 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>The partition name.</p>
 </td>
@@ -167,7 +167,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L136">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L146">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_AvailableStreams_" data-uid="Microsoft.Psi.Data.Partition`1.AvailableStreams*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_AvailableStreams" data-uid="Microsoft.Psi.Data.Partition`1.AvailableStreams">AvailableStreams</h4>
@@ -216,7 +216,63 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L91">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Partition_1_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.Data.Partition`1.MessageCreationTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Partition_1_MessageCreationTimeInterval" data-uid="Microsoft.Psi.Data.Partition`1.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the creation time interval (earliest to latest) of the messages in this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageCreationTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Partition_1_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Partition`1.MessageOriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Partition_1_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Partition`1.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageOriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -244,42 +300,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L87">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_Partition_1_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Partition`1.OriginatingTimeInterval*"></a>
-  <h4 id="Microsoft_Psi_Data_Partition_1_OriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Partition`1.OriginatingTimeInterval">OriginatingTimeInterval</h4>
-  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this partition.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeInterval OriginatingTimeInterval { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L119">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L129">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_Session_" data-uid="Microsoft.Psi.Data.Partition`1.Session*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_Session" data-uid="Microsoft.Psi.Data.Partition`1.Session">Session</h4>
@@ -307,7 +335,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L91">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L99">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_Size_" data-uid="Microsoft.Psi.Data.Partition`1.Size*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_Size" data-uid="Microsoft.Psi.Data.Partition`1.Size">Size</h4>
@@ -328,14 +356,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L123">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L133">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_StoreName_" data-uid="Microsoft.Psi.Data.Partition`1.StoreName*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_StoreName" data-uid="Microsoft.Psi.Data.Partition`1.StoreName">StoreName</h4>
@@ -356,14 +384,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L127">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L137">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_StorePath_" data-uid="Microsoft.Psi.Data.Partition`1.StorePath*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_StorePath" data-uid="Microsoft.Psi.Data.Partition`1.StorePath">StorePath</h4>
@@ -384,14 +412,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L95">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L103">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_StreamCount_" data-uid="Microsoft.Psi.Data.Partition`1.StreamCount*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_StreamCount" data-uid="Microsoft.Psi.Data.Partition`1.StreamCount">StreamCount</h4>
@@ -412,14 +440,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L101">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L109">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_StreamReader_" data-uid="Microsoft.Psi.Data.Partition`1.StreamReader*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_StreamReader" data-uid="Microsoft.Psi.Data.Partition`1.StreamReader">StreamReader</h4>
@@ -447,7 +475,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L132">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L142">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_StreamReaderTypeName_" data-uid="Microsoft.Psi.Data.Partition`1.StreamReaderTypeName*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_StreamReaderTypeName" data-uid="Microsoft.Psi.Data.Partition`1.StreamReaderTypeName">StreamReaderTypeName</h4>
@@ -468,7 +496,35 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L95">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Partition_1_TimeInterval_" data-uid="Microsoft.Psi.Data.Partition`1.TimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Partition_1_TimeInterval" data-uid="Microsoft.Psi.Data.Partition`1.TimeInterval">TimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the time interval between open and closed time for all streams in this partition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval TimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -477,7 +533,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L140">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Partition{TStreamReader}.cs/#L150">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Partition_1_Dispose_" data-uid="Microsoft.Psi.Data.Partition`1.Dispose*"></a>
   <h4 id="Microsoft_Psi_Data_Partition_1_Dispose" data-uid="Microsoft.Psi.Data.Partition`1.Dispose">Dispose()</h4>
@@ -517,7 +573,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

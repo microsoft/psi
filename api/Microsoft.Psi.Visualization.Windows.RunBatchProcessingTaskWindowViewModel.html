@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class RunBatchProcessingTaskWindowViewModel
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,7 +89,30 @@
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><span class="xref">RunBatchProcessingTaskWindowViewModel</span></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Data.ObservableObject.html">ObservableObject</a></div>
+    <div class="level2"><span class="xref">RunBatchProcessingTaskWindowViewModel</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">INotifyPropertyChanging</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanged">ObservableObject.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_PropertyChanging">ObservableObject.PropertyChanging</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanged_System_String_">ObservableObject.RaisePropertyChanged(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_RaisePropertyChanging_System_String_">ObservableObject.RaisePropertyChanging(String)</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Data.ObservableObject.html#Microsoft_Psi_Data_ObservableObject_Set__1_System_String___0____0_">ObservableObject.Set&lt;T&gt;(String, T, T)</a>
+    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Visualization.Windows.html">Microsoft.Psi.Visualization.Windows</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Visualization.Windows.dll</h6>
@@ -104,7 +127,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/RunBatchProcessingTaskWindowViewModel.cs/#L55">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Windows_RunBatchProcessingTaskWindowViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Windows_RunBatchProcessingTaskWindowViewModel__ctor_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer,Microsoft.Psi.Visualization.ViewModels.DatasetViewModel,BatchProcessingTaskMetadata)">RunBatchProcessingTaskWindowViewModel(VisualizationContainer, DatasetViewModel, BatchProcessingTaskMetadata)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Windows_RunBatchProcessingTaskWindowViewModel__ctor_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Microsoft_Psi_Visualization_ViewModels_DatasetViewModel_Microsoft_Psi_Data_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer,Microsoft.Psi.Visualization.ViewModels.DatasetViewModel,Microsoft.Psi.Data.BatchProcessingTaskMetadata)">RunBatchProcessingTaskWindowViewModel(VisualizationContainer, DatasetViewModel, BatchProcessingTaskMetadata)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.html">RunBatchProcessingTaskWindowViewModel</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -135,7 +158,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">BatchProcessingTaskMetadata</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></td>
         <td><span class="parametername">batchProcessingTaskMetadata</span></td>
         <td><p>The batch processing task metadata.</p>
 </td>
@@ -147,7 +170,7 @@
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Windows/RunBatchProcessingTaskWindowViewModel.cs/#L75">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Windows_RunBatchProcessingTaskWindowViewModel__ctor_" data-uid="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.#ctor*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Windows_RunBatchProcessingTaskWindowViewModel__ctor_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer,Microsoft.Psi.Visualization.ViewModels.SessionViewModel,BatchProcessingTaskMetadata)">RunBatchProcessingTaskWindowViewModel(VisualizationContainer, SessionViewModel, BatchProcessingTaskMetadata)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Windows_RunBatchProcessingTaskWindowViewModel__ctor_Microsoft_Psi_Visualization_VisualizationObjects_VisualizationContainer_Microsoft_Psi_Visualization_ViewModels_SessionViewModel_Microsoft_Psi_Data_BatchProcessingTaskMetadata_" data-uid="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.#ctor(Microsoft.Psi.Visualization.VisualizationObjects.VisualizationContainer,Microsoft.Psi.Visualization.ViewModels.SessionViewModel,Microsoft.Psi.Data.BatchProcessingTaskMetadata)">RunBatchProcessingTaskWindowViewModel(VisualizationContainer, SessionViewModel, BatchProcessingTaskMetadata)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindowViewModel.html">RunBatchProcessingTaskWindowViewModel</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -178,7 +201,7 @@
 </td>
       </tr>
       <tr>
-        <td><span class="xref">BatchProcessingTaskMetadata</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskMetadata.html">BatchProcessingTaskMetadata</a></td>
         <td><span class="parametername">batchProcessingTaskMetadata</span></td>
         <td><p>The batch processing task metadata.</p>
 </td>
@@ -238,7 +261,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">BatchProcessingTaskConfiguration</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.BatchProcessingTaskConfiguration.html">BatchProcessingTaskConfiguration</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -676,7 +699,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task RunAsync(CancellationToken cancellationToken = default(CancellationToken))</code></pre>
+    <pre><code class="lang-csharp hljs">public async Task RunAsync(CancellationToken cancellationToken = default(CancellationToken))</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -712,6 +735,10 @@
       </tr>
     </tbody>
   </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">INotifyPropertyChanging</span>
+  </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">Serializer.DeepClone&lt;T&gt;(T, ref T)</a>
@@ -735,7 +762,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

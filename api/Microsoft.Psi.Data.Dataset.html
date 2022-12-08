@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class Dataset
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,7 +88,7 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">Dataset</span></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Data.html">Microsoft.Psi.Data</a></h6>
@@ -123,19 +123,19 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>The name of the new dataset. Default is <a class="xref" href="Microsoft.Psi.Data.Dataset.html#Microsoft_Psi_Data_Dataset_DefaultName">DefaultName</a>.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
         <td><p>An optional filename that indicates the location to save the dataset.<a class="xref" href="Microsoft.Psi.Data.Dataset.html#Microsoft_Psi_Data_Dataset_DefaultName">DefaultName</a>.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">autoSave</span></td>
         <td><p>Whether the dataset automatically autosave changes if a path is given (optional, default is false).</p>
 </td>
@@ -166,7 +166,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -196,7 +196,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -224,7 +224,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -252,7 +252,63 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L97">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_MessageCreationTimeInterval_" data-uid="Microsoft.Psi.Data.Dataset.MessageCreationTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_MessageCreationTimeInterval" data-uid="Microsoft.Psi.Data.Dataset.MessageCreationTimeInterval">MessageCreationTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the creation time interval (earliest to latest) of the messages in this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageCreationTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L87">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_MessageOriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Dataset.MessageOriginatingTimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_MessageOriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Dataset.MessageOriginatingTimeInterval">MessageOriginatingTimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval MessageOriginatingTimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -280,42 +336,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L87">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Data_Dataset_OriginatingTimeInterval_" data-uid="Microsoft.Psi.Data.Dataset.OriginatingTimeInterval*"></a>
-  <h4 id="Microsoft_Psi_Data_Dataset_OriginatingTimeInterval" data-uid="Microsoft.Psi.Data.Dataset.OriginatingTimeInterval">OriginatingTimeInterval</h4>
-  <div class="markdown level1 summary"><p>Gets the originating time interval (earliest to latest) of the messages in this dataset.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TimeInterval OriginatingTimeInterval { get; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L107">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L127">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Sessions_" data-uid="Microsoft.Psi.Data.Dataset.Sessions*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Sessions" data-uid="Microsoft.Psi.Data.Dataset.Sessions">Sessions</h4>
@@ -343,7 +371,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L97">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L117">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Size_" data-uid="Microsoft.Psi.Data.Dataset.Size*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Size" data-uid="Microsoft.Psi.Data.Dataset.Size">Size</h4>
@@ -364,14 +392,14 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L102">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L122">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_StreamCount_" data-uid="Microsoft.Psi.Data.Dataset.StreamCount*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_StreamCount" data-uid="Microsoft.Psi.Data.Dataset.StreamCount">StreamCount</h4>
@@ -392,7 +420,35 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.nullable-1">Nullable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int64">Int64</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L107">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Data_Dataset_TimeInterval_" data-uid="Microsoft.Psi.Data.Dataset.TimeInterval*"></a>
+  <h4 id="Microsoft_Psi_Data_Dataset_TimeInterval" data-uid="Microsoft.Psi.Data.Dataset.TimeInterval">TimeInterval</h4>
+  <div class="markdown level1 summary"><p>Gets the stream open-close time interval in this dataset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TimeInterval TimeInterval { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.TimeInterval.html">TimeInterval</a></td>
         <td></td>
       </tr>
     </tbody>
@@ -401,7 +457,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L239">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L259">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_AddSession_" data-uid="Microsoft.Psi.Data.Dataset.AddSession*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_AddSession_System_String_" data-uid="Microsoft.Psi.Data.Dataset.AddSession(System.String)">AddSession(String)</h4>
@@ -423,7 +479,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sessionName</span></td>
         <td><p>The session name.</p>
 </td>
@@ -448,7 +504,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L253">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L273">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_AddSessionFromStore_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionFromStore*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_AddSessionFromStore_Microsoft_Psi_Data_IStreamReader_System_String_System_String_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionFromStore(Microsoft.Psi.Data.IStreamReader,System.String,System.String)">AddSessionFromStore(IStreamReader, String, String)</h4>
@@ -476,13 +532,13 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sessionName</span></td>
         <td><p>The name of the session (optional, defaults to streamReader.Name).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">partitionName</span></td>
         <td><p>The partition name.</p>
 </td>
@@ -507,7 +563,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L481">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L501">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_AddSessionsFromPsiStores_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionsFromPsiStores*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_AddSessionsFromPsiStores_System_String_System_String_" data-uid="Microsoft.Psi.Data.Dataset.AddSessionsFromPsiStores(System.String,System.String)">AddSessionsFromPsiStores(String, String)</h4>
@@ -529,13 +585,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">path</span></td>
         <td><p>The path that contains the data stores.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">partitionName</span></td>
         <td><p>The name of the partition to be added when adding a new session. Default is null.</p>
 </td>
@@ -544,7 +600,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L181">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L201">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Append_" data-uid="Microsoft.Psi.Data.Dataset.Append*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Append_Microsoft_Psi_Data_Dataset_" data-uid="Microsoft.Psi.Data.Dataset.Append(Microsoft.Psi.Data.Dataset)">Append(Dataset)</h4>
@@ -575,7 +631,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L267">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L287">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_ComputeDerived_" data-uid="Microsoft.Psi.Data.Dataset.ComputeDerived*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_ComputeDerived__1_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter___0__" data-uid="Microsoft.Psi.Data.Dataset.ComputeDerived``1(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,``0})">ComputeDerived&lt;TResult&gt;(Action&lt;Pipeline, SessionImporter, TResult&gt;)</h4>
@@ -639,7 +695,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L351">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L371">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter__System_String_System_Boolean_System_String_Func_Microsoft_Psi_Data_Session_System_String__Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter},System.String,System.Boolean,System.String,Func{Microsoft.Psi.Data.Session,System.String},Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt;, String, Boolean, String, Func&lt;Session, String&gt;, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -648,7 +704,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt; computeDerived, string outputPartitionName, bool overwrite, string outputStoreName, Func&lt;Session, string&gt; outputStorePathFunction, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public async Task CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt; computeDerived, string outputPartitionName, bool overwrite, string outputStoreName, Func&lt;Session, string&gt; outputStorePathFunction, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -667,25 +723,25 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputPartitionName</span></td>
         <td><p>The name of the output partition to be created.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">overwrite</span></td>
         <td><p>An optional flag indicating whether the partition should be overwritten. Default is false.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputStoreName</span></td>
         <td><p>An optional name for the output data store. Default is the output partition name.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">outputStorePathFunction</span></td>
         <td><p>An optional function to determine output store path for each given session. Default is the path for the first partition in the session.</p>
 </td>
@@ -703,13 +759,13 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">enableDiagnostics</span></td>
         <td><p>Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">progress</span></td>
         <td><p>An optional progress object to be used for reporting progress.</p>
 </td>
@@ -740,7 +796,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L311">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L331">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter__System_String_System_Boolean_System_String_System_String_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter},System.String,System.Boolean,System.String,System.String,Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt;, String, Boolean, String, String, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -749,7 +805,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt; computeDerived, string outputPartitionName, bool overwrite = false, string outputStoreName = null, string outputStorePath = null, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public async Task CreateDerivedPartitionAsync(Action&lt;Pipeline, SessionImporter, Exporter&gt; computeDerived, string outputPartitionName, bool overwrite = false, string outputStoreName = null, string outputStorePath = null, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -768,25 +824,25 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputPartitionName</span></td>
         <td><p>The name of the output partition to be created.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">overwrite</span></td>
         <td><p>An optional flag indicating whether the partition should be overwritten. Default is false.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputStoreName</span></td>
         <td><p>An optional name for the output data store. Default is the output partition name.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputStorePath</span></td>
         <td><p>An optional path for the output data store. Default is the path for the first partition in the session.</p>
 </td>
@@ -804,13 +860,13 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">enableDiagnostics</span></td>
         <td><p>Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">progress</span></td>
         <td><p>An optional progress object to be used for reporting progress.</p>
 </td>
@@ -841,7 +897,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L436">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L456">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync__1_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter___0____0_System_String_System_Boolean_System_String_Func_Microsoft_Psi_Data_Session_System_String__Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync``1(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter,``0},``0,System.String,System.Boolean,System.String,Func{Microsoft.Psi.Data.Session,System.String},Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt;, TParameter, String, Boolean, String, Func&lt;Session, String&gt;, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -850,7 +906,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt; computeDerived, TParameter parameter, string outputPartitionName, bool overwrite, string outputStoreName, Func&lt;Session, string&gt; outputStorePathFunction, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public async Task CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt; computeDerived, TParameter parameter, string outputPartitionName, bool overwrite, string outputStoreName, Func&lt;Session, string&gt; outputStorePathFunction, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -875,25 +931,25 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputPartitionName</span></td>
         <td><p>The name of the output partition to be created.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">overwrite</span></td>
         <td><p>An optional flag indicating whether the partition should be overwritten. Default is false.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputStoreName</span></td>
         <td><p>An optional name for the output data store. Default is the output partition name.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
+        <td><span class="xref">Func</span>&lt;<a class="xref" href="Microsoft.Psi.Data.Session.html">Session</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>&gt;</td>
         <td><span class="parametername">outputStorePathFunction</span></td>
         <td><p>An optional function to determine output store path for each given session. Default is the path for the first partition in the session.</p>
 </td>
@@ -911,13 +967,13 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">enableDiagnostics</span></td>
         <td><p>Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">progress</span></td>
         <td><p>An optional progress object to be used for reporting progress.</p>
 </td>
@@ -964,7 +1020,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L393">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L413">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateDerivedPartitionAsync__1_Action_Microsoft_Psi_Pipeline_Microsoft_Psi_Data_SessionImporter_Microsoft_Psi_Data_Exporter___0____0_System_String_System_Boolean_System_String_System_String_Microsoft_Psi_ReplayDescriptor_Microsoft_Psi_DeliveryPolicy_System_Boolean_IProgress_System_ValueTuple_System_String_System_Double___CancellationToken_" data-uid="Microsoft.Psi.Data.Dataset.CreateDerivedPartitionAsync``1(Action{Microsoft.Psi.Pipeline,Microsoft.Psi.Data.SessionImporter,Microsoft.Psi.Data.Exporter,``0},``0,System.String,System.Boolean,System.String,System.String,Microsoft.Psi.ReplayDescriptor,Microsoft.Psi.DeliveryPolicy,System.Boolean,IProgress{System.ValueTuple{System.String,System.Double}},CancellationToken)">CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt;, TParameter, String, Boolean, String, String, ReplayDescriptor, DeliveryPolicy, Boolean, IProgress&lt;(String, Double)&gt;, CancellationToken)</h4>
@@ -973,7 +1029,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt; computeDerived, TParameter parameter, string outputPartitionName, bool overwrite = false, string outputStoreName = null, string outputStorePath = null, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public async Task CreateDerivedPartitionAsync&lt;TParameter&gt;(Action&lt;Pipeline, SessionImporter, Exporter, TParameter&gt; computeDerived, TParameter parameter, string outputPartitionName, bool overwrite = false, string outputStoreName = null, string outputStorePath = null, ReplayDescriptor replayDescriptor = null, DeliveryPolicy deliveryPolicy = null, bool enableDiagnostics = false, IProgress&lt;(string, double)&gt; progress = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -998,25 +1054,25 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputPartitionName</span></td>
         <td><p>The output partition name to be created.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">overwrite</span></td>
         <td><p>Flag indicating whether the partition should be overwritten. Default is false.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputStoreName</span></td>
         <td><p>An optional name for the output data store. Default is the output partition name.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">outputStorePath</span></td>
         <td><p>An optional path for the output data store. Default is the path for the first partition in the session.</p>
 </td>
@@ -1034,13 +1090,13 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">enableDiagnostics</span></td>
         <td><p>Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.valuetuple-2">ValueTuple</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
+        <td><span class="xref">IProgress</span>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">Double</a>&gt;&gt;</td>
         <td><span class="parametername">progress</span></td>
         <td><p>An object that can be used for reporting progress.</p>
 </td>
@@ -1087,7 +1143,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L147">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L167">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateFromStore_" data-uid="Microsoft.Psi.Data.Dataset.CreateFromStore*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateFromStore_Microsoft_Psi_Data_IStreamReader_System_String_System_String_" data-uid="Microsoft.Psi.Data.Dataset.CreateFromStore(Microsoft.Psi.Data.IStreamReader,System.String,System.String)">CreateFromStore(IStreamReader, String, String)</h4>
@@ -1115,13 +1171,13 @@
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sessionName</span></td>
         <td><p>The session name (optional, defaults to streamReader.Name).</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">partitionName</span></td>
         <td><p>The partition name (optional, defaults to streamReader.).</p>
 </td>
@@ -1146,7 +1202,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L159">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L179">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_CreateSession_" data-uid="Microsoft.Psi.Data.Dataset.CreateSession*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_CreateSession_System_String_" data-uid="Microsoft.Psi.Data.Dataset.CreateSession(System.String)">CreateSession(String)</h4>
@@ -1168,7 +1224,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">sessionName</span></td>
         <td><p>The session name.</p>
 </td>
@@ -1193,7 +1249,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L119">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L139">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Load_" data-uid="Microsoft.Psi.Data.Dataset.Load*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Load_System_String_System_Boolean_" data-uid="Microsoft.Psi.Data.Dataset.Load(System.String,System.Boolean)">Load(String, Boolean)</h4>
@@ -1215,13 +1271,13 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
         <td><p>The name of the file that contains the dataset to be loaded.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
         <td><span class="parametername">autoSave</span></td>
         <td><p>A value to indicate whether to enable autosave (optional, default is false).</p>
 </td>
@@ -1246,7 +1302,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L492">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L512">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_OnDatasetChanged_" data-uid="Microsoft.Psi.Data.Dataset.OnDatasetChanged*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_OnDatasetChanged" data-uid="Microsoft.Psi.Data.Dataset.OnDatasetChanged">OnDatasetChanged()</h4>
@@ -1259,7 +1315,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L171">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L191">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_RemoveSession_" data-uid="Microsoft.Psi.Data.Dataset.RemoveSession*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_RemoveSession_Microsoft_Psi_Data_Session_" data-uid="Microsoft.Psi.Data.Dataset.RemoveSession(Microsoft.Psi.Data.Session)">RemoveSession(Session)</h4>
@@ -1290,7 +1346,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L209">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L229">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_Save_" data-uid="Microsoft.Psi.Data.Dataset.Save*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_Save" data-uid="Microsoft.Psi.Data.Dataset.Save">Save()</h4>
@@ -1303,7 +1359,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L200">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Data/Microsoft.Psi.Data/Dataset.cs/#L220">View Source</a>
   </span>
   <a id="Microsoft_Psi_Data_Dataset_SaveAs_" data-uid="Microsoft.Psi.Data.Dataset.SaveAs*"></a>
   <h4 id="Microsoft_Psi_Data_Dataset_SaveAs_System_String_" data-uid="Microsoft.Psi.Data.Dataset.SaveAs(System.String)">SaveAs(String)</h4>
@@ -1325,7 +1381,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">filename</span></td>
         <td><p>The filename that indicates the location to save the dataset.</p>
 </td>
@@ -1390,7 +1446,8 @@
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

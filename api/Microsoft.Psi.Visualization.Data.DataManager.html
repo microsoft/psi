@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class DataManager
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -92,7 +92,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
     <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
     <div class="level1"><span class="xref">DataManager</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.idisposable">IDisposable</a></div>
   </div>
@@ -331,7 +331,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
     <a href="https://github.com/microsoft/psi/blob/master/Sources/Visualization/Microsoft.Psi.Visualization.Windows/Data/DataManager.cs/#L346">View Source</a>
   </span>
   <a id="Microsoft_Psi_Visualization_Data_DataManager_GetTimeOfNearestMessage_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetTimeOfNearestMessage*"></a>
-  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetTimeOfNearestMessage_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_NearestType_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetTimeOfNearestMessage(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,NearestType)">GetTimeOfNearestMessage(StreamSource, DateTime, NearestType)</h4>
+  <h4 id="Microsoft_Psi_Visualization_Data_DataManager_GetTimeOfNearestMessage_Microsoft_Psi_Visualization_Data_StreamSource_System_DateTime_Microsoft_Psi_Data_NearestType_" data-uid="Microsoft.Psi.Visualization.Data.DataManager.GetTimeOfNearestMessage(Microsoft.Psi.Visualization.Data.StreamSource,System.DateTime,Microsoft.Psi.Data.NearestType)">GetTimeOfNearestMessage(StreamSource, DateTime, NearestType)</h4>
   <div class="markdown level1 summary"><p>Gets the time of the nearest message to a specified time, on a specified stream.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -362,7 +362,7 @@ Manages underlying sets of <a class="xref" href="Microsoft.Psi.Visualization.Dat
 </td>
       </tr>
       <tr>
-        <td><span class="xref">NearestType</span></td>
+        <td><a class="xref" href="Microsoft.Psi.Data.NearestType.html">NearestType</a></td>
         <td><span class="parametername">nearestType</span></td>
         <td><p>The type of nearest message to find.</p>
 </td>
@@ -1346,7 +1346,8 @@ either a stream adapter or a stream summarizer are not permitted to update a str
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>

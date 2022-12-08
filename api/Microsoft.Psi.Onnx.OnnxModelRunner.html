@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class OnnxModelRunner
    | Platform for Situated Intelligence ">
-    <meta name="generator" content="docfx 2.56.2.0">
+    <meta name="generator" content="docfx 2.59.4.0">
     
     <link rel="shortcut icon" href="../images/Psi.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -61,11 +61,11 @@
       <div class="container body-content">
         
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -88,18 +88,26 @@
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.object">Object</a></div>
-    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[], <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
-    <div class="level2"><span class="xref">OnnxModelRunner</span></div>
+    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level1"><a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html">ConsumerProducer</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[], <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
+    <div class="level2"><a class="xref" href="Microsoft.Psi.Onnx.OnnxModelRunner-2.html">OnnxModelRunner</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[], <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
+    <div class="level3"><span class="xref">OnnxModelRunner</span></div>
   </div>
-  <div classs="implements">
+  <div class="implements">
     <h5>Implements</h5>
-    <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[], <a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
-    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
-    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[], <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IConsumer-1.html">IConsumer</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
+    <div><a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">Single</a>[]&gt;</div>
+    <div><span class="xref">IDisposable</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Onnx.OnnxModelRunner-2.html#Microsoft_Psi_Onnx_OnnxModelRunner_2_Dispose">OnnxModelRunner&lt;Single[], Single[]&gt;.Dispose()</a>
+    </div>
+    <div>
+      <a class="xref" href="Microsoft.Psi.Onnx.OnnxModelRunner-2.html#Microsoft_Psi_Onnx_OnnxModelRunner_2_Receive__0_Microsoft_Psi_Envelope_">OnnxModelRunner&lt;Single[], Single[]&gt;.Receive(Single[], Envelope)</a>
+    </div>
     <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_In">ConsumerProducer&lt;Single[], Single[]&gt;.In</a>
     </div>
@@ -109,15 +117,12 @@
     <div>
       <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_ToString">ConsumerProducer&lt;Single[], Single[]&gt;.ToString()</a>
     </div>
-    <div>
-      <a class="xref" href="Microsoft.Psi.Components.ConsumerProducer-2.html#Microsoft_Psi_Components_ConsumerProducer_2_Receive__0_Microsoft_Psi_Envelope_">ConsumerProducer&lt;Single[], Single[]&gt;.Receive(Single[], Envelope)</a>
-    </div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="Microsoft.Psi.Onnx.html">Microsoft.Psi.Onnx</a></h6>
   <h6><strong>Assembly</strong>: Microsoft.Psi.Onnx.Cpu.dll</h6>
   <h5 id="Microsoft_Psi_Onnx_OnnxModelRunner_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class OnnxModelRunner : ConsumerProducer&lt;float[], float[]&gt;, IConsumerProducer&lt;float[], float[]&gt;, IConsumer&lt;float[]&gt;, IProducer&lt;float[]&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class OnnxModelRunner : OnnxModelRunner&lt;float[], float[]&gt;, IConsumerProducer&lt;float[], float[]&gt;, IConsumer&lt;float[]&gt;, IProducer&lt;float[]&gt;</code></pre>
   </div>
   <h5 id="Microsoft_Psi_Onnx_OnnxModelRunner_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This class implements a \psi component that runs a simple ONNX model.
@@ -125,17 +130,13 @@ It expects an input stream containing a vector of floats, and produces
 an output stream containing a vector of floats. This component is
 constructed by specifying an <a class="xref" href="Microsoft.Psi.Onnx.OnnxModelConfiguration.html">OnnxModelConfiguration</a>
 object that describes where to load the model from, and runs the
-bare-bones model. In general, input data sent to a neural network
-contained in an ONNX model often needs some processing (e.g.,
-image pixels need to be arranged in a specific order in the input
-tensor, etc.), and similarly the output vector must often be post-
-processed to obtain the desired, final results.</p>
+bare-bones model.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModelRunner.cs/#L41">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModelRunner.cs/#L30">View Source</a>
   </span>
   <a id="Microsoft_Psi_Onnx_OnnxModelRunner__ctor_" data-uid="Microsoft.Psi.Onnx.OnnxModelRunner.#ctor*"></a>
   <h4 id="Microsoft_Psi_Onnx_OnnxModelRunner__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_Onnx_OnnxModelConfiguration_System_String_" data-uid="Microsoft.Psi.Onnx.OnnxModelRunner.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.Onnx.OnnxModelConfiguration,System.String)">OnnxModelRunner(Pipeline, OnnxModelConfiguration, String)</h4>
@@ -169,7 +170,7 @@ processed to obtain the desired, final results.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.string">String</a></td>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">String</a></td>
         <td><span class="parametername">name</span></td>
         <td><p>An optional name for the component.</p>
 </td>
@@ -181,49 +182,6 @@ processed to obtain the desired, final results.</p>
 name of the input and output vectors in that ONNX model, as well as
 the input vector size.</p>
 </div>
-  <h3 id="methods">Methods
-  </h3>
-  
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModelRunner.cs/#L49">View Source</a>
-  </span>
-  <a id="Microsoft_Psi_Onnx_OnnxModelRunner_Receive_" data-uid="Microsoft.Psi.Onnx.OnnxModelRunner.Receive*"></a>
-  <h4 id="Microsoft_Psi_Onnx_OnnxModelRunner_Receive_System_Single___Microsoft_Psi_Envelope_" data-uid="Microsoft.Psi.Onnx.OnnxModelRunner.Receive(System.Single[],Microsoft.Psi.Envelope)">Receive(Single[], Envelope)</h4>
-  <div class="markdown level1 summary"><p>Override this method to process the incomming message and potentially publish one or more output messages.
-The input message payload is only valid for the duration of the call.
-If the data needs to be stored beyond the scope of this method,
-use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Microsoft_Psi_Serializer_DeepClone__1___0___0__">DeepClone&lt;T&gt;(T, ref T)</a> to create a private copy.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override void Receive(float[] data, Envelope envelope)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a class="xref" href="https://docs.microsoft.com/dotnet/api/system.single">Single</a>[]</td>
-        <td><span class="parametername">data</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Microsoft.Psi.Envelope.html">Envelope</a></td>
-        <td><span class="parametername">envelope</span></td>
-        <td><p>The input message envelope.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">Microsoft.Psi.Components.ConsumerProducer&lt;System.Single[], System.Single[]&gt;.Receive(System.Single[], Microsoft.Psi.Envelope)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="Microsoft.Psi.Components.IConsumerProducer-2.html">IConsumerProducer&lt;TIn, TOut&gt;</a>
@@ -233,6 +191,9 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
   </div>
   <div>
       <a class="xref" href="Microsoft.Psi.IProducer-1.html">IProducer&lt;TOut&gt;</a>
+  </div>
+  <div>
+      <span class="xref">IDisposable</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -252,12 +213,13 @@ use the extension method <a class="xref" href="Microsoft.Psi.Serializer.html#Mic
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModelRunner.cs/#L25" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/Integrations/Onnx/Common/OnnxModelRunner.cs/#L19" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
               <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
-              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+                <h5>In This Article</h5>
+                <div></div>
               </nav>
             </div>
           </div>
