@@ -29,8 +29,6 @@ __05/02/2021__: We've opened the [Discussions](https://github.com/microsoft/psi/
 
 __04/29/2021__: Thanks to all who joined us for the [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! In this workshop, we discussed the basics on how to use the framework to accelerate your own work in the space of multimodal, integrative AI; presented some in-depth tutorials, demos, and previews of new features; and had a fun panel on how to build and nurture the open source community. All sessions were recorded, and you can find the videos on the [event website](https://aka.ms/psi-w1) now.
 
-__04/14/2021__: We uploaded a [brief overview](https://innovation.microsoft.com/en-us/tech-minutes-platform-for-situated-intelligence) on Platform for Situated Intelligence as part of the Microsoft Innovation Tech Minutes series.
-
 __03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
 
 # Getting Started
