@@ -229,12 +229,7 @@ namespace HoloLensCaptureExporter
                         videoImageFile.Write(buffer, 0, eicv.ViewedObject.Resource.Size);
                         timingFile.WriteLine($"{imageCounter}\t{envelope.OriginatingTime.ToText()}");
                         poseFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{eicv.CameraPose.ToText()}");
-
-                        if (imageCounter == 0)
-                        {
-                            intrinsicsFile.WriteLine(eicv.CameraIntrinsics.ToText());
-                        }
-
+                        intrinsicsFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{eicv.CameraIntrinsics.ToText()}");
                         imageCounter++;
                     });
         }
