@@ -267,12 +267,7 @@ namespace HoloLensCaptureExporter
                         depthImageFile.Write(buffer, 0, buffer.Length);
                         timingFile.WriteLine($"{depthImageCounter}\t{envelope.OriginatingTime.ToText()}");
                         poseFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{edicv.CameraPose.ToText()}");
-
-                        if (depthImageCounter == 0)
-                        {
-                            intrinsicsFile.WriteLine(edicv.CameraIntrinsics.ToText());
-                        }
-
+                        intrinsicsFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{edicv.CameraIntrinsics.ToText()}");
                         depthImageCounter++;
                     });
         }
