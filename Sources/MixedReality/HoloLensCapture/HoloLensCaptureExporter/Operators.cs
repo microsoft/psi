@@ -229,12 +229,7 @@ namespace HoloLensCaptureExporter
                         videoImageFile.Write(buffer, 0, eicv.ViewedObject.Resource.Size);
                         timingFile.WriteLine($"{imageCounter}\t{envelope.OriginatingTime.ToText()}");
                         poseFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{eicv.CameraPose.ToText()}");
-
-                        if (imageCounter == 0)
-                        {
-                            intrinsicsFile.WriteLine(eicv.CameraIntrinsics.ToText());
-                        }
-
+                        intrinsicsFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{eicv.CameraIntrinsics.ToText()}");
                         imageCounter++;
                     });
         }
@@ -272,12 +267,7 @@ namespace HoloLensCaptureExporter
                         depthImageFile.Write(buffer, 0, buffer.Length);
                         timingFile.WriteLine($"{depthImageCounter}\t{envelope.OriginatingTime.ToText()}");
                         poseFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{edicv.CameraPose.ToText()}");
-
-                        if (depthImageCounter == 0)
-                        {
-                            intrinsicsFile.WriteLine(edicv.CameraIntrinsics.ToText());
-                        }
-
+                        intrinsicsFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{edicv.CameraIntrinsics.ToText()}");
                         depthImageCounter++;
                     });
         }
