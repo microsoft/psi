@@ -48,13 +48,17 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             this.pipeline = pipeline;
             this.configuration = configuration ?? new PhotoVideoCameraConfiguration();
 
+            this.VideoImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.VideoImage));
             this.VideoEncodedImage = pipeline.CreateEmitter<Shared<EncodedImage>>(this, nameof(this.VideoEncodedImage));
             this.VideoIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.VideoIntrinsics));
             this.VideoPose = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.VideoPose));
+            this.VideoImageCameraView = pipeline.CreateEmitter<ImageCameraView>(this, nameof(this.VideoImageCameraView));
             this.VideoEncodedImageCameraView = pipeline.CreateEmitter<EncodedImageCameraView>(this, nameof(this.VideoEncodedImageCameraView));
+            this.PreviewImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.PreviewImage));
             this.PreviewEncodedImage = pipeline.CreateEmitter<Shared<EncodedImage>>(this, nameof(this.PreviewEncodedImage));
             this.PreviewIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.PreviewIntrinsics));
             this.PreviewPose = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.PreviewPose));
+            this.PreviewImageCameraView = pipeline.CreateEmitter<ImageCameraView>(this, nameof(this.PreviewImageCameraView));
             this.PreviewEncodedImageCameraView = pipeline.CreateEmitter<EncodedImageCameraView>(this, nameof(this.PreviewEncodedImageCameraView));
 
             // Call this here (rather than in the Start() method, which is executed on the thread pool) to
@@ -64,6 +68,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             // https://docs.microsoft.com/en-us/uwp/api/windows.media.capture.mediacapture.initializeasync
             this.initMediaCaptureTask = this.InitializeMediaCaptureAsync();
         }
+
+        /// <summary>
+        /// Gets the RGBA-converted image stream.
+        /// </summary>
+        public Emitter<Shared<Image>> VideoImage { get; }
 
         /// <summary>
         /// Gets the original video NV12-encoded image stream.
@@ -81,9 +90,19 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         public Emitter<ICameraIntrinsics> VideoIntrinsics { get; }
 
         /// <summary>
+        /// Gets the RGBA-converted image camera view.
+        /// </summary>
+        public Emitter<ImageCameraView> VideoImageCameraView { get; }
+
+        /// <summary>
         /// Gets the original video NV12-encoded image camera view.
         /// </summary>
         public Emitter<EncodedImageCameraView> VideoEncodedImageCameraView { get; }
+
+        /// <summary>
+        /// Gets the RGBA-converted preview image stream.
+        /// </summary>
+        public Emitter<Shared<Image>> PreviewImage { get; }
 
         /// <summary>
         /// Gets the original preview NV12-encoded image stream.
@@ -99,6 +118,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// Gets the preview camera intrinsics stream.
         /// </summary>
         public Emitter<ICameraIntrinsics> PreviewIntrinsics { get; }
+
+        /// <summary>
+        /// Gets the preview RGBA-converted image camera view.
+        /// </summary>
+        public Emitter<ImageCameraView> PreviewImageCameraView { get; }
 
         /// <summary>
         /// Gets the original preview NV12-encoded image camera view.
@@ -149,9 +173,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 // (if configured) are then posted on the respective output emitters.
                 this.videoFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration.VideoStreamSettings,
+                    this.VideoImage,
                     this.VideoEncodedImage,
                     this.VideoIntrinsics,
                     this.VideoPose,
+                    this.VideoImageCameraView,
                     this.VideoEncodedImageCameraView);
 
                 this.videoFrameReader.FrameArrived += this.videoFrameHandler;
@@ -179,9 +205,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 // (if configured) are then posted on the respective output emitters.
                 this.previewFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration.PreviewStreamSettings,
+                    this.PreviewImage,
                     this.PreviewEncodedImage,
                     this.PreviewIntrinsics,
                     this.PreviewPose,
+                    this.PreviewImageCameraView,
                     this.PreviewEncodedImageCameraView);
 
                 this.previewFrameReader.FrameArrived += this.previewFrameHandler;
@@ -472,16 +500,20 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// Creates an event handler that handles the FrameArrived event of the MediaFrameReader.
         /// </summary>
         /// <param name="streamSettings">The stream settings.</param>
+        /// <param name="imageStream">The stream on which to post the output image.</param>
         /// <param name="encodedImageStream">The stream on which to post the output encoded image.</param>
         /// <param name="intrinsicsStream">The stream on which to post the camera intrinsics.</param>
         /// <param name="poseStream">The stream on which to post the camera pose.</param>
+        /// <param name="imageCameraViewStream">The stream on which to post the image camera view.</param>
         /// <param name="encodedImageCameraViewStream">The stream on which to post the encoded image camera view.</param>
         /// <returns>The event handler.</returns>
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> CreateMediaFrameHandler(
             PhotoVideoCameraConfiguration.StreamSettings streamSettings,
+            Emitter<Shared<Image>> imageStream,
             Emitter<Shared<EncodedImage>> encodedImageStream,
             Emitter<ICameraIntrinsics> intrinsicsStream,
             Emitter<CoordinateSystem> poseStream,
+            Emitter<ImageCameraView> imageCameraViewStream,
             Emitter<EncodedImageCameraView> encodedImageCameraViewStream)
         {
             return (sender, args) =>
@@ -520,43 +552,78 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                         poseStream.Post(cameraPose, originatingTime);
                     }
 
-                    if (streamSettings.OutputEncodedImage || streamSettings.OutputEncodedImageCameraView)
+                    if (streamSettings.OutputImage || streamSettings.OutputImageCameraView
+                     || streamSettings.OutputEncodedImage || streamSettings.OutputEncodedImageCameraView)
                     {
                         // Accessing the VideoMediaFrame.SoftwareBitmap property creates a strong reference
                         // which needs to be Disposed, per the remarks here:
                         // https://docs.microsoft.com/en-us/uwp/api/windows.media.capture.frames.mediaframereference?view=winrt-19041#remarks
                         using var frameBitmap = frame.VideoMediaFrame.SoftwareBitmap;
-                        using var sharedEncodedImage = EncodedImagePool.GetOrCreate(frameBitmap.PixelWidth, frameBitmap.PixelHeight, PixelFormat.BGRA_32bpp);
 
-                        // Copy bitmap data into the shared encoded image
-                        unsafe
+                        if (streamSettings.OutputImage || streamSettings.OutputImageCameraView)
                         {
-                            using var input = frameBitmap.LockBuffer(BitmapBufferAccessMode.Read);
-                            using var inputReference = input.CreateReference();
-                            ((UnsafeNative.IMemoryBufferByteAccess)inputReference).GetBuffer(out byte* imageData, out uint size);
+                            using var convertedBitmap = SoftwareBitmap.Convert(frameBitmap, BitmapPixelFormat.Rgba8, BitmapAlphaMode.Ignore);
+                            using var sharedImage = ImagePool.GetOrCreate(convertedBitmap.PixelWidth, convertedBitmap.PixelHeight, PixelFormat.BGRA_32bpp);
 
-                            // Copy NV12-encoded bytes directly (leaving room for 4-byte header)
-                            sharedEncodedImage.Resource.CopyFrom((IntPtr)imageData, 4, (int)size);
+                            // Copy bitmap data into the shared image
+                            unsafe
+                            {
+                                using var input = convertedBitmap.LockBuffer(BitmapBufferAccessMode.Read);
+                                using var inputReference = input.CreateReference();
+                                ((UnsafeNative.IMemoryBufferByteAccess)inputReference).GetBuffer(out byte* imageData, out uint size);
 
-                            // Add NV12 header to identify encoding
-                            var buffer = sharedEncodedImage.Resource.GetBuffer();
-                            buffer[0] = (byte)'N';
-                            buffer[1] = (byte)'V';
-                            buffer[2] = (byte)'1';
-                            buffer[3] = (byte)'2';
+                                // Copy RGBA bytes directly
+                                sharedImage.Resource.CopyFrom((IntPtr)imageData, (int)size);
+                            }
+
+                            // Post encoded image stream
+                            if (streamSettings.OutputImage)
+                            {
+                                imageStream.Post(sharedImage, originatingTime);
+                            }
+
+                            // Post the encoded image camera view stream if requested
+                            if (streamSettings.OutputImageCameraView)
+                            {
+                                using var imageCameraView = new ImageCameraView(sharedImage, cameraIntrinsics, cameraPose);
+                                imageCameraViewStream.Post(imageCameraView, originatingTime);
+                            }
                         }
 
-                        // Post encoded image stream
-                        if (streamSettings.OutputEncodedImage)
+                        if (streamSettings.OutputEncodedImage || streamSettings.OutputEncodedImageCameraView)
                         {
-                            encodedImageStream.Post(sharedEncodedImage, originatingTime);
-                        }
+                            using var sharedEncodedImage = EncodedImagePool.GetOrCreate(frameBitmap.PixelWidth, frameBitmap.PixelHeight, PixelFormat.BGRA_32bpp);
 
-                        // Post the encoded image camera view stream if requested
-                        if (streamSettings.OutputEncodedImageCameraView)
-                        {
-                            using var encodedImageCameraView = new EncodedImageCameraView(sharedEncodedImage, cameraIntrinsics, cameraPose);
-                            encodedImageCameraViewStream.Post(encodedImageCameraView, originatingTime);
+                            // Copy bitmap data into the shared encoded image
+                            unsafe
+                            {
+                                using var input = frameBitmap.LockBuffer(BitmapBufferAccessMode.Read);
+                                using var inputReference = input.CreateReference();
+                                ((UnsafeNative.IMemoryBufferByteAccess)inputReference).GetBuffer(out byte* imageData, out uint size);
+
+                                // Copy NV12-encoded bytes directly (leaving room for 4-byte header)
+                                sharedEncodedImage.Resource.CopyFrom((IntPtr)imageData, 4, (int)size);
+
+                                // Add NV12 header to identify encoding
+                                var buffer = sharedEncodedImage.Resource.GetBuffer();
+                                buffer[0] = (byte)'N';
+                                buffer[1] = (byte)'V';
+                                buffer[2] = (byte)'1';
+                                buffer[3] = (byte)'2';
+                            }
+
+                            // Post encoded image stream
+                            if (streamSettings.OutputEncodedImage)
+                            {
+                                encodedImageStream.Post(sharedEncodedImage, originatingTime);
+                            }
+
+                            // Post the encoded image camera view stream if requested
+                            if (streamSettings.OutputEncodedImageCameraView)
+                            {
+                                using var encodedImageCameraView = new EncodedImageCameraView(sharedEncodedImage, cameraIntrinsics, cameraPose);
+                                encodedImageCameraViewStream.Post(encodedImageCameraView, originatingTime);
+                            }
                         }
                     }
                 }
