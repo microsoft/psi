@@ -576,13 +576,13 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                                 sharedImage.Resource.CopyFrom((IntPtr)imageData, (int)size);
                             }
 
-                            // Post encoded image stream
+                            // Post image stream
                             if (streamSettings.OutputImage)
                             {
                                 imageStream.Post(sharedImage, originatingTime);
                             }
 
-                            // Post the encoded image camera view stream if requested
+                            // Post the image camera view stream if requested
                             if (streamSettings.OutputImageCameraView)
                             {
                                 using var imageCameraView = new ImageCameraView(sharedImage, cameraIntrinsics, cameraPose);
