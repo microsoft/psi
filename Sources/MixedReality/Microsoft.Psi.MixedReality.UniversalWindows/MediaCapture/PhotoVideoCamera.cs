@@ -70,7 +70,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         }
 
         /// <summary>
-        /// Gets the RGBA-converted image stream.
+        /// Gets the BGRA-converted image stream.
         /// </summary>
         public Emitter<Shared<Image>> VideoImage { get; }
 
@@ -90,7 +90,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         public Emitter<ICameraIntrinsics> VideoIntrinsics { get; }
 
         /// <summary>
-        /// Gets the RGBA-converted image camera view.
+        /// Gets the BGRA-converted image camera view.
         /// </summary>
         public Emitter<ImageCameraView> VideoImageCameraView { get; }
 
@@ -100,7 +100,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         public Emitter<EncodedImageCameraView> VideoEncodedImageCameraView { get; }
 
         /// <summary>
-        /// Gets the RGBA-converted preview image stream.
+        /// Gets the BGRA-converted preview image stream.
         /// </summary>
         public Emitter<Shared<Image>> PreviewImage { get; }
 
@@ -120,7 +120,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         public Emitter<ICameraIntrinsics> PreviewIntrinsics { get; }
 
         /// <summary>
-        /// Gets the preview RGBA-converted image camera view.
+        /// Gets the preview BGRA-converted image camera view.
         /// </summary>
         public Emitter<ImageCameraView> PreviewImageCameraView { get; }
 
@@ -562,7 +562,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
 
                         if (streamSettings.OutputImage || streamSettings.OutputImageCameraView)
                         {
-                            using var convertedBitmap = SoftwareBitmap.Convert(frameBitmap, BitmapPixelFormat.Rgba8, BitmapAlphaMode.Ignore);
+                            using var convertedBitmap = SoftwareBitmap.Convert(frameBitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Ignore);
                             using var sharedImage = ImagePool.GetOrCreate(convertedBitmap.PixelWidth, convertedBitmap.PixelHeight, PixelFormat.BGRA_32bpp);
 
                             // Copy bitmap data into the shared image
@@ -572,7 +572,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                                 using var inputReference = input.CreateReference();
                                 ((UnsafeNative.IMemoryBufferByteAccess)inputReference).GetBuffer(out byte* imageData, out uint size);
 
-                                // Copy RGBA bytes directly
+                                // Copy BGRA bytes directly
                                 sharedImage.Resource.CopyFrom((IntPtr)imageData, (int)size);
                             }
 

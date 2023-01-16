@@ -102,7 +102,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             public int ImageHeight { get; set; } = 720;
 
             /// <summary>
-            /// Gets or sets a value indicating whether the RGBA-converted image is emitted.
+            /// Gets or sets a value indicating whether the BGRA-converted image is emitted.
             /// </summary>
             public bool OutputImage { get; set; } = false;
 
@@ -122,7 +122,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             public bool OutputPose { get; set; } = true;
 
             /// <summary>
-            /// Gets or sets a value indicating whether the RGBA-converted image camera view is emitted.
+            /// Gets or sets a value indicating whether the BGRA-converted image camera view is emitted.
             /// </summary>
             public bool OutputImageCameraView { get; set; } = false;
 
