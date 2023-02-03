@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
@@ -18,7 +19,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <summary>
     /// Provides an abstract base class for visualization objects.
     /// </summary>
-    public abstract class VisualizationObject : ObservableTreeNodeObject
+    public abstract class VisualizationObject : ObservableTreeNodeObject, IContextMenuItemsSource
     {
         /// <summary>
         /// The name of the visualization object.
@@ -257,6 +258,24 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         protected virtual IContractResolver ContractResolver => null;
+
+        /// <inheritdoc/>
+        public virtual List<ContextMenuItemInfo> ContextMenuItemsInfo()
+            => new ()
+            {
+                // Add the show/hide command
+                new ContextMenuItemInfo(
+                    IconSourcePath.ToggleVisibility,
+                    this.Visible ? "Hide Visualizer" : "Show Visualizer",
+                    this.ToggleVisibilityCommand),
+
+                // Add the remove from panel command
+                new ContextMenuItemInfo(
+                    IconSourcePath.RemovePanel,
+                    "Remove Visualizer",
+                    this.Panel.DeleteVisualizationCommand,
+                    commandParameter: this),
+            };
 
         /// <summary>
         /// Snaps or unsnaps the navigation cursor to the visualization object.

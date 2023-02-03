@@ -23,14 +23,27 @@ namespace Microsoft.Psi.Common.Interpolators
         /// <summary>
         /// Initializes a new instance of the <see cref="AdjacentValuesInterpolator{T}"/> class.
         /// </summary>
-        /// <param name="interpolatorFunc">An interpolator function which given the two nearest values and the ratio
-        /// between them where the interpolation result should be produces the interpolation result.</param>
+        /// <param name="interpolatorFunc">A function which produces an interpolation result, given the two nearest values
+        /// and the ratio between them.</param>
         /// <param name="orDefault">Indicates whether to output a default value when no result is found.</param>
         /// <param name="defaultValue">An optional default value to use.</param>
         /// <param name="name">An optional name for the interpolator (defaults to AdjacentValues).</param>
         public AdjacentValuesInterpolator(Func<T, T, double, T> interpolatorFunc, bool orDefault, T defaultValue = default, string name = null)
         {
-            this.interpolator = new (interpolatorFunc, orDefault, defaultValue, name);
+            T InterpolateWithEndpointHandling(T t1, T t2, double amount)
+            {
+                if (amount < 0 || amount > 1)
+                {
+                    throw new ArgumentException("Cannot pass interpolation values less than 0 or greater than 1." +
+                                                $"{nameof(AdjacentValuesInterpolator<T>)} does not support extrapolation.");
+                }
+
+                return amount == 0 ? t1 :
+                       amount == 1 ? t2 :
+                       interpolatorFunc(t1, t2, amount);
+            }
+
+            this.interpolator = new (InterpolateWithEndpointHandling, orDefault, defaultValue, name);
         }
 
         /// <inheritdoc/>

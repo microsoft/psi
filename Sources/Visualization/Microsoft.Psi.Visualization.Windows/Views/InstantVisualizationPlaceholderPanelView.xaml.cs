@@ -3,8 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.Views
 {
-    using System.Collections.Generic;
-    using System.Windows.Controls;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>

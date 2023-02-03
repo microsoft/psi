@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Calibration
     using System.Collections.Generic;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using MathNet.Spatial.Units;
     using Microsoft.Psi;
     using Microsoft.Psi.Imaging;
 
@@ -196,8 +197,8 @@ namespace Microsoft.Psi.Calibration
             double z = pointInCameraSpace.X * colorExtrinsicsInverse[2, 0] + pointInCameraSpace.Y * colorExtrinsicsInverse[2, 1] + pointInCameraSpace.Z * colorExtrinsicsInverse[2, 2] + colorExtrinsicsInverse[2, 3];
             var pointInDepthCameraSpace = new Point3D(x, y, z);
             var colorCameraOriginInDepthCameraSpace = new Point3D(colorExtrinsicsInverse[0, 3], colorExtrinsicsInverse[1, 3], colorExtrinsicsInverse[2, 3]);
-            var searchLine = new Line3D(colorCameraOriginInDepthCameraSpace, pointInDepthCameraSpace);
-            return IntersectLineWithDepthMesh(depthDeviceCalibrationInfo.DepthIntrinsics, searchLine, depthImage.Resource);
+            var searchRay = new Ray3D(colorCameraOriginInDepthCameraSpace, pointInDepthCameraSpace - colorCameraOriginInDepthCameraSpace);
+            return depthImage.Resource.ComputeRayIntersection(depthDeviceCalibrationInfo.DepthIntrinsics, searchRay);
         }
 
         /// <summary>
@@ -212,41 +213,6 @@ namespace Microsoft.Psi.Calibration
             DeliveryPolicy<(Shared<DepthImage>, List<Point2D>, IDepthDeviceCalibrationInfo)> deliveryPolicy = null,
             string name = nameof(ProjectTo3D))
             => source.PipeTo(new ProjectTo3D(source.Out.Pipeline, name), deliveryPolicy);
-
-        /// <summary>
-        /// Performs a ray/mesh intersection with the depth map.
-        /// </summary>
-        /// <param name="depthIntrinsics">The intrinsics for the depth camera.</param>
-        /// <param name="line">Ray to intersect against depth map.</param>
-        /// <param name="depthImage">Depth map to ray cast against.</param>
-        /// <param name="maxDistance">The maximum distance to search for.</param>
-        /// <param name="skipFactor">Distance to march on each step along ray.</param>
-        /// <param name="undistort">Whether undistortion should be applied to the point.</param>
-        /// <returns>Returns point of intersection.</returns>
-        public static Point3D? IntersectLineWithDepthMesh(ICameraIntrinsics depthIntrinsics, Line3D line, DepthImage depthImage, double maxDistance = 5, double skipFactor = 0.05, bool undistort = true)
-        {
-            // max distance to check for intersection with the scene
-            var delta = skipFactor * (line.EndPoint - line.StartPoint).Normalize();
-
-            // size of increment along the ray
-            int maxSteps = (int)(maxDistance / delta.Length);
-            var hypothesisPoint = line.StartPoint;
-            for (int i = 0; i < maxSteps; i++)
-            {
-                hypothesisPoint += delta;
-
-                // get the mesh distance at the extended point
-                float meshDistance = GetMeshDepthAtPoint(depthIntrinsics, depthImage, hypothesisPoint, undistort);
-
-                // if the mesh distance is less than the distance to the point we've hit the mesh
-                if (!float.IsNaN(meshDistance) && (meshDistance < hypothesisPoint.X))
-                {
-                    return hypothesisPoint;
-                }
-            }
-
-            return null;
-        }
 
         /// <summary>
         /// Use the Rodrigues formula for transforming a given rotation from axis-angle representation to a 3x3 matrix.
@@ -299,13 +265,15 @@ namespace Microsoft.Psi.Calibration
         }
 
         /// <summary>
-        /// Convert a rotation matrix to axis-angle representation (a unit vector scaled by the angular distance to rotate).
+        /// Convert a rotation matrix to axis-angle representation (a unit vector scaled by the angular distance in radians to rotate).
         /// </summary>
         /// <param name="m">Input rotation matrix.</param>
-        /// <returns>Same rotation in axis-angle representation (L2-Norm of the vector represents angular distance).</returns>
         /// <param name="epsilon">An optional angle epsilon parameter used to determine when the specified matrix contains a zero-rotation (by default 0.01 degrees).</param>
-        public static Vector<double> MatrixToAxisAngle(Matrix<double> m, double epsilon = 0.01 * Math.PI / 180)
+        /// <returns>Same rotation in axis-angle representation (L2-Norm of the vector represents angular distance in radians).</returns>
+        public static Vector<double> MatrixToAxisAngle(Matrix<double> m, Angle? epsilon = null)
         {
+            epsilon ??= Angle.FromDegrees(0.01);
+
             if (m.RowCount != 3 || m.ColumnCount != 3)
             {
                 throw new InvalidOperationException("The input must be a valid 3x3 rotation matrix in order to compute its axis-angle representation.");
@@ -317,7 +285,7 @@ namespace Microsoft.Psi.Calibration
             // Create the axis vector.
             var v = Vector<double>.Build.Dense(3, 0);
 
-            if (double.IsNaN(angle) || angle < epsilon)
+            if (double.IsNaN(angle) || angle < epsilon.Value.Radians)
             {
                 // If the angular distance to rotate is 0, we just return a vector of all zeroes.
                 return v;
@@ -427,28 +395,62 @@ namespace Microsoft.Psi.Calibration
             projectedPoint = new Point2D(fx * xpp + cx, fy * ypp + cy);
         }
 
-        private static float GetMeshDepthAtPoint(ICameraIntrinsics depthIntrinsics, DepthImage depthImage, Point3D point, bool undistort)
+        /// <summary>
+        /// Computes a ray intersection with a depth image mesh.
+        /// </summary>
+        /// <param name="depthImage">Depth image mesh to ray cast against.</param>
+        /// <param name="depthIntrinsics">The intrinsics for the depth camera.</param>
+        /// <param name="ray">Ray to intersect against depth image mesh.</param>
+        /// <param name="maxDistance">The maximum distance to search for (default is 5 meters).</param>
+        /// <param name="skipFactor">Distance to march on each step along ray (default is 5 cm).</param>
+        /// <param name="undistort">Whether undistortion should be applied to the point.</param>
+        /// <returns>Returns point of intersection, or null if no intersection was found.</returns>
+        /// <remarks>
+        /// The ray is assumed to be defined relative to the pose of the depth camera,
+        /// i.e., (0, 0, 0) is the position of the camera itself.
+        /// </remarks>
+        public static Point3D? ComputeRayIntersection(this DepthImage depthImage, ICameraIntrinsics depthIntrinsics, Ray3D ray, double maxDistance = 5, double skipFactor = 0.05, bool undistort = true)
         {
-            if (!depthIntrinsics.TryGetPixelPosition(point, undistort, out var depthPixel))
+            // max distance to check for intersection with the scene
+            int maxSteps = (int)(maxDistance / skipFactor);
+
+            // size of increment along the ray
+            var delta = skipFactor * ray.Direction;
+
+            var hypothesisPoint = ray.ThroughPoint;
+            for (int i = 0; i < maxSteps; i++)
             {
-                return float.NaN;
+                hypothesisPoint += delta;
+
+                // get the mesh distance at the hypothesis point
+                if (depthIntrinsics.TryGetPixelPosition(hypothesisPoint, undistort, out var depthPixel) &&
+                    depthImage.TryGetPixel((int)Math.Floor(depthPixel.X), (int)Math.Floor(depthPixel.Y), out var depthValue) &&
+                    depthValue != 0)
+                {
+                    // if the mesh distance is less than the distance to the point we've hit the mesh
+                    var meshDistanceMeters = (double)depthValue * depthImage.DepthValueToMetersScaleFactor;
+                    if (depthImage.DepthValueSemantics == DepthValueSemantics.DistanceToPlane)
+                    {
+                        if (meshDistanceMeters < hypothesisPoint.X)
+                        {
+                            return hypothesisPoint;
+                        }
+                    }
+                    else if (depthImage.DepthValueSemantics == DepthValueSemantics.DistanceToPoint)
+                    {
+                        if (meshDistanceMeters < hypothesisPoint.ToVector3D().Length)
+                        {
+                            return hypothesisPoint;
+                        }
+                    }
+                    else
+                    {
+                        throw new ArgumentException($"Unhandled {nameof(DepthValueSemantics)}: {depthImage.DepthValueSemantics}");
+                    }
+                }
             }
 
-            int x = (int)Math.Round(depthPixel.X);
-            int y = (int)Math.Round(depthPixel.Y);
-            if ((x < 0) || (x >= depthImage.Width) || (y < 0) || (y >= depthImage.Height))
-            {
-                return float.NaN;
-            }
-
-            int byteOffset = (int)((y * depthImage.Stride) + (x * 2));
-            var depth = BitConverter.ToUInt16(depthImage.ReadBytes(2, byteOffset), 0);
-            if (depth == 0)
-            {
-                return float.NaN;
-            }
-
-            return (float)depth / 1000;
+            return null;
         }
 
         private static double CalibrateCamera(

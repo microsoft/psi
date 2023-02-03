@@ -162,6 +162,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="forceRelayout">Force re-layout of graph (otherwise, updates labels, colors, etc. in place).</param>
         public void UpdateGraph(PipelineDiagnostics graph, bool forceRelayout)
         {
+            // If the model visualization object is dirty, rebuild
+            if (this.model.VisualizationObject.ModelDirty)
+            {
+                this.model.Reset();
+                this.model.VisualizationObject.ModelDirty = false;
+                this.VisualGraph = null;
+                this.view.Update(true);
+            }
+
             this.model.Graph = graph;
             if (graph == null)
             {
@@ -207,12 +216,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         }
 
         /// <summary>
-        /// Adds the derived receiver diagnostics streams for a specified receiver id.
+        /// Adds a derived receiver diagnostics streams for a specified receiver id and receiver statistic.
         /// </summary>
         /// <param name="receiverId">The receiver id.</param>
-        public void AddDerivedReceiverDiagnosticsStreams(int receiverId)
+        /// <param name="receiverDiagnosticsStatistic">The receiver diagnostics statistic.</param>
+        public void AddDerivedReceiverDiagnosticsStreams(int receiverId, string receiverDiagnosticsStatistic)
         {
-            this.model.VisualizationObject.AddDerivedReceiverDiagnosticsStreams(receiverId);
+            this.model.VisualizationObject.AddReceiverDiagnosticsDerivedStream(receiverId, receiverDiagnosticsStatistic);
         }
 
         /// <summary>

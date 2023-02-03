@@ -165,6 +165,11 @@ namespace Microsoft.Psi.Spatial.Euclidean
         public double LengthZ => this.Bounds.SizeZ;
 
         /// <summary>
+        /// Gets the volume of the box.
+        /// </summary>
+        public double Volume => this.Bounds.Volume;
+
+        /// <summary>
         /// Gets a value indicating whether the box is degenerate
         /// (i.e. one or more of its edges has zero length).
         /// </summary>

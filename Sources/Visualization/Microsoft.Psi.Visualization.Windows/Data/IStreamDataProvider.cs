@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System;
     using System.Collections.Generic;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Defines an interfaces for providers of stream data.
@@ -37,9 +36,9 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets the time of the nearest message to a specified time.
         /// </summary>
         /// <param name="time">The time to find the nearest message to.</param>
-        /// <param name="nearestMessageType">The type of nearest message to find.</param>
+        /// <param name="nearestType">The type of nearest message to find.</param>
         /// <returns>The time of the nearest message, if one is found or null otherwise.</returns>
-        DateTime? GetTimeOfNearestMessage(DateTime time, NearestMessageType nearestMessageType);
+        DateTime? GetTimeOfNearestMessage(DateTime time, NearestType nearestType);
 
         /// <summary>
         /// Open stream given a reader.

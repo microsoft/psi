@@ -131,7 +131,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Gets a value indicating whether the visualization object is using summarization.
         /// </summary>
-        protected bool IsUsingSummarization => this.StreamBinding.SummarizerType != null;
+        protected bool IsUsingSummarization => this.StreamBinding.VisualizerSummarizerType != null;
 
         /// <summary>
         /// Gets the time interval of stream messages required for visualization.
@@ -332,7 +332,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(this.Panel.Width))
             {
                 // And if we are summarizing
-                if (this.StreamBinding?.SummarizerType != null)
+                if (this.StreamBinding?.VisualizerSummarizerType != null)
                 {
                     // Then refresh the data as the sampling rate for summarization will be different
                     this.RefreshData();

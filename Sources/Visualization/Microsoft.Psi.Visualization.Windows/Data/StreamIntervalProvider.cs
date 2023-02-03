@@ -99,9 +99,9 @@ namespace Microsoft.Psi.Visualization.Data
         }
 
         /// <inheritdoc/>
-        public override DateTime? GetTimeOfNearestMessage(DateTime time, NearestMessageType snappingBehavior)
+        public override DateTime? GetTimeOfNearestMessage(DateTime time, NearestType nearestType)
         {
-            int index = IndexHelper.GetIndexForTime(time, this.data.Count, (idx) => this.data[idx].OriginatingTime, snappingBehavior);
+            int index = IndexHelper.GetIndexForTime(time, this.data.Count, (idx) => this.data[idx].OriginatingTime, nearestType);
             return (index >= 0) ? this.data[index].OriginatingTime : null;
         }
 

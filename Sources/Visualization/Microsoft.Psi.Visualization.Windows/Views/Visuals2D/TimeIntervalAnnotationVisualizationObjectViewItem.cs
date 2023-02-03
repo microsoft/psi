@@ -155,6 +155,25 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="trackCount">The track count.</param>
         internal void Update(TimeIntervalAnnotationDisplayData annotationDisplayData, int trackIndex, int trackCount)
         {
+            // First, check if the annotation display data is in view
+            var notInView = annotationDisplayData.EndTime < this.parent.Navigator.ViewRange.StartTime ||
+                annotationDisplayData.StartTime > this.parent.Navigator.ViewRange.EndTime;
+
+            // If not in view
+            if (notInView)
+            {
+                // Collapse its elements
+                for (int attributeIndex = 0; attributeIndex < annotationDisplayData.AnnotationSchema.AttributeSchemas.Count; attributeIndex++)
+                {
+                    this.figures[attributeIndex].Visibility = Visibility.Collapsed;
+                    this.labels[attributeIndex].Visibility = Visibility.Collapsed;
+                    this.borderPath.Visibility = Visibility.Collapsed;
+                }
+
+                // And return
+                return;
+            }
+
             var verticalSpace = this.parent.StreamVisualizationObject.Padding / this.parent.ScaleTransform.ScaleY;
             var start = (annotationDisplayData.StartTime - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
             var end = (annotationDisplayData.EndTime - this.parent.Navigator.DataRange.StartTime).TotalSeconds;
@@ -169,6 +188,18 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
             for (int attributeIndex = 0; attributeIndex < annotationDisplayData.AnnotationSchema.AttributeSchemas.Count; attributeIndex++)
             {
+                // Set visibility for the figure
+                if (this.figures[attributeIndex].Visibility != Visibility.Visible)
+                {
+                    this.figures[attributeIndex].Visibility = Visibility.Visible;
+                }
+
+                // Set visibility for the label
+                if (this.labels[attributeIndex].Visibility != Visibility.Visible)
+                {
+                    this.labels[attributeIndex].Visibility = Visibility.Visible;
+                }
+
                 // Get the attribute schema
                 var attributeSchema = annotationDisplayData.AnnotationSchema.AttributeSchemas[attributeIndex];
 
@@ -176,36 +207,118 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 var annotationValue = annotationDisplayData.Annotation.AttributeValues[attributeSchema.Name];
 
                 // Set the colors etc
-                this.figures[attributeIndex].Fill = this.parent.GetBrush(annotationValue.FillColor);
+                if (this.figures[attributeIndex].Fill != this.parent.GetBrush(annotationValue.FillColor))
+                {
+                    this.figures[attributeIndex].Fill = this.parent.GetBrush(annotationValue.FillColor);
+                }
 
                 var lo = (double)(trackIndex * attributeCount + attributeIndex + verticalSpace) / totalTrackCount;
                 var hi = (double)(trackIndex * attributeCount + attributeIndex + 1 - verticalSpace) / totalTrackCount;
 
                 var annotationElementFigure = (this.figures[attributeIndex].Data as PathGeometry).Figures[0];
-                annotationElementFigure.StartPoint = new Point(start, lo);
-                (annotationElementFigure.Segments[0] as LineSegment).Point = new Point(end, lo);
-                (annotationElementFigure.Segments[1] as LineSegment).Point = new Point(end, hi);
-                (annotationElementFigure.Segments[2] as LineSegment).Point = new Point(start, hi);
+                if (annotationElementFigure.StartPoint.X != start ||
+                    annotationElementFigure.StartPoint.Y != end ||
+                    (annotationElementFigure.Segments[0] as LineSegment).Point.Y != lo ||
+                    (annotationElementFigure.Segments[1] as LineSegment).Point.Y != hi)
+                {
+                    annotationElementFigure.StartPoint = new Point(start, lo);
+                    (annotationElementFigure.Segments[0] as LineSegment).Point = new Point(end, lo);
+                    (annotationElementFigure.Segments[1] as LineSegment).Point = new Point(end, hi);
+                    (annotationElementFigure.Segments[2] as LineSegment).Point = new Point(start, hi);
+                }
 
                 var labelGrid = this.labels[attributeIndex];
-                (labelGrid.Children[0] as TextBlock).Text = annotationValue.ValueAsString;
-                (labelGrid.Children[0] as TextBlock).FontSize = this.parent.StreamVisualizationObject.FontSize;
-                (labelGrid.Children[0] as TextBlock).Foreground = this.parent.GetBrush(annotationValue.TextColor);
+                var labelWidth = (int)((labelEnd - labelStart) * this.parent.Canvas.ActualWidth / this.parent.Navigator.ViewRange.Duration.TotalSeconds);
+                var labelHeight = (int)((hi - lo) * this.parent.Canvas.ActualHeight);
 
-                labelGrid.Width = (labelEnd - labelStart) * this.parent.Canvas.ActualWidth / this.parent.Navigator.ViewRange.Duration.TotalSeconds;
-                labelGrid.Height = (hi - lo) * this.parent.Canvas.ActualHeight;
-                (labelGrid.RenderTransform as TranslateTransform).X = labelStart * this.parent.Canvas.ActualWidth / this.parent.Navigator.ViewRange.Duration.TotalSeconds;
-                (labelGrid.RenderTransform as TranslateTransform).Y = lo * this.parent.Canvas.ActualHeight;
+                // Measure how large the label should be, and if we don't have enough space,
+                // activate a tooltip
+                var t = new TextBlock()
+                {
+                    IsHitTestVisible = false,
+                    Text = annotationValue.ValueAsString,
+                };
+                t.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+                if (t.DesiredSize.Width > labelWidth || t.DesiredSize.Height > labelHeight)
+                {
+                    this.figures[attributeIndex].ToolTip = annotationValue.ValueAsString;
+                }
+                else
+                {
+                    this.figures[attributeIndex].ToolTip = null;
+                }
+
+                // If the label is in view and large enough
+                if (labelEnd > 0 && labelStart < navigatorViewDuration && labelWidth > 20)
+                {
+                    labelGrid.Visibility = Visibility.Visible;
+                    if (labelGrid.Width != labelWidth)
+                    {
+                        labelGrid.Width = labelWidth;
+                    }
+
+                    if (labelGrid.Height != labelHeight)
+                    {
+                        labelGrid.Height = labelHeight;
+                    }
+
+                    var textBlock = labelGrid.Children[0] as TextBlock;
+                    if (textBlock.Text != annotationValue.ValueAsString)
+                    {
+                        textBlock.Text = annotationValue.ValueAsString;
+                    }
+
+                    if (textBlock.FontSize != this.parent.StreamVisualizationObject.FontSize)
+                    {
+                        textBlock.FontSize = this.parent.StreamVisualizationObject.FontSize;
+                    }
+
+                    if (textBlock.Foreground != this.parent.GetBrush(annotationValue.TextColor))
+                    {
+                        textBlock.Foreground = this.parent.GetBrush(annotationValue.TextColor);
+                    }
+
+                    var transformX = (int)(labelStart * this.parent.Canvas.ActualWidth / this.parent.Navigator.ViewRange.Duration.TotalSeconds);
+                    var transformY = (int)(lo * this.parent.Canvas.ActualHeight);
+                    var translateTranform = labelGrid.RenderTransform as TranslateTransform;
+
+                    if (translateTranform.X != transformX)
+                    {
+                        translateTranform.X = transformX;
+                    }
+
+                    if (translateTranform.Y != transformY)
+                    {
+                        translateTranform.Y = transformY;
+                    }
+                }
+                else
+                {
+                    labelGrid.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            // Set visibility for the border
+            if (this.borderPath.Visibility != Visibility.Visible)
+            {
+                this.borderPath.Visibility = Visibility.Visible;
             }
 
             var borderLo = (double)(trackIndex * attributeCount + 0 + verticalSpace) / totalTrackCount;
             var borderHi = (double)(trackIndex * attributeCount + attributeCount - verticalSpace) / totalTrackCount;
 
             var borderFigure = (this.borderPath.Data as PathGeometry).Figures[0];
-            borderFigure.StartPoint = new Point(start, borderLo);
-            (borderFigure.Segments[0] as LineSegment).Point = new Point(end, borderLo);
-            (borderFigure.Segments[1] as LineSegment).Point = new Point(end, borderHi);
-            (borderFigure.Segments[2] as LineSegment).Point = new Point(start, borderHi);
+
+            if (borderFigure.StartPoint.X != start ||
+                borderFigure.StartPoint.Y != borderLo ||
+                (borderFigure.Segments[0] as LineSegment).Point.X != end ||
+                (borderFigure.Segments[1] as LineSegment).Point.Y != borderHi)
+            {
+                borderFigure.StartPoint = new Point(start, borderLo);
+                (borderFigure.Segments[0] as LineSegment).Point = new Point(end, borderLo);
+                (borderFigure.Segments[1] as LineSegment).Point = new Point(end, borderHi);
+                (borderFigure.Segments[2] as LineSegment).Point = new Point(start, borderHi);
+            }
         }
 
         /// <summary>

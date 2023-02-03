@@ -10,7 +10,7 @@ namespace Microsoft.Psi.Visualization.Adapters
     /// Implements a stream adapter from a specified type to an interface.
     /// </summary>
     /// <typeparam name="T">The source type.</typeparam>
-    /// <typeparam name="TInterface">The nterface type.</typeparam>
+    /// <typeparam name="TInterface">The interface type.</typeparam>
     public class InterfaceAdapter<T, TInterface> : StreamAdapter<T, TInterface>
         where T : TInterface
     {

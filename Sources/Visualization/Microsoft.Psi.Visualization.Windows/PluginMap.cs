@@ -45,6 +45,9 @@ namespace Microsoft.Psi.Visualization
         // This list of stream readers that were found during discovery.
         private readonly List<(string Name, string Extension, Type ReaderType)> streamReaders = new ();
 
+        // This dictionary provides a set of additional type mappings.
+        private readonly Dictionary<string, Type> additionalTypeMappings = new ();
+
         /// <summary>
         /// Gets a value indicating whether or not Initialize() has been called.
         /// </summary>
@@ -54,6 +57,11 @@ namespace Microsoft.Psi.Visualization
         /// Gets the set of available visualizers.
         /// </summary>
         public IReadOnlyList<VisualizerMetadata> Visualizers => this.visualizers.AsReadOnly();
+
+        /// <summary>
+        /// Gets the set of additional type mappings.
+        /// </summary>
+        public IReadOnlyDictionary<string, Type> AdditionalTypeMappings => this.additionalTypeMappings;
 
         /// <summary>
         /// Gets the set of available batch processing tasks.
@@ -75,8 +83,16 @@ namespace Microsoft.Psi.Visualization
         /// </summary>
         /// <param name="additionalAssembliesToSearch">A list of assemblies to search for plugins in addition to the default assembly list.
         /// If no additional assemblies contain plugins, this parameter can be null or an empty list.</param>
+        /// <param name="additionalTypeMappings">A set of additional type mappings.</param>
         /// <param name="loadLogFilename">The full path to the log file to be created and written to while initializing.</param>
-        public void Initialize(List<string> additionalAssembliesToSearch, string loadLogFilename)
+        /// <param name="showErrorLog">Indicates whether to show the error log.</param>
+        /// <param name="batchProcessingTaskConfigurationsPath">The folder under which batch processing task configurations are saved.</param>
+        public void Initialize(
+            List<string> additionalAssembliesToSearch,
+            Dictionary<string, string> additionalTypeMappings,
+            string loadLogFilename,
+            bool showErrorLog,
+            string batchProcessingTaskConfigurationsPath)
         {
             // Append the additional assemblies to the list of default assemblies to search for plugins
             List<string> assembliesToSearch = this.defaultAssemblies.ToList();
@@ -86,7 +102,17 @@ namespace Microsoft.Psi.Visualization
             }
 
             // Load all the visualizers, summarizers, stream adapters, stream readers, and batch processing tasks
-            this.DiscoverPlugins(assembliesToSearch, loadLogFilename);
+            this.DiscoverPlugins(assembliesToSearch, loadLogFilename, showErrorLog, batchProcessingTaskConfigurationsPath);
+
+            // Set up the additional type mappings
+            foreach (var kvp in additionalTypeMappings)
+            {
+                var verifiedType = TypeResolutionHelper.GetVerifiedType(kvp.Value);
+                if (verifiedType != null)
+                {
+                    this.additionalTypeMappings.Add(kvp.Key, verifiedType);
+                }
+            }
 
             this.IsInitialized = true;
         }
@@ -110,7 +136,7 @@ namespace Microsoft.Psi.Visualization
             return this.StreamReaders.Where(sr => sr.Extension == extension).First().ReaderType;
         }
 
-        private void DiscoverPlugins(List<string> assemblies, string loadLogFilename)
+        private void DiscoverPlugins(List<string> assemblies, string loadLogFilename, bool showErrorLog, string batchProcessingTaskConfigurationsPath)
         {
             bool hasErrors = false;
 
@@ -172,7 +198,7 @@ namespace Microsoft.Psi.Visualization
                         {
                             foreach (var attr in type.GetCustomAttributes(typeof(BatchProcessingTaskAttribute)))
                             {
-                                this.AddBatchProcessingTask(type, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath);
+                                this.AddBatchProcessingTask(type, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath, batchProcessingTaskConfigurationsPath);
                             }
                         }
 
@@ -187,7 +213,7 @@ namespace Microsoft.Psi.Visualization
                             {
                                 foreach (var attr in method.GetCustomAttributes(typeof(BatchProcessingTaskAttribute)))
                                 {
-                                    this.AddBatchProcessingTask(method, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath);
+                                    this.AddBatchProcessingTask(method, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath, batchProcessingTaskConfigurationsPath);
                                 }
                             }
                         }
@@ -195,7 +221,7 @@ namespace Microsoft.Psi.Visualization
                 }
 
                 // Load all of the visualization object types that were found earlier
-                Dictionary<Type, string>.Enumerator visualizationObjectTypesEnumerator = visualizationObjectTypes.GetEnumerator();
+                var visualizationObjectTypesEnumerator = visualizationObjectTypes.GetEnumerator();
                 while (visualizationObjectTypesEnumerator.MoveNext())
                 {
                     this.AddVisualizer(visualizationObjectTypesEnumerator.Current.Key, logWriter, visualizationObjectTypesEnumerator.Current.Value);
@@ -209,7 +235,7 @@ namespace Microsoft.Psi.Visualization
             }
 
             // If there were any errors while loading the visualizers etc, inform the user and allow him to view the log.
-            if (hasErrors)
+            if (hasErrors && showErrorLog)
             {
                 var messageBoxWindow = new MessageBoxWindow(
                     Application.Current.MainWindow,
@@ -221,7 +247,7 @@ namespace Microsoft.Psi.Visualization
                 if (messageBoxWindow.ShowDialog() == true)
                 {
                     // Display the log file in the default application for text files.
-                    Process.Start(loadLogFilename);
+                    Process.Start("notepad.exe", loadLogFilename);
                 }
             }
         }
@@ -264,10 +290,10 @@ namespace Microsoft.Psi.Visualization
         {
             // Add both a "Visualize" and a "Visualize in new panel" command metadata
             logWriter.WriteLine("Loading Visualizer {0} from {1}...", visualizationObjectType.Name, assemblyPath);
-            List<VisualizerMetadata> visualizerMetadata = VisualizerMetadata.Create(visualizationObjectType, this.summarizers, this.streamAdapters, logWriter);
-            if (visualizerMetadata != null)
+            var visualizer = VisualizerMetadata.Create(visualizationObjectType, this.summarizers, this.streamAdapters, logWriter);
+            if (visualizer != null)
             {
-                this.visualizers.AddRange(visualizerMetadata);
+                this.visualizers.AddRange(visualizer);
             }
         }
 
@@ -295,10 +321,11 @@ namespace Microsoft.Psi.Visualization
             Type batchProcessingTaskType,
             BatchProcessingTaskAttribute batchProcessingTaskAttribute,
             VisualizationLogWriter logWriter,
-            string assemblyPath)
+            string assemblyPath,
+            string batchProcessingTaskConfigurationsPath)
         {
             logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", batchProcessingTaskAttribute.Name, assemblyPath);
-            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingTaskType, batchProcessingTaskAttribute);
+            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingTaskType, batchProcessingTaskAttribute, batchProcessingTaskConfigurationsPath);
             if (batchProcessingTaskMetadata != null)
             {
                 this.batchProcessingTasks.Add(batchProcessingTaskMetadata);
@@ -309,10 +336,11 @@ namespace Microsoft.Psi.Visualization
             MethodInfo batchProcessingMethodInfo,
             BatchProcessingTaskAttribute batchProcessingTaskAttribute,
             VisualizationLogWriter logWriter,
-            string assemblyPath)
+            string assemblyPath,
+            string batchProcessingTaskConfigurationsPath)
         {
             logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", batchProcessingTaskAttribute.Name, assemblyPath);
-            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingMethodInfo, batchProcessingTaskAttribute);
+            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingMethodInfo, batchProcessingTaskAttribute, batchProcessingTaskConfigurationsPath);
             if (batchProcessingTaskMetadata != null)
             {
                 this.batchProcessingTasks.Add(batchProcessingTaskMetadata);

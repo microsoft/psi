@@ -11,7 +11,6 @@ namespace Microsoft.Psi
     /// <summary>
     /// Specifies custom flags for Psi data streams.
     /// </summary>
-    /// <seealso cref="Metadata.CustomFlags"/>
     public enum StreamMetadataFlags : ushort
     {
         /// <summary>
@@ -40,22 +39,31 @@ namespace Microsoft.Psi
     /// </summary>
     public sealed class PsiStreamMetadata : Metadata, IStreamMetadata
     {
-        private const int CurrentVersion = 2;
+        private const int LatestVersion = 2;
         private byte[] supplementalMetadataBytes = Array.Empty<byte>();
 
-        internal PsiStreamMetadata(string name, int id, string typeName)
-            : base(MetadataKind.StreamMetadata, name, id, typeName, CurrentVersion, null, 0, 0)
+        internal PsiStreamMetadata(
+            string name,
+            int id,
+            string typeName,
+            int version = LatestVersion,
+            int serializationSystemVersion = RuntimeInfo.LatestSerializationSystemVersion,
+            ushort customFlags = 0)
+            : base (MetadataKind.StreamMetadata, name, id, version, serializationSystemVersion)
         {
+            this.TypeName = typeName;
+            this.CustomFlags = customFlags;
         }
 
-        internal PsiStreamMetadata(string name, int id, string typeName, int version, string serializerTypeName, int serializerVersion, ushort customFlags)
-            : base(MetadataKind.StreamMetadata, name, id, typeName, version, serializerTypeName, serializerVersion, customFlags)
-        {
-        }
+        /// <summary>
+        /// Gets the name of the type of data contained in the stream.
+        /// </summary>
+        public string TypeName { get; }
 
-        internal PsiStreamMetadata()
-        {
-        }
+        /// <summary>
+        /// Gets the custom flags implemented in derived types.
+        /// </summary>
+        public ushort CustomFlags { get; internal set; }
 
         /// <summary>
         /// Gets the time when the stream was opened.
@@ -159,7 +167,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// Gets the time interval this stream was in existence (from open to close).
         /// </summary>
-        public TimeInterval StreamTimeInterval => new TimeInterval(this.OpenedTime, this.ClosedTime);
+        public TimeInterval StreamTimeInterval => new (this.OpenedTime, this.ClosedTime);
 
         /// <summary>
         /// Gets the interval between the creation times of the first and last messages written to this stream.
@@ -307,12 +315,22 @@ namespace Microsoft.Psi
                 metadataBuffer.Read(this.supplementalMetadataBytes, len);
             }
 
-            this.Version = CurrentVersion; // upgrade to current version format
+            this.Version = LatestVersion; // upgrade to current version format
         }
 
         internal override void Serialize(BufferWriter metadataBuffer)
         {
-            base.Serialize(metadataBuffer);
+            // Serialization follows a legacy pattern of fields, as described
+            // in the comments at the top of the Metadata.Deserialize method.
+            metadataBuffer.Write(this.Name);
+            metadataBuffer.Write(this.Id);
+            metadataBuffer.Write(this.TypeName);
+            metadataBuffer.Write(this.Version);
+            metadataBuffer.Write(default(string));      // this metadata field is not used by PsiStreamMetadata
+            metadataBuffer.Write(this.SerializationSystemVersion);
+            metadataBuffer.Write(this.CustomFlags);
+            metadataBuffer.Write((ushort)this.Kind);
+
             metadataBuffer.Write(this.OpenedTime);
             metadataBuffer.Write(this.ClosedTime);
             metadataBuffer.Write(this.MessageCount);

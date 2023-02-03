@@ -61,6 +61,11 @@ namespace Microsoft.Psi.Spatial.Euclidean
         public Point3D Center => Point3D.MidPoint(this.Min.ToPoint3D(), this.Max.ToPoint3D());
 
         /// <summary>
+        /// Gets the volume of the bounds.
+        /// </summary>
+        public double Volume => this.SizeX * this.SizeY * this.SizeZ;
+
+        /// <summary>
         /// Gets a value indicating whether the bounds are degenerate
         /// (i.e. size zero in one or more dimensions).
         /// </summary>

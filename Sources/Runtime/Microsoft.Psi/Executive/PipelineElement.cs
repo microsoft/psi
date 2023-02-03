@@ -27,15 +27,15 @@ namespace Microsoft.Psi.Executive
         private static readonly AsyncLocal<Pipeline> ExecutionContextPipelineSlot = new AsyncLocal<Pipeline>();
 #endif
 
-        private static readonly ConcurrentDictionary<object, SynchronizationLock> Locks = new ConcurrentDictionary<object, SynchronizationLock>();
+        private static readonly ConcurrentDictionary<object, SynchronizationLock> Locks = new ();
 
         private readonly int id;
+        private readonly ConcurrentDictionary<string, IEmitter> outputs = new ();
+        private readonly ConcurrentDictionary<string, IReceiver> inputs = new ();
+        private readonly SynchronizationLock syncContext;
+        private readonly string name;
 
         private object stateObject;
-        private Dictionary<string, IEmitter> outputs = new Dictionary<string, IEmitter>();
-        private Dictionary<string, IReceiver> inputs = new Dictionary<string, IReceiver>();
-        private SynchronizationLock syncContext;
-        private string name;
         private Pipeline pipeline;
         private State state = State.Initial;
         private DateTime finalOriginatingTime;
@@ -104,9 +104,9 @@ namespace Microsoft.Psi.Executive
 
         internal object StateObject => this.stateObject;
 
-        internal Dictionary<string, IEmitter> Outputs => this.outputs;
+        internal ConcurrentDictionary<string, IEmitter> Outputs => this.outputs;
 
-        internal Dictionary<string, IReceiver> Inputs => this.inputs;
+        internal ConcurrentDictionary<string, IReceiver> Inputs => this.inputs;
 
         internal IEnumerable<string> InputNames => this.inputs.Keys;
 
@@ -244,9 +244,9 @@ namespace Microsoft.Psi.Executive
                 input.Dispose();
             }
 
-            if (this.stateObject is IDisposable)
+            if (this.stateObject is IDisposable disposable)
             {
-                ((IDisposable)this.stateObject).Dispose();
+                disposable.Dispose();
             }
 
             Locks.TryRemove(this.stateObject, out var _);
@@ -370,15 +370,25 @@ namespace Microsoft.Psi.Executive
 
         internal void AddOutput(string name, IEmitter output)
         {
-            name = name ?? $"{this.Name}<{output.GetType().GetGenericArguments()[0].Name}> {output.GetHashCode()}";
-            this.outputs.Add(name, output);
+            name ??= $"{this.Name}<{output.GetType().GetGenericArguments()[0].Name}> {output.GetHashCode()}";
+
+            if (!this.outputs.TryAdd(name, output))
+            {
+                throw new ArgumentException($"Cannot add another output named {name} because one already exists!");
+            }
+
             this.pipeline.DiagnosticsCollector?.PipelineElementAddEmitter(this.pipeline, this, output);
         }
 
         internal void AddInput(string name, IReceiver input)
         {
-            name = name ?? $"{this.Name}[{input.GetType().GetGenericArguments()[0].Name}] {input.GetHashCode()}";
-            this.inputs.Add(name, input);
+            name ??= $"{this.Name}[{input.GetType().GetGenericArguments()[0].Name}] {input.GetHashCode()}";
+
+            if (!this.inputs.TryAdd(name, input))
+            {
+                throw new ArgumentException($"Cannot add another input named {name} because one already exists!");
+            }
+
             this.pipeline.DiagnosticsCollector?.PipelineElementAddReceiver(this.pipeline, this, input);
         }
     }

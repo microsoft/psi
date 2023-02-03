@@ -95,6 +95,15 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class.
+        /// </summary>
+        /// <param name="unmanagedBufferSize">The size of the unmanaged buffer that holds the image.</param>
+        internal Image(int unmanagedBufferSize)
+            : base(unmanagedBufferSize)
+        {
+        }
+
+        /// <summary>
         /// Creates a new <see cref="Image"/> from a specified bitmap.
         /// </summary>
         /// <param name="bitmap">A bitmap to create the image from.</param>
@@ -173,11 +182,6 @@ namespace Microsoft.Psi.Imaging
         public void CopyFrom(BitmapData bitmapData)
         {
             int numBytes = bitmapData.Height * bitmapData.Stride;
-            if (numBytes > this.UnmanagedBuffer.Size)
-            {
-                throw new InvalidOperationException("Buffer too small.");
-            }
-
             this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
         }
 
@@ -212,11 +216,6 @@ namespace Microsoft.Psi.Imaging
                 else
                 {
                     int numBytes = bitmapData.Height * bitmapData.Stride;
-                    if (numBytes > this.UnmanagedBuffer.Size)
-                    {
-                        throw new InvalidOperationException("Buffer too small.");
-                    }
-
                     this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
                 }
             }

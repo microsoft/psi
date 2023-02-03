@@ -255,13 +255,10 @@ namespace Microsoft.Psi.Data
         /// Initializes the serialization subsystem with the metadata from the store.
         /// </summary>
         /// <param name="metadata">The collection of metadata entries from the store catalog.</param>
-        /// <param name="runtimeVersion">The version of the runtime that produced the store.</param>
-        private void LoadMetadata(IEnumerable<Metadata> metadata, RuntimeInfo runtimeVersion)
+        /// <param name="runtimeInfo">The runtime info for the runtime that produced the store.</param>
+        private void LoadMetadata(IEnumerable<Metadata> metadata, RuntimeInfo runtimeInfo)
         {
-            if (this.context == null)
-            {
-                this.context = new SerializationContext(new KnownSerializers(runtimeVersion));
-            }
+            this.context ??= new SerializationContext(new KnownSerializers(runtimeInfo));
 
             this.context.Serializers.RegisterMetadata(metadata);
         }
@@ -367,7 +364,7 @@ namespace Microsoft.Psi.Data
         {
             if (isDynamic)
             {
-                var deserializer = new DynamicMessageDeserializer(typeName, schemas);
+                var deserializer = new DynamicMessageDeserializer(typeName, schemas, this.context.Serializers.TypeNameSynonyms);
                 objectToReuse = deserializer.Deserialize(br);
             }
             else if (isRaw)

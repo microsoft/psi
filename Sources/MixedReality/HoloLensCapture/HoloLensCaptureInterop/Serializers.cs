@@ -10,6 +10,7 @@ namespace HoloLensCaptureInterop
     using System.Linq;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using MathNet.Spatial.Units;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
     using Microsoft.Psi.Calibration;
@@ -20,6 +21,9 @@ namespace HoloLensCaptureInterop
     using Microsoft.Psi.Spatial.Euclidean;
     using static Microsoft.Psi.Diagnostics.PipelineDiagnostics;
     using Image = Microsoft.Psi.Imaging.Image;
+    using OpenXRHand = Microsoft.Psi.MixedReality.OpenXR.Hand;
+    using StereoKitHand = Microsoft.Psi.MixedReality.StereoKit.Hand;
+    using WinRTEyes = Microsoft.Psi.MixedReality.WinRT.Eyes;
 
     /// <summary>
     /// Provides serializers and deserializers for the various mixed reality streams.
@@ -197,6 +201,108 @@ namespace HoloLensCaptureInterop
         }
 
         /// <summary>
+        /// Write <see cref="CoordinateSystemVelocity3D"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="coordinateSystemVelocity3D"><see cref="CoordinateSystemVelocity3D"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteCoordinateSystemVelocity3D(CoordinateSystemVelocity3D coordinateSystemVelocity3D, BinaryWriter writer)
+        {
+            WriteAngularVelocity3D(coordinateSystemVelocity3D.Angular, writer);
+            WriteLinearVelocity3D(coordinateSystemVelocity3D.Linear, writer);
+        }
+
+        /// <summary>
+        /// Read <see cref="CoordinateSystemVelocity3D"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="CoordinateSystemVelocity3D"/>.</returns>
+        public static CoordinateSystemVelocity3D ReadCoordinateSystemVelocity3D(BinaryReader reader)
+        {
+            var angularVelocity3D = ReadAngularVelocity3D(reader);
+            var linearVelocity3D = ReadLinearVelocity3D(reader);
+            return new CoordinateSystemVelocity3D(angularVelocity3D, linearVelocity3D);
+        }
+
+        /// <summary>
+        /// Write <see cref="AngularVelocity3D"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="angularVelocity3D"><see cref="AngularVelocity3D"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteAngularVelocity3D(AngularVelocity3D angularVelocity3D, BinaryWriter writer)
+        {
+            // Write the origin rotation
+            WriteBool(angularVelocity3D.OriginRotation != null, writer);
+            if (angularVelocity3D.OriginRotation != null)
+            {
+                var or = angularVelocity3D.OriginRotation.AsColumnMajorArray();
+                for (var i = 0; i < 9; i++)
+                {
+                    writer.Write(or[i]);
+                }
+            }
+
+            WriteUnitVector3D(angularVelocity3D.AxisDirection, writer);
+            WriteAngle(angularVelocity3D.Magnitude, writer);
+        }
+
+        /// <summary>
+        /// Read <see cref="AngularVelocity3D"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="AngularVelocity3D"/>.</returns>
+        public static AngularVelocity3D ReadAngularVelocity3D(BinaryReader reader)
+        {
+            Matrix<double> originRotation = default;
+            var hasOriginRotation = ReadBool(reader);
+            if (hasOriginRotation)
+            {
+                var or = new double[9];
+                for (var i = 0; i < 9; i++)
+                {
+                    or[i] = reader.ReadDouble();
+                }
+
+                originRotation =
+                    Matrix<double>.Build.DenseOfArray(new double[,]
+                    {
+                        { or[0], or[3], or[6] },
+                        { or[1], or[4], or[7] },
+                        { or[2], or[5], or[8] },
+                    });
+            }
+
+            var axisDirection = ReadUnitVector3D(reader);
+            var magnitude = ReadAngle(reader);
+            return hasOriginRotation ? new AngularVelocity3D(originRotation, axisDirection, magnitude) : default;
+        }
+
+        /// <summary>
+        /// Write <see cref="LinearVelocity3D"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="linearVelocity3D"><see cref="LinearVelocity3D"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteLinearVelocity3D(LinearVelocity3D linearVelocity3D, BinaryWriter writer)
+        {
+            // Write the origin rotation
+            WritePoint3D(linearVelocity3D.Origin, writer);
+            WriteUnitVector3D(linearVelocity3D.Direction, writer);
+            writer.Write(linearVelocity3D.Magnitude);
+        }
+
+        /// <summary>
+        /// Read <see cref="LinearVelocity3D"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="LinearVelocity3D"/>.</returns>
+        public static LinearVelocity3D ReadLinearVelocity3D(BinaryReader reader)
+        {
+            var origin = ReadPoint3D(reader);
+            var direction = ReadUnitVector3D(reader);
+            var magnitude = reader.ReadDouble();
+            return new LinearVelocity3D(origin, direction, magnitude);
+        }
+
+        /// <summary>
         /// Format for <see cref="Ray3D"/>.
         /// </summary>
         /// <returns><see cref="Format{Ray3D}"/> serializer/deserializer.</returns>
@@ -259,18 +365,18 @@ namespace HoloLensCaptureInterop
             };
 
         /// <summary>
-        /// Format for <see cref="Hand"/>.
+        /// Format for <see cref="StereoKitHand"/>.
         /// </summary>
         /// <returns><see cref="Format{Hand}"/> serializer/deserializer.</returns>
-        public static Format<Hand> HandFormat()
-            => new (WriteHand, ReadHand);
+        public static Format<StereoKitHand> StereoKitHandFormat()
+            => new (WriteStereoKitHand, ReadStereoKitHand);
 
         /// <summary>
-        /// Write <see cref="Hand"/> to <see cref="BinaryWriter"/>.
+        /// Write <see cref="StereoKit.Hand"/> to <see cref="BinaryWriter"/>.
         /// </summary>
-        /// <param name="hand"><see cref="Hand"/> to write.</param>
+        /// <param name="hand"><see cref="StereoKit.Hand"/> to write.</param>
         /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
-        public static void WriteHand(Hand hand, BinaryWriter writer)
+        public static void WriteStereoKitHand(StereoKitHand hand, BinaryWriter writer)
         {
             WriteBool(hand != null, writer);
             if (hand == null)
@@ -281,19 +387,15 @@ namespace HoloLensCaptureInterop
             WriteBool(hand.IsTracked, writer);
             WriteBool(hand.IsPinched, writer);
             WriteBool(hand.IsGripped, writer);
-
-            foreach (var j in hand.Joints)
-            {
-                WriteCoordinateSystem(j, writer);
-            }
+            WriteCollection(hand.Joints, writer, WriteCoordinateSystem);
         }
 
         /// <summary>
-        /// Read <see cref="Hand"/> from <see cref="BinaryReader"/>.
+        /// Read <see cref="StereoKitHand"/> from <see cref="BinaryReader"/>.
         /// </summary>
         /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
-        /// <returns><see cref="Hand"/>.</returns>
-        public static Hand ReadHand(BinaryReader reader)
+        /// <returns><see cref="StereoKitHand"/>.</returns>
+        public static StereoKitHand ReadStereoKitHand(BinaryReader reader)
         {
             if (!ReadBool(reader))
             {
@@ -303,42 +405,150 @@ namespace HoloLensCaptureInterop
             var isTracked = ReadBool(reader);
             var isPinched = ReadBool(reader);
             var isGripped = ReadBool(reader);
-            var numJoints = (int)HandJointIndex.MaxIndex;
-            var joints = new CoordinateSystem[numJoints];
-            for (var i = 0; i < numJoints; i++)
-            {
-                joints[i] = ReadCoordinateSystem(reader);
-            }
-
-            return new Hand(isTracked, isPinched, isGripped, joints);
+            var joints = ReadCollection(reader, ReadCoordinateSystem).ToArray();
+            return new StereoKitHand(isTracked, isPinched, isGripped, joints);
         }
 
         /// <summary>
         /// Format for <see cref="ValueTuple{Hand, Hand}"/>.
         /// </summary>
         /// <returns><see cref="Format{T}"/> of <see cref="ValueTuple{Hand, Hand}"/> serializer/deserializer.</returns>
-        public static Format<(Hand Left, Hand Right)> HandsFormat()
-            => new (WriteHands, ReadHands);
+        public static Format<(StereoKitHand Left, StereoKitHand Right)> StereoKitHandsFormat()
+            => new (WriteStereoKitHands, ReadStereoKitHands);
 
         /// <summary>
-        /// Write <see cref="ValueTuple{Hand, Hand}"/> to <see cref="BinaryWriter"/>.
+        /// Write <see cref="ValueTuple{StereoKitHand, StereoKitHand}"/> to <see cref="BinaryWriter"/>.
         /// </summary>
-        /// <param name="hands"><see cref="ValueTuple{Hand, Hand}"/> to write.</param>
+        /// <param name="hands"><see cref="ValueTuple{StereoKitHand, StereoKitHand}"/> to write.</param>
         /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
-        public static void WriteHands((Hand Left, Hand Right) hands, BinaryWriter writer)
+        public static void WriteStereoKitHands((StereoKitHand Left, StereoKitHand Right) hands, BinaryWriter writer)
         {
-            WriteHand(hands.Left, writer);
-            WriteHand(hands.Right, writer);
+            WriteStereoKitHand(hands.Left, writer);
+            WriteStereoKitHand(hands.Right, writer);
         }
 
         /// <summary>
-        /// Read <see cref="ValueTuple{Hand, Hand}"/> from <see cref="BinaryReader"/>.
+        /// Read <see cref="ValueTuple{StereoKitHand, StereoKitHand}"/> from <see cref="BinaryReader"/>.
         /// </summary>
         /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
-        /// <returns><see cref="ValueTuple{Hand, Hand}"/>.</returns>
-        public static (Hand Left, Hand Right) ReadHands(BinaryReader reader)
+        /// <returns><see cref="ValueTuple{StereoKitHand, StereoKitHand}"/>.</returns>
+        public static (StereoKitHand Left, StereoKitHand Right) ReadStereoKitHands(BinaryReader reader)
         {
-            return (ReadHand(reader), ReadHand(reader));
+            return (ReadStereoKitHand(reader), ReadStereoKitHand(reader));
+        }
+
+        /// <summary>
+        /// Format for <see cref="OpenXRHand"/>.
+        /// </summary>
+        /// <returns><see cref="Format{OpenXRHand}"/> serializer/deserializer.</returns>
+        public static Format<OpenXRHand> OpenXRHandFormat()
+            => new (WriteOpenXRHand, ReadOpenXRHand);
+
+        /// <summary>
+        /// Write <see cref="OpenXRHand"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="hand"><see cref="OpenXRHand"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteOpenXRHand(OpenXRHand hand, BinaryWriter writer)
+        {
+            WriteBool(hand != null, writer);
+            if (hand == null)
+            {
+                return;
+            }
+
+            WriteBool(hand.IsActive, writer);
+            WriteCollection(hand.Joints, writer, WriteCoordinateSystem);
+            WriteCollection(hand.JointsValid, writer, WriteBool);
+            WriteCollection(hand.JointsTracked, writer, WriteBool);
+        }
+
+        /// <summary>
+        /// Read <see cref="OpenXRHand"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="OpenXRHand"/>.</returns>
+        public static OpenXRHand ReadOpenXRHand(BinaryReader reader)
+        {
+            if (!ReadBool(reader))
+            {
+                return null;
+            }
+
+            var isActive = ReadBool(reader);
+            var joints = ReadCollection(reader, ReadCoordinateSystem).ToArray();
+            var jointsValid = ReadCollection(reader, ReadBool).ToArray();
+            var jointsTracked = ReadCollection(reader, ReadBool).ToArray();
+            return new OpenXRHand(isActive, joints, jointsValid, jointsTracked);
+        }
+
+        /// <summary>
+        /// Format for <see cref="WinRTEyes"/>.
+        /// </summary>
+        /// <returns><see cref="Format{WinRTEyes}"/> serializer/deserializer.</returns>
+        public static Format<WinRTEyes> WinRTEyesFormat()
+            => new (WriteWinRTEyes, ReadWinRTEyes);
+
+        /// <summary>
+        /// Write <see cref="WinRTEyes"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="eyes"><see cref="WinRTEyes"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteWinRTEyes(WinRTEyes eyes, BinaryWriter writer)
+        {
+            WriteBool(eyes != null, writer);
+            if (eyes == null)
+            {
+                return;
+            }
+
+            WriteBool(eyes.CalibrationValid, writer);
+            WriteNullable(eyes.GazeRay, writer, WriteRay3D);
+        }
+
+        /// <summary>
+        /// Read <see cref="WinRTEyes"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="WinRTEyes"/>.</returns>
+        public static WinRTEyes ReadWinRTEyes(BinaryReader reader)
+        {
+            if (!ReadBool(reader))
+            {
+                return null;
+            }
+
+            var calibrationValid = ReadBool(reader);
+            var gazeRay = ReadNullable(reader, ReadRay3D);
+            return new WinRTEyes(gazeRay, calibrationValid);
+        }
+
+        /// <summary>
+        /// Format for <see cref="ValueTuple{HandXR, HandXR}"/>.
+        /// </summary>
+        /// <returns><see cref="Format{T}"/> of <see cref="ValueTuple{HandXR, HandXR}"/> serializer/deserializer.</returns>
+        public static Format<(OpenXRHand Left, OpenXRHand Right)> OpenXRHandsFormat()
+            => new (WriteOpenXRHands, ReadOpenXRHands);
+
+        /// <summary>
+        /// Write <see cref="ValueTuple{HandXR, HandXR}"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="hands"><see cref="ValueTuple{HandXR, HandXR}"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteOpenXRHands((OpenXRHand Left, OpenXRHand Right) hands, BinaryWriter writer)
+        {
+            WriteOpenXRHand(hands.Left, writer);
+            WriteOpenXRHand(hands.Right, writer);
+        }
+
+        /// <summary>
+        /// Read <see cref="ValueTuple{HandXR, HandXR}"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="ValueTuple{HandXR, HandXR}"/>.</returns>
+        public static (OpenXRHand Left, OpenXRHand Right) ReadOpenXRHands(BinaryReader reader)
+        {
+            return (ReadOpenXRHand(reader), ReadOpenXRHand(reader));
         }
 
         /// <summary>
@@ -1169,6 +1379,58 @@ namespace HoloLensCaptureInterop
             var y = reader.ReadDouble();
             var z = reader.ReadDouble();
             return new Vector3D(x, y, z);
+        }
+
+        /// <summary>
+        /// Write <see cref="UnitVector3D"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="unitVector3D"><see cref="UnitVector3D"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteUnitVector3D(UnitVector3D unitVector3D, BinaryWriter writer)
+        {
+            writer.Write(unitVector3D.X);
+            writer.Write(unitVector3D.Y);
+            writer.Write(unitVector3D.Z);
+        }
+
+        /// <summary>
+        /// Read <see cref="UnitVector3D"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="UnitVector3D"/>.</returns>
+        public static UnitVector3D ReadUnitVector3D(BinaryReader reader)
+        {
+            var x = reader.ReadDouble();
+            var y = reader.ReadDouble();
+            var z = reader.ReadDouble();
+            if (x == 0 && y == 0 && z == 0)
+            {
+                return default;
+            }
+            else
+            {
+                return UnitVector3D.Create(x, y, z);
+            }
+        }
+
+        /// <summary>
+        /// Write <see cref="Angle"/> to <see cref="BinaryWriter"/>.
+        /// </summary>
+        /// <param name="angle"><see cref="Angle"/> to write.</param>
+        /// <param name="writer"><see cref="BinaryWriter"/> to which to write.</param>
+        public static void WriteAngle(Angle angle, BinaryWriter writer)
+        {
+            writer.Write(angle.Radians);
+        }
+
+        /// <summary>
+        /// Read <see cref="Angle"/> from <see cref="BinaryReader"/>.
+        /// </summary>
+        /// <param name="reader"><see cref="BinaryReader"/> from which to read.</param>
+        /// <returns><see cref="Angle"/>.</returns>
+        public static Angle ReadAngle(BinaryReader reader)
+        {
+            return Angle.FromRadians(reader.ReadDouble());
         }
 
         /// <summary>

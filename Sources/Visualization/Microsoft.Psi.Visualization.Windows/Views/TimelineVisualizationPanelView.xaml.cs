@@ -4,9 +4,7 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System;
-    using System.Collections.Generic;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
@@ -42,31 +40,6 @@ namespace Microsoft.Psi.Visualization.Views
         /// Gets the timeline visualization panel.
         /// </summary>
         private TimelineVisualizationPanel VisualizationPanel => this.DataContext as TimelineVisualizationPanel;
-
-        /// <inheritdoc/>
-        public override void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            if (this.DataContext is TimelineVisualizationPanel timelineVisualizationPanel)
-            {
-                // The show/hide legend menu
-                menuItems.Add(
-                    MenuItemHelper.CreateMenuItem(
-                        IconSourcePath.Legend,
-                        timelineVisualizationPanel.ShowLegend ? $"Hide Legend" : $"Show Legend",
-                        timelineVisualizationPanel.ShowHideLegendCommand));
-
-                menuItems.Add(MenuItemHelper.CreateMenuItem(
-                    null,
-                    "Auto-Fit Axes",
-                    this.VisualizationPanel.SetAutoAxisComputeModeCommand,
-                    null,
-                    this.VisualizationPanel.AxisComputeMode == AxisComputeMode.Manual));
-
-                menuItems.Add(null);
-            }
-
-            base.AppendContextMenuItems(menuItems);
-        }
 
         /// <summary>
         /// Signals to the panel that a drag and drop operation it may have initiated has been completed.

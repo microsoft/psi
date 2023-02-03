@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Serialization
     internal sealed class DictionarySerializer<TKey, TValue> : ISerializer<Dictionary<TKey, TValue>>
     {
         // Bumping the schema version number from the auto-generated version which defaults to RuntimeInfo.CurrentRuntimeVersion (2)
-        private const int SchemaVersion = 3;
+        private const int LatestSchemaVersion = 3;
 
         private ISerializer<Dictionary<TKey, TValue>> innerSerializer;
 
@@ -103,12 +103,20 @@ namespace Microsoft.Psi.Serialization
                 this.entriesHandler = serializers.GetHandler<KeyValuePair<TKey, TValue>[]>();
 
                 var type = typeof(Dictionary<TKey, TValue>);
-                var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+                var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
 
                 // Treat the Dictionary as a class with 2 members - a comparer and an array of key-value pairs
                 var comparerMember = new TypeMemberSchema("Comparer", typeof(IEqualityComparer<TKey>).AssemblyQualifiedName, true);
                 var entriesMember = new TypeMemberSchema("KeyValuePairs", typeof(KeyValuePair<TKey, TValue>[]).AssemblyQualifiedName, true);
-                var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, new[] { comparerMember, entriesMember }, SchemaVersion);
+                var schema = new TypeSchema(
+                    type.AssemblyQualifiedName,
+                    TypeFlags.IsClass,
+                    new[] { comparerMember, entriesMember },
+                    name,
+                    TypeSchema.GetId(name),
+                    LatestSchemaVersion,
+                    this.GetType().AssemblyQualifiedName,
+                    serializers.RuntimeInfo.SerializationSystemVersion);
 
                 return targetSchema ?? schema;
             }

@@ -80,6 +80,20 @@ namespace Microsoft.Psi.Spatial.Euclidean
         public int NumberOfPoints => this.points != null ? this.points.ColumnCount : 0;
 
         /// <summary>
+        /// Gets the centroid of the point cloud.
+        /// </summary>
+        public Point3D Centroid
+        {
+            get
+            {
+                var x = this.points.Row(0).Average();
+                var y = this.points.Row(1).Average();
+                var z = this.points.Row(2).Average();
+                return new Point3D(x, y, z);
+            }
+        }
+
+        /// <summary>
         /// Create a point cloud from a shared depth image.
         /// </summary>
         /// <param name="depthImage">The depth image.</param>

@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     /// <summary>
     /// Represents the base class that visualization panels derive from.
     /// </summary>
-    public abstract class VisualizationPanel : ObservableTreeNodeObject
+    public abstract class VisualizationPanel : ObservableTreeNodeObject, IContextMenuItemsSource
     {
         // The minimum height of a Visualization Panel
         private const double MinHeight = 10;
@@ -109,17 +109,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ToggleAllVisualizersVisibilityCommand
-        {
-            get
-            {
-                if (this.toggleAllVisualizersVisibilityCommand == null)
-                {
-                    this.toggleAllVisualizersVisibilityCommand = new RelayCommand(() => this.ToggleAllVisualizationObjectsVisibility());
-                }
-
-                return this.toggleAllVisualizersVisibilityCommand;
-            }
-        }
+            => this.toggleAllVisualizersVisibilityCommand ??= new RelayCommand(() => this.ToggleAllVisualizationObjectsVisibility());
 
         /// <summary>
         /// Gets the toggle visibility command.
@@ -127,17 +117,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ToggleVisibilityCommand
-        {
-            get
-            {
-                if (this.toggleVisibilityCommand == null)
-                {
-                    this.toggleVisibilityCommand = new RelayCommand(() => this.Container.TogglePanelVisibility(this));
-                }
-
-                return this.toggleVisibilityCommand;
-            }
-        }
+            => this.toggleVisibilityCommand ??= new RelayCommand(() => this.Container.TogglePanelVisibility(this));
 
         /// <summary>
         /// Gets the remove panel command.
@@ -145,17 +125,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand RemovePanelCommand
-        {
-            get
-            {
-                if (this.removePanelCommand == null)
-                {
-                    this.removePanelCommand = new RelayCommand(() => this.Container.RemovePanel(this));
-                }
-
-                return this.removePanelCommand;
-            }
-        }
+            => this.removePanelCommand ??= new RelayCommand(() => this.Container.RemovePanel(this));
 
         /// <summary>
         /// Gets the clear panel command.
@@ -163,17 +133,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ClearPanelCommand
-        {
-            get
-            {
-                if (this.clearPanelCommand == null)
-                {
-                    this.clearPanelCommand = new RelayCommand(() => this.Clear());
-                }
-
-                return this.clearPanelCommand;
-            }
-        }
+            => this.clearPanelCommand ??= new RelayCommand(() => this.Clear());
 
         /// <summary>
         /// Gets the mouse left button down command.
@@ -181,33 +141,23 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public virtual RelayCommand<MouseButtonEventArgs> MouseLeftButtonDownCommand
-        {
-            get
-            {
-                if (this.mouseLeftButtonDownCommand == null)
+            => this.mouseLeftButtonDownCommand ??= new RelayCommand<MouseButtonEventArgs>(
+                e =>
                 {
-                    this.mouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
-                        e =>
+                    // Set the current panel on click
+                    if (!this.IsCurrentPanel)
+                    {
+                        // Set the current panel to this panel
+                        this.IsTreeNodeSelected = true;
+                        this.Container.CurrentPanel = this;
+
+                        // If the panel contains any visualization objects, set the first one as selected.
+                        if (this.VisualizationObjects.Any())
                         {
-                            // Set the current panel on click
-                            if (!this.IsCurrentPanel)
-                            {
-                                // Set the current panel to this panel
-                                this.IsTreeNodeSelected = true;
-                                this.Container.CurrentPanel = this;
-
-                                // If the panel contains any visualization objects, set the first one as selected.
-                                if (this.VisualizationObjects.Any())
-                                {
-                                    this.VisualizationObjects[0].IsTreeNodeSelected = true;
-                                }
-                            }
-                        });
-                }
-
-                return this.mouseLeftButtonDownCommand;
-            }
-        }
+                            this.VisualizationObjects[0].IsTreeNodeSelected = true;
+                        }
+                    }
+                });
 
         /// <summary>
         /// Gets the resize panel command.
@@ -215,17 +165,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<DragDeltaEventArgs> ResizePanelCommand
-        {
-            get
-            {
-                if (this.resizePanelCommand == null)
-                {
-                    this.resizePanelCommand = new RelayCommand<DragDeltaEventArgs>(o => this.Height = Math.Max(this.Height + o.VerticalChange, MinHeight));
-                }
-
-                return this.resizePanelCommand;
-            }
-        }
+            => this.resizePanelCommand ??= new RelayCommand<DragDeltaEventArgs>(o => this.Height = Math.Max(this.Height + o.VerticalChange, MinHeight));
 
         /// <summary>
         /// Gets or sets the name of the visualization panel name.
@@ -327,18 +267,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public DataTemplate DefaultViewTemplate
-        {
-            get
-            {
-                if (this.defaultViewTemplate == null)
-                {
-                    this.defaultViewTemplate = this.CreateDefaultViewTemplate();
-                }
-
-                return this.defaultViewTemplate;
-            }
-        }
+        public DataTemplate DefaultViewTemplate => this.defaultViewTemplate ??= this.CreateDefaultViewTemplate();
 
         /// <summary>
         /// Gets or sets the visual margin for the panel.
@@ -399,18 +328,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ZoomToPanelCommand
-        {
-            get
-            {
-                if (this.zoomToPanelCommand == null)
-                {
-                    this.zoomToPanelCommand = new RelayCommand(
-                        () => this.ZoomToPanel());
-                }
-
-                return this.zoomToPanelCommand;
-            }
-        }
+            => this.zoomToPanelCommand ??= new RelayCommand(() => this.ZoomToPanel());
 
         /// <summary>
         /// Gets the delete visualization command.
@@ -418,17 +336,73 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<VisualizationObject> DeleteVisualizationCommand
-        {
-            get
-            {
-                if (this.deleteVisualizationCommand == null)
-                {
-                    this.deleteVisualizationCommand = new RelayCommand<VisualizationObject>(
-                        (o) => this.RemoveVisualizationObject(o));
-                }
+            => this.deleteVisualizationCommand ??= new RelayCommand<VisualizationObject>(o => this.RemoveVisualizationObject(o));
 
-                return this.deleteVisualizationCommand;
+        /// <inheritdoc/>
+        public virtual List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var commands = new List<ContextMenuItemInfo>();
+
+            if (this.VisualizationObjects.Count > 0)
+            {
+                var visible = this.VisualizationObjects.Any(vo => vo.Visible);
+                commands.Add(
+                    new ContextMenuItemInfo(
+                        IconSourcePath.ToggleVisibility,
+                        visible ? "Hide All Visualizers" : "Show All Visualizers",
+                        this.ToggleAllVisualizersVisibilityCommand,
+                        isEnabled: true));
             }
+
+            commands.Add(
+                new ContextMenuItemInfo(
+                    IconSourcePath.ClearPanel,
+                    $"Remove All Visualizers",
+                    this.ClearPanelCommand,
+                    isEnabled: this.VisualizationObjects.Count > 0));
+
+            // Add copy to clipboard menu with sub-menu items
+            var copyToClipboardCommands = new ContextMenuItemInfo("Copy to Clipboard");
+
+            copyToClipboardCommands.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Cursor Time",
+                    this.Navigator.CopyToClipboardCommand,
+                    isEnabled: true,
+                    commandParameter: this.Navigator.Cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
+            copyToClipboardCommands.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Cursor Time (as Ticks)",
+                    this.Navigator.CopyToClipboardCommand,
+                    isEnabled: true,
+                    commandParameter: this.Navigator.Cursor.Ticks.ToString()));
+            copyToClipboardCommands.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Session Name",
+                    this.Navigator.CopyToClipboardCommand,
+                    isEnabled: VisualizationContext.Instance.DatasetViewModel?.CurrentSessionViewModel != null,
+                    commandParameter: VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel.Name.ToString()));
+            copyToClipboardCommands.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Session Name & Cursor Time",
+                    this.Navigator.CopyToClipboardCommand,
+                    isEnabled: VisualizationContext.Instance.DatasetViewModel?.CurrentSessionViewModel != null,
+                    commandParameter: VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel.Name.ToString() + "@" + this.Navigator.Cursor.ToString("M/d/yyyy HH:mm:ss.ffff")));
+
+            commands.Add(copyToClipboardCommands);
+
+            commands.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    $"Go To Time ...",
+                    this.Container.GoToTimeCommand,
+                    isEnabled: true));
+
+            return commands;
         }
 
         /// <summary>
@@ -565,9 +539,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             var derivedStreamVisualizationObjects = new List<IStreamVisualizationObject>();
 
-            foreach (IStreamVisualizationObject visualizationObject in this.VisualizationObjects.Where(vo => vo is IStreamVisualizationObject))
+            foreach (var visualizationObject in this.VisualizationObjects.OfType<IStreamVisualizationObject>())
             {
-                if (visualizationObject.StreamBinding.IsDerived)
+                if (visualizationObject.StreamBinding.IsBindingToDerivedStream)
                 {
                     derivedStreamVisualizationObjects.Add(visualizationObject);
                 }
@@ -584,10 +558,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <param name="partitionName">The partition name of the instance to unbind, or null to unbind all instances.</param>
         public void UnbindVisualizationObjectsFromStore(string storeName, string storePath, string partitionName)
         {
-            foreach (IStreamVisualizationObject streamVisualizationObject in this.VisualizationObjects)
+            foreach (var streamVisualizationObject in this.VisualizationObjects.OfType<IStreamVisualizationObject>())
             {
-                if (streamVisualizationObject != null
-                    && streamVisualizationObject.StreamSource != null
+                if (streamVisualizationObject.StreamSource != null
                     && streamVisualizationObject.StreamSource.StoreName == storeName
                     && streamVisualizationObject.StreamSource.StorePath == storePath
                     && (partitionName == null || streamVisualizationObject.StreamBinding.PartitionName == partitionName))
@@ -603,17 +576,14 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <param name="sessionViewModel">The currently active session view model.</param>
         public virtual void UpdateStreamSources(SessionViewModel sessionViewModel)
         {
-            foreach (IStreamVisualizationObject streamVisualizationObject in this.VisualizationObjects)
+            foreach (var streamVisualizationObject in this.VisualizationObjects.OfType<IStreamVisualizationObject>())
             {
                 streamVisualizationObject?.UpdateStreamSource(sessionViewModel);
             }
         }
 
         /// <inheritdoc/>
-        public override string ToString()
-        {
-            return this.Name;
-        }
+        public override string ToString() => this.Name;
 
         /// <summary>
         /// Initializes a new visualization panel. Called by ctor and contract serializer.
@@ -641,7 +611,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             if (e.OldItems != null)
             {
-                foreach (VisualizationObject visualizationObject in e.OldItems)
+                foreach (var visualizationObject in e.OldItems)
                 {
                     if (visualizationObject is IXValueRangeProvider xValueRangeProvider)
                     {
@@ -657,7 +627,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
             if (e.NewItems != null)
             {
-                foreach (VisualizationObject visualizationObject in e.NewItems)
+                foreach (var visualizationObject in e.NewItems)
                 {
                     if (visualizationObject is IXValueRangeProvider xValueRangeProvider)
                     {
@@ -723,9 +693,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             // Get a list of time intervals for all stream visualization objects in this panel
             var streamIntervals = new List<TimeInterval>();
-            foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
+            foreach (var streamVisualizationObject in this.VisualizationObjects.OfType<IStreamVisualizationObject>())
             {
-                IStreamVisualizationObject streamVisualizationObject = visualizationObject as IStreamVisualizationObject;
                 if (streamVisualizationObject.StreamExtents != TimeInterval.Empty)
                 {
                     streamIntervals.Add(streamVisualizationObject.StreamExtents);
@@ -780,12 +749,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         {
             // After the panel has been deserialized from the layout file, it most likely will contain
             // some visualization objects that will need their property changed handlers hooked up.
-            foreach (VisualizationObject visualizationObject in this.VisualizationObjects)
+            foreach (var yValueRangeProvider in this.VisualizationObjects.OfType<IYValueRangeProvider>())
             {
-                if (visualizationObject is IYValueRangeProvider yValueRangeProvider)
-                {
-                    yValueRangeProvider.YValueRangeChanged += this.OnVisualizationObjectYValueRangeChanged;
-                }
+                yValueRangeProvider.YValueRangeChanged += this.OnVisualizationObjectYValueRangeChanged;
             }
         }
     }

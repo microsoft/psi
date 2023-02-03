@@ -401,7 +401,7 @@ namespace Microsoft.Psi.Remoting
                 this.Dispose();
             }
 
-            private void MetaUpdateHandler(IEnumerable<Metadata> meta, RuntimeInfo runtimeVersion)
+            private void MetaUpdateHandler(IEnumerable<Metadata> meta, RuntimeInfo runtimeInfo)
             {
                 try
                 {

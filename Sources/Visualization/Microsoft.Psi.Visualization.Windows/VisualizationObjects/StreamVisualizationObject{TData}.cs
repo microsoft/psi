@@ -4,15 +4,16 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.PsiStudio.TypeSpec;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Data;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Windows;
 
@@ -60,9 +61,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets the stream name.
         /// </summary>
         [Browsable(true)]
-        [DisplayName("Stream Name")]
+        [DisplayName("Source Stream Name")]
         [IgnoreDataMember]
-        public string StreamName => this.StreamBinding?.StreamName;
+        public string SourceStreamName => this.StreamBinding?.SourceStreamName;
 
         /// <summary>
         /// Gets the stream name.
@@ -83,17 +84,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ToggleSnapToStreamCommand
-        {
-            get
-            {
-                if (this.toggleSnapToStreamCommand == null)
-                {
-                    this.toggleSnapToStreamCommand = new RelayCommand(() => this.ToggleSnapToStream());
-                }
-
-                return this.toggleSnapToStreamCommand;
-            }
-        }
+            => this.toggleSnapToStreamCommand ??= new RelayCommand(() => this.ToggleSnapToStream());
 
         /// <summary>
         /// Gets the zoom to stream command.
@@ -101,19 +92,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ZoomToStreamCommand
-        {
-            get
-            {
-                if (this.zoomToStreamCommand == null)
-                {
-                    this.zoomToStreamCommand = new RelayCommand(
+            => this.zoomToStreamCommand ??= new RelayCommand(
                         () => this.Container.Navigator.Zoom(this.StreamSource.StreamMetadata.FirstMessageOriginatingTime, this.StreamSource.StreamMetadata.LastMessageOriginatingTime),
                         () => this.StreamSource != null);
-                }
-
-                return this.zoomToStreamCommand;
-            }
-        }
 
         /// <summary>
         /// Gets a value indicating whether the visualization object has a current value.
@@ -172,35 +153,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Gets the adapter type.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public Type StreamAdapterType => this.StreamBinding?.StreamAdapterType;
-
-        /// <summary>
         /// Gets the adapter type name (used by property browser).
         /// </summary>
-        [Browsable(true)]
-        [DisplayName("Stream Adapter")]
-        [Description("The stream adapter used by the visualizer.")]
+        [DisplayName("Stream Adapter Type")]
+        [Description("The type of stream adapter used by the visualizer.")]
         [IgnoreDataMember]
-        public string StreamAdapterDisplayName => TypeSpec.Simplify(this.StreamBinding?.StreamAdapterType?.FullName);
+        public string StreamAdapterTypeDisplayString => TypeSpec.Simplify(this.StreamBinding?.VisualizerStreamAdapterType?.AssemblyQualifiedName);
 
         /// <summary>
         /// Gets the summarizer type.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public Type SummarizerType => this.StreamBinding?.SummarizerType;
+        public Type SummarizerType => this.StreamBinding?.VisualizerSummarizerType;
 
         /// <summary>
         /// Gets the summarizer type name (used by property browser).
         /// </summary>
         [Browsable(true)]
-        [DisplayName("Summarizer")]
+        [DisplayName("Summarizer Type")]
         [IgnoreDataMember]
-        public string SummarizerTypeDisplayName => TypeSpec.Simplify(this.StreamBinding?.SummarizerType?.FullName);
+        public string SummarizerTypeDisplayString => TypeSpec.Simplify(this.StreamBinding?.VisualizerSummarizerType?.FullName);
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -229,10 +202,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 if (!this.IsBound)
                 {
-                    if (this.StreamBinding.IsDerived)
+                    if (this.StreamBinding.IsBindingToDerivedStream)
                     {
                         // Stream member unbound
-                        return IconSourcePath.StreamMemberUnbound;
+                        return IconSourcePath.DerivedStreamUnbound;
                     }
                     else
                     {
@@ -242,10 +215,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
                 else if (this.IsSnappedToStream)
                 {
-                    if (this.StreamBinding.IsDerived)
+                    if (this.StreamBinding.IsBindingToDerivedStream)
                     {
                         // Snap to stream member
-                        return this.IsLive ? IconSourcePath.StreamMemberSnapLive : IconSourcePath.StreamMemberSnap;
+                        return this.IsLive ? IconSourcePath.DerivedStreamSnapLive : IconSourcePath.DerivedStreamSnap;
                     }
                     else
                     {
@@ -253,10 +226,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                         return this.IsLive ? IconSourcePath.SnapToStreamLive : IconSourcePath.SnapToStream;
                     }
                 }
-                else if (this.StreamBinding.IsDerived)
+                else if (this.StreamBinding.IsBindingToDerivedStream)
                 {
                     // Stream member
-                    return this.IsLive ? IconSourcePath.StreamMemberLive : IconSourcePath.StreamMember;
+                    return this.IsLive ? IconSourcePath.DerivedStreamLive : IconSourcePath.DerivedStream;
                 }
                 else
                 {
@@ -307,6 +280,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     disposable.Dispose();
                 }
             };
+
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = base.ContextMenuItemsInfo();
+            if (this.CanSnapToStream)
+            {
+                items.Insert(
+                    0,
+                    new ContextMenuItemInfo(
+                        IconSourcePath.SnapToStream,
+                        this.ToggleSnapToStreamCommandText,
+                        this.ToggleSnapToStreamCommand));
+            }
+
+            return items;
+        }
 
         /// <summary>
         /// Sets the current value for the visualization object.
@@ -434,9 +424,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="timeAtIndex">Function that returns an index given a time.</param>
         /// <returns>Best matching index or -1 if no qualifying match was found.</returns>
         protected virtual int GetIndexForTime(DateTime currentTime, int count, Func<int, DateTime> timeAtIndex)
-        {
-            return IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex);
-        }
+            => IndexHelper.GetIndexForTime(currentTime, count, timeAtIndex);
 
         /// <inheritdoc/>
         protected override void OnAddToPanel()

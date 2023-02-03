@@ -7,11 +7,10 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using System.Threading;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Threading;
-    using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
@@ -342,12 +341,12 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         /// <param name="streamSource">The stream source specifying the stream of interest.</param>
         /// <param name="time">The time to find the nearest message to.</param>
-        /// <param name="nearestMessageType">The type of nearest message to find.</param>
+        /// <param name="nearestType">The type of nearest message to find.</param>
         /// <returns>The time of the nearest message, if one is found or null otherwise.</returns>
-        public DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestMessageType nearestMessageType)
+        public DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestType nearestType)
         {
             return streamSource != null ? this.GetOrCreateDataStoreReader(streamSource)
-                .GetTimeOfNearestMessage(streamSource, time, nearestMessageType) : null;
+                .GetTimeOfNearestMessage(streamSource, time, nearestType) : null;
         }
 
         /// <summary>
@@ -378,12 +377,20 @@ namespace Microsoft.Psi.Visualization.Data
                     }
                     catch (Exception ex)
                     {
+                        string GetMessageTrace(Exception ex, string message)
+                        {
+                            return
+                                ex != null
+                                ? GetMessageTrace(ex.InnerException, message + Environment.NewLine + ex.Message)
+                                : message;
+                        }
+
                         Application.Current.Dispatcher.BeginInvoke((Action)(() =>
                         {
                             new MessageBoxWindow(
                                 Application.Current.MainWindow,
                                 "Error",
-                                $"An error occurred while attempting to read stream values.{Environment.NewLine}{Environment.NewLine}{ex.Message}",
+                                GetMessageTrace(ex, $"An error occurred while attempting to read stream values.{Environment.NewLine}"),
                                 "Close",
                                 null).ShowDialog();
                         }));

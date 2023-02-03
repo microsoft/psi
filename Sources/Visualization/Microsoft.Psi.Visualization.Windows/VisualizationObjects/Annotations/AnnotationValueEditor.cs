@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
-    using System.Collections;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;

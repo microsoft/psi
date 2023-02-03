@@ -11,7 +11,6 @@ namespace Microsoft.Psi.MixedReality
     using Microsoft.MixedReality.SceneUnderstanding;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Spatial.Euclidean;
-    using StereoKit;
     using Windows.Perception.Spatial.Preview;
 
     /// <summary>
@@ -132,7 +131,7 @@ namespace Microsoft.Psi.MixedReality
                         }
 
                         // origin is top-left of quad plane, so shift to be relative to the centroid (in 3D)
-                        var placementFromCenter = new Vec3(placement.X - (quad.Extents.X / 2f), placement.Y - (quad.Extents.Y / 2f), 0);
+                        var placementFromCenter = new Vector3(placement.X - (quad.Extents.X / 2f), placement.Y - (quad.Extents.Y / 2f), 0);
 
                         return new Rectangle3D(
                             rectanglePose.Transform(placementFromCenter.ToPoint3D()),

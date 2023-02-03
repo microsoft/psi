@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.Serialization;
     using System.Windows;
     using Microsoft.Psi.Visualization.Helpers;
@@ -79,19 +80,27 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <inheritdoc/>
         public override List<VisualizationPanelType> CompatiblePanelTypes => new ();
 
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+            => new ()
+            {
+                new ContextMenuItemInfo(IconSourcePath.InstantContainerAddCellLeft, $"Insert Cell to the Left", this.InsertCellCommand(true)),
+                new ContextMenuItemInfo(IconSourcePath.InstantContainerAddCellRight, $"Insert Cell to the Right", this.InsertCellCommand(false)),
+                new ContextMenuItemInfo(null, $"Remove Cell", this.CreateRemoveCellCommand(null)),
+                new ContextMenuItemInfo(IconSourcePath.InstantContainerRemoveCell, $"Remove {this.Name}", this.RemovePanelCommand),
+            };
+
         /// <summary>
-        /// Gets the increase cell count command.
+        /// Inserts a cell in the visualization container view to the left or to the right of the current panel.
         /// </summary>
-        /// <param name="panel">The panel that the child panel should be inserted next to.</param>
         /// <param name="insertOnLeft">True if the panel should be inserted to the left of panel, otherwise false.</param>
         /// <returns>The complete relay command.</returns>
-        public PsiCommand CreateIncreaseCellCountCommand(VisualizationPanel panel, bool insertOnLeft)
+        public PsiCommand InsertCellCommand(bool insertOnLeft)
         {
-            int panelIndex = this.panels.IndexOf(panel);
-
-            return new PsiCommand(
-                        () => this.IncreaseCellCount(insertOnLeft ? panelIndex : panelIndex + 1),
-                        this.Panels.Count < MaxCells);
+            var currentPanelIndex = this.Panels.IndexOf(this.Panels.First(p => p.IsCurrentPanel));
+            return new (
+                () => this.IncreaseCellCount(insertOnLeft ? currentPanelIndex : currentPanelIndex + 1),
+                this.Panels.Count < MaxCells);
         }
 
         /// <summary>

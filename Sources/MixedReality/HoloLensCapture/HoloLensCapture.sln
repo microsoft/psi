@@ -44,8 +44,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Media.Windows
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Psi.Media_Interop.Windows.x64", "..\..\Media\Microsoft.Psi.Media_Interop.Windows.x64\Microsoft.Psi.Media_Interop.Windows.x64.vcxproj", "{5348A94F-7B3A-4B42-8555-2A1491971090}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.Psi.Media.Native.x64", "..\..\Media\Microsoft.Psi.Media.Native.x64\Microsoft.Psi.Media.Native.x64.vcxproj", "{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -122,10 +120,6 @@ Global
 		{5348A94F-7B3A-4B42-8555-2A1491971090}.Debug|Any CPU.Build.0 = Debug|x64
 		{5348A94F-7B3A-4B42-8555-2A1491971090}.Release|Any CPU.ActiveCfg = Release|x64
 		{5348A94F-7B3A-4B42-8555-2A1491971090}.Release|Any CPU.Build.0 = Release|x64
-		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Debug|Any CPU.Build.0 = Debug|x64
-		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Release|Any CPU.ActiveCfg = Release|x64
-		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42}.Release|Any CPU.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,7 +142,6 @@ Global
 		{5318B3E0-2FEA-4DED-B041-6F7CC1E15890} = {18171A33-C859-41E1-9FB4-0E314C2B16E3}
 		{B6EBA51D-7A78-4343-9F98-E146FAF405E4} = {18171A33-C859-41E1-9FB4-0E314C2B16E3}
 		{5348A94F-7B3A-4B42-8555-2A1491971090} = {18171A33-C859-41E1-9FB4-0E314C2B16E3}
-		{C50F7F21-BEB0-4366-B73F-859EEBC3ED42} = {18171A33-C859-41E1-9FB4-0E314C2B16E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EAF15EE9-DCC5-411B-A9E5-7C2F3D132331}

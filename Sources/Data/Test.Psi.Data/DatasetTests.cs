@@ -37,7 +37,7 @@ namespace Test.Psi.Data
         {
             var dataset = new Dataset();
             Assert.AreEqual(0, dataset.Sessions.Count);
-            Assert.IsTrue(dataset.OriginatingTimeInterval.IsEmpty);
+            Assert.IsTrue(dataset.MessageOriginatingTimeInterval.IsEmpty);
 
             // generate a test store
             GenerateTestStore("PsiStore", StorePath);
@@ -48,8 +48,8 @@ namespace Test.Psi.Data
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
             // verify originating time interval
-            Assert.AreEqual(session0.OriginatingTimeInterval.Left, dataset.OriginatingTimeInterval.Left);
-            Assert.AreEqual(session0.OriginatingTimeInterval.Right, dataset.OriginatingTimeInterval.Right);
+            Assert.AreEqual(session0.MessageOriginatingTimeInterval.Left, dataset.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(session0.MessageOriginatingTimeInterval.Right, dataset.MessageOriginatingTimeInterval.Right);
 
             // generate a new store with a different originating time interval than the first
             GenerateTestStore("NewStore", StorePath);
@@ -61,8 +61,8 @@ namespace Test.Psi.Data
             Assert.AreEqual("Session_1", dataset.Sessions[1].Name);
 
             // verify new originating time interval
-            Assert.AreEqual(session0.OriginatingTimeInterval.Left, dataset.OriginatingTimeInterval.Left);
-            Assert.AreEqual(session1.OriginatingTimeInterval.Right, dataset.OriginatingTimeInterval.Right);
+            Assert.AreEqual(session0.MessageOriginatingTimeInterval.Left, dataset.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(session1.MessageOriginatingTimeInterval.Right, dataset.MessageOriginatingTimeInterval.Right);
         }
 
         [TestMethod]
@@ -104,8 +104,8 @@ namespace Test.Psi.Data
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
             // verify originating time interval
-            Assert.AreEqual(session0.OriginatingTimeInterval.Left, dataset.OriginatingTimeInterval.Left);
-            Assert.AreEqual(session0.OriginatingTimeInterval.Right, dataset.OriginatingTimeInterval.Right);
+            Assert.AreEqual(session0.MessageOriginatingTimeInterval.Left, dataset.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(session0.MessageOriginatingTimeInterval.Right, dataset.MessageOriginatingTimeInterval.Right);
 
             // generate a new store with a different originating time interval than the first
             GenerateTestStore("NewStore", StorePath);
@@ -120,8 +120,8 @@ namespace Test.Psi.Data
             Assert.AreEqual("Session_1", dataset.Sessions[1].Name);
 
             // verify new originating time interval
-            Assert.AreEqual(session0.OriginatingTimeInterval.Left, dataset.OriginatingTimeInterval.Left);
-            Assert.AreEqual(session1.OriginatingTimeInterval.Right, dataset.OriginatingTimeInterval.Right);
+            Assert.AreEqual(session0.MessageOriginatingTimeInterval.Left, dataset.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(session1.MessageOriginatingTimeInterval.Right, dataset.MessageOriginatingTimeInterval.Right);
         }
 
         [TestMethod]
@@ -167,10 +167,10 @@ namespace Test.Psi.Data
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
             // verify new originating time intervals (session and dataset)
-            Assert.AreEqual(partition0.OriginatingTimeInterval.Left, session.OriginatingTimeInterval.Left);
-            Assert.AreEqual(partition0.OriginatingTimeInterval.Right, session.OriginatingTimeInterval.Right);
-            Assert.AreEqual(partition0.OriginatingTimeInterval.Left, dataset.OriginatingTimeInterval.Left);
-            Assert.AreEqual(partition0.OriginatingTimeInterval.Right, dataset.OriginatingTimeInterval.Right);
+            Assert.AreEqual(partition0.MessageOriginatingTimeInterval.Left, session.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(partition0.MessageOriginatingTimeInterval.Right, session.MessageOriginatingTimeInterval.Right);
+            Assert.AreEqual(partition0.MessageOriginatingTimeInterval.Left, dataset.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(partition0.MessageOriginatingTimeInterval.Right, dataset.MessageOriginatingTimeInterval.Right);
 
             // generate a new store with a different originating time interval than the first
             GenerateTestStore("NewStore", StorePath);
@@ -182,10 +182,10 @@ namespace Test.Psi.Data
             Assert.AreEqual("Partition_1", session.Partitions[1].Name);
 
             // verify new originating time intervals (session and dataset)
-            Assert.AreEqual(partition0.OriginatingTimeInterval.Left, session.OriginatingTimeInterval.Left);
-            Assert.AreEqual(partition1.OriginatingTimeInterval.Right, session.OriginatingTimeInterval.Right);
-            Assert.AreEqual(partition0.OriginatingTimeInterval.Left, dataset.OriginatingTimeInterval.Left);
-            Assert.AreEqual(partition1.OriginatingTimeInterval.Right, dataset.OriginatingTimeInterval.Right);
+            Assert.AreEqual(partition0.MessageOriginatingTimeInterval.Left, session.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(partition1.MessageOriginatingTimeInterval.Right, session.MessageOriginatingTimeInterval.Right);
+            Assert.AreEqual(partition0.MessageOriginatingTimeInterval.Left, dataset.MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(partition1.MessageOriginatingTimeInterval.Right, dataset.MessageOriginatingTimeInterval.Right);
         }
 
         [TestMethod]
@@ -420,8 +420,8 @@ namespace Test.Psi.Data
             Assert.AreEqual(1, sameDataset.Sessions.Count);
             Assert.AreEqual(session2.Name, sameDataset.Sessions[0].Name);
             Assert.AreEqual(1, sameDataset.Sessions[0].Partitions.Count);
-            Assert.AreEqual(session2.OriginatingTimeInterval.Left, sameDataset.Sessions[0].OriginatingTimeInterval.Left);
-            Assert.AreEqual(session2.OriginatingTimeInterval.Right, sameDataset.Sessions[0].OriginatingTimeInterval.Right);
+            Assert.AreEqual(session2.MessageOriginatingTimeInterval.Left, sameDataset.Sessions[0].MessageOriginatingTimeInterval.Left);
+            Assert.AreEqual(session2.MessageOriginatingTimeInterval.Right, sameDataset.Sessions[0].MessageOriginatingTimeInterval.Right);
 
             // now we edit the session and we want to make sure the changes stick!
             GenerateTestStore("store3", StorePath);

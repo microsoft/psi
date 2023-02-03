@@ -50,18 +50,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <summary>
         /// Gets the track name for the annotation.
         /// </summary>
-        public string Track { get; private set; }
+        public string Track { get; }
 
         /// <summary>
         /// Gets the track index for the annotation.
         /// </summary>
-        public int TrackIndex { get; private set; }
+        public int TrackIndex { get; }
 
         /// <summary>
         /// Gets the annotation schema.
         /// </summary>
         [Browsable(false)]
-        public AnnotationSchema AnnotationSchema { get; private set; }
+        public AnnotationSchema AnnotationSchema { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the annotation is the currently selected one.

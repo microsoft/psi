@@ -24,6 +24,11 @@ namespace Microsoft.Psi.Visualization
         public const string AnnotationUnbound = IconPrefix + "annotation-unbound.png";
 
         /// <summary>
+        /// Sets the annotation to the selection boundaries.
+        /// </summary>
+        public const string SetAnnotationToSelection = IconPrefix + "set-annotation-to-selection.png";
+
+        /// <summary>
         /// Partition.
         /// </summary>
         public const string Partition = IconPrefix + "partition.png";
@@ -141,27 +146,27 @@ namespace Microsoft.Psi.Visualization
         /// <summary>
         /// A stream member.
         /// </summary>
-        public const string StreamMember = IconPrefix + "stream-member.png";
+        public const string DerivedStream = IconPrefix + "stream-member.png";
 
         /// <summary>
         /// A live stream member.
         /// </summary>
-        public const string StreamMemberLive = IconPrefix + "stream-member-live.png";
+        public const string DerivedStreamLive = IconPrefix + "stream-member-live.png";
 
         /// <summary>
         /// A stream member.
         /// </summary>
-        public const string StreamMemberSnap = IconPrefix + "stream-member-snap.png";
+        public const string DerivedStreamSnap = IconPrefix + "stream-member-snap.png";
 
         /// <summary>
         /// A stream member.
         /// </summary>
-        public const string StreamMemberSnapLive = IconPrefix + "stream-member-snap-live.png";
+        public const string DerivedStreamSnapLive = IconPrefix + "stream-member-snap-live.png";
 
         /// <summary>
         /// A stream member.
         /// </summary>
-        public const string StreamMemberUnbound = IconPrefix + "stream-member-unbound.png";
+        public const string DerivedStreamUnbound = IconPrefix + "stream-member-unbound.png";
 
         /// <summary>
         /// A stream member.

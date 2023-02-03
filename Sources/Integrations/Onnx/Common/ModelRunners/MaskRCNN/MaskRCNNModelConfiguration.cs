@@ -29,6 +29,11 @@ namespace Microsoft.Psi.Onnx
         public string ClassesFileName { get; set; }
 
         /// <summary>
+        /// Gets or sets the confidence threshold to use in filtering results.
+        /// </summary>
+        public float ConfidenceThreshold { get; set; } = 0.3f;
+
+        /// <summary>
         /// Gets or sets the GPU device ID to run execution on, or null to run on CPU.
         /// </summary>
         /// <remarks>

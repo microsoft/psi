@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Onnx
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.ML;
@@ -16,12 +17,12 @@ namespace Microsoft.Psi.Onnx
     /// It does so by leveraging the ML.NET framework. The
     /// <see cref="OnnxModelConfiguration"/> object specified at construction
     /// time provides information about where to load the network from, etc.</remarks>
-    public class OnnxModel
+    public class OnnxModel : IDisposable
     {
         private readonly OnnxModelConfiguration configuration;
-        private readonly MLContext context = new MLContext();
+        private readonly MLContext context = new ();
         private readonly SchemaDefinition schemaDefinition;
-        private readonly OnnxTransformer onnxTransformer;
+        private OnnxTransformer onnxTransformer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OnnxModel"/> class.
@@ -50,6 +51,13 @@ namespace Microsoft.Psi.Onnx
                     gpuDeviceId: configuration.GpuDeviceId,
                     fallbackToCpu: false);
             this.onnxTransformer = scoringEstimator.Fit(onnxEmptyInputDataView);
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.onnxTransformer?.Dispose();
+            this.onnxTransformer = null;
         }
 
         /// <summary>

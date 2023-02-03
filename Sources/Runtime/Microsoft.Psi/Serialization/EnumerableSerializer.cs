@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal sealed class EnumerableSerializer<T> : ISerializer<IEnumerable<T>>
     {
-        private const int Version = 2;
+        private const int LatestSchemaVersion = 2;
 
         private SerializationHandler<T> elementHandler;
 
@@ -25,9 +25,17 @@ namespace Microsoft.Psi.Serialization
         {
             this.elementHandler = serializers.GetHandler<T>(); // register element type
             var type = typeof(T[]);
-            var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+            var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
             var elementsMember = new TypeMemberSchema("Elements", typeof(T).AssemblyQualifiedName, true);
-            var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsCollection, new TypeMemberSchema[] { elementsMember }, Version);
+            var schema = new TypeSchema(
+                type.AssemblyQualifiedName,
+                TypeFlags.IsCollection,
+                new TypeMemberSchema[] { elementsMember },
+                name,
+                TypeSchema.GetId(name),
+                LatestSchemaVersion,
+                this.GetType().AssemblyQualifiedName,
+                serializers.RuntimeInfo.SerializationSystemVersion);
             return targetSchema ?? schema;
         }
 

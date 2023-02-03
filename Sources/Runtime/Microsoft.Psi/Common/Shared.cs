@@ -208,7 +208,7 @@ namespace Microsoft.Psi
         // This is done to avoid keeping a reference to an object that is still in use.
         private class CustomSerializer : ISerializer<Shared<T>>
         {
-            public const int Version = 2;
+            public const int LatestSchemaVersion = 2;
             private SerializationHandler<SharedContainer<T>> handler;
 
             /// <inheritdoc />
@@ -218,9 +218,17 @@ namespace Microsoft.Psi
             {
                 this.handler = serializers.GetHandler<SharedContainer<T>>();
                 var type = typeof(Shared<T>);
-                var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+                var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
                 var innerMember = new TypeMemberSchema("inner", typeof(SharedContainer<T>).AssemblyQualifiedName, true);
-                var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, new TypeMemberSchema[] { innerMember }, Version);
+                var schema = new TypeSchema(
+                    type.AssemblyQualifiedName,
+                    TypeFlags.IsClass,
+                    new TypeMemberSchema[] { innerMember },
+                    name,
+                    TypeSchema.GetId(name),
+                    LatestSchemaVersion,
+                    this.GetType().AssemblyQualifiedName,
+                    serializers.RuntimeInfo.SerializationSystemVersion);
                 return targetSchema ?? schema;
             }
 

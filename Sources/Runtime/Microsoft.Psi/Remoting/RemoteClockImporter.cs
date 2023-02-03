@@ -72,10 +72,10 @@ namespace Microsoft.Psi.Remoting
                 NetworkStream networkStream = null;
                 try
                 {
-                    Trace.WriteLine($"Attempting to connect to {this.port}");
+                    Trace.WriteLine($"Attempting to connect to {this.host} on port {this.port} ...");
                     this.client.Connect(this.host, this.port);
                     networkStream = this.client.GetStream();
-                    Trace.WriteLine($"Connected to {this.port}.");
+                    Trace.WriteLine($"Connected to {this.host} on port {this.port}.");
 
                     // send protocol version
                     using var writer = new BinaryWriter(networkStream);

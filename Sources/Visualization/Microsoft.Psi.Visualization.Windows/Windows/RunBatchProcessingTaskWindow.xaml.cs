@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Visualization.Windows
 {
+    using System.Threading;
     using System.Windows;
 
     /// <summary>
@@ -10,6 +11,8 @@ namespace Microsoft.Psi.Visualization.Windows
     /// </summary>
     public partial class RunBatchProcessingTaskWindow : Window
     {
+        private CancellationTokenSource cancellationTokenSource = null;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RunBatchProcessingTaskWindow"/> class.
         /// </summary>
@@ -25,22 +28,31 @@ namespace Microsoft.Psi.Visualization.Windows
 
         private RunBatchProcessingTaskWindowViewModel ViewModel => this.DataContext as RunBatchProcessingTaskWindowViewModel;
 
-        private void RunButtonClick(object sender, RoutedEventArgs e)
+        private async void RunButtonClick(object sender, RoutedEventArgs e)
         {
             if (this.ViewModel.Configuration.Validate(out string error))
             {
-                this.ViewModel
-                    .RunAsync()
-                    .ContinueWith(_ => Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        this.DialogResult = true;
-                        this.Close();
-                    }));
+                this.cancellationTokenSource = new ();
+
+                await this.ViewModel
+                    .RunAsync(cancellationToken: this.cancellationTokenSource.Token)
+                    .ContinueWith(
+                        task => Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            this.DialogResult = !task.IsCanceled;
+                            this.Close();
+                        }))
+                    .ContinueWith(_ => this.cancellationTokenSource.Dispose());
             }
             else
             {
                 new MessageBoxWindow(this, "Invalid Configuration", error, cancelButtonText: null).ShowDialog();
             }
+        }
+
+        private void CancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.cancellationTokenSource?.Cancel();
         }
     }
 }

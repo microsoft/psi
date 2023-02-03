@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Spatial.Euclidean
 {
     using System;
+    using System.Linq;
     using System.Numerics;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
@@ -91,28 +92,42 @@ namespace Microsoft.Psi.Spatial.Euclidean
         }
 
         /// <summary>
-        /// Gets a rotation matrix corresponding to a forward vector.
+        /// Computes the velocity (with linear and angular components) of streaming <see cref="CoordinateSystem"/> poses.
         /// </summary>
-        /// <param name="forward">The specified forward vector.</param>
-        /// <returns>The corresponding rotation matrix.</returns>
-        /// <remarks>The X axis of the matrix will correspond to the specified forward vector.</remarks>
-        public static Matrix<double> ToRotationMatrix(this Vector3D forward) => forward.Normalize().ToRotationMatrix();
+        /// <param name="source">The source stream of <see cref="CoordinateSystem"/> poses.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy parameter.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
+        /// <returns>A stream containing the computed velocities.</returns>
+        public static IProducer<CoordinateSystemVelocity3D> ComputeVelocity(
+            this IProducer<CoordinateSystem> source,
+            DeliveryPolicy<CoordinateSystem> deliveryPolicy = null,
+            string name = nameof(ComputeVelocity))
+                => source.Window(
+                    -1,
+                    0,
+                    values => new CoordinateSystemVelocity3D(values.First().Data, values.Last().Data, values.Last().OriginatingTime - values.First().OriginatingTime),
+                    deliveryPolicy,
+                    name);
 
         /// <summary>
         /// Gets a rotation matrix corresponding to a forward vector.
         /// </summary>
-        /// <param name="forward">The specified forward vector.</param>
+        /// <param name="forwardVector3D">The specified forward vector.</param>
+        /// <param name="worldUpVector3D">Optional world "up" vector to use as reference when computing the rotation.
+        /// Defaults to <see cref="UnitVector3D.ZAxis"/>.</param>
         /// <returns>The corresponding rotation matrix.</returns>
         /// <remarks>The X axis of the matrix will correspond to the specified forward vector.</remarks>
-        public static Matrix<double> ToRotationMatrix(this UnitVector3D forward)
+        public static Matrix<double> ToRotationMatrix(this UnitVector3D forwardVector3D, UnitVector3D? worldUpVector3D = null)
         {
-            // Compute left and up directions from the given forward direction.
-            var left = UnitVector3D.ZAxis.CrossProduct(forward);
-            var up = forward.CrossProduct(left);
+            worldUpVector3D ??= UnitVector3D.ZAxis;
+
+            // Compute local left and up vectors from the given forward vector and world up vector.
+            var left = worldUpVector3D.Value.CrossProduct(forwardVector3D);
+            var up = forwardVector3D.CrossProduct(left);
 
             // Create a corresponding 3x3 matrix from the 3 directions.
             var rotationMatrix = Matrix<double>.Build.Dense(3, 3);
-            rotationMatrix.SetColumn(0, forward.ToVector());
+            rotationMatrix.SetColumn(0, forwardVector3D.ToVector());
             rotationMatrix.SetColumn(1, left.ToVector());
             rotationMatrix.SetColumn(2, up.ToVector());
             return rotationMatrix;
@@ -177,16 +192,17 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// </summary>
         /// <param name="cs1">The first <see cref="CoordinateSystem"/>.</param>
         /// <param name="cs2">The second <see cref="CoordinateSystem"/>.</param>
-        /// <param name="amount">The amount to interpolate between the two coordinate systems. A value of 0 will
-        /// effectively return the first coordinate system, a value of 1 will effectively return the second
-        /// coordinate system, and a value between 0 and 1 will return an interpolation between those two values.
+        /// <param name="amount">The amount to interpolate between the two coordinate systems.
+        /// A value between 0 and 1 will return an interpolation between the two values.
         /// A value outside the 0-1 range will generate an extrapolated result.</param>
         /// <returns>The interpolated <see cref="CoordinateSystem"/>.</returns>
+        /// <remarks>Returns null if either input value is null.</remarks>
         public static CoordinateSystem InterpolateCoordinateSystems(CoordinateSystem cs1, CoordinateSystem cs2, double amount)
         {
-            // We assume an identity coordinate system by default if either input happens to be null
-            cs1 ??= new CoordinateSystem();
-            cs2 ??= new CoordinateSystem();
+            if (cs1 is null || cs2 is null)
+            {
+                return null;
+            }
 
             // Extract translation as vectors
             var t1 = cs1.Origin.ToVector3D();

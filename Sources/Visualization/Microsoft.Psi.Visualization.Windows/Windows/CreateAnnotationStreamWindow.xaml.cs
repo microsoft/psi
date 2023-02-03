@@ -23,20 +23,26 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateAnnotationStreamWindow"/> class.
         /// </summary>
-        /// <param name="availablePartitions">The list of partitions that the annotation stream may be created in.</param>
+        /// <param name="session">The session that the annotation stream should be added to.</param>
         /// <param name="availableAnnotationSchemas">The list of available annotation schemas the user may choose from.</param>
         /// <param name="owner">The window that wons this window.</param>
-        public CreateAnnotationStreamWindow(IEnumerable<PartitionViewModel> availablePartitions, List<AnnotationSchema> availableAnnotationSchemas, Window owner)
+        public CreateAnnotationStreamWindow(SessionViewModel session, List<AnnotationSchema> availableAnnotationSchemas, Window owner)
         {
             this.InitializeComponent();
 
-            this.AvailablePartitions = availablePartitions.Where(p => p.IsPsiPartition && !p.IsLivePartition).ToArray();
+            this.AvailablePartitions = session.PartitionViewModels.Where(p => p.IsPsiPartition && !p.IsLivePartition).ToArray();
             this.AvailableAnnotationSchemas = availableAnnotationSchemas;
+
+            // By default, set the store path to the location of the first available partition
+            if (this.AvailablePartitions.Any())
+            {
+                this.StorePath = this.AvailablePartitions.First().StorePath;
+            }
 
             this.Owner = owner;
             this.DataContext = this;
 
-            this.ShowPartitionWarningMessage = this.AvailablePartitions.Count() != availablePartitions.Count();
+            this.ShowPartitionWarningMessage = this.AvailablePartitions.Count() != session.PartitionViewModels.Count();
             if (this.ShowPartitionWarningMessage)
             {
                 if (this.AvailablePartitions.Any())

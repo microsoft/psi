@@ -232,7 +232,14 @@ namespace Microsoft.Psi.Persistence
             if (this.mappedFile == null)
             {
                 // attach to an in-memory MMF
-                this.mappedFile = MemoryMappedFile.OpenExisting(extentName);
+                try
+                {
+                    this.mappedFile = MemoryMappedFile.OpenExisting(extentName);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Failed to open extent: {extentName}.", ex);
+                }
             }
 
             this.view = this.mappedFile.CreateViewAccessor(0, 0, MemoryMappedFileAccess.Read);

@@ -4,18 +4,16 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
     /// Provides an abstract base class for visualization object views.
     /// </summary>
-    public abstract class VisualizationObjectView : UserControl, IContextMenuItemsSource
+    public abstract class VisualizationObjectView : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VisualizationObjectView"/> class.
@@ -27,12 +25,6 @@ namespace Microsoft.Psi.Visualization.Views
             this.Unloaded += this.OnUnloaded;
         }
 
-        /// <inheritdoc/>
-        public ContextMenuItemsSourceType ContextMenuItemsSourceType => ContextMenuItemsSourceType.VisualizationObject;
-
-        /// <inheritdoc/>
-        public string ContextMenuObjectName => this.DataContext is VisualizationObject visualizationObject ? visualizationObject.Name : string.Empty;
-
         /// <summary>
         /// Gets the visualization object.
         /// </summary>
@@ -42,43 +34,6 @@ namespace Microsoft.Psi.Visualization.Views
         /// Gets the navigator for the visualization object.
         /// </summary>
         public Navigator Navigator => this.VisualizationObject.Navigator;
-
-        /// <inheritdoc/>
-        public virtual void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            if (this.DataContext is VisualizationObject visualizationObject)
-            {
-                // If the visualization object is bound and allows snapping to its stream, add the snap to stream menuitem.
-                if (visualizationObject is IStreamVisualizationObject streamVisualizationObject && streamVisualizationObject.IsBound)
-                {
-                    if (visualizationObject.CanSnapToStream)
-                    {
-                        menuItems.Add(MenuItemHelper.CreateMenuItem(
-                            IconSourcePath.SnapToStream,
-                            visualizationObject.IsSnappedToStream ? $"Unsnap from Stream" : $"Snap to Stream",
-                            new VisualizationCommand(() => visualizationObject.ToggleSnapToStream())));
-                    }
-                }
-
-                // Add the show/hide menuitem.
-                menuItems.Add(MenuItemHelper.CreateMenuItem(
-                    IconSourcePath.ToggleVisibility,
-                    visualizationObject.Visible ? "Hide Visualizer" : "Show Visualizers",
-                    visualizationObject.ToggleVisibilityCommand,
-                    null,
-                    true,
-                    null));
-
-                // Add the remove from panel menuitem.
-                menuItems.Add(MenuItemHelper.CreateMenuItem(
-                    IconSourcePath.RemovePanel,
-                    $"Remove Visualizer",
-                    visualizationObject.Panel.DeleteVisualizationCommand,
-                    null,
-                    true,
-                    visualizationObject));
-            }
-        }
 
         /// <summary>
         /// Called when the data context is changed.

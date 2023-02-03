@@ -85,11 +85,31 @@ namespace Microsoft.Psi.Data
         /// Gets the originating time interval (earliest to latest) of the messages in this dataset.
         /// </summary>
         [IgnoreDataMember]
-        public TimeInterval OriginatingTimeInterval =>
+        public TimeInterval MessageOriginatingTimeInterval =>
             TimeInterval.Coverage(
                 this.InternalSessions
-                    .Where(s => s.OriginatingTimeInterval.Left > DateTime.MinValue && s.OriginatingTimeInterval.Right < DateTime.MaxValue)
-                    .Select(s => s.OriginatingTimeInterval));
+                    .Where(s => s.MessageOriginatingTimeInterval.Left > DateTime.MinValue && s.MessageOriginatingTimeInterval.Right < DateTime.MaxValue)
+                    .Select(s => s.MessageOriginatingTimeInterval));
+
+        /// <summary>
+        /// Gets the creation time interval (earliest to latest) of the messages in this dataset.
+        /// </summary>
+        [IgnoreDataMember]
+        public TimeInterval MessageCreationTimeInterval =>
+            TimeInterval.Coverage(
+                this.InternalSessions
+                    .Where(s => s.MessageCreationTimeInterval.Left > DateTime.MinValue && s.MessageCreationTimeInterval.Right < DateTime.MaxValue)
+                    .Select(s => s.MessageCreationTimeInterval));
+
+        /// <summary>
+        /// Gets the stream open-close time interval in this dataset.
+        /// </summary>
+        [IgnoreDataMember]
+        public TimeInterval TimeInterval =>
+            TimeInterval.Coverage(
+                this.InternalSessions
+                    .Where(s => s.TimeInterval.Left > DateTime.MinValue && s.TimeInterval.Right < DateTime.MaxValue)
+                    .Select(s => s.TimeInterval));
 
         /// <summary>
         /// Gets the size of the dataset, in bytes.
@@ -450,10 +470,10 @@ namespace Microsoft.Psi.Data
             var sessionStart = this.Sessions.Select(s =>
                 {
                     var currentDuration = totalDuration;
-                    totalDuration += s.OriginatingTimeInterval.Span.TotalSeconds;
+                    totalDuration += s.TimeInterval.Span.TotalSeconds;
                     return currentDuration;
                 }).ToList();
-            var sessionDuration = this.Sessions.Select(s => s.OriginatingTimeInterval.Span.TotalSeconds).ToList();
+            var sessionDuration = this.Sessions.Select(s => s.TimeInterval.Span.TotalSeconds).ToList();
 
             for (int i = 0; i < this.Sessions.Count; i++)
             {

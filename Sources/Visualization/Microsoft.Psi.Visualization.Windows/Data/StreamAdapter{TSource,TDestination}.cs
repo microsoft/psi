@@ -10,6 +10,25 @@ namespace Microsoft.Psi.Visualization.Data
     /// </summary>
     /// <typeparam name="TSource">The type of the source message.</typeparam>
     /// <typeparam name="TDestination">The type of the destination message.</typeparam>
+    /// <remarks>
+    /// Apart from providing a method that does the data adaptation, the
+    /// <see cref="StreamAdapter{TSource, TDestination}"/> class (as well as derived classes) also
+    /// collaboratively contribute to the lifetime management of the objects passing through.
+    /// Specifically, when implementing a stream adapter, the developer may override
+    /// the <see cref="StreamAdapter{TSource, TDestination}.SourceAllocator"/> and
+    /// <see cref="StreamAdapter{TSource, TDestination}.SourceDeallocator"/> to enable the data reading
+    /// layer to use specific allocators (e.g. shared pools) and deallocation procedures for the objects
+    /// read from disk. In addition, in the
+    /// <see cref="StreamAdapter{TSource, TDestination}.GetAdaptedValue(TSource, Envelope)"/>
+    /// method the framework and stream adapters collaboratively ensure that the input parameter remains
+    /// valid (allocated) throughout the execution of the entire stream adapter chain, all the way to
+    /// the visualizer. This means that the developer may select a subfield of the input and pass it as
+    /// output w/o having to clone. At the same time, the developer should not deallocate the input. If
+    /// however the developer creates new instances of objects in the process of producing an output,
+    /// then the <see cref="StreamAdapter{TSource, TDestination}.Dispose(TDestination)"/> method should
+    /// also be overriden and should implement the on-demand disposal of these output objects (which are
+    /// passed back to this method by the framework.)
+    /// </remarks>
     public abstract class StreamAdapter<TSource, TDestination> : IStreamAdapter
     {
         /// <summary>
