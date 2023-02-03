@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Platforms>x64;AnyCPU</Platforms>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <OutputPath>bin\x64\Debug\netcoreapp3.1</OutputPath>
+    <NoWarn>FS2003</NoWarn>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\netcoreapp3.1</OutputPath>
+    <NoWarn>FS2003</NoWarn>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Sources\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Imaging\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Language\Microsoft.Psi.CognitiveServices.Language.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Integrations\CognitiveServices\Microsoft.Psi.CognitiveServices.Speech\Microsoft.Psi.CognitiveServices.Speech.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Runtime\Microsoft.Psi\Microsoft.Psi.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj"/>
+    <ProjectReference Include="..\..\Sources\Communication\CMU.Smartlab.Communication.csproj"/>
+    <ProjectReference Include="..\..\Sources\Identity\CMU.Smartlab.Identity.csproj"/>
+    <ProjectReference Include="..\..\..\Sources\Integrations\CognitiveServices\Test.Psi.CognitiveServices.Speech\Test.Psi.CognitiveServices.Speech.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0"/>
+    <PackageReference Include="Microsoft.Psi.DeviceManagement" Version="0.15.49.1-beta"/>
+    <PackageReference Include="NetMQ" Version="*"/>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0"/>
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.1"/>
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.1"/>
+    <PackageReference Include="System.ServiceModel.Federation" Version="4.8.1"/>
+    <PackageReference Include="Apache.NMS.ActiveMQ" Version="*"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10"/>
+    <PackageReference Include="Microsoft.Bot.Builder" Version="*"/>
+    <PackageReference Include="System.Runtime" Version="*"/>
+    <PackageReference Include="Microsoft.NETCore.Platforms" Version="*"/>
+    <PackageReference Include="Microsoft.NETCore.Targets" Version="*"/>
+    <PackageReference Include="Microsoft.CSharp" Version="*"/>
+    <PackageReference Include="System.Collections.Immutable" Version="1.7.0"/>
+    <PackageReference Include="System.Numerics.Vectors" Version="*"/>
+    <PackageReference Include="System.Reflection.Emit.ILGeneration" Version="*"/>
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="*"/>
+    <!-- <PackageReference Include="ZeroMQ" Version="*"/> -->
+  </ItemGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.Development.json"/>
+    <Content Include="appsettings.json"/>
+  </ItemGroup>
+</Project>

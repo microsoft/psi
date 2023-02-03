@@ -12,13 +12,15 @@ namespace CMU.Smartlab.Rtsp
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Media;
-    using Microsoft.Psi.Media_Interop;
+    // using Microsoft.Psi.Media_Interop;
+    // using Microsoft.Psi.Media_Interop.Linux;
     using RtspClientSharp;
     using RtspClientSharp.RawFrames;
     using RtspClientSharp.RawFrames.Audio;
     using RtspClientSharp.RawFrames.Video;
 
-    public class RtspCapture : IProducer<Shared<Microsoft.Psi.Imaging.Image>>, ISourceComponent, IDisposable, IMediaCapture
+    // public class RtspCapture : IProducer<Shared<Microsoft.Psi.Imaging.Image>>, ISourceComponent, IDisposable, IMediaCapture
+    public class RtspCapture : IProducer<Shared<Microsoft.Psi.Imaging.Image>>, ISourceComponent, IDisposable
     {
         private readonly Pipeline pipeline;
 
@@ -39,7 +41,9 @@ namespace CMU.Smartlab.Rtsp
         /// <summary>
         /// The video capture device.
         /// </summary>
-        private MediaCaptureDevice camera;
+        // private MediaCaptureDevice camera;
+        // private FFMPEGReaderNative camera;
+        private FFMPEGReader camera;
 
         private IRawFramesSource rawFramesSource;
 

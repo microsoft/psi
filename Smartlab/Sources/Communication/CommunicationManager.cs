@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Apache.NMS;
 using Apache.NMS.ActiveMQ;
+using Microsoft.Psi;
 using Microsoft.Psi.Imaging;
+using Microsoft.Psi.Common;
 
 namespace CMU.Smartlab.Communication
 {

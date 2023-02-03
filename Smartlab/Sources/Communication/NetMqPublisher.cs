@@ -1,54 +1,104 @@
-﻿using NetMQ;
-using NetMQ.Sockets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CMU.Smartlab.Communication
 {
-    public class NetMqPublisher
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Psi;
+    using Microsoft.Psi.Interop.Serialization;
+    using Microsoft.Psi.Interop.Transport;
+    using NetMQ;
+    using NetMQ.Sockets;
+
+    /// <summary>
+    /// NetMQ (ZeroMQ) publisher component.
+    /// </summary>
+    public class NetMQPublisher : IDisposable
     {
-        private object _lockObject = new object();
+        private readonly Pipeline pipeline;
+        private readonly string name;
+        private readonly IFormatSerializer serializer;
+        private readonly Dictionary<string, Type> topics = new ();
 
-        private PublisherSocket _publisherSocket;
+        // private PublisherSocket socket;
+        public PublisherSocket socket;
 
-        public NetMqPublisher()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NetMQPublisher"/> class.
+        /// </summary>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="address">Connection string.</param>
+        /// <param name="serializer">Format serializer with which messages are serialized.</param>
+        /// <param name="name">An optional name for the component.</param>
+        public NetMQPublisher(Pipeline pipeline, string address, IFormatSerializer serializer, string name = nameof(NetMQPublisher))
         {
-            _publisherSocket = new PublisherSocket();
-            _publisherSocket.Options.SendHighWatermark = 1000;
-            _publisherSocket.Bind("tcp://127.0.0.1:8888");
-        }
-
-        public NetMqPublisher(string endPoint)
-        {
-            _publisherSocket = new PublisherSocket();
-            _publisherSocket.Options.SendHighWatermark = 1000;
-            _publisherSocket.Bind(endPoint);
-        }
-
-
-        public void Dispose()
-        {
-            lock (_lockObject)
-            {
-                _publisherSocket.Close();
-                _publisherSocket.Dispose();
-            }
+            this.pipeline = pipeline;
+            this.name = name;
+            this.Address = address;
+            this.serializer = serializer;
+            Console.WriteLine("NetMQPublisher constructor - TCP address = '{0}'", this.Address);
+            this.socket = new PublisherSocket();
+            pipeline.PipelineRun += (s, e) => this.socket.Bind(this.Address);
         }
 
         /// <summary>
-        /// publish the messages
+        /// Gets the connection address string.
         /// </summary>
-        /// <param name="topicName">topic</param>
-        /// <param name="data">content</param>
-        public void Publish(string topicName, string data)
+        public string Address { get; private set; }
+
+        /// <summary>
+        /// Gets the topic names and types being published.
+        /// </summary>
+        public IEnumerable<(string Name, Type Type)> Topics
         {
-            lock (_lockObject)
+            get { return this.topics.Select(x => (x.Key, x.Value)); }
+        }
+
+        /// <summary>
+        /// Add topic receiver.
+        /// </summary>
+        /// <param name="topic">Topic name.</param>
+        /// <typeparam name="T">Message type.</typeparam>
+        /// <returns>Receiver to which to pipe messages.</returns>
+        public Receiver<T> AddTopic<T>(string topic)
+        {
+            this.topics.Add(topic, typeof(T));
+            Console.WriteLine("NetMQPublisher.AddTopic - topic =   '{0}'", topic);
+            return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, topic), topic);
+        }
+
+
+        public Receiver<string> StringIn { get; }
+
+        public Emitter<string> StringOut { get; }
+
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            if (this.socket != null)
             {
-                _publisherSocket.SendMoreFrame(topicName).SendFrame(data);
+                this.socket.Dispose();
+                this.socket = null;
             }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString() => this.name;
+
+        private void Receive<T>(T message, Envelope envelope, string topic)
+        {
+            Console.WriteLine("NetMQPublisher.Receive - message = '{0}'", message);
+            Console.WriteLine("NetMQPublisher.Receive - topic =   '{0}'", topic);
+            var (bytes, index, length) = this.serializer.SerializeMessage(message, envelope.OriginatingTime);
+            if (index != 0)
+            {
+                var slice = new byte[length];
+                Array.Copy(bytes, index, slice, 0, length);
+                bytes = slice;
+            }
+
+            this.socket.SendMoreFrame(topic).SendFrame(bytes, length);
         }
     }
 }

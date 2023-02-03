@@ -1,36 +1,37 @@
-﻿
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
+
 namespace CMU.Smartlab.Communication
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using NetMQ;
-    using NetMQ.Sockets;
     using Microsoft.Psi;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Interop.Serialization;
     using Microsoft.Psi.Interop.Transport;
+    using NetMQ;
+    using NetMQ.Sockets;
+
 
     /// <summary>
     /// NetMQ (ZeroMQ) subscriber component.
     /// </summary>
     /// <typeparam name="T">Message type.</typeparam>
-    public class NetMQSubscriber<T> : IProducer<T>, ISourceComponent, IDisposable
+    public class NetMQResponder<T> : IProducer<T>, ISourceComponent, IDisposable
     {
-        private readonly string topic;
+        private readonly string topic = "fake-topic"; 
         private readonly string address;
         private readonly IFormatDeserializer deserializer;
         private readonly Pipeline pipeline;
         private readonly string name;
+        private string remoteIP = null; 
         private readonly bool useSourceOriginatingTimes;
 
-        private SubscriberSocket socket;
+        private ResponseSocket socket;
         private NetMQPoller poller;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NetMQSubscriber{T}"/> class.
+        /// Initializes a new instance of the <see cref="NetMQResponder{T}"/> class.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="topic">Topic name.</param>
@@ -38,24 +39,16 @@ namespace CMU.Smartlab.Communication
         /// <param name="deserializer">Format deserializer with which messages are deserialized.</param>
         /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
         /// <param name="name">An optional name for the component.</param>
-        public NetMQSubscriber(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = nameof(NetMQSubscriber<T>))
+        public NetMQResponder(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = nameof(NetMQResponder<T>))
         {
             this.pipeline = pipeline;
             this.name = name;
             this.useSourceOriginatingTimes = useSourceOriginatingTimes;
             this.topic = topic;
             this.address = address;
-            Console.WriteLine("NetMQSubscriber constructor - TCP address = '{0}'", this.address);
-            Console.WriteLine("NetMQSubscriber constructor - topic       = '{0}'", this.topic);
             this.deserializer = deserializer;
             this.Out = pipeline.CreateEmitter<T>(this, topic);
-            // this.Out = pipeline.CreateEmitter<string>(this, topic);
         }
-
-        public Receiver<string> StringIn { get; }
-
-        public Emitter<string> StringOut { get; }
-
 
         /// <inheritdoc />
         public Emitter<T> Out { get; }
@@ -69,22 +62,16 @@ namespace CMU.Smartlab.Communication
         /// <inheritdoc/>
         public void Start(Action<DateTime> notifyCompletionTime)
         {
-            Console.WriteLine("NetMQSubscriber Start - enter");
             // notify that this is an infinite source component
             notifyCompletionTime(DateTime.MaxValue);
 
-            this.socket = new SubscriberSocket();
-            Console.WriteLine("NetMQSubscriber.Start - TCP address = '{0}'", this.address);
-            Console.WriteLine("NetMQSubscriber.Start - topic       = '{0}'", this.topic);
-            this.socket.Connect(this.address);
-            this.socket.Subscribe(this.topic);
+            this.socket = new ResponseSocket(address);
+            // this.socket.Connect(this.address);
+            // this.socket.Subscribe(this.topic);
             this.socket.ReceiveReady += this.ReceiveReady;
             this.poller = new NetMQPoller();
             this.poller.Add(this.socket);
             this.poller.RunAsync();
-
-            // this.socket.SubscribeToAnyTopic(); 
-
         }
 
         /// <inheritdoc/>
@@ -107,16 +94,20 @@ namespace CMU.Smartlab.Communication
             }
         }
 
+        public String GetRemoteIP()
+        {
+            return this.remoteIP; 
+        }
+
         private void ReceiveReady(object sender, NetMQSocketEventArgs e)
         {
-            Console.WriteLine("NetMQSubscriber ReceiveReady - enter");
             var frames = new List<byte[]>();
             while (this.socket.TryReceiveMultipartBytes(ref frames, 2))
             {
                 var receivedTopic = System.Text.Encoding.Default.GetString(frames[0]);
                 // if (receivedTopic != this.topic)
                 // {
-                //     throw new Exception($"Unexpected topic name received in NetMQSubscriber. Expected {this.topic} but received {receivedTopic}");
+                //     throw new Exception($"Unexpected topic name received in NetMQResponder. Expected {this.topic} but received {receivedTopic}");
                 // }
 
                 if (frames.Count < 2)
@@ -130,7 +121,12 @@ namespace CMU.Smartlab.Communication
                 }
 
                 var (message, originatingTime) = this.deserializer.DeserializeMessage(frames[1], 0, frames[1].Length);
-                Console.WriteLine("NetMQSubscriber ReceiveReady - received message: '{0}'", message);
+                // Console.WriteLine("ResponseSocket -- sender.ToString(): {0}", sender.ToString());
+                Console.WriteLine("ResponseSocket -- Received: {0}", message);
+                this.remoteIP = message; 
+                Console.WriteLine("ResponseSocket -- Sending:  {0}", this.remoteIP);
+                socket.SendFrame(this.remoteIP);
+                // this.Out.Post(this.remoteIP, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
                 this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
         }
