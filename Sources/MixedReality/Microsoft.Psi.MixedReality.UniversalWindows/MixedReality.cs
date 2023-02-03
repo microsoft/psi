@@ -141,7 +141,7 @@ namespace Microsoft.Psi.MixedReality
                 StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
 
                 System.Diagnostics.Trace.WriteLine($"StereoKit origin: {StereoKitTransforms.StereoKitToWorld.Origin.X},{StereoKitTransforms.StereoKitToWorld.Origin.Y},{StereoKitTransforms.StereoKitToWorld.Origin.Z}");
-                SK.AddStepper(new SpatialTransformsUpdater(worldSpatialAnchor, StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem()));
+                SK.AddStepper(new SpatialTransformsUpdater(worldSpatialAnchor));
 
                 // TODO: It would be nice if we could actually just shift the origin coordinate system in StereoKit
                 // to the pose currently defined in StereoKitTransforms.WorldPose.
@@ -159,12 +159,12 @@ namespace Microsoft.Psi.MixedReality
         private class SpatialTransformsUpdater : IStepper
         {
             private readonly SpatialAnchor worldSpatialAnchor;
-            private readonly SpatialCoordinateSystem stereoKitSpatialCoordinateSystem;
+            private SpatialCoordinateSystem stereoKitSpatialCoordinateSystem;
 
-            public SpatialTransformsUpdater(SpatialAnchor worldSpatialAnchor, SpatialCoordinateSystem stereoKitSpatialCoordinateSystem)
+            public SpatialTransformsUpdater(SpatialAnchor worldSpatialAnchor)
             {
                 this.worldSpatialAnchor = worldSpatialAnchor;
-                this.stereoKitSpatialCoordinateSystem = stereoKitSpatialCoordinateSystem;
+                this.stereoKitSpatialCoordinateSystem = StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
             }
 
             /// <inheritdoc />
@@ -176,21 +176,26 @@ namespace Microsoft.Psi.MixedReality
             /// <inheritdoc />
             public void Step()
             {
-                if (this.stereoKitSpatialCoordinateSystem.TryConvertSpatialCoordinateSystemToPsiCoordinateSystem() is null)
-                {
-                    StereoKitTransforms.StereoKitToWorld = null;
-                    StereoKitTransforms.WorldToStereoKit = null;
-                    StereoKitTransforms.WorldHierarchy = null;
-                }
-                else
-                {
-                    // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
-                    // and for transforming from world coordinates to StereoKit coordinates.
-                    StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(this.worldSpatialAnchor).ToMatrix();
-                    StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.Value.ToCoordinateSystem();
+                this.stereoKitSpatialCoordinateSystem ??= StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
 
-                    // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
-                    StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
+                if (this.stereoKitSpatialCoordinateSystem is not null)
+                {
+                    if (this.stereoKitSpatialCoordinateSystem.TryConvertSpatialCoordinateSystemToPsiCoordinateSystem() is null)
+                    {
+                        StereoKitTransforms.StereoKitToWorld = null;
+                        StereoKitTransforms.WorldToStereoKit = null;
+                        StereoKitTransforms.WorldHierarchy = null;
+                    }
+                    else
+                    {
+                        // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
+                        // and for transforming from world coordinates to StereoKit coordinates.
+                        StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(this.worldSpatialAnchor).ToMatrix();
+                        StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.Value.ToCoordinateSystem();
+
+                        // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
+                        StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
+                    }
                 }
             }
 
