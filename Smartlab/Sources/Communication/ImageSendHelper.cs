@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CMU.Smartlab.Communication
+// namespace Smartlab.Communication
+// namespace Communication
 {
     public class ImageSendHelper
     {
