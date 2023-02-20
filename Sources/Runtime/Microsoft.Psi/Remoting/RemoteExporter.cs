@@ -10,6 +10,7 @@ namespace Microsoft.Psi.Remoting
     using System.IO;
     using System.Net;
     using System.Net.Sockets;
+    using System.Numerics;
     using System.Threading;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Data;
@@ -217,9 +218,9 @@ namespace Microsoft.Psi.Remoting
         {
             try
             {
-                this.dataTransport.StartListening();
                 while (!this.disposed)
                 {
+                    this.dataTransport.StartListening();
                     var client = this.dataTransport.AcceptClient();
                     var guid = Guid.Empty;
                     try
@@ -229,7 +230,7 @@ namespace Microsoft.Psi.Remoting
 
                         if (this.connections.TryGetValue(guid, out Connection connection))
                         {
-                            connection.JoinBackground(client);
+                            connection.JoinBackgroundThread(client);
                         }
                         else
                         {
@@ -265,6 +266,7 @@ namespace Microsoft.Psi.Remoting
             private Stream stream;
             private PsiStoreReader storeReader;
             private TimeInterval interval;
+            private Thread connectionThread;
 
             public Connection(TcpClient client, ITransport dataTransport, string name, string path, Action<Guid> onDisconnect, Exporter exporter, long maxBytesPerSecond, double bytesPerSecondSmoothingWindowSeconds)
             {
@@ -278,6 +280,7 @@ namespace Microsoft.Psi.Remoting
                 this.exporter = exporter;
                 this.maxBytesPerSecond = maxBytesPerSecond;
                 this.bytesPerSecondSmoothingWindowSeconds = bytesPerSecondSmoothingWindowSeconds;
+                this.connectionThread = null;
             }
 
             public Guid Id => this.id;
@@ -330,6 +333,12 @@ namespace Microsoft.Psi.Remoting
                     this.Disconnect();
                     throw;
                 }
+            }
+
+            public void JoinBackgroundThread(ITransportClient client)
+            {
+                this.connectionThread = new Thread(() => this.JoinBackground(client));
+                this.connectionThread.Start();
             }
 
             public void JoinBackground(ITransportClient client)
@@ -393,11 +402,14 @@ namespace Microsoft.Psi.Remoting
                 this.client = null;
                 this.stream.Dispose();
                 this.stream = null;
+                this.connectionThread.Abort();
+                this.connectionThread = null;
             }
 
             private void Disconnect()
             {
                 this.onDisconnect(this.id);
+                this.connectionThread.Abort();
                 this.Dispose();
             }
 
