@@ -51,21 +51,13 @@ namespace SigdialDemo
         private const string TopicToVHText = "PSI_VHT_Text";
         private const string TopicFromPython = "Python_PSI_Location";
         private const string TopicFromBazaar = "Bazaar_PSI_Text";
-        private const string TopicToRemote = "PSI_Remote_Text";
-        // private const string TopicFromRemote = "Remote_PSI_Text";
-        private const string TopicFromRemote = "Remote_PSI_Text";
-        // private const string TopicFromPython_QueryKinect = "Python_PSI_QueryKinect";
-        // private const string TopicToPython_AnswerKinect = "PSI_Python_AnswerKinect";
+        private const string TopicToAgent = "PSI_Agent_Text";
+        private const string TopicFromSensor = "Sensor_PSI_Text";
 
         private const int SendingImageWidth = 360;
         private const int MaxSendingFrameRate = 15;
         private const string TcpIPResponder = "@tcp://*:40001";
         private const string TcpIPPublisher = "tcp://*:40002";
-        // private const string TcpIPPublisher = "tcp://0.0.0.0:40002";
-        // private const string TcpPortSubscriber = "40003";
-
-        // private const int KinectImageWidth = 1920;
-        // private const int KinectImageHeight = 1080;
 
         private const double SocialDistance = 183;
         private const double DistanceWarningCooldown = 30.0;
@@ -75,9 +67,7 @@ namespace SigdialDemo
         private static string AzureSubscriptionKey = "abee363f8d89444998c5f35b6365ca38";
         private static string AzureRegion = "eastus";
 
-        private static CommunicationManager manager;
-        // private static NetMqPublisher netmqpublisher;
-        // private static NetMqSubscriber netmqsubscriber;
+        // private static CommunicationManager manager;
         public static readonly object SendToBazaarLock = new object();
         public static readonly object SendToPythonLock = new object();
         public static readonly object LocationLock = new object();
@@ -92,15 +82,8 @@ namespace SigdialDemo
         public static List<IdentityInfo> IdInfoList;
         public static Dictionary<string, IdentityInfo> IdHead;
         public static Dictionary<string, IdentityInfo> IdTail;
-        // public static SortedList<DateTime, CameraSpacePoint[]> KinectMappingBuffer;
         public static List<String> AudioSourceList;
-
-        // public static CameraInfo KinectInfo;
         public static CameraInfo VhtInfo;
-        // public static void Main(string[] args)
-        // {
-        //     CreateHostBuilder(args).Build().Run();
-        // }
 
         public static String remoteIP; 
 
@@ -182,23 +165,26 @@ namespace SigdialDemo
 
             using (var p = Pipeline.Create())
             {
-                var nmqSub = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance);
-                // var nmqSub = new NetMQSubscriber<string>(p, "", localIP, JsonFormat.Instance);
+                // Subscribe to messages from remote sensor using NetMQ (ZeroMQ)
+                var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance);
 
-                var amqRemoteToBazaar = new AMQPublisher<string>(p, TopicFromRemote, TopicToBazaar, "Remote to Bazaar"); 
-                var amqBazaarToRemote = new AMQSubscriber<string>(p, TopicFromBazaar, TopicToRemote, "Bazaar to Remote"); 
+                // Create a publisher for messages from the sensor to Bazaar
+                var amqPubSensorToBazaar = new AMQPublisher<string>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
 
-                var nmqPub = new NetMQPublisher<string>(p, TopicToRemote, TcpIPPublisher, JsonFormat.Instance);
-                // nmqPub.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPub.Do: {0}", x));
+                // Subscribe to messages from Bazaar for the agent
+                var amqSubBazaarToAgent = new AMQSubscriber<string>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
 
-                // nmqSub.PipeTo(nmqPub); 
-                nmqSub.PipeTo(amqRemoteToBazaar.StringIn); 
-                amqBazaarToRemote.PipeTo(nmqPub); 
+                // Create a publisher for messages to the agent using NetMQ (ZeroMQ)
+                var nmqPubToAgent = new NetMQPublisher<string>(p, TopicToAgent, TcpIPPublisher, JsonFormat.Instance);
+                // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
-                // manager = new CommunicationManager(); 
-                // manager.subscribe(TopicFromBazaar, ProcessText);
+                // Route messages from the sensor to Bazaar
+                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.StringIn); 
 
-                // amqBazaarToPSI.PipeTo(________________); 
+                // Route messages from Bazaar to the agent
+                amqSubBazaarToAgent.PipeTo(nmqPubToAgent); 
+
+                // manager = new CommunicationManager()
 
                 p.Run();
 
@@ -209,9 +195,9 @@ namespace SigdialDemo
         {
             if (s != null)
             {
-                Console.WriteLine($"Program.cs, ProcessText - send to topic: {TopicToRemote}");
+                Console.WriteLine($"Program.cs, ProcessText - send to topic: {TopicToAgent}");
                 Console.WriteLine($"Program.cs, ProcessText - send message:  {s}");
-                manager.SendText(TopicToRemote, s);
+                // manager.SendText(TopicToAgent, s);
             }
         }
 
