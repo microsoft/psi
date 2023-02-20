@@ -176,13 +176,14 @@ namespace SigdialDemo
                 var nmqPubToAgent = new NetMQPublisher<string>(p, TopicToAgent, TcpIPPublisher, JsonFormat.Instance);
                 // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
+                // Route messages from the sensor directly to the agent
+                nmqSubFromSensor.PipeTo(nmqPubToAgent);
+
                 // Route messages from the sensor to Bazaar
                 nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.StringIn); 
 
                 // Route messages from Bazaar to the agent
                 amqSubBazaarToAgent.PipeTo(nmqPubToAgent); 
-
-                // manager = new CommunicationManager()
 
                 p.Run();
 
