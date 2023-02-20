@@ -66,8 +66,6 @@ namespace SigdialDemo
 
         private static string AzureSubscriptionKey = "abee363f8d89444998c5f35b6365ca38";
         private static string AzureRegion = "eastus";
-
-        // private static CommunicationManager manager;
         public static readonly object SendToBazaarLock = new object();
         public static readonly object SendToPythonLock = new object();
         public static readonly object LocationLock = new object();
@@ -188,16 +186,6 @@ namespace SigdialDemo
 
                 p.Run();
 
-            }
-        }
-
-        private static void ProcessText(String s)
-        {
-            if (s != null)
-            {
-                Console.WriteLine($"Program.cs, ProcessText - send to topic: {TopicToAgent}");
-                Console.WriteLine($"Program.cs, ProcessText - send message:  {s}");
-                // manager.SendText(TopicToAgent, s);
             }
         }
 
