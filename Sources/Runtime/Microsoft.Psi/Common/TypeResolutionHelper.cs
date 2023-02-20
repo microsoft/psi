@@ -21,8 +21,7 @@ namespace Microsoft.Psi
         /// <returns>The requested type, or null if the type was not found.</returns>
         public static Type GetVerifiedType(string typeName)
         {
-            // var type = Type.GetType(typeName, AssemblyResolver, null);
-            var type = Type.GetType(typeName);
+            var type = Type.GetType(typeName, AssemblyResolver, null);
             if (type == null)
             {
                 // Unable to resolve type. Attempt to resolve base class library types
@@ -31,8 +30,7 @@ namespace Microsoft.Psi
                 // mscorlib/System.Private.CoreLib or the currently executing assembly.
                 typeName = RemoveCoreAssemblyName(typeName);
 
-                // type = Type.GetType(typeName, AssemblyResolver, null);
-                type = Type.GetType(typeName);
+                type = Type.GetType(typeName, AssemblyResolver, null);
             }
 
             return type;
