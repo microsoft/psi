@@ -266,7 +266,7 @@ namespace SigdialDemo
                 // nmqSubFromSensor.PipeTo(mergeToAgent);
                 // amqSubBazaarToAgent.PipeTo(mergeToAgent); 
 
-                mergeToAgent.PipeTo(nmqPubToAgent); 
+                mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
 
                 // Emitter<Message<string>> mergeEmitter = mergeToAgent.Out; 
                 // mergeEmitter.PipeTo(nmqPubToAgent); 
