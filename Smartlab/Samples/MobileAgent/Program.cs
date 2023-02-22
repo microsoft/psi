@@ -182,28 +182,12 @@ namespace SigdialDemo
                 // Route messages from the sensor to Bazaar
                 nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.StringIn); 
 
-                // ===============================================================================
-                // Two emitters to a single receive not allowed
-                // // Route messages from the sensor directly to the agent
-                // nmqSubFromSensor.PipeTo(nmqPubToAgent);
-                // // Route messages from Bazaar to the agent
-                // amqSubBazaarToAgent.PipeTo(nmqPubToAgent); 
-
-                // Have to merge two emitters before connecting to a single receiver
-                // ... see https://github.com/Microsoft/psi/issues/19
-                // ... tried Merger code from https://github.com/Microsoft/psi/issues/19 -- example doesn't work
-                // SEE ******* https://github.com/microsoft/psi/wiki/Stream-Fusion-and-Merging *******
-
+                // Combine messages (1) direct from sensor, and (2) from Bazaar, and send to agent
                 SmartlabMerge<string> mergeToAgent = new SmartlabMerge<string>(p,"Merge to Agent"); 
                 var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
                 var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
-
                 nmqSubFromSensor.PipeTo(receiverSensor); 
                 amqSubBazaarToAgent.PipeTo(receiverBazaar);
-
-                // nmqSubFromSensor.PipeTo(mergeToAgent);
-                // amqSubBazaarToAgent.PipeTo(mergeToAgent); 
-
                 mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
 
                 p.Run();
