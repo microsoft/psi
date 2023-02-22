@@ -195,8 +195,11 @@ namespace SigdialDemo
                 // SEE ******* https://github.com/microsoft/psi/wiki/Stream-Fusion-and-Merging *******
 
                 SmartlabMerge<string> mergeToAgent = new SmartlabMerge<string>(p,"Merge to Agent"); 
-                mergeToAgent.AddInput("Sensor to PSI"); 
-                mergeToAgent.AddInput("Bazaar to Agent"); 
+                var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
+                var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
+
+                nmqSubFromSensor.PipeTo(receiverSensor); 
+                amqSubBazaarToAgent.PipeTo(receiverBazaar);
 
                 // nmqSubFromSensor.PipeTo(mergeToAgent);
                 // amqSubBazaarToAgent.PipeTo(mergeToAgent); 
