@@ -183,83 +183,18 @@ namespace SigdialDemo
                 nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.StringIn); 
 
                 // ===============================================================================
-                // Have to merge two emitters before connecting to a single receiver
-                // ... see https://github.com/Microsoft/psi/issues/19
-
                 // Two emitters to a single receive not allowed
                 // // Route messages from the sensor directly to the agent
                 // nmqSubFromSensor.PipeTo(nmqPubToAgent);
                 // // Route messages from Bazaar to the agent
                 // amqSubBazaarToAgent.PipeTo(nmqPubToAgent); 
-                
 
-                // Tried the syntactic sugar method at https://github.com/Microsoft/psi/issues/19
-                // nmqSubFromSensor.Merge(amqSubBazaarToAgent).PipeTo(nmqPubToAgent);
+                // Have to merge two emitters before connecting to a single receiver
+                // ... see https://github.com/Microsoft/psi/issues/19
+                // ... tried Merger code from https://github.com/Microsoft/psi/issues/19 -- example doesn't work
+                // SEE ******* https://github.com/microsoft/psi/wiki/Stream-Fusion-and-Merging *******
 
-
-                // Merge code from https://github.com/Microsoft/psi/issues/19
-                // Merge two emitters to a single receiver
-                // create Merger component
-
-                // ======= API =======
-                // Merger(Pipeline, Action<TKey, Message<TIn>>, String)
-                // public Merger(Pipeline pipeline, Action<TKey, Message<TIn>> action, string name = "Merger")
-
-
-                // Example (doesn't work) from https://github.com/Microsoft/psi/issues/19
-                // var merger = new Merger<string, int>(pipeline);
-                // merger.Select(m => m.Item2.Data).PipeTo(c);
-
-                // var merger = new Merger<string, int>(p);
-                // var merger = new Merger(p,Action<int,Message<string>>,"Merge to Agent");
-                // var merger = new Merger(p,Select(m => m.Item2.Data),"Merge to Agent");
-                // var merger = new Merger(p,Action<int,Message<string>> (m => m.Item2.Data),"Merge to Agent");
-                // var merger = new Merger(p,Action<int,Message<string>> mySelect,"Merge to Agent");
-                // var merger = new Merger(p, Action<int, Message<string>>);
-                // var merger = new Merger(p, Select);
-
-                // // create 2 receivers to merge 2 streams
-
-                // Merger<Message<string>, int> merger = new Merger<Message<string>, int>(p);
-                // var receiver0 = merger.Add(0);
-                // var receiver1 = merger.Add(1);
-
-                // pipe streams to merge to the Merger
-                // nmqSubFromSensor.PipeTo(receiver0);
-                // amqSubBazaarToAgent.PipeTo(receiver1);
-
-                // // pipe merged output to ConsoleOutput
-                // merger.Select(m => m.Item2.Data).PipeTo(nmqPubToAgent);
-                // merger.PipeTo(nmqPubToAgent);
-
-
-                // ===============================================================================
-
-
-                // Merger<Message<string>, int> merger = new Merger<Message<string>, int>(p);
-
-                // Merger<Message<string>, int> merger = new Merger<Message<string>, int>(p, (_, m) =>
-                // {
-                //     // Select(m => m.Item2.Data); 
-                //     // return m.Item2.Data; 
-                //     m.Item2.Data; 
-                // });
-                // var receiver0 = merger.Add(0);
-                // var receiver1 = merger.Add(1);
-
-                // nmqSubFromSensor.PipeTo(receiver0);
-                // amqSubBazaarToAgent.PipeTo(receiver1);
-
-                // Try Merge class at xhttps://microsoft.github.io/psi/api/Microsoft.Psi.Components.Merge-1.html
-                // Merge<String> mergeToAgent = new Merge<String>(p); 
-                // mergeToAgent.addInput("Sensor to PSI"); 
-                // mergeToAgent.addInput("Bazaar to Agent"); 
-                // mergeToAgent.PipeTo(nmqPubToAgent); 
-
-                // pipe merged output to ConsoleOutput
-                // merger.Select(m => m.Item2.Data).PipeTo(nmqPubToAgent);
-
-                Merge<string> mergeToAgent = new Merge<string>(p,"Merge to Agent"); 
+                SmartlabMerge<string> mergeToAgent = new SmartlabMerge<string>(p,"Merge to Agent"); 
                 mergeToAgent.AddInput("Sensor to PSI"); 
                 mergeToAgent.AddInput("Bazaar to Agent"); 
 
@@ -267,11 +202,6 @@ namespace SigdialDemo
                 // amqSubBazaarToAgent.PipeTo(mergeToAgent); 
 
                 mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
-
-                // Emitter<Message<string>> mergeEmitter = mergeToAgent.Out; 
-                // mergeEmitter.PipeTo(nmqPubToAgent); 
-    
-                // SEE ******* https://github.com/microsoft/psi/wiki/Stream-Fusion-and-Merging *******
 
                 p.Run();
 
