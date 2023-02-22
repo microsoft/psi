@@ -203,18 +203,23 @@ namespace CMU.Smartlab.Communication
                 consumer = this.session.CreateDurableConsumer(topic, "consumer for " + topicName, null, false);
                 this.consumerList.Add(topicName, consumer);
             }
-
             return consumer;
         }
 
-        // private static void ProcessText(String s)
-        // {
-        //     if (s != null)
-        //     {
-        //         Console.WriteLine($">>> Send MULTIMODAL message to VHT: multimodal:false;%;identity:someone;%;text:{s}");
-        //         ReceiveString(s, envelope);
-        //     }
-        // }
+        private static string processString(String s)
+        {
+            string delimiter = ":"; 
+            Console.WriteLine($"AMQPublisher, Process String - input: {s}");
+            if (s != null)
+            {
+                string [] components = s.Split(delimiter); 
+                if (components[0] != "location") {
+                    return components[1];
+                }
+            }
+            return null; 
+        }
+
         /// <inheritdoc />
         // public void Dispose() {}
         // {
@@ -231,10 +236,14 @@ namespace CMU.Smartlab.Communication
         // The receive method for the StringIn receiver. This executes every time a message arrives on StringIn.
         private void ReceiveString(string input, Envelope envelope)
         {
-            Console.WriteLine("AMQPublisher.cs, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + input);
-            IMessageProducer producer = this.GetProducer(outTopic);
-            ITextMessage message = producer.CreateTextMessage(input);
-            producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
+            string stringIn = processString(input); 
+            if (stringIn != null)
+            {
+                Console.WriteLine("AMQPublisher.cs, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + stringIn);
+                IMessageProducer producer = this.GetProducer(outTopic);
+                ITextMessage message = producer.CreateTextMessage(stringIn);
+                producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
+            }
         }
     }
 }

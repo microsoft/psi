@@ -38,6 +38,8 @@ namespace CMU.Smartlab.Communication
         /// <param name="deserializer">Format deserializer with which messages are deserialized.</param>
         /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
         /// <param name="name">An optional name for the component.</param>
+        // public NetMQSubscriber(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = nameof(NetMQSubscriber<T>))
+
         public NetMQSubscriber(Pipeline pipeline, string topic, string address, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true, string name = nameof(NetMQSubscriber<T>))
         {
             this.pipeline = pipeline;
