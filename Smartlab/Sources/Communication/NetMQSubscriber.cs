@@ -135,7 +135,8 @@ namespace CMU.Smartlab.Communication
 
                 // Console.WriteLine("NetMQSubscriber ReceiveReady - received message: '{0}'", message);
 
-                // Temp get format first item in deserialized python dict as string
+                // =====================================================================
+                // Temp print first key-value pair in deserialized python dict as string
                 int element=0;
                 string firstKey = "null";
                 string firstValue = "null"; 
@@ -149,6 +150,7 @@ namespace CMU.Smartlab.Communication
                 }
                 Console.WriteLine("Message - first key:   '{0}'", firstKey); 
                 Console.WriteLine("Message - first value: '{0}'", firstValue); 
+                // =====================================================================
 
                 // this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
