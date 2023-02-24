@@ -132,8 +132,25 @@ namespace CMU.Smartlab.Communication
                 }
 
                 var (message, originatingTime) = this.deserializer.DeserializeMessage(frames[1], 0, frames[1].Length);
-                Console.WriteLine("NetMQSubscriber ReceiveReady - received message: '{0}'", message);
-                this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
+
+                // Console.WriteLine("NetMQSubscriber ReceiveReady - received message: '{0}'", message);
+
+                // Temp get format first item in deserialized python dict as string
+                int element=0;
+                string firstKey = "null";
+                string firstValue = "null"; 
+
+                foreach (KeyValuePair<string,object> kvp in message) {
+                    if (element == 0) {
+                        firstKey = kvp.Key;
+                        firstValue = (string)kvp.Value;
+                    }
+                    element += 1; 
+                }
+                Console.WriteLine("Message - first key:   '{0}'", firstKey); 
+                Console.WriteLine("Message - first value: '{0}'", firstValue); 
+
+                // this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
         }
     }
