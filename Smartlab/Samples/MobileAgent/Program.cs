@@ -55,11 +55,14 @@ namespace SigdialDemo
         private const string TopicFromBazaar = "Bazaar_PSI_Text";
         private const string TopicToAgent = "PSI_Agent_Text";
         private const string TopicFromSensor = "Sensor_PSI_Text";
+        private const string TopicFaceOrientation = "face-orientation";
 
         private const int SendingImageWidth = 360;
         private const int MaxSendingFrameRate = 15;
         private const string TcpIPResponder = "@tcp://*:40001";
-        private const string TcpIPPublisher = "tcp://*:40002";
+        // private const string TcpIPPublisher = "tcp://*:40002";
+        private const string TcpIPPublisher = "tcp://*:30002";
+        
 
         private const double SocialDistance = 183;
         private const double DistanceWarningCooldown = 30.0;
@@ -177,7 +180,7 @@ namespace SigdialDemo
                 var amqSubBazaarToAgent = new AMQSubscriber<string>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
 
                 // Create a publisher for messages to the agent using NetMQ (ZeroMQ)
-                var nmqPubToAgent = new NetMQPublisher<string>(p, TopicToAgent, TcpIPPublisher, JsonFormat.Instance);
+                var nmqPubToAgent = new NetMQPublisher<string>(p, TopicFaceOrientation, TcpIPPublisher, MessagePackFormat.Instance);
                 // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
                 // Route messages from the sensor to Bazaar

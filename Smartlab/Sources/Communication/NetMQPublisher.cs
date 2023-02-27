@@ -90,6 +90,7 @@ namespace CMU.Smartlab.Communication
         {
             Console.WriteLine("NetMQPublisher.Receive - message = '{0}'", message);
             Console.WriteLine("NetMQPublisher.Receive - topic =   '{0}'", topic);
+            
             var (bytes, index, length) = this.serializer.SerializeMessage(message, envelope.OriginatingTime);
             if (index != 0)
             {
