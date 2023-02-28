@@ -270,7 +270,7 @@ namespace CMU.Smartlab.Communication
             string messageToBazaar = processIDictionary(messageIn); 
             if (messageToBazaar != null)
             {
-                Console.WriteLine("AMQPublisher.cs, ReceiveIDictionary: sending -- outTopic: " + outTopic);
+                Console.WriteLine("AMQPublisher.cs, ReceiveIDictionary: sending -- outTopic: " + outTopic + "  --  message: " + messageToBazaar);
                 IMessageProducer producer = this.GetProducer(outTopic);
                 ITextMessage message = producer.CreateTextMessage(messageToBazaar);
                 producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
