@@ -58,6 +58,8 @@ namespace CMU.Smartlab.Communication
 
         public Emitter<string> StringOut { get; }
 
+        public Emitter<IDictionary<string,object>> IDictionaryOut { get; }
+
 
         /// <inheritdoc />
         public Emitter<T> Out { get; }
@@ -138,10 +140,10 @@ namespace CMU.Smartlab.Communication
                 // =====================================================================
                 // Temp print first key-value pair in deserialized python dict as string
 
-                IDictionary<string,object> messageDict = new Dictionary<string,object>(); 
+                IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
                 foreach (KeyValuePair<string,object> kvp in message) {
-                    messageDict.Add(kvp.Key,kvp.Value); 
-                    Console.WriteLine("Message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
+                    messageDictionary.Add(kvp.Key,kvp.Value); 
+                    Console.WriteLine("NetMQSubscriber ReceiveReady: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
                 }
 
                 // int element=0;
@@ -159,8 +161,9 @@ namespace CMU.Smartlab.Communication
                 // Console.WriteLine("Message - first value: '{0}'", firstValue); 
                 // =====================================================================
 
-                // this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
+                this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
         }
+
     }
 }

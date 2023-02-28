@@ -171,10 +171,10 @@ namespace SigdialDemo
                 // Subscribe to messages from remote sensor using NetMQ (ZeroMQ)
                 // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, MessagePackFormat.Instance, useSourceOriginatingTimes = true, name="Sensor to PSI");
                 // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance, true, "Sensor to PSI");
-                var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, MessagePackFormat.Instance, true, "Sensor to PSI");
+                var nmqSubFromSensor = new NetMQSubscriber<IDictionary<string,object>>(p, "", remoteIP, MessagePackFormat.Instance, true, "Sensor to PSI");
 
                 // Create a publisher for messages from the sensor to Bazaar
-                var amqPubSensorToBazaar = new AMQPublisher<string>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
+                var amqPubSensorToBazaar = new AMQPublisher<IDictionary<string,object>>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
 
                 // Subscribe to messages from Bazaar for the agent
                 var amqSubBazaarToAgent = new AMQSubscriber<string>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
@@ -184,13 +184,13 @@ namespace SigdialDemo
                 // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
                 // Route messages from the sensor to Bazaar
-                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.StringIn); 
+                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn); 
 
                 // Combine messages (1) direct from sensor, and (2) from Bazaar, and send to agent
                 SmartlabMerge<string> mergeToAgent = new SmartlabMerge<string>(p,"Merge to Agent"); 
                 var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
                 var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
-                nmqSubFromSensor.PipeTo(receiverSensor); 
+                // nmqSubFromSensor.PipeTo(receiverSensor); 
                 amqSubBazaarToAgent.PipeTo(receiverBazaar);
                 mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
 
