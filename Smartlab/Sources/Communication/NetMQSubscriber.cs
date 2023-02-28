@@ -137,19 +137,26 @@ namespace CMU.Smartlab.Communication
 
                 // =====================================================================
                 // Temp print first key-value pair in deserialized python dict as string
-                int element=0;
-                string firstKey = "null";
-                string firstValue = "null"; 
 
+                IDictionary<string,object> messageDict = new Dictionary<string,object>(); 
                 foreach (KeyValuePair<string,object> kvp in message) {
-                    if (element == 0) {
-                        firstKey = kvp.Key;
-                        firstValue = (string)kvp.Value;
-                    }
-                    element += 1; 
+                    messageDict.Add(kvp.Key,kvp.Value); 
+                    Console.WriteLine("Message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
                 }
-                Console.WriteLine("Message - first key:   '{0}'", firstKey); 
-                Console.WriteLine("Message - first value: '{0}'", firstValue); 
+
+                // int element=0;
+                // string firstKey = "null";
+                // string firstValue = "null"; 
+
+                // foreach (KeyValuePair<string,object> kvp in message) {
+                //     if (element == 0) {
+                //         firstKey = kvp.Key;
+                //         firstValue = (string)kvp.Value;
+                //     }
+                //     element += 1; 
+                // }
+                // Console.WriteLine("Message - first key:   '{0}'", firstKey); 
+                // Console.WriteLine("Message - first value: '{0}'", firstValue); 
                 // =====================================================================
 
                 // this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
