@@ -187,12 +187,13 @@ namespace SigdialDemo
                 nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn); 
 
                 // Combine messages (1) direct from sensor, and (2) from Bazaar, and send to agent
-                SmartlabMerge<string> mergeToAgent = new SmartlabMerge<string>(p,"Merge to Agent"); 
+                SmartlabMerge<IDictionary<string,object>> mergeToAgent = new SmartlabMerge<IDictionary<string,object>>(p,"Merge to Agent"); 
                 var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
                 var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
-                // nmqSubFromSensor.PipeTo(receiverSensor); 
-                amqSubBazaarToAgent.PipeTo(receiverBazaar);
-                mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
+                nmqSubFromSensor.PipeTo(receiverSensor); 
+                // amqSubBazaarToAgent.PipeTo(receiverBazaar);
+                // mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
+                // mergeToAgent.PipeTo(nmqPubToAgent); 
 
                 p.Run();
 
