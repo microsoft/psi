@@ -109,7 +109,7 @@ namespace CMU.Smartlab.Communication
             {
                 Console.WriteLine(ex.ToString());
             }
-            subscribe(inTopic,outputString);
+            subscribe(inTopic,outputMessage);
         }
 
         private IMessageProducer GetProducer(string topicName)
@@ -223,9 +223,9 @@ namespace CMU.Smartlab.Communication
         /// <inheritdoc/>
         public override string ToString() => this.name;
 
-        private void outputString (string outString)
+        private void outputMessage (string outString)
         {
-            Console.WriteLine("AMQSubscriber.cs, outputString: outString: " + outString);
+            Console.WriteLine("AMQSubscriber.cs, outputMessage: outString: " + outString);
             T outType = GetValue<T>(outString); 
             outputType(outType);
             // this.Out.Post(outString, this.pipeline.GetCurrentTime());
@@ -238,8 +238,11 @@ namespace CMU.Smartlab.Communication
 
         private void outputType (T outString)
         {
-            Console.WriteLine("AMQSubscriber.cs, outputTuype: sending -- outTopic: " + outTopic + "  content: " + outString);
-            this.Out.Post(outString, this.pipeline.GetCurrentTime());
+            Console.WriteLine("AMQSubscriber.cs, outputType: sending -- outTopic: " + outTopic + "  content: " + outString);
+            IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            messageDictionary.Add("response",outString); 
+            T messageOut = (T)messageDictionary; 
+            this.Out.Post(messageOut, this.pipeline.GetCurrentTime());
         }
 
         // The receive method for the StringIn receiver. This executes every time a message arrives on StringIn.

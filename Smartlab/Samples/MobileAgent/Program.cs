@@ -177,7 +177,7 @@ namespace SigdialDemo
                 var amqPubSensorToBazaar = new AMQPublisher<IDictionary<string,object>>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
 
                 // Subscribe to messages from Bazaar for the agent
-                var amqSubBazaarToAgent = new AMQSubscriber<string>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
+                var amqSubBazaarToAgent = new AMQSubscriber<IDictionary<string,object>>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
 
                 // Create a publisher for messages to the agent using NetMQ (ZeroMQ)
                 var nmqPubToAgent = new NetMQPublisher<string>(p, TopicFaceOrientation, TcpIPPublisher, MessagePackFormat.Instance);
