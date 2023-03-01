@@ -66,16 +66,13 @@ namespace CMU.Smartlab.Communication
         private static Boolean processIDictionary(object message)
         {
 
-            Console.WriteLine("SmartlabMerge processIDictionary -  enter");  
+            // Console.WriteLine("SmartlabMerge processIDictionary -  enter");  
             IDictionary<string,object> dictionaryIn = (IDictionary<string,object>)message; 
             string messageToBazaar = null;  
             IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
             foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
                 messageDictionary.Add(kvp.Key,kvp.Value); 
-                Console.WriteLine("SmartlabMerge processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
-                // if (kvp.Key == "speech") {
-                //     messageToBazaar = (string)kvp.Value; 
-                // }
+                Console.WriteLine("SmartlabMerge processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value); 
             }
             return true;
         }
@@ -85,10 +82,9 @@ namespace CMU.Smartlab.Communication
 
         private void Receive(T message, Envelope e)
         {
-            Console.WriteLine("SmartlabMerge, Receive T - enter");
+            // Console.WriteLine("SmartlabMerge, Receive T - enter");
             Boolean uselessValue = processIDictionary(message); 
-            // this.Out.Post(Message.Create(message, e), this.pipeline.GetCurrentTime());
-            Console.WriteLine("SmartlabMerge, Receive T - posting message");
+            // Console.WriteLine("SmartlabMerge, Receive T - posting message");
             this.Out.Post(message, this.useSourceOriginatingTimes ? e.OriginatingTime : this.pipeline.GetCurrentTime());
         }
     }
