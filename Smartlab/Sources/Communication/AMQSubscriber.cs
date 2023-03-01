@@ -64,6 +64,10 @@ namespace CMU.Smartlab.Communication
 
         // Emitter that encapsulates the output stream
         // public Emitter<string> Out { get; private set; }
+
+        // public Emitter<IDictionary<string,object>> IDictionaryOut { get; private set; }
+        // public Emitter<IDictionary<string,object>> Out { get; }
+
         public Emitter<T> Out { get; }
 
         /// <inheritdoc />
@@ -133,14 +137,14 @@ namespace CMU.Smartlab.Communication
 
         public void subscribe(string topic, Action<ITextMessage> listener)
         {
-            Console.WriteLine("AMQSubscriber.cs: subscribe ITextMessage -- topic: " + topic);
+            Console.WriteLine("AMQSubscriber: subscribe ITextMessage -- topic: " + topic);
             IMessageConsumer consumer = this.GetConsumer(topic);
             consumer.Listener += new MessageListener((message) =>
             {
                 if (message is ITextMessage)
                 {
                     ITextMessage textMessage = (ITextMessage)message;
-                    Console.WriteLine("AMQSubscriber.cs: subscribe ITextMessage -- topic: " + topic + "  textMessage: " + textMessage);
+                    Console.WriteLine("AMQSubscriber: subscribe ITextMessage -- topic: " + topic + "  textMessage: " + textMessage);
                     listener.Invoke(textMessage);
                 }
             });
@@ -161,14 +165,14 @@ namespace CMU.Smartlab.Communication
 
         public void subscribe(string topic, Action<string> listener)
         {
-            // Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic);
+            // Console.WriteLine("AMQSubscriber: subscribe string -- topic: " + topic);
             IMessageConsumer consumer = this.GetConsumer(topic);
             consumer.Listener += new MessageListener((message) =>
             {
                 if (message is ITextMessage)
                 {
                     string text = ((ITextMessage)message).Text;
-                    // Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic + "  textMessage: " + text);
+                    // Console.WriteLine("AMQSubscriber: subscribe string -- topic: " + topic + "  textMessage: " + text);
                     listener.Invoke(text);
                 }
             });
@@ -223,35 +227,97 @@ namespace CMU.Smartlab.Communication
         /// <inheritdoc/>
         public override string ToString() => this.name;
 
-        private void outputMessage (string outString)
+        private void outputMessageXXX (string outString)
         {
-            Console.WriteLine("AMQSubscriber.cs, outputMessage: outString: " + outString);
-            T outType = GetValue<T>(outString); 
-            outputType(outType);
+            Console.WriteLine("AMQSubscriber, outputMessage: outString: " + outString);
+            T outType = GetValueXXX<T>(outString); 
+            outputTypeXXX(outType);
             // this.Out.Post(outString, this.pipeline.GetCurrentTime());
+
+            // IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            // var messageDictionary = new Dictionary<string,object>(); 
+            // messageDictionary.Add("response",outString); 
+            // // T messageOut = (T)messageDictionary; 
+            // this.Out.Post(messageDictionary, this.pipeline.GetCurrentTime());
         }
 
-        public static T GetValue<T>(String value)
-            {
-            return (T)Convert.ChangeType(value, typeof(T));
-            }
-
-        private void outputType (T outString)
+        public static T GetValueXXX<T>(String value)
         {
-            // Console.WriteLine("AMQSubscriber.cs, outputType: sending -- outTopic: " + outTopic + "  content: " + outString);
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        private void outputTypeXXX (T outString)
+        {
+            Console.WriteLine("AMQSubscriber, outputType -- outTopic: " + outTopic + "  content: " + outString);
             IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
             messageDictionary.Add("response",outString); 
             T messageOut = (T)messageDictionary; 
+            Console.WriteLine("AMQSubscriber, outputType: posting T messageOut");
             this.Out.Post(messageOut, this.pipeline.GetCurrentTime());
+        }
+
+
+
+        private void outputMessage (string outString)
+        {
+            Console.WriteLine("AMQSubscriber, outputMessage: outString: " + outString);
+            // T outType = GetValue<T>(outString); 
+            // outputType(outType);
+            // this.Out.Post(outString, this.pipeline.GetCurrentTime());
+
+            IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            // var messageDictionary = new Dictionary<string,object>(); 
+            messageDictionary.Add("response",outString); 
+
+            T dictionaryOut = (T)messageDictionary; 
+            Console.WriteLine("AMQSubscriber, outputMessage: posting dictionaryOut");
+            this.Out.Post(dictionaryOut, this.pipeline.GetCurrentTime());
+
+            // T outType = GetValue<T>(messageDictionary); 
+            // Console.WriteLine("AMQSubscriber, outputMessage: call outputType");
+            // outputType(outType); 
+            // // T messageOut = (T)messageDictionary; 
+            // this.Out.Post(messageDictionary, this.pipeline.GetCurrentTime());
+        }
+
+        public static T GetValue<T>(String value)
+        {   
+            Console.WriteLine("AMQSubscriber, T GetValue String - enter");
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        public static T GetValue<T>(IDictionary<string,object> value)
+        {
+            Console.WriteLine("AMQSubscriber, T GetValue IDictionary - enter");
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        private void outputType (T dictionaryOut)
+        {
+            Console.WriteLine("AMQSubscriber, outputType -- enter");
+            // IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            // messageDictionary.Add("response",outString); 
+            // T messageOut = (T)messageDictionary; 
+            Console.WriteLine("AMQSubscriber, outputType: posting dictionaryOut");
+            this.Out.Post(dictionaryOut, this.pipeline.GetCurrentTime());
         }
 
         // The receive method for the StringIn receiver. This executes every time a message arrives on StringIn.
         private void ReceiveString(string input, Envelope envelope)
         {
-            Console.WriteLine("AMQSubscriber.cs, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + input);
+            Console.WriteLine("AMQSubscriber, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + input);
             IMessageProducer producer = this.GetProducer(outTopic);
             ITextMessage message = producer.CreateTextMessage(input);
             producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
+        }
+
+        // The receive method for the StringIn receiver. This executes every time a message arrives on StringIn.
+        private void ReceiveDictionary(IDictionary<string,object> input, Envelope envelope)
+        {
+            Console.WriteLine("AMQSubscriber, ReceiveDictionary -- NULL: sending -- outTopic: " + outTopic);
+            // IMessageProducer producer = this.GetProducer(outTopic);
+            // ITextMessage message = producer.CreateTextMessage(input);
+            // producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
         }
     }
 }

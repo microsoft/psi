@@ -10,8 +10,6 @@ using Microsoft.Psi.Components;
 using Microsoft.Psi.Audio;
 using Microsoft.Psi.Imaging;
 using Microsoft.Psi.Media;
-using Microsoft.Psi.Interop.Format;
-using Microsoft.Psi.Interop.Transport;
 
 namespace CMU.Smartlab.Communication
 {
@@ -67,6 +65,8 @@ namespace CMU.Smartlab.Communication
         // private static Boolean processIDictionary(IDictionary<string,object> dictionaryIn)
         private static Boolean processIDictionary(object message)
         {
+
+            Console.WriteLine("SmartlabMerge processIDictionary -  enter");  
             IDictionary<string,object> dictionaryIn = (IDictionary<string,object>)message; 
             string messageToBazaar = null;  
             IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
@@ -85,9 +85,10 @@ namespace CMU.Smartlab.Communication
 
         private void Receive(T message, Envelope e)
         {
+            Console.WriteLine("SmartlabMerge, Receive T - enter");
             Boolean uselessValue = processIDictionary(message); 
-            // Console.WriteLine("SmartlabMerge, Receive - message: '{0}'", message);
             // this.Out.Post(Message.Create(message, e), this.pipeline.GetCurrentTime());
+            Console.WriteLine("SmartlabMerge, Receive T - posting message");
             this.Out.Post(message, this.useSourceOriginatingTimes ? e.OriginatingTime : this.pipeline.GetCurrentTime());
         }
     }
