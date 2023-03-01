@@ -161,14 +161,14 @@ namespace CMU.Smartlab.Communication
 
         public void subscribe(string topic, Action<string> listener)
         {
-            Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic);
+            // Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic);
             IMessageConsumer consumer = this.GetConsumer(topic);
             consumer.Listener += new MessageListener((message) =>
             {
                 if (message is ITextMessage)
                 {
                     string text = ((ITextMessage)message).Text;
-                    Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic + "  textMessage: " + text);
+                    // Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic + "  textMessage: " + text);
                     listener.Invoke(text);
                 }
             });
@@ -238,7 +238,7 @@ namespace CMU.Smartlab.Communication
 
         private void outputType (T outString)
         {
-            Console.WriteLine("AMQSubscriber.cs, outputType: sending -- outTopic: " + outTopic + "  content: " + outString);
+            // Console.WriteLine("AMQSubscriber.cs, outputType: sending -- outTopic: " + outTopic + "  content: " + outString);
             IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
             messageDictionary.Add("response",outString); 
             T messageOut = (T)messageDictionary; 

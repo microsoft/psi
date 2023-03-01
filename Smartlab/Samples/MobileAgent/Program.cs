@@ -191,7 +191,7 @@ namespace SigdialDemo
                 var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
                 var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
                 nmqSubFromSensor.PipeTo(receiverSensor); 
-                // amqSubBazaarToAgent.PipeTo(receiverBazaar);
+                amqSubBazaarToAgent.PipeTo(receiverBazaar);
                 // mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
                 // mergeToAgent.PipeTo(nmqPubToAgent); 
 
