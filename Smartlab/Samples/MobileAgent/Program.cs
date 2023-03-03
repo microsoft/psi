@@ -62,6 +62,7 @@ namespace SigdialDemo
         private const string TcpIPResponder = "@tcp://*:40001";
         // private const string TcpIPPublisher = "tcp://*:40002";
         private const string TcpIPPublisher = "tcp://*:30002";
+        // private const string TcpIPPublisher = "tcp://*:5500";
         
 
         private const double SocialDistance = 183;

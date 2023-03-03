@@ -42,7 +42,7 @@ namespace CMU.Smartlab.Communication
             // this.Out = pipeline.CreateEmitter<T>(this);
             // this.Out = pipeline.CreateReceiver<T>(this);
             // this.ReceiveIDictionary = pipeline.CreateReceiver<IDictionary<string,object>>(this, ReceiveIDictionary, nameof(this.IDictionaryIn));
-            this.IDictionaryIn = pipeline.CreateReceiver<IDictionary<string,object>>(this, ReceiveIDictionary, nameof(this.IDictionaryIn));
+            this.IDictionaryIn = pipeline.CreateReceiver<IDictionary<string,object>>(this, Receive, nameof(this.IDictionaryIn));
             this.socket = new PublisherSocket();
             pipeline.PipelineRun += (s, e) => this.socket.Bind(this.Address);
         }
@@ -114,40 +114,38 @@ namespace CMU.Smartlab.Communication
             return true;
         }
 
-
-        // private void Receive<T>(T message, Envelope envelope, string topic)
-        // {
-        //     // Console.WriteLine("NetMQPublisher.Receive - message = '{0}'", message);
-        //     Console.WriteLine("NetMQPublisher.Receive - enter - topic =   '{0}'", topic);
-        //     Boolean uselessValue = processIDictionary(message); 
-            
-        //     var (bytes, index, length) = this.serializer.SerializeMessage(message, envelope.OriginatingTime);
-        //     if (index != 0)
-        //     {
-        //         var slice = new byte[length];
-        //         Array.Copy(bytes, index, slice, 0, length);
-        //         bytes = slice;
-        //     }
-
-        //     this.socket.SendMoreFrame(topic).SendFrame(bytes, length);
-        // }
-
-
-        // The receive method for the IDictionaryIn receiver. T
-        private void ReceiveIDictionary(IDictionary<string,object> messageIn, Envelope envelope)
+        private static string stringForAgent(object message)
         {
-            string topic = topics.Keys.First(); 
-            Console.WriteLine("NetMQPublisher.ReceiveIDictionary - enter - topic =   '{0}'", topic);
-            Boolean uselessValue = processIDictionary(messageIn);      
-            var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);
-            if (index != 0)
-            {
-                var slice = new byte[length];
-                Array.Copy(bytes, index, slice, 0, length);
-                bytes = slice;
-            }
 
-            this.socket.SendMoreFrame(topic).SendFrame(bytes, length);
+            // Console.WriteLine("SmartlabMerge processIDictionary -  enter");  
+            IDictionary<string,object> dictionaryIn = (IDictionary<string,object>)message; 
+            string response = null;
+            string location = null; 
+            foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
+                Console.WriteLine("NetMQPublisher.processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value); 
+                if (kvp.Key == "location") {
+                    location = (string)kvp.Value; 
+                }
+                if (kvp.Key == "response") {
+                    response = (string)kvp.Value; 
+                }
+            }
+            if (response != null) {
+                return response;
+            } else if (location != null) {
+                // return location; 
+                if (location == "left") {
+                    return "Rachel is looking left";
+                } else if (location == "front") {
+                    return "Rachel is looking straight ahead";
+                } else if (location == "right") {
+                    return "Rachel is looking right";
+                } else {
+                    return "Rachel is looking up, down, and all around";
+                }
+            } else {
+                return null; 
+            }
         }
 
 
@@ -156,17 +154,19 @@ namespace CMU.Smartlab.Communication
         {
             string topic = topics.Keys.First(); 
             Console.WriteLine("NetMQPublisher.ReceiveIDictionary - enter - topic =   '{0}'", topic);
-            Boolean uselessValue = processIDictionary(messageIn);      
-            // var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);     
-            var (bytes, index, length) = this.serializer.SerializeMessage("Rachel is looking straight ahead", envelope.OriginatingTime);
-            if (index != 0)
-            {
-                var slice = new byte[length];
-                Array.Copy(bytes, index, slice, 0, length);
-                bytes = slice;
+            // Boolean uselessValue = processIDictionary(messageIn);    
+            string messageToAgent = stringForAgent(messageIn); 
+            if (messageToAgent != null) {      
+                // var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);   
+                var (bytes, index, length) = this.serializer.SerializeMessage(messageToAgent, envelope.OriginatingTime);   
+                if (index != 0)
+                {
+                    var slice = new byte[length];
+                    Array.Copy(bytes, index, slice, 0, length);
+                    bytes = slice;
+                }
+                this.socket.SendMoreFrame(topic).SendFrame(bytes, length);
             }
-
-            this.socket.SendMoreFrame(topic).SendFrame(bytes, length);
         }
     }
 }
