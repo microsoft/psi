@@ -87,7 +87,8 @@ namespace CMU.Smartlab.Communication
         {
             this.topics.Add(topic, typeof(T));
             Console.WriteLine("NetMQPublisher.AddTopic - topic =   '{0}'", topic);
-            return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, topic), topic);
+            // return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, topic), topic);
+            return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e), topic);
         }
         /// <inheritdoc />
         public void Dispose()
@@ -114,13 +115,31 @@ namespace CMU.Smartlab.Communication
         }
 
 
-        private void Receive<T>(T message, Envelope envelope, string topic)
-        {
-            // Console.WriteLine("NetMQPublisher.Receive - message = '{0}'", message);
-            Console.WriteLine("NetMQPublisher.Receive - enter - topic =   '{0}'", topic);
-            Boolean uselessValue = processIDictionary(message); 
+        // private void Receive<T>(T message, Envelope envelope, string topic)
+        // {
+        //     // Console.WriteLine("NetMQPublisher.Receive - message = '{0}'", message);
+        //     Console.WriteLine("NetMQPublisher.Receive - enter - topic =   '{0}'", topic);
+        //     Boolean uselessValue = processIDictionary(message); 
             
-            var (bytes, index, length) = this.serializer.SerializeMessage(message, envelope.OriginatingTime);
+        //     var (bytes, index, length) = this.serializer.SerializeMessage(message, envelope.OriginatingTime);
+        //     if (index != 0)
+        //     {
+        //         var slice = new byte[length];
+        //         Array.Copy(bytes, index, slice, 0, length);
+        //         bytes = slice;
+        //     }
+
+        //     this.socket.SendMoreFrame(topic).SendFrame(bytes, length);
+        // }
+
+
+        // The receive method for the IDictionaryIn receiver. T
+        private void ReceiveIDictionary(IDictionary<string,object> messageIn, Envelope envelope)
+        {
+            string topic = topics.Keys.First(); 
+            Console.WriteLine("NetMQPublisher.ReceiveIDictionary - enter - topic =   '{0}'", topic);
+            Boolean uselessValue = processIDictionary(messageIn);      
+            var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);
             if (index != 0)
             {
                 var slice = new byte[length];
@@ -133,12 +152,13 @@ namespace CMU.Smartlab.Communication
 
 
         // The receive method for the IDictionaryIn receiver. T
-        private void ReceiveIDictionary(IDictionary<string,object> messageIn, Envelope envelope)
+        private void Receive<T>(T messageIn, Envelope envelope)
         {
             string topic = topics.Keys.First(); 
             Console.WriteLine("NetMQPublisher.ReceiveIDictionary - enter - topic =   '{0}'", topic);
             Boolean uselessValue = processIDictionary(messageIn);      
-            var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);
+            // var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);     
+            var (bytes, index, length) = this.serializer.SerializeMessage("Rachel is looking straight ahead", envelope.OriginatingTime);
             if (index != 0)
             {
                 var slice = new byte[length];
