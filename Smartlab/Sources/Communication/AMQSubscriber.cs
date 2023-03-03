@@ -37,25 +37,20 @@ namespace CMU.Smartlab.Communication
         private string outTopic;
         private string clientID;
         private readonly bool useSourceOriginatingTimes;
-        // private Envelope envelope;
 
         public AMQSubscriber(Pipeline pipeline, string inTopic, string outTopic, string clientID, bool useSourceOriginatingTimes = true, string name = nameof(AMQSubscriber<T>))
         {
             this.inTopic = inTopic;
             this.outTopic = outTopic; 
-            Console.WriteLine("AMQSubscriber constructor - inTopic: '{0}'  --  outTopic: '{1}'", this.inTopic, this.outTopic);
+            // Console.WriteLine("AMQSubscriber constructor - inTopic: '{0}'  --  outTopic: '{1}'", this.inTopic, this.outTopic);
             this.pipeline = pipeline;
             this.name = name;
             this.useSourceOriginatingTimes = false; 
             this.uri = string.Format("tcp://localhost:{0}", this.port);
             this.activeMQUri = uri;
             this.clientID = clientID;
-            // this.StringIn = pipeline.CreateReceiver<string>(this, ReceiveString, nameof(this.StringIn));
             this.Out = pipeline.CreateEmitter<T>(this, outTopic);
-            // this.envelope = pipeline.Envelope;
-            // subscribe(inTopic,ProcessText);
         }
-
 
         // Receiver that encapsulates the string input stream
         public Receiver<string> StringIn { get; }
@@ -63,7 +58,7 @@ namespace CMU.Smartlab.Communication
         public Emitter<string> StringOut { get; }
 
         // Emitter that encapsulates the output stream
-        // public Emitter<string> Out { get; private set; }
+        // public Emitter<string> Out { get; private set; } { get; }
         public Emitter<T> Out { get; }
 
         /// <inheritdoc />
@@ -79,23 +74,16 @@ namespace CMU.Smartlab.Communication
             notifyCompleted();
         }
 
-        private void Stop()
-        {
-            // if (this.socket != null)
-            // {
-            //     this.poller.Dispose();
-            //     this.socket.Dispose();
-            //     this.socket = null;
-            // }
-        }
+        private void Stop() {}
 
         public void Start(Action<DateTime> notifyCompletionTime)
         {
-            Console.WriteLine("AMQSubscriber Start - enter");
+            // Console.WriteLine("AMQSubscriber Start - enter");
+
             // notify that this is an infinite source component
             notifyCompletionTime(DateTime.MaxValue);
-            Console.WriteLine("AMQSubscriber.Start - InTopic:  '{0}'", this.inTopic);
-            Console.WriteLine("AMQSubscriber.Start - OutTopic: '{0}'", this.outTopic);
+            // Console.WriteLine("AMQSubscriber.Start - InTopic:  '{0}'", this.inTopic);
+            // Console.WriteLine("AMQSubscriber.Start - OutTopic: '{0}'", this.outTopic);
             // InitActiveMQServer();
             this.factory = new NMSConnectionFactory(this.activeMQUri);
             try
@@ -109,7 +97,7 @@ namespace CMU.Smartlab.Communication
             {
                 Console.WriteLine(ex.ToString());
             }
-            subscribe(inTopic,outputString);
+            subscribe(inTopic,outputMessage);
         }
 
         private IMessageProducer GetProducer(string topicName)
@@ -133,61 +121,33 @@ namespace CMU.Smartlab.Communication
 
         public void subscribe(string topic, Action<ITextMessage> listener)
         {
-            Console.WriteLine("AMQSubscriber.cs: subscribe ITextMessage -- topic: " + topic);
+            // Console.WriteLine("AMQSubscriber: subscribe ITextMessage -- topic: " + topic);
             IMessageConsumer consumer = this.GetConsumer(topic);
             consumer.Listener += new MessageListener((message) =>
             {
                 if (message is ITextMessage)
                 {
                     ITextMessage textMessage = (ITextMessage)message;
-                    Console.WriteLine("AMQSubscriber.cs: subscribe ITextMessage -- topic: " + topic + "  textMessage: " + textMessage);
+                    // Console.WriteLine("AMQSubscriber: subscribe ITextMessage -- topic: " + topic + "  textMessage: " + textMessage);
                     listener.Invoke(textMessage);
                 }
             });
         }
 
-        // public void subscribe(string topic, Action<IBytesMessage> listener)
-        // {
-        //     IMessageConsumer consumer = this.GetConsumer(topic);
-        //     consumer.Listener += new MessageListener((message) =>
-        //     {
-        //         if (message is IBytesMessage)
-        //         {
-        //             IBytesMessage bytesMessage = (IBytesMessage)message;
-        //             listener.Invoke(bytesMessage);
-        //         }
-        //     });
-        // }
-
         public void subscribe(string topic, Action<string> listener)
         {
-            Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic);
+            // Console.WriteLine("AMQSubscriber: subscribe string -- topic: " + topic);
             IMessageConsumer consumer = this.GetConsumer(topic);
             consumer.Listener += new MessageListener((message) =>
             {
                 if (message is ITextMessage)
                 {
                     string text = ((ITextMessage)message).Text;
-                    Console.WriteLine("AMQSubscriber.cs: subscribe string -- topic: " + topic + "  textMessage: " + text);
+                    // Console.WriteLine("AMQSubscriber: subscribe string -- topic: " + topic + "  textMessage: " + text);
                     listener.Invoke(text);
                 }
             });
         }
-
-        // public void subscribe(string topic, Action<byte[]> listener)
-        // {
-        //     IMessageConsumer consumer = this.GetConsumer(topic);
-        //     consumer.Listener += new MessageListener((message) =>
-        //     {
-        //         if (message is IBytesMessage)
-        //         {
-        //             IBytesMessage bytesMessage = (IBytesMessage)message;
-        //             byte[] bytes = new byte[bytesMessage.BodyLength];
-        //             ((IBytesMessage)message).ReadBytes(bytes);
-        //             listener.Invoke(bytes);
-        //         }
-        //     });
-        // }
 
         private IMessageConsumer GetConsumer(string topicName)
         {
@@ -202,50 +162,23 @@ namespace CMU.Smartlab.Communication
             return consumer;
         }
 
-        // private static void ProcessText(String s)
-        // {
-        //     if (s != null)
-        //     {
-        //         Console.WriteLine($">>> Send MULTIMODAL message to VHT: multimodal:false;%;identity:someone;%;text:{s}");
-        //         ReceiveString(s, envelope);
-        //     }
-        // }
-        /// <inheritdoc />
-        // public void Dispose() {}
-        // {
-        //     if (this.socket != null)
-        //     {
-        //         this.socket.Dispose();
-        //         this.socket = null;
-        //     }
-        // }
-
         /// <inheritdoc/>
         public override string ToString() => this.name;
 
-        private void outputString (string outString)
+        private void outputMessage (string outString)
         {
-            Console.WriteLine("AMQSubscriber.cs, outputString: outString: " + outString);
-            T outType = GetValue<T>(outString); 
-            outputType(outType);
-            // this.Out.Post(outString, this.pipeline.GetCurrentTime());
-        }
-
-        public static T GetValue<T>(String value)
-            {
-            return (T)Convert.ChangeType(value, typeof(T));
-            }
-
-        private void outputType (T outString)
-        {
-            Console.WriteLine("AMQSubscriber.cs, outputTuype: sending -- outTopic: " + outTopic + "  content: " + outString);
-            this.Out.Post(outString, this.pipeline.GetCurrentTime());
+            // Console.WriteLine("AMQSubscriber, outputMessage: outString: " + outString);
+            IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            messageDictionary.Add("response",outString); 
+            T dictionaryOut = (T)messageDictionary; 
+            // Console.WriteLine("AMQSubscriber, outputMessage: posting dictionaryOut");
+            this.Out.Post(dictionaryOut, this.pipeline.GetCurrentTime());
         }
 
         // The receive method for the StringIn receiver. This executes every time a message arrives on StringIn.
         private void ReceiveString(string input, Envelope envelope)
         {
-            Console.WriteLine("AMQSubscriber.cs, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + input);
+            // Console.WriteLine("AMQSubscriber, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + input);
             IMessageProducer producer = this.GetProducer(outTopic);
             ITextMessage message = producer.CreateTextMessage(input);
             producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);

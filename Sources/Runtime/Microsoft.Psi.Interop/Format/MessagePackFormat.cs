@@ -75,13 +75,16 @@ namespace Microsoft.Psi.Interop.Format
 
         private dynamic NormalizeValue(dynamic value)
         {
+            // Console.WriteLine("MessagePackFormat.cs, NormalizeValue - enter");
             if (typeof(IDictionary<object, object>).IsAssignableFrom(((object)value).GetType()))
             {
                 // library returns structured values as object dictionary - convert to ExpandoObject
+                // Console.WriteLine("MessagePackFormat.cs, NormalizeValue - is dictionary");
                 var expando = new ExpandoObject();
                 var dict = expando as IDictionary<string, dynamic>;
                 foreach (var kv in value as IDictionary<object, object>)
                 {
+                    // Console.WriteLine("MessagePackFormat.cs, NormalizeValue - kv: '{0}'", kv);
                     dict[kv.Key.ToString()] = this.NormalizeValue(kv.Value); // potentially recursively
                 }
 

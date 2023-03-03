@@ -58,6 +58,8 @@ namespace CMU.Smartlab.Communication
 
         public Emitter<string> StringOut { get; }
 
+        public Emitter<IDictionary<string,object>> IDictionaryOut { get; }
+
 
         /// <inheritdoc />
         public Emitter<T> Out { get; }
@@ -132,9 +134,36 @@ namespace CMU.Smartlab.Communication
                 }
 
                 var (message, originatingTime) = this.deserializer.DeserializeMessage(frames[1], 0, frames[1].Length);
-                Console.WriteLine("NetMQSubscriber ReceiveReady - received message: '{0}'", message);
+
+                // Console.WriteLine("NetMQSubscriber ReceiveReady - received message: '{0}'", message);
+
+                // =====================================================================
+                // Temp print first key-value pair in deserialized python dict as string
+
+                IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+                foreach (KeyValuePair<string,object> kvp in message) {
+                    messageDictionary.Add(kvp.Key,kvp.Value); 
+                    Console.WriteLine("NetMQSubscriber ReceiveReady: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
+                }
+
+                // int element=0;
+                // string firstKey = "null";
+                // string firstValue = "null"; 
+
+                // foreach (KeyValuePair<string,object> kvp in message) {
+                //     if (element == 0) {
+                //         firstKey = kvp.Key;
+                //         firstValue = (string)kvp.Value;
+                //     }
+                //     element += 1; 
+                // }
+                // Console.WriteLine("Message - first key:   '{0}'", firstKey); 
+                // Console.WriteLine("Message - first value: '{0}'", firstValue); 
+                // =====================================================================
+
                 this.Out.Post(message, this.useSourceOriginatingTimes ? originatingTime : this.pipeline.GetCurrentTime());
             }
         }
+
     }
 }

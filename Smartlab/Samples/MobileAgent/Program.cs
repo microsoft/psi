@@ -55,11 +55,15 @@ namespace SigdialDemo
         private const string TopicFromBazaar = "Bazaar_PSI_Text";
         private const string TopicToAgent = "PSI_Agent_Text";
         private const string TopicFromSensor = "Sensor_PSI_Text";
+        private const string TopicFaceOrientation = "face-orientation";
 
         private const int SendingImageWidth = 360;
         private const int MaxSendingFrameRate = 15;
         private const string TcpIPResponder = "@tcp://*:40001";
-        private const string TcpIPPublisher = "tcp://*:40002";
+        // private const string TcpIPPublisher = "tcp://*:40002";
+        private const string TcpIPPublisher = "tcp://*:30002";
+        // private const string TcpIPPublisher = "tcp://*:5500";
+        
 
         private const double SocialDistance = 183;
         private const double DistanceWarningCooldown = 30.0;
@@ -166,29 +170,31 @@ namespace SigdialDemo
             using (var p = Pipeline.Create())
             {
                 // Subscribe to messages from remote sensor using NetMQ (ZeroMQ)
-                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance, useSourceOriginatingTimes = true, name="Sensor to PSI");
-                var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance, true, "Sensor to PSI");
+                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, MessagePackFormat.Instance, useSourceOriginatingTimes = true, name="Sensor to PSI");
+                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance, true, "Sensor to PSI");
+                var nmqSubFromSensor = new NetMQSubscriber<IDictionary<string,object>>(p, "", remoteIP, MessagePackFormat.Instance, true, "Sensor to PSI");
 
                 // Create a publisher for messages from the sensor to Bazaar
-                var amqPubSensorToBazaar = new AMQPublisher<string>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
+                var amqPubSensorToBazaar = new AMQPublisher<IDictionary<string,object>>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
 
                 // Subscribe to messages from Bazaar for the agent
-                var amqSubBazaarToAgent = new AMQSubscriber<string>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
+                var amqSubBazaarToAgent = new AMQSubscriber<IDictionary<string,object>>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
 
                 // Create a publisher for messages to the agent using NetMQ (ZeroMQ)
-                var nmqPubToAgent = new NetMQPublisher<string>(p, TopicToAgent, TcpIPPublisher, JsonFormat.Instance);
+                var nmqPubToAgent = new NetMQPublisher<IDictionary<string,object>>(p, TopicFaceOrientation, TcpIPPublisher, MessagePackFormat.Instance);
                 // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
                 // Route messages from the sensor to Bazaar
-                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.StringIn); 
+                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn); 
 
                 // Combine messages (1) direct from sensor, and (2) from Bazaar, and send to agent
-                SmartlabMerge<string> mergeToAgent = new SmartlabMerge<string>(p,"Merge to Agent"); 
+                SmartlabMerge<IDictionary<string,object>> mergeToAgent = new SmartlabMerge<IDictionary<string,object>>(p,"Merge to Agent"); 
                 var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
                 var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
                 nmqSubFromSensor.PipeTo(receiverSensor); 
                 amqSubBazaarToAgent.PipeTo(receiverBazaar);
-                mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
+                // mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
+                mergeToAgent.PipeTo(nmqPubToAgent); 
 
                 p.Run();
 

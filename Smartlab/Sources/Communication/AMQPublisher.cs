@@ -46,6 +46,7 @@ namespace CMU.Smartlab.Communication
             this.clientID = clientID;
             this.useSourceOriginatingTimes = useSourceOriginatingTimes;
             this.StringIn = pipeline.CreateReceiver<string>(this, ReceiveString, nameof(this.StringIn));
+            this.IDictionaryIn = pipeline.CreateReceiver<IDictionary<string,object>>(this, ReceiveIDictionary, nameof(this.IDictionaryIn));
             this.Out = pipeline.CreateEmitter<T>(this, outTopic);
             // this.envelope = pipeline.Envelope;
             // subscribe(inTopic,ProcessText);
@@ -54,6 +55,9 @@ namespace CMU.Smartlab.Communication
 
         // Receiver that encapsulates the string input stream
         public Receiver<string> StringIn { get; private set; }
+
+        // Receiver that encapsulates the Dictionary input stream
+        public Receiver<IDictionary<string,object>> IDictionaryIn { get; private set; }
 
 
         public Emitter<string> StringOut { get; }
@@ -220,6 +224,20 @@ namespace CMU.Smartlab.Communication
             return null; 
         }
 
+        private static string processIDictionary(IDictionary<string,object> dictionaryIn)
+        {
+            string messageToBazaar = null; 
+            IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
+                messageDictionary.Add(kvp.Key,kvp.Value); 
+                Console.WriteLine("NetMQSubscriber ReceiveReady: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
+                if (kvp.Key == "speech") {
+                    messageToBazaar = (string)kvp.Value; 
+                }
+            }
+            return messageToBazaar;
+        }
+
         /// <inheritdoc />
         // public void Dispose() {}
         // {
@@ -242,6 +260,19 @@ namespace CMU.Smartlab.Communication
                 Console.WriteLine("AMQPublisher.cs, ReceiveString: sending -- outTopic: " + outTopic + "  content: " + stringIn);
                 IMessageProducer producer = this.GetProducer(outTopic);
                 ITextMessage message = producer.CreateTextMessage(stringIn);
+                producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
+            }
+        }
+
+        // The receive method for the IDictionaryIn receiver. T
+        private void ReceiveIDictionary(IDictionary<string,object> messageIn, Envelope envelope)
+        {
+            string messageToBazaar = processIDictionary(messageIn); 
+            if (messageToBazaar != null)
+            {
+                Console.WriteLine("AMQPublisher.cs, ReceiveIDictionary: sending -- outTopic: " + outTopic + "  --  message: " + messageToBazaar);
+                IMessageProducer producer = this.GetProducer(outTopic);
+                ITextMessage message = producer.CreateTextMessage(messageToBazaar);
                 producer.Send(message, MsgDeliveryMode.Persistent, MsgPriority.Normal, TimeSpan.MaxValue);
             }
         }
