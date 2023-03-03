@@ -264,7 +264,7 @@ namespace CMU.Smartlab.Communication
             }
         }
 
-        // The receive method for the IDictionaryIn receiver. This executes every time a message arrives on StringIn.
+        // The receive method for the IDictionaryIn receiver. T
         private void ReceiveIDictionary(IDictionary<string,object> messageIn, Envelope envelope)
         {
             string messageToBazaar = processIDictionary(messageIn); 
