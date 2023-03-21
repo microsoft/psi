@@ -186,6 +186,18 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Copies the image contents from a memory pointer.
+        /// </summary>
+        /// <param name="source">Memory pointer from which to copy data.</param>
+        /// <param name="size">The maximum number of bytes to copy.</param>
+        /// <remarks><para>The method copies data from the memory pointer into the image.
+        /// The image must be allocated and must have the same size.</para></remarks>
+        public void CopyFrom(IntPtr source, int size)
+        {
+            this.UnmanagedBuffer.CopyFrom(source, size);
+        }
+
+        /// <summary>
         /// Copies the image contents from a specified bitmap.
         /// </summary>
         /// <param name="bitmap">A bitmap to copy from.</param>

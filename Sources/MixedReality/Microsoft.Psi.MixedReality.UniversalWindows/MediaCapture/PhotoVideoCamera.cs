@@ -19,6 +19,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
     using Windows.Graphics.Imaging;
     using Windows.Media.Capture;
     using Windows.Media.Capture.Frames;
+    using Windows.Media.MediaProperties;
 
     /// <summary>
     /// Photo/video (PV) camera source component.
@@ -48,13 +49,17 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             this.pipeline = pipeline;
             this.configuration = configuration ?? new PhotoVideoCameraConfiguration();
 
+            this.VideoImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.VideoImage));
             this.VideoEncodedImage = pipeline.CreateEmitter<Shared<EncodedImage>>(this, nameof(this.VideoEncodedImage));
             this.VideoIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.VideoIntrinsics));
             this.VideoPose = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.VideoPose));
+            this.VideoImageCameraView = pipeline.CreateEmitter<ImageCameraView>(this, nameof(this.VideoImageCameraView));
             this.VideoEncodedImageCameraView = pipeline.CreateEmitter<EncodedImageCameraView>(this, nameof(this.VideoEncodedImageCameraView));
+            this.PreviewImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.PreviewImage));
             this.PreviewEncodedImage = pipeline.CreateEmitter<Shared<EncodedImage>>(this, nameof(this.PreviewEncodedImage));
             this.PreviewIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.PreviewIntrinsics));
             this.PreviewPose = pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.PreviewPose));
+            this.PreviewImageCameraView = pipeline.CreateEmitter<ImageCameraView>(this, nameof(this.PreviewImageCameraView));
             this.PreviewEncodedImageCameraView = pipeline.CreateEmitter<EncodedImageCameraView>(this, nameof(this.PreviewEncodedImageCameraView));
 
             // Call this here (rather than in the Start() method, which is executed on the thread pool) to
@@ -64,6 +69,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             // https://docs.microsoft.com/en-us/uwp/api/windows.media.capture.mediacapture.initializeasync
             this.initMediaCaptureTask = this.InitializeMediaCaptureAsync();
         }
+
+        /// <summary>
+        /// Gets the BGRA-converted image stream.
+        /// </summary>
+        public Emitter<Shared<Image>> VideoImage { get; }
 
         /// <summary>
         /// Gets the original video NV12-encoded image stream.
@@ -81,9 +91,19 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         public Emitter<ICameraIntrinsics> VideoIntrinsics { get; }
 
         /// <summary>
+        /// Gets the BGRA-converted image camera view.
+        /// </summary>
+        public Emitter<ImageCameraView> VideoImageCameraView { get; }
+
+        /// <summary>
         /// Gets the original video NV12-encoded image camera view.
         /// </summary>
         public Emitter<EncodedImageCameraView> VideoEncodedImageCameraView { get; }
+
+        /// <summary>
+        /// Gets the BGRA-converted preview image stream.
+        /// </summary>
+        public Emitter<Shared<Image>> PreviewImage { get; }
 
         /// <summary>
         /// Gets the original preview NV12-encoded image stream.
@@ -99,6 +119,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// Gets the preview camera intrinsics stream.
         /// </summary>
         public Emitter<ICameraIntrinsics> PreviewIntrinsics { get; }
+
+        /// <summary>
+        /// Gets the preview BGRA-converted image camera view.
+        /// </summary>
+        public Emitter<ImageCameraView> PreviewImageCameraView { get; }
 
         /// <summary>
         /// Gets the original preview NV12-encoded image camera view.
@@ -149,9 +174,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 // (if configured) are then posted on the respective output emitters.
                 this.videoFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration.VideoStreamSettings,
+                    this.VideoImage,
                     this.VideoEncodedImage,
                     this.VideoIntrinsics,
                     this.VideoPose,
+                    this.VideoImageCameraView,
                     this.VideoEncodedImageCameraView);
 
                 this.videoFrameReader.FrameArrived += this.videoFrameHandler;
@@ -179,9 +206,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 // (if configured) are then posted on the respective output emitters.
                 this.previewFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration.PreviewStreamSettings,
+                    this.PreviewImage,
                     this.PreviewEncodedImage,
                     this.PreviewIntrinsics,
                     this.PreviewPose,
+                    this.PreviewImageCameraView,
                     this.PreviewEncodedImageCameraView);
 
                 this.previewFrameReader.FrameArrived += this.previewFrameHandler;
@@ -266,6 +295,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     this.configuration.VideoStreamSettings.ImageWidth,
                     this.configuration.VideoStreamSettings.ImageHeight,
                     this.configuration.VideoStreamSettings.FrameRate,
+                    this.configuration.VideoStreamSettings.OutputEncodedImage ? MediaEncodingSubtypes.Nv12 : MediaEncodingSubtypes.Bgra8,
                     MediaStreamType.VideoRecord);
 
                 if (this.videoFrameReader == null)
@@ -282,6 +312,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     this.configuration.PreviewStreamSettings.ImageWidth,
                     this.configuration.PreviewStreamSettings.ImageHeight,
                     this.configuration.PreviewStreamSettings.FrameRate,
+                    this.configuration.PreviewStreamSettings.OutputEncodedImage ? MediaEncodingSubtypes.Nv12 : MediaEncodingSubtypes.Bgra8,
                     MediaStreamType.VideoPreview);
 
                 if (this.previewFrameReader == null)
@@ -439,9 +470,10 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// <param name="targetWidth">The requested capture frame width.</param>
         /// <param name="targetHeight">The requested capture frame height.</param>
         /// <param name="targetFrameRate">The requested capture frame rate.</param>
+        /// <param name="targetSubtype">The requested media encoding subtype.</param>
         /// <param name="targetStreamType">The requested capture stream type.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        private async Task<MediaFrameReader> CreateMediaFrameReaderAsync(MediaFrameSourceGroup sourceGroup, int targetWidth, int targetHeight, int targetFrameRate, MediaStreamType targetStreamType)
+        private async Task<MediaFrameReader> CreateMediaFrameReaderAsync(MediaFrameSourceGroup sourceGroup, int targetWidth, int targetHeight, int targetFrameRate, string targetSubtype, MediaStreamType targetStreamType)
         {
             // Search all color frame sources of the requested stream type (Video or Preview)
             foreach (var sourceInfo in sourceGroup.SourceInfos
@@ -459,7 +491,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     {
                         // Found a frame source for the requested format - create the frame reader
                         await frameSource.SetFormatAsync(format);
-                        return await this.mediaCapture.CreateFrameReaderAsync(frameSource);
+                        return await this.mediaCapture.CreateFrameReaderAsync(frameSource, targetSubtype);
                     }
                 }
             }
@@ -472,16 +504,20 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// Creates an event handler that handles the FrameArrived event of the MediaFrameReader.
         /// </summary>
         /// <param name="streamSettings">The stream settings.</param>
+        /// <param name="imageStream">The stream on which to post the output image.</param>
         /// <param name="encodedImageStream">The stream on which to post the output encoded image.</param>
         /// <param name="intrinsicsStream">The stream on which to post the camera intrinsics.</param>
         /// <param name="poseStream">The stream on which to post the camera pose.</param>
+        /// <param name="imageCameraViewStream">The stream on which to post the image camera view.</param>
         /// <param name="encodedImageCameraViewStream">The stream on which to post the encoded image camera view.</param>
         /// <returns>The event handler.</returns>
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> CreateMediaFrameHandler(
             PhotoVideoCameraConfiguration.StreamSettings streamSettings,
+            Emitter<Shared<Image>> imageStream,
             Emitter<Shared<EncodedImage>> encodedImageStream,
             Emitter<ICameraIntrinsics> intrinsicsStream,
             Emitter<CoordinateSystem> poseStream,
+            Emitter<ImageCameraView> imageCameraViewStream,
             Emitter<EncodedImageCameraView> encodedImageCameraViewStream)
         {
             return (sender, args) =>
@@ -495,7 +531,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
 
                     // Compute the camera intrinsics if needed
                     var cameraIntrinsics = default(ICameraIntrinsics);
-                    if (streamSettings.OutputCameraIntrinsics || streamSettings.OutputEncodedImageCameraView)
+                    if (streamSettings.OutputCameraIntrinsics || streamSettings.OutputImageCameraView || streamSettings.OutputEncodedImageCameraView)
                     {
                         cameraIntrinsics = this.GetCameraIntrinsics(frame);
                     }
@@ -508,7 +544,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
 
                     // Compute the camera pose if needed
                     var cameraPose = default(CoordinateSystem);
-                    if (streamSettings.OutputPose || streamSettings.OutputEncodedImageCameraView)
+                    if (streamSettings.OutputPose || streamSettings.OutputImageCameraView || streamSettings.OutputEncodedImageCameraView)
                     {
                         // Convert the frame coordinate system to world pose in psi basis
                         cameraPose = frame.CoordinateSystem?.TryConvertSpatialCoordinateSystemToPsiCoordinateSystem();
@@ -557,6 +593,38 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                         {
                             using var encodedImageCameraView = new EncodedImageCameraView(sharedEncodedImage, cameraIntrinsics, cameraPose);
                             encodedImageCameraViewStream.Post(encodedImageCameraView, originatingTime);
+                        }
+                    }
+                    else if (streamSettings.OutputImage || streamSettings.OutputImageCameraView)
+                    {
+                        // Accessing the VideoMediaFrame.SoftwareBitmap property creates a strong reference
+                        // which needs to be Disposed, per the remarks here:
+                        // https://docs.microsoft.com/en-us/uwp/api/windows.media.capture.frames.mediaframereference?view=winrt-19041#remarks
+                        using var frameBitmap = frame.VideoMediaFrame.SoftwareBitmap;
+                        using var sharedImage = ImagePool.GetOrCreate(frameBitmap.PixelWidth, frameBitmap.PixelHeight, PixelFormat.BGRA_32bpp);
+
+                        // Copy bitmap data into the shared image
+                        unsafe
+                        {
+                            using var input = frameBitmap.LockBuffer(BitmapBufferAccessMode.Read);
+                            using var inputReference = input.CreateReference();
+                            ((UnsafeNative.IMemoryBufferByteAccess)inputReference).GetBuffer(out byte* imageData, out uint size);
+
+                            // Copy BGRA bytes directly
+                            sharedImage.Resource.CopyFrom((IntPtr)imageData, (int)size);
+                        }
+
+                        // Post image stream
+                        if (streamSettings.OutputImage)
+                        {
+                            imageStream.Post(sharedImage, originatingTime);
+                        }
+
+                        // Post the image camera view stream if requested
+                        if (streamSettings.OutputImageCameraView)
+                        {
+                            using var imageCameraView = new ImageCameraView(sharedImage, cameraIntrinsics, cameraPose);
+                            imageCameraViewStream.Post(imageCameraView, originatingTime);
                         }
                     }
                 }

@@ -240,7 +240,15 @@ namespace Microsoft.Psi.Persistence
             {
                 this.extentName = System.IO.Path.Combine(this.Path, this.extentName);
                 var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-                newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
+                try
+                {
+                    newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
+                }
+                catch (IOException)
+                {
+                    file.Dispose();
+                    throw;
+                }
             }
             else
             {
