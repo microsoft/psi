@@ -295,9 +295,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     this.configuration.VideoStreamSettings.ImageWidth,
                     this.configuration.VideoStreamSettings.ImageHeight,
                     this.configuration.VideoStreamSettings.FrameRate,
-                    this.configuration.VideoStreamSettings.OutputEncodedImage
-                    || this.configuration.VideoStreamSettings.OutputEncodedImageCameraView
-                        ? MediaEncodingSubtypes.Nv12 : MediaEncodingSubtypes.Bgra8,
+                    this.configuration.VideoStreamSettings.OutputEncodedImage || this.configuration.VideoStreamSettings.OutputEncodedImageCameraView ? MediaEncodingSubtypes.Nv12 : MediaEncodingSubtypes.Bgra8,
                     MediaStreamType.VideoRecord);
 
                 if (this.videoFrameReader == null)
@@ -314,9 +312,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     this.configuration.PreviewStreamSettings.ImageWidth,
                     this.configuration.PreviewStreamSettings.ImageHeight,
                     this.configuration.PreviewStreamSettings.FrameRate,
-                    this.configuration.PreviewStreamSettings.OutputEncodedImage
-                    || this.configuration.PreviewStreamSettings.OutputEncodedImageCameraView
-                        ? MediaEncodingSubtypes.Nv12 : MediaEncodingSubtypes.Bgra8,
+                    this.configuration.PreviewStreamSettings.OutputEncodedImage || this.configuration.PreviewStreamSettings.OutputEncodedImageCameraView ? MediaEncodingSubtypes.Nv12 : MediaEncodingSubtypes.Bgra8,
                     MediaStreamType.VideoPreview);
 
                 if (this.previewFrameReader == null)
