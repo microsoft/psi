@@ -56,6 +56,67 @@ namespace Microsoft.Psi.MixedReality
 
             return spatialAnchor;
         }
+        
+        /// <summary>
+        /// Creates a persisted spatial anchor at the supplied <see cref="SpatialCoordinateSystem"/> with a positional offset.
+        /// </summary>
+        /// <param name="id">The identifier of the spatial anchor.</param>
+        /// <param name="spatialCoordinateSystem">The coordinate system at which to create the spatial anchor.</param>
+        /// <param name="translation">The rigid positional offset from the coordinate system's origin to the interop frame of reference's origin.</param>
+        /// <returns>The new spatial anchor, or null if the creation failed.</returns>
+        public SpatialAnchor TryCreateSpatialAnchor(string id, SpatialCoordinateSystem spatialCoordinateSystem, Vector3 translation)
+        {
+            // SpatialAnchor.TryCreateRelativeTo could return null if either the maximum number of
+            // spatial anchors has been reached, or if the world coordinate system could not be located.
+            var spatialAnchor = SpatialAnchor.TryCreateRelativeTo(spatialCoordinateSystem, translation);
+
+            if (spatialAnchor != null)
+            {
+                // Try to persist the spatial anchor to the store
+                if (this.spatialAnchorStore.TrySave(id, spatialAnchor))
+                {
+                    // Save it in the in-memory dictionary of spatial anchors
+                    this.spatialAnchors[id] = spatialAnchor;
+                }
+                else
+                {
+                    spatialAnchor = null;
+                }
+            }
+
+            return spatialAnchor;
+        }
+
+        /// <summary>
+        /// Creates a persisted spatial anchor at the supplied <see cref="SpatialCoordinateSystem"/> with offsets in position and rotation.
+        /// </summary>
+        /// <param name="id">The identifier of the spatial anchor.</param>
+        /// <param name="spatialCoordinateSystem">The coordinate system at which to create the spatial anchor.</param>
+        /// <param name="translation">The rigid positional offset from the coordinate system's origin to the interop frame of reference's origin.</param>
+        /// <param name="rotation">The rigid rotation from the coordinate system's origin to the interop frame of reference's origin.</param>
+        /// <returns>The new spatial anchor, or null if the creation failed.</returns>
+        public SpatialAnchor TryCreateSpatialAnchor(string id, SpatialCoordinateSystem spatialCoordinateSystem, Vector3 translation, System.Numerics.Quaternion rotation)
+        {
+            // SpatialAnchor.TryCreateRelativeTo could return null if either the maximum number of
+            // spatial anchors has been reached, or if the world coordinate system could not be located.
+            var spatialAnchor = SpatialAnchor.TryCreateRelativeTo(spatialCoordinateSystem, translation, rotation);
+
+            if (spatialAnchor != null)
+            {
+                // Try to persist the spatial anchor to the store
+                if (this.spatialAnchorStore.TrySave(id, spatialAnchor))
+                {
+                    // Save it in the in-memory dictionary of spatial anchors
+                    this.spatialAnchors[id] = spatialAnchor;
+                }
+                else
+                {
+                    spatialAnchor = null;
+                }
+            }
+
+            return spatialAnchor;
+        }
 
         /// <summary>
         /// Creates a persisted spatial anchor at the supplied <see cref="CoordinateSystem"/>.
