@@ -62,7 +62,7 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="id">The identifier of the spatial anchor.</param>
         /// <param name="spatialCoordinateSystem">The coordinate system at which to create the spatial anchor.</param>
-        /// <param name="translation">The rigid positional offset from the coordinate system's origin to the interop frame of reference's origin.</param>
+        /// <param name="translation">The rigid positional offset from the coordinate system's origin.</param>
         /// <returns>The new spatial anchor, or null if the creation failed.</returns>
         public SpatialAnchor TryCreateSpatialAnchor(string id, SpatialCoordinateSystem spatialCoordinateSystem, Vector3 translation)
         {
@@ -92,8 +92,8 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="id">The identifier of the spatial anchor.</param>
         /// <param name="spatialCoordinateSystem">The coordinate system at which to create the spatial anchor.</param>
-        /// <param name="translation">The rigid positional offset from the coordinate system's origin to the interop frame of reference's origin.</param>
-        /// <param name="rotation">The rigid rotation from the coordinate system's origin to the interop frame of reference's origin.</param>
+        /// <param name="translation">The rigid positional offset from the coordinate system's origin.</param>
+        /// <param name="rotation">The rigid rotation from the coordinate system's origin.</param>
         /// <returns>The new spatial anchor, or null if the creation failed.</returns>
         public SpatialAnchor TryCreateSpatialAnchor(string id, SpatialCoordinateSystem spatialCoordinateSystem, Vector3 translation, System.Numerics.Quaternion rotation)
         {
