@@ -6,6 +6,7 @@ namespace Microsoft.Psi.MixedReality
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Numerics;
     using MathNet.Spatial.Euclidean;
     using Windows.Perception.Spatial;
 
@@ -56,13 +57,31 @@ namespace Microsoft.Psi.MixedReality
 
             return spatialAnchor;
         }
-        
+
+        /// <summary>
+        /// Creates a persisted spatial anchor at the supplied <see cref="CoordinateSystem"/>.
+        /// </summary>
+        /// <param name="id">The identifier of the spatial anchor.</param>
+        /// <param name="coordinateSystem">The coordinate system at which to create the spatial anchor.</param>
+        /// <returns>The new spatial anchor, or null if the creation failed.</returns>
+        public SpatialAnchor TryCreateSpatialAnchor(string id, CoordinateSystem coordinateSystem)
+        {
+            SpatialAnchor spatialAnchor = null;
+            var spatialCoordinateSystem = coordinateSystem.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
+            if (spatialCoordinateSystem != null)
+            {
+                spatialAnchor = this.TryCreateSpatialAnchor(id, spatialCoordinateSystem);
+            }
+
+            return spatialAnchor;
+        }
+
         /// <summary>
         /// Creates a persisted spatial anchor at the supplied <see cref="SpatialCoordinateSystem"/> with a positional offset.
         /// </summary>
         /// <param name="id">The identifier of the spatial anchor.</param>
         /// <param name="spatialCoordinateSystem">The coordinate system at which to create the spatial anchor.</param>
-        /// <param name="translation">The rigid positional offset from the coordinate system's origin.</param>
+        /// <param name="translation">The rigid positional offset from the coordinate system's origin in HoloLens basis.</param>
         /// <returns>The new spatial anchor, or null if the creation failed.</returns>
         public SpatialAnchor TryCreateSpatialAnchor(string id, SpatialCoordinateSystem spatialCoordinateSystem, Vector3 translation)
         {
@@ -92,8 +111,8 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="id">The identifier of the spatial anchor.</param>
         /// <param name="spatialCoordinateSystem">The coordinate system at which to create the spatial anchor.</param>
-        /// <param name="translation">The rigid positional offset from the coordinate system's origin.</param>
-        /// <param name="rotation">The rigid rotation from the coordinate system's origin.</param>
+        /// <param name="translation">The rigid positional offset from the coordinate system's origin in HoloLens basis.</param>
+        /// <param name="rotation">The rigid rotation from the coordinate system's origin in HoloLens basis.</param>
         /// <returns>The new spatial anchor, or null if the creation failed.</returns>
         public SpatialAnchor TryCreateSpatialAnchor(string id, SpatialCoordinateSystem spatialCoordinateSystem, Vector3 translation, System.Numerics.Quaternion rotation)
         {
@@ -123,14 +142,16 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="id">The identifier of the spatial anchor.</param>
         /// <param name="coordinateSystem">The coordinate system at which to create the spatial anchor.</param>
+        /// <param name="relativeOffset">The amount of relative offset applied to the given coordinate system when creating the spatial anchor.</param>
         /// <returns>The new spatial anchor, or null if the creation failed.</returns>
-        public SpatialAnchor TryCreateSpatialAnchor(string id, CoordinateSystem coordinateSystem)
+        public SpatialAnchor TryCreateSpatialAnchor(string id, CoordinateSystem coordinateSystem, CoordinateSystem relativeOffset)
         {
             SpatialAnchor spatialAnchor = null;
             var spatialCoordinateSystem = coordinateSystem.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
             if (spatialCoordinateSystem != null)
             {
-                spatialAnchor = this.TryCreateSpatialAnchor(id, spatialCoordinateSystem);
+                Matrix4x4.Decompose(relativeOffset.RebaseToHoloLensSystemMatrix(), out _, out var rotation, out var translation);
+                spatialAnchor = this.TryCreateSpatialAnchor(id, spatialCoordinateSystem, translation, rotation);
             }
 
             return spatialAnchor;
