@@ -49,6 +49,21 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             this.pipeline = pipeline;
             this.configuration = configuration ?? new PhotoVideoCameraConfiguration();
 
+            static void ValidateImageOutput(PhotoVideoCameraConfiguration.StreamSettings streamSettings)
+            {
+                if (streamSettings is not null
+                    && (streamSettings.OutputEncodedImage || streamSettings.OutputEncodedImageCameraView)
+                    && (streamSettings.OutputImage || streamSettings.OutputImageCameraView))
+                {
+                    throw new NotSupportedException(
+                        "Emitters for outputting both encoded and regular images simultaneously is not supported. " +
+                        "Please specify whether or not the images should be encoded.");
+                }
+            }
+
+            ValidateImageOutput(this.configuration.PreviewStreamSettings);
+            ValidateImageOutput(this.configuration.VideoStreamSettings);
+
             this.VideoImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.VideoImage));
             this.VideoEncodedImage = pipeline.CreateEmitter<Shared<EncodedImage>>(this, nameof(this.VideoEncodedImage));
             this.VideoIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.VideoIntrinsics));
@@ -595,7 +610,8 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                             encodedImageCameraViewStream.Post(encodedImageCameraView, originatingTime);
                         }
                     }
-                    else if (streamSettings.OutputImage || streamSettings.OutputImageCameraView)
+
+                    if (streamSettings.OutputImage || streamSettings.OutputImageCameraView)
                     {
                         // Accessing the VideoMediaFrame.SoftwareBitmap property creates a strong reference
                         // which needs to be Disposed, per the remarks here:
