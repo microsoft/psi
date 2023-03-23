@@ -3474,7 +3474,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.Image.CustomSerializer.html",
-          "hash": "+vST8khxDFzOkkDHTJ1XlmJK9uJ2SnUQm9hClyJF6so="
+          "hash": "qN6KseQuUAPz2AtzlT0lCaNelISCcND4c0Jz8eKJ9XA="
         }
       },
       "is_incremental": false,
@@ -3486,7 +3486,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Imaging.Image.html",
-          "hash": "0g/MRDT79dXagOgTGJKORodWvPEx+PnRO5eU1gHyAWk="
+          "hash": "11ww3D4bqTcFNMI97+pzEJaIDXNCM8GIdArX8crs1/M="
         }
       },
       "is_incremental": false,
@@ -4878,7 +4878,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.html",
-          "hash": "zX5HxyJZuloMwrBFPrOKRTO5LXR5V7r9adMiyRzlC1M="
+          "hash": "q4y3UXBGuhm7e1wU0XY1YuJiFS1I9M6VizV/Puk/V4U="
         }
       },
       "is_incremental": false,
@@ -4890,7 +4890,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration.StreamSettings.html",
-          "hash": "Hc0u8urHXC5JXtwdNqBImgQeFl1sL6OzbveQPouVShg="
+          "hash": "89+NvqALod2GWe+lvv2H9YfAaivSOUGqdPg+PraCbaY="
         }
       },
       "is_incremental": false,

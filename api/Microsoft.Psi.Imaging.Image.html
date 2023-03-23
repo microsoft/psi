@@ -432,7 +432,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L194">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L206">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CopyFrom_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CopyFrom_Bitmap_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom(Bitmap)">CopyFrom(Bitmap)</h4>
@@ -503,7 +503,48 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L246">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L195">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_Imaging_Image_CopyFrom_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom*"></a>
+  <h4 id="Microsoft_Psi_Imaging_Image_CopyFrom_IntPtr_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom(IntPtr,System.Int32)">CopyFrom(IntPtr, Int32)</h4>
+  <div class="markdown level1 summary"><p>Copies the image contents from a memory pointer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CopyFrom(IntPtr source, int size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IntPtr</span></td>
+        <td><span class="parametername">source</span></td>
+        <td><p>Memory pointer from which to copy data.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">Int32</a></td>
+        <td><span class="parametername">size</span></td>
+        <td><p>The maximum number of bytes to copy.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="Microsoft_Psi_Imaging_Image_CopyFrom_IntPtr_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The method copies data from the memory pointer into the image.
+    The image must be allocated and must have the same size.</p>
+</div>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L258">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CopyFrom_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CopyFrom_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom(Microsoft.Psi.Imaging.DepthImage)">CopyFrom(DepthImage)</h4>
@@ -538,7 +579,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L235">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L247">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CopyFrom_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CopyFrom_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Image.CopyFrom(Microsoft.Psi.Imaging.Image)">CopyFrom(Image)</h4>
@@ -574,7 +615,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L298">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L310">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CopyTo_" data-uid="Microsoft.Psi.Imaging.Image.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CopyTo_Microsoft_Psi_Imaging_DepthImage_" data-uid="Microsoft.Psi.Imaging.Image.CopyTo(Microsoft.Psi.Imaging.DepthImage)">CopyTo(DepthImage)</h4>
@@ -609,7 +650,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L287">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L299">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CopyTo_" data-uid="Microsoft.Psi.Imaging.Image.CopyTo*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CopyTo_Microsoft_Psi_Imaging_Image_" data-uid="Microsoft.Psi.Imaging.Image.CopyTo(Microsoft.Psi.Imaging.Image)">CopyTo(Image)</h4>
@@ -645,7 +686,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L459">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L471">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_CreateEmptyOfSameSize_" data-uid="Microsoft.Psi.Imaging.Image.CreateEmptyOfSameSize*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_CreateEmptyOfSameSize" data-uid="Microsoft.Psi.Imaging.Image.CreateEmptyOfSameSize">CreateEmptyOfSameSize()</h4>
@@ -676,7 +717,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   <div><a class="xref" href="Microsoft.Psi.Imaging.ImageBase.html#Microsoft_Psi_Imaging_ImageBase_CreateEmptyOfSameSize">ImageBase.CreateEmptyOfSameSize()</a></div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L257">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L269">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_DecodeFrom_" data-uid="Microsoft.Psi.Imaging.Image.DecodeFrom*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_DecodeFrom_Microsoft_Psi_Imaging_EncodedImage_Microsoft_Psi_Imaging_IImageFromStreamDecoder_" data-uid="Microsoft.Psi.Imaging.Image.DecodeFrom(Microsoft.Psi.Imaging.EncodedImage,Microsoft.Psi.Imaging.IImageFromStreamDecoder)">DecodeFrom(EncodedImage, IImageFromStreamDecoder)</h4>
@@ -716,7 +757,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
 </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L273">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L285">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_Encode_" data-uid="Microsoft.Psi.Imaging.Image.Encode*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_Encode_Microsoft_Psi_Imaging_IImageToStreamEncoder_" data-uid="Microsoft.Psi.Imaging.Image.Encode(Microsoft.Psi.Imaging.IImageToStreamEncoder)">Encode(IImageToStreamEncoder)</h4>
@@ -857,7 +898,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L314">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L326">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_GetPixel_" data-uid="Microsoft.Psi.Imaging.Image.GetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_GetPixel_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.GetPixel(System.Int32,System.Int32)">GetPixel(Int32, Int32)</h4>
@@ -941,7 +982,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L453">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L465">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_SetPixel_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_SetPixel_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel(System.Int32,System.Int32,System.Int32)">SetPixel(Int32, Int32, Int32)</h4>
@@ -984,7 +1025,7 @@ data is made, and the bitmap data can be released right after the <a class="xref
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L387">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/Imaging/Microsoft.Psi.Imaging/Image.cs/#L399">View Source</a>
   </span>
   <a id="Microsoft_Psi_Imaging_Image_SetPixel_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel*"></a>
   <h4 id="Microsoft_Psi_Imaging_Image_SetPixel_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="Microsoft.Psi.Imaging.Image.SetPixel(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">SetPixel(Int32, Int32, Int32, Int32, Int32, Int32)</h4>

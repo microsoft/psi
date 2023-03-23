@@ -106,7 +106,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L45">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L46">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera__ctor_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.#ctor*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera__ctor_Microsoft_Psi_Pipeline_Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCameraConfiguration_System_String_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.#ctor(Microsoft.Psi.Pipeline,Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCameraConfiguration,System.String)">PhotoVideoCamera(Pipeline, PhotoVideoCameraConfiguration, String)</h4>
@@ -151,7 +151,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L91">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L126">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewEncodedImage_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewEncodedImage*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewEncodedImage" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewEncodedImage">PreviewEncodedImage</h4>
@@ -179,7 +179,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L106">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L146">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewEncodedImageCameraView_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewEncodedImageCameraView*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewEncodedImageCameraView" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewEncodedImageCameraView">PreviewEncodedImageCameraView</h4>
@@ -207,7 +207,63 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L101">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L121">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewImage_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewImage" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewImage">PreviewImage</h4>
+  <div class="markdown level1 summary"><p>Gets the BGRA-converted preview image stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;Shared&lt;Image&gt;&gt; PreviewImage { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L141">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewImageCameraView_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewImageCameraView" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewImageCameraView">PreviewImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets the preview BGRA-converted image camera view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;ImageCameraView&gt; PreviewImageCameraView { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageCameraView.html">ImageCameraView</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L136">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewIntrinsics_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewIntrinsics*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewIntrinsics" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewIntrinsics">PreviewIntrinsics</h4>
@@ -235,7 +291,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L96">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L131">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewPose_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewPose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_PreviewPose" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.PreviewPose">PreviewPose</h4>
@@ -263,7 +319,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L71">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L96">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoEncodedImage_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoEncodedImage*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoEncodedImage" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoEncodedImage">VideoEncodedImage</h4>
@@ -291,7 +347,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L86">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L116">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoEncodedImageCameraView_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoEncodedImageCameraView*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoEncodedImageCameraView" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoEncodedImageCameraView">VideoEncodedImageCameraView</h4>
@@ -319,7 +375,63 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L81">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L91">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoImage_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoImage*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoImage" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoImage">VideoImage</h4>
+  <div class="markdown level1 summary"><p>Gets the BGRA-converted image stream.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;Shared&lt;Image&gt;&gt; VideoImage { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Shared-1.html">Shared</a>&lt;<a class="xref" href="Microsoft.Psi.Imaging.Image.html">Image</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L111">View Source</a>
+  </span>
+  <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoImageCameraView_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoImageCameraView*"></a>
+  <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoImageCameraView" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoImageCameraView">VideoImageCameraView</h4>
+  <div class="markdown level1 summary"><p>Gets the BGRA-converted image camera view.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Emitter&lt;ImageCameraView&gt; VideoImageCameraView { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Microsoft.Psi.Emitter-1.html">Emitter</a>&lt;<a class="xref" href="Microsoft.Psi.Spatial.Euclidean.ImageCameraView.html">ImageCameraView</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L106">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoIntrinsics_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoIntrinsics*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoIntrinsics" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoIntrinsics">VideoIntrinsics</h4>
@@ -347,7 +459,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L76">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L101">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoPose_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoPose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_VideoPose" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.VideoPose">VideoPose</h4>
@@ -377,7 +489,7 @@
   </h3>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L109">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L149">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_Dispose_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.Dispose*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_Dispose" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.Dispose">Dispose()</h4>
@@ -389,7 +501,7 @@
   </div>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L122">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L162">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_Start_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.Start*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_Start_Action_Windows_Foundation_DateTime__" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.Start(Action{Windows.Foundation.DateTime})">Start(Action&lt;DateTime&gt;)</h4>
@@ -418,7 +530,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L192">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L236">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_Stop_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.Stop*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_Stop_Windows_Foundation_DateTime_Action_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.Stop(Windows.Foundation.DateTime,Action)">Stop(DateTime, Action)</h4>
@@ -452,7 +564,7 @@
   </table>
   
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L216">View Source</a>
+    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L260">View Source</a>
   </span>
   <a id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_ToString_" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.ToString*"></a>
   <h4 id="Microsoft_Psi_MixedReality_MediaCapture_PhotoVideoCamera_ToString" data-uid="Microsoft.Psi.MixedReality.MediaCapture.PhotoVideoCamera.ToString">ToString()</h4>
@@ -502,7 +614,7 @@
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L26" class="contribution-link">View Source</a>
+                    <a href="https://github.com/microsoft/psi/blob/master/Sources/MixedReality/Microsoft.Psi.MixedReality.UniversalWindows/MediaCapture/PhotoVideoCamera.cs/#L27" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
