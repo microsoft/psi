@@ -94,17 +94,16 @@ namespace SigdialDemo
 
         public static void Main(string[] args)
         {
-            SetConsole();
             if (Initialize())    // TEMPORARY
             // if (true)
             {
                 bool exit = false;
                 while (!exit)
                 {
+                    SetConsole();
                     Console.WriteLine("############################################################################");
-                    Console.WriteLine("1) Respond to requests from remote device.");
-                    Console.WriteLine("Press any key to exit.'");
-                    Console.WriteLine("Then press 'q' to quit.'");
+                    Console.WriteLine("1) Respond to requests from remote device. Then press any key to quit.");
+                    Console.WriteLine("Q) Quit.");
                     ConsoleKey key = Console.ReadKey().Key;
                     Console.WriteLine();
                     switch (key)
@@ -116,6 +115,7 @@ namespace SigdialDemo
                             exit = true;
                             break;
                     }
+                    exit = true;   // TEMPORARY for one loop only
                 }
             }
             // else
@@ -198,6 +198,8 @@ namespace SigdialDemo
                 mergeToAgent.PipeTo(nmqPubToAgent); 
 
                 p.RunAsync();
+
+                Console.WriteLine("Press any key to exit...");
                 Console.ReadKey(true); 
             }
         }
