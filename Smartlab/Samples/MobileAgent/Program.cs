@@ -94,15 +94,16 @@ namespace SigdialDemo
 
         public static void Main(string[] args)
         {
-            SetConsole();
             if (Initialize())    // TEMPORARY
-            if (true)
+            // if (true)
             {
                 bool exit = false;
                 while (!exit)
                 {
+                    SetConsole();
                     Console.WriteLine("############################################################################");
-                    Console.WriteLine("1) Respond to requests from remote device.");
+                    Console.WriteLine("1) Respond to requests from remote device. Then press any key to quit.");
+                    Console.WriteLine("Q) Quit.");
                     ConsoleKey key = Console.ReadKey().Key;
                     Console.WriteLine();
                     switch (key)
@@ -110,10 +111,11 @@ namespace SigdialDemo
                         case ConsoleKey.D1:
                             RunDemo();
                             break;
-                        // case ConsoleKey.Q:
-                        //     exit = true;
-                        //     break;
+                        case ConsoleKey.Q:
+                            exit = true;
+                            break;
                     }
+                    exit = true;   // TEMPORARY for one loop only
                 }
             }
             // else
@@ -166,7 +168,6 @@ namespace SigdialDemo
             }
             Thread.Sleep(1000); 
 
-
             using (var p = Pipeline.Create())
             {
                 // Subscribe to messages from remote sensor using NetMQ (ZeroMQ)
@@ -196,8 +197,10 @@ namespace SigdialDemo
                 // mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
                 mergeToAgent.PipeTo(nmqPubToAgent); 
 
-                p.Run();
+                p.RunAsync();
 
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey(true); 
             }
         }
 
