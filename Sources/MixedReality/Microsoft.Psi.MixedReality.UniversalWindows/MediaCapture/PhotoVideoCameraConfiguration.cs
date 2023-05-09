@@ -102,6 +102,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             public int ImageHeight { get; set; } = 720;
 
             /// <summary>
+            /// Gets or sets a value indicating whether the BGRA-converted image is emitted.
+            /// </summary>
+            public bool OutputImage { get; set; } = false;
+
+            /// <summary>
             /// Gets or sets a value indicating whether the original NV12-encoded image is emitted.
             /// </summary>
             public bool OutputEncodedImage { get; set; } = true;
@@ -115,6 +120,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             /// Gets or sets a value indicating whether the camera pose is emitted.
             /// </summary>
             public bool OutputPose { get; set; } = true;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the BGRA-converted image camera view is emitted.
+            /// </summary>
+            public bool OutputImageCameraView { get; set; } = false;
 
             /// <summary>
             /// Gets or sets a value indicating whether the original NV12-encoded camera view is emitted.
