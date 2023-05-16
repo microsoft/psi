@@ -7,6 +7,7 @@ using CMU.Smartlab.Communication;
 using CMU.Smartlab.Identity;
 // using CMU.Smartlab.Rtsp;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 // using Microsoft.Kinect;
 using Microsoft.Psi;
-using Microsoft.Psi.Components; 
+using Microsoft.Psi.Components;
 using Microsoft.Psi.Audio;
 using Microsoft.Psi.CognitiveServices;
 using Microsoft.Psi.CognitiveServices.Speech;
@@ -35,6 +36,7 @@ using Apache.NMS.ActiveMQ.Transport.Discovery;
 using Rectangle = System.Drawing.Rectangle;
 using NetMQ;
 using NetMQ.Sockets;
+using Newtonsoft.Json;
 // using NetMQSource;
 // using ZeroMQ; 
 // using Operators; 
@@ -42,10 +44,16 @@ using NetMQ.Sockets;
 
 namespace SigdialDemo
 {
+    public class NanoIPs
+    {
+        public string audio_channel { get; set; }
+        public string doa { get; set; }
+        public string vad { get; set; }
+        public string remoteIP { get; set; }
+    }
     public class Program
     {
         private const string AppName = "SmartLab Project - Demo v3.0 (for SigDial Demo)";
-
         private const string TopicToBazaar = "PSI_Bazaar_Text";
         private const string TopicToPython = "PSI_Python_Image";
         private const string TopicToMacaw = "PSI_Macaw_Text";
@@ -56,41 +64,35 @@ namespace SigdialDemo
         private const string TopicToAgent = "PSI_Agent_Text";
         private const string TopicFromSensor = "Sensor_PSI_Text";
         private const string TopicFaceOrientation = "face-orientation";
-
         private const int SendingImageWidth = 360;
         private const int MaxSendingFrameRate = 15;
         private const string TcpIPResponder = "@tcp://*:40001";
-        // private const string TcpIPPublisher = "tcp://*:40002";
         private const string TcpIPPublisher = "tcp://*:30002";
+        // private const string TcpIPPublisher = "tcp://*:40002";
         // private const string TcpIPPublisher = "tcp://*:5500";
-        
-
         private const double SocialDistance = 183;
         private const double DistanceWarningCooldown = 30.0;
         private const double NVBGCooldownLocation = 8.0;
         private const double NVBGCooldownAudio = 3.0;
-
-        private static string AzureSubscriptionKey = "abee363f8d89444998c5f35b6365ca38";
+        private static string AzureSubscriptionKey = "b6ba5313943f4393abaa37e28a45de51";
         private static string AzureRegion = "eastus";
         public static readonly object SendToBazaarLock = new object();
         public static readonly object SendToPythonLock = new object();
         public static readonly object LocationLock = new object();
         public static readonly object AudioSourceLock = new object();
-
         public static volatile bool AudioSourceFlag = true;
-
         public static DateTime LastLocSendTime = new DateTime();
         public static DateTime LastDistanceWarning = new DateTime();
         public static DateTime LastNVBGTime = new DateTime();
-
         public static List<IdentityInfo> IdInfoList;
         public static Dictionary<string, IdentityInfo> IdHead;
         public static Dictionary<string, IdentityInfo> IdTail;
         public static List<String> AudioSourceList;
         public static CameraInfo VhtInfo;
-        // private readonly Merger<Message<string>, int> merger;
-
-        public static String remoteIP; 
+        public static String remoteIP = "tcp://128.2.212.138:40000";
+        public static String audio_channel = "tcp://128.2.212.138:40001"; 
+        public static String doa = "tcp://128.2.212.138:40002"; 
+        public static String nanoVad = "tcp://128.2.212.138:40003"; 
 
         public static void Main(string[] args)
         {
@@ -152,55 +154,165 @@ namespace SigdialDemo
 
             return true;
         }
- 
+
         // ...
         public static void RunDemo()
         {
-            String remoteIP; 
-            // String localIP = "tcp://127.0.0.1:40003";
+            // NanoIPs ips;
 
-            using (var responseSocket = new ResponseSocket("@tcp://*:40001")) {
-                var message = responseSocket.ReceiveFrameString();
-                Console.WriteLine("RunDemoWithRemoteMultipart, responseSocket received '{0}'", message);
-                responseSocket.SendFrame(message);
-                remoteIP = message; 
-                Console.WriteLine("RunDemoWithRemoteMultipart: remoteIP = '{0}'", remoteIP);
-            }
-            Thread.Sleep(1000); 
+            // String remoteIP;
+            // using (var responseSocket = new ResponseSocket("@tcp://*:40001"))
+            // {
+            //     var message = responseSocket.ReceiveFrameString();
+            //     Console.WriteLine("RunDemoWithRemoteMultipart, responseSocket received '{0}'", message);
+            //     responseSocket.SendFrame(message);
+            //     remoteIP = message; 
+            //     // ips = JsonConvert.DeserializeObject<NanoIPs>(message);
+            //     // remoteIP = ips.remoteIP;
+            //     Console.WriteLine("RunDemoWithRemoteMultipart: remoteIP = '{0}'", remoteIP);
+            // }
+            // Thread.Sleep(1000);
+
 
             using (var p = Pipeline.Create())
             {
                 // Subscribe to messages from remote sensor using NetMQ (ZeroMQ)
                 // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, MessagePackFormat.Instance, useSourceOriginatingTimes = true, name="Sensor to PSI");
                 // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance, true, "Sensor to PSI");
-                var nmqSubFromSensor = new NetMQSubscriber<IDictionary<string,object>>(p, "", remoteIP, MessagePackFormat.Instance, true, "Sensor to PSI");
+                // other messages
+                var nmqSubFromSensor = new NetMQSubscriber<IDictionary<string, object>>(p, "", remoteIP, MessagePackFormat.Instance, true, "Sensor to PSI");
 
                 // Create a publisher for messages from the sensor to Bazaar
-                var amqPubSensorToBazaar = new AMQPublisher<IDictionary<string,object>>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar"); 
+                var amqPubSensorToBazaar = new AMQPublisher<IDictionary<string, object>>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar");
 
                 // Subscribe to messages from Bazaar for the agent
-                var amqSubBazaarToAgent = new AMQSubscriber<IDictionary<string,object>>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent"); 
+                var amqSubBazaarToAgent = new AMQSubscriber<IDictionary<string, object>>(p, TopicFromBazaar, TopicToAgent, "Bazaar to Agent");
 
                 // Create a publisher for messages to the agent using NetMQ (ZeroMQ)
-                var nmqPubToAgent = new NetMQPublisher<IDictionary<string,object>>(p, TopicFaceOrientation, TcpIPPublisher, MessagePackFormat.Instance);
+                var nmqPubToAgent = new NetMQPublisher<IDictionary<string, object>>(p, TopicFaceOrientation, TcpIPPublisher, MessagePackFormat.Instance);
                 // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
                 // Route messages from the sensor to Bazaar
-                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn); 
+                nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn);
 
                 // Combine messages (1) direct from sensor, and (2) from Bazaar, and send to agent
-                SmartlabMerge<IDictionary<string,object>> mergeToAgent = new SmartlabMerge<IDictionary<string,object>>(p,"Merge to Agent"); 
-                var receiverSensor = mergeToAgent.AddInput("Sensor to PSI"); 
-                var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent"); 
-                nmqSubFromSensor.PipeTo(receiverSensor); 
+                SmartlabMerge<IDictionary<string, object>> mergeToAgent = new SmartlabMerge<IDictionary<string, object>>(p, "Merge to Agent");
+                var receiverSensor = mergeToAgent.AddInput("Sensor to PSI");
+                var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent");
+                nmqSubFromSensor.PipeTo(receiverSensor);
                 amqSubBazaarToAgent.PipeTo(receiverBazaar);
                 // mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
                 mergeToAgent.PipeTo(nmqPubToAgent); 
 
-                p.RunAsync();
+                // ======================================================================================
+                // vvv AUDIO SETUP vvv
+                var format = WaveFormat.Create16BitPcm(16000, 1);
 
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey(true); 
+                // binary data stream
+                var audioFromNano = new NetMQSource<byte[]>(
+                    p,
+                    "temp",
+                    // ips.audio_channel,  // TEMPORARY
+                    audio_channel,          // TEMPORARY
+                    MessagePackFormat.Instance);
+
+                // DOA - Direction of Arrival (of sound, int values range from 0 to 360)
+                var doaFromNano = new NetMQSource<int>(
+                    p,
+                    "temp2",
+                    // ips.doa,         // TEMPORARY
+                    doa,             // TEMPORARY
+                    MessagePackFormat.Instance);
+
+                var vadFromNano = new NetMQSource<int>(
+                    p,
+                    "temp3",
+                    // ips.vad,         // TEMPORARY
+                    nanoVad,                // TEMPORARY
+                MessagePackFormat.Instance);
+
+                // processing audio and DOA input, and saving to file
+                // audioFromNano contains binary array data, needs to be converted to PSI compatible AudioBuffer format
+                var audioInAudioBuffer = audioFromNano
+                    .Select(t =>
+                    {
+                        var ab = new AudioBuffer(t, format);
+                        return ab;
+                    });
+
+                // saving to audio file
+                // var saveToWavFile = new WaveFileWriter(p, "./psi_direct_audio_05-14-a.wav");
+                // audioInAudioBuffer.PipeTo(saveToWavFile);  
+
+                // vvvvvvvvvvvv From psi-samples SimpleVoiceActivityDetector vvvvvvvvvvvvvv
+
+                // To run from a stored audio file
+                //    -- Comment out the 'audioInAudioBuffer' declaration above
+                //    -- Uncomment the two lines below and customize the file name at the end of the first line
+                // var inputStore = PsiStore.Open(p, "psi_direct_audio_0.wav", Path.Combine(Directory.GetCurrentDirectory(), "Stores"));
+                // audioInAudioBuffer = inputStore.OpenStream<AudioBuffer>("Audio");  // replaced microphone with audioInAudioBuffer
+
+                var acousticFeaturesExtractor = new AcousticFeaturesExtractor(p);
+                audioInAudioBuffer.PipeTo(acousticFeaturesExtractor);  // replaced microphone with audioInAudioBuffer
+
+                // Display the log energy
+                // acousticFeaturesExtractor.LogEnergy
+                //     .Sample(TimeSpan.FromSeconds(0.2))
+                //     .Do(logEnergy => Console.Write($"LogEnergy = {logEnergy}"));
+                    // .Do(logEnergy => Console.WriteLine($"LogEnergy = {logEnergy}"));
+
+                // Create a voice-activity stream by thresholding the log energy
+                var vad = acousticFeaturesExtractor.LogEnergy
+                    .Select(l => l > 10);
+                
+                // Create filtered signal by aggregating over historical buffers
+                var vadWithHistory = acousticFeaturesExtractor.LogEnergy
+                    .Window(RelativeTimeInterval.Future(TimeSpan.FromMilliseconds(300)))
+                    .Aggregate(false, (previous, buffer) => (!previous && buffer.All(v => v > 10)) || (previous && !buffer.All(v => v < 10)));
+
+                // Write the microphone output, VAD streams, and some acoustic features to the store
+                // Console.WriteLine($"Writing to store");
+                // var store = PsiStore.Create(p, "SimpleVAD", Path.Combine(Directory.GetCurrentDirectory(), "Stores"));
+                // audioInAudioBuffer.Write("Audio", store);
+                // vad.Write("VAD", store);
+                // vadWithHistory.Write("VADFiltered", store);
+                // acousticFeaturesExtractor.LogEnergy.Write("LogEnergy", store);
+                // acousticFeaturesExtractor.ZeroCrossingRate.Write("ZeroCrossingRate", store);
+                // ^^^^^^^^^^^^ From psi-samples SimpleVoiceActivityDetector ^^^^^^^^^^^^^
+                
+
+                // AUDIO [10, 283, 3972, 74.0397, ........., 835.3, 493.8]
+                // VAD [0, 0, 1, 1, 1, 1,................, 0, 0] (same length as above)
+                var annotatedAudio = audioInAudioBuffer.Join(vadWithHistory, TimeSpan.FromMilliseconds(100)).Select(x =>
+                {
+                    return (x.Item1, x.Item2);
+                });
+
+                var recognizer = new AzureSpeechRecognizer(p, new AzureSpeechRecognizerConfiguration()
+                {
+                    SubscriptionKey = Program.AzureSubscriptionKey,
+                    Region = Program.AzureRegion
+                });
+
+                // To CHECK: 
+                // What is being sent to Azure? Answer: Only audio for which voice activity detection (vad) == true
+                // What are we being charged for: the time the ASR system is running or the audio duration being sent?
+                annotatedAudio.PipeTo(recognizer);
+
+                // Text transcription from Azure
+                var finalResults = recognizer.Out.Where(result => result.IsFinal);
+                finalResults.Do((IStreamingSpeechRecognitionResult result, Envelope envelope) =>
+                {
+                    string text = result.Text; 
+                    if (!string.IsNullOrWhiteSpace(text)) {
+                        Console.WriteLine($"Send text message to Bazaar: {text}");
+                    }
+                });
+                // ^^^ AUDIO SETUP ^^^
+                // ======================================================================================
+
+                p.RunAsync();
+                Console.ReadKey();
             }
         }
 
@@ -212,19 +324,17 @@ namespace SigdialDemo
             using (var p = Pipeline.Create())
             for (;;) 
             {
-                {
-                    var mq = new NetMQSource<string>(p, "test-topic", "tcp://localhost:45678", JsonFormat.Instance); 
-                    Console.WriteLine("requestSocket : Sending 'Hello'");
-                    requestSocket.SendFrame(">>>>> Hello from afar! <<<<<<");
-                    var message = responseSocket.ReceiveFrameString();
-                    Console.WriteLine("responseSocket : Server Received '{0}'", message);
-                    Console.WriteLine("responseSocket Sending 'Hibackatcha!'");
-                    responseSocket.SendFrame("Hibackatcha!");
-                    message = requestSocket.ReceiveFrameString();
-                    Console.WriteLine("requestSocket : Received '{0}'", message);
-                    Console.ReadLine();
-                    Thread.Sleep(1000);
-                }
+				var mq = new NetMQSource<string>(p, "test-topic", "tcp://localhost:45678", JsonFormat.Instance); 
+				Console.WriteLine("requestSocket : Sending 'Hello'");
+				requestSocket.SendFrame(">>>>> Hello from afar! <<<<<<");
+				var message = responseSocket.ReceiveFrameString();
+				Console.WriteLine("responseSocket : Server Received '{0}'", message);
+				Console.WriteLine("responseSocket Sending 'Hibackatcha!'");
+				responseSocket.SendFrame("Hibackatcha!");
+				message = requestSocket.ReceiveFrameString();
+				Console.WriteLine("requestSocket : Received '{0}'", message);
+				Console.ReadLine();
+				Thread.Sleep(1000);
             }
         }
 
@@ -235,7 +345,7 @@ namespace SigdialDemo
             string address = "tcp://127.0.0.1:40001";
             var pubSocket = new PublisherSocket();
             pubSocket.Options.SendHighWatermark = 1000;
-            pubSocket.Bind(address); 
+            pubSocket.Bind(address);
             var subSocket = new SubscriberSocket();
             subSocket.Connect(address);
             Thread.Sleep(100);
@@ -252,14 +362,13 @@ namespace SigdialDemo
                         Console.WriteLine( "Received nothing");
                         continue; 
                     }
-                    Console.WriteLine( "Received something");
-                    break; 
+                    Console.WriteLine("Received something");
+                    break;
                 }
-                Console.WriteLine( received );
+                Console.WriteLine(received);
                 Thread.Sleep(2000);
             }
         }
-
 
 
         private static String getRandomName()
