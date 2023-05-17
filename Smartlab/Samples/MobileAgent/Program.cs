@@ -302,24 +302,13 @@ namespace SigdialDemo
                 // Text transcription from Azure
                 var finalResults = recognizer.Out.Where(result => result.IsFinal);
 
-                recognizer.Select(result => result.Text).PipeTo(amqPubSensorToBazaar.StringIn);
-                // recognizer.Out.PipeTo(amqPubSensorToBazaar.IDictionaryIn); 
-                // recognizer.Out.PipeTo(amqPubSensorToBazaar.StringIn);
-                // SAMPLE from above: nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn);
-                // recognizer.PipeTo(amqPubSensorToBazaar); 
-                // String resultText = getResultText(finalResults); 
-                // recognizer.Out.Where(result => result.IsFinal).PipeTo(amqPubSensorToBazaar.StringIn); 
-                // recognizer.Out.Where(result => result.IsFinal).Do((IStreamingSpeechRecognitionResult result, Envelope envelope) =>
-                //     {
-                //     return result.Text; 
-                //     }) 
-                // .PipeTo(amqPubSensorToBazaar.StringIn); 
+                recognizer.Select(result => "audio:" + result.Text).PipeTo(amqPubSensorToBazaar.StringIn);
 
                 finalResults.Do((IStreamingSpeechRecognitionResult result, Envelope envelope) =>
                 {
                     string text = result.Text; 
                     if (!string.IsNullOrWhiteSpace(text)) {
-                        Console.WriteLine($"Send text message to Bazaar: {text}");
+                        Console.WriteLine($"Sending text to Bazaar -- audio:{text}");
                     }
                 });
                 // ^^^ AUDIO SETUP ^^^
