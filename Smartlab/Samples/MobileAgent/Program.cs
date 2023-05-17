@@ -89,7 +89,8 @@ namespace SigdialDemo
         public static Dictionary<string, IdentityInfo> IdTail;
         public static List<String> AudioSourceList;
         public static CameraInfo VhtInfo;
-        public static String remoteIP = "tcp://128.2.212.138:40000";
+        // public static String remoteIP = "tcp://128.2.212.138:40000";     // Nano
+        public static String remoteIP = "tcp://128.2.220.118:40003";     // erebor
         public static String audio_channel = "tcp://128.2.212.138:40001"; 
         public static String doa = "tcp://128.2.212.138:40002"; 
         public static String nanoVad = "tcp://128.2.212.138:40003"; 
