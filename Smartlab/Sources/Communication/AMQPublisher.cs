@@ -212,16 +212,19 @@ namespace CMU.Smartlab.Communication
 
         private static string processString(String s)
         {
-            string delimiter = ":"; 
-            Console.WriteLine($"AMQPublisher, Process String - input: {s}");
-            if (s != null)
-            {
-                string [] components = s.Split(delimiter); 
-                if (components[0] != "location") {
-                    return components[1];
-                }
-            }
-            return null; 
+
+            // TEMPORARY
+            return s; 
+            // string delimiter = ":"; 
+            // Console.WriteLine($"AMQPublisher, Process String - input: {s}");
+            // if (s != null)
+            // {
+            //     string [] components = s.Split(delimiter); 
+            //     if (components[0] != "location") {
+            //         return components[1];
+            //     }
+            // }
+            // return null; 
         }
 
         private static string processIDictionary(IDictionary<string,object> dictionaryIn)
