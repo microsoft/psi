@@ -57,7 +57,7 @@ jobs:
 
       - name: Generate Random Name
         id: generator
-        uses: TGPSKI/name-generator-node-action@v2
+        uses: thclark/coolname-generator-action@0.0.1
         with:
           separator: '_'
           length: '3'
