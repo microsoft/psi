@@ -51,6 +51,10 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      RELEASE_NAME: ${{ github.sha }}
+      RELEASE_VERSION: ${{ github.ref }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -66,9 +70,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0
-          release_name: Release 1.0.0
-          body: Release notes for version 1.0.0.
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_NAME }}
+          body: Release notes for version ${{ env.RELEASE_VERSION }}
           draft: false
           prerelease: false
 
