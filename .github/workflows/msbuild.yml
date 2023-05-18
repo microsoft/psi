@@ -72,3 +72,13 @@ jobs:
           body: Release notes for version ${{ steps.generate-name.outputs.petname }}
           draft: false
           prerelease: false
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/built-dll
+          asset_name: Microsoft.Psi.Visualization.Windows.dll
+          asset_content_type: application/octet-stream
