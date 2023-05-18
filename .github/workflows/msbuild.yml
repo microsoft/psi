@@ -51,13 +51,13 @@ jobs:
     permissions:
       contents: write
 
-    env:
-      RELEASE_NAME: ${{ github.sha }}
-      RELEASE_VERSION: ${{ github.ref_qualified }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Generate Random Name
+        id: generate_name
+        uses: actions/unique-name-generator-action@v1
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -70,9 +70,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.RELEASE_NAME }}
-          release_name: ${{ env.RELEASE_VERSION }}
-          body: Release notes for version ${{ env.RELEASE_VERSION }}
+          tag_name: ${{ github.sha }}
+          release_name: ${{ steps.generate_name.outputs.name }}
+          body: Release notes for version ${{ steps.generate_name.outputs.name }}
           draft: false
           prerelease: false
 
