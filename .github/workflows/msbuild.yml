@@ -53,7 +53,7 @@ jobs:
 
     env:
       RELEASE_NAME: ${{ github.sha }}
-      RELEASE_VERSION: ${{ github.ref }}
+      RELEASE_VERSION: ${{ github.ref_qualified }}
 
     steps:
       - name: Checkout code
@@ -70,8 +70,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.RELEASE_VERSION }}
-          release_name: ${{ env.RELEASE_NAME }}
+          tag_name: ${{ env.RELEASE_NAME }}
+          release_name: ${{ env.RELEASE_VERSION }}
           body: Release notes for version ${{ env.RELEASE_VERSION }}
           draft: false
           prerelease: false
