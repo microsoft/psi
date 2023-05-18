@@ -15,7 +15,7 @@ env:
   BUILD_CONFIGURATION: Release
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -41,7 +41,7 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PsiStudio }}
       with:
         tag_name: v0.0.1
         release_name: Release v0.0.1
@@ -51,7 +51,7 @@ jobs:
     - name: Upload DLL to Release
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.PsiStudio }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/Microsoft.Psi.Visualization.Windows.dll
