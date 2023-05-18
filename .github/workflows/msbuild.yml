@@ -56,8 +56,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Generate Random Name
-        id: generate_name
-        uses: actions/unique-name-generator-action@v1
+        id: generator
+        uses: TGPSKI/name-generator-node-action@v2
+        with:
+          separator: '_'
+          length: '3'
+          style: 'upperCase'
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -70,9 +74,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.generate_name.outputs.name }}
-          release_name: ${{ steps.generate_name.outputs.name }}
-          body: Release notes for version ${{ steps.generate_name.outputs.name }}
+          tag_name: ${{ steps.generator.outputs.name }}
+          release_name: ${{ steps.generator.outputs.name }}
+          body: Release notes for version ${{ steps.generator.outputs.name }}
           draft: false
           prerelease: false
 
