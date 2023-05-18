@@ -35,15 +35,13 @@ jobs:
         run: nuget restore ${{env.SOLUTION_FILE_PATH}}
 
       - name: Build
-        # Add additional options to the MSBuild command line here (like platform or verbosity level).
-        # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
         run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: DLL
-          path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/net472/Microsoft.Psi.Visualization.Windows.dll
+          name: built-dll
+          path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/Microsoft.Psi.Visualization.Windows.dll
 
   release:
     needs: build
@@ -60,9 +58,10 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: DLL
+          name: built-dll
 
       - name: Create Release
+        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,6 +78,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: Microsoft.Psi.Visualization.Windows.dll
+          asset_path: built-dll/Microsoft.Psi.Visualization.Windows.dll
           asset_name: Microsoft.Psi.Visualization.Windows.dll
           asset_content_type: application/octet-stream
