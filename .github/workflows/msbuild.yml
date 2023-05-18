@@ -1,4 +1,4 @@
-name: Build and release visualization dll
+name: Build and Release DLL
 
 on:
   push:
@@ -37,50 +37,23 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
-  release:
-    needs: build
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Create Release Draft
+    - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.0  # Replace with your desired tag name
-        release_name: Release v1.0.0  # Replace with your desired release name
+        tag_name: v0.0.1
+        release_name: Release v0.0.1
         draft: false
         prerelease: false
 
-    - name: Upload DLL
-      id: upload_dll
-      uses: actions/upload-artifact@v2
-      with:
-        name: compiled-dll
-        path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{env.BUILD_CONFIGURATION}}/Microsoft.Psi.Visualization.Windows.dll
-
-    - name: Get Artifact URL
-      id: get_artifact_url
-      run: echo "::set-output name=artifact_url::${{ steps.upload_dll.outputs.artifact_url }}"
-
-    - name: Add Artifact Link to Release Body
-      id: update_release_body
-      uses: actions/github-script@v4
+    - name: Upload DLL to Release
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const artifactUrl = '${{ steps.get_artifact_url.outputs.artifact_url }}';
-          const releaseId = '${{ steps.create_release.outputs.id }}';
-          const octokit = require('@octokit/rest')();
-          octokit.repos.getRelease({ owner: context.repo.owner, repo: context.repo.repo, release_id: releaseId }).then(response => {
-            const release = response.data;
-            const updatedBody = release.body + '\n\nCompiled DLL: ' + artifactUrl;
-            octokit.repos.updateRelease({ owner: context.repo.owner, repo: context.repo.repo, release_id: releaseId, body: updatedBody });
-          });
-
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/Microsoft.Psi.Visualization.Windows.dll
+        asset_name: Microsoft.Psi.Visualization.Windows.dll
+        asset_content_type: application/octet-stream
