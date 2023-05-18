@@ -89,7 +89,8 @@ namespace SigdialDemo
         public static Dictionary<string, IdentityInfo> IdTail;
         public static List<String> AudioSourceList;
         public static CameraInfo VhtInfo;
-        public static String remoteIP = "tcp://128.2.212.138:40000";
+        // public static String remoteIP = "tcp://128.2.212.138:40000";     // Nano
+        public static String remoteIP = "tcp://128.2.220.118:40003";     // erebor
         public static String audio_channel = "tcp://128.2.212.138:40001"; 
         public static String doa = "tcp://128.2.212.138:40002"; 
         public static String nanoVad = "tcp://128.2.212.138:40003"; 
@@ -301,11 +302,14 @@ namespace SigdialDemo
 
                 // Text transcription from Azure
                 var finalResults = recognizer.Out.Where(result => result.IsFinal);
+
+                recognizer.Select(result => "audio:" + result.Text).PipeTo(amqPubSensorToBazaar.StringIn);
+
                 finalResults.Do((IStreamingSpeechRecognitionResult result, Envelope envelope) =>
                 {
                     string text = result.Text; 
                     if (!string.IsNullOrWhiteSpace(text)) {
-                        Console.WriteLine($"Send text message to Bazaar: {text}");
+                        Console.WriteLine($"Sending text to Bazaar -- audio:{text}");
                     }
                 });
                 // ^^^ AUDIO SETUP ^^^
@@ -315,6 +319,7 @@ namespace SigdialDemo
                 Console.ReadKey();
             }
         }
+
 
         // Works sending to itself locally
         public static void RunDemoWithLocal()
