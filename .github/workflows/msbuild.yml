@@ -1,4 +1,4 @@
-name: Build and Release DLL
+name: Build and Release Visualization DLL
 
 on:
   push:
@@ -13,9 +13,6 @@ env:
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
-
-permissions:
-  contents: read
 
 jobs:
   build:
@@ -40,7 +37,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: built-dll
+          name: VisualizationDLL
           path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/net472/Microsoft.Psi.Visualization.Windows.dll
 
   release:
@@ -59,7 +56,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: built-dll
+          name: VisualizationDLL
 
       - name: Create Release
         id: create_release
@@ -69,7 +66,11 @@ jobs:
         with:
           tag_name: ${{ steps.generate-name.outputs.petname }}
           release_name: ${{ steps.generate-name.outputs.petname }}
-          body: Release notes for version ${{ steps.generate-name.outputs.petname }}
+          body: |
+            Release notes for version ${{ steps.generate-name.outputs.petname }}:
+
+            The Microsoft.Psi.Visualization.Windows.dll contains the necessary modifications for the Position, Rotate and VAD datas to be displayed in the PsiStudio Visualizer.
+            *Lien vers le wiki qui explique l'utilisation?*
           draft: false
           prerelease: false
 
