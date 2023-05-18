@@ -70,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
+          tag_name: ${{ steps.generate_name.outputs.name }}
           release_name: ${{ steps.generate_name.outputs.name }}
           body: Release notes for version ${{ steps.generate_name.outputs.name }}
           draft: false
