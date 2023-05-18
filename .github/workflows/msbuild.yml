@@ -55,13 +55,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Generate Random Name
-        id: generator
-        uses: thclark/coolname-generator-action@0.0.1
-        with:
-          separator: '_'
-          length: '3'
-          style: 'upperCase'
+      - name: Generate random name
+        id: generate-name
+        uses: cyberbartels/random-pet@main
 
       - name: Download artifact
         uses: actions/download-artifact@v2
@@ -74,9 +70,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.generator.outputs.name }}
-          release_name: ${{ steps.generator.outputs.name }}
-          body: Release notes for version ${{ steps.generator.outputs.name }}
+          tag_name: ${{ steps.generate-name.outputs.petname }}
+          release_name: ${{ steps.generate-name.outputs.petname }}
+          body: Release notes for version ${{ steps.generate-name.outputs.petname }}
           draft: false
           prerelease: false
 
