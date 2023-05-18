@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: built-dll
-          path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/Microsoft.Psi.Visualization.Windows.dll
+          path: ./Sources/Visualization/Microsoft.Psi.Visualization.Windows/bin/${{ env.BUILD_CONFIGURATION }}/net472/Microsoft.Psi.Visualization.Windows.dll
 
   release:
     needs: build
