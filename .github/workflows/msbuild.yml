@@ -46,7 +46,7 @@ jobs:
   release:
     needs: build
 
-    runs-on: windows-latest
+    runs-on: ubuntu-20.04
 
     permissions:
       contents: write
