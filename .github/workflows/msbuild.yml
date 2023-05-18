@@ -75,6 +75,7 @@ jobs:
             Release notes for version ${{ steps.generate-name.outputs.petname }}:
 
             The Microsoft.Psi.Visualization.Windows.dll contains the necessary modifications for the Position, Rotate and VAD datas to be displayed in the PsiStudio Visualizer.
+
             *Lien vers le wiki qui explique l'utilisation?*
           draft: false
           prerelease: false
