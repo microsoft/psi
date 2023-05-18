@@ -61,10 +61,6 @@ jobs:
         with:
           name: built-dll
 
-      - name: Extract artifact
-        run: |
-          unzip built-dll.zip -d built-dll
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
