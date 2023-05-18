@@ -79,6 +79,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/built-dll/Microsoft.Psi.Visualization.Windows.dll
+          asset_path: ${{ github.workspace }}/Microsoft.Psi.Visualization.Windows.dll
           asset_name: Microsoft.Psi.Visualization.Windows.dll
           asset_content_type: application/octet-stream
