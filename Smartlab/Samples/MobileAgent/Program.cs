@@ -44,12 +44,12 @@ using Newtonsoft.Json;
 
 namespace SigdialDemo
 {
-    public class NanoIPs
+    public class sensorIPs
     {
-        public string audio_channel { get; set; }
-        public string doa { get; set; }
-        public string vad { get; set; }
-        public string remoteIP { get; set; }
+        public string sensorAudio { get; set; }
+        public string sensorDOA { get; set; }
+        public string sensorVAD { get; set; }
+        public string sensorVideoText { get; set; }
     }
     public class Program
     {
@@ -89,11 +89,16 @@ namespace SigdialDemo
         public static Dictionary<string, IdentityInfo> IdTail;
         public static List<String> AudioSourceList;
         public static CameraInfo VhtInfo;
-        // public static String remoteIP = "tcp://128.2.212.138:40000";     // Nano
-        public static String remoteIP = "tcp://128.2.220.118:40003";     // erebor
-        public static String audio_channel = "tcp://128.2.212.138:40001"; 
-        public static String doa = "tcp://128.2.212.138:40002"; 
-        public static String nanoVad = "tcp://128.2.212.138:40003"; 
+        // public static String sensorVideoText = "tcp://128.2.212.138:40000";     // Nano
+        // public static String sensorVideoText = "tcp://128.2.220.118:40003";     // erebor
+        public static String sensorVideoText; 
+        public static String sensorAudio; 
+        public static String sensorDOA; 
+        public static String sensorVAD; 
+
+        // public static String sensorAudio = "tcp://128.2.212.138:40001"; 
+        // public static String sensorDOA = "tcp://128.2.212.138:40002"; 
+        // public static String sensorVAD = "tcp://128.2.212.138:40003"; 
 
         public static void Main(string[] args)
         {
@@ -159,29 +164,33 @@ namespace SigdialDemo
         // ...
         public static void RunDemo()
         {
-            // NanoIPs ips;
+            sensorIPs IPs = new sensorIPs(); 
 
-            // String remoteIP;
-            // using (var responseSocket = new ResponseSocket("@tcp://*:40001"))
-            // {
-            //     var message = responseSocket.ReceiveFrameString();
-            //     Console.WriteLine("RunDemoWithRemoteMultipart, responseSocket received '{0}'", message);
-            //     responseSocket.SendFrame(message);
-            //     remoteIP = message; 
-            //     // ips = JsonConvert.DeserializeObject<NanoIPs>(message);
-            //     // remoteIP = ips.remoteIP;
-            //     Console.WriteLine("RunDemoWithRemoteMultipart: remoteIP = '{0}'", remoteIP);
-            // }
-            // Thread.Sleep(1000);
+            String sensorVideoText;
+            using (var responseSocket = new ResponseSocket("@tcp://*:40001"))
+            {
+                var message = responseSocket.ReceiveFrameString();
+                Console.WriteLine("RunDemo, responseSocket received '{0}'", message);
+                responseSocket.SendFrame(message);
+                // sensorVideoText = message; 
+                IPs = JsonConvert.DeserializeObject<sensorIPs>(message);
+                sensorVideoText = IPs.sensorVideoText;
+                sensorAudio = IPs.sensorAudio;
+                sensorDOA = IPs.sensorDOA;
+                sensorVAD = IPs.sensorVAD;
+                Console.WriteLine("RunDemo: sensorVideoText = '{0}'", sensorVideoText);
+                Console.WriteLine("RunDemo: sensorAudio = '{0}'", sensorAudio);
+            }
+            Thread.Sleep(1000);
 
 
             using (var p = Pipeline.Create())
             {
                 // Subscribe to messages from remote sensor using NetMQ (ZeroMQ)
-                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, MessagePackFormat.Instance, useSourceOriginatingTimes = true, name="Sensor to PSI");
-                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", remoteIP, JsonFormat.Instance, true, "Sensor to PSI");
+                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", sensorVideoText, MessagePackFormat.Instance, useSourceOriginatingTimes = true, name="Sensor to PSI");
+                // var nmqSubFromSensor = new NetMQSubscriber<string>(p, "", sensorVideoText, JsonFormat.Instance, true, "Sensor to PSI");
                 // other messages
-                var nmqSubFromSensor = new NetMQSubscriber<IDictionary<string, object>>(p, "", remoteIP, MessagePackFormat.Instance, true, "Sensor to PSI");
+                var nmqSubFromSensor = new NetMQSubscriber<IDictionary<string, object>>(p, "", sensorVideoText, MessagePackFormat.Instance, true, "Sensor to PSI");
 
                 // Create a publisher for messages from the sensor to Bazaar
                 var amqPubSensorToBazaar = new AMQPublisher<IDictionary<string, object>>(p, TopicFromSensor, TopicToBazaar, "Sensor to Bazaar");
@@ -213,26 +222,26 @@ namespace SigdialDemo
                 var audioFromNano = new NetMQSource<byte[]>(
                     p,
                     "temp",
-                    // ips.audio_channel,  // TEMPORARY
-                    audio_channel,          // TEMPORARY
+                    // ips.sensorAudio,  // TEMPORARY
+                    sensorAudio,          // TEMPORARY
                     MessagePackFormat.Instance);
 
-                // DOA - Direction of Arrival (of sound, int values range from 0 to 360)
-                var doaFromNano = new NetMQSource<int>(
+                // sensorDOA - Direction of Arrival (of sound, int values range from 0 to 360)
+                var sensorDOAFromNano = new NetMQSource<int>(
                     p,
                     "temp2",
-                    // ips.doa,         // TEMPORARY
-                    doa,             // TEMPORARY
+                    // ips.sensorDOA,         // TEMPORARY
+                    sensorDOA,             // TEMPORARY
                     MessagePackFormat.Instance);
 
                 var vadFromNano = new NetMQSource<int>(
                     p,
                     "temp3",
                     // ips.vad,         // TEMPORARY
-                    nanoVad,                // TEMPORARY
+                    sensorVAD,                // TEMPORARY
                 MessagePackFormat.Instance);
 
-                // processing audio and DOA input, and saving to file
+                // processing audio and sensorDOA input, and saving to file
                 // audioFromNano contains binary array data, needs to be converted to PSI compatible AudioBuffer format
                 var audioInAudioBuffer = audioFromNano
                     .Select(t =>

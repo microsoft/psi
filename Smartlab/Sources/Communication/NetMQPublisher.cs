@@ -153,7 +153,7 @@ namespace CMU.Smartlab.Communication
         private void Receive<T>(T messageIn, Envelope envelope)
         {
             string topic = topics.Keys.First(); 
-            Console.WriteLine("NetMQPublisher.ReceiveIDictionary - enter - topic =   '{0}'", topic);
+            Console.WriteLine($"NetMQPublisher.ReceiveIDictionary - enter - topic = '{0}'", topic);
             // Boolean uselessValue = processIDictionary(messageIn);    
             string messageToAgent = stringForAgent(messageIn); 
             if (messageToAgent != null) {      
