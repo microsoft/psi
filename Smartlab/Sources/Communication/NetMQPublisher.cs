@@ -47,7 +47,6 @@ namespace CMU.Smartlab.Communication
             pipeline.PipelineRun += (s, e) => this.socket.Bind(this.Address);
         }
 
-
         // public ReceiveIDictionary<T> messageIn { get; }
 
         // Receiver that encapsulates the Dictionary input stream
@@ -61,8 +60,6 @@ namespace CMU.Smartlab.Communication
         /// Gets the output emitter.
         /// </summary>
         // public Emitter<T> Out { get; }
-
-
 
         /// <summary>
         /// Gets the connection address string.
@@ -86,8 +83,7 @@ namespace CMU.Smartlab.Communication
         public Receiver<T> AddTopic<T>(string topic)
         {
             this.topics.Add(topic, typeof(T));
-            Console.WriteLine("NetMQPublisher.AddTopic - topic =   '{0}'", topic);
-            // return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e, topic), topic);
+            Console.WriteLine("NetMQPublisher.Receiver - topic =   '{0}'", topic);
             return this.pipeline.CreateReceiver<T>(this, (m, e) => this.Receive(m, e), topic);
         }
         /// <inheritdoc />
@@ -106,7 +102,7 @@ namespace CMU.Smartlab.Communication
         private static Boolean processIDictionary(object message)
         {
 
-            // Console.WriteLine("SmartlabMerge processIDictionary -  enter");  
+            // Console.WriteLine("NetMQPublisher processIDictionary -  enter");  
             IDictionary<string,object> dictionaryIn = (IDictionary<string,object>)message; 
             foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
                 Console.WriteLine("NetMQPublisher.processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value); 
@@ -115,9 +111,7 @@ namespace CMU.Smartlab.Communication
         }
 
         private static string stringForAgent(object message)
-        {
-
-            // Console.WriteLine("SmartlabMerge processIDictionary -  enter");  
+        { 
             IDictionary<string,object> dictionaryIn = (IDictionary<string,object>)message; 
             string response = null;
             string location = null; 
@@ -141,7 +135,8 @@ namespace CMU.Smartlab.Communication
                 } else if (location == "right") {
                     return "Rachel is looking right";
                 } else {
-                    return "Rachel is looking up, down, and all around";
+                    Console.WriteLine($"NetMQPublisher.stringForAgent - unexpected location value: '{0}'", location);
+                    return null;
                 }
             } else {
                 return null; 
@@ -154,7 +149,6 @@ namespace CMU.Smartlab.Communication
         {
             string topic = topics.Keys.First(); 
             Console.WriteLine($"NetMQPublisher.ReceiveIDictionary - enter - topic = '{0}'", topic);
-            // Boolean uselessValue = processIDictionary(messageIn);    
             string messageToAgent = stringForAgent(messageIn); 
             if (messageToAgent != null) {      
                 // var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);   

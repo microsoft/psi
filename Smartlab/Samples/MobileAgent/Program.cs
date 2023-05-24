@@ -200,7 +200,6 @@ namespace SigdialDemo
 
                 // Create a publisher for messages to the agent using NetMQ (ZeroMQ)
                 var nmqPubToAgent = new NetMQPublisher<IDictionary<string, object>>(p, TopicFaceOrientation, TcpIPPublisher, MessagePackFormat.Instance);
-                // nmqPubToAgent.Do(x => Console.WriteLine("RunDemoWithRemoteMultipart, nmqPubToAgent.Do: {0}", x));
 
                 // Route messages from the sensor to Bazaar
                 nmqSubFromSensor.PipeTo(amqPubSensorToBazaar.IDictionaryIn);
@@ -211,7 +210,6 @@ namespace SigdialDemo
                 var receiverBazaar = mergeToAgent.AddInput("Bazaar to Agent");
                 nmqSubFromSensor.PipeTo(receiverSensor);
                 amqSubBazaarToAgent.PipeTo(receiverBazaar);
-                // mergeToAgent.Select(m => m.Data).PipeTo(nmqPubToAgent); 
                 mergeToAgent.PipeTo(nmqPubToAgent); 
 
                 // ======================================================================================
