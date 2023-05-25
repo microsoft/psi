@@ -227,13 +227,25 @@ namespace CMU.Smartlab.Communication
         private static string processIDictionary(IDictionary<string,object> dictionaryIn)
         {
             string messageToBazaar = null; 
-            IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
+            string speechValue = null; 
+            string poseValue = null; 
+            string multimodalPreamble = "multimodal:true"; 
+            string multimodalTagDelimiter = ";%;"; 
+            string multimodalValueDelimiter = ":::"; 
+            
             foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
-                messageDictionary.Add(kvp.Key,kvp.Value); 
-                Console.WriteLine("NetMQSubscriber ReceiveReady: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
-                if (kvp.Key == "speech") {
-                    messageToBazaar = (string)kvp.Value; 
-                }
+                // messageDictionary.Add(kvp.Key,kvp.Value); 
+                Console.WriteLine("AMQPublisher processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
+                if (kvp.Value ! = null) {
+                    if (kvp.Key == "speech") {
+                        speechValue = multimodalTagDelimiter + "speech" + multimodalValueDelimiter + (string)kvp.Value;
+                    } else if (kvp.Key == "pose") {
+                        poseValue = multimodalTagDelimiter + "pose" + multimodalValueDelimiter + (string)kvp.Value; 
+                    }
+                }   
+            }
+            if (speechValue != null) or (poseValue != null) {
+                messageToBazaar = multimodalPreamble + speechValue + poseValue; 
             }
             return messageToBazaar;
         }

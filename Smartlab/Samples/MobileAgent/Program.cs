@@ -237,7 +237,7 @@ namespace SigdialDemo
                     "temp3",
                     // ips.vad,         // TEMPORARY
                     sensorVAD,                // TEMPORARY
-                MessagePackFormat.Instance);
+                    MessagePackFormat.Instance);
 
                 // processing audio and sensorDOA input, and saving to file
                 // audioFromNano contains binary array data, needs to be converted to PSI compatible AudioBuffer format
