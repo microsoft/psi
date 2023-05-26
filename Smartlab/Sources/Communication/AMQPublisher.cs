@@ -227,25 +227,33 @@ namespace CMU.Smartlab.Communication
         private static string processIDictionary(IDictionary<string,object> dictionaryIn)
         {
             string messageToBazaar = null; 
-            string speechValue = null; 
-            string poseValue = null; 
-            string multimodalPreamble = "multimodal:true"; 
+            string identityString = null;
+            string speechString = null; 
+            string locationString = null; 
+            string poseString = null;
+            string identityValue = "psi";            // default identity; hardcoded for now
+            string multimodalPreamble = "multimodal:::true"; 
             string multimodalTagDelimiter = ";%;"; 
             string multimodalValueDelimiter = ":::"; 
             
             foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
                 // messageDictionary.Add(kvp.Key,kvp.Value); 
                 Console.WriteLine("AMQPublisher processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value);  
-                if (kvp.Value ! = null) {
-                    if (kvp.Key == "speech") {
-                        speechValue = multimodalTagDelimiter + "speech" + multimodalValueDelimiter + (string)kvp.Value;
+                if (kvp.Value != null) {
+                    if (kvp.Key == "identity") {
+                        identityValue = (string)kvp.Value;
+                    } else if (kvp.Key == "speech") {
+                        speechString = multimodalTagDelimiter + "speech" + multimodalValueDelimiter + (string)kvp.Value;
+                    } else if (kvp.Key == "location") {
+                        locationString = multimodalTagDelimiter + "location" + multimodalValueDelimiter + (string)kvp.Value; 
                     } else if (kvp.Key == "pose") {
-                        poseValue = multimodalTagDelimiter + "pose" + multimodalValueDelimiter + (string)kvp.Value; 
-                    }
+                        poseString = multimodalTagDelimiter + "pose" + multimodalValueDelimiter + (string)kvp.Value; 
+                    } 
                 }   
             }
-            if (speechValue != null) or (poseValue != null) {
-                messageToBazaar = multimodalPreamble + speechValue + poseValue; 
+            if ((speechString != null) || (poseString != null)) {
+                identityString = multimodalTagDelimiter + "identity" + multimodalValueDelimiter + identityValue; 
+                messageToBazaar = multimodalPreamble + identityString + speechString + locationString + poseString; 
             }
             return messageToBazaar;
         }
