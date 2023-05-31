@@ -143,13 +143,36 @@ namespace CMU.Smartlab.Communication
             }
         }
 
+        private static IDictionary<string,string> messageForAgent(object message)
+        { 
+            IDictionary<string,object> dictionaryIn = (IDictionary<string,object>)message; 
+            IDictionary<string,string> dictionaryOut = new Dictionary<string, string>(); 
+            Boolean messageFound = false; 
+            foreach (KeyValuePair<string,object> kvp in dictionaryIn) {
+                Console.WriteLine("NetMQPublisher.processIDictionary: message - key: '{0}'  --  value: '{1}'", kvp.Key,kvp.Value); 
+                if (kvp.Key == "location") {
+                    dictionaryOut.Add("location",(string)kvp.Value); 
+                    messageFound = true; 
+                }
+                if (kvp.Key == "speech") {
+                    dictionaryOut.Add("speech",(string)kvp.Value); 
+                    messageFound = true; 
+                }
+            }
+            if (messageFound) {
+                return dictionaryOut;
+            } else {
+                return null; 
+            }
+        }
+
 
         // The receive method for the IDictionaryIn receiver. T
         private void Receive<T>(T messageIn, Envelope envelope)
         {
             string topic = topics.Keys.First(); 
             Console.WriteLine($"NetMQPublisher.ReceiveIDictionary - enter - topic = '{0}'", topic);
-            string messageToAgent = stringForAgent(messageIn); 
+            IDictionary<string,string> messageToAgent = messageForAgent(messageIn); 
             if (messageToAgent != null) {      
                 // var (bytes, index, length) = this.serializer.SerializeMessage(messageIn, envelope.OriginatingTime);   
                 var (bytes, index, length) = this.serializer.SerializeMessage(messageToAgent, envelope.OriginatingTime);   

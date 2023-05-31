@@ -169,7 +169,7 @@ namespace CMU.Smartlab.Communication
         {
             // Console.WriteLine("AMQSubscriber, outputMessage: outString: " + outString);
             IDictionary<string,object> messageDictionary = new Dictionary<string,object>(); 
-            messageDictionary.Add("response",outString); 
+            messageDictionary.Add("speech",outString); 
             T dictionaryOut = (T)messageDictionary; 
             // Console.WriteLine("AMQSubscriber, outputMessage: posting dictionaryOut");
             this.Out.Post(dictionaryOut, this.pipeline.GetCurrentTime());

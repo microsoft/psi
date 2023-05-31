@@ -67,6 +67,7 @@ namespace SigdialDemo
         private const int SendingImageWidth = 360;
         private const int MaxSendingFrameRate = 15;
         private const string TcpIPResponder = "@tcp://*:40001";
+        // private const string TcpIPPublisher = "tcp://*:8080";
         private const string TcpIPPublisher = "tcp://*:30002";
         // private const string TcpIPPublisher = "tcp://*:40002";
         // private const string TcpIPPublisher = "tcp://*:5500";
