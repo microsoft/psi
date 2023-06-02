@@ -5,6 +5,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using Microsoft.Psi.Visualization.Data;
 
     /// <summary>

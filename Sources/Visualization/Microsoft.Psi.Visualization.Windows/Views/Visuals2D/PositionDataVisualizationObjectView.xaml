@@ -24,9 +24,9 @@
         <Border Grid.Row="1" Padding="5,2,0,0">
             <Grid>
                 <TextBlock>
-                    Voici la position de la tête: <Run Text="{Binding Path=CurrentValue, Mode=OneWay}" />
+                    Voici la position de la tête: <Run Text="{Binding Path=HasCurrentValue, Mode=OneWay}" />
                 </TextBlock>
-            </Grid>
+			</Grid>
         </Border>
     </Grid>
 </vv:VisualizationObjectView>
