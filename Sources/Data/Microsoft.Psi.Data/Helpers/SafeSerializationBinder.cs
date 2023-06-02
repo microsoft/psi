@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Data.Helpers
 {
     using System;
-    using System.Diagnostics;
     using Newtonsoft.Json.Serialization;
 
     /// <summary>
@@ -19,7 +18,6 @@ namespace Microsoft.Psi.Data.Helpers
         {
             assemblyName = serializedType.Assembly.FullName;
             typeName = serializedType.FullName;
-            Debug.WriteLine("CACA: ", serializedType, typeName);
         }
 
         /// <inheritdoc/>
