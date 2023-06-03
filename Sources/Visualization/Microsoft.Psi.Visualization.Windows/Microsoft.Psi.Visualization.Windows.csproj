@@ -39,6 +39,9 @@
     <DefineConstants>TRACE;DEBUG;NET47</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Converters\ObjectToPositionDataConverter.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Icons\2d.png" />
     <None Remove="Icons\3d.png" />
     <None Remove="Icons\annotation-unbound.png" />

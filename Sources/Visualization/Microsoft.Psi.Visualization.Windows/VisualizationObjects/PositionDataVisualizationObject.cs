@@ -7,9 +7,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
     using System.ComponentModel;
+    using System.Linq;
     using System.Numerics;
     using System.Runtime.Serialization;
     using System.Windows;
+    using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
@@ -20,27 +22,34 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     [VisualizationObject("PositionData")]
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
-    public class PositionDataVisualizationObject : StreamValueVisualizationObject<PositionData>
+    public class PositionDataVisualizationObject : StreamIntervalVisualizationObject<PositionData>
     {
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(PositionDataVisualizationObjectView));
-    
-        public PositionDataVisualizationObject() { }
+
+        public String HeadPos
+        {
+            get { return this.Data != null ? this.CurrentValue.Value.Data.ToString() : "Pas de valeur"; }
+        }
+
     }
 
-    [System.Serializable]
     public class PositionData
     {
-        public DateTime originatingTime { get; set; }
-        public float deltatime { get; set; }
-        public int userID { get; set; }
-        public string headPos { get; set; }
-        public string lHandPos { get; set; }
-        public string rHandPos { get; set; }
-        public Vector3 headPosv { get; set; }
-        public Vector3 lHandPosv { get; set; }
-        public Vector3 rHandPosv { get; set; }
+        public DateTime originatingTime;
+        public float deltatime;
+        public int userID;
+        public string headPos;
+        public string lHandPos;
+        public string rHandPos;
+        public Vector3 headPosv;
+        public Vector3 lHandPosv;
+        public Vector3 rHandPosv;
+
+        public override string ToString() {
+            return "caca" + headPos;
+        }
     }
 }
 
