@@ -22,15 +22,39 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     [VisualizationObject("PositionData")]
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
-    public class PositionDataVisualizationObject : StreamIntervalVisualizationObject<PositionData>
+    public class PositionDataVisualizationObject : StreamValueVisualizationObject<PositionData>
     {
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(PositionDataVisualizationObjectView));
 
-        public String HeadPos
-        {
-            get { return this.Data != null ? this.CurrentValue.Value.Data.ToString() : "Pas de valeur"; }
+        // On update
+        protected override void OnPropertyChanging(object sender, PropertyChangingEventArgs e) {
+            base.OnPropertyChanging(sender, e);
+
+            if (e.PropertyName == nameof(this.CurrentValue)){
+                this.RaisePropertyChanging(nameof(this.HeadPosition));
+            }
+        }
+
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(this.CurrentValue)) {
+                this.RaisePropertyChanged(nameof(this.HeadPosition));
+            }
+
+            base.OnPropertyChanged(sender, e);
+        }
+
+        [IgnoreDataMember]
+        public virtual string HeadPosition {
+            get {
+                if (this.CurrentValue.HasValue) {
+                    Vector3 headPosition = this.CurrentValue.Value.Data.headPosv;
+                    return "x:" + headPosition.X + " y:" + headPosition.X + " z:" + headPosition.Z;
+                } else {
+                    return string.Empty;
+                }
+            }
         }
 
     }
@@ -46,10 +70,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public Vector3 headPosv;
         public Vector3 lHandPosv;
         public Vector3 rHandPosv;
-
-        public override string ToString() {
-            return "caca" + headPos;
-        }
     }
 }
 

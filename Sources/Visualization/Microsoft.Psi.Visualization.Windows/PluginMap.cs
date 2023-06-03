@@ -114,7 +114,7 @@ namespace Microsoft.Psi.Visualization
                 }
             }
 
-            // TODO: Voir si c'est propre
+            // TODO: Voir pour une solution plus propre ?
             this.additionalTypeMappings.Add("PipelineRejeuxDonnees.PositionData, SynchroSession, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", typeof(PositionData));
 
             this.IsInitialized = true;
