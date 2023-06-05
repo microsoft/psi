@@ -12,21 +12,30 @@
     d:DesignHeight="300" 
     d:DesignWidth="300">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}"/>
-        </Grid.Resources>
+    <Border Grid.Row="1" Padding="5,2,0,0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="1" Padding="5,2,0,0">
-            <Grid>
-                <TextBlock>
-                    Voici la position de la tête: <Run Text="{Binding Path=HeadPosition, Mode=OneWay}" />
-                </TextBlock>
-			</Grid>
-        </Border>
-    </Grid>
+            <TextBlock Grid.Column="0">
+            Voici la position de la tête: x: <Run Text="{Binding Path=HeadPositionX, Mode=OneWay}" />,
+            y: <Run Text="{Binding Path=HeadPositionY, Mode=OneWay}" />,
+            z: <Run Text="{Binding Path=HeadPositionZ, Mode=OneWay}" />
+            </TextBlock>
+
+            <Canvas Grid.Column="1" Width="200" Height="200" Background="White">
+                <Ellipse Width="10" Height="10" Fill="Red">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="10" ScaleY="10"/>
+                            <TranslateTransform X="{Binding Path=HeadPositionX, Mode=OneWay}" Y="{Binding Path=HeadPositionY, Mode=OneWay}" />
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+            </Canvas>
+        </Grid>
+    </Border>
+
 </vv:VisualizationObjectView>

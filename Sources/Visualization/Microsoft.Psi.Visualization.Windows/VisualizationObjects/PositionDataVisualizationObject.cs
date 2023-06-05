@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     [VisualizationObject("PositionData")]
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
-    public class PositionDataVisualizationObject : StreamValueVisualizationObject<PositionData>
+    public class PositionDataVisualizationObject : StreamValueVisualizationObject<PositionData>, INotifyPropertyChanged
     {
         /// <inheritdoc />
         [IgnoreDataMember]
@@ -34,26 +34,61 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (e.PropertyName == nameof(this.CurrentValue)){
                 this.RaisePropertyChanging(nameof(this.HeadPosition));
+                this.RaisePropertyChanging(nameof(this.HeadPositionX));
+                this.RaisePropertyChanging(nameof(this.HeadPositionY));
+                this.RaisePropertyChanging(nameof(this.HeadPositionZ));
             }
         }
 
         protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(this.CurrentValue)) {
                 this.RaisePropertyChanged(nameof(this.HeadPosition));
+                this.RaisePropertyChanged(nameof(this.HeadPositionX));
+                this.RaisePropertyChanged(nameof(this.HeadPositionY));
+                this.RaisePropertyChanged(nameof(this.HeadPositionZ));
             }
 
             base.OnPropertyChanged(sender, e);
         }
 
         [IgnoreDataMember]
-        public virtual string HeadPosition {
-            get {
-                if (this.CurrentValue.HasValue) {
-                    Vector3 headPosition = this.CurrentValue.Value.Data.headPosv;
-                    return "x:" + headPosition.X + " y:" + headPosition.X + " z:" + headPosition.Z;
-                } else {
-                    return string.Empty;
+        public Vector3 HeadPosition
+        {
+            get
+            {
+                if (this.CurrentValue.HasValue)
+                {
+                    return this.CurrentValue.Value.Data.headPosv;
                 }
+                else
+                {
+                    // Renvoyer une valeur par défaut appropriée
+                    return new Vector3(float.NaN, float.NaN, float.NaN);
+                }
+            }
+        }
+
+        public virtual float HeadPositionX
+        {
+            get
+            {
+                return this.HeadPosition.X;
+            }
+        }
+
+        public virtual float HeadPositionY
+        {
+            get
+            {
+                return this.HeadPosition.Y;
+            }
+        }
+
+        public virtual float HeadPositionZ
+        {
+            get
+            {
+                return this.HeadPosition.Z;
             }
         }
 
