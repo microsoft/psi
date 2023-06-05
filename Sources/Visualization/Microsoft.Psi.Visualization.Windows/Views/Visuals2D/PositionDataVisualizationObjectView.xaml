@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
 
             <Canvas Name="canvas" Grid.Column="1" Width="Auto" Height="Auto" Background="Transparent">
-                <Ellipse Width="2" Height="2" Fill="Red">
+                <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
                     <Ellipse.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="10" ScaleY="10"/>

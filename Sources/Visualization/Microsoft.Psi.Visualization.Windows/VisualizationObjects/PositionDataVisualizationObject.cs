@@ -10,7 +10,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Linq;
     using System.Numerics;
     using System.Runtime.Serialization;
+    using System.Security.Cryptography;
     using System.Windows;
+    using System.Windows.Media.Imaging;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Summarizers;
@@ -162,6 +164,28 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             get
             {
                 return this.HeadPosition.Z;
+            }
+        }
+
+        [DataMember]
+        public virtual string HeadColor
+        {
+            get
+            {
+                using var sha1 = SHA1.Create();
+                byte[] hashBytes = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.Name));
+                string hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                string color = "#" + hashString.Substring(0, 6).ToString();
+                return color;
+            }
+        }
+
+        [DataMember]
+        public virtual string HeadName
+        {
+            get
+            {
+                return this.Name;
             }
         }
 
