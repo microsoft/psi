@@ -28,8 +28,27 @@
                         </TransformGroup>
                     </Ellipse.RenderTransform>
                 </Ellipse>
+
+                <TextBlock Text="{Binding HeadName}" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Foreground="white" 
+                       Canvas.Left="{Binding Path=HeadPositionX, Mode=OneWay}" 
+                       Canvas.Top="{Binding Path=HeadPositionY, Mode=OneWay}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsHeadNameHidden}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Canvas>
         </Grid>
     </Border>
+
 
 </vv:VisualizationObjectView>

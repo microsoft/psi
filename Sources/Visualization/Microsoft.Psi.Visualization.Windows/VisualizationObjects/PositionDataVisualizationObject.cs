@@ -30,6 +30,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private float maximumPositionX = 1;
         private float minimumPositionY = 0;
         private float maximumPositionY = 1;
+        private bool _isHeadNameHidden;
 
         /// <inheritdoc />
         [IgnoreDataMember]
@@ -188,6 +189,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return this.Name;
             }
         }
+
+        [DataMember]
+        public bool IsHeadNameHidden
+        {
+            get { return _isHeadNameHidden; }
+            set
+            {
+                _isHeadNameHidden = value;
+                this.RaisePropertyChanged(nameof(IsHeadNameHidden));
+            }
+        }
+
 
     }
 
