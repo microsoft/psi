@@ -19,14 +19,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0">
-            Voici la position de la tête: x: <Run Text="{Binding Path=HeadPositionX, Mode=OneWay}" />,
-            y: <Run Text="{Binding Path=HeadPositionY, Mode=OneWay}" />,
-            z: <Run Text="{Binding Path=HeadPositionZ, Mode=OneWay}" />
-            </TextBlock>
-
-            <Canvas Grid.Column="1" Width="200" Height="200" Background="White">
-                <Ellipse Width="10" Height="10" Fill="Red">
+            <Canvas Name="canvas" Grid.Column="1" Width="Auto" Height="Auto" Background="Transparent">
+                <Ellipse Width="2" Height="2" Fill="Red">
                     <Ellipse.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="10" ScaleY="10"/>

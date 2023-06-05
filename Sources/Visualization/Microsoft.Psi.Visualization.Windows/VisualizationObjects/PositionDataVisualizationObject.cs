@@ -24,6 +24,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
     public class PositionDataVisualizationObject : StreamValueVisualizationObject<PositionData>, INotifyPropertyChanged
     {
+        private float minimumPositionX = 0;
+        private float maximumPositionX = 1;
+        private float minimumPositionY = 0;
+        private float maximumPositionY = 1;
+
         /// <inheritdoc />
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(PositionDataVisualizationObjectView));
@@ -68,11 +73,75 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
+        [DataMember]
+        public float MinimumPositionX
+        {
+            get
+            {
+                return this.minimumPositionX;
+            }
+
+            set
+            {
+                this.minimumPositionX = value;
+                this.RaisePropertyChanged(nameof(this.HeadPositionX));
+            }
+        }
+
+        [DataMember]
+        public float MaximumPositionX
+        {
+            get
+            {
+                return this.maximumPositionX;
+            }
+
+            set
+            {
+                this.maximumPositionX = value;
+                this.RaisePropertyChanged(nameof(this.HeadPositionX));
+            }
+        }
+
+        [DataMember]
+        public float MaximumPositionY
+        {
+            get
+            {
+                return this.maximumPositionY;
+            }
+
+            set
+            {
+                this.maximumPositionY = value;
+                this.RaisePropertyChanged(nameof(this.HeadPositionY));
+            }
+        }
+
+        [DataMember]
+        public float MinimumPositionY
+        {
+            get
+            {
+                return this.minimumPositionY;
+            }
+
+            set
+            {
+                this.minimumPositionY = value;
+                this.RaisePropertyChanged(nameof(this.HeadPositionY));
+            }
+        }
+
         public virtual float HeadPositionX
         {
             get
             {
-                return this.HeadPosition.X;
+                float interval = Math.Abs(minimumPositionX) + Math.Abs(maximumPositionX);
+                float delta = Math.Abs(minimumPositionX) + Math.Abs(this.HeadPosition.X);
+                float ratio = delta / interval * 100;
+
+                return ratio;
             }
         }
 
@@ -80,7 +149,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             get
             {
-                return this.HeadPosition.Y;
+                float interval = Math.Abs(minimumPositionY) + Math.Abs(maximumPositionY);
+                float delta = Math.Abs(minimumPositionY) + Math.Abs(this.HeadPosition.Y);
+                float ratio = delta / interval * 100;
+
+                return ratio;
             }
         }
 
