@@ -1,0 +1,70 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: MSBuild
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+    
+    env:
+      BUILD_CONFIGURATION: ${{matrix.configuration}}
+      # Path to the solution file relative to the root of the project.
+      SOLUTION_FILE_PATH: ./Psi.sln
+      
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Get Test Assemblies (.NET Framework)
+      uses: tj-actions/glob@v17.2.6
+      id: get-framework-tests
+      with:
+        files: |
+          **\bin\**\*Test.Psi*.exe
+          **\bin\**\*Test.Psi*.dll
+          !**\bin\**\netcoreapp*\*
+          !**\bin\**\net5.0*\*
+          !**\bin\**\*Test.Psi*.Common.dll
+          !**\bin\**\Test.Psi.exe
+
+    - name: Run Tests
+      run: dotnet test --filter "TestCategory!=Performance" -l "console;verbosity=detailed" ${{ steps.get-framework-tests.outputs.paths }}      
+
+    - name: Get Test Assemblies (.NET Core)
+      uses: tj-actions/glob@v17.2.6
+      id: get-netcore-tests
+      with:
+        files: |
+          **\bin\**\netcoreapp*\*Test.Psi*.dll
+          !**\bin\**\netcoreapp*\*Test.Psi*.Common.dll
+
+    - name: Run Tests
+      run: dotnet test --filter "TestCategory!=Performance" -l "console;verbosity=detailed" ${{ steps.get-netcore-tests.outputs.paths }}
