@@ -239,7 +239,6 @@
     <None Remove="Views\Visuals2D\NumericPlot\NullableFloatVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\NumericPlot\NullableLongSeriesVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\NumericPlot\NullableLongVisualizationObjectView.xaml" />
-    <None Remove="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\SpeechRecognitionVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\StringWithDurationVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\TextVisualizationObjectView.xaml" />
@@ -264,9 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HelixToolkit.Wpf" Version="2.11.0" />
@@ -524,5 +520,10 @@
     <Resource Include="Icons\zoom-to-session.png" />
     <Resource Include="Icons\zoom-to-stream.png" />
     <Resource Include="Icons\zoom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Views\Visuals2D\PositionDataVisualizationObjectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 </Project>

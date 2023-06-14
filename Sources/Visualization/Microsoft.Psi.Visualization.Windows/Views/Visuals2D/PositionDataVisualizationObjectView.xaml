@@ -1,0 +1,54 @@
+﻿<!-- Copyright (c) Microsoft Corporation. All rights reserved.
+     Licensed under the MIT License. -->
+
+<vv:VisualizationObjectView
+    x:Class="Microsoft.Psi.Visualization.Views.Visuals2D.PositionDataVisualizationObjectView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vv="clr-namespace:Microsoft.Psi.Visualization.Views"
+    mc:Ignorable="d" 
+    d:DesignHeight="300" 
+    d:DesignWidth="300">
+
+    <Border Grid.Row="1" Padding="5,2,0,0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Canvas Name="canvas" Grid.Column="1" Width="Auto" Height="Auto" Background="Transparent">
+                <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="10" ScaleY="10"/>
+                            <TranslateTransform X="{Binding Path=HeadPositionX, Mode=OneWay}" Y="{Binding Path=HeadPositionY, Mode=OneWay}" />
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+
+                <TextBlock Text="{Binding HeadName}" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Foreground="white" 
+                       Canvas.Left="{Binding Path=HeadPositionX, Mode=OneWay}" 
+                       Canvas.Top="{Binding Path=HeadPositionY, Mode=OneWay}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsHeadNameHidden}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Canvas>
+        </Grid>
+    </Border>
+
+
+</vv:VisualizationObjectView>

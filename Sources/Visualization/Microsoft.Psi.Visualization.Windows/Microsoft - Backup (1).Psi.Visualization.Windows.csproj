@@ -266,9 +266,6 @@
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="HelixToolkit.Wpf" Version="2.11.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
@@ -327,6 +324,7 @@
     <Page Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\DepthImageVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\IFormattableVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
 	  <Page Include="Views\Visuals2D\TextVisualizationObjectView.xaml" />
 	  <Page Include="Views\Visuals2D\NumericPlot\BoolSeriesVisualizationObjectView.xaml" />
 	  <Page Include="Views\Visuals2D\NumericPlot\BoolVisualizationObjectView.xaml" />
