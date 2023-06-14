@@ -115,7 +115,11 @@ namespace Microsoft.Psi.Visualization
             }
 
             // TODO: Voir pour une solution plus propre ?
+            // positionData
             this.additionalTypeMappings.Add("PipelineRejeuxDonnees.PositionData, SynchroSession, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", typeof(PositionData));
+
+            // rotationData
+            this.additionalTypeMappings.Add("PipelineRejeuxDonnees.RotationData, SynchroSession, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", typeof(RotationData));
 
             this.IsInitialized = true;
         }

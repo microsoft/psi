@@ -240,6 +240,7 @@
     <None Remove="Views\Visuals2D\NumericPlot\NullableLongSeriesVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\NumericPlot\NullableLongVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\RotationDataVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\SpeechRecognitionVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\StringWithDurationVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\TextVisualizationObjectView.xaml" />
@@ -327,6 +328,9 @@
     <Page Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\DepthImageVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\IFormattableVisualizationObjectView.xaml" />
+    <Page Include="Views\Visuals2D\RotationDataVisualizationObjectView.xaml">
+      <Generator></Generator>
+    </Page>
 	  <Page Include="Views\Visuals2D\TextVisualizationObjectView.xaml" />
 	  <Page Include="Views\Visuals2D\NumericPlot\BoolSeriesVisualizationObjectView.xaml" />
 	  <Page Include="Views\Visuals2D\NumericPlot\BoolVisualizationObjectView.xaml" />
