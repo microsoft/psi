@@ -12,21 +12,43 @@
     d:DesignHeight="300" 
     d:DesignWidth="300">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.Resources>
-            <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}"/>
-        </Grid.Resources>
+    <Border Grid.Row="1" Padding="5,2,0,0">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Border Grid.Row="1" Padding="5,2,0,0">
-            <Grid>
-                <TextBlock>
-                    Voici la position de la tête: <Run Text="{Binding Path=CurrentValue, Mode=OneWay}" />
+            <Canvas Name="canvas" Grid.Column="1" Width="Auto" Height="Auto" Background="Transparent">
+                <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="10" ScaleY="10"/>
+                            <TranslateTransform X="{Binding Path=HeadPositionX, Mode=OneWay}" Y="{Binding Path=HeadPositionY, Mode=OneWay}" />
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+
+                <TextBlock Text="{Binding HeadName}" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       Foreground="white" 
+                       Canvas.Left="{Binding Path=HeadPositionX, Mode=OneWay}" 
+                       Canvas.Top="{Binding Path=HeadPositionY, Mode=OneWay}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsHeadNameHidden}" Value="False">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
                 </TextBlock>
-            </Grid>
-        </Border>
-    </Grid>
+            </Canvas>
+        </Grid>
+    </Border>
+
+
 </vv:VisualizationObjectView>
