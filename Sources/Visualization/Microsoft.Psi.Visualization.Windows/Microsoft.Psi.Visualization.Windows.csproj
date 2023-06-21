@@ -239,6 +239,7 @@
     <None Remove="Views\Visuals2D\NumericPlot\NullableFloatVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\NumericPlot\NullableLongSeriesVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\NumericPlot\NullableLongVisualizationObjectView.xaml" />
+    <None Remove="Views\Visuals2D\PlayersDataVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\RotationDataVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\SpeechRecognitionVisualizationObjectView.xaml" />
@@ -265,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\Visuals2D\PlayersDataVisualizationObjectView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\Visuals2D\PositionDataVisualizationObjectView.xaml" />
