@@ -19,11 +19,26 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <Border Grid.Row="0" Padding="5,2,0,0">
-        <TextBlock Text="{Binding Path=GetPlayersDataAsString}" FontWeight="Bold"></TextBlock>
-      </Border>
+      <Canvas Name="canvas" Grid.Column="1" Width="Auto" Height="Auto" Background="Transparent">
+        <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
+          <Ellipse.RenderTransform>
+            <TransformGroup>
+              <ScaleTransform ScaleX="10" ScaleY="10"/>
+              <TranslateTransform X="{Binding Path=P1X, Mode=OneWay}" Y="{Binding Path=P1Y, Mode=OneWay}" />
+            </TransformGroup>
+          </Ellipse.RenderTransform>
+        </Ellipse>
 
-      <Border Grid.Row="0" Padding="5,2,0,0"></Border>
+
+        <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
+          <Ellipse.RenderTransform>
+            <TransformGroup>
+              <ScaleTransform ScaleX="10" ScaleY="10"/>
+              <TranslateTransform X="{Binding Path=PlayersData.GetPlayerPositionPlayer2.X, Mode=OneWay}" Y="{Binding Path=PlayersData.GetPlayerPositionPlayer2.Y, Mode=OneWay}" />
+            </TransformGroup>
+          </Ellipse.RenderTransform>
+        </Ellipse>
+      </Canvas>
     </Grid>
   </Border>
 </vv:VisualizationObjectView>

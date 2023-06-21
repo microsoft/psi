@@ -30,6 +30,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
     public class PlayersDataVisualizationObject : StreamValueVisualizationObject<PlayersData>, INotifyPropertyChanged
     {
+        private float minimumPositionX = 0;
+        private float maximumPositionX = 1;
+        private float minimumPositionY = 0;
+        private float maximumPositionY = 1;
+        private bool _isHeadNameHidden;
+
+
         /// <inheritdoc/>
         [IgnoreDataMember]
         public override DataTemplate DefaultViewTemplate => XamlHelper.CreateTemplate(this.GetType(), typeof(PlayersDataVisualizationObjectView));
@@ -43,7 +50,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 this.RaisePropertyChanging(nameof(this.GetPlayersData));
                 this.RaisePropertyChanging(nameof(this.GetPlayersDataAsString));
-                this.RaisePropertyChanging(nameof(this.GetDefString));
+                this.RaisePropertyChanging(nameof(this.PositionPlayer1));
+                this.RaisePropertyChanging(nameof(this.PositionPlayer2));
+                this.RaisePropertyChanging(nameof(this.RotationPlayer1));
+                this.RaisePropertyChanging(nameof(this.RotationPlayer2));
+                this.RaisePropertyChanging(nameof(this.VadPlayer1));
+                this.RaisePropertyChanging(nameof(this.VadPlayer2));
+                this.RaisePropertyChanging(nameof(this.JVAData));
             }
         }
 
@@ -53,7 +66,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 this.RaisePropertyChanged(nameof(this.GetPlayersData));
                 this.RaisePropertyChanged(nameof(this.GetPlayersDataAsString));
-                this.RaisePropertyChanged(nameof(this.GetDefString));
+                this.RaisePropertyChanged(nameof(this.PositionPlayer1));
+                this.RaisePropertyChanged(nameof(this.PositionPlayer2));
+                this.RaisePropertyChanged(nameof(this.RotationPlayer1));
+                this.RaisePropertyChanged(nameof(this.RotationPlayer2));
+                this.RaisePropertyChanged(nameof(this.VadPlayer1));
+                this.RaisePropertyChanged(nameof(this.VadPlayer2));
+                this.RaisePropertyChanged(nameof(this.JVAData));
             }
 
             base.OnPropertyChanged(sender, e);
@@ -95,11 +114,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        public virtual PipelineRejeuxDonnees.PositionData PositionPlayer1
+        public virtual Vector3 PositionPlayer1
         {
             get
             {
-                return this.GetPlayersData().position1;
+                return this.GetPlayersData().position1.headPosv;
+            }
+        }
+        public virtual float P1X
+        {
+            get
+            {
+                return this.PositionPlayer1.X;
+            }
+        }
+        public virtual float P1Y
+        {
+            get
+            {
+                return this.PositionPlayer1.Y;
             }
         }
 
@@ -160,11 +193,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             get
             {
-                string positions = this.PositionPlayer1.headPos.ToString() + "/" + this.PositionPlayer2.headPos.ToString();
+                //string positions = this.PositionPlayer1.headPos.ToString() + "/" + this.PositionPlayer2.headPos.ToString();
                 string rotations = this.RotationPlayer1.headRot.ToString() + "/" + this.RotationPlayer2.headRot.ToString();
                 string vads = this.VadPlayer1.ToString() + "/" + this.VadPlayer2.ToString();
 
-                string res = positions + "\n" + rotations + "\n" + vads;
+                string res = /*positions + "\n" +*/ rotations + "\n" + vads;
 
                 PipelineRejeuxDonnees.JVAData JVAData = this.JVAData;
                 if (JVAData != null)
@@ -172,17 +205,69 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     res += "\n" + JVAData.responder.ToString() + " " + JVAData.objectID.ToString();
                 }
 
-
                 return res;
             }
         }
 
 
-        [DataMember]
-        public string GetDefString
+        // Players positions
+        /*public virtual float HeadPositionX
         {
-            get {
-                return "def string tmtc";
+            get
+            {
+                float interval = Math.Abs(minimumPositionX) + Math.Abs(maximumPositionX);
+                float delta = Math.Abs(minimumPositionX) + Math.Abs(this.HeadPosition.X);
+                float ratio = delta / interval * 100;
+
+                return ratio;
+            }
+        }
+
+        public virtual float HeadPositionY
+        {
+            get
+            {
+                float interval = Math.Abs(minimumPositionY) + Math.Abs(maximumPositionY);
+                float delta = Math.Abs(minimumPositionY) + Math.Abs(this.HeadPosition.Y);
+                float ratio = delta / interval * 100;
+
+                return ratio;
+            }
+        }*/
+
+
+
+        // Names and colors of the players
+        [DataMember]
+        public virtual string HeadName
+        {
+            get
+            {
+                return this.Name;
+            }
+        }
+
+        [DataMember]
+        public virtual string HeadColor
+        {
+            get
+            {
+                using var sha1 = SHA1.Create();
+                byte[] hashBytes = sha1.ComputeHash(System.Text.Encoding.UTF8.GetBytes(this.Name));
+                string hashString = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
+                string color = "#" + hashString.Substring(0, 6).ToString();
+                return color;
+            }
+        }
+
+        [DataMember]
+        public bool IsHeadNameHidden
+        {
+            get { return _isHeadNameHidden; }
+            set
+            {
+                _isHeadNameHidden = value;
+                this.RaisePropertyChanged(nameof(IsHeadNameHidden));
             }
         }
     }
