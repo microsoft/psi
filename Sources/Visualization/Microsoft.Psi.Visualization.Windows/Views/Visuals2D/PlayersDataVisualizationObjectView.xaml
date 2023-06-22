@@ -29,15 +29,25 @@
           </Ellipse.RenderTransform>
         </Ellipse>
 
+        <TextBlock Text="{Binding Path=GetPlayersDataAsString, Mode=OneWay}"></TextBlock>
 
-        <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
-          <Ellipse.RenderTransform>
-            <TransformGroup>
-              <ScaleTransform ScaleX="10" ScaleY="10"/>
-              <TranslateTransform X="{Binding Path=PlayersData.GetPlayerPositionPlayer2.X, Mode=OneWay}" Y="{Binding Path=PlayersData.GetPlayerPositionPlayer2.Y, Mode=OneWay}" />
-            </TransformGroup>
-          </Ellipse.RenderTransform>
-        </Ellipse>
+        <TextBlock Text="{Binding Path=P1X, Mode=OneWay}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Foreground="white"
+               Canvas.Left="{Binding Path=P1X, Mode=OneWay}"
+               Canvas.Top="{Binding Path=P1Y, Mode=OneWay}">
+          <TextBlock.Style>
+            <Style TargetType="TextBlock">
+              <Setter Property="Visibility" Value="Collapsed"/>
+              <Style.Triggers>
+                <DataTrigger Binding="{Binding IsHeadNameHidden}" Value="False">
+                  <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+              </Style.Triggers>
+            </Style>
+          </TextBlock.Style>
+        </TextBlock>
       </Canvas>
     </Grid>
   </Border>

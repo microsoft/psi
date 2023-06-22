@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     [VisualizationObject("PlayersData")]
     [VisualizationPanelType(VisualizationPanelType.Canvas)]
-    public class PlayersDataVisualizationObject : StreamValueVisualizationObject<PlayersData>, INotifyPropertyChanged
+    public class PlayersDataVisualizationObject : StreamValueVisualizationObject<List<PlayersData>>, INotifyPropertyChanged
     {
         private float minimumPositionX = 0;
         private float maximumPositionX = 1;
@@ -49,14 +49,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(this.CurrentValue))
             {
                 this.RaisePropertyChanging(nameof(this.GetPlayersData));
-                this.RaisePropertyChanging(nameof(this.GetPlayersDataAsString));
+                //this.RaisePropertyChanging(nameof(this.GetPlayersDataAsString));
                 this.RaisePropertyChanging(nameof(this.PositionPlayer1));
-                this.RaisePropertyChanging(nameof(this.PositionPlayer2));
+                /*this.RaisePropertyChanging(nameof(this.PositionPlayer2));
                 this.RaisePropertyChanging(nameof(this.RotationPlayer1));
                 this.RaisePropertyChanging(nameof(this.RotationPlayer2));
                 this.RaisePropertyChanging(nameof(this.VadPlayer1));
                 this.RaisePropertyChanging(nameof(this.VadPlayer2));
-                this.RaisePropertyChanging(nameof(this.JVAData));
+                this.RaisePropertyChanging(nameof(this.JVAData));*/
+                this.RaisePropertyChanging(nameof(this.P1X));
+                this.RaisePropertyChanging(nameof(this.P1Y));
             }
         }
 
@@ -65,14 +67,16 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(this.CurrentValue))
             {
                 this.RaisePropertyChanged(nameof(this.GetPlayersData));
-                this.RaisePropertyChanged(nameof(this.GetPlayersDataAsString));
+                //this.RaisePropertyChanged(nameof(this.GetPlayersDataAsString));
                 this.RaisePropertyChanged(nameof(this.PositionPlayer1));
-                this.RaisePropertyChanged(nameof(this.PositionPlayer2));
+                /*this.RaisePropertyChanged(nameof(this.PositionPlayer2));
                 this.RaisePropertyChanged(nameof(this.RotationPlayer1));
                 this.RaisePropertyChanged(nameof(this.RotationPlayer2));
                 this.RaisePropertyChanged(nameof(this.VadPlayer1));
                 this.RaisePropertyChanged(nameof(this.VadPlayer2));
-                this.RaisePropertyChanged(nameof(this.JVAData));
+                this.RaisePropertyChanged(nameof(this.JVAData));*/
+                this.RaisePropertyChanged(nameof(this.P1X));
+                this.RaisePropertyChanged(nameof(this.P1Y));
             }
 
             base.OnPropertyChanged(sender, e);
@@ -84,7 +88,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <returns>
         /// PlayersData instance.
         /// </returns>
-        public PlayersData GetPlayersData()
+        public List<PlayersData> GetPlayersData()
         {
             if (this.CurrentValue.HasValue)
             {
@@ -92,25 +96,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
             else
             {
-;               PlayersData placeholder = new PlayersData(
-                    new PipelineRejeuxDonnees.PositionData(""),
-                    new PipelineRejeuxDonnees.PositionData(""),
-                    new PipelineRejeuxDonnees.RotationData(""),
-                    new PipelineRejeuxDonnees.RotationData(""),
-                    false,
-                    false,
-                    new PipelineRejeuxDonnees.JVAData(
-                        new DateTime(),
-                        new DateTime(),
-                        new DateTime(),
-                        new DateTime(),
-                        new TimeSpan(),
-                        "",
-                        0,
-                        0
+                List<PlayersData> res = new List<PlayersData>(1);
+                res.Add(
+                    new PlayersData(
+                        new PipelineRejeuxDonnees.PositionData(""),
+                        new PipelineRejeuxDonnees.RotationData(""),
+                        false,
+                        new PipelineRejeuxDonnees.JVAData(
+                            new DateTime(),
+                            new DateTime(),
+                            new DateTime(),
+                            new DateTime(),
+                            new TimeSpan(),
+                            "",
+                            0,
+                            0
+                        )
                     )
                 );
-                return placeholder;
+                return res;
             }
         }
 
@@ -118,70 +122,32 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             get
             {
-                return this.GetPlayersData().position1.headPosv;
+                return this.GetPlayersData().ElementAt(0).position.headPosv;
             }
         }
-        public virtual float P1X
+        public float P1X
         {
             get
             {
-                return this.PositionPlayer1.X;
+                float interval = Math.Abs(minimumPositionX) + Math.Abs(maximumPositionX);
+                float delta = Math.Abs(minimumPositionX) + Math.Abs(this.PositionPlayer1.X);
+                float ratio = delta / interval * 100;
+
+                return ratio;
             }
         }
-        public virtual float P1Y
+        public float P1Y
         {
             get
             {
-                return this.PositionPlayer1.Y;
+                float interval = Math.Abs(minimumPositionY) + Math.Abs(maximumPositionY);
+                float delta = Math.Abs(minimumPositionY) + Math.Abs(this.PositionPlayer1.Y);
+                float ratio = delta / interval * 100;
+
+                return ratio;
             }
         }
 
-        public virtual PipelineRejeuxDonnees.PositionData PositionPlayer2
-        {
-            get
-            {
-                return this.GetPlayersData().position2;
-            }
-        }
-
-        public virtual PipelineRejeuxDonnees.RotationData RotationPlayer1
-        {
-            get
-            {
-                return this.GetPlayersData().rotation1;
-            }
-        }
-        public virtual PipelineRejeuxDonnees.RotationData RotationPlayer2
-        {
-            get
-            {
-                return this.GetPlayersData().rotation2;
-            }
-        }
-
-        public virtual bool VadPlayer1
-        {
-            get
-            {
-                return this.GetPlayersData().vad1;
-            }
-        }
-
-        public virtual bool VadPlayer2
-        {
-            get
-            {
-                return this.GetPlayersData().vad2;
-            }
-        }
-
-        public virtual PipelineRejeuxDonnees.JVAData JVAData
-        {
-            get
-            {
-                return this.GetPlayersData().jvaEvent;
-            }
-        }
 
         /// <summary>
         ///  Returns the PlayersData value at time t as a string.
@@ -189,15 +155,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <returns>
         /// String.
         /// </returns>
-        public virtual string GetPlayersDataAsString
+        /*public virtual string GetPlayersDataAsString
         {
             get
             {
-                //string positions = this.PositionPlayer1.headPos.ToString() + "/" + this.PositionPlayer2.headPos.ToString();
+                string positions = this.PositionPlayer1.ToString() + "/" + this.PositionPlayer2.ToString();
                 string rotations = this.RotationPlayer1.headRot.ToString() + "/" + this.RotationPlayer2.headRot.ToString();
                 string vads = this.VadPlayer1.ToString() + "/" + this.VadPlayer2.ToString();
 
-                string res = /*positions + "\n" +*/ rotations + "\n" + vads;
+                string res = positions + "\n" + rotations + "\n" + vads;
 
                 PipelineRejeuxDonnees.JVAData JVAData = this.JVAData;
                 if (JVAData != null)
@@ -207,7 +173,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
                 return res;
             }
-        }
+        }*/
 
 
         // Players positions
