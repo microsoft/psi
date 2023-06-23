@@ -19,36 +19,41 @@
         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
 
-      <Canvas Name="canvas" Grid.Column="1" Width="Auto" Height="Auto" Background="Transparent">
-        <Ellipse Width="2" Height="2" Fill="{Binding Path=HeadColor, Mode=OneWay}">
-          <Ellipse.RenderTransform>
-            <TransformGroup>
-              <ScaleTransform ScaleX="10" ScaleY="10"/>
-              <TranslateTransform X="{Binding Path=P1X, Mode=OneWay}" Y="{Binding Path=P1Y, Mode=OneWay}" />
-            </TransformGroup>
-          </Ellipse.RenderTransform>
-        </Ellipse>
+      <TextBlock Text="{Binding GetPlayersData.JVA.GetToString}" />
+      
+      <ItemsControl ItemsSource="{Binding GetPlayersData}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Grid Margin="0,0,0,5">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+              </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding Path=GetPlayersDataAsString, Mode=OneWay}"></TextBlock>
+              <Canvas>
+                <TextBlock Canvas.Left="{Binding Position.X}" Canvas.Top="{Binding Position.Y}">
+                  <TextBlock.Text>
+                    <MultiBinding StringFormat="P{0}">
+                      <Binding Path="(ItemsControl.AlternationIndex)" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ContentPresenter}}" />
+                    </MultiBinding>
+                  </TextBlock.Text>
+                </TextBlock>
+                
+                <Ellipse Canvas.Left="{Binding Position.X}" Canvas.Top="{Binding Position.Y}" Width="24" Height="24" Stroke="Red" StrokeThickness="2" Visibility="{Binding Vad, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-6">
+                  <Ellipse.Fill>
+                    <SolidColorBrush Color="Green" Opacity="0.2"/>
+                  </Ellipse.Fill>
+                </Ellipse>
+              </Canvas>
+            </Grid>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
 
-        <TextBlock Text="{Binding Path=P1X, Mode=OneWay}"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Foreground="white"
-               Canvas.Left="{Binding Path=P1X, Mode=OneWay}"
-               Canvas.Top="{Binding Path=P1Y, Mode=OneWay}">
-          <TextBlock.Style>
-            <Style TargetType="TextBlock">
-              <Setter Property="Visibility" Value="Collapsed"/>
-              <Style.Triggers>
-                <DataTrigger Binding="{Binding IsHeadNameHidden}" Value="False">
-                  <Setter Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-              </Style.Triggers>
-            </Style>
-          </TextBlock.Style>
-        </TextBlock>
-      </Canvas>
+        <ItemsControl.AlternationCount>
+          <Binding Path="Items.Count" RelativeSource="{RelativeSource Self}" />
+        </ItemsControl.AlternationCount>
+      </ItemsControl>
     </Grid>
   </Border>
 </vv:VisualizationObjectView>
+

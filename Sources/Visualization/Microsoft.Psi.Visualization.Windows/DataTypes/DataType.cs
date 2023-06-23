@@ -177,6 +177,9 @@ namespace PipelineRejeuxDonnees
             initiator = init;
             responder = resp;
         }
+
+        public string GetToString()
+        { return "JVA: " + this.objectID; }
     }
     [System.Serializable]
     public class JVAWindow
@@ -373,6 +376,15 @@ namespace PipelineRejeuxDonnees
             rHandPos = parts[4];
         }
 
+        public float X
+        {
+            get { return this.headPosv.X; }
+        }
+        public float Y
+        {
+            get { return this.headPosv.Y; }
+        }
+
         public void ToVectHeadPos()
         {
             var partsHeadPos = headPos.Split('_');
@@ -420,6 +432,19 @@ namespace PipelineRejeuxDonnees
             headRot = parts[2];
             lHandRot = parts[3];
             rHandRot = parts[4];
+        }
+
+        public float X
+        {
+            get { return this.headRotv.X; }
+        }
+        public float Y
+        {
+            get { return this.headRotv.Y; }
+        }
+        public float Z
+        {
+            get { return this.headRotv.Z; }
         }
 
         public void ToVectHeadRot()

@@ -88,33 +88,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <returns>
         /// PlayersData instance.
         /// </returns>
-        public List<PlayersData> GetPlayersData()
+        public List<PlayersData> GetPlayersData
         {
-            if (this.CurrentValue.HasValue)
+            get
             {
-                return this.CurrentValue.Value.Data;
-            }
-            else
-            {
-                List<PlayersData> res = new List<PlayersData>(1);
-                res.Add(
-                    new PlayersData(
-                        new PipelineRejeuxDonnees.PositionData(""),
-                        new PipelineRejeuxDonnees.RotationData(""),
-                        false,
-                        new PipelineRejeuxDonnees.JVAData(
-                            new DateTime(),
-                            new DateTime(),
-                            new DateTime(),
-                            new DateTime(),
-                            new TimeSpan(),
-                            "",
-                            0,
-                            0
-                        )
-                    )
-                );
-                return res;
+                if (this.CurrentValue.HasValue)
+                {
+                    return this.CurrentValue.Value.Data;
+                }
+                else
+                {
+                    return new List<PlayersData>(0);
+                }
             }
         }
 
@@ -122,7 +107,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             get
             {
-                return this.GetPlayersData().ElementAt(0).position.headPosv;
+                return this.GetPlayersData.ElementAt(0).position.headPosv;
             }
         }
         public float P1X

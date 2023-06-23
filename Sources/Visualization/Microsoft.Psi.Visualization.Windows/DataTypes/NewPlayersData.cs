@@ -4,6 +4,9 @@
 #pragma warning disable
 
 using PipelineRejeuxDonnees;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Windows.Forms.VisualStyles;
 
 [System.Serializable]
 public class PlayersData
@@ -19,6 +22,26 @@ public class PlayersData
         rotation = rot;
         vad = v;
         jvaEvent = jva;
+    }
+
+    public PositionData Position
+    {
+        get { return this.position; }
+    }
+
+    public RotationData Rotation
+    {
+        get { return this.rotation; }
+    }
+
+    public bool Vad
+    {
+        get { return this.vad; }
+    }
+
+    public JVAData JVA
+    {
+        get { return this.jvaEvent; }
     }
 }
 
