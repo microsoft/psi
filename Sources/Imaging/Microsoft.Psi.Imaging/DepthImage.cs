@@ -164,11 +164,6 @@ namespace Microsoft.Psi.Imaging
         {
             CheckPixelFormat(bitmapData.PixelFormat);
             int numBytes = bitmapData.Height * bitmapData.Stride;
-            if (numBytes > this.UnmanagedBuffer.Size)
-            {
-                throw new InvalidOperationException("Buffer too small.");
-            }
-
             this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
         }
 
@@ -187,11 +182,6 @@ namespace Microsoft.Psi.Imaging
             try
             {
                 int numBytes = bitmapData.Height * bitmapData.Stride;
-                if (numBytes > this.UnmanagedBuffer.Size)
-                {
-                    throw new InvalidOperationException("Buffer too small.");
-                }
-
                 this.UnmanagedBuffer.CopyFrom(bitmapData.Scan0, numBytes);
             }
             finally
@@ -434,8 +424,16 @@ namespace Microsoft.Psi.Imaging
                     schemaMembers.Add(new TypeMemberSchema(nameof(DepthImage.depthValueToMetersScaleFactor), typeof(double).AssemblyQualifiedName, false));
 
                     var type = typeof(DepthImage);
-                    var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
-                    this.Schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, schemaMembers, Version);
+                    var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
+                    this.Schema = new TypeSchema(
+                        type.AssemblyQualifiedName,
+                        TypeFlags.IsClass,
+                        schemaMembers,
+                        name,
+                        TypeSchema.GetId(name),
+                        LatestSchemaVersion,
+                        this.GetType().AssemblyQualifiedName,
+                        serializers.RuntimeInfo.SerializationSystemVersion);
                 }
                 else
                 {

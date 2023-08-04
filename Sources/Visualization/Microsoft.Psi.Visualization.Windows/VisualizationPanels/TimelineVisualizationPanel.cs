@@ -15,6 +15,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using System.Windows.Input;
     using System.Windows.Media;
     using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Common;
     using Microsoft.Psi.Visualization.Controls;
@@ -80,17 +81,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ShowHideLegendCommand
-        {
-            get
-            {
-                if (this.showHideLegendCommand == null)
-                {
-                    this.showHideLegendCommand = new RelayCommand(() => this.ShowLegend = !this.ShowLegend);
-                }
-
-                return this.showHideLegendCommand;
-            }
-        }
+            => this.showHideLegendCommand ??= new RelayCommand(() => this.ShowLegend = !this.ShowLegend);
 
         /// <summary>
         /// Gets the clear selection command.
@@ -98,19 +89,9 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ClearSelectionCommand
-        {
-            get
-            {
-                if (this.clearSelectionCommand == null)
-                {
-                    this.clearSelectionCommand = new RelayCommand(
-                        () => this.Container.Navigator.ClearSelection(),
-                        () => this.Container.Navigator.CanClearSelection());
-                }
-
-                return this.clearSelectionCommand;
-            }
-        }
+            => this.clearSelectionCommand ??= new RelayCommand(
+                () => this.Container.Navigator.ClearSelection(),
+                () => this.Container.Navigator.CanClearSelection());
 
         /// <summary>
         /// Gets the mouse right button down command.
@@ -118,21 +99,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<RoutedEventArgs> ViewportLoadedCommand
-        {
-            get
-            {
-                if (this.viewportLoadedCommand == null)
-                {
-                    this.viewportLoadedCommand = new RelayCommand<RoutedEventArgs>(
-                        e =>
-                        {
-                            this.viewport = e.Source as Grid;
-                        });
-                }
-
-                return this.viewportLoadedCommand;
-            }
-        }
+            => this.viewportLoadedCommand ??= new RelayCommand<RoutedEventArgs>(e => this.viewport = e.Source as Grid);
 
         /// <summary>
         /// Gets the items control size changed command.
@@ -140,17 +107,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<SizeChangedEventArgs> ViewportSizeChangedCommand
-        {
-            get
-            {
-                if (this.viewportSizeChangedCommand == null)
-                {
-                    this.viewportSizeChangedCommand = new RelayCommand<SizeChangedEventArgs>(e => this.OnViewportSizeChanged(e));
-                }
-
-                return this.viewportSizeChangedCommand;
-            }
-        }
+            => this.viewportSizeChangedCommand ??= new RelayCommand<SizeChangedEventArgs>(e => this.OnViewportSizeChanged(e));
 
         /// <summary>
         /// Gets the mouse left button down command.
@@ -158,39 +115,29 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public override RelayCommand<MouseButtonEventArgs> MouseLeftButtonDownCommand
-        {
-            get
-            {
-                if (this.mouseLeftButtonDownCommand == null)
+            => this.mouseLeftButtonDownCommand ??= new RelayCommand<MouseButtonEventArgs>(
+                e =>
                 {
-                    this.mouseLeftButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
-                        e =>
+                    // Set the current panel on click
+                    if (!this.IsCurrentPanel)
+                    {
+                        this.IsTreeNodeSelected = true;
+                        this.Container.CurrentPanel = this;
+
+                        // If the panel contains any visualization objects, set the first one as selected.
+                        if (this.VisualizationObjects.Any())
                         {
-                            // Set the current panel on click
-                            if (!this.IsCurrentPanel)
-                            {
-                                this.IsTreeNodeSelected = true;
-                                this.Container.CurrentPanel = this;
+                            this.VisualizationObjects[0].IsTreeNodeSelected = true;
+                        }
+                    }
 
-                                // If the panel contains any visualization objects, set the first one as selected.
-                                if (this.VisualizationObjects.Any())
-                                {
-                                    this.VisualizationObjects[0].IsTreeNodeSelected = true;
-                                }
-                            }
-
-                            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                            {
-                                var cursor = this.Navigator.Cursor;
-                                this.Navigator.SelectionRange.Set(cursor, this.Navigator.SelectionRange.EndTime >= cursor ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
-                                e.Handled = true;
-                            }
-                        });
-                }
-
-                return this.mouseLeftButtonDownCommand;
-            }
-        }
+                    if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                    {
+                        var cursor = this.Navigator.Cursor;
+                        this.Navigator.SelectionRange.Set(cursor, this.Navigator.SelectionRange.EndTime >= cursor ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
+                        e.Handled = true;
+                    }
+                });
 
         /// <summary>
         /// Gets the mouse right button down command.
@@ -198,26 +145,16 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<MouseButtonEventArgs> MouseRightButtonDownCommand
-        {
-            get
-            {
-                if (this.mouseRightButtonDownCommand == null)
+            => this.mouseRightButtonDownCommand ??= new RelayCommand<MouseButtonEventArgs>(
+                e =>
                 {
-                    this.mouseRightButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
-                        e =>
-                        {
-                            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                            {
-                                var time = this.Navigator.Cursor;
-                                this.Navigator.SelectionRange.Set(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
-                                e.Handled = true;
-                            }
-                        });
-                }
-
-                return this.mouseRightButtonDownCommand;
-            }
-        }
+                    if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                    {
+                        var time = this.Navigator.Cursor;
+                        this.Navigator.SelectionRange.Set(this.Navigator.SelectionRange.StartTime <= time ? this.Navigator.SelectionRange.StartTime : DateTime.MinValue, time);
+                        e.Handled = true;
+                    }
+                });
 
         /// <summary>
         /// Gets the mouse move command.
@@ -225,28 +162,18 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<MouseEventArgs> MouseMoveCommand
-        {
-            get
-            {
-                if (this.mouseMoveCommand == null)
+            => this.mouseMoveCommand ??= new RelayCommand<MouseEventArgs>(
+                e =>
                 {
-                    this.mouseMoveCommand = new RelayCommand<MouseEventArgs>(
-                        e =>
-                        {
-                            // Get the current mouse position
-                            Point newMousePosition = e.GetPosition(this.viewport);
+                    // Get the current mouse position
+                    Point newMousePosition = e.GetPosition(this.viewport);
 
-                            // Get the current scale factor between the axes logical bounds and the items control size.
-                            double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / this.viewport.ActualHeight;
+                    // Get the current scale factor between the axes logical bounds and the items control size.
+                    double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / this.viewport.ActualHeight;
 
-                            // Set the mouse position in locical/image co-ordinates
-                            this.MousePosition = new TimelinePanelMousePosition(this.GetTimeAtMousePointer(e, false), this.YAxis.Maximum - newMousePosition.Y * scaleY /*+ this.YAxis.Minimum*/);
-                        });
-                }
-
-                return this.mouseMoveCommand;
-            }
-        }
+                    // Set the mouse position in locical/image co-ordinates
+                    this.MousePosition = new TimelinePanelMousePosition(this.GetTimeAtMousePointer(e, false), this.YAxis.Maximum - newMousePosition.Y * scaleY /*+ this.YAxis.Minimum*/);
+                });
 
         /// <summary>
         /// Gets the set auto axis compute mode command for both the X and Y axes.
@@ -254,20 +181,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SetAutoAxisComputeModeCommand
-        {
-            get
-            {
-                if (this.setAutoAxisComputeModeCommand == null)
-                {
-                    this.setAutoAxisComputeModeCommand = new RelayCommand(() =>
-                    {
-                        this.AxisComputeMode = AxisComputeMode.Auto;
-                    });
-                }
-
-                return this.setAutoAxisComputeModeCommand;
-            }
-        }
+            => this.setAutoAxisComputeModeCommand ??= new RelayCommand(() => this.AxisComputeMode = AxisComputeMode.Auto);
 
         /// <summary>
         /// Gets or sets the Y Axis for the panel.
@@ -328,7 +242,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [PropertyOrder(4)]
         [DisplayName("Mouse Position")]
         [Description("The position of the mouse within the Timeline Visualization panel.")]
-        public string MousePositionString => $"{DateTimeFormatHelper.FormatTime(this.mousePosition.X)}, {this.mousePosition.Y:F}";
+        public string MousePositionString => $"{DateTimeHelper.FormatTime(this.mousePosition.X)}, {this.mousePosition.Y:F}";
 
         /// <summary>
         /// Gets or sets the mouse position in the panel.
@@ -429,6 +343,25 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <inheritdoc/>
         public override List<VisualizationPanelType> CompatiblePanelTypes => new () { VisualizationPanelType.Timeline };
 
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = new List<ContextMenuItemInfo>()
+            {
+                // The show/hide legend menu
+                new ContextMenuItemInfo(IconSourcePath.Legend, this.ShowLegend ? $"Hide Legend" : $"Show Legend", this.ShowHideLegendCommand),
+                new ContextMenuItemInfo(
+                    null,
+                    "Auto-Fit Axes",
+                    this.SetAutoAxisComputeModeCommand,
+                    isEnabled: this.AxisComputeMode == AxisComputeMode.Manual),
+                null,
+            };
+
+            items.AddRange(base.ContextMenuItemsInfo());
+            return items;
+        }
+
         /// <summary>
         /// Gets the time at the mouse pointer, optionally adjusting for visualization object snap.
         /// </summary>
@@ -449,7 +382,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                 DateTime? snappedTime = null;
                 if (useSnap == true && VisualizationContext.Instance.VisualizationContainer.SnapToVisualizationObject is IStreamVisualizationObject snapToVisualizationObject)
                 {
-                    snappedTime = DataManager.Instance.GetTimeOfNearestMessage(snapToVisualizationObject.StreamSource, time, NearestMessageType.Nearest);
+                    snappedTime = DataManager.Instance.GetTimeOfNearestMessage(snapToVisualizationObject.StreamSource, time, NearestType.Nearest);
                 }
 
                 return snappedTime ?? time;

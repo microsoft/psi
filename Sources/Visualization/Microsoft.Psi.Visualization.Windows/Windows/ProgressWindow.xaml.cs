@@ -18,12 +18,14 @@ namespace Microsoft.Psi.Visualization.Windows
         /// </summary>
         /// <param name="owner">The owner of this window.</param>
         /// <param name="progressText">The text in the progress window.</param>
-        public ProgressWindow(Window owner, string progressText)
+        /// <param name="showCancelButton">Whether the progress window should display the Cancel button.</param>
+        public ProgressWindow(Window owner, string progressText, bool showCancelButton = false)
         {
             this.InitializeComponent();
 
             this.DataContext = this;
             this.Owner = owner;
+            this.ShowCancelButton = showCancelButton;
             this.ProgressText = progressText;
             this.Progress = 0d;
         }
@@ -49,5 +51,10 @@ namespace Microsoft.Psi.Visualization.Windows
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Progress)));
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the Cancel button should be displayed.
+        /// </summary>
+        public bool ShowCancelButton { get; }
     }
 }

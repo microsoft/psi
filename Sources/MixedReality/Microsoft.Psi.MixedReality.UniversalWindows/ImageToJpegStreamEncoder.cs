@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-namespace Microsoft.Psi.MixedReality
+namespace Microsoft.Psi.Imaging
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
-    using Microsoft.Psi.Imaging;
     using Windows.Graphics.Imaging;
 
     /// <summary>
@@ -24,8 +23,10 @@ namespace Microsoft.Psi.MixedReality
         public ImageToJpegStreamEncoder(double imageQuality = 1.0)
         {
             this.imageQuality = imageQuality;
-            this.propertySet = new ();
-            this.propertySet.Add("ImageQuality", new BitmapTypedValue(imageQuality, Windows.Foundation.PropertyType.Single));
+            this.propertySet = new ()
+            {
+                { "ImageQuality", new BitmapTypedValue(imageQuality, Windows.Foundation.PropertyType.Single) },
+            };
         }
 
         /// <inheritdoc/>

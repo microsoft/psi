@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal sealed class SimpleArraySerializer<T> : ISerializer<T[]>
     {
-        private const int Version = 2;
+        private const int LatestSchemaVersion = 2;
 
         // for performance reasons, we want serialization to perform block-copy operations over the entire array in one go
         // however, since this class is generic, the C# compiler doesn't let us get the address of the first element of the array
@@ -30,9 +30,17 @@ namespace Microsoft.Psi.Serialization
         {
             serializers.GetHandler<T>(); // register element type
             var type = typeof(T[]);
-            var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+            var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
             var elementsMember = new TypeMemberSchema("Elements", typeof(T).AssemblyQualifiedName, true);
-            var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsCollection, new TypeMemberSchema[] { elementsMember }, Version);
+            var schema = new TypeSchema(
+                type.AssemblyQualifiedName,
+                TypeFlags.IsCollection,
+                new TypeMemberSchema[] { elementsMember },
+                name,
+                TypeSchema.GetId(name),
+                LatestSchemaVersion,
+                this.GetType().AssemblyQualifiedName,
+                serializers.RuntimeInfo.SerializationSystemVersion);
             return targetSchema ?? schema;
         }
 

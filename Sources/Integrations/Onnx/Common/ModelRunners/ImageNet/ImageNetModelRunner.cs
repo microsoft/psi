@@ -27,12 +27,12 @@ namespace Microsoft.Psi.Onnx
     /// downloaded locally and the path to the model file will need to be
     /// specified when creating the configuration.
     /// </remarks>
-    public class ImageNetModelRunner : ConsumerProducer<Shared<Image>, List<LabeledPrediction>>
+    public class ImageNetModelRunner : ConsumerProducer<Shared<Image>, List<LabeledPrediction>>, IDisposable
     {
         private readonly ImageNetModelRunnerConfiguration configuration;
         private readonly float[] onnxInputVector = new float[3 * 224 * 224];
-        private readonly OnnxModel onnxModel;
         private readonly ImageNetModelOutputParser outputParser;
+        private OnnxModel onnxModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageNetModelRunner"/> class.
@@ -60,6 +60,13 @@ namespace Microsoft.Psi.Onnx
             });
 
             this.outputParser = new ImageNetModelOutputParser(configuration.ImageClassesFilePath, configuration.ApplySoftmaxToModelOutput);
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.onnxModel?.Dispose();
+            this.onnxModel = null;
         }
 
         /// <inheritdoc/>

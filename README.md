@@ -3,12 +3,12 @@
 ![Build status](https://dev.azure.com/msresearch/psi/_apis/build/status/psi-github-ci?branchName=master)
 [![Join the chat at https://gitter.im/Microsoft/psi](https://badges.gitter.im/Microsoft/psi.svg)](https://gitter.im/Microsoft/psi?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. Examples include multimodal interactive systems such as social robots and embodied conversational agents, mixed-reality systems, applications for ambient intelligence or smart spaces, applications based on small devices that work with streaming sensor data, etc. In essence, any application that processes streaming, sensor data (such as audio, video, depth, etc.), combines multiple (AI) technologies, and operates under latency constraints can benefit from the affordances the provided by the framework.
+**Platform for Situated Intelligence** (or in short, \\psi, pronounced like the greek letter) is an open, extensible framework for development and research of multimodal, integrative-AI systems. Examples include multimodal interactive systems such as social robots and embodied conversational agents, mixed-reality systems, applications for ambient intelligence or smart spaces, etc. In essence, any application that processes streaming, sensor data (such as audio, video, depth, etc.), combines multiple (AI) technologies, and operates under latency constraints can benefit from the affordances the provided by the framework.
 
-The framework accelerates the development of these applications by providing: 
--	a modern, performant **infrastructure** for working with multimodal, temporally streaming data
--	a set of **tools** for multimodal data visualization, annotation, and processing
--	an ecosystem of **components** for various sensors, processing technologies, and effectors
+The framework provides: 
+-	**a modern, performant infrastructure** for working with multimodal, temporally streaming data
+-	**a set of tools** for multimodal data visualization, annotation, and processing
+-	**an ecosystem of components** for various sensors, processing technologies, and effectors
 
 <br>
 
@@ -18,9 +18,9 @@ A high-level overview of the framework is available in [this blog post](https://
 
 # What’s New
 
-__04/21/2022__: We've recently released [beta version 0.17](https://github.com/microsoft/psi/wiki/Release-Notes#20220420-beta-release-version-017521), which includes important updates to mixed reality support in \psi, including [a set of tools for streaming data from a HoloLens 2 to a separate PC for data collection and export](https://github.com/microsoft/psi/tree/master/Sources/MixedReality/HoloLensCapture). The release also includes several updates to visualization and PsiStudio, the addition of a wrapper for running MaskRCNN models, updates to Azure Kinect Components, as well as some runtime updates and various other bug fixes.
+__12/08/2022__: This week we have released [beta version 0.18](https://github.com/microsoft/psi/wiki/Release-Notes#20221206-beta-release-version-018721), continuing to refine support for building mixed reality applications with \psi, and further evolving debugging and visualization capabilities in PsiStudio.
 
-__03/03/2022__: We've recently released [beta version 0.16](https://github.com/microsoft/psi/wiki/Release-Notes#20220208-beta-release-version-016921), which includes (among other things) components and libraries for writing \psi mixed-reality applicaton for HoloLens 2. This includes components for accessing and processing the rich multimodal sensor streams (such as head tracking, hand tracking, gaze tracking, RGB and depth cameras, IMU, etc.) as well as example \psi components for rendering output on the device. Integration between \psi and the HoloLens 2 is accomplished by leveraging Windows Runtime APIs, as well as [HoloLens Research Mode](https://docs.microsoft.com/en-us/windows/mixed-reality/develop/advanced-concepts/research-mode) and [StereoKit](https://stereokit.net/). [A sample](https://github.com/microsoft/psi-samples/tree/main/Samples/HoloLensSample) that illustrates some of this functionality is also available in the [psi-samples repo](https://github.com/microsoft/psi-samples).
+__04/21/2022__: We've recently released [beta version 0.17](https://github.com/microsoft/psi/wiki/Release-Notes#20220420-beta-release-version-017521), which includes important updates to mixed reality support in \psi, including [a set of tools for streaming data from a HoloLens 2 to a separate PC for data collection and export](https://github.com/microsoft/psi/tree/master/Sources/MixedReality/HoloLensCapture). The release also includes several updates to visualization and PsiStudio, the addition of a wrapper for running MaskRCNN models, updates to Azure Kinect Components, as well as some runtime updates and various other bug fixes.
 
 __07/29/2021__: Check out this [new sample application](https://github.com/microsoftgraph/microsoft-graph-comms-samples/tree/master/Samples/PublicSamples/PsiBot) which shows how you can integrate \\psi with the Teams bot architecture to develop bots that can participate in live meetings! (Please note that although it is hosted in the Microsoft Graph repository, you should post any issues or questions about this sample here).
 
@@ -28,8 +28,6 @@ __05/02/2021__: We've opened the [Discussions](https://github.com/microsoft/psi/
 [ask questions](https://github.com/microsoft/psi/discussions/categories/q-a), [share ideas and feature requests](https://github.com/microsoft/psi/discussions/categories/ideas), [show off the cool components or projects you're building with \psi](https://github.com/microsoft/psi/discussions/categories/show-and-tell), and generally engage with other community members.
 
 __04/29/2021__: Thanks to all who joined us for the [Platform for Situated Intelligence Workshop](https://aka.ms/psi-w1)! In this workshop, we discussed the basics on how to use the framework to accelerate your own work in the space of multimodal, integrative AI; presented some in-depth tutorials, demos, and previews of new features; and had a fun panel on how to build and nurture the open source community. All sessions were recorded, and you can find the videos on the [event website](https://aka.ms/psi-w1) now.
-
-__04/14/2021__: We uploaded a [brief overview](https://innovation.microsoft.com/en-us/tech-minutes-platform-for-situated-intelligence) on Platform for Situated Intelligence as part of the Microsoft Innovation Tech Minutes series.
 
 __03/31/2021__: We published a [technical report](https://arxiv.org/abs/2103.15975) containing a more in-depth description of the various aspects of the framework.
 

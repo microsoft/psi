@@ -19,7 +19,7 @@ namespace Microsoft {
             //**********************************************************************
             // Defines list of native pixel formats. NOTE: This list must match
             // the list in Microsoft.Psi.Imaging.PixelFormats. The reason for
-            // the duplication is to avoid taking a dependency in Media.Native.Windows
+            // the duplication is to avoid taking a dependency in Media_Interop.Windows
             // on the Imaging layer.
             //**********************************************************************
             const int NativePixelFormat_Undefined = 0;
@@ -62,7 +62,7 @@ namespace Microsoft {
             public:
                 MP4WriterUnmanagedData();
                 HRESULT Open(UINT32 imageWidth, UINT32 imageHeight, UINT32 frameRateNum, UINT32 frameRateDenom, UINT32 bitrate, int pixelFormat,
-                    bool containsAudio, UINT32 bitsPerSample, UINT32 samplesPerSecond, UINT32 numChannels,
+                    bool containsAudio, UINT32 bitsPerSample, UINT32 samplesPerSecond, UINT32 numChannels, bool disableThrottling,
                     wchar_t *outputFilename);
                 HRESULT WriteVideoFrame(LONGLONG timestamp, IntPtr imageData, UINT32 imageWidth, UINT32 imageHeight, int pixelFormat);
                 HRESULT WriteAudioSample(LONGLONG timestamp, IntPtr pcmData, UINT32 numDataBytes, IntPtr waveFormat);
@@ -85,6 +85,7 @@ namespace Microsoft {
                 UINT32 bitsPerSample;        /* Number of bits per audio sample (typically 16) */
                 UINT32 samplesPerSecond;     /* Audio's sample rate (typically 48000) */
                 UINT32 numChannels;          /* Number of audio channels (typically 1 or 2) */
+                bool disableThrottling;      /* Whether the MP4 writer should disable throttling */
             };
 
             /// <summary>

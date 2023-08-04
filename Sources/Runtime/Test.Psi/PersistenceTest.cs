@@ -1226,6 +1226,7 @@ namespace Test.Psi
         }
 
         [TestMethod]
+        [TestCategory("Performance")]
         [Timeout(60000)]
         public void StoreWriteReadSpeedTest()
         {

@@ -13,7 +13,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     using Microsoft.Msagl.Drawing;
     using Microsoft.Msagl.WpfGraphControl;
     using Microsoft.Psi.Diagnostics;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Brushes = System.Windows.Media.Brushes;
     using Transform = System.Windows.Media.Transform;
@@ -23,8 +22,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// </summary>
     public partial class PipelineDiagnosticsVisualizationObjectView : VisualizationObjectView, IDisposable
     {
-        private readonly GraphViewer graphViewer = new GraphViewer() { LayoutEditingEnabled = false };
-        private Dictionary<int, (Transform, Node)> graphVisualPanZoom = new Dictionary<int, (Transform, Node)>();
+        private readonly GraphViewer graphViewer = new () { LayoutEditingEnabled = false };
+        private Dictionary<int, (Transform, Node)> graphVisualPanZoom = new ();
         private Transform lastRenderTransform = Transform.Identity;
         private Node lastCenteredNode = null;
         private PipelineDiagnosticsVisualizationPresenter presenter;
@@ -58,51 +57,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.UpdateViewerGraph(forceRelayout);
             this.infoText.FontSize = this.presenter.InfoTextSize;
             this.infoText.Text = this.presenter.SelectedEdgeDetails;
-        }
-
-        /// <inheritdoc/>
-        public override void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            // If the mouse is over an edge, add a menu item to expand the streams of the receiver.
-            if (this.graphViewer.ObjectUnderMouseCursor is VEdge vedge)
-            {
-                menuItems.Add(
-                    MenuItemHelper.CreateMenuItem(
-                        IconSourcePath.Diagnostics,
-                        $"Add derived diagnostics streams for receiver {vedge.Edge.UserData}",
-                        new PsiCommand(() => this.presenter.AddDerivedReceiverDiagnosticsStreams((int)vedge.Edge.UserData))));
-            }
-
-            // Add a heatmap statistics context menu
-            var heatmapStatisticsMenu = MenuItemHelper.CreateMenuItem(null, "Heatmap Statistics", null);
-            menuItems.Add(heatmapStatisticsMenu);
-            foreach (var heatmapStat in Enum.GetValues(typeof(PipelineDiagnosticsVisualizationObject.HeatmapStats)))
-            {
-                var heatmapStatValue = (PipelineDiagnosticsVisualizationObject.HeatmapStats)heatmapStat;
-                var heatmapStatName = heatmapStatValue switch
-                {
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.None => "None",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageCreatedLatency => "Message Created Latency (Average)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageEmittedLatency => "Message Emitted Latency (Average)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageReceivedLatency => "Message Received Latency (Average)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgDeliveryQueueSize => "Delivery Queue Size (Average)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageProcessTime => "Message Process Time (Average)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageEmittedCount => "Total Messages Emitted (Count)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedCount => "Total Messages Dropped (Count)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedPercentage => "Total Messages Dropped (%)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedCount => "Total Messages Processed (Count)",
-                    PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageSize => "Message Size (Average)",
-                    _ => throw new NotImplementedException(),
-                };
-
-                heatmapStatisticsMenu.Items.Add(
-                    MenuItemHelper.CreateMenuItem(
-                        this.PipelineDiagnosticsVisualizationObject.HeatmapStatistics == heatmapStatValue ? IconSourcePath.Checkmark : null,
-                        heatmapStatName,
-                        new PsiCommand(() => this.PipelineDiagnosticsVisualizationObject.HeatmapStatistics = heatmapStatValue)));
-            }
-
-            base.AppendContextMenuItems(menuItems);
         }
 
         /// <inheritdoc/>
@@ -160,6 +114,15 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         private void GraphViewer_ObjectUnderMouseCursorChanged(object sender, ObjectUnderMouseCursorChangedEventArgs e)
         {
             Mouse.OverrideCursor = e.NewObject != null ? Cursors.Hand : Cursors.Arrow;
+
+            if (e.NewObject is VEdge edge)
+            {
+                this.PipelineDiagnosticsVisualizationObject.UpdateEdgeUnderCursor(Convert.ToInt32(edge.Edge.UserData));
+            }
+            else
+            {
+                this.PipelineDiagnosticsVisualizationObject.UpdateEdgeUnderCursor(-1);
+            }
         }
 
         private void DiagnosticsVisualizationObjectView_SizeChanged(object sender, SizeChangedEventArgs e)

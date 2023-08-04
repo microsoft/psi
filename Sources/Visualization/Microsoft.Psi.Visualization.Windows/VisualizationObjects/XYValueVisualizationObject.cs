@@ -6,7 +6,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
-    using System.Windows;
     using Microsoft.Psi.Visualization.VisualizationPanels;
 
     /// <summary>

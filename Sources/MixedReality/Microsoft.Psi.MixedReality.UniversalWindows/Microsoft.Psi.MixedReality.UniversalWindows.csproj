@@ -54,33 +54,35 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ImageToGZipStreamEncoder.cs" />
-    <Compile Include="Magnetometer.cs" />
-    <Compile Include="Gyroscope.cs" />
-    <Compile Include="Accelerometer.cs" />
-    <Compile Include="MediaCaptureMicrophone.cs" />
-    <Compile Include="MediaCaptureMicrophoneConfiguration.cs" />
-    <Compile Include="MixedRealityCapturePerspective.cs" />
-    <Compile Include="ResearchModeCamera.cs" />
-    <Compile Include="PhotoVideoCamera.cs" />
-    <Compile Include="PhotoVideoCameraConfiguration.cs" />
-    <Compile Include="ResearchModeCameraConfiguration.cs" />
-    <Compile Include="ResearchModeImu.cs" />
-    <Compile Include="SerializedCameraIntrinsics.cs" />
-    <Compile Include="VisibleLightCameraConfiguration.cs" />
-    <Compile Include="VisibleLightCamera.cs" />
-    <Compile Include="DepthCamera.cs" />
-    <Compile Include="DepthCameraConfiguration.cs" />
     <Compile Include="ImageToJpegStreamEncoder.cs" />
+    <Compile Include="MediaCapture\Microphone.cs" />
+    <Compile Include="MediaCapture\MicrophoneConfiguration.cs" />
+    <Compile Include="MediaCapture\MixedRealityCapturePerspective.cs" />
+    <Compile Include="MediaCapture\MixedRealityCaptureVideoEffect.cs" />
+    <Compile Include="MediaCapture\PhotoVideoCamera.cs" />
+    <Compile Include="MediaCapture\PhotoVideoCameraConfiguration.cs" />
+    <Compile Include="MediaCapture\UnsafeNative.cs" />
+    <Compile Include="ResearchMode\Accelerometer.cs" />
+    <Compile Include="ResearchMode\DepthCamera.cs" />
+    <Compile Include="ResearchMode\DepthCameraConfiguration.cs" />
+    <Compile Include="ResearchMode\Gyroscope.cs" />
+    <Compile Include="ResearchMode\Magnetometer.cs" />
+    <Compile Include="ResearchMode\ResearchModeCamera.cs" />
+    <Compile Include="ResearchMode\ResearchModeCameraConfiguration.cs" />
+    <Compile Include="ResearchMode\ResearchModeImu.cs" />
+    <Compile Include="ResearchMode\VisibleLightCamera.cs" />
+    <Compile Include="ResearchMode\VisibleLightCameraConfiguration.cs" />
+    <Compile Include="SerializedCameraIntrinsics.cs" />
     <Compile Include="SpatialAnchorHelper.cs" />
     <Compile Include="MixedReality.cs" />
-    <Compile Include="MixedRealityCaptureVideoEffect.cs" />
     <Compile Include="Operators.cs" />
     <Compile Include="SpatialAnchorsSource.cs" />
     <Compile Include="SceneUnderstandingConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SceneUnderstanding.cs" />
-    <Compile Include="UnsafeNative.cs" />
+    <Compile Include="WinRT\GazeSensorConfiguration.cs" />
+    <Compile Include="WinRT\GazeSensor.cs" />
+    <Compile Include="WinRT\Operators.cs" />
     <EmbeddedResource Include="Properties\Microsoft.Psi.MixedReality.UniversalWindows.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -99,7 +101,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="StereoKit">
-      <Version>0.3.5</Version>
+      <Version>0.3.6</Version>
     </PackageReference>
     <PackageReference Include="StyleCop.Analyzers">
       <Version>1.1.118</Version>
@@ -141,6 +143,7 @@
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

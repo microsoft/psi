@@ -30,7 +30,7 @@ namespace Microsoft.Psi.PsiStudio
                 {
                     return element.FindResource("PartitionTemplate") as DataTemplate;
                 }
-                else if (item is StreamContainerTreeNode)
+                else if (item is StreamTreeNode)
                 {
                     return element.FindResource("StreamTreeNodeTemplate") as DataTemplate;
                 }

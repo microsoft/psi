@@ -85,7 +85,15 @@ namespace Microsoft.Psi.Data
 
         /// <inheritdoc />
         [IgnoreDataMember]
-        public TimeInterval OriginatingTimeInterval { get; private set; } = TimeInterval.Empty;
+        public TimeInterval MessageOriginatingTimeInterval { get; private set; } = TimeInterval.Empty;
+
+        /// <inheritdoc />
+        [IgnoreDataMember]
+        public TimeInterval MessageCreationTimeInterval { get; private set; } = TimeInterval.Empty;
+
+        /// <inheritdoc />
+        [IgnoreDataMember]
+        public TimeInterval TimeInterval { get; private set; } = TimeInterval.Empty;
 
         /// <inheritdoc />
         [IgnoreDataMember]
@@ -108,7 +116,9 @@ namespace Microsoft.Psi.Data
                 if (this.streamReader != null)
                 {
                     // Set originating time interval from the reader metadata
-                    this.OriginatingTimeInterval = this.streamReader.MessageOriginatingTimeInterval;
+                    this.MessageOriginatingTimeInterval = this.streamReader.MessageOriginatingTimeInterval;
+                    this.MessageCreationTimeInterval = this.streamReader.MessageCreationTimeInterval;
+                    this.TimeInterval = this.streamReader.StreamTimeInterval;
                     this.Size = this.streamReader.Size;
                     this.StreamCount = this.streamReader.StreamCount;
                 }

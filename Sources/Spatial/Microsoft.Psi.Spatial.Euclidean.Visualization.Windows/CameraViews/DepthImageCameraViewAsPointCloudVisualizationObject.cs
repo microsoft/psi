@@ -6,14 +6,19 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
     using System.Runtime.Serialization;
     using System.Threading.Tasks;
+    using System.Windows;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi.Calibration;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Spatial.Euclidean;
+    using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Microsoft.Psi.Visualization.Windows;
+    using Microsoft.Win32;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
     using Windows = System.Windows.Media.Media3D;
 
@@ -81,6 +86,20 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
 
         /// <inheritdoc/>
         protected override Action<DepthImageCameraView> Deallocator => data => data.ViewedObject?.Dispose();
+
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = base.ContextMenuItemsInfo();
+            items.Insert(
+                0,
+                new ContextMenuItemInfo(
+                    null,
+                    "Export Point Cloud",
+                    new VisualizationCommand(this.ExportPointCloudToPly),
+                    isEnabled: this.PointCloud.CurrentData != null));
+            return items;
+        }
 
         /// <inheritdoc/>
         public override void UpdateData()
@@ -183,6 +202,65 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         {
             this.UpdateChildVisibility(this.pointCloud.ModelView, this.Visible && this.CurrentData != default && this.depthImage != null && this.depthImage.Resource != null && this.intrinsics != null && this.position != null);
             this.UpdateChildVisibility(this.frustum.ModelView, this.Visible && this.CurrentData != default && this.intrinsics != null && this.position != null);
+        }
+
+        private void ExportPointCloudToPly()
+        {
+            // Suggest filename of <StreamName>_<PointCloudTimeInTicks>.ply
+            string exportFilePath = $"{this.StreamBinding.StreamName}_{this.PointCloud.CurrentOriginatingTime.Ticks}.ply";
+
+            // Allow user to modify location and name of file
+            var saveFileDialog = new SaveFileDialog
+            {
+                FileName = exportFilePath,
+                DefaultExt = ".ply",
+                Filter = "Polygon File Format|*.ply",
+            };
+
+            bool? result = saveFileDialog.ShowDialog(Application.Current.MainWindow);
+            if (result == true)
+            {
+                exportFilePath = saveFileDialog.FileName;
+
+                try
+                {
+                    var points = this.PointCloud.CurrentData;
+                    using var writer = File.CreateText(exportFilePath);
+
+                    // Header
+                    writer.WriteLine("ply");
+                    writer.WriteLine("format ascii 1.0");
+                    writer.WriteLine($"element vertex {points.Count}");
+                    writer.WriteLine("property float x");
+                    writer.WriteLine("property float y");
+                    writer.WriteLine("property float z");
+                    writer.WriteLine("end_header");
+
+                    // Vertices
+                    foreach (var point in points)
+                    {
+                        writer.WriteLine($"{point.X} {point.Y} {point.Z}");
+                    }
+
+                    // Show where the file was written
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Export Point Cloud to PLY File",
+                        $"Point cloud saved to {exportFilePath}",
+                        "Close",
+                        null).ShowDialog();
+                }
+                catch (Exception e)
+                {
+                    var exception = e.InnerException ?? e;
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Error",
+                        exception.Message,
+                        "Close",
+                        null).ShowDialog();
+                }
+            }
         }
     }
 }

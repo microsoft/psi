@@ -120,15 +120,20 @@ namespace Microsoft.Psi.Common
         /// Copy this unmanaged buffer to another instance.
         /// </summary>
         /// <param name="destination">Destination instance to which to copy.</param>
-        public void CopyTo(UnmanagedBuffer destination)
+        /// <param name="size">Size (bytes) to copy.</param>
+        public void CopyTo(UnmanagedBuffer destination, int size)
         {
             if (destination == null)
             {
-                throw new ArgumentException("Destination unmanaged array is null.");
+                throw new ArgumentException("Destination unmanaged buffer is null.");
             }
-            else if (destination.size != this.size)
+            else if (this.size < size)
             {
-                throw new ArgumentException("Destination unmanaged array is not of the same size.");
+                throw new ArgumentException("Source unmanaged buffer is not of sufficient size.");
+            }
+            else if (destination.Size < size)
+            {
+                throw new ArgumentException("Destination unmanaged buffer is not of sufficient size.");
             }
             else
             {
@@ -144,6 +149,11 @@ namespace Microsoft.Psi.Common
         /// <returns>Bytes having been copied.</returns>
         public byte[] ReadBytes(int count, int offset = 0)
         {
+            if (this.size < count + offset)
+            {
+                throw new ArgumentException("Unmanaged buffer is not of sufficient size.");
+            }
+
             var result = new byte[count];
             Marshal.Copy(IntPtr.Add(this.data, offset), result, 0, count);
             return result;
@@ -153,18 +163,23 @@ namespace Microsoft.Psi.Common
         /// Copy unmanaged buffer to managed array.
         /// </summary>
         /// <param name="destination">Destination array to which to copy.</param>
-        public void CopyTo(byte[] destination)
+        /// <param name="size">Size (bytes) to copy.</param>
+        public void CopyTo(byte[] destination, int size)
         {
             if (destination == null)
             {
-                throw new ArgumentException("Destination buffer is null.");
+                throw new ArgumentException("Destination array is null.");
             }
-            else if (this.size != destination.Length)
+            else if (this.size < size)
             {
-                throw new ArgumentException("Destination buffer is not of the same size.");
+                throw new ArgumentException("Source unmanaged buffer is not of sufficient size.");
+            }
+            else if (destination.Length < size)
+            {
+                throw new ArgumentException("Destination array is not of sufficient size.");
             }
 
-            Marshal.Copy(this.data, destination, 0, destination.Length);
+            Marshal.Copy(this.data, destination, 0, size);
         }
 
         /// <summary>
@@ -174,30 +189,35 @@ namespace Microsoft.Psi.Common
         /// <param name="size">Size (bytes) to copy.</param>
         public void CopyTo(IntPtr destination, int size)
         {
-            if (size != this.size)
+            if (this.size < size)
             {
-                throw new ArgumentException("Destination size is not the same as source.");
+                throw new ArgumentException("Source unmanaged buffer is not of sufficient size.");
             }
 
-            CopyUnmanagedMemory(destination, this.data, this.size);
+            CopyUnmanagedMemory(destination, this.data, size);
         }
 
         /// <summary>
         /// Copy from unmanaged buffer.
         /// </summary>
         /// <param name="source">Unmanaged buffer from which to copy.</param>
-        public void CopyFrom(UnmanagedBuffer source)
+        /// <param name="size">Size (bytes) to copy.</param>
+        public void CopyFrom(UnmanagedBuffer source, int size)
         {
             if (source == null)
             {
                 throw new ArgumentException("Source unmanaged array is null.");
             }
-            else if (this.size != source.Size)
+            else if (this.size < size)
             {
-                throw new ArgumentException("Source unmanaged array is not of the same size.");
+                throw new ArgumentException("Destination unmanaged array is not of sufficient size.");
+            }
+            else if (source.Size < size)
+            {
+                throw new ArgumentException("Source unmanaged array is not of sufficient size.");
             }
 
-            CopyUnmanagedMemory(this.data, source.data, this.size);
+            CopyUnmanagedMemory(this.data, source.data, size);
         }
 
         /// <summary>
@@ -219,11 +239,15 @@ namespace Microsoft.Psi.Common
         {
             if (source == null)
             {
-                throw new ArgumentException("Source buffer is null.");
+                throw new ArgumentException("Source array is null.");
             }
-            else if (this.size != length)
+            else if (this.size < length)
             {
-                throw new ArgumentException("Source buffer is not of the same size.");
+                throw new ArgumentException("Destination unmanaged buffer is not of sufficient size.");
+            }
+            else if (source.Length < offset + length)
+            {
+                throw new ArgumentException("Source array is not of sufficient size.");
             }
 
             Marshal.Copy(source, offset, this.data, length);
@@ -236,12 +260,12 @@ namespace Microsoft.Psi.Common
         /// <param name="size">Size (bytes) to copy.</param>
         public void CopyFrom(IntPtr source, int size)
         {
-            if (size != this.size)
+            if (this.size < size)
             {
-                throw new ArgumentException("Destination size is not the same as source.");
+                throw new ArgumentException("Destination unmanaged buffer is not of sufficient size.");
             }
 
-            CopyUnmanagedMemory(this.data, source, this.size);
+            CopyUnmanagedMemory(this.data, source, size);
         }
 
         /// <inheritdoc />
@@ -272,7 +296,7 @@ namespace Microsoft.Psi.Common
 
         private class CustomSerializer : ISerializer<UnmanagedBuffer>
         {
-            public const int Version = 2;
+            public const int LatestSchemaVersion = 2;
 
             /// <inheritdoc />
             public bool? IsClearRequired => false;
@@ -281,9 +305,17 @@ namespace Microsoft.Psi.Common
             {
                 serializers.GetHandler<byte>(); // register element type
                 var type = typeof(byte[]);
-                var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+                var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
                 var elementsMember = new TypeMemberSchema("Elements", typeof(byte).AssemblyQualifiedName, true);
-                var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsCollection, new TypeMemberSchema[] { elementsMember }, Version);
+                var schema = new TypeSchema(
+                    type.AssemblyQualifiedName,
+                    TypeFlags.IsCollection,
+                    new TypeMemberSchema[] { elementsMember },
+                    name,
+                    TypeSchema.GetId(name),
+                    LatestSchemaVersion,
+                    this.GetType().AssemblyQualifiedName,
+                    serializers.RuntimeInfo.SerializationSystemVersion);
                 return targetSchema ?? schema;
             }
 

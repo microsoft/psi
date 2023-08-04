@@ -15,10 +15,10 @@ namespace Microsoft.Psi
     public class SharedPool<T> : IDisposable
         where T : class
     {
-        private readonly List<T> keepAlive;
         private readonly Func<T> allocator;
         private readonly KnownSerializers serializers;
-        private readonly object availableLock = new object();
+        private readonly object availableLock = new ();
+        private List<T> pool;
         private Queue<T> available;
 
         /// <summary>
@@ -31,12 +31,12 @@ namespace Microsoft.Psi
         {
             this.allocator = allocator;
             this.available = new Queue<T>(initialSize);
-            this.keepAlive = new List<T>();
+            this.pool = new List<T>();
             this.serializers = knownSerializers;
         }
 
         /// <summary>
-        /// Gets the number of objects available in the pool.
+        /// Gets the number of objects available, i.e., that are not live, in the pool.
         /// </summary>
         public int AvailableCount
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Psi
             {
                 lock (this.availableLock)
                 {
-                    return this.available.Count;
+                    return this.available != null ? this.available.Count : 0;
                 }
             }
         }
@@ -56,9 +56,47 @@ namespace Microsoft.Psi
         {
             get
             {
-                lock (this.keepAlive)
+                lock (this.pool)
                 {
-                    return this.keepAlive.Count;
+                    return this.pool.Count;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Resets the shared pool.
+        /// </summary>
+        /// <param name="clearLiveObjects">Indicates whether to clear any live objects.</param>
+        /// <remarks>
+        /// If the clearLiveObjects flag is false, an exception is thrown if a reset is attempted while the pool
+        /// still contains live objects.
+        /// </remarks>
+        public void Reset(bool clearLiveObjects = false)
+        {
+            lock (this.availableLock)
+            {
+                lock (this.pool)
+                {
+                    // If no object is still alive, then reset the pool
+                    if (clearLiveObjects || (this.available.Count == this.pool.Count))
+                    {
+                        // Dispose all the objects in the pool
+                        if (typeof(IDisposable).IsAssignableFrom(typeof(T)))
+                        {
+                            foreach (var entry in this.available)
+                            {
+                                ((IDisposable)entry).Dispose();
+                            }
+                        }
+
+                        // Re-initialize
+                        this.available = new ();
+                        this.pool = new ();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Cannot reset a shared pool that contains live objects.");
+                    }
                 }
             }
         }
@@ -109,9 +147,9 @@ namespace Microsoft.Psi
             if (!this.TryGet(out T recycled))
             {
                 recycled = this.allocator();
-                lock (this.keepAlive)
+                lock (this.pool)
                 {
-                    this.keepAlive.Add(recycled);
+                    this.pool.Add(recycled);
                 }
             }
 
@@ -155,9 +193,9 @@ namespace Microsoft.Psi
                 else
                 {
                     // dispose the recycled object if it is disposable
-                    if (recyclable is IDisposable)
+                    if (recyclable is IDisposable disposable)
                     {
-                        ((IDisposable)recyclable).Dispose();
+                        disposable.Dispose();
                     }
                 }
             }

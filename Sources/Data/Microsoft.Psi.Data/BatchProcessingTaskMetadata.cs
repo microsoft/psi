@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Data
 {
     using System;
+    using System.IO;
     using System.Reflection;
 
     /// <summary>
@@ -15,16 +16,19 @@ namespace Microsoft.Psi.Data
         private readonly BatchProcessingTaskAttribute batchProcessingTaskAttribute = null;
         private readonly Type batchProcessingTaskType;
         private readonly MethodInfo batchProcessingTaskMethodInfo;
+        private readonly string batchProcessingTaskConfigurationsPath;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchProcessingTaskMetadata"/> class.
         /// </summary>
         /// <param name="batchProcessingTaskType">The batch processing task type.</param>
         /// <param name="batchProcessingTaskAttribute">The batch processing task attribute.</param>
-        public BatchProcessingTaskMetadata(Type batchProcessingTaskType, BatchProcessingTaskAttribute batchProcessingTaskAttribute)
+        /// <param name="batchProcessingTaskConfigurationsPath">The folder in which batch processing task configurations are saved.</param>
+        public BatchProcessingTaskMetadata(Type batchProcessingTaskType, BatchProcessingTaskAttribute batchProcessingTaskAttribute, string batchProcessingTaskConfigurationsPath)
         {
             this.batchProcessingTaskType = batchProcessingTaskType;
             this.batchProcessingTaskAttribute = batchProcessingTaskAttribute;
+            this.batchProcessingTaskConfigurationsPath = Path.Combine(batchProcessingTaskConfigurationsPath, batchProcessingTaskAttribute.Name);
         }
 
         /// <summary>
@@ -32,10 +36,12 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="batchProcessingTaskMethodInfo">The batch processing method info.</param>
         /// <param name="batchProcessingTaskAttribute">The batch processing task attribute.</param>
-        public BatchProcessingTaskMetadata(MethodInfo batchProcessingTaskMethodInfo, BatchProcessingTaskAttribute batchProcessingTaskAttribute)
+        /// <param name="batchProcessingTaskConfigurationsPath">The folder in which batch processing task configurations are saved.</param>
+        public BatchProcessingTaskMetadata(MethodInfo batchProcessingTaskMethodInfo, BatchProcessingTaskAttribute batchProcessingTaskAttribute, string batchProcessingTaskConfigurationsPath)
         {
             this.batchProcessingTaskMethodInfo = batchProcessingTaskMethodInfo;
             this.batchProcessingTaskAttribute = batchProcessingTaskAttribute;
+            this.batchProcessingTaskConfigurationsPath = Path.Combine(batchProcessingTaskConfigurationsPath, batchProcessingTaskAttribute.Name);
         }
 
         /// <summary>
@@ -52,6 +58,16 @@ namespace Microsoft.Psi.Data
         /// Gets the batch processing task icon source path.
         /// </summary>
         public string IconSourcePath => this.batchProcessingTaskAttribute.IconSourcePath;
+
+        /// <summary>
+        /// Gets the folder under which configurations for this batch processing task should be stored.
+        /// </summary>
+        public string ConfigurationsPath => this.batchProcessingTaskConfigurationsPath;
+
+        /// <summary>
+        /// Gets or sets the name of the most recently used configuration.
+        /// </summary>
+        public string MostRecentlyUsedConfiguration { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether this batch processing task is method based.

@@ -15,11 +15,11 @@ namespace Microsoft.Psi.Scheduling
         private readonly SimpleSemaphore threadSemaphore;
         private readonly Func<Exception, bool> errorHandler;
         private readonly bool allowSchedulingOnExternalThreads;
-        private readonly ManualResetEvent stopped = new ManualResetEvent(true);
-        private readonly AutoResetEvent futureQueuePulse = new AutoResetEvent(false);
-        private readonly ThreadLocal<WorkItem?> nextWorkitem = new ThreadLocal<WorkItem?>();
-        private readonly ThreadLocal<bool> isSchedulerThread = new ThreadLocal<bool>(() => false);
-        private readonly ThreadLocal<DateTime> currentWorkitemTime = new ThreadLocal<DateTime>(() => DateTime.MaxValue);
+        private readonly ManualResetEvent stopped = new (true);
+        private readonly AutoResetEvent futureQueuePulse = new (false);
+        private readonly ThreadLocal<WorkItem?> nextWorkitem = new ();
+        private readonly ThreadLocal<bool> isSchedulerThread = new (() => false);
+        private readonly ThreadLocal<DateTime> currentWorkitemTime = new (() => DateTime.MaxValue);
 
         // the queue of pending workitems, ordered by start time
         private readonly WorkItemQueue globalWorkitems;
@@ -28,7 +28,7 @@ namespace Microsoft.Psi.Scheduling
         private IPerfCounterCollection<SchedulerCounters> counters;
         private bool forcedShutdownRequested;
         private Clock clock;
-        private bool delayFutureWorkitemsUntilDue;
+        private bool delayFutureWorkItemsUntilDue;
         private bool started = false;
         private bool completed = false;
 
@@ -52,7 +52,7 @@ namespace Microsoft.Psi.Scheduling
             // set virtual time such that any scheduled item appears to be in the future and gets queued in the future workitem queue
             // the time will change when the scheduler is started, and the future workitem queue will be drained then as appropriate
             this.clock = clock ?? new Clock(DateTime.MinValue, 0);
-            this.delayFutureWorkitemsUntilDue = true;
+            this.delayFutureWorkItemsUntilDue = true;
         }
 
         /// <summary>
@@ -68,6 +68,11 @@ namespace Microsoft.Psi.Scheduling
         /// Gets the scheduler clock.
         /// </summary>
         public Clock Clock => this.clock;
+
+        /// <summary>
+        /// Gets a value indicating whether the scheduler should delay future work items until they're due.
+        /// </summary>
+        internal bool DelayFutureWorkItemsUntilDue => this.delayFutureWorkItemsUntilDue;
 
         internal bool IsStarted
         {
@@ -122,7 +127,7 @@ namespace Microsoft.Psi.Scheduling
                 return true;
             }
 
-            if (startTime > this.clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue)
+            if (startTime > this.clock.GetCurrentTime() && this.delayFutureWorkItemsUntilDue)
             {
                 return false;
             }
@@ -189,7 +194,7 @@ namespace Microsoft.Psi.Scheduling
                 return true;
             }
 
-            if (startTime > this.clock.GetCurrentTime() && this.delayFutureWorkitemsUntilDue)
+            if (startTime > this.clock.GetCurrentTime() && this.delayFutureWorkItemsUntilDue)
             {
                 return false;
             }
@@ -274,7 +279,7 @@ namespace Microsoft.Psi.Scheduling
             }
 
             // if no clock is specified, schedule everything without delay
-            this.delayFutureWorkitemsUntilDue = delayFutureWorkitemsUntilDue;
+            this.delayFutureWorkItemsUntilDue = delayFutureWorkitemsUntilDue;
             this.clock = clock;
             this.started = true;
             this.stopped.Reset();
@@ -298,7 +303,7 @@ namespace Microsoft.Psi.Scheduling
             this.futuresThread.Join();
             this.clock = new Clock(DateTime.MinValue, 0);
             this.completed = true;
-            this.delayFutureWorkitemsUntilDue = true;
+            this.delayFutureWorkItemsUntilDue = true;
         }
 
         /// <summary>
@@ -431,7 +436,7 @@ namespace Microsoft.Psi.Scheduling
             }
 
             // if the work item is not yet due, add it to the future work item queue, as long as it is not after the finalize time
-            if ((wi.StartTime > wi.SchedulerContext.Clock.GetCurrentTime() && wi.StartTime <= wi.SchedulerContext.FinalizeTime && this.delayFutureWorkitemsUntilDue) ||
+            if ((wi.StartTime > wi.SchedulerContext.Clock.GetCurrentTime() && wi.StartTime <= wi.SchedulerContext.FinalizeTime && this.delayFutureWorkItemsUntilDue) ||
                 !this.started || !wi.SchedulerContext.Started)
             {
                 this.futureWorkitems.Enqueue(wi);
@@ -630,7 +635,7 @@ namespace Microsoft.Psi.Scheduling
                 if (this.futureWorkitems.TryPeek(out wi))
                 {
                     // the result could be a negative value if some other thread captured "now" before us and added the item to the future queue after the while loop above exited
-                    waitTimeout = (int)this.clock.ToRealTime(wi.StartTime - this.clock.GetCurrentTime()).TotalMilliseconds;
+                    waitTimeout = this.delayFutureWorkItemsUntilDue ? (int)this.clock.ToRealTime(wi.StartTime - this.clock.GetCurrentTime()).TotalMilliseconds : 0;
                     if (waitTimeout < 0)
                     {
                         waitTimeout = 0;

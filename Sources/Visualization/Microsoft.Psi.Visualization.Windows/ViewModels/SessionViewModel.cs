@@ -21,6 +21,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using Microsoft.Psi.Visualization.Base;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
+    using Microsoft.Psi.Visualization.VisualizationObjects;
     using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
@@ -103,27 +104,27 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [DisplayName("First Message OriginatingTime")]
         [Description("The originating time of the first message in the session.")]
-        public string FirstMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.FirstMessageOriginatingTime);
+        public string FirstMessageOriginatingTimeString => DateTimeHelper.FormatDateTime(this.FirstMessageOriginatingTime);
 
         /// <summary>
         /// Gets a string representation of the originating time of the last message in the session.
         /// </summary>
         [DisplayName("Last Message OriginatingTime")]
         [Description("The originating time of the last message in the session.")]
-        public string LastMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.LastMessageOriginatingTime);
+        public string LastMessageOriginatingTimeString => DateTimeHelper.FormatDateTime(this.LastMessageOriginatingTime);
 
         /// <summary>
         /// Gets the originating time of the first message in the session.
         /// </summary>
         [Browsable(false)]
-        public DateTime FirstMessageOriginatingTime
+        public DateTime? FirstMessageOriginatingTime
             => this.partitionViewModels.Count > 0 ? this.partitionViewModels.Min(p => p.FirstMessageOriginatingTime) : default;
 
         /// <summary>
         /// Gets the originating time of the last message in the session.
         /// </summary>
         [Browsable(false)]
-        public DateTime LastMessageOriginatingTime
+        public DateTime? LastMessageOriginatingTime
             => this.partitionViewModels.Count > 0 ? this.partitionViewModels.Max(p => p.LastMessageOriginatingTime) : default;
 
         /// <summary>
@@ -139,8 +140,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public TimeInterval OriginatingTimeInterval =>
             TimeInterval.Coverage(
                 this.partitionViewModels
-                    .Where(p => p.FirstMessageOriginatingTime > DateTime.MinValue && p.LastMessageOriginatingTime < DateTime.MaxValue)
-                    .Select(p => new TimeInterval(p.FirstMessageOriginatingTime, p.LastMessageOriginatingTime)));
+                    .Where(p => p.FirstMessageOriginatingTime != null && p.LastMessageOriginatingTime != null)
+                    .Select(p => new TimeInterval(p.FirstMessageOriginatingTime.Value, p.LastMessageOriginatingTime.Value)));
 
         /// <summary>
         /// Gets the collection of partitions in this session.
@@ -436,6 +437,48 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 .FirstOrDefault(p => p.Name == partitionName)?
                 .FindStreamTreeNode(streamName);
 
+        /// <summary>
+        /// Ensures that the derived stream tree nodes necessary for the set of visualization objects in a specified container.
+        /// </summary>
+        /// <param name="visualizationContainer">The visualization container.</param>
+        public void EnsureDerivedStreamTreeNodesExist(VisualizationContainer visualizationContainer)
+        {
+            // Check if the visualization container contains any stream member visualizers.
+            var derivedStreamVisualizationObjects = visualizationContainer.GetDerivedStreamVisualizationObjects();
+
+            foreach (IStreamVisualizationObject derivedStreamVisualizationObject in derivedStreamVisualizationObjects)
+            {
+                // Find the stream tree node corresponding to the source data
+                var sourceStreamTreeNode = this.FindStreamTreeNode(
+                    derivedStreamVisualizationObject.StreamBinding.PartitionName,
+                    derivedStreamVisualizationObject.StreamBinding.SourceStreamName);
+
+                // If the source exists
+                if (sourceStreamTreeNode != null)
+                {
+                    // Find the derived stream tree node used by this visualizer
+                    var streamTreeNode = this.FindStreamTreeNode(
+                        derivedStreamVisualizationObject.StreamBinding.PartitionName,
+                        derivedStreamVisualizationObject.StreamBinding.StreamName);
+
+                    // Find the partition view model
+                    var partitionViewModel = this.PartitionViewModels.FirstOrDefault(
+                        p => p.Name == derivedStreamVisualizationObject.StreamBinding.PartitionName);
+
+                    // If the derived stream does not exist, and we have the partition
+                    if (streamTreeNode == null && partitionViewModel != null)
+                    {
+                        partitionViewModel.RootStreamTreeNode.AddChild(
+                            derivedStreamVisualizationObject.StreamBinding.StreamName,
+                            sourceStreamTreeNode.SourceStreamMetadata,
+                            derivedStreamVisualizationObject.StreamBinding.DerivedStreamAdapterType,
+                            derivedStreamVisualizationObject.StreamBinding.DerivedStreamAdapterArguments,
+                            true);
+                    }
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString() => $"Session: {this.Name}";
 
@@ -489,8 +532,18 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             if (this.DatasetViewModel.CurrentSessionViewModel != this)
             {
+                // Visualize the current session
                 this.DatasetViewModel.VisualizeSession(this);
+
+                // Expand the session tree node to show partitions
                 this.IsTreeNodeExpanded = true;
+
+                // If a single partition, expand the partition to show streams
+                if (this.partitionViewModels.Count == 1)
+                {
+                    this.partitionViewModels.First().IsTreeNodeExpanded = true;
+                }
+
                 e.Handled = true;
             }
         }
@@ -503,37 +556,37 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.AuxiliaryInfo = string.Empty;
                     break;
                 case AuxiliarySessionInfo.Duration:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
                     break;
                 case AuxiliarySessionInfo.StartDate:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToShortDateString();
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToShortDateString();
                     break;
                 case AuxiliarySessionInfo.StartDateLocal:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToLocalTime().ToShortDateString();
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToLocalTime().ToShortDateString();
                     break;
                 case AuxiliarySessionInfo.StartTime:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToShortTimeString();
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToShortTimeString();
                     break;
                 case AuxiliarySessionInfo.StartTimeLocal:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToLocalTime().ToShortTimeString();
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToLocalTime().ToShortTimeString();
                     break;
                 case AuxiliarySessionInfo.StartDateTime:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToString();
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToString();
                     break;
                 case AuxiliarySessionInfo.StartDateTimeLocal:
-                    this.AuxiliaryInfo = this.Session.OriginatingTimeInterval.Left.ToLocalTime().ToString();
+                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToLocalTime().ToString();
                     break;
                 case AuxiliarySessionInfo.Size:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatSize(this.Session.Size.Value) : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatSize(this.Session.Size.Value) : "?";
                     break;
                 case AuxiliarySessionInfo.DataThroughputPerHour:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Session.Size.Value / this.Session.OriginatingTimeInterval.Span.TotalHours, "hour") : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.TimeInterval.Span.TotalHours, "hour") : "?";
                     break;
                 case AuxiliarySessionInfo.DataThroughputPerMinute:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Session.Size.Value / this.Session.OriginatingTimeInterval.Span.TotalMinutes, "min") : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.TimeInterval.Span.TotalMinutes, "min") : "?";
                     break;
                 case AuxiliarySessionInfo.DataThroughputPerSecond:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Session.Size.Value / this.Session.OriginatingTimeInterval.Span.TotalSeconds, "sec") : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.TimeInterval.Span.TotalSeconds, "sec") : "?";
                     break;
                 case AuxiliarySessionInfo.StreamCount:
                     this.AuxiliaryInfo = this.Session.StreamCount.HasValue ? (this.Session.StreamCount == 0 ? "0" : $"{this.Session.StreamCount.Value:0,0}") : "?";
@@ -577,7 +630,24 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             contextMenu.Items.Add(runTasksMenuItem);
+            contextMenu.Items.Add(new Separator());
 
+            // Add copy to clipboard menu with sub-menu items
+            var copyToClipboardMenuItem = MenuItemHelper.CreateMenuItem(
+                string.Empty,
+                "Copy to Clipboard",
+                null);
+
+            copyToClipboardMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Session Name",
+                    VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
+                    null,
+                    true,
+                    this.Name));
+
+            contextMenu.Items.Add(copyToClipboardMenuItem);
             contextMenu.Items.Add(new Separator());
 
             // Add show session info menu

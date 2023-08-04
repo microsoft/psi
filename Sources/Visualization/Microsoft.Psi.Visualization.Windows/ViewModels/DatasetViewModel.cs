@@ -875,6 +875,42 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
         }
 
+        /// <summary>
+        /// Removes a partition specified by name from all sessions.
+        /// </summary>
+        /// <param name="partitionName">The partition name.</param>
+        public void RemovePartitionFromAllSessions(string partitionName)
+        {
+            var count = this.sessionViewModels.Count(svm => svm.PartitionViewModels.Any(pvm => pvm.Name == partitionName));
+            if (count > 1)
+            {
+                var result = new MessageBoxWindow(
+                    Application.Current.MainWindow,
+                    "Are you sure?",
+                    $"The partition named {partitionName} appears in {count} sessions. Are you sure you want to remove it from all these sessions?",
+                    "Close",
+                    null)
+                    .ShowDialog();
+
+                if (result == null || !result.Value)
+                {
+                    return;
+                }
+            }
+
+            foreach (var sessionViewModel in this.sessionViewModels)
+            {
+                var partitionViewModel = sessionViewModel.PartitionViewModels.FirstOrDefault(p => p.Name == partitionName);
+                if (partitionViewModel != null)
+                {
+                    if (partitionViewModel.PromptSaveChangesAndContinue())
+                    {
+                        sessionViewModel.RemovePartition(partitionViewModel);
+                    }
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override string ToString() => "Dataset: " + this.Name;
 
@@ -1035,16 +1071,16 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.AuxiliaryInfo = this.OriginatingTimeInterval.Left.ToLocalTime().ToString();
                     break;
                 case AuxiliaryDatasetInfo.DataThroughputPerHour:
-                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalHours, "hour") : "?";
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalHours, "hour") : "?";
                     break;
                 case AuxiliaryDatasetInfo.DataThroughputPerMinute:
-                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalMinutes, "min") : "?";
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalMinutes, "min") : "?";
                     break;
                 case AuxiliaryDatasetInfo.DataThroughputPerSecond:
-                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalSeconds, "sec") : "?";
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeHelper.FormatThroughput(this.Dataset.Size.Value / this.TotalDuration.TotalSeconds, "sec") : "?";
                     break;
                 case AuxiliaryDatasetInfo.Size:
-                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeFormatHelper.FormatSize(this.Dataset.Size.Value) : "?";
+                    this.AuxiliaryInfo = this.Dataset.Size.HasValue ? SizeHelper.FormatSize(this.Dataset.Size.Value) : "?";
                     break;
                 case AuxiliaryDatasetInfo.StreamCount:
                     this.AuxiliaryInfo = this.Dataset.StreamCount.HasValue ? (this.Dataset.StreamCount == 0 ? "0" : $"{this.Dataset.StreamCount.Value:0,0.}") : "?";

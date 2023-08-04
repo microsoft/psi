@@ -3,9 +3,6 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
-    using System.Collections.Generic;
-    using System.Windows.Controls;
-    using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
@@ -20,17 +17,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         {
             this.InitializeComponent();
             this.Canvas = this._DynamicCanvas;
-        }
-
-        /// <inheritdoc/>
-        public override void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            if (this.DataContext is AudioVisualizationObject audioVisualizationObject && audioVisualizationObject.IsBound)
-            {
-                menuItems.Add(MenuItemHelper.CreateMenuItem(audioVisualizationObject.ContextMenuIconSource, audioVisualizationObject.EnableAudioCommandText, audioVisualizationObject.EnableAudioCommand));
-            }
-
-            base.AppendContextMenuItems(menuItems);
         }
     }
 }

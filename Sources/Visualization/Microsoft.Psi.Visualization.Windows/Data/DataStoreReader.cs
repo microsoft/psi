@@ -12,7 +12,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Threading.Tasks;
     using Microsoft.Psi;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Implements an object used to read stream data from a specific data store.
@@ -28,8 +27,8 @@ namespace Microsoft.Psi.Visualization.Data
         /// The list of streams that have been identified as unreadable, probably due to the format of the
         /// message on disk not matching the current format of the data object they are deserialized from.
         /// </summary>
-        private readonly List<string> unreadableStreams = new List<string>();
-        private readonly List<IStreamDataProvider> streamDataProviders = new List<IStreamDataProvider>();
+        private readonly List<string> unreadableStreams = new ();
+        private readonly List<IStreamDataProvider> streamDataProviders = new ();
 
         private IStreamReader streamReader;
         private List<ExecutionContext> executionContexts;
@@ -113,11 +112,11 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         /// <param name="streamSource">The stream source specifying the stream of interest.</param>
         /// <param name="time">The time to find the nearest message to.</param>
-        /// <param name="nearestMessageType">The type of nearest message to find.</param>
+        /// <param name="nearestType">The type of nearest message to find.</param>
         /// <returns>The time of the nearest message, if one is found or null otherwise.</returns>
-        internal DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestMessageType nearestMessageType) =>
+        internal DateTime? GetTimeOfNearestMessage(StreamSource streamSource, DateTime time, NearestType nearestType) =>
             this.GetStreamProviderOrDefault(streamSource.StreamName)
-                .GetTimeOfNearestMessage(time, nearestMessageType);
+                .GetTimeOfNearestMessage(time, nearestType);
 
         /// <summary>
         /// Gets or creates a stream interval provider for a specified stream source.
@@ -271,7 +270,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// <returns>The list of the names of streams that had updates saved.</returns>
         internal string[] SaveChanges(IProgress<double> progress)
         {
-            Dictionary<string, IEnumerable<(bool, dynamic, DateTime)>> updates = new Dictionary<string, IEnumerable<(bool, dynamic, DateTime)>>();
+            var updates = new Dictionary<string, IEnumerable<(bool, dynamic, DateTime)>>();
 
             // Get all the changes from all the stream readers that have them.
             foreach (var streamIntervalProvider in this.GetStreamIntervalProviders())

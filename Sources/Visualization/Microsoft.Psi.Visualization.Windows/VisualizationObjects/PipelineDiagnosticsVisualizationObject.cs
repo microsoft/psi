@@ -3,6 +3,8 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.Serialization;
@@ -10,10 +12,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Windows.Media;
     using Microsoft.Psi.Diagnostics;
     using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Helpers;
-    using Microsoft.Psi.Visualization.ViewModels;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationPanels;
+    using Microsoft.Psi.Visualization.Windows;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
@@ -41,6 +44,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private Color connectorColor = Colors.LightGray;
         private Color joinColor = Colors.LightSlateGray;
         private double infoTextSize = 12;
+
+        private int edgeUnderCursor = -1;
 
         /// <summary>
         /// Enumeration of statistics available for heatmap visualization.
@@ -423,24 +428,116 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [IgnoreDataMember]
         public bool ModelDirty { get; set; } = false;
 
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = new List<ContextMenuItemInfo>();
+
+            // If the mouse is over an edge, add a menu item to expand the streams of the receiver.
+            if (this.edgeUnderCursor != -1)
+            {
+                var addDiagnosticsCommands = new ContextMenuItemInfo($"Add derived diagnostics streams for receiver {this.edgeUnderCursor}");
+                items.Add(addDiagnosticsCommands);
+
+                foreach (var receiverDiagnosticsStatistic in PipelineDiagnostics.ReceiverDiagnostics.AllStatistics)
+                {
+                    addDiagnosticsCommands.SubItems.Add(
+                        new ContextMenuItemInfo(
+                            null,
+                            receiverDiagnosticsStatistic,
+                            new PsiCommand(() => this.AddReceiverDiagnosticsDerivedStream(this.edgeUnderCursor, receiverDiagnosticsStatistic))));
+                }
+            }
+
+            // Add a heatmap statistics context menu
+            var heatmapStatisticsItems = new ContextMenuItemInfo("Heatmap Statistics");
+            items.Add(heatmapStatisticsItems);
+
+            foreach (var heatmapStat in Enum.GetValues(typeof(HeatmapStats)))
+            {
+                var heatmapStatValue = (HeatmapStats)heatmapStat;
+                var heatmapStatName = heatmapStatValue switch
+                {
+                    HeatmapStats.None => "None",
+                    HeatmapStats.AvgMessageCreatedLatency => "Message Created Latency (Average)",
+                    HeatmapStats.AvgMessageEmittedLatency => "Message Emitted Latency (Average)",
+                    HeatmapStats.AvgMessageReceivedLatency => "Message Received Latency (Average)",
+                    HeatmapStats.AvgDeliveryQueueSize => "Delivery Queue Size (Average)",
+                    HeatmapStats.AvgMessageProcessTime => "Message Process Time (Average)",
+                    HeatmapStats.TotalMessageEmittedCount => "Total Messages Emitted (Count)",
+                    HeatmapStats.TotalMessageDroppedCount => "Total Messages Dropped (Count)",
+                    HeatmapStats.TotalMessageDroppedPercentage => "Total Messages Dropped (%)",
+                    HeatmapStats.TotalMessageProcessedCount => "Total Messages Processed (Count)",
+                    HeatmapStats.AvgMessageSize => "Message Size (Average)",
+                    _ => throw new NotImplementedException(),
+                };
+
+                heatmapStatisticsItems.SubItems.Add(
+                    new ContextMenuItemInfo(
+                        this.HeatmapStatistics == heatmapStatValue ? IconSourcePath.Checkmark : null,
+                        heatmapStatName,
+                        new PsiCommand(() => this.HeatmapStatistics = heatmapStatValue)));
+            }
+
+            items.AddRange(base.ContextMenuItemsInfo());
+            return items;
+        }
+
         /// <summary>
-        /// Adds the derived receiver diagnostics streams for a specified receiver id.
+        /// Updates the edge currently under the cursor.
+        /// </summary>
+        /// <param name="edgeUnderCursor">Updates the edge under the cursor.</param>
+        public void UpdateEdgeUnderCursor(int edgeUnderCursor)
+        {
+            this.edgeUnderCursor = edgeUnderCursor;
+        }
+
+        /// <summary>
+        /// Adds a specified derived receiver diagnostics stream.
         /// </summary>
         /// <param name="receiverId">The receiver id.</param>
-        public void AddDerivedReceiverDiagnosticsStreams(int receiverId)
+        /// <param name="receiverDiagnosticsStatistic">The name of the receiver diagnostics to use.</param>
+        public void AddReceiverDiagnosticsDerivedStream(int receiverId, string receiverDiagnosticsStatistic)
         {
-            var partition = VisualizationContext.Instance
+            // Find the corresponding partition view model
+            var partitionViewModel = VisualizationContext.Instance
                 .DatasetViewModel
                 .CurrentSessionViewModel
                 .PartitionViewModels
                 .FirstOrDefault(p => p.Name == this.StreamBinding.PartitionName);
 
-            var pipelineDiagnosticsStreamTreeNode = partition
-                .FindStreamTreeNode(this.StreamBinding.StreamName) as PipelineDiagnosticsStreamTreeNode;
+            // Find the pipeline diagnostics node
+            var diagnosticsNode = partitionViewModel.FindStreamTreeNode(this.StreamBinding.StreamName);
 
-            var receiver = pipelineDiagnosticsStreamTreeNode.AddDerivedReceiverDiagnosticsChildren(receiverId);
-            partition.SelectNode(receiver.Path);
-            receiver.ExpandAll();
+            // Figure out the type and extractor function for the statistic of interest
+            var receiverDiagnosticsStatisticType = this.GetTypeForReceiverDiagnosticsStatistic(receiverDiagnosticsStatistic);
+            var receiverDiagnosticsExtractorFunction = this.GetExtractorFunctionForReceiverDiagnosticsStatistic(receiverDiagnosticsStatistic);
+
+            // Add the child node
+            var receiverDiagnosticsNode = diagnosticsNode.AddChild(
+                $"ReceiverDiagnostics.{receiverId}.{receiverDiagnosticsStatistic}",
+                diagnosticsNode.SourceStreamMetadata,
+                typeof(PipelineDiagnosticsToReceiverDiagnosticsMemberStreamAdapter<>).MakeGenericType(receiverDiagnosticsStatisticType),
+                new object[] { receiverId, receiverDiagnosticsExtractorFunction });
+
+            // Select it and expand the diagnostics node
+            if (receiverDiagnosticsNode != null)
+            {
+                partitionViewModel.SelectStreamTreeNode(receiverDiagnosticsNode.FullName);
+                diagnosticsNode.ExpandAll();
+            }
+            else
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Warning",
+                        $"The receiver diagnostics statistic derived stream not added because derived streams with the same names already exist.",
+                        "Close",
+                        null).ShowDialog();
+                }));
+            }
         }
 
         /// <inheritdoc />
@@ -449,5 +546,55 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             base.OnStreamUnbound();
             this.ModelDirty = true;
         }
+
+        private Type GetTypeForReceiverDiagnosticsStatistic(string receiverDiagnosticsStatistic)
+            => receiverDiagnosticsStatistic switch
+            {
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageEmittedLatency) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageCreatedLatency) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageProcessTime) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageReceivedLatency) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageSize) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgDeliveryQueueSize) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageEmittedLatency) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageCreatedLatency) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageProcessTime) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageReceivedLatency) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageSize) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastDeliveryQueueSize) => typeof(double),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.ReceiverIsThrottled) => typeof(bool),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageEmittedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageEmittedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedCount) => typeof(int),
+                _ => throw new ArgumentException($"Unknown receiver diagnostics statistic: {receiverDiagnosticsStatistic}")
+            };
+
+        private object GetExtractorFunctionForReceiverDiagnosticsStatistic(string receiverDiagnosticsStatistic)
+            => receiverDiagnosticsStatistic switch
+            {
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageEmittedLatency) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.AvgMessageEmittedLatency),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageCreatedLatency) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.AvgMessageCreatedLatency),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageProcessTime) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.AvgMessageProcessTime),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageReceivedLatency) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.AvgMessageReceivedLatency),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgMessageSize) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.AvgMessageSize),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.AvgDeliveryQueueSize) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.AvgDeliveryQueueSize),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageEmittedLatency) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastMessageEmittedLatency),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageCreatedLatency) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastMessageCreatedLatency),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageProcessTime) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastMessageProcessTime),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageReceivedLatency) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastMessageReceivedLatency),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastMessageSize) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastMessageSize),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.LastDeliveryQueueSize) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastDeliveryQueueSize),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.ReceiverIsThrottled) => (Func<PipelineDiagnostics.ReceiverDiagnostics, bool>)(rd => rd.ReceiverIsThrottled),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.TotalMessageDroppedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageEmittedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.TotalMessageEmittedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.TotalMessageProcessedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.WindowMessageDroppedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageEmittedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.WindowMessageEmittedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.WindowMessageProcessedCount),
+                _ => throw new ArgumentException($"Unknown receiver diagnostics statistic: {receiverDiagnosticsStatistic}")
+            };
     }
 }

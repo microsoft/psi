@@ -112,10 +112,11 @@ namespace Microsoft {
             //   bitsPerSample - Bits per audio sample for the input audio. Typically this is 16.
             //   samplesPerSample - Bitrate of the input audio. Typically this is 48000.
             //   numChannels - Number of audio channels. This is assumed to be either 1 or 2.
+            //   disableThrottling - Prevents the sink writer from throttling the input data.
             //   outputFilename - name of the output file for the generated .mp4 file
             //**********************************************************************
             HRESULT MP4WriterUnmanagedData::Open(UINT32 imageWidth, UINT32 imageHeight, UINT32 frameRateNum, UINT32 frameRateDenom, UINT32 bitrate, int pixelFormat,
-                bool containsAudio, UINT32 bitsPerSample, UINT32 samplesPerSecond, UINT32 numChannels,
+                bool containsAudio, UINT32 bitsPerSample, UINT32 samplesPerSecond, UINT32 numChannels, bool disableThrottling,
                 wchar_t *outputFilename)
             {
                 hasAudio = containsAudio;
@@ -139,7 +140,11 @@ namespace Microsoft {
                 }
 
                 HRESULT hr = S_OK;
-                IFS(MFCreateSinkWriterFromURL(outputFilename, nullptr, nullptr, &writer));
+
+                CComPtr<IMFAttributes> attributes;
+                IFS(MFCreateAttributes(&attributes, 1));
+                IFS(attributes->SetUINT32(MF_SINK_WRITER_DISABLE_THROTTLING, disableThrottling));
+                IFS(MFCreateSinkWriterFromURL(outputFilename, nullptr, attributes, &writer));
 
                 // Define our output media type
                 IFS(MFCreateMediaType(&outputMediaType));
@@ -411,7 +416,7 @@ namespace Microsoft {
                 unmanagedData = new MP4WriterUnmanagedData();
                 IntPtr ptrToNativeString = Marshal::StringToHGlobalUni(fn);
                 HRESULT hr = unmanagedData->Open(config->imageWidth, config->imageHeight, config->frameRateNumerator, config->frameRateDenominator, config->targetBitrate,
-                    config->pixelFormat, config->containsAudio, config->bitsPerSample, config->samplesPerSecond, config->numChannels,
+                    config->pixelFormat, config->containsAudio, config->bitsPerSample, config->samplesPerSecond, config->numChannels, config->disableThrottling,
                     static_cast<wchar_t*>(ptrToNativeString.ToPointer()));
                 Marshal::FreeHGlobal(ptrToNativeString);
                 return hr;

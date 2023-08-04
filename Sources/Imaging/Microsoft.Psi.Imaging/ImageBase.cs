@@ -125,6 +125,19 @@ namespace Microsoft.Psi.Imaging
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ImageBase"/> class.
+        /// </summary>
+        /// <param name="unmanagedBufferSize">The size of the unmanaged buffer that holds the image.</param>
+        internal ImageBase(int unmanagedBufferSize)
+        {
+            this.image = UnmanagedBuffer.Allocate(unmanagedBufferSize);
+            this.width = 0;
+            this.height = 0;
+            this.stride = 0;
+            this.pixelFormat = PixelFormat.Undefined;
+        }
+
+        /// <summary>
         /// Gets a pointer to unmanaged buffer that wraps the image data in unmanaged memory.
         /// </summary>
         public UnmanagedBuffer UnmanagedBuffer => this.image;
@@ -176,7 +189,7 @@ namespace Microsoft.Psi.Imaging
         /// The buffer must be allocated and must have the same size.</remarks>
         public void CopyTo(byte[] destinationBuffer)
         {
-            this.image.CopyTo(destinationBuffer);
+            this.image.CopyTo(destinationBuffer, destinationBuffer.Length);
         }
 
         /// <summary>
@@ -387,7 +400,7 @@ namespace Microsoft.Psi.Imaging
         /// The image must be allocated and must have the same size.</para></remarks>
         public void CopyFrom(IntPtr source)
         {
-            this.image.CopyFrom(source, this.image.Size);
+            this.image.CopyFrom(source, this.Size);
         }
 
         /// <summary>
@@ -487,6 +500,20 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <returns>An empty image of the same size.</returns>
         public abstract ImageBase CreateEmptyOfSameSize();
+
+        /// <summary>
+        /// Initialize an image that has been constructed from just a buffer.
+        /// </summary>
+        /// <param name="width">The width of the image.</param>
+        /// <param name="height">The height of the image.</param>
+        /// <param name="pixelFormat">The pixel format for the image.</param>
+        internal void Initialize(int width, int height, PixelFormat pixelFormat)
+        {
+            this.width = width;
+            this.height = height;
+            this.stride = 4 * ((width * pixelFormat.GetBytesPerPixel() + 3) / 4);
+            this.pixelFormat = pixelFormat;
+        }
 
         private void CopyImageSlow(IntPtr sourceIntPtr, PixelFormat sourceFormat, IntPtr destinationIntPtr, int destinationStride, PixelFormat destinationFormat)
         {
@@ -650,7 +677,7 @@ namespace Microsoft.Psi.Imaging
             /// <summary>
             /// Gets the schema version for custom image serialization.
             /// </summary>
-            protected const int Version = 5;
+            protected const int LatestSchemaVersion = 5;
 
             /// <inheritdoc />
             public bool? IsClearRequired => true;
@@ -680,8 +707,16 @@ namespace Microsoft.Psi.Imaging
                         new TypeMemberSchema("pixelFormat", typeof(PixelFormat).AssemblyQualifiedName, true),
                     };
                     var type = typeof(TImage);
-                    var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
-                    this.Schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsClass, schemaMembers, Version);
+                    var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
+                    this.Schema = new TypeSchema(
+                        type.AssemblyQualifiedName,
+                        TypeFlags.IsClass,
+                        schemaMembers,
+                        name,
+                        TypeSchema.GetId(name),
+                        LatestSchemaVersion,
+                        this.GetType().AssemblyQualifiedName,
+                        serializers.RuntimeInfo.SerializationSystemVersion);
                 }
                 else
                 {
@@ -749,10 +784,7 @@ namespace Microsoft.Psi.Imaging
             /// <param name="context">Serialization context.</param>
             public virtual void PrepareDeserializationTarget(BufferReader reader, ref TImage target, SerializationContext context)
             {
-                if (target == null)
-                {
-                    target = (TImage)System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(TImage));
-                }
+                target ??= (TImage)System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(TImage));
             }
 
             /// <summary>

@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Persistence
 
         public int Write(Envelope envelope, byte[] source, int start, int count)
         {
-            // for now, lock. To get rid of it we need to split an ExtentWriter out of the InifinteFileWriter
+            // for now, lock. To get rid of it we need to split an ExtentWriter out of the InfiniteFileWriter
             lock (this.fileWriter)
             {
                 unsafe

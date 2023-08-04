@@ -1097,11 +1097,11 @@
                              Value="{Binding Description, RelativeSource={RelativeSource TemplatedParent}}"
                              TargetName="PART_Name" />
                         </MultiDataTrigger>
-                        <!--Trigger Property="Validation.HasError"
+                        <Trigger Property="Validation.HasError"
                            Value="true">
                             <Setter Property="ToolTip"
                              Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
-                        </-->
+                        </Trigger>
                         <Trigger Property="Visibility"
                            Value="Visible"
                            SourceName="_expandableButton">

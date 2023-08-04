@@ -3,30 +3,30 @@
 
 #if FFMPEG
 
-namespace Microsoft.Psi.Media.Native.Linux
+namespace Microsoft.Psi.Media
 {
     /// <summary>
-    /// Contains information about the current video/audio frame
+    /// Contains information about the current video/audio frame.
     /// </summary>
     public class FFMPEGFrameInfo
     {
         /// <summary>
-        /// Constant used to define frame data associated with the video stream
+        /// Constant used to define frame data associated with the video stream.
         /// </summary>
         public const int FrameTypeVideo = 0;
 
         /// <summary>
-        /// Constant used to define frame data associated with the audio stream
+        /// Constant used to define frame data associated with the audio stream.
         /// </summary>
         public const int FrameTypeAudio = 1;
 
         /// <summary>
-        /// Gets or sets the type of frame data
+        /// Gets or sets the type of frame data.
         /// </summary>
         public int FrameType { get; set; } // Type of data to be returned next by call to ReadFrameData
 
         /// <summary>
-        /// Gets or sets the buffer size of the current frame
+        /// Gets or sets the buffer size of the current frame.
         /// </summary>
         public int BufferSize { get; set; } // The size of the buffer required to hold the decompressed data
     }

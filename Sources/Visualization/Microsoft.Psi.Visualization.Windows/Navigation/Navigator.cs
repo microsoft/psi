@@ -280,12 +280,12 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Gets selection start as a formatted string.
         /// </summary>
-        public string SelectionStartFormatted => DateTimeFormatHelper.FormatDateTime(this.SelectionRange.StartTime, false);
+        public string SelectionStartFormatted => DateTimeHelper.FormatDateTime(this.SelectionRange.StartTime, false);
 
         /// <summary>
         /// Gets selection end as a formatted string.
         /// </summary>
-        public string SelectionEndFormatted => DateTimeFormatHelper.FormatDateTime(this.SelectionRange.EndTime, false);
+        public string SelectionEndFormatted => DateTimeHelper.FormatDateTime(this.SelectionRange.EndTime, false);
 
         /// <summary>
         /// Gets the offset of the section start from the start of the ession.

@@ -12,6 +12,7 @@ namespace Microsoft.Psi.Visualization
     using System.Windows.Threading;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
+    using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Navigation;
     using Microsoft.Psi.Visualization.ViewModels;
@@ -22,7 +23,7 @@ namespace Microsoft.Psi.Visualization
     /// <summary>
     /// Data context for visualization.
     /// </summary>
-    public class VisualizationContext : ObservableObject
+    public class VisualizationContext : ObservableObject, IDisposable
     {
         private readonly DispatcherTimer liveStatusTimer = null;
 
@@ -78,11 +79,7 @@ namespace Microsoft.Psi.Visualization
         public VisualizationContainer VisualizationContainer
         {
             get => this.visualizationContainer;
-
-            set
-            {
-                this.Set(nameof(this.VisualizationContainer), ref this.visualizationContainer, value);
-            }
+            set => this.Set(nameof(this.VisualizationContainer), ref this.visualizationContainer, value);
         }
 
         /// <summary>
@@ -95,13 +92,20 @@ namespace Microsoft.Psi.Visualization
         /// </summary>
         public string PlayPauseButtonToolTip => this.VisualizationContainer.Navigator.IsCursorModePlayback ? @"Stop" : @"Play";
 
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            this.VisualizationContainer?.Dispose();
+        }
+
         /// <summary>
         /// Opens a previously persisted layout file.
         /// </summary>
         /// <param name="path">The path to the layout to open.</param>
         /// <param name="name">The name of the layout to open.</param>
+        /// <param name="userConsented">A flag indicating whether consent to apply this layout was explicitly given. This only applies to layouts containing scripts.</param>
         /// <returns>True if the layout was successfully loaded, otherwise false.</returns>
-        public bool OpenLayout(string path, string name)
+        public bool OpenLayout(string path, string name, ref bool userConsented)
         {
             if (!string.IsNullOrWhiteSpace(path))
             {
@@ -109,26 +113,61 @@ namespace Microsoft.Psi.Visualization
                 VisualizationContainer newVisualizationContainer = VisualizationContainer.Load(path, name, this.VisualizationContainer);
                 if (newVisualizationContainer != null)
                 {
-                    // NOTE: If we unbind the current VOs before binding the VOs of the new visualization
-                    // container we risk data layer objects being disposed of because they temporarily
-                    // have no subscribers.  To avoid this, we'll bind the VOs in the new visualization
-                    // container before we unbind the VOs from the visualization container that's being
-                    // replaced.  This way we'll ensure the subscriber count never goes to zero for data
-                    // layer objects that are used by both the old and the new visualization container.
+                    // If the new layout contains scripts, seek confirmation from the user before binding to the data
+                    // Check if the new visualization container contains any derived stream visualizers.
+                    var derivedStreamVisualizationObjects = newVisualizationContainer.GetDerivedStreamVisualizationObjects();
 
-                    // Bind the visualization objects in the new visualization container to their sources
-                    newVisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
+                    // Checks whether the adapter is a ScriptAdapter or has a ScriptAdapter somewhere in its chain
+                    static bool ContainsScriptAdapter(Type adapterType)
+                    {
+                        if (adapterType.IsGenericType)
+                        {
+                            var genericAdapterType = adapterType.GetGenericTypeDefinition();
+                            if (genericAdapterType == typeof(ScriptAdapter<,>))
+                            {
+                                return true;
+                            }
+                            else if (genericAdapterType == typeof(ChainedStreamAdapter<,,,,>))
+                            {
+                                var genericTypeParams = adapterType.GetGenericArguments();
+                                return ContainsScriptAdapter(genericTypeParams[4]) || ContainsScriptAdapter(genericTypeParams[3]);
+                            }
+                        }
 
-                    // Clear the current visualization container
-                    this.ClearLayout();
+                        return false;
+                    }
 
-                    // Set the new visualization container
-                    this.VisualizationContainer = newVisualizationContainer;
+                    // Check whether any of the VO bindings contain scripted streams, and display a warning if consent has not previously been granted
+                    bool hasScripts = derivedStreamVisualizationObjects.Any(vo => ContainsScriptAdapter(vo.StreamBinding.DerivedStreamAdapterType));
+                    if (hasScripts && !userConsented)
+                    {
+                        var confirmationWindow = new ConfirmLayoutWindow(Application.Current.MainWindow, name);
+                        userConsented = confirmationWindow.ShowDialog() ?? false;
+                    }
 
-                    // And re-read the stream values at cursor (to publish to stream value visualizers)
-                    DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
+                    if (!hasScripts || userConsented)
+                    {
+                        // NOTE: If we unbind the current VOs before binding the VOs of the new visualization
+                        // container we risk data layer objects being disposed of because they temporarily
+                        // have no subscribers.  To avoid this, we'll bind the VOs in the new visualization
+                        // container before we unbind the VOs from the visualization container that's being
+                        // replaced.  This way we'll ensure the subscriber count never goes to zero for data
+                        // layer objects that are used by both the old and the new visualization container.
 
-                    return true;
+                        // Bind the visualization objects in the new visualization container to their sources
+                        newVisualizationContainer.UpdateStreamSources(this.DatasetViewModel?.CurrentSessionViewModel);
+
+                        // Clear the current visualization container
+                        this.ClearLayout();
+
+                        // Set the new visualization container
+                        this.VisualizationContainer = newVisualizationContainer;
+
+                        // And re-read the stream values at cursor (to publish to stream value visualizers)
+                        DataManager.Instance.ReadAndPublishStreamValue(this.VisualizationContainer.Navigator.Cursor);
+
+                        return true;
+                    }
                 }
             }
 
@@ -152,7 +191,8 @@ namespace Microsoft.Psi.Visualization
         /// <returns>The type of messages in the stream.</returns>
         public Type GetDataType(string typeName)
         {
-            return TypeResolutionHelper.GetVerifiedType(typeName) ?? TypeResolutionHelper.GetVerifiedType(typeName.Split(',')[0]) ?? typeof(object);
+            return TypeResolutionHelper.GetVerifiedType(typeName) ??
+                (this.PluginMap.AdditionalTypeMappings.ContainsKey(typeName) ? this.PluginMap.AdditionalTypeMappings[typeName] : typeof(object));
         }
 
         /// <summary>
@@ -228,8 +268,8 @@ namespace Microsoft.Psi.Visualization
         public void VisualizeStream(StreamTreeNode streamTreeNode, VisualizerMetadata visualizerMetadata, VisualizationPanel visualizationPanel)
         {
             // Create the visualization object
-            IStreamVisualizationObject visualizationObject = Activator.CreateInstance(visualizerMetadata.VisualizationObjectType) as IStreamVisualizationObject;
-            visualizationObject.Name = visualizerMetadata.VisualizationFormatString.Replace(VisualizationObjectAttribute.DefaultVisualizationFormatString, streamTreeNode.Path);
+            var visualizationObject = Activator.CreateInstance(visualizerMetadata.VisualizationObjectType) as IStreamVisualizationObject;
+            visualizationObject.Name = visualizerMetadata.VisualizationFormatString.Replace(VisualizationObjectAttribute.DefaultVisualizationFormatString, streamTreeNode.FullName);
 
             // If the visualization object requires stream supplemental metadata to function, check that we're able to read the supplemental metadata from the stream.
             if (visualizationObject.RequiresSupplementalMetadata && !streamTreeNode.SupplementalMetadataTypeIsKnown)
@@ -260,7 +300,7 @@ namespace Microsoft.Psi.Visualization
                 }
                 else
                 {
-                    InstantVisualizationContainer instantVisualizationContainer = Activator.CreateInstance(typeof(InstantVisualizationContainer), visualizationPanel) as InstantVisualizationContainer;
+                    var instantVisualizationContainer = Activator.CreateInstance(typeof(InstantVisualizationContainer), visualizationPanel) as InstantVisualizationContainer;
                     this.VisualizationContainer.AddPanel(instantVisualizationContainer);
                 }
             }
@@ -268,7 +308,7 @@ namespace Microsoft.Psi.Visualization
             // If the target visualization panel is an instant visualization placeholder panel, replace it with a real panel of the correct type
             else if ((visualizationPanel is InstantVisualizationPlaceholderPanel placeholderPanel) && (visualizationPanel.ParentPanel is InstantVisualizationContainer instantVisualizationContainer))
             {
-                VisualizationPanel replacementPanel = VisualizationPanelFactory.CreateVisualizationPanel(visualizerMetadata.VisualizationPanelType);
+                var replacementPanel = VisualizationPanelFactory.CreateVisualizationPanel(visualizerMetadata.VisualizationPanelType);
                 instantVisualizationContainer.ReplaceChildVisualizationPanel(placeholderPanel, replacementPanel);
                 visualizationPanel = replacementPanel;
             }
@@ -414,7 +454,10 @@ namespace Microsoft.Psi.Visualization
         /// <param name="streamTreeNode">The stream to zoom to.</param>
         public void ZoomToStreamExtents(StreamTreeNode streamTreeNode)
         {
-            this.VisualizationContainer.Navigator.Zoom(streamTreeNode.SubsumedFirstMessageOriginatingTime, streamTreeNode.SubsumedLastMessageOriginatingTime);
+            if (streamTreeNode.SubsumedFirstMessageOriginatingTime != null && streamTreeNode.SubsumedLastMessageOriginatingTime != null)
+            {
+                this.VisualizationContainer.Navigator.Zoom(streamTreeNode.SubsumedFirstMessageOriginatingTime.Value, streamTreeNode.SubsumedLastMessageOriginatingTime.Value);
+            }
         }
 
         /// <summary>

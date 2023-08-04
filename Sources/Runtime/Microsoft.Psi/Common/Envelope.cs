@@ -90,7 +90,7 @@ namespace Microsoft.Psi
         /// <returns>True if the instances are equal.</returns>
         public override bool Equals(object other)
         {
-            if (!(other is Envelope))
+            if (other is not Envelope)
             {
                 return false;
             }

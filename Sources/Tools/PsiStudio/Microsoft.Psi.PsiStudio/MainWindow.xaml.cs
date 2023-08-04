@@ -37,18 +37,18 @@ namespace Microsoft.Psi.PsiStudio
         {
             this.InitializeComponent();
 
-            // Create the context
-            var viewModel = new MainWindowViewModel();
-
             // Create the visualization container and set the navigator range to an arbitrary default
             VisualizationContext visualizationContext = VisualizationContext.Instance;
             visualizationContext.VisualizationContainer = new VisualizationContainer();
             visualizationContext.VisualizationContainer.Navigator.ViewRange.Set(DateTime.UtcNow, TimeSpan.FromSeconds(60));
 
+            // Create the context
+            var viewModel = new MainWindowViewModel();
+
             // Set the values for the timing buttons on the navigator
-            visualizationContext.VisualizationContainer.Navigator.ShowAbsoluteTiming = viewModel.AppSettings.ShowAbsoluteTiming;
-            visualizationContext.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart = viewModel.AppSettings.ShowTimingRelativeToSessionStart;
-            visualizationContext.VisualizationContainer.Navigator.ShowTimingRelativeToSelectionStart = viewModel.AppSettings.ShowTimingRelativeToSelectionStart;
+            visualizationContext.VisualizationContainer.Navigator.ShowAbsoluteTiming = viewModel.Settings.ShowAbsoluteTiming;
+            visualizationContext.VisualizationContainer.Navigator.ShowTimingRelativeToSessionStart = viewModel.Settings.ShowTimingRelativeToSessionStart;
+            visualizationContext.VisualizationContainer.Navigator.ShowTimingRelativeToSelectionStart = viewModel.Settings.ShowTimingRelativeToSelectionStart;
 
             // Set the data context
             this.DataContext = viewModel;

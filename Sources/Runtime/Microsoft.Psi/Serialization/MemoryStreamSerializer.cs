@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Serialization
     /// </summary>
     internal sealed class MemoryStreamSerializer : ISerializer<MemoryStream>
     {
-        private const int SchemaVersion = 3;
+        private const int LatestSchemaVersion = 3;
         private ISerializer<MemoryStream> innerSerializer;
 
         /// <inheritdoc />
@@ -83,8 +83,16 @@ namespace Microsoft.Psi.Serialization
             {
                 var schemaMembers = new[] { new TypeMemberSchema("buffer", typeof(byte[]).AssemblyQualifiedName, true) };
                 var type = typeof(MemoryStream);
-                var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
-                var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsCollection, schemaMembers, SchemaVersion);
+                var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
+                var schema = new TypeSchema(
+                    type.AssemblyQualifiedName,
+                    TypeFlags.IsCollection,
+                    schemaMembers,
+                    name,
+                    TypeSchema.GetId(name),
+                    LatestSchemaVersion,
+                    this.GetType().AssemblyQualifiedName,
+                    serializers.RuntimeInfo.SerializationSystemVersion);
                 return targetSchema ?? schema;
             }
 

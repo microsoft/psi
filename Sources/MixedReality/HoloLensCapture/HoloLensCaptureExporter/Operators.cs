@@ -17,13 +17,22 @@ namespace HoloLensCaptureExporter
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.MixedReality;
+    using Microsoft.Psi.MixedReality.OpenXR;
+    using Microsoft.Psi.MixedReality.WinRT;
     using Microsoft.Psi.Spatial.Euclidean;
+    using OpenXRHand = Microsoft.Psi.MixedReality.OpenXR.Hand;
+    using OpenXRHandsSensor = Microsoft.Psi.MixedReality.OpenXR.HandsSensor;
+    using StereoKitHand = Microsoft.Psi.MixedReality.StereoKit.Hand;
+    using StereoKitHandsSensor = Microsoft.Psi.MixedReality.StereoKit.HandsSensor;
+    using WinRTEyes = Microsoft.Psi.MixedReality.WinRT.Eyes;
 
     /// <summary>
     /// Stream operators and extension methods for exporting data.
     /// </summary>
     internal static class Operators
     {
+        private static readonly string NaNString = double.NaN.ToText();
+
         /// <summary>
         /// Opens the specified stream for reading and (or returns null if nonexistent).
         /// </summary>
@@ -86,10 +95,15 @@ namespace HoloLensCaptureExporter
         /// <param name="c"><see cref="CoordinateSystem"/> to be converted.</param>
         /// <returns>Tab-delimited text representation.</returns>
         internal static string ToText(this CoordinateSystem c)
-            => $"{c[0, 0].ToText()}\t{c[0, 1].ToText()}\t{c[0, 2].ToText()}\t{c[0, 3].ToText()}\t" +
-               $"{c[1, 0].ToText()}\t{c[1, 1].ToText()}\t{c[1, 2].ToText()}\t{c[1, 3].ToText()}\t" +
-               $"{c[2, 0].ToText()}\t{c[2, 1].ToText()}\t{c[2, 2].ToText()}\t{c[2, 3].ToText()}\t" +
-               $"{c[3, 0].ToText()}\t{c[3, 1].ToText()}\t{c[3, 2].ToText()}\t{c[3, 3].ToText()}";
+            => c is not null
+               ? $"{c[0, 0].ToText()}\t{c[0, 1].ToText()}\t{c[0, 2].ToText()}\t{c[0, 3].ToText()}\t" +
+                 $"{c[1, 0].ToText()}\t{c[1, 1].ToText()}\t{c[1, 2].ToText()}\t{c[1, 3].ToText()}\t" +
+                 $"{c[2, 0].ToText()}\t{c[2, 1].ToText()}\t{c[2, 2].ToText()}\t{c[2, 3].ToText()}\t" +
+                 $"{c[3, 0].ToText()}\t{c[3, 1].ToText()}\t{c[3, 2].ToText()}\t{c[3, 3].ToText()}"
+               : $"{NaNString}\t{NaNString}\t{NaNString}\t{NaNString}\t" +
+                 $"{NaNString}\t{NaNString}\t{NaNString}\t{NaNString}\t" +
+                 $"{NaNString}\t{NaNString}\t{NaNString}\t{NaNString}\t" +
+                 $"{NaNString}\t{NaNString}\t{NaNString}\t{NaNString}";
 
         /// <summary>
         /// Converts a camera intrinsics to a tab-delimited text representation.
@@ -215,12 +229,7 @@ namespace HoloLensCaptureExporter
                         videoImageFile.Write(buffer, 0, eicv.ViewedObject.Resource.Size);
                         timingFile.WriteLine($"{imageCounter}\t{envelope.OriginatingTime.ToText()}");
                         poseFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{eicv.CameraPose.ToText()}");
-
-                        if (imageCounter == 0)
-                        {
-                            intrinsicsFile.WriteLine(eicv.CameraIntrinsics.ToText());
-                        }
-
+                        intrinsicsFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{eicv.CameraIntrinsics.ToText()}");
                         imageCounter++;
                     });
         }
@@ -258,12 +267,7 @@ namespace HoloLensCaptureExporter
                         depthImageFile.Write(buffer, 0, buffer.Length);
                         timingFile.WriteLine($"{depthImageCounter}\t{envelope.OriginatingTime.ToText()}");
                         poseFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{edicv.CameraPose.ToText()}");
-
-                        if (depthImageCounter == 0)
-                        {
-                            intrinsicsFile.WriteLine(edicv.CameraIntrinsics.ToText());
-                        }
-
+                        intrinsicsFile.WriteLine($"{envelope.OriginatingTime.ToText()}\t{edicv.CameraIntrinsics.ToText()}");
                         depthImageCounter++;
                     });
         }
@@ -330,14 +334,57 @@ namespace HoloLensCaptureExporter
         }
 
         /// <summary>
-        /// Exports a stream of hand infomation.
+        /// Exports a stream of EyeRT.
+        /// </summary>
+        /// <param name="source">The source stream of EyeRT.</param>
+        /// <param name="name">The name for the source stream.</param>
+        /// <param name="outputPath">The output path.</param>
+        /// <param name="streamWritersToClose">The collection of stream writers to be closed.</param>
+        internal static void Export(this IProducer<WinRTEyes> source, string name, string outputPath, List<StreamWriter> streamWritersToClose)
+        {
+            var filePath = DataExporter.EnsurePathExists(Path.Combine(outputPath, name, $"{name}.txt"));
+            var file = File.CreateText(filePath);
+            streamWritersToClose.Add(file);
+            source
+                .Do(
+                    (eyes, envelope) =>
+                    {
+                        file.Write($"{envelope.OriginatingTime.ToText()}\t");
+
+                        if (eyes?.GazeRay is null)
+                        {
+                            // write 6 NaNs to represent the null GazeRay (Point3D, Vector3D)
+                            for (int i = 0; i < 6; i++)
+                            {
+                                file.Write($"{NaNString}\t");
+                            }
+                        }
+                        else
+                        {
+                            file.Write($"{eyes.GazeRay.Value.ToText()}\t");
+                        }
+
+                        if (eyes is null)
+                        {
+                            // write false for CalibrationValid
+                            file.WriteLine(false.ToText());
+                        }
+                        else
+                        {
+                            file.WriteLine($"{eyes.CalibrationValid.ToText()}");
+                        }
+                    });
+        }
+
+        /// <summary>
+        /// Exports a stream of hand infomation (from <see cref="StereoKitHandsSensor"/>).
         /// </summary>
         /// <param name="source">The source stream of hand information.</param>
         /// <param name="directory">The directory in which to persist.</param>
         /// <param name="name">The name for the source stream.</param>
         /// <param name="outputPath">The output path.</param>
         /// <param name="streamWritersToClose">The collection of stream writers to be closed.</param>
-        internal static void Export(this IProducer<Hand> source, string directory, string name, string outputPath, List<StreamWriter> streamWritersToClose)
+        internal static void Export(this IProducer<StereoKitHand> source, string directory, string name, string outputPath, List<StreamWriter> streamWritersToClose)
         {
             var filePath = DataExporter.EnsurePathExists(Path.Combine(outputPath, directory, $"{name}.txt"));
             var file = File.CreateText(filePath);
@@ -346,17 +393,63 @@ namespace HoloLensCaptureExporter
                 .Do(
                     (hand, envelope) =>
                     {
+                        // ensures that we export null Hand instances with NaNs
+                        hand ??= StereoKitHand.Empty;
+
                         var result = new StringBuilder();
                         result.Append($"{envelope.OriginatingTime.ToText()}\t");
                         result.Append($"{hand.IsGripped.ToText()}\t");
                         result.Append($"{hand.IsPinched.ToText()}\t");
                         result.Append($"{hand.IsTracked.ToText()}\t");
-                        if (hand.IsTracked)
+
+                        // hand.Joints is never null, but may contain null values
+                        foreach (var joint in hand.Joints)
                         {
-                            foreach (var joint in hand.Joints)
-                            {
-                                result.Append($"{joint.ToText()}\t");
-                            }
+                            result.Append($"{joint.ToText()}\t");
+                        }
+
+                        file.WriteLine(result.ToString().TrimEnd('\t'));
+                    });
+        }
+
+        /// <summary>
+        /// Exports a stream of hand infomation (from <see cref="OpenXRHandsSensor"/>).
+        /// </summary>
+        /// <param name="source">The source stream of hand information.</param>
+        /// <param name="directory">The directory in which to persist.</param>
+        /// <param name="name">The name for the source stream.</param>
+        /// <param name="outputPath">The output path.</param>
+        /// <param name="streamWritersToClose">The collection of stream writers to be closed.</param>
+        internal static void Export(this IProducer<OpenXRHand> source, string directory, string name, string outputPath, List<StreamWriter> streamWritersToClose)
+        {
+            var filePath = DataExporter.EnsurePathExists(Path.Combine(outputPath, directory, $"{name}.txt"));
+            var file = File.CreateText(filePath);
+            streamWritersToClose.Add(file);
+            source
+                .Do(
+                    (hand, envelope) =>
+                    {
+                        // ensures that we export null HandXR instances with NaNs
+                        hand ??= OpenXRHand.Empty;
+
+                        var result = new StringBuilder();
+                        result.Append($"{envelope.OriginatingTime.ToText()}\t");
+                        result.Append($"{hand.IsActive.ToText()}\t");
+
+                        // hand.Joints is never null, but may contain null values
+                        foreach (var joint in hand.Joints)
+                        {
+                            result.Append($"{joint.ToText()}\t");
+                        }
+
+                        foreach (var jointValid in hand.JointsValid)
+                        {
+                            result.Append($"{jointValid.ToText()}\t");
+                        }
+
+                        foreach (var jointTracked in hand.JointsTracked)
+                        {
+                            result.Append($"{jointTracked.ToText()}\t");
                         }
 
                         file.WriteLine(result.ToString().TrimEnd('\t'));
@@ -458,10 +551,9 @@ namespace HoloLensCaptureExporter
                     }
                     else
                     {
-                        var nan = double.NaN.ToText();
                         for (var i = 0; i < 8; i++)
                         {
-                            sb.Append($"{nan}\t");
+                            sb.Append($"{NaNString}\t");
                         }
                     }
                 }

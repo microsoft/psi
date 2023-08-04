@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi.Onnx
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.ML;
@@ -12,16 +13,16 @@ namespace Microsoft.Psi.Onnx
     /// <summary>
     /// Implements an ONNX model for Mask R-CNN.
     /// </summary>
-    public class MaskRCNNOnnxModel
+    public class MaskRCNNOnnxModel : IDisposable
     {
         private const string BOXES = "6568";
         private const string LABELS = "6570";
         private const string SCORES = "6572";
         private const string MASKS = "6887";
 
-        private readonly MLContext context = new MLContext();
+        private readonly MLContext context = new ();
         private readonly SchemaDefinition schemaDefinition;
-        private readonly OnnxTransformer onnxTransformer;
+        private OnnxTransformer onnxTransformer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MaskRCNNOnnxModel"/> class.
@@ -55,6 +56,13 @@ namespace Microsoft.Psi.Onnx
                     gpuDeviceId: gpuDeviceId,
                     fallbackToCpu: false);
             this.onnxTransformer = scoringEstimator.Fit(onnxEmptyInputDataView);
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.onnxTransformer?.Dispose();
+            this.onnxTransformer = null;
         }
 
         /// <summary>

@@ -28,7 +28,6 @@
     <None Remove="Windows\AdditionalAssembliesWindow.xaml" />
     <None Remove="Windows\LayoutNameWindow.xaml" />
     <None Remove="Windows\LoadingDatasetWindow.xaml" />
-    <None Remove="Windows\SettingsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
@@ -38,9 +37,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainWindow.xaml" />
+    <Page Include="Windows\PsiStudioSettingsWindow.xaml" />
     <Page Include="Windows\AdditionalAssembliesWindow.xaml" />
     <Page Include="Windows\LayoutNameWindow.xaml" />
-    <Page Include="Windows\SettingsWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Audio\Microsoft.Psi.Audio\Microsoft.Psi.Audio.csproj" />

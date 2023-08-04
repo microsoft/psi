@@ -79,9 +79,24 @@ namespace Microsoft.Psi.PsiStudio.Common
         public const string ZoomToStreamExtents = "Zoom to Stream Extents";
 
         /// <summary>
-        /// Expand members.
+        /// Create a script derived stream.
         /// </summary>
-        public const string ExpandMembers = "Expand Members";
+        public const string AddScriptDerivedStream = "Add Script Derived Stream ...";
+
+        /// <summary>
+        /// Modify a script for a script derived stream.
+        /// </summary>
+        public const string ModifyScript = "Modify Script ...";
+
+        /// <summary>
+        /// Add member derived streams.
+        /// </summary>
+        public const string AddMemberDerivedStreams = "Add Member Derived Streams";
+
+        /// <summary>
+        /// Expand dictionary keys.
+        /// </summary>
+        public const string AddDictionaryKeyDerivedStreams = "Add Dictionary Key Derived Streams";
 
         /// <summary>
         /// Expand all nodes.
