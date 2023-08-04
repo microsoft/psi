@@ -77,11 +77,37 @@ namespace Microsoft.Psi.Data
         /// Gets the originating time interval (earliest to latest) of the messages in this session.
         /// </summary>
         [IgnoreDataMember]
-        public TimeInterval OriginatingTimeInterval =>
+        public TimeInterval MessageOriginatingTimeInterval =>
             TimeInterval.Coverage(
                 this.InternalPartitions
-                    .Where(p => p.OriginatingTimeInterval.Left > DateTime.MinValue && p.OriginatingTimeInterval.Right < DateTime.MaxValue)
-                    .Select(p => p.OriginatingTimeInterval));
+                    .Where(p => p.MessageOriginatingTimeInterval.Left > DateTime.MinValue && p.MessageOriginatingTimeInterval.Right < DateTime.MaxValue)
+                    .Select(p => p.MessageOriginatingTimeInterval));
+
+        /// <summary>
+        /// Gets the creation time interval (earliest to latest) of the messages in this session.
+        /// </summary>
+        [IgnoreDataMember]
+        public TimeInterval MessageCreationTimeInterval =>
+            TimeInterval.Coverage(
+                this.InternalPartitions
+                    .Where(p => p.MessageCreationTimeInterval.Left > DateTime.MinValue && p.MessageCreationTimeInterval.Right < DateTime.MaxValue)
+                    .Select(p => p.MessageCreationTimeInterval));
+
+        /// <summary>
+        /// Gets the stream open-close time interval in this session.
+        /// </summary>
+        [IgnoreDataMember]
+        public TimeInterval TimeInterval =>
+            TimeInterval.Coverage(
+                this.InternalPartitions
+                    .Where(p => p.TimeInterval.Left > DateTime.MinValue && p.TimeInterval.Right < DateTime.MaxValue)
+                    .Select(p => p.TimeInterval));
+
+        /// <summary>
+        /// Gets the session duration.
+        /// </summary>
+        [IgnoreDataMember]
+        public TimeSpan Duration => this.TimeInterval.Span;
 
         /// <summary>
         /// Gets the size of the session, in bytes.
@@ -101,6 +127,13 @@ namespace Microsoft.Psi.Data
 
         [DataMember(Name = "Partitions")]
         private List<IPartition> InternalPartitions { get; set; }
+
+        /// <summary>
+        /// Gets the partition specified by a name.
+        /// </summary>
+        /// <param name="partitionName">The name of the partition.</param>
+        /// <returns>The partition with the specified name.</returns>
+        public IPartition this[string partitionName] => this.InternalPartitions.FirstOrDefault(p => p.Name == partitionName);
 
         /// <summary>
         /// Creates and adds a data partition from an existing data store.

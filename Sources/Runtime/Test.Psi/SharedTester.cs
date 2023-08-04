@@ -9,7 +9,6 @@ namespace Test.Psi
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Common;
-    using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Serialization;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -329,32 +328,6 @@ namespace Test.Psi
                 Assert.IsTrue(pool.TotalCount > 0);
                 Assert.AreEqual(pool.TotalCount, pool.AvailableCount);
             }
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void SharedImagePoolCollisionTest()
-        {
-            var bmp57 = new System.Drawing.Bitmap(5, 7);
-            var bmp75 = new System.Drawing.Bitmap(7, 5);
-
-            Assert.AreEqual<int>(5, bmp57.Width);
-            Assert.AreEqual<int>(7, bmp57.Height);
-            Assert.AreEqual<int>(7, bmp75.Width);
-            Assert.AreEqual<int>(5, bmp75.Height);
-
-            var shared57 = ImagePool.GetOrCreateFromBitmap(bmp57);
-            Assert.AreEqual<int>(5, shared57.Resource.Width);
-            Assert.AreEqual<int>(7, shared57.Resource.Height);
-
-            // Ensure that the ImagePool is not recycling images based solely on the product of
-            // width*height (i.e. the same number of pixels but different dimensions), as the
-            // stride and total size of the recycled image could be incorrect.
-
-            shared57.Dispose(); // release to be recycled
-            var shared75 = ImagePool.GetOrCreateFromBitmap(bmp75); // should *not* get the recycled image
-            Assert.AreEqual<int>(7, shared75.Resource.Width);
-            Assert.AreEqual<int>(5, shared75.Resource.Height);
         }
 
         [TestMethod]

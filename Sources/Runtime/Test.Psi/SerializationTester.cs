@@ -414,7 +414,7 @@ namespace Test.Psi
 
             // Create the known serializers and register the old version of the Dictionary schema. This simulates what would be read from an older store.
             var serializers = new KnownSerializers();
-            var oldSchema = TypeSchema.FromType(typeof(Dictionary<int, string>), new RuntimeInfo(serializationSystemVersion: 2), typeof(ClassSerializer<Dictionary<int, string>>), serializerVersion: 1);
+            var oldSchema = TypeSchema.FromType(typeof(Dictionary<int, string>), null, serializationSystemVersion: 2);
             serializers.RegisterSchema(oldSchema);
 
             // Deserialize the buffer using a SerializationContext initialized with the old schema
@@ -503,14 +503,6 @@ namespace Test.Psi
             var emitter = new Emitter<int>(0, null, null, null, null);
             var clonedEmitter = emitter.DeepClone();
             Assert.AreEqual(emitter.Name, clonedEmitter.Name);
-        }
-
-        [TestMethod]
-        [Timeout(60000)]
-        public void SerializePixelFormat()
-        {
-            this.ValueTypeCloneTest(System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            this.ValueTypeSerializeTest(System.Drawing.Imaging.PixelFormat.Format24bppRgb, new byte[256]);
         }
 
         [TestMethod]
@@ -780,33 +772,24 @@ namespace Test.Psi
 
             Assert.AreEqual(RuntimeInfo.RuntimeName.FullName, runtimeInfo.Name);
             Assert.AreEqual(0, runtimeInfo.Id);
-            Assert.AreEqual(default(string), runtimeInfo.TypeName);
             Assert.AreEqual((RuntimeInfo.RuntimeName.Version.Major << 16) | RuntimeInfo.RuntimeName.Version.Minor, runtimeInfo.Version);
-            Assert.AreEqual(default(string), runtimeInfo.SerializerTypeName);
-            Assert.AreEqual(RuntimeInfo.CurrentRuntimeVersion, runtimeInfo.SerializerVersion);
-            Assert.AreEqual(0, runtimeInfo.CustomFlags);
+            Assert.AreEqual(RuntimeInfo.LatestSerializationSystemVersion, runtimeInfo.SerializationSystemVersion);
             Assert.AreEqual(MetadataKind.RuntimeInfo, runtimeInfo.Kind);
 
             // Test serialization/deserialization of RuntimeInfo with explicit parameters
             writer = new BufferWriter(0);
             new RuntimeInfo(
                 name: "Some Name",
-                id: 1,
-                typeName: "Some Type Name",
                 version: 2,
-                serializerTypeName: "Some Serializer Type Name",
-                serializerVersion: 7).Serialize(writer);
+                serializationSystemVersion: 7).Serialize(writer);
 
             reader = new BufferReader(writer.Buffer);
             runtimeInfo = (RuntimeInfo)Metadata.Deserialize(reader);
 
             Assert.AreEqual("Some Name", runtimeInfo.Name);
-            Assert.AreEqual(1, runtimeInfo.Id);
-            Assert.AreEqual("Some Type Name", runtimeInfo.TypeName);
+            Assert.AreEqual(0, runtimeInfo.Id);
             Assert.AreEqual(2, runtimeInfo.Version);
-            Assert.AreEqual("Some Serializer Type Name", runtimeInfo.SerializerTypeName);
-            Assert.AreEqual(7, runtimeInfo.SerializerVersion);
-            Assert.AreEqual(0, runtimeInfo.CustomFlags);
+            Assert.AreEqual(7, runtimeInfo.SerializationSystemVersion);
             Assert.AreEqual(MetadataKind.RuntimeInfo, runtimeInfo.Kind);
         }
 
@@ -828,8 +811,8 @@ namespace Test.Psi
                 writer.Write(123); // ID
                 writer.Write("SomeFakeTypeName"); // TypeName
                 writer.Write(version); // Version
-                writer.Write("SomeFakeSerializerTypeName"); // SerializerTypeName
-                writer.Write(7); // SerializerVersion
+                writer.Write(default(string)); // Not used anymore
+                writer.Write(7); // SerializationSystemVersion
                 writer.Write((ushort)(isPolymorphic ? StreamMetadataFlags.Polymorphic : 0)); // CustomFlags
                 writer.Write((ushort)MetadataKind.StreamMetadata); // MetadataKind
                 writer.Write(new DateTime(1969, 4, 2)); // OpenedTime
@@ -933,8 +916,7 @@ namespace Test.Psi
                 Assert.AreEqual(123, meta.Id);
                 Assert.AreEqual(123, meta.Id);
                 Assert.AreEqual("SomeFakeTypeName", meta.TypeName);
-                Assert.AreEqual("SomeFakeSerializerTypeName", meta.SerializerTypeName);
-                Assert.AreEqual(7, meta.SerializerVersion);
+                Assert.AreEqual(7, meta.SerializationSystemVersion);
                 Assert.AreEqual(new DateTime(1969, 4, 2), meta.OpenedTime);
                 Assert.AreEqual(new DateTime(2070, 1, 1), meta.ClosedTime);
                 Assert.AreEqual(messageCount, meta.MessageCount);

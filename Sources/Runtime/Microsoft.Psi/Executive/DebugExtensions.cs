@@ -143,7 +143,7 @@ namespace Microsoft.Psi
                     {
                         if (receiver.Value.Source != null)
                         {
-                            var emitterComp = pipeline.Components.First(c => c.Outputs.ContainsValue(receiver.Value.Source));
+                            var emitterComp = pipeline.Components.First(c => c.Outputs.Values.Contains(receiver.Value.Source));
                             var emitComponentName = System.Security.SecurityElement.Escape(emitterComp.Name);
                             var emitterName = System.Security.SecurityElement.Escape(pipeline.Components.SelectMany(c => c.Outputs).First(e => e.Value == receiver.Value.Source).Key);
                             var receiverName = System.Security.SecurityElement.Escape(receiver.Key);

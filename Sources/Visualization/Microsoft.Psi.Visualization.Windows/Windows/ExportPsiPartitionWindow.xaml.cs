@@ -33,8 +33,8 @@ namespace Microsoft.Psi.Visualization.Windows
 
             this.StoreName = initialStoreName;
             this.StorePath = initialStorePath;
-            this.StartTimeText = DateTimeFormatHelper.FormatDateTime(initialCropInterval.Left);
-            this.EndTimeText = DateTimeFormatHelper.FormatDateTime(initialCropInterval.Right);
+            this.StartTimeText = DateTimeHelper.FormatDateTime(initialCropInterval.Left);
+            this.EndTimeText = DateTimeHelper.FormatDateTime(initialCropInterval.Right);
 
             this.Validate();
         }

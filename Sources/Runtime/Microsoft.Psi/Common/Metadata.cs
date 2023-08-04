@@ -3,6 +3,7 @@
 
 namespace Microsoft.Psi
 {
+    using System;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Serialization;
 
@@ -30,112 +31,118 @@ namespace Microsoft.Psi
     /// <summary>
     /// Represents common metadata used in Psi stores.
     /// </summary>
-    public class Metadata
+    public abstract class Metadata
     {
-        internal Metadata(MetadataKind kind, string name, int id, string typeName, int version, string serializerTypeName, int serializerVersion, ushort customFlags)
+        internal Metadata(MetadataKind kind, string name, int id, int version, int serializationSystemVersion)
         {
             this.Kind = kind;
             this.Name = name;
             this.Id = id;
-            this.TypeName = typeName;
             this.Version = version;
-            this.SerializerTypeName = serializerTypeName;
-            this.SerializerVersion = serializerVersion;
-            this.CustomFlags = customFlags;
-        }
-
-        internal Metadata()
-        {
+            this.SerializationSystemVersion = serializationSystemVersion;
         }
 
         /// <summary>
-        /// Gets or sets the name of the object the metadata represents.
+        /// Gets the name of the object the metadata represents.
         /// </summary>
-        public string Name { get; protected set; }
+        public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the id of the object the metadata represents.
+        /// Gets the id of the object the metadata represents.
         /// </summary>
-        public int Id { get; protected set; }
+        public int Id { get; }
 
         /// <summary>
-        /// Gets or sets the name of the type of data contained in the object the metadata represents.
-        /// </summary>
-        public string TypeName { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the metadata serializer type name.
-        /// </summary>
-        public string SerializerTypeName { get; protected set; }
-
-        /// <summary>
-        /// Gets or sets the metadata version number.
+        /// Gets or sets the version number.
         /// </summary>
         public int Version { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the metadata serializer version number.
+        /// Gets the serialization system version number.
         /// </summary>
-        public int SerializerVersion { get; protected set; }
+        public int SerializationSystemVersion { get; }
 
         /// <summary>
-        /// Gets or sets the metadata kind.
+        /// Gets the metadata kind.
         /// </summary>
         /// <seealso cref="MetadataKind"/>
-        public MetadataKind Kind { get; protected set; }
+        public MetadataKind Kind { get; }
 
-        /// <summary>
-        /// Gets or sets custom flags implemented in derived types.
-        /// </summary>
-        public ushort CustomFlags { get; protected set; }
-
-        // custom deserializer with no dependency on the Serializer subsystem
-        // order of fields is important for backwards compat and must be the same as the order in Serialize, don't change!
-        // This method is static because the entry type differentiator is not the first field, and we need to read several
-        // fields before we can decide what type to create. This is for legacy reasons, since the early versions of the
-        // catalog file only contained one type of entry (stream metadata).
+        // The Metadata deserializer has no dependency on the Serializer subsystem.
+        //
+        // For legacy reasons, the metadata is manually persisted with the
+        // following fields and following semantics, in the order below (do not change!)
+        // string -> name of the metadata, meaning:
+        //           - the stream name for PsiStreamMetadata
+        //           - the schema name for TypeSchema
+        //           - the assembly name for the runtime for RuntimeInfo
+        // int -> id of the metadata
+        //           - the stream id for PsiStreamMetadata
+        //           - the schema id for TypeSchema
+        //           - N/A (0) for RuntimeInfo
+        // string -> type name
+        //           - the stream type for PsiStreamMetadata
+        //           - the data type represented by the schema for TypeSchema
+        //           - N/A (null) for RuntimeInfo
+        // int -> version
+        //           - the metadata version for PsiStreamMetadata
+        //           - the schema version for TypeSchema
+        //           - the runtime assembly version (major << 16 | minor) for RuntimeInfo
+        // string -> serializer type assembly qualified name
+        //           - N/A (null) for PsiStreamMetadata
+        //           - the serializer type assembly qualified name (for TypeSchema)
+        //           - N/A (null) for RuntimeInfo
+        // int -> serialization system version (for PsiStreamMetadata, TypeSchema and RuntimeInfo)
+        // ushort -> stream metadata flags
+        //           - stream metadata flags for PsiStreamMetadata
+        //           - N/A (0) for TypeSchema
+        //           - N/A (0) for RuntimeInfo
+        // MetadataKind -> the type of metadata (for PsiStreamMetadata, TypeSchema and RuntimeInfo)
+        //
+        // This method is static because the entry type differentiator is not the first field,
+        // and we need to read several fields before we can decide what type to create. This is for
+        // legacy reasons, since the early versions of the catalog file only contained one type of
+        // entry (stream metadata).
+        //
+        // Serialization happens via the overriden Deserialize method in the derived
+        // classes (PsiStreamMetadata, TypeSchema and RuntimeInfo). The fields described
+        // above are serialized in the order above, followed by fields specific to the
+        // derived metadata type.
         internal static Metadata Deserialize(BufferReader metadataBuffer)
         {
+            // Read the legacy field structure, as described above.
             var name = metadataBuffer.ReadString();
             var id = metadataBuffer.ReadInt32();
             var typeName = metadataBuffer.ReadString();
             var version = metadataBuffer.ReadInt32();
             var serializerTypeName = metadataBuffer.ReadString();
-            var serializerVersion = metadataBuffer.ReadInt32();
+            var serializationSystemVersion = metadataBuffer.ReadInt32();
             var customFlags = metadataBuffer.ReadUInt16();
             var kind = (MetadataKind)metadataBuffer.ReadUInt16();
 
             if (kind == MetadataKind.StreamMetadata)
             {
-                var result = new PsiStreamMetadata(name, id, typeName, version, serializerTypeName, serializerVersion, customFlags);
+                var result = new PsiStreamMetadata(name, id, typeName, version, serializationSystemVersion, customFlags);
                 result.Deserialize(metadataBuffer);
                 return result;
             }
             else if (kind == MetadataKind.TypeSchema)
             {
-                var result = new TypeSchema(name, id, typeName, version, serializerTypeName, serializerVersion);
+                var result = new TypeSchema(typeName, name, id, version, serializerTypeName, serializationSystemVersion);
                 result.Deserialize(metadataBuffer);
+                return result;
+            }
+            else if (kind == MetadataKind.RuntimeInfo)
+            {
+                var result = new RuntimeInfo(name, version, serializationSystemVersion);
                 return result;
             }
             else
             {
-                // kind == MetadataKind.RuntimeInfo
-                var result = new RuntimeInfo(name, id, typeName, version, serializerTypeName, serializerVersion);
-                return result;
+                throw new NotSupportedException($"Unknown metadata kind: {kind}");
             }
         }
 
-        // this must be called first by derived classes, before writing any of their own fields
-        internal virtual void Serialize(BufferWriter metadataBuffer)
-        {
-            metadataBuffer.Write(this.Name);
-            metadataBuffer.Write(this.Id);
-            metadataBuffer.Write(this.TypeName);
-            metadataBuffer.Write(this.Version);
-            metadataBuffer.Write(this.SerializerTypeName);
-            metadataBuffer.Write(this.SerializerVersion);
-            metadataBuffer.Write(this.CustomFlags);
-            metadataBuffer.Write((ushort)this.Kind);
-        }
+        internal abstract void Serialize(BufferWriter metadataBuffer);
     }
 }

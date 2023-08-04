@@ -3,9 +3,11 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
@@ -219,6 +221,31 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 throw new InvalidEnumArgumentException(nameof(depthImageRangeMode), (int)depthImageRangeMode, typeof(DepthImageRangeMode));
             }
+        }
+
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = base.ContextMenuItemsInfo();
+
+            // Add Set Range mode commands
+            var rangeModeItems = new ContextMenuItemInfo("Set Range Mode");
+
+            rangeModeItems.SubItems.Add(
+                new ContextMenuItemInfo(
+                    string.Empty,
+                    DepthImageRangeMode.Auto.ToString(),
+                    new RelayCommand(() => this.RangeMode = DepthImageRangeMode.Auto)));
+
+            rangeModeItems.SubItems.Add(
+                new ContextMenuItemInfo(
+                    string.Empty,
+                    DepthImageRangeMode.Maximum.ToString(),
+                    new RelayCommand(() => this.RangeMode = DepthImageRangeMode.Maximum)));
+
+            items.Add(rangeModeItems);
+
+            return items;
         }
 
         /// <inheritdoc />

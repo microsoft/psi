@@ -8,7 +8,6 @@ namespace Microsoft.Psi.Visualization.Data
     using System.Collections.ObjectModel;
     using System.Runtime.Serialization;
     using Microsoft.Psi.Data;
-    using Microsoft.Psi.Visualization.Helpers;
 
     /// <summary>
     /// Represents an object used to read streams.
@@ -102,7 +101,7 @@ namespace Microsoft.Psi.Visualization.Data
         public abstract void OpenStream(IStreamReader streamReader);
 
         /// <inheritdoc/>
-        public abstract DateTime? GetTimeOfNearestMessage(DateTime time, NearestMessageType snappingBehavior);
+        public abstract DateTime? GetTimeOfNearestMessage(DateTime time, NearestType nearestType);
 
         /// <summary>
         /// Called by a derived class when it no longer has any subscribers.

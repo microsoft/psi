@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Visualization.Views
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Windows;
     using System.Windows.Controls;
@@ -18,89 +17,34 @@ namespace Microsoft.Psi.Visualization.Views
     /// <summary>
     /// Interaction logic for InstantVisualizationContainerView.xaml.
     /// </summary>
-    public partial class InstantVisualizationContainerView : UserControl, IContextMenuItemsSource
+    public partial class InstantVisualizationContainerView : UserControl
     {
-        private VisualizationPanel mouseOverVisualizationPanel;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="InstantVisualizationContainerView"/> class.
         /// </summary>
         public InstantVisualizationContainerView()
         {
             this.InitializeComponent();
-            this.DataContextChanged += this.InstantVisualizationContainerView_DataContextChanged;
-            this.SizeChanged += this.InstantVisualizationContainerView_SizeChanged;
+            this.DataContextChanged += this.OnInstantVisualizationContainerViewDataContextChanged;
+            this.SizeChanged += this.OnInstantVisualizationContainerViewSizeChanged;
         }
-
-        /// <inheritdoc/>
-        public ContextMenuItemsSourceType ContextMenuItemsSourceType => ContextMenuItemsSourceType.VisualizationPanelMatrixContainer;
-
-        /// <inheritdoc/>
-        public string ContextMenuObjectName => string.Empty;
 
         /// <summary>
         /// Gets the visualization panel.
         /// </summary>
         protected InstantVisualizationContainer VisualizationPanel => (InstantVisualizationContainer)this.DataContext;
 
-        /// <inheritdoc/>
-        public void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            if (this.DataContext is InstantVisualizationContainer instantVisualizationContainer)
-            {
-                // Find the child panel that the mouse is over
-                // Run a hit test at the mouse cursor
-                this.mouseOverVisualizationPanel = null;
-                VisualTreeHelper.HitTest(
-                    this,
-                    null,
-                    new HitTestResultCallback(this.ContextMenuHitTestResult),
-                    new PointHitTestParameters(Mouse.GetPosition(this)));
-
-                if (this.mouseOverVisualizationPanel != null)
-                {
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.InstantContainerAddCellLeft, $"Insert Cell to the Left", instantVisualizationContainer.CreateIncreaseCellCountCommand(this.mouseOverVisualizationPanel, true)));
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.InstantContainerAddCellRight, $"Insert Cell to the Right", instantVisualizationContainer.CreateIncreaseCellCountCommand(this.mouseOverVisualizationPanel, false)));
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Remove Cell", instantVisualizationContainer.CreateRemoveCellCommand(this.mouseOverVisualizationPanel)));
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.InstantContainerRemoveCell, $"Remove {instantVisualizationContainer.Name}", instantVisualizationContainer.RemovePanelCommand));
-                }
-            }
-        }
-
-        private HitTestResultBehavior ContextMenuHitTestResult(HitTestResult result)
-        {
-            // Find the visualization panel view that the mouse is over
-            DependencyObject dependencyObject = result.VisualHit;
-            while (dependencyObject != null)
-            {
-                // If the dependency object is not a hidden panel
-                if (!(dependencyObject is VisualizationPanelView visualizationPanelView && !(visualizationPanelView.DataContext as VisualizationPanel).IsShown))
-                {
-                    if (dependencyObject is IContextMenuItemsSource contextMenuItemsSource && contextMenuItemsSource.ContextMenuItemsSourceType == ContextMenuItemsSourceType.VisualizationPanel)
-                    {
-                        // Get the visualization panel related to the visualization panel view
-                        this.mouseOverVisualizationPanel = (contextMenuItemsSource as VisualizationPanelView).DataContext as VisualizationPanel;
-                        return HitTestResultBehavior.Stop;
-                    }
-                }
-
-                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
-            }
-
-            return HitTestResultBehavior.Continue;
-        }
-
-        private void InstantVisualizationContainerView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void OnInstantVisualizationContainerViewDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.OldValue is InstantVisualizationContainer oldContainer)
             {
-                oldContainer.Panels.CollectionChanged -= this.Panels_CollectionChanged;
+                oldContainer.Panels.CollectionChanged -= this.OnPanelsCollectionChanged;
                 oldContainer.ChildVisualizationPanelWidthChanged -= this.ChildVisualizationPanelWidthChanged;
             }
 
             if (e.NewValue is InstantVisualizationContainer newContainer)
             {
-                newContainer.Panels.CollectionChanged += this.Panels_CollectionChanged;
+                newContainer.Panels.CollectionChanged += this.OnPanelsCollectionChanged;
                 newContainer.ChildVisualizationPanelWidthChanged += this.ChildVisualizationPanelWidthChanged;
             }
         }
@@ -110,7 +54,7 @@ namespace Microsoft.Psi.Visualization.Views
             this.ResizeChildVisualizationPanels();
         }
 
-        private void Panels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnPanelsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Remove)
             {
@@ -118,7 +62,7 @@ namespace Microsoft.Psi.Visualization.Views
             }
         }
 
-        private void InstantVisualizationContainerView_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnInstantVisualizationContainerViewSizeChanged(object sender, SizeChangedEventArgs e)
         {
             this.ResizeChildVisualizationPanels();
         }

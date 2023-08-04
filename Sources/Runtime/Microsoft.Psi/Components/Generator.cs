@@ -91,6 +91,13 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public void Stop(DateTime finalOriginatingTime, Action notifyCompleted)
         {
+            // If the generator has already stopped, call notify completed.
+            if (this.stopped)
+            {
+                notifyCompleted.Invoke();
+                return;
+            }
+
             this.finalMessageTime = finalOriginatingTime;
             this.notifyCompleted = notifyCompleted;
 

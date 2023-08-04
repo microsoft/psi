@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type of objects this serializer knows how to handle.</typeparam>
     internal sealed class ArraySerializer<T> : ISerializer<T[]>
     {
-        private const int Version = 2;
+        private const int LatestSchemaVersion = 2;
 
         private SerializationHandler<T> elementHandler;
 
@@ -23,9 +23,17 @@ namespace Microsoft.Psi.Serialization
         {
             var type = typeof(T[]);
             this.elementHandler = serializers.GetHandler<T>(); // register element type
-            var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+            var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
             var elementsMember = new TypeMemberSchema("Elements", typeof(T).AssemblyQualifiedName, true);
-            var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsCollection, new TypeMemberSchema[] { elementsMember }, Version);
+            var schema = new TypeSchema(
+                type.AssemblyQualifiedName,
+                TypeFlags.IsCollection,
+                new TypeMemberSchema[] { elementsMember },
+                name,
+                TypeSchema.GetId(name),
+                LatestSchemaVersion,
+                this.GetType().AssemblyQualifiedName,
+                serializers.RuntimeInfo.SerializationSystemVersion);
             return targetSchema ?? schema;
         }
 
@@ -78,7 +86,7 @@ namespace Microsoft.Psi.Serialization
             if (target != null && target.Length > size && (!this.elementHandler.IsClearRequired.HasValue || this.elementHandler.IsClearRequired.Value))
             {
                 // use a separate context to clear the unused objects, so that we don't corrupt the current context
-                SerializationContext clearContext = new SerializationContext(context.Serializers);
+                var clearContext = new SerializationContext(context.Serializers);
 
                 // only clear the extra items that we won't use during cloning or deserialization (those get cleared by cloning/deserialization).
                 for (int i = size; i < target.Length; i++)

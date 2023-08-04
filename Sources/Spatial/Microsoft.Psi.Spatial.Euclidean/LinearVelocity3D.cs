@@ -5,62 +5,61 @@ namespace Microsoft.Psi.Spatial.Euclidean
 {
     using System;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi.Common;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
-    /// Represents a linear 3D velocity rooted at a point in space.
+    /// Represents a linear velocity from a starting point in 3D space.
     /// </summary>
+    [Serializer(typeof(LinearVelocity3D.CustomSerializer))]
     public readonly struct LinearVelocity3D : IEquatable<LinearVelocity3D>
     {
         /// <summary>
-        /// The point of origin.
+        /// The starting point of origin.
         /// </summary>
         public readonly Point3D Origin;
 
         /// <summary>
-        /// The velocity vector. Describes the direction of motion as well as the speed (length of the vector).
+        /// The vector direction of motion of the velocity.
         /// </summary>
-        public readonly Vector3D Vector;
+        public readonly UnitVector3D Direction;
+
+        /// <summary>
+        /// The scalar magnitude (per-second speed) of the velocity.
+        /// </summary>
+        public readonly double Magnitude;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinearVelocity3D"/> struct.
         /// </summary>
-        /// <param name="origin">The origin point.</param>
-        /// <param name="vector">The velocity vector.</param>
-        public LinearVelocity3D(Point3D origin, Vector3D vector)
+        /// <param name="origin">The starting point of origin.</param>
+        /// <param name="direction">The unit vector indicating the direction of velocity.</param>
+        /// <param name="magnitude">The scalar magnitude (per-second speed) of the velocity.</param>
+        public LinearVelocity3D(Point3D origin, UnitVector3D direction, double magnitude)
         {
+            if (direction == default(UnitVector3D) && magnitude != 0)
+            {
+                throw new ArgumentException("Axis direction cannot be (0,0,0) with a non-zero magnitude.");
+            }
+
             this.Origin = origin;
-            this.Vector = vector;
+            this.Direction = direction;
+            this.Magnitude = magnitude;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinearVelocity3D"/> struct.
         /// </summary>
-        /// <param name="origin">The origin of the velocity.</param>
-        /// <param name="unitVector">The unit vector indicating the direction of velocity.</param>
-        /// <param name="speed">The speed in the specified direction.</param>
-        public LinearVelocity3D(Point3D origin, UnitVector3D unitVector, double speed)
-            : this(origin, unitVector.ScaleBy(speed))
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LinearVelocity3D"/> struct.
-        /// </summary>
-        /// <param name="origin">The origin of the velocity.</param>
+        /// <param name="origin">The starting point of origin.</param>
         /// <param name="destinationPoint">A destination point.</param>
-        /// <param name="time">The time it took to reach that destination point.</param>
+        /// <param name="time">The time taken to reach that destination point.</param>
         public LinearVelocity3D(Point3D origin, Point3D destinationPoint, TimeSpan time)
         {
             this.Origin = origin;
             var directionVector = destinationPoint - origin;
-            var speed = directionVector.Length / time.TotalSeconds;
-            this.Vector = directionVector.Normalize().ScaleBy(speed);
+            this.Magnitude = directionVector.Length / time.TotalSeconds;
+            this.Direction = directionVector.Length >= float.Epsilon ? directionVector.Normalize() : default;
         }
-
-        /// <summary>
-        /// Gets the magnitude of the velocity.
-        /// </summary>
-        public double Speed => this.Vector.Length;
 
         /// <summary>
         /// Returns a value indicating whether the specified velocities are the same.
@@ -79,23 +78,78 @@ namespace Microsoft.Psi.Spatial.Euclidean
         public static bool operator !=(LinearVelocity3D left, LinearVelocity3D right) => !left.Equals(right);
 
         /// <inheritdoc/>
-        public bool Equals(LinearVelocity3D other) => this.Origin == other.Origin && this.Vector == other.Vector;
+        public bool Equals(LinearVelocity3D other) =>
+            this.Origin.Equals(other.Origin) &&
+            this.Direction.Equals(other.Direction) &&
+            this.Magnitude.Equals(other.Magnitude);
 
         /// <inheritdoc/>
         public override bool Equals(object obj) => obj is LinearVelocity3D other && this.Equals(other);
 
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(this.Origin, this.Vector);
+        public override int GetHashCode() => HashCode.Combine(this.Origin, this.Direction, this.Magnitude);
 
         /// <summary>
         /// Computes the destination point, if this velocity is followed for a given amount of time.
         /// </summary>
         /// <param name="time">The span of time to compute over.</param>
         /// <returns>The destination point.</returns>
-        /// <remarks>The unit of time should be the same as assumed for the velocity vector (e.g., seconds).</remarks>
-        public Point3D ComputeDestination(double time)
+        public Point3D ComputeDestination(TimeSpan time) =>
+            this.Origin + this.Direction.ScaleBy(this.Magnitude * time.TotalSeconds);
+
+        /// <summary>
+        /// Provides backcompat serialization for <see cref="LinearVelocity3D"/> objects.
+        /// </summary>
+        public class CustomSerializer : BackCompatStructSerializer<LinearVelocity3D>
         {
-            return this.Origin + this.Vector.ScaleBy(time);
+            // When introducing a custom serializer, the LatestSchemaVersion
+            // is set to be one above the auto-generated schema version (given by
+            // RuntimeInfo.LatestSerializationSystemVersion, which was 2 at the time)
+            private const int LatestSchemaVersion = 3;
+            private SerializationHandler<Point3D> point3DHandler;
+            private SerializationHandler<Vector3D> vector3DHandler;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CustomSerializer"/> class.
+            /// </summary>
+            public CustomSerializer()
+                : base(LatestSchemaVersion)
+            {
+            }
+
+            /// <inheritdoc/>
+            public override void InitializeBackCompatSerializationHandlers(int schemaVersion, KnownSerializers serializers, TypeSchema targetSchema)
+            {
+                if (schemaVersion <= 2)
+                {
+                    this.point3DHandler = serializers.GetHandler<Point3D>();
+                    this.vector3DHandler = serializers.GetHandler<Vector3D>();
+                }
+                else
+                {
+                    throw new NotSupportedException($"{nameof(LinearVelocity3D.CustomSerializer)} only supports schema versions 2 and 3.");
+                }
+            }
+
+            /// <inheritdoc/>
+            public override void BackCompatDeserialize(int schemaVersion, BufferReader reader, ref LinearVelocity3D target, SerializationContext context)
+            {
+                if (schemaVersion <= 2)
+                {
+                    var origin = default(Point3D);
+                    var vector = default(Vector3D);
+                    this.point3DHandler.Deserialize(reader, ref origin, context);
+                    this.vector3DHandler.Deserialize(reader, ref vector, context);
+                    target = new LinearVelocity3D(
+                        origin,
+                        vector.Length >= float.Epsilon ? vector.Normalize() : default,
+                        vector.Length);
+                }
+                else
+                {
+                    throw new NotSupportedException($"{nameof(LinearVelocity3D.CustomSerializer)} only supports schema versions 2 and 3.");
+                }
+            }
         }
     }
 }

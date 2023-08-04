@@ -133,6 +133,7 @@
     <None Remove="Icons\session-repairing.png" />
     <None Remove="Icons\session-stream.png" />
     <None Remove="Icons\session.png" />
+    <None Remove="Icons\set-annotation-to-selection.png" />
     <None Remove="Icons\settings.png" />
     <None Remove="Icons\speed.png" />
     <None Remove="Icons\stop.png" />
@@ -168,6 +169,7 @@
     <None Remove="Icons\zoom-to-stream.png" />
     <None Remove="Icons\zoom.png" />
     <None Remove="stylecop.json" />
+    <None Remove="PropertyGridEditors\ItemPickerEditor.xaml" />
     <None Remove="Themes\Brushes.xaml" />
     <None Remove="Themes\Buttons.xaml" />
     <None Remove="Themes\CollectionControl.xaml" />
@@ -226,11 +228,11 @@
     <None Remove="Views\Visuals2D\TimeIntervalAnnotationVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml" />
     <None Remove="Views\Visuals2D\TimeIntervalVisualizationObjectView.xaml" />
-    <None Remove="Views\Visuals3D\AnimatedModelVisual.xaml" />
     <None Remove="Views\Visuals3D\SpriteVisual.xaml" />
     <None Remove="Views\Visuals3D\XYPanelVisual.xaml" />
     <None Remove="Views\XYVisualizationPanelView.xaml" />
     <None Remove="Views\XYZVisualizationPanelView.xaml" />
+    <None Remove="Windows\ConfirmLayoutWindow.xaml" />
     <None Remove="Windows\CreateAnnotationStreamWindow.xaml" />
     <None Remove="Windows\ExportPsiPartitionWindow.xaml" />
     <None Remove="Windows\GetParameterWindow.xaml" />
@@ -240,12 +242,14 @@
     <None Remove="Windows\ProgressWindow.xaml" />
     <None Remove="Windows\SaveStoreWindow.xaml" />
     <None Remove="Windows\RunBatchProcessingTaskWindow.xaml" />
+    <None Remove="Windows\ScriptWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HelixToolkit.Wpf" Version="2.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -277,7 +281,8 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  <ItemGroup>    
+  <ItemGroup>
+    <Page Include="PropertyGridEditors\ItemPickerEditor.xaml" />
     <Page Include="Themes\Brushes.xaml" />
     <Page Include="Themes\Buttons.xaml" />
     <Page Include="Themes\CollectionControl.xaml" />
@@ -301,12 +306,12 @@
     <Page Include="Views\Visuals2D\DiagnosticsVisualization\PipelineDiagnosticsVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\DepthImageVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\IFormattableVisualizationObjectView.xaml" />
-	<Page Include="Views\Visuals2D\TextVisualizationObjectView.xaml" />
-	<Page Include="Views\Visuals2D\NumericPlot\BoolSeriesVisualizationObjectView.xaml" />
-	<Page Include="Views\Visuals2D\NumericPlot\BoolVisualizationObjectView.xaml" />
-	<Page Include="Views\Visuals2D\NumericPlot\NullableBoolSeriesVisualizationObjectView.xaml" />
-	<Page Include="Views\Visuals2D\NumericPlot\NullableBoolVisualizationObjectView.xaml" />
-	<Page Include="Views\Visuals2D\NumericPlot\NullableLongSeriesVisualizationObjectView.xaml" />
+	  <Page Include="Views\Visuals2D\TextVisualizationObjectView.xaml" />
+	  <Page Include="Views\Visuals2D\NumericPlot\BoolSeriesVisualizationObjectView.xaml" />
+	  <Page Include="Views\Visuals2D\NumericPlot\BoolVisualizationObjectView.xaml" />
+	  <Page Include="Views\Visuals2D\NumericPlot\NullableBoolSeriesVisualizationObjectView.xaml" />
+	  <Page Include="Views\Visuals2D\NumericPlot\NullableBoolVisualizationObjectView.xaml" />
+	  <Page Include="Views\Visuals2D\NumericPlot\NullableLongSeriesVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\NumericPlot\NullableIntSeriesVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\NumericPlot\NullableFloatSeriesVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\NumericPlot\NullableDoubleSeriesVisualizationObjectView.xaml" />
@@ -335,12 +340,12 @@
     <Page Include="Views\Visuals2D\TimeIntervalAnnotationVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\TimeIntervalHistoryVisualizationObjectView.xaml" />
     <Page Include="Views\Visuals2D\TimeIntervalVisualizationObjectView.xaml" />
-    <Page Include="Views\Visuals3D\AnimatedModelVisual.xaml" />
     <Page Include="Views\Visuals3D\SpriteVisual.xaml" />
     <Page Include="Views\Visuals3D\XYPanelVisual.xaml" />
     <Page Include="Views\CanvasVisualizationPanelView.xaml" />
     <Page Include="Views\XYVisualizationPanelView.xaml" />
     <Page Include="Views\XYZVisualizationPanelView.xaml" />
+    <Page Include="Windows\ConfirmLayoutWindow.xaml" />
     <Page Include="Windows\CreateAnnotationStreamWindow.xaml" />
     <Page Include="Windows\GetParameterWindow.xaml" />
     <Page Include="Windows\ExportPsiPartitionWindow.xaml" />
@@ -349,10 +354,12 @@
     <Page Include="Windows\ProgressWindow.xaml" />
     <Page Include="Windows\SaveStoreWindow.xaml" />
     <Page Include="Windows\RunBatchProcessingTaskWindow.xaml" />
+    <Page Include="Windows\ScriptWindow.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\2d.png" />
     <Resource Include="Icons\3d.png" />
+    <Resource Include="Icons\set-annotation-to-selection.png" />
     <Resource Include="Icons\annotation.png" />
     <Resource Include="Icons\annotation-unbound.png" />
     <Resource Include="Icons\blank.png" />

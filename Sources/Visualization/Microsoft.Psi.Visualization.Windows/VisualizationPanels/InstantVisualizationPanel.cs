@@ -3,10 +3,14 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Runtime.Serialization;
+    using System.Windows;
+    using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization.VisualizationObjects;
-    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Represents the base class that instant visualization panels derive from.
@@ -53,6 +57,41 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
             set { this.Set(nameof(this.RelativeWidth), ref this.relativeWidth, value); }
         }
 
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = new List<ContextMenuItemInfo>();
+
+            // Add Set Cursor Epsilon menu with sub-menu items
+            var setCursorEpsilonItems = new ContextMenuItemInfo("Set Default Cursor Epsilon");
+
+            setCursorEpsilonItems.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Infinite Past",
+                    new RelayCommand(() => this.UpdateDefaultCursorEpsilon("Infinite Past", int.MaxValue, 0), true)));
+            setCursorEpsilonItems.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Last 5 seconds",
+                    new RelayCommand(() => this.UpdateDefaultCursorEpsilon("Last 5 seconds", 5000, 0), true)));
+            setCursorEpsilonItems.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Last 1 second",
+                    new RelayCommand(() => this.UpdateDefaultCursorEpsilon("Last 1 second", 1000, 0), true)));
+            setCursorEpsilonItems.SubItems.Add(
+                new ContextMenuItemInfo(
+                    null,
+                    "Last 50 milliseconds",
+                    new RelayCommand(() => this.UpdateDefaultCursorEpsilon("Last 50 milliseconds", 50, 0), true)));
+
+            items.Add(setCursorEpsilonItems);
+
+            items.AddRange(base.ContextMenuItemsInfo());
+            return items;
+        }
+
         /// <inheritdoc />
         public override void AddVisualizationObject(VisualizationObject visualizationObject)
         {
@@ -60,6 +99,33 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
 
             visualizationObject.CursorEpsilonNegMs = this.defaultCursorEpsilonNegMs;
             visualizationObject.CursorEpsilonPosMs = this.defaultCursorEpsilonPosMs;
+        }
+
+        private void UpdateDefaultCursorEpsilon(string name, int negMs, int posMs)
+        {
+            this.DefaultCursorEpsilonNegMs = negMs;
+            this.DefaultCursorEpsilonPosMs = posMs;
+
+            var anyVisualizersWithDifferentCursorEpsilon =
+                this.VisualizationObjects.Any(vo => vo.CursorEpsilonNegMs != 50 || vo.CursorEpsilonPosMs != 0);
+
+            if (anyVisualizersWithDifferentCursorEpsilon)
+            {
+                var result = new MessageBoxWindow(
+                    Application.Current.MainWindow,
+                    "Update visualizers?",
+                    $"Some of the visualizers in this panel have a cursor epsilon that is different from {name}. Would you also like to change the cursor epsilon for these visualizers to {name}?",
+                    "Yes",
+                    "No").ShowDialog();
+                if (result == true)
+                {
+                    foreach (var visualizationObject in this.VisualizationObjects)
+                    {
+                        visualizationObject.CursorEpsilonNegMs = negMs;
+                        visualizationObject.CursorEpsilonPosMs = posMs;
+                    }
+                }
+            }
         }
     }
 }

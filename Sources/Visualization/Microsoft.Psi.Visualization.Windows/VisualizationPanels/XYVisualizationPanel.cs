@@ -189,27 +189,17 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<RoutedEventArgs> ViewportLoadedCommand
-        {
-            get
-            {
-                if (this.viewportLoadedCommand == null)
+            => this.viewportLoadedCommand ??= new RelayCommand<RoutedEventArgs>(
+                e =>
                 {
-                    this.viewportLoadedCommand = new RelayCommand<RoutedEventArgs>(
-                        e =>
-                        {
-                            // Event source is the viewport
-                            var viewport = e.Source as FrameworkElement;
+                    // Event source is the viewport
+                    var viewport = e.Source as FrameworkElement;
 
-                            // Initialize the display area
-                            this.viewportWidth = viewport.ActualWidth;
-                            this.viewportHeight = viewport.ActualHeight;
-                            this.ZoomToDisplayArea();
-                        });
-                }
-
-                return this.viewportLoadedCommand;
-            }
-        }
+                    // Initialize the display area
+                    this.viewportWidth = viewport.ActualWidth;
+                    this.viewportHeight = viewport.ActualHeight;
+                    this.ZoomToDisplayArea();
+                });
 
         /// <summary>
         /// Gets the mouse wheel command.
@@ -217,57 +207,47 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<MouseWheelEventArgs> MouseWheelCommand
-        {
-            get
-            {
-                if (this.mouseWheelCommand == null)
+            => this.mouseWheelCommand ??= new RelayCommand<MouseWheelEventArgs>(
+                e =>
                 {
-                    this.mouseWheelCommand = new RelayCommand<MouseWheelEventArgs>(
-                        e =>
+                    if (e.Delta != 0)
+                    {
+                        // Event source is the items control Grid element
+                        var itemsControl = e.Source as FrameworkElement;
+
+                        // Get the current mouse location in the items control
+                        var mouseLocation = Mouse.GetPosition(itemsControl);
+
+                        // Get the current X Axis and Y Axis logical dimensions
+                        double xAxisLogicalWidth = this.XAxis.Maximum - this.XAxis.Minimum;
+                        double yAxisLogicalHeight = this.YAxis.Maximum - this.YAxis.Minimum;
+
+                        // Zoom in our out if there is a non-zero mouse delta
+                        if (e.Delta > 0)
                         {
-                            if (e.Delta != 0)
-                            {
-                                // Event source is the items control Grid element
-                                var itemsControl = e.Source as FrameworkElement;
+                            xAxisLogicalWidth /= ZoomFactor;
+                            yAxisLogicalHeight /= ZoomFactor;
+                        }
+                        else
+                        {
+                            xAxisLogicalWidth *= ZoomFactor;
+                            yAxisLogicalHeight *= ZoomFactor;
+                        }
 
-                                // Get the current mouse location in the items control
-                                var mouseLocation = Mouse.GetPosition(itemsControl);
+                        // Calculate the new minimum X and Y logical values of the axes such
+                        // that the mouse will still be above the same point in the 2D image
+                        double xAxisLogicalMinimum = this.MousePosition.X - mouseLocation.X * xAxisLogicalWidth / itemsControl.ActualWidth;
+                        double yAxisLogicalMinimum = this.MousePosition.Y - mouseLocation.Y * yAxisLogicalHeight / itemsControl.ActualHeight;
 
-                                // Get the current X Axis and Y Axis logical dimensions
-                                double xAxisLogicalWidth = this.XAxis.Maximum - this.XAxis.Minimum;
-                                double yAxisLogicalHeight = this.YAxis.Maximum - this.YAxis.Minimum;
+                        // Switch to manual axis compute mode
+                        this.AxisComputeMode = AxisComputeMode.Manual;
 
-                                // Zoom in our out if there is a non-zero mouse delta
-                                if (e.Delta > 0)
-                                {
-                                    xAxisLogicalWidth /= ZoomFactor;
-                                    yAxisLogicalHeight /= ZoomFactor;
-                                }
-                                else
-                                {
-                                    xAxisLogicalWidth *= ZoomFactor;
-                                    yAxisLogicalHeight *= ZoomFactor;
-                                }
+                        this.XAxis.SetRange(xAxisLogicalMinimum, xAxisLogicalMinimum + xAxisLogicalWidth);
+                        this.YAxis.SetRange(yAxisLogicalMinimum, yAxisLogicalMinimum + yAxisLogicalHeight);
+                    }
 
-                                // Calculate the new minimum X and Y logical values of the axes such
-                                // that the mouse will still be above the same point in the 2D image
-                                double xAxisLogicalMinimum = this.MousePosition.X - mouseLocation.X * xAxisLogicalWidth / itemsControl.ActualWidth;
-                                double yAxisLogicalMinimum = this.MousePosition.Y - mouseLocation.Y * yAxisLogicalHeight / itemsControl.ActualHeight;
-
-                                // Switch to manual axis compute mode
-                                this.AxisComputeMode = AxisComputeMode.Manual;
-
-                                this.XAxis.SetRange(xAxisLogicalMinimum, xAxisLogicalMinimum + xAxisLogicalWidth);
-                                this.YAxis.SetRange(yAxisLogicalMinimum, yAxisLogicalMinimum + yAxisLogicalHeight);
-                            }
-
-                            e.Handled = true;
-                        });
-                }
-
-                return this.mouseWheelCommand;
-            }
-        }
+                    e.Handled = true;
+                });
 
         /// <summary>
         /// Gets the mouse right button down command.
@@ -275,21 +255,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<MouseButtonEventArgs> MouseRightButtonDownCommand
-        {
-            get
-            {
-                if (this.mouseRightButtonDownCommand == null)
-                {
-                    this.mouseRightButtonDownCommand = new RelayCommand<MouseButtonEventArgs>(
-                        e =>
-                        {
-                            this.mouseRButtonDownPosition = Mouse.GetPosition(e.Source as FrameworkElement);
-                        });
-                }
-
-                return this.mouseRightButtonDownCommand;
-            }
-        }
+            => this.mouseRightButtonDownCommand ??= new RelayCommand<MouseButtonEventArgs>(e => this.mouseRButtonDownPosition = Mouse.GetPosition(e.Source as FrameworkElement));
 
         /// <summary>
         /// Gets the mouse right button up command.
@@ -297,27 +263,17 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<MouseButtonEventArgs> MouseRightButtonUpCommand
-        {
-            get
-            {
-                if (this.mouseRightButtonUpCommand == null)
+            => this.mouseRightButtonUpCommand ??= new RelayCommand<MouseButtonEventArgs>(
+                e =>
                 {
-                    this.mouseRightButtonUpCommand = new RelayCommand<MouseButtonEventArgs>(
-                        e =>
-                        {
-                            if (this.isDraggingAxes)
-                            {
-                                this.isDraggingAxes = false;
+                    if (this.isDraggingAxes)
+                    {
+                        this.isDraggingAxes = false;
 
-                                // Prevent the context menu from displaying
-                                e.Handled = true;
-                            }
-                        });
-                }
-
-                return this.mouseRightButtonUpCommand;
-            }
-        }
+                        // Prevent the context menu from displaying
+                        e.Handled = true;
+                    }
+                });
 
         /// <summary>
         /// Gets the mouse move command.
@@ -325,58 +281,48 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<MouseEventArgs> MouseMoveCommand
-        {
-            get
-            {
-                if (this.mouseMoveCommand == null)
+            => this.mouseMoveCommand ??= new RelayCommand<MouseEventArgs>(
+                e =>
                 {
-                    this.mouseMoveCommand = new RelayCommand<MouseEventArgs>(
-                        e =>
-                        {
-                            // Event source is the items control Grid element
-                            var itemsControl = e.Source as FrameworkElement;
+                    // Event source is the items control Grid element
+                    var itemsControl = e.Source as FrameworkElement;
 
-                            // Get the current mouse position
-                            var newMousePosition = e.GetPosition(itemsControl);
+                    // Get the current mouse position
+                    var newMousePosition = e.GetPosition(itemsControl);
 
-                            // Get the current scale factor between the axes logical bounds and the items control size.
-                            double scaleX = (this.XAxis.Maximum - this.XAxis.Minimum) / itemsControl.ActualWidth;
-                            double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / itemsControl.ActualHeight;
+                    // Get the current scale factor between the axes logical bounds and the items control size.
+                    double scaleX = (this.XAxis.Maximum - this.XAxis.Minimum) / itemsControl.ActualWidth;
+                    double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / itemsControl.ActualHeight;
 
-                            // Set the mouse position in locical/image co-ordinates
-                            this.MousePosition = new Point(newMousePosition.X * scaleX + this.XAxis.Minimum, newMousePosition.Y * scaleY + this.YAxis.Minimum);
+                    // Set the mouse position in locical/image co-ordinates
+                    this.MousePosition = new Point(newMousePosition.X * scaleX + this.XAxis.Minimum, newMousePosition.Y * scaleY + this.YAxis.Minimum);
 
-                            // If the right mouse button is pressed, the user is attempting a drag
-                            if (e.RightButton == MouseButtonState.Pressed)
-                            {
-                                this.isDraggingAxes = true;
+                    // If the right mouse button is pressed, the user is attempting a drag
+                    if (e.RightButton == MouseButtonState.Pressed)
+                    {
+                        this.isDraggingAxes = true;
 
-                                // Determine how far the mouse moved in logical/image coordinates
-                                double xDelta = (newMousePosition.X - this.mouseRButtonDownPosition.X) * scaleX;
-                                double yDelta = (newMousePosition.Y - this.mouseRButtonDownPosition.Y) * scaleY;
+                        // Determine how far the mouse moved in logical/image coordinates
+                        double xDelta = (newMousePosition.X - this.mouseRButtonDownPosition.X) * scaleX;
+                        double yDelta = (newMousePosition.Y - this.mouseRButtonDownPosition.Y) * scaleY;
 
-                                // Switch to auto axis compute mode
-                                this.AxisComputeMode = AxisComputeMode.Manual;
+                        // Switch to auto axis compute mode
+                        this.AxisComputeMode = AxisComputeMode.Manual;
 
-                                // Move the display area bounds by the same logical distance the mouse moved.
-                                this.XAxis.TranslateRange(-xDelta);
-                                this.YAxis.TranslateRange(-yDelta);
+                        // Move the display area bounds by the same logical distance the mouse moved.
+                        this.XAxis.TranslateRange(-xDelta);
+                        this.YAxis.TranslateRange(-yDelta);
 
-                                // Remember the current mouse position
-                                this.mouseRButtonDownPosition = newMousePosition;
+                        // Remember the current mouse position
+                        this.mouseRButtonDownPosition = newMousePosition;
 
-                                e.Handled = true;
-                            }
-                            else
-                            {
-                                this.isDraggingAxes = false;
-                            }
-                        });
-                }
-
-                return this.mouseMoveCommand;
-            }
-        }
+                        e.Handled = true;
+                    }
+                    else
+                    {
+                        this.isDraggingAxes = false;
+                    }
+                });
 
         /// <summary>
         /// Gets the mouse enter command.
@@ -384,17 +330,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand MouseEnterCommand
-        {
-            get
-            {
-                if (this.mouseEnterCommand == null)
-                {
-                    this.mouseEnterCommand = new RelayCommand(() => this.isDraggingAxes = false);
-                }
-
-                return this.mouseEnterCommand;
-            }
-        }
+            => this.mouseEnterCommand ??= new RelayCommand(() => this.isDraggingAxes = false);
 
         /// <summary>
         /// Gets the mouse leave command.
@@ -402,17 +338,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand MouseLeaveCommand
-        {
-            get
-            {
-                if (this.mouseLeaveCommand == null)
-                {
-                    this.mouseLeaveCommand = new RelayCommand(() => this.isDraggingAxes = false);
-                }
-
-                return this.mouseLeaveCommand;
-            }
-        }
+            => this.mouseLeaveCommand ??= new RelayCommand(() => this.isDraggingAxes = false);
 
         /// <summary>
         /// Gets the items control size changed command.
@@ -420,17 +346,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand<SizeChangedEventArgs> ViewportSizeChangedCommand
-        {
-            get
-            {
-                if (this.viewportSizeChangedCommand == null)
-                {
-                    this.viewportSizeChangedCommand = new RelayCommand<SizeChangedEventArgs>(e => this.OnViewportSizeChanged(e));
-                }
-
-                return this.viewportSizeChangedCommand;
-            }
-        }
+            => this.viewportSizeChangedCommand ??= new RelayCommand<SizeChangedEventArgs>(e => this.OnViewportSizeChanged(e));
 
         /// <summary>
         /// Gets the set auto axis compute mode command for both the X and Y axes.
@@ -438,19 +354,22 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SetAutoAxisComputeModeCommand
-        {
-            get
-            {
-                if (this.setAutoAxisComputeModeCommand == null)
-                {
-                    this.setAutoAxisComputeModeCommand = new RelayCommand(() =>
-                        {
-                            this.AxisComputeMode = AxisComputeMode.Auto;
-                        });
-                }
+            => this.setAutoAxisComputeModeCommand ??= new RelayCommand(() => this.AxisComputeMode = AxisComputeMode.Auto);
 
-                return this.setAutoAxisComputeModeCommand;
-            }
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = new List<ContextMenuItemInfo>()
+            {
+                new ContextMenuItemInfo(
+                    null,
+                    "Auto-Fit Axes",
+                    this.SetAutoAxisComputeModeCommand,
+                    isEnabled: this.AxisComputeMode == AxisComputeMode.Manual),
+            };
+
+            items.AddRange(base.ContextMenuItemsInfo());
+            return items;
         }
 
         /// <inheritdoc/>

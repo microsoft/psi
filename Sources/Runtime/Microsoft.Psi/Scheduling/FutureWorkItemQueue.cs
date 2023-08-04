@@ -8,7 +8,7 @@ namespace Microsoft.Psi.Scheduling
     /// </summary>
     internal class FutureWorkItemQueue : PriorityQueue<WorkItem>
     {
-        private Scheduler scheduler;
+        private readonly Scheduler scheduler;
 
         public FutureWorkItemQueue(string name, Scheduler scheduler)
             : base(name, WorkItem.PriorityCompare)
@@ -18,10 +18,14 @@ namespace Microsoft.Psi.Scheduling
 
         protected override bool DequeueCondition(WorkItem item)
         {
-            // Dequeue work item if it is due for execution, or will never be executed
-            // due to the scheduler context being finalized before its execution time.
-            return item.StartTime <= this.scheduler.Clock.GetCurrentTime()
-                || item.StartTime > item.SchedulerContext.FinalizeTime;
+            // Dequeue work item if:
+            // (1) it is due for execution, or
+            // (2) the scheduler does not need to delay future work items, or
+            // (3) it will never be executed due to the scheduler context being
+            // finalized before its execution time.
+            return item.StartTime <= this.scheduler.Clock.GetCurrentTime() ||
+                !this.scheduler.DelayFutureWorkItemsUntilDue ||
+                item.StartTime > item.SchedulerContext.FinalizeTime;
         }
     }
 }

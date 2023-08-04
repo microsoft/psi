@@ -22,10 +22,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="streamName">The name of the rendezvous stream.</param>
         /// <returns>Rendezvous endpoint.</returns>
         public static Rendezvous.Endpoint ToRendezvousEndpoint<T>(this TcpWriter<T> writer, string address, string streamName)
-        {
-            // Each TcpWriter is an endpoint emitting a single stream
-            return new Rendezvous.TcpSourceEndpoint(address, writer.Port, new[] { new Rendezvous.Stream(streamName, typeof(T)) });
-        }
+            => new Rendezvous.TcpSourceEndpoint(address, writer.Port, new Rendezvous.Stream(streamName, typeof(T)));
 
         /// <summary>
         /// Create a <see cref="TcpSource{T}"/> from a <see cref="Rendezvous.TcpSourceEndpoint"/>.
@@ -71,9 +68,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="host">Host address with which to create endpoint.</param>
         /// <returns>Rendezvous endpoint.</returns>
         public static Rendezvous.Endpoint ToRendezvousEndpoint(this RemoteClockExporter exporter, string host)
-        {
-            return new Rendezvous.RemoteClockExporterEndpoint(host, exporter.Port);
-        }
+            => new Rendezvous.RemoteClockExporterEndpoint(host, exporter.Port);
 
         /// <summary>
         /// Create a <see cref="NetMQSource{T}"/> from a <see cref="Rendezvous.NetMQSourceEndpoint"/>.
@@ -86,7 +81,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
         /// <returns><see cref="NetMQSource{T}"/>.</returns>
         public static NetMQSource<T> ToNetMQSource<T>(this Rendezvous.NetMQSourceEndpoint endpoint, Pipeline pipeline, string topic, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true)
-            => new NetMQSource<T>(pipeline, topic, endpoint.Address, deserializer, useSourceOriginatingTimes);
+            => new (pipeline, topic, endpoint.Address, deserializer, useSourceOriginatingTimes);
 
         /// <summary>
         /// Create a rendezvous endpoint from a <see cref="RemoteExporter"/>.
@@ -113,9 +108,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <returns><see cref="RemoteImporter"/>.</returns>
         public static RemoteImporter ToRemoteImporter(this Rendezvous.RemoteExporterEndpoint endpoint, Pipeline pipeline)
-        {
-            return new RemoteImporter(pipeline, endpoint.Host, endpoint.Port);
-        }
+            => new (pipeline, endpoint.Host, endpoint.Port);
 
         /// <summary>
         /// Create a <see cref="RemoteClockImporter"/> from a <see cref="Rendezvous.RemoteClockExporterEndpoint"/>.
@@ -124,8 +117,31 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <returns><see cref="RemoteClockImporter"/>.</returns>
         public static RemoteClockImporter ToRemoteClockImporter(this Rendezvous.RemoteClockExporterEndpoint endpoint, Pipeline pipeline)
+            => new (pipeline, endpoint.Host, endpoint.Port);
+
+        /// <summary>
+        /// Writes a stream to a specified rendezvous process.
+        /// </summary>
+        /// <typeparam name="T">The type of data in the stream.</typeparam>
+        /// <param name="source">The source stream to write.</param>
+        /// <param name="streamName">The name under which to write the stream to the rendezvous process.</param>
+        /// <param name="rendezvousProcess">The rendezvous process.</param>
+        /// <param name="address">The address to write the stream to.</param>
+        /// <param name="port">The port to write the stream to.</param>
+        /// <param name="serializer">The serializer to use when writing the stream.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        public static void WriteToRendezvousProcess<T>(
+            this IProducer<T> source,
+            string streamName,
+            Rendezvous.Process rendezvousProcess,
+            string address,
+            int port,
+            IFormatSerializer serializer,
+            DeliveryPolicy deliveryPolicy = null)
         {
-            return new RemoteClockImporter(pipeline, endpoint.Host, endpoint.Port);
+            var tcpWriter = new TcpWriter<T>(source.Out.Pipeline, port, serializer);
+            source.PipeTo(tcpWriter, deliveryPolicy);
+            rendezvousProcess.AddEndpoint(tcpWriter.ToRendezvousEndpoint(address, streamName));
         }
     }
 }

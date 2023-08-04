@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="MathNet.Spatial.Signed" Version="0.6.0" />
-    <PackageReference Include="StereoKit" Version="0.3.5" />
+    <PackageReference Include="StereoKit" Version="0.3.6" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Serialization
     /// </summary>
     internal sealed class BufferSerializer : ISerializer<BufferReader>
     {
-        private const int Version = 2;
+        private const int LatestSchemaVersion = 2;
 
         /// <inheritdoc />
         public bool? IsClearRequired => false;
@@ -21,9 +21,17 @@ namespace Microsoft.Psi.Serialization
         {
             serializers.GetHandler<byte>(); // register element type
             var type = typeof(byte[]);
-            var name = TypeSchema.GetContractName(type, serializers.RuntimeVersion);
+            var name = TypeSchema.GetContractName(type, serializers.RuntimeInfo.SerializationSystemVersion);
             var elementsMember = new TypeMemberSchema("Elements", typeof(byte).AssemblyQualifiedName, true);
-            var schema = new TypeSchema(name, TypeSchema.GetId(name), type.AssemblyQualifiedName, TypeFlags.IsCollection, new TypeMemberSchema[] { elementsMember }, Version);
+            var schema = new TypeSchema(
+                type.AssemblyQualifiedName,
+                TypeFlags.IsCollection,
+                new TypeMemberSchema[] { elementsMember },
+                name,
+                TypeSchema.GetId(name),
+                LatestSchemaVersion,
+                this.GetType().AssemblyQualifiedName,
+                serializers.RuntimeInfo.SerializationSystemVersion);
             return targetSchema ?? schema;
         }
 
@@ -42,7 +50,7 @@ namespace Microsoft.Psi.Serialization
         public void PrepareDeserializationTarget(BufferReader reader, ref BufferReader target, SerializationContext context)
         {
             var length = reader.ReadInt32();
-            target = target ?? new BufferReader();
+            target ??= new BufferReader();
             target.Reset(length);
         }
 

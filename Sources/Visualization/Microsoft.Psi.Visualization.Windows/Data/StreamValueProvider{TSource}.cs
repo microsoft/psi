@@ -251,9 +251,9 @@ namespace Microsoft.Psi.Visualization.Data
             streamReader.OpenStreamIndex(this.StreamName, this.OnReceiveIndex, this.Allocator);
 
         /// <inheritdoc/>
-        public override DateTime? GetTimeOfNearestMessage(DateTime time, NearestMessageType snappingBehavior)
+        public override DateTime? GetTimeOfNearestMessage(DateTime time, NearestType nearestType)
         {
-            int index = IndexHelper.GetIndexForTime(time, this.indexView.Count, (idx) => this.indexView[idx].OriginatingTime, snappingBehavior);
+            int index = IndexHelper.GetIndexForTime(time, this.indexView.Count, (idx) => this.indexView[idx].OriginatingTime, nearestType);
             return (index >= 0) ? this.indexView[index].OriginatingTime : null;
         }
 

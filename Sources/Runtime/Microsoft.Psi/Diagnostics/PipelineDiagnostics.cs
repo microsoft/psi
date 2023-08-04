@@ -521,6 +521,32 @@ namespace Microsoft.Psi.Diagnostics
             }
 
             /// <summary>
+            /// Gets the name of all the statistics.
+            /// </summary>
+            public static string[] AllStatistics => new string[]
+            {
+                nameof(AvgMessageEmittedLatency),
+                nameof(AvgMessageCreatedLatency),
+                nameof(AvgMessageProcessTime),
+                nameof(AvgMessageReceivedLatency),
+                nameof(AvgMessageSize),
+                nameof(AvgDeliveryQueueSize),
+                nameof(LastMessageEmittedLatency),
+                nameof(LastMessageCreatedLatency),
+                nameof(LastMessageProcessTime),
+                nameof(LastMessageReceivedLatency),
+                nameof(LastMessageSize),
+                nameof(LastDeliveryQueueSize),
+                nameof(ReceiverIsThrottled),
+                nameof(TotalMessageDroppedCount),
+                nameof(TotalMessageEmittedCount),
+                nameof(TotalMessageProcessedCount),
+                nameof(WindowMessageDroppedCount),
+                nameof(WindowMessageEmittedCount),
+                nameof(WindowMessageProcessedCount),
+            };
+
+            /// <summary>
             /// Gets receiver ID.
             /// </summary>
             public int Id { get; }

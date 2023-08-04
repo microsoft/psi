@@ -46,55 +46,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             this.Canvas.Children.Add(this.trackHighlight);
         }
 
-        /// <inheritdoc/>
-        public override void AppendContextMenuItems(List<MenuItem> menuItems)
-        {
-            if (this.DataContext is TimeIntervalAnnotationVisualizationObject annotationVisualizationObject && annotationVisualizationObject.IsBound)
-            {
-                // Get the track under the cursor
-                var trackUnderCursor = annotationVisualizationObject.GetTrackByIndex(this.GetTrackIndexUnderMouseCursor());
-
-                // Add the add annotation (on current track) context menu item
-                var addAnnotationOnCurrentTrackCommand = annotationVisualizationObject.GetAddAnnotationOnTrackCommand(trackUnderCursor);
-                menuItems.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.Annotation, "Add Annotation", addAnnotationOnCurrentTrackCommand, null, addAnnotationOnCurrentTrackCommand != null));
-
-                // Add the add annotation on new track context menu item
-                var addAnnotationOnNewTrackCommand = annotationVisualizationObject.GetAddAnnotationOnNewTrackCommand();
-                menuItems.Add(MenuItemHelper.CreateMenuItem(null, "Add Annotation on New Track", addAnnotationOnNewTrackCommand, null, addAnnotationOnNewTrackCommand != null));
-
-                // Add the delete annotation context menu item
-                var deleteCommand = annotationVisualizationObject.GetDeleteAnnotationOnTrackCommand(trackUnderCursor);
-                menuItems.Add(MenuItemHelper.CreateMenuItem(null, "Delete Annotation", deleteCommand, null, deleteCommand != null));
-
-                // Add the delete annotation context menu item
-                var deleteAllAnnotationsOnTrackCommand = annotationVisualizationObject.GetDeleteAllAnnotationsOnTrackCommand(trackUnderCursor);
-                menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Delete All Annotations on Curent Track ({trackUnderCursor})", deleteAllAnnotationsOnTrackCommand, null, deleteAllAnnotationsOnTrackCommand != null));
-
-                // Add the delete annotation context menu item
-                var renameCurrentTrackCommand = annotationVisualizationObject.GetRenameTrackCommand(trackUnderCursor);
-                menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Rename Curent Track ({trackUnderCursor})", renameCurrentTrackCommand, null, renameCurrentTrackCommand != null));
-
-                // Add the command to show all tracks
-                var showAllTracksCommand = annotationVisualizationObject.GetShowAllTracksCommand();
-                if (showAllTracksCommand != null)
-                {
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Show All Tracks", showAllTracksCommand, null, true));
-                }
-
-                // Add the command to show only tracks with events in view
-                var showOnlyTracksWithEventsInViewCommand = annotationVisualizationObject.GetShowOnlyTracksWithEventsInViewCommand();
-                if (showOnlyTracksWithEventsInViewCommand != null)
-                {
-                    menuItems.Add(MenuItemHelper.CreateMenuItem(null, $"Show Only Tracks with Events in View", showOnlyTracksWithEventsInViewCommand, null, true));
-                }
-
-                // Add a separator
-                menuItems.Add(null);
-            }
-
-            base.AppendContextMenuItems(menuItems);
-        }
-
         /// <summary>
         /// Returns a brush with the requested System.Drawing.Color from the brushes cache.
         /// </summary>
@@ -138,7 +89,8 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 e.PropertyName == nameof(this.StreamVisualizationObject.LineWidth) ||
                 e.PropertyName == nameof(this.StreamVisualizationObject.Padding) ||
                 e.PropertyName == nameof(this.StreamVisualizationObject.FontSize) ||
-                e.PropertyName == nameof(this.StreamVisualizationObject.ShowOnlyTracksWithEventsInView))
+                e.PropertyName == nameof(this.StreamVisualizationObject.ShowTracks) ||
+                e.PropertyName == nameof(this.StreamVisualizationObject.ShowTracksSelection))
             {
                 this.OnDisplayDataChanged();
             }
@@ -173,8 +125,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             {
                 if (i >= this.itemViews.Count)
                 {
-                    this.itemViews.Add(
-                        new TimeIntervalAnnotationVisualizationObjectViewItem(this, this.StreamVisualizationObject.DisplayData[i]));
+                    var item = new TimeIntervalAnnotationVisualizationObjectViewItem(this, this.StreamVisualizationObject.DisplayData[i]);
+                    item.Update(this.StreamVisualizationObject.DisplayData[i], this.StreamVisualizationObject.DisplayData[i].TrackIndex, this.StreamIntervalVisualizationObject.TrackCount);
+                    this.itemViews.Add(item);
                 }
                 else
                 {
@@ -185,10 +138,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             // remove the remaining figures
             for (int i = this.StreamVisualizationObject.DisplayData.Count; i < this.itemViews.Count; i++)
             {
-                var item = this.itemViews[this.StreamVisualizationObject.DisplayData.Count];
-                item.RemoveFromCanvas();
-                this.itemViews.Remove(item);
+                this.itemViews[i].RemoveFromCanvas();
             }
+
+            this.itemViews.RemoveRange(this.StreamVisualizationObject.DisplayData.Count, this.itemViews.Count - this.StreamVisualizationObject.DisplayData.Count);
 
             // Go through the track views and create new ones where necessary
             for (int i = 0; i < this.StreamVisualizationObject.TrackCount; i++)
@@ -207,10 +160,10 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             // remove the remaining figures
             for (int i = this.StreamVisualizationObject.TrackCount; i < this.trackViews.Count; i++)
             {
-                var trackView = this.trackViews[this.StreamVisualizationObject.TrackCount];
-                trackView.RemoveFromCanvas();
-                this.trackViews.Remove(trackView);
+                this.trackViews[i].RemoveFromCanvas();
             }
+
+            this.trackViews.RemoveRange(this.StreamVisualizationObject.TrackCount, this.trackViews.Count - this.StreamVisualizationObject.TrackCount);
         }
 
         private static Color ToMediaColor(System.Drawing.Color color)
@@ -218,7 +171,9 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
 
         private void UpdateTrackHighlight()
         {
-            if (this.DataContext is TimeIntervalAnnotationVisualizationObject annotationVisualizationObject && annotationVisualizationObject.IsBound)
+            if (this.DataContext is TimeIntervalAnnotationVisualizationObject annotationVisualizationObject &&
+                annotationVisualizationObject.IsBound &&
+                annotationVisualizationObject.TrackCount > 0)
             {
                 this.trackHighlight.Background = new SolidColorBrush(Color.FromRgb(0x2D, 0x2D, 0x30));
                 this.trackHighlight.Width = this.Canvas.ActualWidth;
@@ -349,12 +304,6 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             }
 
             return timelinePanelView as TimelineVisualizationPanelView;
-        }
-
-        private int GetTrackIndexUnderMouseCursor()
-        {
-            var visualizationObject = this.DataContext as TimeIntervalAnnotationVisualizationObject;
-            return (int)(Mouse.GetPosition(this.Canvas).Y * visualizationObject.TrackCount / this.Canvas.ActualHeight);
         }
 
         private class UnrestrictedAnnotationValueContext

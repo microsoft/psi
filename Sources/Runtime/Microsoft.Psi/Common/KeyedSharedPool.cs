@@ -5,6 +5,7 @@ namespace Microsoft.Psi
 {
     using System;
     using System.Collections.Concurrent;
+    using System.Linq;
 
     /// <summary>
     /// Provides a pool of shared objects organized by a key. The key is used both to group
@@ -15,7 +16,7 @@ namespace Microsoft.Psi
     public class KeyedSharedPool<T, TKey> : IDisposable
         where T : class
     {
-        private readonly ConcurrentDictionary<TKey, SharedPool<T>> sharedPools = new ConcurrentDictionary<TKey, SharedPool<T>>();
+        private readonly ConcurrentDictionary<TKey, SharedPool<T>> sharedPools = new ();
         private readonly Func<TKey, T> allocator;
         private readonly int initialSize;
 
@@ -28,6 +29,26 @@ namespace Microsoft.Psi
         {
             this.allocator = allocator;
             this.initialSize = initialSize;
+        }
+
+        /// <summary>
+        /// Resets the keyed shared pool.
+        /// </summary>
+        /// <param name="clearLiveObjects">Indicates whether to clear any live objects.</param>
+        /// <remarks>
+        /// If the clearLiveObjects flag is false, an exception is thrown if a reset is attempted while the pool
+        /// still contains live objects.
+        /// </remarks>
+        public void Reset(bool clearLiveObjects = false)
+        {
+            // Reset the individual shared pools
+            foreach (var pool in this.sharedPools.Values)
+            {
+                pool.Reset(clearLiveObjects);
+            }
+
+            // And remove them
+            this.sharedPools.Clear();
         }
 
         /// <summary>
@@ -48,6 +69,10 @@ namespace Microsoft.Psi
                 sharedPool.Dispose();
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+            => $"{this.sharedPools.Count} keys, {this.sharedPools.Sum(kvp => kvp.Value.TotalCount)} objects.";
 
         private SharedPool<T> GetSharedPool(TKey key)
         {

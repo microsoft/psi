@@ -4,8 +4,9 @@
 namespace Microsoft.Psi.MixedReality
 {
     using System;
-    using System.Threading.Tasks;
-    using StereoKit;
+    using global::StereoKit;
+    using global::StereoKit.Framework;
+    using Microsoft.Psi.MixedReality.StereoKit;
     using Windows.Perception.Spatial;
 
     /// <summary>
@@ -34,19 +35,18 @@ namespace Microsoft.Psi.MixedReality
         /// </summary>
         /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (optional).</param>
         /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Optional flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment (default: false).</param>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
         /// <remarks>
         /// This method should be called after SK.Initialize.
         /// </remarks>
-        public static async Task InitializeAsync(SpatialAnchor worldSpatialAnchor = null, bool regenerateDefaultWorldSpatialAnchorIfNeeded = false)
+        public static void Initialize(SpatialAnchor worldSpatialAnchor = null, bool regenerateDefaultWorldSpatialAnchorIfNeeded = false)
         {
             if (!SK.IsInitialized)
             {
-                throw new InvalidOperationException("StereoKit is not initialized. Call SK.Initialize before calling MixedReality.InitializeAsync.");
+                throw new InvalidOperationException($"StereoKit is not initialized. Call SK.Initialize before calling MixedReality.{nameof(Initialize)}.");
             }
 
             // Create the spatial anchor helper
-            SpatialAnchorHelper = new SpatialAnchorHelper(await SpatialAnchorManager.RequestStoreAsync());
+            SpatialAnchorHelper = new SpatialAnchorHelper(SpatialAnchorManager.RequestStoreAsync().AsTask().GetAwaiter().GetResult());
 
             InitializeWorldCoordinateSystem(worldSpatialAnchor, regenerateDefaultWorldSpatialAnchorIfNeeded);
 
@@ -61,11 +61,11 @@ namespace Microsoft.Psi.MixedReality
         /// world coordinate system will be consistent across application sessions, unless the associated
         /// spatial anchor is modified or deleted.
         /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (may be null).</param>
-        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment (default: false).</param>
+        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment.</param>
         /// </summary>
         private static void InitializeWorldCoordinateSystem(SpatialAnchor worldSpatialAnchor, bool regenerateDefaultWorldSpatialAnchorIfNeeded)
         {
-            SpatialAnchor TryCreateDefaultWorldSpatialAnchor(SpatialStationaryFrameOfReference world)
+            static SpatialAnchor TryCreateDefaultWorldSpatialAnchor(SpatialStationaryFrameOfReference world)
             {
                 // Save the world spatial coordinate system
                 WorldSpatialCoordinateSystem = world.CoordinateSystem;
@@ -135,12 +135,13 @@ namespace Microsoft.Psi.MixedReality
                 // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
                 // and for transforming from world coordinates to StereoKit coordinates.
                 StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(worldSpatialAnchor).ToMatrix();
-                StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.ToCoordinateSystem();
+                StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.Value.ToCoordinateSystem();
 
                 // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
                 StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
 
                 System.Diagnostics.Trace.WriteLine($"StereoKit origin: {StereoKitTransforms.StereoKitToWorld.Origin.X},{StereoKitTransforms.StereoKitToWorld.Origin.Y},{StereoKitTransforms.StereoKitToWorld.Origin.Z}");
+                SK.AddStepper(new SpatialTransformsUpdater(worldSpatialAnchor));
 
                 // TODO: It would be nice if we could actually just shift the origin coordinate system in StereoKit
                 // to the pose currently defined in StereoKitTransforms.WorldPose.
@@ -152,6 +153,55 @@ namespace Microsoft.Psi.MixedReality
                 // pose is applied first (e.g., pitching up), and *then* the Renderer.CameraRoot transform is applied (yaw of 180 degrees)
                 // which in this example manifests as the pitch going down, opposite of what we desired.
                 ////Renderer.CameraRoot = stereoKitTransform.Inverse;
+            }
+        }
+
+        private class SpatialTransformsUpdater : IStepper
+        {
+            private readonly SpatialAnchor worldSpatialAnchor;
+            private SpatialCoordinateSystem stereoKitSpatialCoordinateSystem;
+
+            public SpatialTransformsUpdater(SpatialAnchor worldSpatialAnchor)
+            {
+                this.worldSpatialAnchor = worldSpatialAnchor;
+                this.stereoKitSpatialCoordinateSystem = StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
+            }
+
+            /// <inheritdoc />
+            public bool Enabled => true;
+
+            /// <inheritdoc />
+            public bool Initialize() => true;
+
+            /// <inheritdoc />
+            public void Step()
+            {
+                this.stereoKitSpatialCoordinateSystem ??= StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
+
+                if (this.stereoKitSpatialCoordinateSystem is not null)
+                {
+                    if (this.stereoKitSpatialCoordinateSystem.TryConvertSpatialCoordinateSystemToPsiCoordinateSystem() is null)
+                    {
+                        StereoKitTransforms.StereoKitToWorld = null;
+                        StereoKitTransforms.WorldToStereoKit = null;
+                        StereoKitTransforms.WorldHierarchy = null;
+                    }
+                    else
+                    {
+                        // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
+                        // and for transforming from world coordinates to StereoKit coordinates.
+                        StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(this.worldSpatialAnchor).ToMatrix();
+                        StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.Value.ToCoordinateSystem();
+
+                        // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
+                        StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
+                    }
+                }
+            }
+
+            /// <inheritdoc />
+            public void Shutdown()
+            {
             }
         }
     }

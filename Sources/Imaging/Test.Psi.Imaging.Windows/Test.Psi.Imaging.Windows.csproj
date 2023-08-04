@@ -1,215 +1,79 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{191DF615-3D8F-45A3-B763-DD4A604A712A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test.Psi.Imaging</RootNamespace>
-    <AssemblyName>Test.Psi.Imaging.Windows</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
-    <TargetFrameworkProfile />
+    <TargetFramework>net472</TargetFramework>
+    <CodeAnalysisRuleSet>../../../Build/Test.Psi.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CODE_ANALYSIS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\..\Build\Test.Psi.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>
-    </DocumentationFile>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <WarningsAsErrors />
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;CODE_ANALYSIS</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>..\..\..\Build\Test.Psi.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>
-    </DocumentationFile>
+    <WarningsAsErrors />
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+
   <PropertyGroup>
-    <StartupObject />
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <PackageId>Test.Psi.Imaging.Windows</PackageId>
+    <Product>Test.Psi.Imaging.Windows</Product>
+    <StartupObject>Test.Psi.Imaging.ConsoleMain</StartupObject>
+    <RootNamespace>Test.Psi.Imaging</RootNamespace>
   </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
+    <None Remove="stylecop.json" />
   </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise />
-  </Choose>
-  <ItemGroup>
-    <Compile Include="ConsoleMain.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ImageTester.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AverageColorTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Common\Test.Psi.Common\Test.Psi.Common.csproj">
-      <Project>{f843dafa-a02b-4b63-8985-6890e513312e}</Project>
-      <Name>Test.Psi.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj">
-      <Project>{04147400-0ab0-4f07-9975-d4b7e58150db}</Project>
-      <Name>Microsoft.Psi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj">
-      <Project>{02a92f0e-98f1-4b42-883a-761272bac185}</Project>
-      <Name>Microsoft.Psi.Imaging.Windows</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj">
-      <Project>{9bf2e5ef-186a-4179-b753-ae11ee90e026}</Project>
-      <Name>Microsoft.Psi.Imaging</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
+
   <ItemGroup>
     <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <Version>2.9.8</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestAdapter">
-      <Version>2.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestFramework">
-      <Version>2.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers">
-      <Version>1.1.118</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="System.Collections.Immutable">
-      <Version>1.7.0</Version>
-    </PackageReference>
-    <PackageReference Include="System.Drawing.Common">
-      <Version>4.7.0</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Resources\TestImage.bmp" />
+    <ProjectReference Include="..\..\Common\Test.Psi.Common\Test.Psi.Common.csproj" />
+    <ProjectReference Include="..\..\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
+    <ProjectReference Include="..\Microsoft.Psi.Imaging.Windows\Microsoft.Psi.Imaging.Windows.csproj" />
+    <ProjectReference Include="..\Microsoft.Psi.Imaging\Microsoft.Psi.Imaging.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Resources\TestImage_Crop_0_0_200_100.bmp" />
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Resources\TestImage_Crop_73_41_59_37.bmp" />
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="Resources\TestImage_Crop_153_57_103_199.bmp" />
+    <Reference Include="PresentationCore" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\SolidColors.bmp" />
-    <Content Include="Resources\TestImage2.bmp" />
-    <Content Include="Resources\TestImage2_AbsDiff.bmp" />
-    <Content Include="Resources\TestImage2_BlueChannel.bmp" />
-    <Content Include="Resources\TestImage2_CopyImage.bmp" />
-    <Content Include="Resources\TestImage2_DrawCircle.bmp" />
-    <Content Include="Resources\TestImage2_DrawLine.bmp" />
-    <Content Include="Resources\TestImage2_DrawRect.bmp" />
-    <Content Include="Resources\TestImage2_DrawText.bmp" />
-    <Content Include="Resources\TestImage2_DrawTextWithBackground.bmp" />
-    <Content Include="Resources\TestImage2_FillRect.bmp" />
-    <Content Include="Resources\TestImage2_FillCircle.bmp" />
-    <Content Include="Resources\TestImage2_FlipHoriz.bmp" />
-    <Content Include="Resources\TestImage2_FlipVert.bmp" />
-    <Content Include="Resources\TestImage2_GreenChannel.bmp" />
-    <Content Include="Resources\TestImage2_Invert.bmp" />
-    <Content Include="Resources\TestImage2_Mask.bmp" />
-    <Content Include="Resources\TestImage2_RedChannel.bmp" />
-    <Content Include="Resources\TestImage2_Rotate_110.bmp" />
-    <Content Include="Resources\TestImage2_Rotate_110_Loose.bmp" />
-    <Content Include="Resources\TestImage2_Rotate_Neg10.bmp" />
-    <Content Include="Resources\TestImage2_Rotate_Neg10_Loose.bmp" />
-    <Content Include="Resources\TestImage2_Threshold.bmp" />
-    <Content Include="Resources\TestImage_Gray.bmp" />
-    <Content Include="Resources\TestImage_GrayDrawCircle.bmp" />
-    <Content Include="Resources\TestImage_GrayDrawLine.bmp" />
-    <Content Include="Resources\TestImage_GrayDrawRect.bmp" />
-    <Content Include="Resources\TestImage_GrayDrawText.bmp" />
-    <Content Include="Resources\TestImage_GrayDrawTextWithBackground.bmp" />
-    <Content Include="Resources\TestImage_GrayFillRect.bmp" />
-    <Content Include="Resources\TestImage_GrayFillCircle.bmp" />
-    <Content Include="Resources\TestImage_GrayFlip.bmp" />
-    <Content Include="Resources\TestImage_GrayResized.bmp" />
-    <Content Include="Resources\TestImage_GrayRotate.bmp" />
-    <Content Include="Resources\TestImage_GraySetPixel.bmp" />
-    <Content Include="Resources\TestImage_Scale_150_125_Point.bmp" />
-    <Content Include="Resources\TestImage_Scale_25_200_Linear.bmp" />
-    <Content Include="Resources\TestImage_Scale_50_25_Cubic.bmp" />
-    <Content Include="Resources\TestImage_SetPixel.bmp" />
-  </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

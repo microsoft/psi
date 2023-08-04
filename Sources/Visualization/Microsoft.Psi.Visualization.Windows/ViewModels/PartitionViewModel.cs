@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
         private string auxiliaryInfo = string.Empty;
 
-        private StreamContainerTreeNode streamTreeRoot;
+        private StreamTreeNode rootStreamTreeNode;
         private bool isDirty = false;
         private bool isLivePartition = false;
         private Thread monitorWorker = null;
@@ -66,6 +66,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private RelayCommand saveChangesCommand;
         private RelayCommand exportStoreCommand;
         private RelayCommand removePartitionCommand;
+        private RelayCommand removePartitionFromAllSessionsCommand;
         private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
@@ -79,10 +80,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
             this.sessionViewModel = sessionViewModel;
             this.sessionViewModel.DatasetViewModel.PropertyChanged += this.OnDatasetViewModelPropertyChanged;
             this.streamsById = new Dictionary<int, StreamTreeNode>();
-            this.StreamTreeRoot = new StreamContainerTreeNode(this, null, null);
+            this.RootStreamTreeNode = StreamTreeNode.CreateRoot(this);
             foreach (var stream in this.partition.AvailableStreams)
             {
-                this.streamsById[stream.Id] = this.StreamTreeRoot.AddStreamTreeNode(stream);
+                this.streamsById[stream.Id] = this.RootStreamTreeNode.AddChild(stream.Name, stream, null, null);
                 this.streamsById[stream.Id].IsTreeNodeExpanded = true;
             }
 
@@ -94,8 +95,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 this.newMetadataCallback = new UpdateStreamMetadataDelegate(this.UpdateStreamMetadata);
                 this.MonitorLivePartition();
             }
-
-            this.IsTreeNodeExpanded = true;
 
             // If there's no store backing the partition, alert the user.
             if (!this.partition.IsStoreValid)
@@ -119,19 +118,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand SaveChangesCommand
-        {
-            get
-            {
-                if (this.saveChangesCommand == null)
-                {
-                    this.saveChangesCommand = new RelayCommand(
-                        () => this.SaveChanges(),
-                        () => this.IsDirty);
-                }
-
-                return this.saveChangesCommand;
-            }
-        }
+            => this.saveChangesCommand ??= new RelayCommand(() => this.SaveChanges(), () => this.IsDirty);
 
         /// <summary>
         /// Gets the export store command.
@@ -139,19 +126,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ExportStoreCommand
-        {
-            get
-            {
-                if (this.exportStoreCommand == null)
-                {
-                    this.exportStoreCommand = new RelayCommand(
-                        () => this.ExportStore(),
-                        () => this.IsPsiPartition && !this.IsLivePartition && !this.isDirty && this.Partition.OriginatingTimeInterval != TimeInterval.Empty);
-                }
-
-                return this.exportStoreCommand;
-            }
-        }
+            => this.exportStoreCommand ??= new RelayCommand(
+                () => this.ExportStore(),
+                () => this.IsPsiPartition && !this.IsLivePartition && !this.isDirty && this.Partition.MessageOriginatingTimeInterval != TimeInterval.Empty);
 
         /// <summary>
         /// Gets or sets the partition name.
@@ -217,26 +194,26 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [DisplayName("First Message OriginatingTime")]
         [Description("The originating time of the first message in the partition.")]
-        public string FirstMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.FirstMessageOriginatingTime);
+        public string FirstMessageOriginatingTimeString => DateTimeHelper.FormatDateTime(this.FirstMessageOriginatingTime);
 
         /// <summary>
         /// Gets a string representation of the originating time of the last message in the partition.
         /// </summary>
         [DisplayName("Last Message OriginatingTime")]
         [Description("The originating time of the last message in the partition.")]
-        public string LastMessageOriginatingTimeString => DateTimeFormatHelper.FormatDateTime(this.LastMessageOriginatingTime);
+        public string LastMessageOriginatingTimeString => DateTimeHelper.FormatDateTime(this.LastMessageOriginatingTime);
 
         /// <summary>
         /// Gets the originating time of the first message in the partition.
         /// </summary>
         [Browsable(false)]
-        public DateTime FirstMessageOriginatingTime => this.streamTreeRoot.SubsumedFirstMessageOriginatingTime;
+        public DateTime? FirstMessageOriginatingTime => this.rootStreamTreeNode.SubsumedFirstMessageOriginatingTime;
 
         /// <summary>
         /// Gets the originating time of the last message in the partition.
         /// </summary>
         [Browsable(false)]
-        public DateTime LastMessageOriginatingTime => this.streamTreeRoot.SubsumedLastMessageOriginatingTime;
+        public DateTime? LastMessageOriginatingTime => this.rootStreamTreeNode.SubsumedLastMessageOriginatingTime;
 
         /// <summary>
         /// Gets the dataset that this partition belongs to.
@@ -274,10 +251,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Gets or sets the root stream tree node of this partition.
         /// </summary>
         [Browsable(false)]
-        public StreamContainerTreeNode StreamTreeRoot
+        public StreamTreeNode RootStreamTreeNode
         {
-            get => this.streamTreeRoot;
-            set => this.Set(nameof(this.StreamTreeRoot), ref this.streamTreeRoot, value);
+            get => this.rootStreamTreeNode;
+            set => this.Set(nameof(this.RootStreamTreeNode), ref this.rootStreamTreeNode, value);
         }
 
         /// <summary>
@@ -346,6 +323,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         public RelayCommand RemovePartitionCommand => this.removePartitionCommand ??= new RelayCommand(() => this.RemovePartition());
 
         /// <summary>
+        /// Gets the command for removing this partition from all sessions.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand RemovePartitionFromAllSessionsCommand =>
+            this.removePartitionFromAllSessionsCommand ??= new RelayCommand(() => this.DatasetViewModel.RemovePartitionFromAllSessions(this.Name));
+
+        /// <summary>
         /// Gets the command that executes when opening the partition context menu.
         /// </summary>
         [Browsable(false)]
@@ -364,10 +349,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             this.partition = partition;
             this.streamsById.Clear();
-            this.StreamTreeRoot = new StreamContainerTreeNode(this, null, null);
+            this.RootStreamTreeNode = StreamTreeNode.CreateRoot(this);
             foreach (var stream in this.partition.AvailableStreams)
             {
-                this.streamsById[stream.Id] = this.StreamTreeRoot.AddStreamTreeNode(stream);
+                this.streamsById[stream.Id] = this.RootStreamTreeNode.AddChild(stream.Name, stream, null, null);
             }
 
             // Check if this is a live partition (i.e. it still has a writer attached)
@@ -394,7 +379,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             StreamSource streamSource = null;
 
             // Check if the partition contains the required stream
-            IStreamMetadata streamMetadata = this.Partition.AvailableStreams.FirstOrDefault(s => s.Name == streamBinding.StreamName);
+            var streamMetadata = this.Partition.AvailableStreams.FirstOrDefault(s => s.Name == streamBinding.SourceStreamName);
             if (streamMetadata != default)
             {
                 if (streamBinding.Summarizer != null)
@@ -412,7 +397,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 streamSource = new StreamSource(
                     this,
                     TypeResolutionHelper.GetVerifiedType(this.Partition.StreamReaderTypeName),
-                    streamBinding.StreamName,
+                    streamBinding.SourceStreamName,
                     streamMetadata,
                     streamBinding.StreamAdapter,
                     streamBinding.Summarizer,
@@ -433,12 +418,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// Finds a node in the partition by name and selects it.
         /// </summary>
         /// <param name="nodeName">The full name of the node to select.</param>
-        /// <returns>True if the stream was found and selected, otherwise false.</returns>
-        public bool SelectNode(string nodeName)
+        /// <returns>True if the node was found and selected, otherwise false.</returns>
+        public bool SelectStreamTreeNode(string nodeName)
         {
-            if (this.StreamTreeRoot != null)
+            if (this.RootStreamTreeNode != null)
             {
-                if (this.StreamTreeRoot.SelectTreeNode(nodeName))
+                if (this.RootStreamTreeNode.SelectChild(nodeName))
                 {
                     this.SessionViewModel.IsTreeNodeExpanded = true;
                     this.IsTreeNodeExpanded = true;
@@ -450,12 +435,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Finds a stream tree node within a partition.
+        /// Finds a node in the partition.
         /// </summary>
-        /// <param name="streamName">The name of the stream to search for.</param>
-        /// <returns>A stream tree node representing the stream, or null if the stream does not exist in the partition.</returns>
-        public StreamTreeNode FindStreamTreeNode(string streamName) =>
-            this.StreamTreeRoot?.FindStreamTreeNode(streamName);
+        /// <param name="nodeName">The full name of the node to find.</param>
+        /// <returns>The found stream tree node, or null if the node does not exist in the partition.</returns>
+        public StreamTreeNode FindStreamTreeNode(string nodeName) =>
+            this.RootStreamTreeNode?.FindChild(nodeName);
 
         /// <summary>
         /// Saves all uncommitted changes of all streams in the partition to the store.
@@ -475,7 +460,11 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 }
             });
 
-            Task.Run(() => DataManager.Instance.SaveStore(this.StoreName, this.StorePath, progress));
+            Task.Run(() =>
+            {
+                DataManager.Instance.SaveStore(this.StoreName, this.StorePath, progress);
+                Console.WriteLine();
+            });
 
             // Show the modal progress window.  If the task has already completed then it will have
             // closed the progress window and an invalid operation exception will be thrown.
@@ -540,7 +529,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             // Update the dirty flag on all of the streams that had changes saved.
             foreach (string streamName in streamNames)
             {
-                var streamTreeNode = this.StreamTreeRoot.FindStreamTreeNode(streamName);
+                var streamTreeNode = this.RootStreamTreeNode.FindChild(streamName);
                 if (streamTreeNode != null)
                 {
                     streamTreeNode.IsDirty = isDirty;
@@ -579,7 +568,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private async void ExportStore()
         {
             // Set the initial crop interval to be the same as the partition's originating time interval
-            TimeInterval partitionInterval = this.Partition.OriginatingTimeInterval;
+            var partitionInterval = this.Partition.TimeInterval;
             DateTime cropIntervalLeft = partitionInterval.Left;
             DateTime cropIntervalRight = partitionInterval.Right;
 
@@ -617,21 +606,21 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 TimeInterval requestedCropInterval = dlg.CropInterval;
 
                 // Make sure the requested crop interval does not fall outside the partition interval
-                if (requestedCropInterval.Left < this.Partition.OriginatingTimeInterval.Left)
+                if (requestedCropInterval.Left < partitionInterval.Left)
                 {
-                    requestedCropInterval = new TimeInterval(this.Partition.OriginatingTimeInterval.Left, requestedCropInterval.Right);
+                    requestedCropInterval = new TimeInterval(partitionInterval.Left, requestedCropInterval.Right);
                 }
 
-                if (requestedCropInterval.Right > this.Partition.OriginatingTimeInterval.Right)
+                if (requestedCropInterval.Right > partitionInterval.Right)
                 {
-                    requestedCropInterval = new TimeInterval(requestedCropInterval.Left, this.Partition.OriginatingTimeInterval.Right);
+                    requestedCropInterval = new TimeInterval(requestedCropInterval.Left, partitionInterval.Right);
                 }
 
                 // Export the store
                 Task exportTask = Task.Run(() => PsiStore.Crop(
                     (this.StoreName, this.StorePath),
                     (dlg.StoreName, dlg.StorePath),
-                    requestedCropInterval.Left - this.Partition.OriginatingTimeInterval.Left,
+                    requestedCropInterval.Left - partitionInterval.Left,
                     RelativeTimeInterval.Future(requestedCropInterval.Span),
                     false,
                     progress));
@@ -729,7 +718,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
         }
 
-        private void OnMetadataUpdate(IEnumerable<Metadata> metadata, RuntimeInfo runtimeVersion)
+        private void OnMetadataUpdate(IEnumerable<Metadata> metadata, RuntimeInfo runtimeInfo)
         {
             // Switch to the main UI thread for handling this message
             Application.Current?.Dispatcher.Invoke(this.newMetadataCallback, metadata);
@@ -747,7 +736,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     if (!this.streamsById.ContainsKey(psiStreamMetadata.Id))
                     {
                         IStreamMetadata streamMetadata = new PsiLiveStreamMetadata(psiStreamMetadata.Name, psiStreamMetadata.Id, psiStreamMetadata.TypeName, psiStreamMetadata.SupplementalMetadataTypeName, this.StoreName, this.StorePath);
-                        this.streamsById[streamMetadata.Id] = this.StreamTreeRoot.AddStreamTreeNode(streamMetadata);
+                        this.streamsById[streamMetadata.Id] = this.RootStreamTreeNode.AddChild(streamMetadata.Name, streamMetadata, null, null);
                     }
                 }
             }
@@ -773,42 +762,42 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.AuxiliaryInfo = string.Empty;
                     break;
                 case AuxiliaryPartitionInfo.Duration:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
                     break;
                 case AuxiliaryPartitionInfo.StartDate:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Left.ToShortDateString();
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToShortDateString();
                     break;
                 case AuxiliaryPartitionInfo.StartDateLocal:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Left.ToLocalTime().ToShortDateString();
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToLocalTime().ToShortDateString();
                     break;
                 case AuxiliaryPartitionInfo.StartTime:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Left.ToShortTimeString();
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToShortTimeString();
                     break;
                 case AuxiliaryPartitionInfo.StartTimeLocal:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Left.ToLocalTime().ToShortTimeString();
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToLocalTime().ToShortTimeString();
                     break;
                 case AuxiliaryPartitionInfo.StartDateTime:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Left.ToString();
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToString();
                     break;
                 case AuxiliaryPartitionInfo.StartDateTimeLocal:
-                    this.AuxiliaryInfo = this.Partition.OriginatingTimeInterval.IsEmpty ? "?" : this.Partition.OriginatingTimeInterval.Left.ToLocalTime().ToString();
+                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToLocalTime().ToString();
                     break;
                 case AuxiliaryPartitionInfo.Size:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue ? SizeFormatHelper.FormatSize(this.Partition.Size.Value) : "?";
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue ? SizeHelper.FormatSize(this.Partition.Size.Value) : "?";
                     break;
                 case AuxiliaryPartitionInfo.DataThroughputPerHour:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.OriginatingTimeInterval.IsEmpty ?
-                        SizeFormatHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.OriginatingTimeInterval.Span.TotalHours, "hour") :
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.TimeInterval.IsEmpty ?
+                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.TimeInterval.Span.TotalHours, "hour") :
                         "?";
                     break;
                 case AuxiliaryPartitionInfo.DataThroughputPerMinute:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.OriginatingTimeInterval.IsEmpty ?
-                        SizeFormatHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.OriginatingTimeInterval.Span.TotalMinutes, "min") :
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.TimeInterval.IsEmpty ?
+                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.TimeInterval.Span.TotalMinutes, "min") :
                         "?";
                     break;
                 case AuxiliaryPartitionInfo.DataThroughputPerSecond:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.OriginatingTimeInterval.IsEmpty ?
-                        SizeFormatHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.OriginatingTimeInterval.Span.TotalSeconds, "sec") :
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.TimeInterval.IsEmpty ?
+                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.TimeInterval.Span.TotalSeconds, "sec") :
                         "?";
                     break;
                 case AuxiliaryPartitionInfo.StreamCount:
@@ -852,6 +841,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionExport, "Export Partition", this.ExportStoreCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Save Changes", this.SaveChangesCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionRemove, "Remove", this.RemovePartitionCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(null, "Remove From All Sessions", this.RemovePartitionFromAllSessionsCommand));
             contextMenu.Items.Add(new Separator());
 
             // Add the visualize session context menu if the partition is not in the currently visualized session
@@ -860,6 +850,51 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.VisualizeSession, this.SessionViewModel.VisualizeSessionCommand));
                 contextMenu.Items.Add(new Separator());
             }
+
+            // Add copy to clipboard menu with sub-menu items
+            var copyToClipboardMenuItem = MenuItemHelper.CreateMenuItem(
+                string.Empty,
+                "Copy to Clipboard",
+                null);
+
+            copyToClipboardMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Session Name",
+                    VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
+                    null,
+                    true,
+                    this.SessionViewModel.Name));
+
+            copyToClipboardMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Partition Name",
+                    VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
+                    null,
+                    true,
+                    this.Name));
+
+            copyToClipboardMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Partition Store Name",
+                    VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
+                    null,
+                    true,
+                    this.StoreName));
+
+            copyToClipboardMenuItem.Items.Add(
+                MenuItemHelper.CreateMenuItem(
+                    null,
+                    "Partition Store Path",
+                    VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
+                    null,
+                    true,
+                    this.StorePath));
+
+            contextMenu.Items.Add(copyToClipboardMenuItem);
+            contextMenu.Items.Add(new Separator());
 
             // Add show partition info menu
             var showPartitionInfoMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Show Partitions Info", null);

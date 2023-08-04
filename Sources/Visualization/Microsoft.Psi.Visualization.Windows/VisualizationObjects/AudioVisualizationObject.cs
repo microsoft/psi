@@ -3,11 +3,13 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
     using GalaSoft.MvvmLight.CommandWpf;
     using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
@@ -85,7 +87,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     // NOTE: Only open a stream when this visualization object is connected to it's parent
 
                     // Create a new binding with a different channel argument and re-open the stream
-                    this.StreamBinding.SummarizerArguments = new object[] { this.Channel };
+                    this.StreamBinding = new StreamBinding(
+                        this.StreamBinding.SourceStreamName,
+                        this.StreamBinding.PartitionName,
+                        this.StreamBinding.StreamName,
+                        this.StreamBinding.DerivedStreamAdapterType,
+                        this.StreamBinding.DerivedStreamAdapterArguments,
+                        this.StreamBinding.VisualizerStreamAdapterType,
+                        this.StreamBinding.VisualizerStreamAdapterArguments,
+                        this.StreamBinding.VisualizerSummarizerType,
+                        new object[] { this.Channel });
+
                     this.OnStreamBound();
                 }
             }
@@ -132,6 +144,18 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public string EnableAudioCommandText => this.Navigator.IsAudioPlaybackVisualizationObject(this) ? $"Mute {this.Name}" : $"Enable {this.Name}";
+
+        /// <inheritdoc/>
+        public override List<ContextMenuItemInfo> ContextMenuItemsInfo()
+        {
+            var items = new List<ContextMenuItemInfo>()
+            {
+                new ContextMenuItemInfo(this.ContextMenuIconSource, this.EnableAudioCommandText, this.EnableAudioCommand),
+            };
+
+            items.AddRange(base.ContextMenuItemsInfo());
+            return items;
+        }
 
         /// <inheritdoc/>
         public override double GetNumericValue(double data)

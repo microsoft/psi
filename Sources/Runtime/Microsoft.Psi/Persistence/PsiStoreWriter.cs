@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Persistence
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -38,7 +39,7 @@ namespace Microsoft.Psi.Persistence
         private readonly InfiniteFileWriter catalogWriter;
         private readonly InfiniteFileWriter pageIndexWriter;
         private readonly MessageWriter writer;
-        private readonly Dictionary<int, PsiStreamMetadata> metadata = new ();
+        private readonly ConcurrentDictionary<int, PsiStreamMetadata> metadata = new ();
         private readonly BufferWriter metadataBuffer = new (128);
         private readonly BufferWriter indexBuffer = new (24);
 

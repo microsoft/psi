@@ -73,13 +73,14 @@ namespace Microsoft.Psi.Persistence
 
         internal static IEnumerable<FileInfo> EnumerateStoreFiles(string storeName, string storePath)
         {
+            string escapedStoreName = Regex.Escape(storeName);
             foreach (var fileName in Directory.EnumerateFiles(storePath))
             {
                 var fileInfo = new FileInfo(fileName);
-                if (Regex.Match(fileInfo.Name, $@"^{storeName}\.Catalog_\d\d\d\d\d\d\.psi$").Success ||
-                    Regex.Match(fileInfo.Name, $@"^{storeName}\.Data_\d\d\d\d\d\d\.psi$").Success ||
-                    Regex.Match(fileInfo.Name, $@"^{storeName}\.LargeData_\d\d\d\d\d\d\.psi$").Success ||
-                    Regex.Match(fileInfo.Name, $@"^{storeName}\.Index_\d\d\d\d\d\d\.psi$").Success)
+                if (Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Catalog_\d\d\d\d\d\d\.psi$").Success ||
+                    Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Data_\d\d\d\d\d\d\.psi$").Success ||
+                    Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.LargeData_\d\d\d\d\d\d\.psi$").Success ||
+                    Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Index_\d\d\d\d\d\d\.psi$").Success)
                 {
                     yield return fileInfo;
                 }

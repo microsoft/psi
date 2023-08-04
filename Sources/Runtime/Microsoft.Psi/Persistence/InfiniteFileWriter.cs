@@ -71,7 +71,11 @@ namespace Microsoft.Psi.Persistence
                 }
                 catch (ObjectDisposedException)
                 {
-                    // ignore
+                    // ignore if localWritePulse was disposed
+                }
+                catch (AbandonedMutexException)
+                {
+                    // ignore if globalWritePulse was disposed
                 }
             })) { IsBackground = true }.Start();
 
@@ -236,7 +240,15 @@ namespace Microsoft.Psi.Persistence
             {
                 this.extentName = System.IO.Path.Combine(this.Path, this.extentName);
                 var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
-                newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
+                try
+                {
+                    newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
+                }
+                catch (IOException)
+                {
+                    file.Dispose();
+                    throw;
+                }
             }
             else
             {

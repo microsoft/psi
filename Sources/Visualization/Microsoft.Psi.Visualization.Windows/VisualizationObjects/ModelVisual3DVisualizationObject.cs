@@ -25,9 +25,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             nameof(CursorEpsilonPosMs),
             nameof(Name),
             nameof(PartitionName),
-            nameof(StreamName),
-            nameof(StreamAdapterDisplayName),
-            nameof(SummarizerTypeDisplayName),
+            nameof(SourceStreamName),
+            nameof(StreamAdapterTypeDisplayString),
+            nameof(SummarizerTypeDisplayString),
         };
 
         // The time elapsed while updating the data

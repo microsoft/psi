@@ -24,10 +24,10 @@ namespace Microsoft.Psi.Onnx
     /// be loaded from. The model is available in the ONNX Model Zoo at
     /// https://github.com/onnx/models/raw/3d4b2c28f951064ab35c89d5f5c3ffe74a149e4b/vision/object_detection_segmentation/tiny-yolov2/model/tinyyolov2-8.onnx.
     /// </remarks>
-    public class TinyYoloV2OnnxModelRunner : ConsumerProducer<Shared<Image>, List<TinyYoloV2Detection>>
+    public class TinyYoloV2OnnxModelRunner : ConsumerProducer<Shared<Image>, List<TinyYoloV2Detection>>, IDisposable
     {
         private readonly float[] onnxInputVector = new float[3 * 416 * 416];
-        private readonly OnnxModel onnxModel;
+        private OnnxModel onnxModel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TinyYoloV2OnnxModelRunner"/> class.
@@ -53,6 +53,13 @@ namespace Microsoft.Psi.Onnx
                 OutputVectorName = "grid",
                 GpuDeviceId = gpuDeviceId,
             });
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            this.onnxModel.Dispose();
+            this.onnxModel = null;
         }
 
         /// <inheritdoc/>

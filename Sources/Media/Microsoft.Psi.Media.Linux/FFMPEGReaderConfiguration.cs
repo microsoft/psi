@@ -3,10 +3,10 @@
 
 #if FFMPEG
 
-namespace Microsoft.Psi.Media.Native.Linux
+namespace Microsoft.Psi.Media
 {
     /// <summary>
-    /// Defines configuration parameters for FFMPEG
+    /// Defines configuration parameters for FFMPEG.
     /// </summary>
     public class FFMPEGReaderConfiguration
     {

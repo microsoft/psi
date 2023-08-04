@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Serialization
     using System.Collections.Generic;
     using System.Dynamic;
     using System.Linq;
+    using System.Runtime.Serialization;
     using Microsoft.Psi.Common;
 
     /// <summary>
@@ -18,18 +19,22 @@ namespace Microsoft.Psi.Serialization
         private readonly string rootTypeName;
         private readonly IDictionary<string, TypeSchema> schemasByTypeName;
         private readonly IDictionary<int, TypeSchema> schemasById;
-        private readonly List<dynamic> instanceCache = new List<dynamic>();
+        private readonly List<dynamic> instanceCache = new ();
+        private readonly IDictionary<string, string> typeNameSynonyms;
+        private readonly XsdDataContractExporter dataContractExporter = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DynamicMessageDeserializer"/> class.
         /// </summary>
         /// <param name="typeName">Type name of message.</param>
         /// <param name="schemas">Collection of known TypeSchemas.</param>
-        public DynamicMessageDeserializer(string typeName, IDictionary<string, TypeSchema> schemas)
+        /// <param name="typeNameSynonyms">Type name synonyms.</param>
+        public DynamicMessageDeserializer(string typeName, IDictionary<string, TypeSchema> schemas, IDictionary<string, string> typeNameSynonyms)
         {
             this.rootTypeName = typeName;
             this.schemasByTypeName = schemas;
             this.schemasById = schemas.Values.ToDictionary(s => s.Id);
+            this.typeNameSynonyms = typeNameSynonyms;
         }
 
         /// <summary>
@@ -80,12 +85,42 @@ namespace Microsoft.Psi.Serialization
 
             // determine type info and schema
             var isString = simpleTypeName == "System.String";
-
             if (!isString && !this.schemasByTypeName.ContainsKey(typeName))
             {
-                // try custom serializer
-                var prefix = typeName.Split('[', ',')[0];
-                typeName = $"{prefix}+CustomSerializer{typeName.Substring(prefix.Length)}";
+                string ResolveTypeName()
+                {
+                    if (this.typeNameSynonyms.TryGetValue(typeName, out var synonym))
+                    {
+                        return synonym;
+                    }
+                    else
+                    {
+                        // try contract name (if type can be resolved)
+                        var typ = Type.GetType(typeName, false);
+                        if (typ != null)
+                        {
+                            var contractName = this.dataContractExporter.GetSchemaTypeName(typ);
+                            if (contractName != null)
+                            {
+                                synonym = contractName.ToString();
+                                this.typeNameSynonyms.Add(typeName, synonym);
+                                return synonym;
+                            }
+                        }
+
+                        // try custom serializer
+                        var prefix = typeName.Split('[', ',')[0];
+                        var customTypeName = $"{prefix}+CustomSerializer{typeName.Substring(prefix.Length)}";
+                        if (!this.schemasByTypeName.ContainsKey(customTypeName))
+                        {
+                            throw new Exception($"Unknown schema type name ({typeName}).\nA synonym may be needed (see {nameof(KnownSerializers)}.{nameof(KnownSerializers.RegisterDynamicTypeSchemaNameSynonym)}())");
+                        }
+
+                        return customTypeName;
+                    }
+                }
+
+                typeName = ResolveTypeName();
             }
 
             var schema = isString ? null : this.schemasByTypeName[typeName];

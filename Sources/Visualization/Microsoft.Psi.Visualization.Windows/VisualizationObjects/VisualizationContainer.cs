@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <summary>
     /// Implements the container where all visualization panels are hosted. The is the root UI element for visualizations.
     /// </summary>
-    public class VisualizationContainer : ObservableObject
+    public class VisualizationContainer : ObservableObject, IContextMenuItemsSource, IDisposable
     {
         // Property names used in the layout (*.plo) files
         private const string LayoutPropertyName = "Layout";
@@ -186,21 +186,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [IgnoreDataMember]
         public RelayCommand<VisualizationPanel> DeleteVisualizationPanelCommand
-        {
-            get
-            {
-                if (this.deleteVisualizationPanelCommand == null)
-                {
-                    this.deleteVisualizationPanelCommand = new RelayCommand<VisualizationPanel>(
-                        o =>
-                        {
-                            this.RemovePanel(o);
-                        });
-                }
-
-                return this.deleteVisualizationPanelCommand;
-            }
-        }
+            => this.deleteVisualizationPanelCommand ??= new RelayCommand<VisualizationPanel>(o => this.RemovePanel(o));
 
         /// <summary>
         /// Loads a visualization layout from the specified file.
@@ -269,6 +255,25 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 jsonFile?.Dispose();
             }
         }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            // Ensure playback is stopped
+            this.Navigator.SetCursorMode(CursorMode.Manual);
+
+            // Clear container to give all panels a chance to clean up
+            this.Clear();
+        }
+
+        /// <inheritdoc/>
+        public List<ContextMenuItemInfo> ContextMenuItemsInfo()
+            => new ()
+            {
+                new ContextMenuItemInfo(IconSourcePath.ZoomToSelection, "Zoom to Selection", this.ZoomToSelectionCommand),
+                new ContextMenuItemInfo(IconSourcePath.ClearSelection, "Clear Selection", this.ClearSelectionCommand),
+                new ContextMenuItemInfo(IconSourcePath.ZoomToSession, "Zoom to Session Extents", this.ZoomToSessionExtentsCommand),
+            };
 
         /// <summary>
         /// Adds a new panel to the container.
@@ -480,6 +485,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="sessionViewModel">The currently active session view model.</param>
         public void UpdateStreamSources(SessionViewModel sessionViewModel)
         {
+            // First, ensure any required derived stream tree nodes exist.
+            sessionViewModel?.EnsureDerivedStreamTreeNodesExist(this);
+
             foreach (var panel in this.Panels)
             {
                 // Update the stream sources for the panel
@@ -521,6 +529,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                             return (false, "The specified date-time is outside the range of the current session.");
                         }
                     }
+                    else if (long.TryParse(value, out var ticks))
+                    {
+                        var ticksDateTime = new DateTime(ticks);
+                        if (ticksDateTime >= this.Navigator.DataRange.StartTime &&
+                            ticksDateTime <= this.Navigator.DataRange.EndTime)
+                        {
+                            return (true, string.Empty);
+                        }
+                        else
+                        {
+                            return (false, "The specified date-time is outside the range of the current session.");
+                        }
+                    }
                     else
                     {
                         return (false, "Cannot convert the specified time to a valid date time.");
@@ -529,7 +550,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (getTime.ShowDialog() == true)
             {
-                var cursor = DateTime.Parse(getTime.ParameterValue);
+                var cursor = default(DateTime);
+                if (DateTime.TryParse(getTime.ParameterValue, out var dateTime))
+                {
+                    cursor = dateTime;
+                }
+                else if (long.TryParse(getTime.ParameterValue, out var ticks))
+                {
+                    cursor = new DateTime(ticks);
+                }
 
                 // If the cursor falls outside the current view range, shift the view range
                 if (cursor <= this.Navigator.ViewRange.StartTime)

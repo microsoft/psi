@@ -2,14 +2,14 @@
 // Licensed under the MIT license.
 
 #if FFMPEG
-#pragma warning disable SA1615, SA1600
-namespace Microsoft.Psi.Media.Native.Linux
+
+namespace Microsoft.Psi.Media
 {
     using System;
     using System.Runtime.InteropServices;
 
     /// <summary>
-    /// Defines our wrapper class for calling into our Native FFMPEG reader
+    /// Defines our wrapper class for calling into our Native FFMPEG reader.
     /// </summary>
     public class FFMPEGReader
     {
@@ -18,10 +18,10 @@ namespace Microsoft.Psi.Media.Native.Linux
         /// <summary>
         /// Initializes a new instance of the <see cref="FFMPEGReader"/> class.
         /// </summary>
-        /// <param name="imageDepth">Depth of requested output images. Must be 24 or 32</param>
+        /// <param name="imageDepth">Depth of requested output images. Must be 24 or 32.</param>
         public FFMPEGReader(int imageDepth)
         {
-            this.unmanagedData = FFMPEGReaderNative_Alloc(imageDepth);
+            this.unmanagedData = NativeMethods.FFMPEGReaderNative_Alloc(imageDepth);
         }
 
         /// <summary>
@@ -31,107 +31,74 @@ namespace Microsoft.Psi.Media.Native.Linux
         {
             if (this.unmanagedData != IntPtr.Zero)
             {
-                FFMPEGReaderNative_Dealloc(this.unmanagedData);
+                NativeMethods.FFMPEGReaderNative_Dealloc(this.unmanagedData);
                 this.unmanagedData = IntPtr.Zero;
             }
         }
 
         /// <summary>
-        /// Gets the width of the current video frame
+        /// Gets the width of the current video frame.
         /// </summary>
         public int Width
         {
             get
             {
-                return (this.unmanagedData != IntPtr.Zero) ? FFMPEGReaderNative_GetWidth(this.unmanagedData) : 0;
+                return (this.unmanagedData != IntPtr.Zero) ? NativeMethods.FFMPEGReaderNative_GetWidth(this.unmanagedData) : 0;
             }
         }
 
         /// <summary>
-        /// Gets the height of the current video frame
+        /// Gets the height of the current video frame.
         /// </summary>
         public int Height
         {
             get
             {
-                return (this.unmanagedData != IntPtr.Zero) ? FFMPEGReaderNative_GetHeight(this.unmanagedData) : 0;
+                return (this.unmanagedData != IntPtr.Zero) ? NativeMethods.FFMPEGReaderNative_GetHeight(this.unmanagedData) : 0;
             }
         }
 
         /// <summary>
-        /// Gets the audio sample rate
+        /// Gets the audio sample rate.
         /// </summary>
         public int AudioSampleRate
         {
             get
             {
-                return (this.unmanagedData != IntPtr.Zero) ? FFMPEGReaderNative_GetAudioSampleRate(this.unmanagedData) : 0;
+                return (this.unmanagedData != IntPtr.Zero) ? NativeMethods.FFMPEGReaderNative_GetAudioSampleRate(this.unmanagedData) : 0;
             }
         }
 
         /// <summary>
-        /// Gets the audio bits per sample
+        /// Gets the audio bits per sample.
         /// </summary>
         public int AudioBitsPerSample
         {
             get
             {
-                return (this.unmanagedData != IntPtr.Zero) ? FFMPEGReaderNative_GetAudioBitsPerSample(this.unmanagedData) : 0;
+                return (this.unmanagedData != IntPtr.Zero) ? NativeMethods.FFMPEGReaderNative_GetAudioBitsPerSample(this.unmanagedData) : 0;
             }
         }
 
         /// <summary>
-        /// Gets the number of audio channels
+        /// Gets the number of audio channels.
         /// </summary>
         public int AudioNumChannels
         {
             get
             {
-                return (this.unmanagedData != IntPtr.Zero) ? FFMPEGReaderNative_GetAudioNumChannels(this.unmanagedData) : 0;
+                return (this.unmanagedData != IntPtr.Zero) ? NativeMethods.FFMPEGReaderNative_GetAudioNumChannels(this.unmanagedData) : 0;
             }
         }
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_Alloc")]
-        public static extern IntPtr FFMPEGReaderNative_Alloc(int imageDepth);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_Dealloc")]
-        public static extern void FFMPEGReaderNative_Dealloc(IntPtr obj);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_GetWidth")]
-        public static extern int FFMPEGReaderNative_GetWidth(IntPtr obj);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_GetHeight")]
-        public static extern int FFMPEGReaderNative_GetHeight(IntPtr obj);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_GetAudioSampleRate")]
-        public static extern int FFMPEGReaderNative_GetAudioSampleRate(IntPtr obj);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_GetAudioBitsPerSample")]
-        public static extern int FFMPEGReaderNative_GetAudioBitsPerSample(IntPtr obj);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_GetAudioNumChannels")]
-        public static extern int FFMPEGReaderNative_GetAudioNumChannels(IntPtr obj);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_Open", CharSet=CharSet.Ansi)]
-        public static extern int FFMPEGReaderNative_Open(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)]string fn);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_NextFrame")]
-        public static extern int FFMPEGReaderNative_NextFrame(IntPtr obj, ref int frameType, ref int requiredBufferSize, ref bool eos);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_ReadFrameData")]
-        public static extern int FFMPEGReaderNative_ReadFrameData(IntPtr obj, IntPtr buffer, ref int bytesRead, ref double timestamp);
-
-        [DllImport("Microsoft.Psi.Media.Native.so", EntryPoint="FFMPEGReaderNative_Close")]
-        public static extern int FFMPEGReaderNative_Close(IntPtr obj);
 
         /// <summary>
         /// Opens a MP4 file for writing.
         /// </summary>
-        /// <param name="fn">File to open</param>
-        /// <param name="config">Configuration</param>
+        /// <param name="fn">File to open.</param>
+        /// <param name="config">Configuration.</param>
         public void Open(string fn, FFMPEGReaderConfiguration config)
         {
-            int hr = FFMPEGReaderNative_Open(this.unmanagedData, fn);
+            int hr = NativeMethods.FFMPEGReaderNative_Open(this.unmanagedData, fn);
             if (hr < 0)
             {
                 throw new Exception("Failed to read video frame. HRESULT=" + hr.ToString());
@@ -147,16 +114,16 @@ namespace Microsoft.Psi.Media.Native.Linux
         /// read by the client via a call to ReadFrameData().
         /// Returns true if a frame was read; false otherwise.
         /// </summary>
-        /// <param name="info">Filled with info about the next frame</param>
-        /// <param name="endOfStream">Returns true if end of stream detected</param>
-        /// <returns>false if error detected. true otherwise</returns>
+        /// <param name="info">Filled with info about the next frame.</param>
+        /// <param name="endOfStream">Returns true if end of stream detected.</param>
+        /// <returns>false if error detected. true otherwise.</returns>
         public bool NextFrame(ref FFMPEGFrameInfo info, out bool endOfStream)
         {
             int frameType = 0;
             int requiredBufferSize = 0;
             bool eos = false;
             endOfStream = false;
-            int hr = FFMPEGReaderNative_NextFrame(this.unmanagedData, ref frameType, ref requiredBufferSize, ref eos);
+            int hr = NativeMethods.FFMPEGReaderNative_NextFrame(this.unmanagedData, ref frameType, ref requiredBufferSize, ref eos);
             if (hr == 1)
             {
                 return false;
@@ -183,17 +150,17 @@ namespace Microsoft.Psi.Media.Native.Linux
         /// 'dataBuffer' will be filled with the decompressed data. The buffer
         /// is allocated and controlled by the calling client. The size of the required
         /// buffer was returned by the client's previous call to NextFrame().
-        /// Return true if we successfully decoded a frame
+        /// Return true if we successfully decoded a frame.
         /// </summary>
-        /// <param name="dataBuffer">Buffer to fill with data</param>
-        /// <param name="bufferSize">Size of buffer in bytes</param>
-        /// <param name="timestampMillisecs">Timestamp associated with the data</param>
-        /// <returns>false if error detected. true otherwise</returns>
+        /// <param name="dataBuffer">Buffer to fill with data.</param>
+        /// <param name="bufferSize">Size of buffer in bytes.</param>
+        /// <param name="timestampMillisecs">Timestamp associated with the data.</param>
+        /// <returns>false if error detected. true otherwise.</returns>
         public bool ReadFrameData(IntPtr dataBuffer, ref int bufferSize, ref double timestampMillisecs)
         {
             double ts = 0.0;
             int bytesRead = 0;
-            int hr = FFMPEGReaderNative_ReadFrameData(this.unmanagedData, dataBuffer, ref bytesRead, ref ts);
+            int hr = NativeMethods.FFMPEGReaderNative_ReadFrameData(this.unmanagedData, dataBuffer, ref bytesRead, ref ts);
             if (hr < 0)
             {
                 throw new Exception("Failed to read video frame. HRESULT=" + hr.ToString());
@@ -210,15 +177,15 @@ namespace Microsoft.Psi.Media.Native.Linux
         }
 
         /// <summary>
-        /// Close the reader
+        /// Close the reader.
         /// </summary>
         public void Close()
         {
             int hr = 0;
             if (this.unmanagedData != IntPtr.Zero)
             {
-                hr = FFMPEGReaderNative_Close(this.unmanagedData);
-                FFMPEGReaderNative_Dealloc(this.unmanagedData);
+                hr = NativeMethods.FFMPEGReaderNative_Close(this.unmanagedData);
+                NativeMethods.FFMPEGReaderNative_Dealloc(this.unmanagedData);
                 this.unmanagedData = IntPtr.Zero;
             }
 
@@ -227,7 +194,42 @@ namespace Microsoft.Psi.Media.Native.Linux
                 throw new Exception("Failed to read video frame. HRESULT=" + hr.ToString());
             }
         }
+
+        private static class NativeMethods
+        {
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_Alloc")]
+            public static extern IntPtr FFMPEGReaderNative_Alloc(int imageDepth);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_Dealloc")]
+            public static extern void FFMPEGReaderNative_Dealloc(IntPtr obj);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_GetWidth")]
+            public static extern int FFMPEGReaderNative_GetWidth(IntPtr obj);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_GetHeight")]
+            public static extern int FFMPEGReaderNative_GetHeight(IntPtr obj);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_GetAudioSampleRate")]
+            public static extern int FFMPEGReaderNative_GetAudioSampleRate(IntPtr obj);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_GetAudioBitsPerSample")]
+            public static extern int FFMPEGReaderNative_GetAudioBitsPerSample(IntPtr obj);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_GetAudioNumChannels")]
+            public static extern int FFMPEGReaderNative_GetAudioNumChannels(IntPtr obj);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_Open", BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            public static extern int FFMPEGReaderNative_Open(IntPtr obj, [MarshalAs(UnmanagedType.LPStr)] string fn);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_NextFrame")]
+            public static extern int FFMPEGReaderNative_NextFrame(IntPtr obj, ref int frameType, ref int requiredBufferSize, ref bool eos);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_ReadFrameData")]
+            public static extern int FFMPEGReaderNative_ReadFrameData(IntPtr obj, IntPtr buffer, ref int bytesRead, ref double timestamp);
+
+            [DllImport("Microsoft.Psi.Media_Interop.so", EntryPoint = "FFMPEGReaderNative_Close")]
+            public static extern int FFMPEGReaderNative_Close(IntPtr obj);
+        }
     }
 }
-#pragma warning restore SA1615, SA1600
 #endif // FFMPEG

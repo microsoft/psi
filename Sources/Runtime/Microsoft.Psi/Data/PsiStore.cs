@@ -490,7 +490,7 @@ namespace Microsoft.Psi
         {
             if (!PsiStoreCommon.TryGetPathToLatestVersion(storeName, rootPath, out string path))
             {
-                throw new InvalidOperationException($"No matching files found: {rootPath} \\[{storeName}.*\\]{storeName}*");
+                throw new InvalidOperationException($"No matching files found for store \"{storeName}\" at path \"{rootPath}\"");
             }
 
             return path;
@@ -512,7 +512,7 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="store">The name and path of the store to delete.</param>
         /// <param name="deleteDirectoryIfOtherwiseEmpty">Whether to delete the containing directory if it is empty after removing store files.</param>
-        internal static void Delete((string Name, string Path) store, bool deleteDirectoryIfOtherwiseEmpty = false)
+        public static void Delete((string Name, string Path) store, bool deleteDirectoryIfOtherwiseEmpty = false)
         {
             foreach (var fileInfo in PsiStoreCommon.EnumerateStoreFiles(store.Name, store.Path))
             {
