@@ -4,6 +4,7 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -888,6 +889,33 @@ namespace Microsoft.Psi
             this.completed.Set();
         }
 
+        internal bool RemoveSubpipline(Subpipeline subpipeline)
+        {
+            PipelineElement node = this.components.FirstOrDefault(c => c.StateObject == subpipeline);
+            if (node == null)
+            {
+                return false;
+            }
+
+            if (!subpipeline.IsCompleted)
+            {
+                throw new InvalidOperationException($"Subpipeline is still running, it can't be removed from parent pipeline.");
+            }
+
+            List<PipelineElement> list = subpipeline.Components.ToList();
+            list.Add(node);
+            SynchronizationLock locker = new SynchronizationLock(this, true);
+            this.scheduler.Freeze(locker);
+            this.components = new ConcurrentQueue<PipelineElement>(this.components.Where(x => !list.Contains(x)));
+            foreach (PipelineElement child in list)
+            {
+                this.DiagnosticsCollector?.PipelineElementDisposed(this, child);
+            }
+
+            locker.Release();
+            return true;
+        }
+
         /// <summary>
         /// Run pipeline (asynchronously).
         /// </summary>
@@ -962,6 +990,18 @@ namespace Microsoft.Psi
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Dispose components within pipeline and recursively within subpipelines.
+        /// </summary>
+        protected void DisposeComponents()
+        {
+            foreach (var component in this.components)
+            {
+                this.DiagnosticsCollector?.PipelineElementDisposed(this, component);
+                component.Dispose();
+            }
         }
 
         /// <summary>
@@ -1386,15 +1426,6 @@ namespace Microsoft.Psi
                     sub.FinalOriginatingTime = finalOriginatingTime;
                     sub.schedulerContext.FinalizeTime = finalOriginatingTime;
                 }
-            }
-        }
-
-        private void DisposeComponents()
-        {
-            foreach (var component in this.components)
-            {
-                this.DiagnosticsCollector?.PipelineElementDisposed(this, component);
-                component.Dispose();
             }
         }
 

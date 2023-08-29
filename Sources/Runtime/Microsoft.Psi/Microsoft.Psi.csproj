@@ -5,6 +5,8 @@
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageId>Microsoft.Psi.Runtime</PackageId>
 	  <Description>Provides the core APIs and components for Platform for Situated Intelligence.</Description>
+	  <AssemblyVersion>0.18.72.1</AssemblyVersion>
+	  <Version>$(AssemblyVersion)-modifiedPipeTest3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Unix'">
