@@ -6114,7 +6114,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.PsiStudio.App.html",
-          "hash": "eLybNg/mqKXOCSMwFNqEm6qRmXxuncsv9bwr54EYwWk="
+          "hash": "JXHQC1dxvDfy/QtZcvCDnfYYQjczA3qC/HZ7I0yrLOQ="
         }
       },
       "is_incremental": false,
@@ -6138,7 +6138,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.PsiStudio.MainWindow.html",
-          "hash": "AdzLaOrWjx+qpcCBlNR9058zPUShgAIGzBrTCivpujs="
+          "hash": "QVhx9S1NP7qJdPGoKAhr+dbDYHLeIhADKh+t47aW08w="
         }
       },
       "is_incremental": false,
@@ -6222,7 +6222,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.PsiStudio.Windows.LayoutNameWindow.html",
-          "hash": "hERBsAuWU95U8lkBK3O2MGy5vIUvuOBpxI6CYK3tR2c="
+          "hash": "GPwAtFsvy7KmYdZUv7JvnCzAPghuJoaBVTYzykqctDc="
         }
       },
       "is_incremental": false,
@@ -8826,7 +8826,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Controls.TimelineCanvas.html",
-          "hash": "ta6GvlFztCRnQFyKinLNhlHrk6yHagu3o81lT4/H5VQ="
+          "hash": "7sQC5HKqAcbGgPMvg48TwoFODYbfT3ZoexQWi2Xzuqc="
         }
       },
       "is_incremental": false,
@@ -8838,7 +8838,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Controls.TimelineScroller.html",
-          "hash": "EPkcwdQpUcC8Xc0PX0+Pt7qbc/3FVMXJJe0ba5E5zaY="
+          "hash": "0E4R07WtslLsX0uLrW01F6nSV1JRgQoiLca4WjNy+Eo="
         }
       },
       "is_incremental": false,
@@ -9270,7 +9270,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Data.StreamReadErrorEventArgs.html",
-          "hash": "mkGy54BPTI1SLdzm/cTIyoMS9YFmKiI+eVg7H3pk8f4="
+          "hash": "ZH3HJVVzIJsL0CR+TwoEYtXl1XKl90whXsSnhfCnQtI="
         }
       },
       "is_incremental": false,
@@ -9402,7 +9402,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.DataStoreStatusChangedEventArgs.html",
-          "hash": "kYF+oA8XBnQ+R6Wk7gQa4z7KdYxy+7fYD5ZuaIfTUyc="
+          "hash": "aq07vsxLeP9n0PaR51j18U31yxOo3rcXHHFh2PKPVVw="
         }
       },
       "is_incremental": false,
@@ -9774,7 +9774,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.LiveCharts.CartesianChartVisualizationObjectView.html",
-          "hash": "APcoxLzZ64O9U+bV/Vat/PacK8KPBCC2BFpsVf9XP5s="
+          "hash": "yvrGVehR+z8EOeIZzs1q1+5gtRoGhNawxw4MFe6LYSE="
         }
       },
       "is_incremental": false,
@@ -9858,7 +9858,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Navigation.CursorModeChangedEventArgs.html",
-          "hash": "zPhreQk+dg0xUWgAT1t9Ng+bNFtZ8GKDm26YErwOtVs="
+          "hash": "uFFXToZh+b2cdgqRbK3MNVsp2uFBwnhEngdB6xPT7y0="
         }
       },
       "is_incremental": false,
@@ -9906,7 +9906,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Navigation.NavigatorTimeChangedEventArgs.html",
-          "hash": "UHwFv5zhOQvUJAa9URjWSqPWkbrroOzke3cUTu5fUiM="
+          "hash": "S6hDvInBjqznwYGxzZBQEW6Q6iUuCs8HXNBYQvap3aw="
         }
       },
       "is_incremental": false,
@@ -9930,7 +9930,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Navigation.NavigatorTimeRangeChangedEventArgs.html",
-          "hash": "VtjkxVLfn+hatea/+rlQzn0WcMA9egpW47yJGI0ST4U="
+          "hash": "C/3htnS+jXItmD7aWc/al91ceDnxQzktgX6Fynuj0Og="
         }
       },
       "is_incremental": false,
@@ -9966,7 +9966,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.ObservableDataCollection-1.html",
-          "hash": "vdbWfvJ7aoQMrZur5CBum2GR36na37BPEOwMTrjKwzM="
+          "hash": "H/OK8uyP182/UymkTkCoOGfMJ4p5EX/4ZRPfDK2BUjw="
         }
       },
       "is_incremental": false,
@@ -10050,7 +10050,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.PropertyGridEditors.ItemPickerEditor.html",
-          "hash": "iRh3RDyhtWHvh5eCcsG82xxLWJzkVp5KHGzInUsZWB4="
+          "hash": "7wYg1U7o3FCz/uwczK2BNtOrEB46jtf2WHWUrI4fR3I="
         }
       },
       "is_incremental": false,
@@ -10098,7 +10098,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.RequestDisplayObjectPropertiesEventArgs.html",
-          "hash": "dKg7irDY41o4i7Pj5neJPpSg3TTzs+uVe+6Zm/OX42A="
+          "hash": "70lq/upBIcHXLeKxKOEyUU5sPVAzterZlKmRfu+LMcI="
         }
       },
       "is_incremental": false,
@@ -10638,7 +10638,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.CanvasVisualizationPanelView.html",
-          "hash": "knWcMsQdC3tHBOKZrH40E2qcxdlBg5x0tvBMLYO94gw="
+          "hash": "6ryqgl29ZaD5zGQNUIzKvABggFbX1p/s/RfLBfwKvGA="
         }
       },
       "is_incremental": false,
@@ -10650,7 +10650,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.InstantVisualizationContainerView.html",
-          "hash": "2Kj0RDKAOd+2sc1kYVoYS22819ljpdLimzEjm9neW38="
+          "hash": "28hAGiTiLCSIRtd62hKTjF50snFe1y9MgrV5aNhJbUQ="
         }
       },
       "is_incremental": false,
@@ -10662,7 +10662,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.InstantVisualizationPanelView.html",
-          "hash": "gQlEboAJw/bHDzkhKNGa7wF+06WJZd2F1au0kV00omk="
+          "hash": "BQV4qTm7dp2jTZn01AfwdAdmOIq6GkDdxjIQgu9ou5Q="
         }
       },
       "is_incremental": false,
@@ -10674,7 +10674,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.InstantVisualizationPlaceholderPanelView.html",
-          "hash": "i96pqbVjpm6MWwOKPCsj88texLAablDQx47uVb1009s="
+          "hash": "3aPOdzaomK8PlrIZgwOLtNiYIzst/Ib45/1cJOG4t/Q="
         }
       },
       "is_incremental": false,
@@ -10686,7 +10686,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.NavigatorView.html",
-          "hash": "B82ZpN1qMr0nRs+PiJTTzNeEXfDgDwGcYoaTxj3pQ9Y="
+          "hash": "r87icRW4SapmHH/ioDa89rtPgUf2nlBOkjB0yePGsWY="
         }
       },
       "is_incremental": false,
@@ -10698,7 +10698,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.TimelineSegmentView.html",
-          "hash": "Qv0A4jEcQmOI7lLI43vRjsyHXokEu8sa6RqoOkWU6w8="
+          "hash": "BxfM2Sfik5/Bp+D7wOpxdxSbidq/LswbRgbdA8OFYsU="
         }
       },
       "is_incremental": false,
@@ -10722,7 +10722,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.TimelineView.html",
-          "hash": "MCIccWtydYJ53dRHRvSW+0qVWgavEMYij/Qe857KldE="
+          "hash": "QpAS2YWE23k0u9+A9CenYwA447bre733MbSLhVhBt5Q="
         }
       },
       "is_incremental": false,
@@ -10746,7 +10746,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.TimelineVisualizationPanelView.html",
-          "hash": "pJVSwkFLNX7ysiZJH9ajDNke+bAIISLc2DY90rO8xp4="
+          "hash": "WgGHwA3h8gc5AJ0qkU4tDSl25pY+bEYUJd35BxllzeI="
         }
       },
       "is_incremental": false,
@@ -10758,7 +10758,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.VisualizationContainerDragDropAdorner.html",
-          "hash": "OaXBuneU1upfBElPYj3oX7ONtAO28Xi/dojj/GpMlAI="
+          "hash": "XCCiGsp4waEpoeuL7vQ6C2YshMRm+wvV8cFsdxMmaZM="
         }
       },
       "is_incremental": false,
@@ -10770,7 +10770,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.VisualizationContainerView.html",
-          "hash": "QblZn6TFVDgX/mmqlm2I1okpYC7juzpoijV44I8SHdk="
+          "hash": "8/OuL5dPpNpi8i3HucVonLUEgOyZZ4o6gkyyPrXzH5k="
         }
       },
       "is_incremental": false,
@@ -10782,7 +10782,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.VisualizationObjectView.html",
-          "hash": "loZ2uLD+/fj+AfiGWKO/gZ9dfYka+etg30Dd6XfQURQ="
+          "hash": "PtCcuhhaAKm2yCYrM7ADt/YnZyleTMm89L22R9RRtmo="
         }
       },
       "is_incremental": false,
@@ -10794,7 +10794,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.VisualizationPanelView.html",
-          "hash": "tbcx8PJaZAUTFGbW9CXhz7AT9qtNhkZ4WXRzVxIQ0SA="
+          "hash": "H04BNfBEirbrGMQ/r/lS0TRhP+N8yjIq14JDp/u8ZMI="
         }
       },
       "is_incremental": false,
@@ -10818,7 +10818,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.AudioVisualizationObjectView.html",
-          "hash": "lwoUwU0EIKrA1r0XtJX7LLuf/Oilv+pVxMZ4p+5zgFM="
+          "hash": "MMis2TUortawNeL5Fk1zd6IW+P202TWUBScZ8fPCRNU="
         }
       },
       "is_incremental": false,
@@ -10830,7 +10830,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.BoolSeriesVisualizationObjectView.html",
-          "hash": "NDw/rbFqvu8wmZrAt0f8loTI7+CCGYr8wvSOrS5+ZL8="
+          "hash": "T4sFssEcGfvPG4hL2dyL0/Zqfgsr62oqm31xQQThw7g="
         }
       },
       "is_incremental": false,
@@ -10842,7 +10842,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.BoolVisualizationObjectView.html",
-          "hash": "ANPhsOASaEnbwhzNL+syhRSf7PdZEwyf4gdAAuKixO4="
+          "hash": "axtfN1lgioQmA6ynQx3fjvqdHePBbkw5k+alfKdUJtY="
         }
       },
       "is_incremental": false,
@@ -10854,7 +10854,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.DecimalSeriesVisualizationObjectView.html",
-          "hash": "e311NgcK5N/U0QCbXv+0zNGJW6eLv67FvelCIeBVYtY="
+          "hash": "eypG81bU5YZgw7v9s5mJeLjF2L5pxPsxARcHjwieTUU="
         }
       },
       "is_incremental": false,
@@ -10866,7 +10866,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.DecimalVisualizationObjectView.html",
-          "hash": "r7J395D2Njcc5q2shfApg5X3BXXef1jgRFrFT02nspg="
+          "hash": "jOUcznDTSCMFVNqwXPViOnLIAtn+lAObDH6Pp1oRqms="
         }
       },
       "is_incremental": false,
@@ -10878,7 +10878,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.DepthImageVisualizationObjectView.html",
-          "hash": "iG21jw/OsY7zM8adc72BuWjJpkBSN61Dpuoe40bRUPY="
+          "hash": "wguoIUXr5wk9RH6P667MFszdN2yOkVOI9+y2gpfFErA="
         }
       },
       "is_incremental": false,
@@ -10890,7 +10890,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.DepthImageVisualizationObjectViewBase.html",
-          "hash": "S3yRxcfjcj75duCKcG33knb5mtbVFvy0u6CJqzmbt1I="
+          "hash": "/QQ4GOpe6iputrEoCpktKxZXRIyRmAcF4hiorH4z1VA="
         }
       },
       "is_incremental": false,
@@ -10902,7 +10902,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.DoubleSeriesVisualizationObjectView.html",
-          "hash": "8JjipVenlpfMJTM5U850+e18PR1Ss9DfbZaFF+XqVDU="
+          "hash": "9EvEQSKKurc2kKk8EyBvv//z7Jr7kc10hI7Rj/V3U6M="
         }
       },
       "is_incremental": false,
@@ -10914,7 +10914,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.DoubleVisualizationObjectView.html",
-          "hash": "wlZD1sTCdx1LL/8KapPxVmexCmN5feSGIJim1lBY5jA="
+          "hash": "0U1oXzTGbYeXqRzRGC8FevMyiQ3aNX9zO+OzvYFi7SA="
         }
       },
       "is_incremental": false,
@@ -10926,7 +10926,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.FloatSeriesVisualizationObjectView.html",
-          "hash": "l8uFnGrBwov3bxVYJ2MnhsYrU4RwYrnR43szd7OgH6U="
+          "hash": "i4qxA9Sh0tJ8u6NNUEXvhlQhZPap7swrmfmIfBcc0m8="
         }
       },
       "is_incremental": false,
@@ -10938,7 +10938,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.FloatVisualizationObjectView.html",
-          "hash": "FQzck3S9aY4Uqd1yDIg7ln24jIvJa+ROSIwYZ9a9sxQ="
+          "hash": "CcjAYl7cv4R56m7imi19jV1Xfpo0XREzILnsh+K7J44="
         }
       },
       "is_incremental": false,
@@ -10950,7 +10950,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.IFormattableVisualizationObjectView.html",
-          "hash": "zsjwRH8U6zwq9MlaQ+hDgQdjULCngvdlyGo68FRdkY0="
+          "hash": "Epv2qU23wS6sl1ICzcdRn/eXsiaNYjH0E3u2oPz/o2E="
         }
       },
       "is_incremental": false,
@@ -10974,7 +10974,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.ImageVisualizationObjectView.html",
-          "hash": "KLlEQjwpZWvq+78HHFReSkzuyMn6+tuB1x9J5PrayJE="
+          "hash": "FkEDSvi0saBBbj+0xKb1m4IWPOZKnnLu2NDIsLm1cq0="
         }
       },
       "is_incremental": false,
@@ -10986,7 +10986,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.ImageVisualizationObjectViewBase.html",
-          "hash": "jn7AadIr5mI2aJXTWtcOSrEJRYXg/CKI0yhJrzsvMrM="
+          "hash": "rAkqS247I8MKjK4kASw4DBwxaJ4eBnVmdhivmzhKezI="
         }
       },
       "is_incremental": false,
@@ -10998,7 +10998,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.IntSeriesVisualizationObjectView.html",
-          "hash": "20Nx/9oMhaPNuE2p5YtAV/z+Hnieirdlpv3UhoiGspY="
+          "hash": "yehQSXxJhGaCMjv4vN9iK8Xru249bJ41EWB7OBKRaFQ="
         }
       },
       "is_incremental": false,
@@ -11010,7 +11010,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.IntVisualizationObjectView.html",
-          "hash": "c4JJ9KJtUWfjl8flqwGmQKMItEQnzcpGWnX9i0cReXs="
+          "hash": "ODIiOIG8bm017zePzlbI+ruDZNHPdxoNuShN2RcKr+c="
         }
       },
       "is_incremental": false,
@@ -11034,7 +11034,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.LabeledPointListVisualizationObjectView.html",
-          "hash": "wkKL53Qb7GdM87qfnnsYNXrWyLxbSli4Phl7o00EFVU="
+          "hash": "l150MlFo0ng1kSoOfvTQaPfUakUeQnRowJRHGOmK+r4="
         }
       },
       "is_incremental": false,
@@ -11046,7 +11046,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.LabeledPointListVisualizationObjectViewBase.html",
-          "hash": "cCdWReMAQd6KJS793FaJ8tL2oM0ff3+fqOUXSz2ECYw="
+          "hash": "Izl6R2lugRKkAEZ8hfXFIG9J+zLVgWPXIQxMCJ0fnlI="
         }
       },
       "is_incremental": false,
@@ -11070,7 +11070,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.LabeledRectangleListVisualizationObjectView.html",
-          "hash": "oVe0rzawuwx8Lx0+hGfe4lcyrNF2oJpq/B0znBh+q1w="
+          "hash": "V2hoM57K4UG8eOmQwzoXC0nyDzo6dtGcUxiORlg/aoU="
         }
       },
       "is_incremental": false,
@@ -11082,7 +11082,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.LabeledRectangleListVisualizationObjectViewBase.html",
-          "hash": "7r0BOfZo04NQ8zZ30picBokTLILuERDIRzga88bJ7So="
+          "hash": "T7DaEh+z63+v7ONtwdbgqDEQYxJ3lBQLVJEPZ4xjjZ4="
         }
       },
       "is_incremental": false,
@@ -11094,7 +11094,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.LongSeriesVisualizationObjectView.html",
-          "hash": "gYDPMCBQRUpQHHuo/xafsD+wXMjBwZ/j/fjIZeTJrTU="
+          "hash": "cWfw/RNKhz7PyznrqaJH4NVELipYIjDiLiOr0hNwtq0="
         }
       },
       "is_incremental": false,
@@ -11106,7 +11106,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.LongVisualizationObjectView.html",
-          "hash": "foLBi4jBeYZ8JkZkryPyeLwYtORqmnnm/gOUPvrrsQY="
+          "hash": "ZH06R+WuSIjGKS0Q16LQyAac4vCgwLPLy6UFEahV3lg="
         }
       },
       "is_incremental": false,
@@ -11118,7 +11118,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.MessageVisualizationObjectView.html",
-          "hash": "wiOARQB0+jOzvdJDVWewIlq9/UmQFp8qMYwxE8GaYxw="
+          "hash": "ZN1hslgko00af19hhHfCpVpf/j8n+6Ol6IhZ7f+FFhA="
         }
       },
       "is_incremental": false,
@@ -11130,7 +11130,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableBoolSeriesVisualizationObjectView.html",
-          "hash": "ItSMvEsg2az410zP2FaCh2mF0ZdFb/rs06y6/iAGndU="
+          "hash": "PjCS3ZOvp6VFaA8bDFDbnlyeyJol48FEOz9Xg1FDsvg="
         }
       },
       "is_incremental": false,
@@ -11142,7 +11142,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableBoolSeriesVisualizationObjectViewBase.html",
-          "hash": "a4UUMR2lI5Xiaeu+YuMi5OCfPi8sAmOTOl6MoimKkIU="
+          "hash": "nqskP8WPjcBGDXiVwgpLFYfrTju17hk6kaZIyXpOIpE="
         }
       },
       "is_incremental": false,
@@ -11154,7 +11154,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableBoolVisualizationObjectView.html",
-          "hash": "yDJJTDsBuPhU2vRId2rUzGLxoSMOxMdXGTGTV+lfTgE="
+          "hash": "yvVvA45662c3UPb1APVbcqod9g7vkRv5fFHIZs/+ZI8="
         }
       },
       "is_incremental": false,
@@ -11166,7 +11166,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableBoolVisualizationObjectViewBase.html",
-          "hash": "eGWAILsMKSdBRxgWuuMVTujxQ61CWBcNNQCOlF2iriM="
+          "hash": "/MaZsoGCQPKIYBZP5Den6sZ9bFHPeRTTs1WrKsYn9jg="
         }
       },
       "is_incremental": false,
@@ -11178,7 +11178,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDecimalSeriesVisualizationObjectView.html",
-          "hash": "dy4aOebTSvlG49Em2ZJfZmyeFREptYO0FGSFSS+zpp0="
+          "hash": "v54P9B0TQ43WcbXqEE680gEITp91OPUMbOywLLqK1W8="
         }
       },
       "is_incremental": false,
@@ -11190,7 +11190,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDecimalSeriesVisualizationObjectViewBase.html",
-          "hash": "WL1GTLcyZGR0K/zUi/HhrlIMtRnqCMZQOynUeCZywns="
+          "hash": "nBWwrl8SRzYBbGgLgJqDTEgAQesrXHvaJ2aMQmADAt0="
         }
       },
       "is_incremental": false,
@@ -11202,7 +11202,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDecimalVisualizationObjectView.html",
-          "hash": "RNzJkIyVQYkH+X40uZMXRlfJcfREenbcA2lm0i9OWZ8="
+          "hash": "ssp8r5bIH9x346TigzeYZzMXH8HSU7CGmfg3YxwZP9E="
         }
       },
       "is_incremental": false,
@@ -11214,7 +11214,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDecimalVisualizationObjectViewBase.html",
-          "hash": "koJ4/2xM6FaEW2yWkQ11pfYsg9JV8p7zeSpzWaAShZE="
+          "hash": "uL9xGENVtSruInbyT5BNyP2wjv0qbpozBYqrt7VMj5s="
         }
       },
       "is_incremental": false,
@@ -11226,7 +11226,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDoubleSeriesVisualizationObjectView.html",
-          "hash": "8U+05gJSu6heCK+KkKjAFFpIH+HGY4ejAh3Ohny1FBA="
+          "hash": "rIgjzAPbGmcUd9wA2fncIVR0TZjwE9r/qgSjFf0vqiU="
         }
       },
       "is_incremental": false,
@@ -11238,7 +11238,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDoubleSeriesVisualizationObjectViewBase.html",
-          "hash": "F5gRNkAUsqEtAS6ubykoOrJqZ6bAx4Wyt56zuf2OJyY="
+          "hash": "UzvqOCwjfwV8SZ6mrMJKWsE59asJPEacVFk5M5vIO5A="
         }
       },
       "is_incremental": false,
@@ -11250,7 +11250,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDoubleVisualizationObjectView.html",
-          "hash": "iDqwaJpEHYgUcileoizs77kXkV9mQb2WI03XHKA+LS0="
+          "hash": "Quzb6SaAcwI1mbPSx7RgypZAKPXUssdgvxrYMmFgC/8="
         }
       },
       "is_incremental": false,
@@ -11262,7 +11262,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableDoubleVisualizationObjectViewBase.html",
-          "hash": "hyTEEWszfTYvQwOMDEYVki/yoRIeiP8oX/sPc7NNKXI="
+          "hash": "434gZoJs0B+gJbitKuWJDfcD67ik4wQ949V2rmC4eZQ="
         }
       },
       "is_incremental": false,
@@ -11274,7 +11274,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableFloatSeriesVisualizationObjectView.html",
-          "hash": "1Z0HW9Lzp90tF7U6v5DK9XuH3NwobW1Kc693cD1kzi0="
+          "hash": "ATNLs5CoewBTpPAewSK9EKdeH92WtKlomDucBFgdiE8="
         }
       },
       "is_incremental": false,
@@ -11286,7 +11286,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableFloatSeriesVisualizationObjectViewBase.html",
-          "hash": "O5w4Yx/Nvxrv/fpoiLOAqDziSt8YiQuGpCu0S2fo6hs="
+          "hash": "0SCgqqhEOCQH1Ht/izNb6Rx4EXnE2V0JgLjKEwZ/xsA="
         }
       },
       "is_incremental": false,
@@ -11298,7 +11298,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableFloatVisualizationObjectView.html",
-          "hash": "IkpxxXwpRn3yycxP3iuBUFZkOWbRNrf9fHsH0ZCqMh8="
+          "hash": "ZKAiG41+S4KPc5JKzR2NGOebQF9BYGryKGc4SEn18OY="
         }
       },
       "is_incremental": false,
@@ -11310,7 +11310,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableFloatVisualizationObjectViewBase.html",
-          "hash": "IXGAyjHRlfRy37WflT+AeMVrNNSKfDl2y6fG6jxJsQ0="
+          "hash": "kf7DNs2YWdM4toGs/BLsWb2JSFE/8W8MJ1hQMZwLPVw="
         }
       },
       "is_incremental": false,
@@ -11322,7 +11322,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableIntSeriesVisualizationObjectView.html",
-          "hash": "op3gkHBd7jfPfBw9DanEPUpW5tU6iTJVBOAYSuowdqA="
+          "hash": "ZfRKRTYPDxDYEKl9KFAUfKQ731G9JCPUazhiMmBpmqQ="
         }
       },
       "is_incremental": false,
@@ -11334,7 +11334,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableIntSeriesVisualizationObjectViewBase.html",
-          "hash": "u1R+leWOFz3E3t9qqYbCRFBD8QCDi2aXDpETnANYYzE="
+          "hash": "5MLZfgRJwOIoZxO0PqmjxDGAJxSimUkBitw9QMSKXOM="
         }
       },
       "is_incremental": false,
@@ -11346,7 +11346,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableIntVisualizationObjectView.html",
-          "hash": "LCOhyROV/y6DBeI7hKKn2eDxkDFDVeJ+nUFKOw/ZQMg="
+          "hash": "1WR9HDgNOOLyBzyW46VCnQCrHqHxb0sCpq9xP/6dB+o="
         }
       },
       "is_incremental": false,
@@ -11358,7 +11358,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableIntVisualizationObjectViewBase.html",
-          "hash": "2h93rWxFBMSScM3VZsCUX/jB4dTt8EeNATl54yduqjg="
+          "hash": "mSktkF1RnRnx713KaOZCzdDUMjX3d+O4YpVmeZZ2rwA="
         }
       },
       "is_incremental": false,
@@ -11370,7 +11370,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableLongSeriesVisualizationObjectView.html",
-          "hash": "vyGNfWM7SmB0m0oOBOquSDQLoYbPe7Pu+7kIYnkcnq4="
+          "hash": "YNFySviiOXQ4rbTYkueu9+gapfy7/2tZCr8wwCFnCQM="
         }
       },
       "is_incremental": false,
@@ -11382,7 +11382,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableLongSeriesVisualizationObjectViewBase.html",
-          "hash": "tES/7T1/cD4O1VdmolFFQAsgsipCCRzhC8JRElh6jgU="
+          "hash": "InFYBMjXSl4fppqLy3yyfpx/4toj2R5tM7wjSdJQacY="
         }
       },
       "is_incremental": false,
@@ -11394,7 +11394,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableLongVisualizationObjectView.html",
-          "hash": "fWehaixrUlNTsORuxJjLTjflRflPJqkoBdc5D7Q/Axs="
+          "hash": "tihuMhVtwhJDrXuPfkOBXxdLrtB3GsD+atva8F3cuYE="
         }
       },
       "is_incremental": false,
@@ -11406,7 +11406,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.NullableLongVisualizationObjectViewBase.html",
-          "hash": "7188bVENfM8FphpKLZ1NLjShKpmCrr/Qc2nsI0uzlQM="
+          "hash": "UPozyRYvu7MDNrLO7kjVZzeuzwefUqH1pP5GqznyvRI="
         }
       },
       "is_incremental": false,
@@ -11430,7 +11430,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.PipelineDiagnosticsVisualizationObjectView.html",
-          "hash": "IGT6WMGAJPwklTo+By0fURw4wxpxB/M/z6G/EEJgHr4="
+          "hash": "ihmdzkKi0SR3pSQb2I0XSzLmIxbvuoyAkNyvJZAA0ic="
         }
       },
       "is_incremental": false,
@@ -11454,7 +11454,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.PlotSeriesVisualizationObjectView-3.html",
-          "hash": "kqUgP+Q4LzKnPddgHB3l2dlMjMcM9QGsBa2sIWvfpak="
+          "hash": "nFn+gxJfViJMhLxE1COazu3xw/ZuLTGzzDixiK2tNAU="
         }
       },
       "is_incremental": false,
@@ -11466,7 +11466,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.PlotVisualizationObjectView-2.html",
-          "hash": "0SUC0MEoDoI1SiWzXO4eJKz1SDpCXgkAHcEp0jtixp0="
+          "hash": "dSPbbbarYCBIN3favm3qHAT3gWHdYqHYopOSaZfPhus="
         }
       },
       "is_incremental": false,
@@ -11502,7 +11502,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.SpeechRecognitionVisualizationObjectView.html",
-          "hash": "baJNuBoeqByp21OgtxtbGSitiFQnaUVIYvapifsL5VQ="
+          "hash": "3+UI6lsy+VU54MVncoG2GhgL2B8H3L6HXUVkFor8954="
         }
       },
       "is_incremental": false,
@@ -11514,7 +11514,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectCanvasView-2.html",
-          "hash": "buptspafBdKA/sxS2hUaI3Vt3ltK6Mo/qHql6+VU3do="
+          "hash": "jYSXDxkBWmhleUJZOy0zAN9cLEM6522b3Ssiw9tMfKE="
         }
       },
       "is_incremental": false,
@@ -11526,7 +11526,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.StreamIntervalVisualizationObjectTimelineCanvasView-2.html",
-          "hash": "iNqmQdfjZNgjEFPhV+XVOFKutCf3ykS5APK2J91cvDc="
+          "hash": "FUtBBM48AXr4d7laYe4P0tmz0/8XRejIbvgomMwHNTk="
         }
       },
       "is_incremental": false,
@@ -11538,7 +11538,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.StreamValueVisualizationObjectCanvasView-2.html",
-          "hash": "nhZoK91S8m07Y/YJjQ1GDEbw/UN8ZESPOEJSoRMvqN4="
+          "hash": "GNLgBj7DM6yt5yy/8edT55CLmU8zAKNzoe8xEx0yYF4="
         }
       },
       "is_incremental": false,
@@ -11550,7 +11550,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.StreamValueVisualizationObjectTimelineCanvasView-2.html",
-          "hash": "V7rY3bKzX6gFpXF251avRDl78ERDnpcqdw1uav0J4Jk="
+          "hash": "JAw+Yj67Ev857OyXkLItN0BGKO9XgWfy+MS6PxcubkQ="
         }
       },
       "is_incremental": false,
@@ -11562,7 +11562,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.StreamVisualizationObjectCanvasView-2.html",
-          "hash": "efMKjJRonmtL10xMG/C7oEEhe/ixDYZ54rhr1OEN3Fw="
+          "hash": "rC46kXnDDb9NGvVPh87kX6T0naDSEHPZMTiON9gpe4s="
         }
       },
       "is_incremental": false,
@@ -11574,7 +11574,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.StringWithDurationVisualizationObjectView.html",
-          "hash": "yGr2X1dL+bAkhkolmTdayK9p1vIHda0S8Twp1fW5X+s="
+          "hash": "UML9p+55lj0SzuHNhapzlNqAIAdfUfMRR5eCwX0kLi0="
         }
       },
       "is_incremental": false,
@@ -11586,7 +11586,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.TextVisualizationObjectView.html",
-          "hash": "5AoourKCCOjVMhzfSVNpoFrehmzjr/KDusb0HXSK8I0="
+          "hash": "PsSjnUHkZaXqQSX7tum2DJEJ4lRWy89YTRBBwJo4yxM="
         }
       },
       "is_incremental": false,
@@ -11598,7 +11598,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalAnnotationVisualizationObjectView.html",
-          "hash": "oPQ7UdyiUuXoBZ73d9rq6UK9wx1WB3Rd5NR4HS0uiGY="
+          "hash": "sVVB9AUGlDy67wwwjeGajuPY+AdMoeMlYhG3ADhD/OM="
         }
       },
       "is_incremental": false,
@@ -11610,7 +11610,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalHistoryVisualizationObjectView.html",
-          "hash": "5+9mM4/hnDjbxdOqnAEku6z8bSAhO4mnm6OefpECnSE="
+          "hash": "oMIhE/SpKXf2Q/m2pzIwZ39oQAH29CJG/Qi6Ah7kjNI="
         }
       },
       "is_incremental": false,
@@ -11622,7 +11622,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.TimeIntervalVisualizationObjectView.html",
-          "hash": "AkuzvY+0UpXznzgPVXTdlGSsuVNUBHfGQGk4v3UVV30="
+          "hash": "gNgaKwxlY9hrAebt69p8lY9xecQx2OmQpDtX65ZWUDM="
         }
       },
       "is_incremental": false,
@@ -11646,7 +11646,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals2D.XYValueVisualizationObjectCanvasView-2.html",
-          "hash": "Y6JhCJpENHJEv+F58jZ4YSCwfpALCA/jY4fGirPfooA="
+          "hash": "k+BvmnQIxf0jpRX4noGq2DIH+aWJkUguxRLcqX1mftA="
         }
       },
       "is_incremental": false,
@@ -11682,7 +11682,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.ScatterPlanarDirectionVisual.html",
-          "hash": "KW5EzGNyDhELTyUrmThrGbNd0wB0CHVmd/OfmchaBUA="
+          "hash": "nPKgSA+Psm7d27uUymGCiDleV856VbRWVw8tnHFlwds="
         }
       },
       "is_incremental": false,
@@ -11694,7 +11694,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.SpriteVisual.html",
-          "hash": "gfYyaUN4MkX7YVRoyG/1oVeQ/n2Waizmm5twUHrWwhk="
+          "hash": "F8i3zyaXQRje68vNGdWkW0IMKOjtCrRCEBOtamw+ibQ="
         }
       },
       "is_incremental": false,
@@ -11706,7 +11706,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.Visuals3D.XYPanelVisual.html",
-          "hash": "gw0EibLs485ThV1LovXQvVsr4POmZnHt6yF2LFdVhlU="
+          "hash": "N1bQFR212p+ZMAcaN9N26h3AFCUhZW2qs8WvAXUwFOI="
         }
       },
       "is_incremental": false,
@@ -11730,7 +11730,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.XYValueEnumerableVisualizationObjectCanvasView-4.html",
-          "hash": "72JfR1eM3n9+XP+/IJ38t/xsYWEPVOW9lpU1nuWxub4="
+          "hash": "dTBzJjLmPHYpcek9sPGpxVO0/l40Z3oEnvktRxCdyOs="
         }
       },
       "is_incremental": false,
@@ -11742,7 +11742,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.XYVisualizationPanelView.html",
-          "hash": "xdRcu9ba7XpDciRYjM4OIse9U8Rs+NA1T/b0+6r4Z/w="
+          "hash": "7hRELwIU+Dc6K3ZR+a3+Gy5GgRIkTa8VRGvGu0pjDiY="
         }
       },
       "is_incremental": false,
@@ -11754,7 +11754,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Views.XYZVisualizationPanelView.html",
-          "hash": "FIsjYXmFGWVpKcZ74/jkP5HGhIQlxwHmBZxMQk5+JQU="
+          "hash": "C2Nhcdmdu11oBijT9S23mwpNPFvZ2RtO/mqYb/Kfyow="
         }
       },
       "is_incremental": false,
@@ -11814,7 +11814,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationLogWriter.html",
-          "hash": "gVyoK2OLj2ER0GLpUkfW6Anwca+xZRDzbeOD3UlqODM="
+          "hash": "eWGHoOWYQFrIYXd8CUzCYAj6Sx00yyoNrYwQPUuXUsg="
         }
       },
       "is_incremental": false,
@@ -12774,7 +12774,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.TimeIntervalAnnotationEditEventArgs.html",
-          "hash": "7/fynW7upwkgtniKJIY9mPrc3TcgPnu3tpB8M/RIry4="
+          "hash": "eeC9ToFaP/wieUzYeCkzn1RajtRnjzK9CCY2f3K2U8c="
         }
       },
       "is_incremental": false,
@@ -12846,7 +12846,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DDictionary-2.html",
-          "hash": "Lbcg6f7vSIa0pj6wfGEHhrD4Ovu7Zd/fxZmh5Ar72bI="
+          "hash": "m/MC0gt44IJ0uFLQLU0JslGswiP+XxwNoWq8SMTev6I="
         }
       },
       "is_incremental": false,
@@ -12870,7 +12870,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.VisualizationObjects.UpdatableVisual3DList-1.html",
-          "hash": "iKLfKYMRBoVVnn9gchVFpe1p6Oxnv6qXQtG+3phCuUY="
+          "hash": "F8vXZe+3O+w3iFLiaaDP2gvh2G59ccVtDqFyA5u1raU="
         }
       },
       "is_incremental": false,
@@ -13170,7 +13170,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.AdditionalAssembliesWindow.html",
-          "hash": "XAkoqbdV5ZOR+WeXXhlXy/b93K8i2nAI4g/rUF4/MG8="
+          "hash": "BDckBOz2WZPiWvVPZsXw6NcV1fr0WVCkEtI+L98RKkY="
         }
       },
       "is_incremental": false,
@@ -13182,7 +13182,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.ConfirmLayoutWindow.html",
-          "hash": "sPMpxhCUgvHRBmzSvOficA1Kz2HrS5DUg/jjjcsRPqM="
+          "hash": "Q4PDe2+uKlJDFl39dfMCYjfQudXBYGdPqXXaELiCQRo="
         }
       },
       "is_incremental": false,
@@ -13194,7 +13194,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.CreateAnnotationStreamWindow.html",
-          "hash": "WI8Zi7fL0q1Di/WY7mFHqu9buDcsC0nYxvYuZw2dpDQ="
+          "hash": "PFqQzpMEvSmgDb2rmDBeXObOBEiyM1rnjNZnDE6QqOA="
         }
       },
       "is_incremental": false,
@@ -13206,7 +13206,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.ExportPsiPartitionWindow.html",
-          "hash": "5jMp0XlkNb0/71Fbpj/UitJaQgP/i9kfnMISyUah6fk="
+          "hash": "42EBrhEUTeqwPs9UkT3YFkhYADF4m+HD/YDNMcCC3tI="
         }
       },
       "is_incremental": false,
@@ -13218,7 +13218,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.GetParameterWindow.html",
-          "hash": "BuKXgdUFJrMT1I8BUTJw6v/x1M3GMaLx76sro9c1iTM="
+          "hash": "HpzouWP5aGcDhI1rLIcitLdu2D/2fa5hCxa0PO91gOU="
         }
       },
       "is_incremental": false,
@@ -13230,7 +13230,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.LoadingDatasetWindow.html",
-          "hash": "EgjOv6Qqu5EfMo/fOMp7bsMJy3ylFkdQKK88/B9uT8I="
+          "hash": "PyCfRNmZieV4UCsCj9hWdNHpElPczBPIowW1ITgHzVs="
         }
       },
       "is_incremental": false,
@@ -13242,7 +13242,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.MessageBoxWindow.html",
-          "hash": "8fdTnS8vL8V9XxgzWtdWjK0ezkiTZvRqxkuyUly9hco="
+          "hash": "GIOl/4BES+xSuj/B7tgPJEmkORJvHbADzNlqnOgvOAA="
         }
       },
       "is_incremental": false,
@@ -13254,7 +13254,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.ProgressWindow.html",
-          "hash": "HkOPNz6NZsZkkCvhjSRAureB106LP6tEClB66x1tOmo="
+          "hash": "0z2S/PgHBfDBqLCi1of0CTMUpaRCXdg5Ow8hnMAjt4c="
         }
       },
       "is_incremental": false,
@@ -13266,7 +13266,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.PsiStudioSettingsWindow.html",
-          "hash": "B2oK2BoHL96Lj5y5vOiTYJBtOyeqVGfxA9m1A3YlArE="
+          "hash": "HRHZ3hQ6bV8MWtHU0IHYY0gh0xhymeRwZ7tL6u9+aro="
         }
       },
       "is_incremental": false,
@@ -13278,7 +13278,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.RunBatchProcessingTaskWindow.html",
-          "hash": "XTeVVz0V4eQfivItmDCbacv1XIES40YAivGfOn9+F/0="
+          "hash": "/YNTsraAbBbXBODSb2XZ91q1SIB900eKtAlEKKNcPuI="
         }
       },
       "is_incremental": false,
@@ -13314,7 +13314,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.SaveStoreWindow.html",
-          "hash": "t5QfrCjLL3Lu1E0uAfJ+DlnK5Rf1rb/jf//AaZEwsAI="
+          "hash": "43CWELOdDclSoNxshOF6pT8+5F2xEG7LDP2aeWmt2IY="
         }
       },
       "is_incremental": false,
@@ -13326,7 +13326,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Microsoft.Psi.Visualization.Windows.ScriptWindow.html",
-          "hash": "sF87IPG/KJo/JaBCDOic2sPBEEMV+pIR1VpeuvFz62A="
+          "hash": "FL17rT97qwoFqdZ8L39EzFYdvgjM/AUfFFjaWQnY4r0="
         }
       },
       "is_incremental": false,
@@ -13374,7 +13374,7 @@
       "output": {
         ".html": {
           "relative_path": "api/PsiStoreTool.Program.html",
-          "hash": "CunNZdEFzAjKBp+JadY0bzVVJixza1SAbh5GCQFgNsc="
+          "hash": "kAdq/8T2pBXXhHc5kqEmiEL+qG7bBq7K6FUo5D4zl70="
         }
       },
       "is_incremental": false,
