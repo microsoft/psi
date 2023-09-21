@@ -135,7 +135,7 @@ namespace Test.Psi
             var clone = c.DeepClone();
             Assert.IsTrue(c.IsDeepClone(clone));
 
-            var arr = new[] { c, c, c };
+            var arr = Enumerable.Repeat(c, 50000).ToArray();
             var arrClone = arr.DeepClone();
             for (int i = 0; i < arr.Length; i++)
             {
@@ -162,7 +162,7 @@ namespace Test.Psi
             var clone = c.DeepClone();
             Assert.AreEqual(c, clone);
 
-            var arr = new[] { c, c, c };
+            var arr = Enumerable.Repeat(c, 50000).ToArray();
             var arrClone = arr.DeepClone();
             for (int i = 0; i < arr.Length; i++)
             {
@@ -188,7 +188,7 @@ namespace Test.Psi
             var clone = c.DeepClone();
             Assert.IsTrue(c.IsDeepClone(clone));
 
-            var arr = new[] { c, c, c };
+            var arr = Enumerable.Repeat(c, 50000).ToArray();
             var arrClone = arr.DeepClone();
             for (int i = 0; i < arr.Length; i++)
             {
