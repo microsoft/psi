@@ -133,7 +133,7 @@ namespace Test.Psi
             // ensure that the stdout/stderr streams don't fill up (this causes the server to block)
             server.BeginOutputReadLine();
             server.BeginErrorReadLine();
-            
+
             Console.WriteLine($"Server {entryPoint} started");
 
             return server;
