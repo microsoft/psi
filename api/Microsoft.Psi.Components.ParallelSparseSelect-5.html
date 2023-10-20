@@ -90,7 +90,7 @@ output stream.</p>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
-    <div class="level0"><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">Object</a></div>
+    <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><a class="xref" href="Microsoft.Psi.Pipeline.html">Pipeline</a></div>
     <div class="level2"><a class="xref" href="Microsoft.Psi.Subpipeline.html">Subpipeline</a></div>
     <div class="level3"><span class="xref">ParallelSparseSelect&lt;TIn, TBranchKey, TBranchIn, TBranchOut, TOut&gt;</span></div>
@@ -346,7 +346,7 @@ termination policy function governs when branches are terminated.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a></td>
+        <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">outputDefaultIfDropped</span></td>
         <td><p>When true, a result is produced even if a message is dropped in processing one of the input elements. In this case the corresponding output element is set to a default value.</p>
 </td>
@@ -358,7 +358,7 @@ termination policy function governs when branches are terminated.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">Func</span>&lt;TBranchKey, <span class="xref">Dictionary</span>&lt;TBranchKey, TBranchIn&gt;, <span class="xref">DateTime</span>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetuple-2">(, )</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">Boolean</a>, <span class="xref">DateTime</span>&gt;&gt;</td>
+        <td><span class="xref">Func</span>&lt;TBranchKey, <span class="xref">Dictionary</span>&lt;TBranchKey, TBranchIn&gt;, <span class="xref">DateTime</span>, <span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Boolean</span>, <span class="xref">DateTime</span>&gt;&gt;</td>
         <td><span class="parametername">branchTerminationPolicy</span></td>
         <td><p>Predicate function determining whether and when (originating time) to terminate branches (defaults to when key no longer present), given the current key, message payload (dictionary) and originating time.</p>
 </td>
