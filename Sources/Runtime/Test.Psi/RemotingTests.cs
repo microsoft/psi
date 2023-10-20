@@ -96,7 +96,7 @@ namespace Test.Psi
                     var dataStream = importer.OpenStream<int>(ServerDataStream);
                     dataStream.Do(data.Add).Select(i => ++count).Where(c => c == 100).Do(_ => doneEvt.Set());
                     p.RunAsync();
-                    doneEvt.WaitOne(60000);
+                    doneEvt.WaitOne(40000);
 #if !ShellExecute
                     server.StandardInput.WriteLine();
                     server.StandardInput.WriteLine(); // the test execution framework is also waiting for a line
