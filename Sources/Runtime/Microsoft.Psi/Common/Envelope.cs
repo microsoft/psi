@@ -4,21 +4,25 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Represents the envelope of a message published to a data stream.
     /// See <see cref="Message{T}"/> for details.
     /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
     public struct Envelope
     {
         /// <summary>
         /// The id of the stream that generated the message.
         /// </summary>
+        [FieldOffset(0)]
         public int SourceId;
 
         /// <summary>
         /// The sequence number of this message, unique within the stream identified by <see cref="SourceId"/>.
         /// </summary>
+        [FieldOffset(4)]
         public int SequenceId;
 
         /// <summary>
@@ -26,11 +30,13 @@ namespace Microsoft.Psi
         /// This value is used as a key when synchronizing messages across streams.
         /// This value must be propagated with any message derived from this message.
         /// </summary>
+        [FieldOffset(8)]
         public DateTime OriginatingTime;
 
         /// <summary>
         /// The message creation time.
         /// </summary>
+        [FieldOffset(16)]
         public DateTime CreationTime;
 
         /// <summary>
