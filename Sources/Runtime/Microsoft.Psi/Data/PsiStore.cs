@@ -91,6 +91,29 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Opens a \psi store for read and returns a <see cref="PsiImporter"/> instance
+        /// which can be used to inspect the store and open the streams.
+        /// The store metadata is available immediately after this call (before the pipeline is running) via the <see cref="Importer.AvailableStreams"/> property.
+        /// </summary>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="serializers">Custom known serializers.</param>
+        /// <param name="name">The name of the store to open (the same as the catalog file name).</param>
+        /// <param name="rootPath">
+        /// The path to the store.
+        /// This can be one of:
+        /// - a full path to a directory containing the store
+        /// - a root path containing one or more versions of the store, each in its own subdirectory,
+        /// in which case the latest store is opened.
+        /// - a null string, in which case an in-memory store is opened.
+        /// </param>
+        /// <param name="usePerStreamReaders">Optional flag indicating whether to use per-stream readers (see remarks).</param>
+        /// <returns>A <see cref="PsiImporter"/> instance that can be used to open streams and read messages.</returns>
+        public static PsiImporter Open(Pipeline pipeline, KnownSerializers serializers, string name, string rootPath, bool usePerStreamReaders = true)
+        {
+            return new PsiImporter(pipeline, serializers, name, rootPath, usePerStreamReaders);
+        }
+
+        /// <summary>
         /// Writes the specified stream to a multi-stream \psi store.
         /// </summary>
         /// <typeparam name="TMessage">The type of messages in the stream.</typeparam>

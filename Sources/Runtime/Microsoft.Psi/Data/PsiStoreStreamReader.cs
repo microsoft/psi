@@ -40,6 +40,18 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
         /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
+        /// <param name="serializers">Custom known serializers.</param>
+        public PsiStoreStreamReader(string name, string path, KnownSerializers serializers)
+        {
+            this.PsiStoreReader = new PsiStoreReader(name, path, this.LoadMetadata);
+            this.context = new SerializationContext(serializers);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PsiStoreStreamReader"/> class.
+        /// </summary>
+        /// <param name="name">The name of the application that generated the persisted files, or the root name of the files.</param>
+        /// <param name="path">The directory in which the main persisted file resides or will reside, or null to create a volatile data store.</param>
         /// <param name="defaultStartTime">Default start time (unused).</param>
         public PsiStoreStreamReader(string name, string path, DateTime defaultStartTime)
             : this(name, path)

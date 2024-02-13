@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
     using Microsoft.Psi.Interop.Serialization;
     using Microsoft.Psi.Interop.Transport;
     using Microsoft.Psi.Remoting;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
     /// Rendezvous related operators.
@@ -100,6 +101,17 @@ namespace Microsoft.Psi.Interop.Rendezvous
 
             return endpoint;
         }
+
+        /// <summary>
+        /// Create a <see cref="RemoteImporter"/> from a <see cref="Rendezvous.RemoteExporterEndpoint"/>.
+        /// </summary>
+        /// <param name="endpoint"><see cref="Rendezvous.RemoteExporterEndpoint"/> from which to create .</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="storePath">Path for PsiStore.</param>
+        /// <param name="knownSerializers">Custom known serializers.</param>
+        /// <returns><see cref="RemoteImporter"/>.</returns>
+        public static RemoteImporter ToRemoteImporter(this Rendezvous.RemoteExporterEndpoint endpoint, Pipeline pipeline, string storePath, KnownSerializers knownSerializers)
+            => new (pipeline, storePath, endpoint.Host, endpoint.Port, knownSerializers);
 
         /// <summary>
         /// Create a <see cref="RemoteImporter"/> from a <see cref="Rendezvous.RemoteExporterEndpoint"/>.
