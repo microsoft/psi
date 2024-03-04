@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Serialization
 
     /// <summary>
     /// Represents the registry of all serializers.
-    /// The <see cref="KnownSerializers.Default"/> contains system-wide serializers for the current version of the type system.
+    /// The <see cref="KnownSerializers.defaultKnownSerializers"/> contains system-wide serializers for the current version of the type system.
     /// Serializers explicitly registered with this instance are used by all other instances unless an override is specified.
     /// When deserializing from a persisted file, the <see cref="Microsoft.Psi.Data.Importer"/> instance returned by
     /// the <see cref="Data.PsiImporter"/> will create its own KnownSerializer instance, and register serializers
@@ -65,14 +65,14 @@ namespace Microsoft.Psi.Serialization
         // - there can be at most one schema for a type and at most one type for a schema,
         //    and they must have matching IDs (implicitly or because of a user-specified name mapping)
 
+        // the set of types we don't know how to serialize
+        private static readonly HashSet<Type> UnserializableTypes = new ();
+
         /// <summary>
         /// The default set of types and serializer creation rules globally known to the serialization subsystem.
         /// Custom serializers can be added directly to this set.
         /// </summary>
-        public static readonly KnownSerializers Default;
-
-        // the set of types we don't know how to serialize
-        private static readonly HashSet<Type> UnserializableTypes = new ();
+        private static KnownSerializers defaultKnownSerializers;
 
         // mapping from fully-qualified .NET type names to synonyms
         private readonly Dictionary<string, string> typeNameSynonyms = new ();
@@ -131,7 +131,7 @@ namespace Microsoft.Psi.Serialization
             UnserializableTypes.Add(typeof(UIntPtr));
             UnserializableTypes.Add(typeof(MemberInfo));
             UnserializableTypes.Add(typeof(System.Diagnostics.StackTrace));
-            Default = new KnownSerializers(true, RuntimeInfo.Latest);
+            defaultKnownSerializers = new KnownSerializers(true, RuntimeInfo.Latest);
         }
 
         /// <summary>
@@ -177,13 +177,13 @@ namespace Microsoft.Psi.Serialization
             else
             {
                 // all other instances start off with the Default rules
-                this.templates = new Dictionary<Type, Type>(Default.templates);
-                this.serializers = new Dictionary<Type, Type>(Default.serializers);
-                this.knownTypes = new ConcurrentDictionary<string, Type>(Default.knownTypes);
-                this.knownNames = new ConcurrentDictionary<Type, string>(Default.knownNames);
-                this.schemas = new ConcurrentDictionary<string, TypeSchema>(Default.schemas);
-                this.schemasById = new ConcurrentDictionary<int, TypeSchema>(Default.schemasById);
-                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>(Default.cloningFlags);
+                this.templates = new Dictionary<Type, Type>(defaultKnownSerializers.templates);
+                this.serializers = new Dictionary<Type, Type>(defaultKnownSerializers.serializers);
+                this.knownTypes = new ConcurrentDictionary<string, Type>(defaultKnownSerializers.knownTypes);
+                this.knownNames = new ConcurrentDictionary<Type, string>(defaultKnownSerializers.knownNames);
+                this.schemas = new ConcurrentDictionary<string, TypeSchema>(defaultKnownSerializers.schemas);
+                this.schemasById = new ConcurrentDictionary<int, TypeSchema>(defaultKnownSerializers.schemasById);
+                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>(defaultKnownSerializers.cloningFlags);
             }
         }
 
@@ -206,6 +206,15 @@ namespace Microsoft.Psi.Serialization
         /// Gets the set of type name synonyms.
         /// </summary>
         public IDictionary<string, string> TypeNameSynonyms => this.typeNameSynonyms;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KnownSerializers"/> class.
+        /// </summary>
+        /// <returns><see cref="KnownSerializers"/> static class. </returns>
+        public static KnownSerializers GetKnownSerializers()
+        {
+            return defaultKnownSerializers;
+        }
 
         /// <summary>
         /// Registers type T with the specified contract name.
