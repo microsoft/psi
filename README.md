@@ -101,7 +101,7 @@ While the Platform for Situated Intelligence source code and the `Microsoft.Psi.
 
 # Licenses
 
-Platform for Situated Intelligence is available under an [MIT License](LICENSE.txt), with the exception of all files under the [Applications](https://github.com/microsoft/psi/tree/master/Sources) folder (including the SIGMA application), which are released under the [Microsoft Research license agreement](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt). See also [Third Party Notices](ThirdPartyNotices.txt).
+Platform for Situated Intelligence is available under an [MIT License](LICENSE.txt), with the exception of all files under the [Applications](https://github.com/microsoft/psi/tree/master/Applications) folder (including the SIGMA application), which are released under the [Microsoft Research license agreement](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt). See also [Third Party Notices](ThirdPartyNotices.txt).
 
 # Trademarks
 
