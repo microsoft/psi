@@ -1,6 +1,6 @@
 --extra-index-url=https://download.pytorch.org/whl/cu118 torch==2.1.0+cu118
 torchvision==0.16.0+cu118
-pillow==9.5.0
+pillow==10.2.0
 opencv-python==4.8.1.78
 pyyaml==6.0.1
 json_tricks==3.17.3
