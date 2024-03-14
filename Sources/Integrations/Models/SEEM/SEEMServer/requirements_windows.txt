@@ -21,7 +21,7 @@ vision-datasets==0.2.2
 cython==3.0.2
 pycocotools==2.0.7
 diffdist==0.1
-pyarrow==13.0.0
+pyarrow==14.0.1
 cityscapesscripts==2.2.2
 shapely==1.8.0
 scikit-image==0.21.0
