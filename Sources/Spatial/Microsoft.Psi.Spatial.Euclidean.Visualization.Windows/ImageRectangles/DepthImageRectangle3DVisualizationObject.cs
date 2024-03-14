@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a 3D depth image rectangle visualization object.
     /// </summary>
     [VisualizationObject("Depth Image in 3D Rectangle")]
-    public class DepthImageRectangle3DVisualizationObject : ModelVisual3DVisualizationObject<DepthImageRectangle3D>
+    public class DepthImageRectangle3DVisualizationObject : ModelVisual3DValueVisualizationObject<DepthImageRectangle3D>
     {
         private readonly MeshGeometryVisual3D depthImageModelVisual;
         private readonly DisplayImage displayImage;
@@ -257,7 +257,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         protected override Action<DepthImageRectangle3D> Deallocator => data => data?.Dispose();
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null && !this.CurrentData.Rectangle3D.IsDegenerate &&
                 this.CurrentData.Image != null && this.CurrentData.Image.Resource != null)

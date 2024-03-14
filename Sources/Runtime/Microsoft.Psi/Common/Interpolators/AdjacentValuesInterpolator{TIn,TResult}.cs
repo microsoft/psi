@@ -23,6 +23,7 @@ namespace Microsoft.Psi.Common.Interpolators
         private readonly Func<TIn, TIn, double, TResult> interpolatorFunc;
         private readonly bool orDefault;
         private readonly TResult defaultValue;
+        private readonly TimeSpan maxSpan;
         private readonly string name;
 
         /// <summary>
@@ -32,12 +33,14 @@ namespace Microsoft.Psi.Common.Interpolators
         /// and the ratio between them.</param>
         /// <param name="orDefault">Indicates whether to output a default value when no result is found.</param>
         /// <param name="defaultValue">An optional default value to use.</param>
+        /// <param name="maxSpan">The maximal timespan between adjacent messages for which interpolation will be run.</param>
         /// <param name="name">An optional name for the interpolator (defaults to AdjacentValues).</param>
-        public AdjacentValuesInterpolator(Func<TIn, TIn, double, TResult> interpolatorFunc, bool orDefault, TResult defaultValue = default, string name = null)
+        public AdjacentValuesInterpolator(Func<TIn, TIn, double, TResult> interpolatorFunc, bool orDefault, TResult defaultValue = default, TimeSpan? maxSpan = null, string name = null)
         {
             this.interpolatorFunc = interpolatorFunc;
             this.orDefault = orDefault;
             this.defaultValue = defaultValue;
+            this.maxSpan = maxSpan ?? TimeSpan.MaxValue;
 
             name ??= "AdjacentValues";
             this.name = this.orDefault ? $"{nameof(Reproducible)}.{name}OrDefault" : $"{nameof(Reproducible)}.{name}";
@@ -75,11 +78,23 @@ namespace Microsoft.Psi.Common.Interpolators
                     // Then if we have a previous message
                     if (lastMessage != default)
                     {
-                        // Then interpolate and return the result
-                        var ratio = (interpolationTime - lastMessage.OriginatingTime).Ticks / (double)(message.OriginatingTime - lastMessage.OriginatingTime).Ticks;
-                        return InterpolationResult<TResult>.Create(
-                            this.interpolatorFunc(lastMessage.Data, message.Data, ratio),
-                            message.OriginatingTime == interpolationTime ? message.OriginatingTime : lastMessage.OriginatingTime);
+                        // If the time between these messages is less than maxSpan
+                        if (message.OriginatingTime - lastMessage.OriginatingTime < this.maxSpan)
+                        {
+                            // Then interpolate and return the result
+                            var ratio = (interpolationTime - lastMessage.OriginatingTime).Ticks / (double)(message.OriginatingTime - lastMessage.OriginatingTime).Ticks;
+                            return InterpolationResult<TResult>.Create(
+                                this.interpolatorFunc(lastMessage.Data, message.Data, ratio),
+                                message.OriginatingTime == interpolationTime ? message.OriginatingTime : lastMessage.OriginatingTime);
+                        }
+                        else
+                        {
+                            // O/w we cannot interpolate at that location, so depending on orDefault,
+                            // either create a default value or return does not exist.
+                            return this.orDefault ?
+                                InterpolationResult<TResult>.Create(this.defaultValue, DateTime.MinValue) :
+                                InterpolationResult<TResult>.DoesNotExist(DateTime.MinValue);
+                        }
                     }
                     else if (message.OriginatingTime == interpolationTime)
                     {

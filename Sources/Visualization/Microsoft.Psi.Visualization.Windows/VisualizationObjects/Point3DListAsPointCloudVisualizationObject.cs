@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a list of 3D points as a point cloud visualization object.
     /// </summary>
     [VisualizationObject("3D Point Cloud")]
-    public class Point3DListAsPointCloudVisualizationObject : ModelVisual3DVisualizationObject<List<Point3D>>
+    public class Point3DListAsPointCloudVisualizationObject : ModelVisual3DValueVisualizationObject<List<Point3D>>
     {
         private readonly PointsVisual3D pointsVisual3D;
 
@@ -72,7 +72,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.NumberOfPoints = this.CurrentData != null ? this.CurrentData.Count.ToString() : "N/A";
             this.UpdateVisuals();

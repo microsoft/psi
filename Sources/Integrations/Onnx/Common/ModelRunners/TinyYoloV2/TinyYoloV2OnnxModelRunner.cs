@@ -24,7 +24,9 @@ namespace Microsoft.Psi.Onnx
     /// be loaded from. The model is available in the ONNX Model Zoo at
     /// https://github.com/onnx/models/raw/3d4b2c28f951064ab35c89d5f5c3ffe74a149e4b/vision/object_detection_segmentation/tiny-yolov2/model/tinyyolov2-8.onnx.
     /// </remarks>
-    public class TinyYoloV2OnnxModelRunner : ConsumerProducer<Shared<Image>, List<TinyYoloV2Detection>>, IDisposable
+    public class TinyYoloV2OnnxModelRunner
+
+        : ConsumerProducer<Shared<Image>, TinyYoloV2DetectionResults>, IDisposable
     {
         private readonly float[] onnxInputVector = new float[3 * 416 * 416];
         private OnnxModel onnxModel;
@@ -76,7 +78,7 @@ namespace Microsoft.Psi.Onnx
             var detections = TinyYoloV2ModelOutputParser.ExtractBoundingBoxes(outputVector);
 
             // convert back based on the cropping performed
-            var results = this.ConvertBoundingBoxesToImageSpace(detections, data);
+            var results = new TinyYoloV2DetectionResults(this.ConvertBoundingBoxesToImageSpace(detections, data), data.Resource.Width, data.Resource.Height);
 
             // post the results
             this.Out.Post(results, envelope.OriginatingTime);

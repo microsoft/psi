@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             LabeledRectangleListVisualizationObject,
             Tuple<System.Drawing.Rectangle, string, string>,
             List<Tuple<System.Drawing.Rectangle, string, string>>,
-            LabeledRectangleListVisualizationObjectCanvasItemView>
+            LabeledRectangleVisualizationObjectCanvasItemView>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LabeledRectangleListVisualizationObjectViewBase"/> class.

@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private Color fillColor = Colors.Red;
         private Color labelColor = Colors.White;
 
-        private int radius = 3;
+        private float radius = 3;
         private bool showLabels = true;
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets the radius.
         /// </summary>
         [DataMember]
-        public int Radius
+        public float Radius
         {
             get { return this.radius; }
             set { this.Set(nameof(this.Radius), ref this.radius, value); }

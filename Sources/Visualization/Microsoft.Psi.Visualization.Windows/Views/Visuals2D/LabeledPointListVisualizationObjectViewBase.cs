@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             LabeledPointListVisualizationObject,
             Tuple<Point, string, string>,
             List<Tuple<Point, string, string>>,
-            LabeledPointListVisualizationObjectCanvasItemView>
+            LabeledPointVisualizationObjectCanvasItemView>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LabeledPointListVisualizationObjectViewBase"/> class.

@@ -107,7 +107,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         public AzureSpeechRecognizer(Pipeline pipeline, string configurationFilename = null)
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AzureSpeechRecognizerConfiguration() : new ConfigurationHelper<AzureSpeechRecognizerConfiguration>(configurationFilename).Configuration)
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AzureSpeechRecognizerConfiguration(), true))
         {
         }
 

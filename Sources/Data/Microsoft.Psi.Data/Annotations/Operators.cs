@@ -14,6 +14,27 @@ namespace Microsoft.Psi.Data.Annotations
     public static class Operators
     {
         /// <summary>
+        /// Converts a stream of boolean values into a corresponding stream of time interval annotations.
+        /// </summary>
+        /// <param name="source">The source stream.</param>
+        /// <param name="track">The track for the annotations.</param>
+        /// <param name="annotationConstructor">A function that produces a set of attribute values for the annotation.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
+        /// <returns>A time interval annotation stream.</returns>
+        public static IProducer<TimeIntervalAnnotationSet> ToTimeIntervalAnnotations(
+            this IProducer<bool> source,
+            string track,
+            Func<Dictionary<string, IAnnotationValue>> annotationConstructor,
+            DeliveryPolicy<bool> deliveryPolicy = null,
+            string name = nameof(ToTimeIntervalAnnotations))
+            => source.ToTimeIntervalAnnotations(
+                value => value ? new Dictionary<bool, bool> { { true, true } } : new Dictionary<bool, bool>(),
+                (_, _) => (true, track, annotationConstructor()),
+                deliveryPolicy,
+                name);
+
+        /// <summary>
         /// Converts a stream of dictionaries with boolean values into a corresponding stream of time interval annotations.
         /// </summary>
         /// <typeparam name="TKey">The type of key in the source stream.</typeparam>

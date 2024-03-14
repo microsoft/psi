@@ -6,10 +6,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Threading;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using GalaSoft.MvvmLight.CommandWpf;
@@ -67,6 +67,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
         private RelayCommand exportStoreCommand;
         private RelayCommand removePartitionCommand;
         private RelayCommand removePartitionFromAllSessionsCommand;
+        private RelayCommand deletePartitionCommand;
+        private RelayCommand deletePartitionFromAllSessionsCommand;
         private RelayCommand<Grid> contextMenuOpeningCommand;
 
         /// <summary>
@@ -95,13 +97,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 this.newMetadataCallback = new UpdateStreamMetadataDelegate(this.UpdateStreamMetadata);
                 this.MonitorLivePartition();
             }
-
-            // If there's no store backing the partition, alert the user.
-            if (!this.partition.IsStoreValid)
-            {
-                string errorMessage = $"An error occurred while attempting to load the partition {this.partition.Name} from the store at {this.StorePath}.";
-                Application.Current.Dispatcher.BeginInvoke((Action)(() => new MessageBoxWindow(Application.Current.MainWindow, "Error Loading Store", errorMessage, "Close", null).ShowDialog()));
-            }
         }
 
         /// <summary>
@@ -111,6 +106,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             this.Dispose(false);
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the partition is valid.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public bool IsValidPartition => this.partition.IsStoreValid;
 
         /// <summary>
         /// Gets the save partition command.
@@ -331,6 +333,21 @@ namespace Microsoft.Psi.Visualization.ViewModels
             this.removePartitionFromAllSessionsCommand ??= new RelayCommand(() => this.DatasetViewModel.RemovePartitionFromAllSessions(this.Name));
 
         /// <summary>
+        /// Gets the delete partition command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand DeletePartitionCommand => this.deletePartitionCommand ??= new RelayCommand(() => this.DeletePartition(), () => !this.IsLivePartition);
+
+        /// <summary>
+        /// Gets the delete partition from all sessions command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand DeletePartitionFromAllSessionsCommand =>
+            this.deletePartitionFromAllSessionsCommand ??= new RelayCommand(() => this.DatasetViewModel.DeletePartitionFromAllSessions(this.Name));
+
+        /// <summary>
         /// Gets the command that executes when opening the partition context menu.
         /// </summary>
         [Browsable(false)]
@@ -447,34 +464,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         public void SaveChanges()
         {
-            // Create the progress window
-            var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Saving store {this.StoreName}");
-            var progress = new Progress<double>(p =>
-            {
-                progressWindow.Progress = p;
-
-                if (p == 1.0)
+            // Run the task in the progress window
+            ProgressWindow.RunWithProgress(
+                $"Saving store {this.StoreName}",
+                progress =>
                 {
-                    // close the status window when the task reports completion
-                    progressWindow.Close();
-                }
-            });
-
-            Task.Run(() =>
-            {
-                DataManager.Instance.SaveStore(this.StoreName, this.StorePath, progress);
-                Console.WriteLine();
-            });
-
-            // Show the modal progress window.  If the task has already completed then it will have
-            // closed the progress window and an invalid operation exception will be thrown.
-            try
-            {
-                progressWindow.ShowDialog();
-            }
-            catch (InvalidOperationException)
-            {
-            }
+                    DataManager.Instance.SaveStore(this.StoreName, this.StorePath, new Progress<double>(p => progress.Report((string.Empty, p))));
+                });
         }
 
         /// <summary>
@@ -494,6 +490,38 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
+        /// Removes this partition from the session that it belongs to and deletes all
+        /// of its associated files on disk.
+        /// </summary>
+        public void DeletePartition()
+        {
+            var confirmation = new MessageBoxWindow(
+               Application.Current.MainWindow,
+               "Are you sure?",
+               "Are you sure you want to delete this partition? This will permanently delete it from disk.",
+               "Yes",
+               "Cancel");
+
+            if (confirmation.ShowDialog() == true)
+            {
+                try
+                {
+                    PsiStore.Delete((this.StoreName, this.StorePath), true);
+                    this.sessionViewModel.RemovePartition(this);
+                }
+                catch (Exception e)
+                {
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Delete Partition Error",
+                        $"An error occurred while attempting to delete the partition: {e.Message}",
+                        "Close",
+                        null).ShowDialog();
+                }
+            }
+        }
+
+        /// <summary>
         /// Prompts the user to save changes if the partition is dirty before continuing with an operation.
         /// </summary>
         /// <returns>True if the current operation should continue, false if the current operation should be cancelled.</returns>
@@ -501,14 +529,25 @@ namespace Microsoft.Psi.Visualization.ViewModels
         {
             if (this.IsDirty)
             {
-                var saveStoreWindow = new SaveStoreWindow(Application.Current.MainWindow, this);
+                var saveStoreWindow = new ConfirmOperationWindow(
+                    Application.Current.MainWindow,
+                    "Save changes to store",
+                    $"The partition {this.Name} has unsaved changes.{Environment.NewLine}{Environment.NewLine}Do you wish to save these changes to disk before continuing?");
+
                 saveStoreWindow.ShowDialog();
                 switch (saveStoreWindow.UserSelection)
                 {
-                    case SaveStoreWindow.SaveStoreWindowResult.SaveChanges:
+                    case ConfirmOperationWindow.ConfirmOperationResult.Yes:
+                        // Save changes and continue
                         this.SaveChanges();
                         break;
-                    case SaveStoreWindow.SaveStoreWindowResult.Cancel:
+
+                    case ConfirmOperationWindow.ConfirmOperationResult.No:
+                        // Continue without saving
+                        break;
+
+                    default:
+                        // Cancel the operation by returning false
                         return false;
                 }
             }
@@ -565,7 +604,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             return this.IsLivePartition;
         }
 
-        private async void ExportStore()
+        private void ExportStore()
         {
             // Set the initial crop interval to be the same as the partition's originating time interval
             var partitionInterval = this.Partition.TimeInterval;
@@ -589,21 +628,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
             var dlg = new ExportPsiPartitionWindow(this.StoreName + "Exported", this.StorePath, new TimeInterval(cropIntervalLeft, cropIntervalRight), Application.Current.MainWindow);
             if (dlg.ShowDialog() == true)
             {
-                // Create the progress window
-                var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Cropping Store {this.StoreName}");
-                var progress = new Progress<double>(p =>
-                {
-                    progressWindow.Progress = p;
-
-                    if (p == 1.0)
-                    {
-                        // close the status window when the task reports completion
-                        progressWindow.Close();
-                    }
-                });
-
                 // Get the requested crop interval
-                TimeInterval requestedCropInterval = dlg.CropInterval;
+                var requestedCropInterval = dlg.CropInterval;
 
                 // Make sure the requested crop interval does not fall outside the partition interval
                 if (requestedCropInterval.Left < partitionInterval.Left)
@@ -616,20 +642,16 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     requestedCropInterval = new TimeInterval(requestedCropInterval.Left, partitionInterval.Right);
                 }
 
-                // Export the store
-                Task exportTask = Task.Run(() => PsiStore.Crop(
-                    (this.StoreName, this.StorePath),
-                    (dlg.StoreName, dlg.StorePath),
-                    requestedCropInterval.Left - partitionInterval.Left,
-                    RelativeTimeInterval.Future(requestedCropInterval.Span),
-                    false,
-                    progress));
-
-                // Show the progress window
-                progressWindow.ShowDialog();
-
-                // Wait for the export command to complete
-                await exportTask;
+                // Export the store and show progress in the progress window
+                ProgressWindow.RunWithProgress(
+                    $"Cropping Store {this.StoreName}",
+                    progress => PsiStore.Crop(
+                        (this.StoreName, this.StorePath),
+                        (dlg.StoreName, dlg.StorePath),
+                        requestedCropInterval.Left - partitionInterval.Left,
+                        RelativeTimeInterval.Future(requestedCropInterval.Span),
+                        false,
+                        new Progress<double>(p => progress.Report((string.Empty, p)))));
 
                 // Update the session
                 this.SessionViewModel.Update(this.SessionViewModel.Session);
@@ -644,7 +666,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             // Find the current extents of the partition, as of this moment
             (TimeInterval messageTimes, TimeInterval messageOriginatingTimes) = storeReader.GetLiveStoreExtents();
 
-            // HACK: Use the partition extents as the extents of all the streams that already exist
+            // Use the partition extents as the extents of all the streams that already exist
             foreach (var streamTreeNode in this.streamsById.Values)
             {
                 streamTreeNode.SourceStreamMetadata.Update(messageTimes, messageOriginatingTimes);
@@ -762,42 +784,42 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.AuxiliaryInfo = string.Empty;
                     break;
                 case AuxiliaryPartitionInfo.Duration:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
                     break;
                 case AuxiliaryPartitionInfo.StartDate:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToShortDateString();
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Left.ToShortDateString();
                     break;
                 case AuxiliaryPartitionInfo.StartDateLocal:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToLocalTime().ToShortDateString();
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Left.ToLocalTime().ToShortDateString();
                     break;
                 case AuxiliaryPartitionInfo.StartTime:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToShortTimeString();
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Left.ToShortTimeString();
                     break;
                 case AuxiliaryPartitionInfo.StartTimeLocal:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToLocalTime().ToShortTimeString();
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Left.ToLocalTime().ToShortTimeString();
                     break;
                 case AuxiliaryPartitionInfo.StartDateTime:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToString();
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Left.ToString();
                     break;
                 case AuxiliaryPartitionInfo.StartDateTimeLocal:
-                    this.AuxiliaryInfo = this.Partition.TimeInterval.IsEmpty ? "?" : this.Partition.TimeInterval.Left.ToLocalTime().ToString();
+                    this.AuxiliaryInfo = this.Partition.MessageOriginatingTimeInterval.IsEmpty ? "?" : this.Partition.MessageOriginatingTimeInterval.Left.ToLocalTime().ToString();
                     break;
                 case AuxiliaryPartitionInfo.Size:
                     this.AuxiliaryInfo = this.Partition.Size.HasValue ? SizeHelper.FormatSize(this.Partition.Size.Value) : "?";
                     break;
                 case AuxiliaryPartitionInfo.DataThroughputPerHour:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.TimeInterval.IsEmpty ?
-                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.TimeInterval.Span.TotalHours, "hour") :
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.MessageOriginatingTimeInterval.IsEmpty ?
+                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.MessageOriginatingTimeInterval.Span.TotalHours, "hour") :
                         "?";
                     break;
                 case AuxiliaryPartitionInfo.DataThroughputPerMinute:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.TimeInterval.IsEmpty ?
-                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.TimeInterval.Span.TotalMinutes, "min") :
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.MessageOriginatingTimeInterval.IsEmpty ?
+                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.MessageOriginatingTimeInterval.Span.TotalMinutes, "min") :
                         "?";
                     break;
                 case AuxiliaryPartitionInfo.DataThroughputPerSecond:
-                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.TimeInterval.IsEmpty ?
-                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.TimeInterval.Span.TotalSeconds, "sec") :
+                    this.AuxiliaryInfo = this.Partition.Size.HasValue && !this.Partition.MessageOriginatingTimeInterval.IsEmpty ?
+                        SizeHelper.FormatThroughput(this.Partition.Size.Value / this.Partition.MessageOriginatingTimeInterval.Span.TotalSeconds, "sec") :
                         "?";
                     break;
                 case AuxiliaryPartitionInfo.StreamCount:
@@ -842,6 +864,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Save Changes", this.SaveChangesCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionRemove, "Remove", this.RemovePartitionCommand));
             contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(null, "Remove From All Sessions", this.RemovePartitionFromAllSessionsCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(null, "Delete Partition", this.DeletePartitionCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(null, "Delete Partition From All Sessions", this.DeletePartitionFromAllSessionsCommand));
             contextMenu.Items.Add(new Separator());
 
             // Add the visualize session context menu if the partition is not in the currently visualized session
@@ -894,7 +918,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.StorePath));
 
             contextMenu.Items.Add(copyToClipboardMenuItem);
-            contextMenu.Items.Add(new Separator());
 
             // Add show partition info menu
             var showPartitionInfoMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Show Partitions Info", null);
@@ -923,11 +946,22 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     MenuItemHelper.CreateMenuItem(
                         this.DatasetViewModel.ShowAuxiliaryPartitionInfo == auxiliaryPartitionInfoValue ? IconSourcePath.Checkmark : null,
                         auxiliaryPartitionInfoName,
-                        new VisualizationCommand<AuxiliaryPartitionInfo>(api => this.DatasetViewModel.ShowAuxiliaryPartitionInfo = api),
+                        new RelayCommand<AuxiliaryPartitionInfo>(api => this.DatasetViewModel.ShowAuxiliaryPartitionInfo = api),
                         commandParameter: auxiliaryPartitionInfoValue));
             }
 
             contextMenu.Items.Add(showPartitionInfoMenuItem);
+
+            // Add open partition folder in windows explorer
+            if (!string.IsNullOrEmpty(this.StorePath))
+            {
+                contextMenu.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        null,
+                        "Open Partition Folder in Explorer",
+                        new RelayCommand(() => { Process.Start("explorer.exe", this.StorePath); }),
+                        commandParameter: default));
+            }
 
             return contextMenu;
         }

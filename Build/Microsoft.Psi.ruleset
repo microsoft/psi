@@ -72,7 +72,7 @@
     <Rule Id="SA1008" Action="None" />
     <Rule Id="SA1009" Action="None" />
     <Rule Id="SA1124" Action="None" />
-    <Rule Id="SA1305" Action="Warning" />
+    <Rule Id="SA1305" Action="None" />
     <Rule Id="SA1407" Action="None" />
     <Rule Id="SA1504" Action="None" />
   </Rules>

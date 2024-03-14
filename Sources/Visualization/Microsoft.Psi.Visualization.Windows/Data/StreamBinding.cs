@@ -104,7 +104,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets a value indicating whether the binding is to a derived stream.
         /// </summary>
         [IgnoreDataMember]
-        public bool IsBindingToDerivedStream => this.DerivedStreamAdapter != null;
+        public bool IsBindingToDerivedStream => this.DerivedStreamAdapterTypeName != null;
 
         /// <summary>
         /// Gets the end-to-end stream adapter.
@@ -162,17 +162,8 @@ namespace Microsoft.Psi.Visualization.Data
         /// </remarks>
         [IgnoreDataMember]
         public IStreamAdapter DerivedStreamAdapter
-        {
-            get
-            {
-                if (this.derivedStreamAdapter == null)
-                {
-                    this.derivedStreamAdapter = this.DerivedStreamAdapterType != null ? (IStreamAdapter)Activator.CreateInstance(this.DerivedStreamAdapterType, this.DerivedStreamAdapterArguments) : null;
-                }
-
-                return this.derivedStreamAdapter;
-            }
-        }
+            => this.derivedStreamAdapter ??= this.DerivedStreamAdapterType != null ?
+            (IStreamAdapter)Activator.CreateInstance(this.DerivedStreamAdapterType, this.DerivedStreamAdapterArguments) : null;
 
         /// <summary>
         /// Gets the derived stream adapter type.
@@ -215,17 +206,8 @@ namespace Microsoft.Psi.Visualization.Data
         /// </remarks>
         [IgnoreDataMember]
         public IStreamAdapter VisualizerStreamAdapter
-        {
-            get
-            {
-                if (this.visualizerStreamAdapter == null)
-                {
-                    this.visualizerStreamAdapter = this.VisualizerStreamAdapterType != null ? (IStreamAdapter)Activator.CreateInstance(this.VisualizerStreamAdapterType, this.VisualizerStreamAdapterArguments) : null;
-                }
-
-                return this.visualizerStreamAdapter;
-            }
-        }
+            => this.visualizerStreamAdapter ??= this.VisualizerStreamAdapterType != null ?
+            (IStreamAdapter)Activator.CreateInstance(this.VisualizerStreamAdapterType, this.VisualizerStreamAdapterArguments) : null;
 
         /// <summary>
         /// Gets visualizer stream adapter type.
@@ -265,15 +247,8 @@ namespace Microsoft.Psi.Visualization.Data
         [IgnoreDataMember]
         public ISummarizer Summarizer
         {
-            get
-            {
-                if (this.visualizerSummarizer == null)
-                {
-                    this.visualizerSummarizer = this.VisualizerSummarizerType != null ? (ISummarizer)Activator.CreateInstance(this.VisualizerSummarizerType, this.VisualizerSummarizerArguments) : null;
-                }
-
-                return this.visualizerSummarizer;
-            }
+            get => this.visualizerSummarizer ??= this.VisualizerSummarizerType != null ?
+                (ISummarizer)Activator.CreateInstance(this.VisualizerSummarizerType, this.VisualizerSummarizerArguments) : null;
 
             private set
             {
@@ -319,7 +294,7 @@ namespace Microsoft.Psi.Visualization.Data
         /// Gets or sets the derived stream adapter type name.
         /// </summary>
         [DataMember]
-        private string DerivedStreamAdapterTypeName { get; set; }
+        public string DerivedStreamAdapterTypeName { get; set; }
 
         /// <summary>
         /// Gets or sets the visualizer stream adapter type name.
@@ -332,5 +307,39 @@ namespace Microsoft.Psi.Visualization.Data
         /// </summary>
         [DataMember]
         private string SummarizerTypeName { get; set; }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // Perform check that we can instantiate the derived stream adapter type
+            if (this.DerivedStreamAdapterTypeName != null && this.derivedStreamAdapterType == null)
+            {
+                this.derivedStreamAdapterType = TypeResolutionHelper.GetVerifiedType(this.DerivedStreamAdapterTypeName);
+                if (this.derivedStreamAdapterType == null)
+                {
+                    throw new Exception($"Cannot construct derived stream adapter type {this.DerivedStreamAdapterTypeName}");
+                }
+            }
+
+            // Perform check that we can instantiate the visualizer stream adapter type
+            if (this.VisualizerStreamAdapterTypeName != null && this.visualizerStreamAdapterType == null)
+            {
+                this.visualizerStreamAdapterType = TypeResolutionHelper.GetVerifiedType(this.VisualizerStreamAdapterTypeName);
+                if (this.visualizerStreamAdapterType == null)
+                {
+                    throw new Exception($"Cannot construct visualizer stream adapter type {this.VisualizerStreamAdapterTypeName}");
+                }
+            }
+
+            // Perform check that we can instantiate the summarizer type
+            if (this.SummarizerTypeName != null && this.visualizerSummarizerType == null)
+            {
+                this.visualizerSummarizerType = TypeResolutionHelper.GetVerifiedType(this.SummarizerTypeName);
+                if (this.visualizerSummarizerType == null)
+                {
+                    throw new Exception($"Cannot construct visualizer summarizer type {this.SummarizerTypeName}");
+                }
+            }
+        }
     }
 }

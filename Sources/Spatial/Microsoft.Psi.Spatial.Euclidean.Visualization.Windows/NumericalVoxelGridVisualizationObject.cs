@@ -49,7 +49,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         {
             if (propertyName == nameof(this.Threshold))
             {
-                this.UpdateData();
+                this.UpdateVisual3D();
             }
 
             base.NotifyPropertyChanged(propertyName);

@@ -46,9 +46,9 @@ namespace Microsoft.Psi.Data
         public bool ReplayAllRealTime { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use the <see cref="DeliveryPolicy.LatestMessage"/> pipeline-level delivery policy when executing this batch task.
+        /// Gets or sets the pipeline level delivery policy specifier.
         /// </summary>
-        public bool DeliveryPolicyLatestMessage { get; set; } = false;
+        public DeliveryPolicySpec DeliveryPolicySpec { get; set; } = DeliveryPolicySpec.Unlimited;
 
         /// <summary>
         /// Gets or sets a value indicating whether to enable pipeline diagnostics when running this batch task.

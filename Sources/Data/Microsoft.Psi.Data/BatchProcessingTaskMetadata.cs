@@ -5,7 +5,6 @@ namespace Microsoft.Psi.Data
 {
     using System;
     using System.IO;
-    using System.Reflection;
 
     /// <summary>
     /// Represents metadata about a dynamically loaded batch processing task
@@ -15,7 +14,6 @@ namespace Microsoft.Psi.Data
     {
         private readonly BatchProcessingTaskAttribute batchProcessingTaskAttribute = null;
         private readonly Type batchProcessingTaskType;
-        private readonly MethodInfo batchProcessingTaskMethodInfo;
         private readonly string batchProcessingTaskConfigurationsPath;
 
         /// <summary>
@@ -27,19 +25,6 @@ namespace Microsoft.Psi.Data
         public BatchProcessingTaskMetadata(Type batchProcessingTaskType, BatchProcessingTaskAttribute batchProcessingTaskAttribute, string batchProcessingTaskConfigurationsPath)
         {
             this.batchProcessingTaskType = batchProcessingTaskType;
-            this.batchProcessingTaskAttribute = batchProcessingTaskAttribute;
-            this.batchProcessingTaskConfigurationsPath = Path.Combine(batchProcessingTaskConfigurationsPath, batchProcessingTaskAttribute.Name);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BatchProcessingTaskMetadata"/> class.
-        /// </summary>
-        /// <param name="batchProcessingTaskMethodInfo">The batch processing method info.</param>
-        /// <param name="batchProcessingTaskAttribute">The batch processing task attribute.</param>
-        /// <param name="batchProcessingTaskConfigurationsPath">The folder in which batch processing task configurations are saved.</param>
-        public BatchProcessingTaskMetadata(MethodInfo batchProcessingTaskMethodInfo, BatchProcessingTaskAttribute batchProcessingTaskAttribute, string batchProcessingTaskConfigurationsPath)
-        {
-            this.batchProcessingTaskMethodInfo = batchProcessingTaskMethodInfo;
             this.batchProcessingTaskAttribute = batchProcessingTaskAttribute;
             this.batchProcessingTaskConfigurationsPath = Path.Combine(batchProcessingTaskConfigurationsPath, batchProcessingTaskAttribute.Name);
         }
@@ -70,52 +55,20 @@ namespace Microsoft.Psi.Data
         public string MostRecentlyUsedConfiguration { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether this batch processing task is method based.
-        /// </summary>
-        private bool IsMethodBased => this.batchProcessingTaskMethodInfo != null;
-
-        /// <summary>
         /// Gets the default configuration for the batch processing task.
         /// </summary>
         /// <returns>The default configuration.</returns>
         public BatchProcessingTaskConfiguration GetDefaultConfiguration()
         {
-            if (this.IsMethodBased)
-            {
-                return new BatchProcessingTaskConfiguration()
-                {
-                    ReplayAllRealTime = this.batchProcessingTaskAttribute.ReplayAllRealTime,
-                    DeliveryPolicyLatestMessage = this.batchProcessingTaskAttribute.DeliveryPolicyLatestMessage,
-                    OutputStoreName = this.batchProcessingTaskAttribute.OutputStoreName,
-                    OutputStorePath = this.batchProcessingTaskAttribute.OutputStorePath,
-                    OutputPartitionName = this.batchProcessingTaskAttribute.OutputPartitionName ?? "Derived",
-                };
-            }
-            else
-            {
-                var batchProcessingTask = Activator.CreateInstance(this.batchProcessingTaskType) as IBatchProcessingTask;
-                return batchProcessingTask.GetDefaultConfiguration();
-            }
+            var batchProcessingTask = Activator.CreateInstance(this.batchProcessingTaskType) as IBatchProcessingTask;
+            return batchProcessingTask.GetDefaultConfiguration();
         }
 
         /// <summary>
-        /// Runs the batch processing task.
+        /// Creates a corresponding batch processing task instance.
         /// </summary>
-        /// <param name="pipeline">The pipeline to run the task on.</param>
-        /// <param name="sessionImporter">The session importer.</param>
-        /// <param name="exporter">The exporter.</param>
-        /// <param name="configuration">The task configuration.</param>
-        public void Run(Pipeline pipeline, SessionImporter sessionImporter, Exporter exporter, BatchProcessingTaskConfiguration configuration)
-        {
-            if (this.IsMethodBased)
-            {
-                this.batchProcessingTaskMethodInfo.Invoke(null, new object[] { pipeline, sessionImporter, exporter });
-            }
-            else
-            {
-                var batchProcessingTask = Activator.CreateInstance(this.batchProcessingTaskType) as IBatchProcessingTask;
-                batchProcessingTask.Run(pipeline, sessionImporter, exporter, configuration);
-            }
-        }
+        /// <returns>The batch processing task instance.</returns>
+        public IBatchProcessingTask CreateBatchProcessingTask()
+            => Activator.CreateInstance(this.batchProcessingTaskType) as IBatchProcessingTask;
     }
 }

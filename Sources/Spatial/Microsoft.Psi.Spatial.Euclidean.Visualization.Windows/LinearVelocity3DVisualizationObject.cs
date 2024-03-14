@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a linear velocity visualization object.
     /// </summary>
     [VisualizationObject("Linear 3D-velocity")]
-    public class LinearVelocity3DVisualizationObject : ModelVisual3DVisualizationObject<LinearVelocity3D>
+    public class LinearVelocity3DVisualizationObject : ModelVisual3DValueVisualizationObject<LinearVelocity3D>
     {
         private const int ThetaDivDefault = 5;
 
@@ -58,7 +58,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.UpdateVelocityVector();
             this.UpdateVisibility();

@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a 3D rectangles visualization object.
     /// </summary>
     [VisualizationObject("3D Rectangle")]
-    public class Rectangle3DVisualizationObject : ModelVisual3DVisualizationObject<Rectangle3D?>
+    public class Rectangle3DVisualizationObject : ModelVisual3DValueVisualizationObject<Rectangle3D?>
     {
         private readonly MeshGeometryVisual3D modelVisual;
         private readonly PipeVisual3D[] borderEdges;
@@ -180,7 +180,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData.HasValue && !this.CurrentData.Value.IsDegenerate)
             {

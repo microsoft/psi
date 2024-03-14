@@ -22,8 +22,10 @@ namespace Microsoft.Psi
         /// assemblies, i.e. assemblies explicitly referenced or loaded by this application.
         /// </summary>
         /// <param name="typeName">The name of the type to retrieve.</param>
+        /// <param name="typeMapping">An optional type mapping to use when retrieving the type
+        /// by name, in case the type is not found and names or assemblies have changed.</param>
         /// <returns>The requested type, or null if the type was not found.</returns>
-        public static Type GetVerifiedType(string typeName)
+        public static Type GetVerifiedType(string typeName, IReadOnlyDictionary<string, string> typeMapping = null)
         {
             if (TypeCache.ContainsKey(typeName))
             {
@@ -40,6 +42,15 @@ namespace Microsoft.Psi
                 // mscorlib/System.Private.CoreLib or the currently executing assembly.
                 typeName = RemoveCoreAssemblyName(typeName);
                 type = Type.GetType(typeName, AssemblyResolver, null);
+            }
+
+            if (type == null &&
+                typeMapping != null &&
+                typeMapping.ContainsKey(typeName))
+            {
+                // If still unable to resolve the type, but a mapping was provided, attempt
+                // to use the target of the mapping to retrieve the type by name.
+                return GetVerifiedType(typeMapping[typeName]);
             }
 
             if (type != null)
@@ -78,7 +89,7 @@ namespace Microsoft.Psi
             string typeName = assemblyQualifiedName;
 
             // strip out mscorlib and System.Private.CoreLib assembly names only
-            typeName = Regex.Replace(typeName, @",\s(mscorlib|System\.Private\.CoreLib)[^\[\]\*]+", string.Empty);
+            typeName = Regex.Replace(typeName, @",\s(mscorlib|System\.Private\.CoreLib)[^\[\]\*]*", string.Empty);
 
             return typeName;
         }

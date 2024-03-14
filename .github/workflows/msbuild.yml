@@ -28,10 +28,10 @@ jobs:
       SOLUTION_FILE_PATH: ./Psi.sln
       
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -43,21 +43,15 @@ jobs:
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
-    - name: Install .NET 3.1
-      # Required to run the cross-framework serialization tests
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '3.1.x'
-        
     - name: Get Test Assemblies (.NET Framework)
-      uses: tj-actions/glob@v17.2.6
+      uses: tj-actions/glob@v21
       id: get-framework-tests
       with:
         files: |
           **\bin\**\*Test.Psi*.exe
           **\bin\**\*Test.Psi*.dll
           !**\bin\**\netcoreapp*\*
-          !**\bin\**\net5.0*\*
+          !**\bin\**\net[0-9].[0-9]*\*
           !**\bin\**\*Test.Psi*.Common.dll
           !**\bin\**\Test.Psi.exe
 
@@ -65,12 +59,12 @@ jobs:
       run: dotnet test --filter "TestCategory!=Performance" -l "console;verbosity=detailed" ${{ steps.get-framework-tests.outputs.paths }}      
 
     - name: Get Test Assemblies (.NET Core)
-      uses: tj-actions/glob@v17.2.6
+      uses: tj-actions/glob@v21
       id: get-netcore-tests
       with:
         files: |
-          **\bin\**\netcoreapp*\*Test.Psi*.dll
-          !**\bin\**\netcoreapp*\*Test.Psi*.Common.dll
+          **\bin\**\net[0-9].[0-9]\Test.Psi*.dll
+          !**\bin\**\net[0-9].[0-9]\Test.Psi*.Common.dll
 
     - name: Run Tests
       run: dotnet test --filter "TestCategory!=Performance" -l "console;verbosity=detailed" ${{ steps.get-netcore-tests.outputs.paths }}

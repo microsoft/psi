@@ -137,12 +137,22 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSerializers"/> class.
         /// </summary>
-        /// <param name="runtimeInfo">
-        /// The version of the runtime to be compatible with. This dictates the behavior of automatic serialization.
-        /// </param>
-        public KnownSerializers(RuntimeInfo runtimeInfo = null)
+        /// <param name="runtimeInfo">The version of the runtime to be compatible with. This dictates the behavior of automatic serialization.</param>
+        /// <param name="knownSerializers">A set of known serializers to initialize with.</param>
+        public KnownSerializers(RuntimeInfo runtimeInfo = null, KnownSerializers knownSerializers = null)
             : this(false, runtimeInfo ?? RuntimeInfo.Latest)
         {
+            if (knownSerializers != null)
+            {
+                // all other instances start off with the Default rules
+                this.templates = new Dictionary<Type, Type>(knownSerializers.templates);
+                this.serializers = new Dictionary<Type, Type>(knownSerializers.serializers);
+                this.knownTypes = new ConcurrentDictionary<string, Type>(knownSerializers.knownTypes);
+                this.knownNames = new ConcurrentDictionary<Type, string>(knownSerializers.knownNames);
+                this.schemas = new ConcurrentDictionary<string, TypeSchema>(knownSerializers.schemas);
+                this.schemasById = new ConcurrentDictionary<int, TypeSchema>(knownSerializers.schemasById);
+                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>(knownSerializers.cloningFlags);
+            }
         }
 
         private KnownSerializers(bool isDefault, RuntimeInfo runtimeInfo)
@@ -155,36 +165,22 @@ namespace Microsoft.Psi.Serialization
             this.handlersByType = new Dictionary<Type, SerializationHandler>();
             this.index = new Dictionary<SerializationHandler, int>();
 
-            if (isDefault)
-            {
-                this.templates = new Dictionary<Type, Type>();
-                this.serializers = new Dictionary<Type, Type>();
-                this.knownTypes = new ConcurrentDictionary<string, Type>();
-                this.knownNames = new ConcurrentDictionary<Type, string>();
-                this.schemas = new ConcurrentDictionary<string, TypeSchema>();
-                this.schemasById = new ConcurrentDictionary<int, TypeSchema>();
-                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>();
+            this.templates = new Dictionary<Type, Type>();
+            this.serializers = new Dictionary<Type, Type>();
+            this.knownTypes = new ConcurrentDictionary<string, Type>();
+            this.knownNames = new ConcurrentDictionary<Type, string>();
+            this.schemas = new ConcurrentDictionary<string, TypeSchema>();
+            this.schemasById = new ConcurrentDictionary<int, TypeSchema>();
+            this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>();
 
-                // register non-generic, custom serializers
-                this.Register<string, StringSerializer>();
-                this.Register<byte[], ByteArraySerializer>();
-                this.Register<BufferReader, BufferSerializer>();
-                this.Register<string[], StringArraySerializer>();
-                this.Register<MemoryStream, MemoryStreamSerializer>();
-                this.RegisterGenericSerializer(typeof(EnumerableSerializer<>));
-                this.RegisterGenericSerializer(typeof(DictionarySerializer<,>));
-            }
-            else
-            {
-                // all other instances start off with the Default rules
-                this.templates = new Dictionary<Type, Type>(Default.templates);
-                this.serializers = new Dictionary<Type, Type>(Default.serializers);
-                this.knownTypes = new ConcurrentDictionary<string, Type>(Default.knownTypes);
-                this.knownNames = new ConcurrentDictionary<Type, string>(Default.knownNames);
-                this.schemas = new ConcurrentDictionary<string, TypeSchema>(Default.schemas);
-                this.schemasById = new ConcurrentDictionary<int, TypeSchema>(Default.schemasById);
-                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>(Default.cloningFlags);
-            }
+            // register non-generic, custom serializers
+            this.Register<string, StringSerializer>();
+            this.Register<byte[], ByteArraySerializer>();
+            this.Register<BufferReader, BufferSerializer>();
+            this.Register<string[], StringArraySerializer>();
+            this.Register<MemoryStream, MemoryStreamSerializer>();
+            this.RegisterGenericSerializer(typeof(EnumerableSerializer<>));
+            this.RegisterGenericSerializer(typeof(DictionarySerializer<,>));
         }
 
         /// <summary>

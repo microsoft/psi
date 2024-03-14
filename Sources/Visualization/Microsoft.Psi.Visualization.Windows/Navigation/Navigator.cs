@@ -16,6 +16,8 @@ namespace Microsoft.Psi.Visualization.Navigation
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.VisualizationObjects;
+    using Microsoft.Psi.Visualization.VisualizationPanels;
+    using Microsoft.Psi.Visualization.Windows;
 
     /// <summary>
     /// Class implements the time Navigator view model.
@@ -244,7 +246,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         /// <summary>
         /// Gets a value indicating whether the navigator has a finite range.
         /// </summary>
-        public bool HasFiniteRange => this.selectionRange.IsFinite && this.viewRange.IsFinite && this.dataRange.IsFinite;
+        public bool HasFiniteRange => this.viewRange.IsFinite && this.dataRange.IsFinite;
 
         /// <summary>
         /// Gets a value indicating whether we're currently playing back data.
@@ -669,6 +671,76 @@ namespace Microsoft.Psi.Visualization.Navigation
             => this.CursorMode != CursorMode.Live && this.SelectionRange.IsFinite && this.SelectionRange.EndTime < this.DataRange.EndTime;
 
         /// <summary>
+        /// Moves the selection to the next annotation.
+        /// </summary>
+        public void MoveSelectionToNextAnnotation()
+        {
+            if (this.CursorMode != CursorMode.Live &&
+                VisualizationContext.Instance.VisualizationContainer.CurrentPanel is TimelineVisualizationPanel timelineVisualizationPanel)
+            {
+                var annotationVisualizationObject = timelineVisualizationPanel.VisualizationObjects.FirstOrDefault(vo => vo is TimeIntervalAnnotationVisualizationObject);
+                if (annotationVisualizationObject != null)
+                {
+                    (annotationVisualizationObject as TimeIntervalAnnotationVisualizationObject).MoveSelectionToNextAnnotation();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the selection can be moved to the next annotation.
+        /// </summary>
+        /// <returns>True if the selection can be moved to the next annotation.</returns>
+        public bool CanMoveSelectionToNextAnnotation()
+        {
+            if (this.CursorMode != CursorMode.Live &&
+                VisualizationContext.Instance.VisualizationContainer.CurrentPanel is TimelineVisualizationPanel timelineVisualizationPanel)
+            {
+                var annotationVisualizationObject = timelineVisualizationPanel.VisualizationObjects.FirstOrDefault(vo => vo is TimeIntervalAnnotationVisualizationObject);
+                if (annotationVisualizationObject != null)
+                {
+                    return (annotationVisualizationObject as TimeIntervalAnnotationVisualizationObject).CanMoveSelectionToNextAnnotation();
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Moves the selection to the previous annotation.
+        /// </summary>
+        public void MoveSelectionToPreviousAnnotation()
+        {
+            if (this.CursorMode != CursorMode.Live &&
+                VisualizationContext.Instance.VisualizationContainer.CurrentPanel is TimelineVisualizationPanel timelineVisualizationPanel)
+            {
+                var annotationVisualizationObject = timelineVisualizationPanel.VisualizationObjects.FirstOrDefault(vo => vo is TimeIntervalAnnotationVisualizationObject);
+                if (annotationVisualizationObject != null)
+                {
+                    (annotationVisualizationObject as TimeIntervalAnnotationVisualizationObject).MoveSelectionToPreviousAnnotation();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the selection can be moved to the previous annotation.
+        /// </summary>
+        /// <returns>True if the selection can be moved to the previous annotation.</returns>
+        public bool CanMoveSelectionToPreviousAnnotation()
+        {
+            if (this.CursorMode != CursorMode.Live &&
+                VisualizationContext.Instance.VisualizationContainer.CurrentPanel is TimelineVisualizationPanel timelineVisualizationPanel)
+            {
+                var annotationVisualizationObject = timelineVisualizationPanel.VisualizationObjects.FirstOrDefault(vo => vo is TimeIntervalAnnotationVisualizationObject);
+                if (annotationVisualizationObject != null)
+                {
+                    return (annotationVisualizationObject as TimeIntervalAnnotationVisualizationObject).CanMoveSelectionToPreviousAnnotation();
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Shift the view range to capture the selection.
         /// </summary>
         public void ShiftViewRangeToAccomodateSelection()
@@ -727,13 +799,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         private void StartPlayback()
         {
             // Create the play timer if it doesn't exist yet
-            if (this.playTimer == null)
-            {
-                this.playTimer = new DispatcherTimer(TimeSpan.FromMilliseconds(this.playTimerTickIntervalMs), DispatcherPriority.Background, new EventHandler(this.OnPlaytimerTick), Dispatcher.CurrentDispatcher);
-            }
-
-            // Move the cursor to the start of the selection, if one is available or from the start of the data if not.
-            this.Cursor = this.SelectionRange.StartTime != DateTime.MinValue ? this.SelectionRange.StartTime : this.DataRange.StartTime;
+            this.playTimer ??= new DispatcherTimer(TimeSpan.FromMilliseconds(this.playTimerTickIntervalMs), DispatcherPriority.Background, new EventHandler(this.OnPlaytimerTick), Dispatcher.CurrentDispatcher);
 
             // Make sure that the cursor is visible
             this.EnsureCursorVisible();
@@ -755,10 +821,7 @@ namespace Microsoft.Psi.Visualization.Navigation
         private void StopPlayback()
         {
             // Pause the play timer
-            if (this.playTimer != null)
-            {
-                this.playTimer.Stop();
-            }
+            this.playTimer?.Stop();
 
             // Update the cursor mode
             this.CursorMode = CursorMode.Manual;
@@ -780,15 +843,20 @@ namespace Microsoft.Psi.Visualization.Navigation
             {
                 // Create the playback pipeline
                 this.audioPlaybackPipeline = Pipeline.Create("AudioPlayer");
+                this.audioPlaybackPipeline.PipelineExceptionNotHandled += this.OnAudioPlaybackPipelineError;
 
-                foreach (StreamSource streamSource in this.audioPlaybackSources.Values)
+                foreach (var (audio, streamSource) in this.audioPlaybackSources.Select(source => (source.Key, source.Value)))
                 {
                     if (streamSource != null)
                     {
                         // Get the audio stream to play
                         var reader = StreamReader.Create(streamSource.StoreName, streamSource.StorePath, streamSource.StreamReaderType);
-                        var importer = new Importer(this.audioPlaybackPipeline, reader, false);
-                        var stream = importer.OpenStream<AudioBuffer>(streamSource.StreamName);
+                        var importer = new AudioImporter(this.audioPlaybackPipeline, reader, false);
+                        var stream = importer.OpenAudioStream(streamSource.StreamName);
+                        if (audio.PlayDisplayChannelOnly)
+                        {
+                            stream = stream.SelectChannel(audio.Channel);
+                        }
 
                         // Create the audio player
                         var audioPlayer = new AudioPlayer(this.audioPlaybackPipeline, new AudioPlayerConfiguration());
@@ -800,6 +868,24 @@ namespace Microsoft.Psi.Visualization.Navigation
                 var endTime = this.SelectionRange.EndTime != DateTime.MaxValue ? this.SelectionRange.EndTime : this.DataRange.EndTime;
                 this.audioPlaybackPipeline.RunAsync(new ReplayDescriptor(this.Cursor, endTime));
             }
+        }
+
+        private void OnAudioPlaybackPipelineError(object sender, PipelineExceptionNotHandledEventArgs e)
+        {
+            Application.Current.Dispatcher.BeginInvoke(() =>
+            {
+                if (this.audioPlaybackPipeline != null)
+                {
+                    this.StopPlayback();
+
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Audio Playback Error",
+                        $"An error occurred during audio playback: {e.Exception.Message}",
+                        "Close",
+                        null).ShowDialog();
+                }
+            });
         }
 
         /// <summary>

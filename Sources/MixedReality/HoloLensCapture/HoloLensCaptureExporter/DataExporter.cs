@@ -7,12 +7,10 @@ namespace HoloLensCaptureExporter
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Threading;
+    using HoloLensCaptureInterop;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi;
     using Microsoft.Psi.Audio;
-    using Microsoft.Psi.Imaging;
-    using Microsoft.Psi.Media;
     using Microsoft.Psi.MixedReality;
     using Microsoft.Psi.Spatial.Euclidean;
     using OpenXRHand = Microsoft.Psi.MixedReality.OpenXR.Hand;
@@ -24,8 +22,19 @@ namespace HoloLensCaptureExporter
     /// </summary>
     internal class DataExporter
     {
-        private const string VideoStreamName = "VideoImageCameraView";
-        private const string VideoEncodedStreamName = "VideoEncodedImageCameraView";
+        /// <summary>
+        /// The video stream name.
+        /// </summary>
+        private const string VideoImageCameraViewStreamName = "VideoImageCameraView";
+
+        /// <summary>
+        /// The encoded video stream name.
+        /// </summary>
+        private const string VideoEncodedImageCameraViewStreamName = "VideoEncodedImageCameraView";
+
+        /// <summary>
+        /// The audio stream name.
+        /// </summary>
         private const string AudioStreamName = "Audio";
 
         /// <summary>
@@ -35,8 +44,10 @@ namespace HoloLensCaptureExporter
         /// <returns>An error code or 0 if success.</returns>
         public static int Run(Verbs.ExportCommand exportCommand)
         {
-            var pngEncoder = new ImageToPngStreamEncoder();
-            var decoder = new ImageFromStreamDecoder();
+            // Register platform-specific resources
+            Microsoft.Psi.Imaging.Resources.RegisterPlatformResources();
+            Microsoft.Psi.Media.Resources.RegisterPlatformResources();
+            Microsoft.Psi.Audio.Resources.RegisterPlatformResources();
 
             // Create a pipeline
             using var p = Pipeline.Create(deliveryPolicy: DeliveryPolicy.Throttle);
@@ -51,8 +62,8 @@ namespace HoloLensCaptureExporter
             var magnetometer = store.OpenStreamOrDefault<(Vector3D, DateTime)[]>("Magnetometer");
             var head = store.OpenStreamOrDefault<CoordinateSystem>("Head");
             var audio = store.OpenStreamOrDefault<AudioBuffer>(AudioStreamName);
-            var videoEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>(VideoEncodedStreamName);
-            var videoImageCameraView = store.OpenStreamOrDefault<ImageCameraView>(VideoStreamName);
+            var videoEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>(VideoEncodedImageCameraViewStreamName);
+            var videoImageCameraView = store.OpenStreamOrDefault<ImageCameraView>(VideoImageCameraViewStreamName);
             var previewEncodedImageCameraView = store.OpenStreamOrDefault<EncodedImageCameraView>("PreviewEncodedImageCameraView");
             var previewImageCameraView = store.OpenStreamOrDefault<ImageCameraView>("PreviewImageCameraView");
             var depthImageCameraView = store.OpenStreamOrDefault<DepthImageCameraView>("DepthImageCameraView");
@@ -82,7 +93,7 @@ namespace HoloLensCaptureExporter
             var sceneUnderstanding = store.OpenStreamOrDefault<SceneObjectCollection>("SceneUnderstanding");
 
             // Verify expected stream combinations
-            void VerifyMutualExclusivity(dynamic a, dynamic b, string name)
+            static void VerifyMutualExclusivity(dynamic a, dynamic b, string name)
             {
                 if (a != null && b != null)
                 {
@@ -103,68 +114,14 @@ namespace HoloLensCaptureExporter
             // the export pipeline is completed)
             var streamWritersToClose = new List<StreamWriter>();
 
-            // Export various encoded image camera views
-            IProducer<ImageCameraView> Export(
-                string name,
-                IProducer<ImageCameraView> imageCameraView,
-                IProducer<EncodedImageCameraView> encodedImageCameraView,
-                IProducer<EncodedImageCameraView> gzipImageCameraView = null,
-                bool isNV12 = false)
-            {
-                void VerifyMutualExclusivity(dynamic s0, dynamic s1)
-                {
-                    if (s0 != null || s1 != null)
-                    {
-                        throw new Exception($"Expected single stream for each camera (found multiple for {name}).");
-                    }
-                }
-
-                if (imageCameraView != null)
-                {
-                    // export raw camera view as lossless PNG
-                    VerifyMutualExclusivity(encodedImageCameraView, gzipImageCameraView);
-                    imageCameraView.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
-                    return imageCameraView;
-                }
-
-                if (encodedImageCameraView != null)
-                {
-                    VerifyMutualExclusivity(imageCameraView, gzipImageCameraView);
-                    var decoded = encodedImageCameraView.Decode(decoder);
-                    if (isNV12)
-                    {
-                        // export NV12-encoded camera view as lossless PNG
-                        decoded.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
-                    }
-                    else
-                    {
-                        // export encoded camera view as is
-                        encodedImageCameraView.Export(name, exportCommand.OutputPath, streamWritersToClose);
-                    }
-
-                    return decoded;
-                }
-
-                if (gzipImageCameraView != null)
-                {
-                    // export GZIP'd camera view as lossless PNG
-                    VerifyMutualExclusivity(imageCameraView, encodedImageCameraView);
-                    var decoded = gzipImageCameraView.Decode(decoder);
-                    decoded.Encode(pngEncoder).Export(name, exportCommand.OutputPath, streamWritersToClose);
-                    return decoded;
-                }
-
-                return null;
-            }
-
-            var decodedVideo = Export("Video", videoImageCameraView, videoEncodedImageCameraView, isNV12: true);
-            Export("Preview", previewImageCameraView, previewEncodedImageCameraView, isNV12: true);
-            Export("Infrared", infraredImageCameraView, infraredEncodedImageCameraView);
-            Export("AhatInfrared", ahatInfraredImageCameraView, ahatInfraredEncodedImageCameraView);
-            Export("LeftFront", leftFrontImageCameraView, leftFrontEncodedImageCameraView, leftFrontGzipImageCameraView);
-            Export("RightFront", rightFrontImageCameraView, rightFrontEncodedImageCameraView, rightFrontGzipImageCameraView);
-            Export("LeftLeft", leftLeftImageCameraView, leftLeftEncodedImageCameraView, leftLeftGzipImageCameraView);
-            Export("RightRight", rightRightImageCameraView, rightRightEncodedImageCameraView, rightRightGzipImageCameraView);
+            var imageCameraView = HoloLensCaptureInterop.Operators.Export("Video", videoImageCameraView, videoEncodedImageCameraView, null, isNV12: true, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("Preview", previewImageCameraView, previewEncodedImageCameraView, null, isNV12: true, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("Infrared", infraredImageCameraView, infraredEncodedImageCameraView, null, isNV12: false, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("AhatInfrared", ahatInfraredImageCameraView, ahatInfraredEncodedImageCameraView, null, isNV12: false, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("LeftFront", leftFrontImageCameraView, leftFrontEncodedImageCameraView, leftFrontGzipImageCameraView, isNV12: false, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("RightFront", rightFrontImageCameraView, rightFrontEncodedImageCameraView, rightFrontGzipImageCameraView, isNV12: false, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("LeftLeft", leftLeftImageCameraView, leftLeftEncodedImageCameraView, leftLeftGzipImageCameraView, isNV12: false, exportCommand.OutputPath, streamWritersToClose);
+            HoloLensCaptureInterop.Operators.Export("RightRight", rightRightImageCameraView, rightRightEncodedImageCameraView, rightRightGzipImageCameraView, isNV12: false, exportCommand.OutputPath, streamWritersToClose);
 
             // Export various depth image camera views
             depthImageCameraView?.Export("Depth", exportCommand.OutputPath, streamWritersToClose);
@@ -227,96 +184,17 @@ namespace HoloLensCaptureExporter
             // Export scene understanding
             sceneUnderstanding?.Export("SceneUnderstanding", exportCommand.OutputPath, streamWritersToClose);
 
-            // Export MPEG video
-            (var videoMeta, var width, var height, var audioFormat) = GetAudioAndVideoInfo(exportCommand.StoreName, exportCommand.StorePath);
-
-            if (videoMeta is not null)
-            {
-                // Configure and initialize the mpeg writer
-                var frameRateNumerator = (uint)(videoMeta.MessageCount - 1);
-                var frameRateDenominator = (uint)((videoMeta.LastMessageOriginatingTime - videoMeta.FirstMessageOriginatingTime).TotalSeconds + 0.5);
-                var frameRate = frameRateNumerator / frameRateDenominator;
-                var mpegFile = EnsurePathExists(Path.Combine(exportCommand.OutputPath, "Video", $"Video.mpeg"));
-                var audioOutputFormat = WaveFormat.Create16BitPcm((int)(audioFormat?.SamplesPerSec ?? 0), audioFormat?.Channels ?? 0);
-                var mpegWriter = new Mpeg4Writer(p, mpegFile, new Mpeg4WriterConfiguration()
-                {
-                    ImageWidth = (uint)width,
-                    ImageHeight = (uint)height,
-                    FrameRateNumerator = frameRateNumerator,
-                    FrameRateDenominator = frameRateDenominator,
-                    PixelFormat = PixelFormat.BGRA_32bpp,
-                    TargetBitrate = 10000000,
-                    ContainsAudio = audioFormat != null,
-                    AudioBitsPerSample = audioOutputFormat.BitsPerSample,
-                    AudioChannels = audioOutputFormat.Channels,
-                    AudioSamplesPerSecond = audioOutputFormat.SamplesPerSec,
-                });
-
-                // We will need to resample the video stream for the mpeg
-                var mpegVideoInterval = TimeSpan.FromSeconds(1.0 / frameRate);
-                IProducer<bool> mpegVideoTicks;
-                IProducer<bool> mpegTicks;
-
-                // Write "start" and "end" times of the mpeg to file
-                var mpegTimingFile = File.CreateText(EnsurePathExists(Path.Combine(exportCommand.OutputPath, "Video", "VideoMpegTiming.txt")));
-                streamWritersToClose.Add(mpegTimingFile);
-
-                // Audio
-                if (audioFormat is not null)
-                {
-                    var mpegAudio = audio.Resample(new AudioResamplerConfiguration() { OutputFormat = audioOutputFormat, });
-                    mpegAudio.PipeTo(mpegWriter.AudioIn);
-
-                    // Compute frame ticks for the resampled video
-                    mpegVideoTicks = mpegAudio
-                        .Select((m, e) => e.OriginatingTime - m.Duration)
-                        .Zip(decodedVideo.TimeOf())
-                        .Process<DateTime[], bool>((m, e, emitter) =>
-                        {
-                            if (emitter.LastEnvelope.OriginatingTime == default)
-                            {
-                                // The mpeg "start time" will be the minimum time of the first video message and *start* of the first (resampled) audio buffer.
-                                emitter.Post(true, m.Min());
-                            }
-
-                            while (emitter.LastEnvelope.OriginatingTime <= e.OriginatingTime)
-                            {
-                                emitter.Post(true, emitter.LastEnvelope.OriginatingTime + mpegVideoInterval);
-                            }
-                        });
-
-                    // Zip with the resampled audio times
-                    mpegTicks = mpegAudio.Select(_ => true).Zip(mpegVideoTicks).Select(a => a.First());
-                }
-                else
-                {
-                    // Compute frame ticks for the resampled video
-                    mpegVideoTicks = decodedVideo.Process<ImageCameraView, bool>((_, e, emitter) =>
-                    {
-                        if (emitter.LastEnvelope.OriginatingTime == default)
-                        {
-                            emitter.Post(true, e.OriginatingTime);
-                        }
-
-                        while (emitter.LastEnvelope.OriginatingTime <= e.OriginatingTime)
-                        {
-                            emitter.Post(true, emitter.LastEnvelope.OriginatingTime + mpegVideoInterval);
-                        }
-                    });
-
-                    // No audio, so the mpeg start/end times are just the time of the first/last video message.
-                    mpegTicks = mpegVideoTicks;
-                }
-
-                // Video
-                mpegVideoTicks
-                    .Join(decodedVideo, Reproducible.Nearest<ImageCameraView>()).Select(tuple => tuple.Item2.ViewedObject)
-                    .PipeTo(mpegWriter);
-
-                // Write the mpeg start and end times time
-                mpegTicks.First().Do((_, e) => mpegTimingFile.WriteLine($"{e.OriginatingTime.ToText()}"));
-                mpegTicks.Last().Do((_, e) => mpegTimingFile.WriteLine($"{e.OriginatingTime.ToText()}"));
-            }
+            // Export the video and audio to an Mpeg
+            HoloLensCaptureInterop.Operators.ExportToMpeg(
+                imageCameraView,
+                VideoImageCameraViewStreamName,
+                VideoEncodedImageCameraViewStreamName,
+                audio,
+                AudioStreamName,
+                exportCommand.StoreName,
+                exportCommand.StorePath,
+                Path.Combine(exportCommand.OutputPath, "Video"),
+                streamWritersToClose);
 
             Console.WriteLine($"Exporting {exportCommand.StoreName} to {exportCommand.OutputPath}");
             var startTime = DateTime.Now;
@@ -332,97 +210,6 @@ namespace HoloLensCaptureExporter
             Console.WriteLine($"Done in {DateTime.Now - startTime}.");
 
             return 0;
-        }
-
-        /// <summary>
-        /// Ensures that a specified path exists.
-        /// </summary>
-        /// <param name="path">The path to ensure the existence of.</param>
-        /// <returns>The path.</returns>
-        internal static string EnsurePathExists(string path)
-        {
-            var directory = Path.GetDirectoryName(path);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            return path;
-        }
-
-        private static (IStreamMetadata VideoMetadata, int Width, int Height, WaveFormat AudioFormat) GetAudioAndVideoInfo(string storeName, string storePath)
-        {
-            // determine properties for the mpeg writer by peeking at the first video and audio messages
-            using var p = Pipeline.Create();
-            var store = PsiStore.Open(p, storeName, storePath);
-
-            // Get the image width and height by looking at the first message of the video stream.
-            var width = 0;
-            var height = 0;
-            var videoWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-
-            void SetWidthAndHeight(IImage image)
-            {
-                if (image.PixelFormat != PixelFormat.BGRA_32bpp)
-                {
-                    throw new ArgumentException($"Expected video stream of {PixelFormat.BGRA_32bpp} (found {image.PixelFormat}).");
-                }
-
-                width = image.Width;
-                height = image.Height;
-                videoWaitHandle.Set();
-            }
-
-            bool TryGetMetadata(string stream, out IStreamMetadata meta)
-            {
-                if (store.Contains(stream))
-                {
-                    meta = store.GetMetadata(stream);
-                    if (meta.MessageCount > 0)
-                    {
-                        return true;
-                    }
-                }
-
-                meta = null;
-                return false;
-            }
-
-            if (TryGetMetadata(VideoStreamName, out var videoMetadata))
-            {
-                store.OpenStream<ImageCameraView>(VideoStreamName).First().Do(v => SetWidthAndHeight(v.ViewedObject.Resource));
-            }
-            else if (TryGetMetadata(VideoEncodedStreamName, out videoMetadata))
-            {
-                store.OpenStream<EncodedImageCameraView>(VideoEncodedStreamName).First().Do(v => SetWidthAndHeight(v.ViewedObject.Resource));
-            }
-            else
-            {
-                videoWaitHandle.Set();
-            }
-
-            // Get the audio format by examining the first audio message (if one exists).
-            WaveFormat audioFormat = null;
-            var audioWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
-
-            if (TryGetMetadata(AudioStreamName, out var audioMeta))
-            {
-                store.OpenStream<AudioBuffer>(AudioStreamName).First().Do((a, env) =>
-                {
-                    audioFormat = a.Format;
-                    audioWaitHandle.Set();
-                });
-            }
-            else
-            {
-                audioWaitHandle.Set();
-            }
-
-            // Run the pipeline, just until we've read the first video and audio message
-            p.RunAsync();
-            WaitHandle.WaitAll(new WaitHandle[2] { videoWaitHandle, audioWaitHandle });
-
-            return (videoMetadata, width, height, audioFormat);
         }
 
         /// <summary>

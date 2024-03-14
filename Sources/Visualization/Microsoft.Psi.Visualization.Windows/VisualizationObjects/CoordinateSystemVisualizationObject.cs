@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a coordinate system visualization object.
     /// </summary>
     [VisualizationObject("Coordinate System")]
-    public class CoordinateSystemVisualizationObject : ModelVisual3DVisualizationObject<CoordinateSystem>
+    public class CoordinateSystemVisualizationObject : ModelVisual3DValueVisualizationObject<CoordinateSystem>
     {
         private const int XAxisIndex = 0;
         private const int YAxisIndex = 1;
@@ -70,7 +70,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (propertyName == nameof(this.Length) || propertyName == nameof(this.Thickness))
             {
                 this.UpdateThickness();
-                this.UpdateData();
+                this.UpdateVisual3D();
             }
             else if (propertyName == nameof(this.Visible))
             {
@@ -79,7 +79,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {

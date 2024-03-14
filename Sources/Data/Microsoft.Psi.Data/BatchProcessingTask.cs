@@ -29,6 +29,46 @@ namespace Microsoft.Psi.Data
         public abstract void Run(Pipeline pipeline, SessionImporter sessionImporter, Exporter exporter, TBatchProcessingTaskConfiguration configuration);
 
         /// <inheritdoc/>
+        public virtual void OnStartProcessingDataset()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnEndProcessingDataset()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnCanceledProcessingDataset()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnExceptionProcessingDataset()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnStartProcessingSession()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnEndProcessingSession()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnCanceledProcessingSession()
+        {
+        }
+
+        /// <inheritdoc/>
+        public virtual void OnExceptionProcessingSession()
+        {
+        }
+
+        /// <inheritdoc/>
         BatchProcessingTaskConfiguration IBatchProcessingTask.GetDefaultConfiguration() => this.GetDefaultConfiguration();
 
         /// <inheritdoc/>

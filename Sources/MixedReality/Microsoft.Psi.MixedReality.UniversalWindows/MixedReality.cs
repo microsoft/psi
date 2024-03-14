@@ -12,9 +12,11 @@ namespace Microsoft.Psi.MixedReality
     /// <summary>
     /// Represents mixed reality utility functions.
     /// </summary>
+    /// <remarks>SK.Initialize must be called before using this class.</remarks>
     public static class MixedReality
     {
         private const string DefaultWorldSpatialAnchorId = "_world";
+        private static readonly SpatialLocator DeviceLocator = SpatialLocator.GetDefault();
 
         /// <summary>
         /// Gets the world coordinate system.
@@ -22,9 +24,19 @@ namespace Microsoft.Psi.MixedReality
         public static SpatialCoordinateSystem WorldSpatialCoordinateSystem { get; private set; }
 
         /// <summary>
-        /// Gets the spatial anchor helper.
+        /// Gets the id of the world spatial anchor.
         /// </summary>
-        public static SpatialAnchorHelper SpatialAnchorHelper { get; private set; }
+        public static string WorldSpatialAnchorId { get; private set; }
+
+        /// <summary>
+        /// Gets the spatial anchor provider.
+        /// </summary>
+        public static ISpatialAnchorProvider SpatialAnchorProvider { get; private set; }
+
+        /// <summary>
+        /// Gets the current localization state.
+        /// </summary>
+        public static LocalizationState LocalizationState { get; private set; }
 
         /// <summary>
         /// Initializes static members of the <see cref="MixedReality"/> class.
@@ -33,8 +45,9 @@ namespace Microsoft.Psi.MixedReality
         /// If the default spatial anchor is not found (e.g., if the app is being run for the first time),
         /// a stationary frame of reference for the world is created at the current location.
         /// </summary>
-        /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (optional).</param>
-        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Optional flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment (default: false).</param>
+        /// <param name="worldSpatialAnchor">An already created spatial anchor to use for the world root (optional).</param>
+        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Optional flag indicating whether to regenerate and persist
+        /// the world spatial anchor if the current world anchor cannot be localized in the current environment (default: false).</param>
         /// <remarks>
         /// This method should be called after SK.Initialize.
         /// </remarks>
@@ -42,129 +55,144 @@ namespace Microsoft.Psi.MixedReality
         {
             if (!SK.IsInitialized)
             {
-                throw new InvalidOperationException($"StereoKit is not initialized. Call SK.Initialize before calling MixedReality.{nameof(Initialize)}.");
+                throw new InvalidOperationException($"StereoKit is not initialized. Call SK.Initialize before accessing the {nameof(MixedReality)} class.");
             }
-
-            // Create the spatial anchor helper
-            SpatialAnchorHelper = new SpatialAnchorHelper(SpatialAnchorManager.RequestStoreAsync().AsTask().GetAwaiter().GetResult());
-
-            InitializeWorldCoordinateSystem(worldSpatialAnchor, regenerateDefaultWorldSpatialAnchorIfNeeded);
 
             // By default, don't render the hands or register with StereoKit physics system.
             Input.HandVisible(Handed.Max, false);
             Input.HandSolid(Handed.Max, false);
+
+            // Set the default world coordinate system
+            SetWorldCoordinateSystem(
+                new LocalSpatialAnchorProvider(SpatialAnchorManager.RequestStoreAsync().AsTask().GetAwaiter().GetResult()),
+                worldSpatialAnchor,
+                DefaultWorldSpatialAnchorId,
+                createWorldSpatialAnchorIfNeeded: true,
+                regenerateWorldSpatialAnchorIfNeeded: regenerateDefaultWorldSpatialAnchorIfNeeded);
         }
 
         /// <summary>
-        /// Initializes the world coordinate system for the application using a pre-defined spatial anchor,
-        /// or creates it at a stationary frame of reference if it does not exist. Once initialized, the
-        /// world coordinate system will be consistent across application sessions, unless the associated
-        /// spatial anchor is modified or deleted.
-        /// <param name="worldSpatialAnchor">A spatial anchor to use for the world (may be null).</param>
-        /// <param name="regenerateDefaultWorldSpatialAnchorIfNeeded">Flag indicating whether to regenerate and persist default world spatial anchor if currently persisted anchor fails to localize in the current environment.</param>
+        /// Sets the world coordinate system for the application using a spatial anchor. The spatial anchor to use
+        /// may be explicitly provided or loaded from a spatial anchor provider by providing the unique identifier
+        /// of the spatial anchor. If no spatial anchor provider is specified, the app-local spatial anchor store
+        /// will be used. If no spatial anchor is provided or the specified anchor identifier cannot be found, one
+        /// may optionally be created at the current location.
         /// </summary>
-        private static void InitializeWorldCoordinateSystem(SpatialAnchor worldSpatialAnchor, bool regenerateDefaultWorldSpatialAnchorIfNeeded)
+        /// <param name="spatialAnchorProvider">The spatial anchor provider to use.</param>
+        /// <param name="worldSpatialAnchor">An already created spatial anchor to use for the world root (optional).</param>
+        /// <param name="worldSpatialAnchorId">The id of the world spatial anchor.</param>
+        /// <param name="createWorldSpatialAnchorIfNeeded">
+        /// Optional flag indicating whether to create a new world spatial anchor if no world anchor was supplied or
+        /// the specified world anchor could not be found (default: true).
+        /// </param>
+        /// <param name="regenerateWorldSpatialAnchorIfNeeded">
+        /// Optional flag indicating whether to regenerate and persist the world spatial anchor if the current world
+        /// anchor cannot be localized in the current environment (default: false).
+        /// </param>
+        /// <remarks>
+        /// This method should be called after SK.Initialize.
+        /// </remarks>
+        public static void SetWorldCoordinateSystem(
+            ISpatialAnchorProvider spatialAnchorProvider = null,
+            SpatialAnchor worldSpatialAnchor = null,
+            string worldSpatialAnchorId = DefaultWorldSpatialAnchorId,
+            bool createWorldSpatialAnchorIfNeeded = true,
+            bool regenerateWorldSpatialAnchorIfNeeded = false)
         {
-            static SpatialAnchor TryCreateDefaultWorldSpatialAnchor(SpatialStationaryFrameOfReference world)
+            SpatialAnchorProvider = spatialAnchorProvider ?? new LocalSpatialAnchorProvider(SpatialAnchorManager.RequestStoreAsync().AsTask().GetAwaiter().GetResult());
+            WorldSpatialAnchorId = worldSpatialAnchorId;
+            LocalizationState = LocalizationState.NotLocalized;
+
+            // If using a supplied spatial anchor for the world, create it using the spatial anchor provider
+            if (worldSpatialAnchor?.CoordinateSystem != null)
             {
-                // Save the world spatial coordinate system
-                WorldSpatialCoordinateSystem = world.CoordinateSystem;
-
-                // Create a spatial anchor to represent the world origin and persist it to the spatial
-                // anchor store to ensure that the origin remains coherent between sessions.
-                return SpatialAnchorHelper.TryCreateSpatialAnchor(DefaultWorldSpatialAnchorId, WorldSpatialCoordinateSystem);
-            }
-
-            // If no world anchor was given, try to load the default world spatial anchor if it was previously persisted
-            worldSpatialAnchor ??= SpatialAnchorHelper.TryGetSpatialAnchor(DefaultWorldSpatialAnchorId);
-
-            if (worldSpatialAnchor != null)
-            {
-                // Set the world spatial coordinate system using the spatial anchor
-                WorldSpatialCoordinateSystem = worldSpatialAnchor.CoordinateSystem;
-                if (regenerateDefaultWorldSpatialAnchorIfNeeded)
+                (worldSpatialAnchor, worldSpatialAnchorId) = SpatialAnchorProvider.TryCreateSpatialAnchor(WorldSpatialAnchorId, worldSpatialAnchor.CoordinateSystem);
+                if (worldSpatialAnchorId != null)
                 {
-                    var locator = SpatialLocator.GetDefault();
-                    if (locator == null)
-                    {
-                        throw new Exception($"Could not get spatial locator.");
-                    }
-
-                    // determine whether we can localize in the current environment
-                    var world = locator.CreateStationaryFrameOfReferenceAtCurrentLocation();
-                    var success = world.CoordinateSystem.TryGetTransformTo(WorldSpatialCoordinateSystem) != null;
-                    if (!success)
-                    {
-                        SpatialAnchorHelper.RemoveSpatialAnchor(DefaultWorldSpatialAnchorId);
-                        worldSpatialAnchor = TryCreateDefaultWorldSpatialAnchor(world);
-                        if (worldSpatialAnchor == null)
-                        {
-                            throw new Exception("Could not create the persistent world spatial anchor.");
-                        }
-                    }
+                    WorldSpatialAnchorId = worldSpatialAnchorId;
                 }
             }
             else
             {
-                // Generate and persist the default world spatial anchor
-                var locator = SpatialLocator.GetDefault();
-
-                if (locator != null)
+                try
                 {
-                    // This creates a stationary frame of reference which we will use as our world origin
-                    var world = locator.CreateStationaryFrameOfReferenceAtCurrentLocation();
-                    worldSpatialAnchor = TryCreateDefaultWorldSpatialAnchor(world);
-
-                    if (worldSpatialAnchor == null)
-                    {
-                        System.Diagnostics.Trace.WriteLine($"WARNING: Could not create the persistent world spatial anchor.");
-                    }
+                    // Try to lookup the world spatial anchor by id using the spatial anchor provider
+                    worldSpatialAnchor = SpatialAnchorProvider.TryGetSpatialAnchor(WorldSpatialAnchorId);
                 }
-                else
+                catch when (createWorldSpatialAnchorIfNeeded)
                 {
-                    System.Diagnostics.Trace.WriteLine($"WARNING: Could not get spatial locator (expected in StereoKit on desktop).");
+                    // We will create a new world spatial anchor if the specified one was not found, so don't throw an exception
                 }
+            }
+
+            Pose? worldAnchorPose = null;
+
+            // Check the current pose of the device
+            var currentDevicePose = DeviceLocator.CreateStationaryFrameOfReferenceAtCurrentLocation().CoordinateSystem;
+
+            // If we need to create a world spatial anchor or we need to regenerate it because we cannot localize it
+            if ((worldSpatialAnchor == null && createWorldSpatialAnchorIfNeeded) ||
+                (worldSpatialAnchor != null && currentDevicePose?.TryGetTransformTo(worldSpatialAnchor.CoordinateSystem) == null && regenerateWorldSpatialAnchorIfNeeded))
+            {
+                if (worldSpatialAnchor != null)
+                {
+                    // If we need to regenerate the world spatial anchor, delete the existing one first
+                    SpatialAnchorProvider.RemoveSpatialAnchor(WorldSpatialAnchorId);
+                }
+
+                // Create a new world spatial anchor at the current pose of the device
+                (worldSpatialAnchor, worldSpatialAnchorId) = SpatialAnchorProvider.TryCreateSpatialAnchor(WorldSpatialAnchorId, currentDevicePose);
+
+                // Throw an exception if that did not work
+                if (worldSpatialAnchor == null)
+                {
+                    throw new Exception($"Could not create the world spatial anchor.");
+                }
+
+                WorldSpatialAnchorId = worldSpatialAnchorId;
             }
 
             if (worldSpatialAnchor != null)
             {
-                // At startup, we need to capture the pose of StereoKit with respect to the world anchor, and vice versa.
-                // These transforms will allow us to convert world coordinates to/from StereoKit coordinates where needed:
-                // on input from StereoKit -> \psi, and on output (rendering) \psi -> StereoKit
-
-                // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
-                // and for transforming from world coordinates to StereoKit coordinates.
-                StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(worldSpatialAnchor).ToMatrix();
-                StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.Value.ToCoordinateSystem();
-
-                // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
-                StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
-
-                System.Diagnostics.Trace.WriteLine($"StereoKit origin: {StereoKitTransforms.StereoKitToWorld.Origin.X},{StereoKitTransforms.StereoKitToWorld.Origin.Y},{StereoKitTransforms.StereoKitToWorld.Origin.Z}");
-                SK.AddStepper(new SpatialTransformsUpdater(worldSpatialAnchor));
-
-                // TODO: It would be nice if we could actually just shift the origin coordinate system in StereoKit
-                // to the pose currently defined in StereoKitTransforms.WorldPose.
-                // There's currently an open issue for this: https://github.com/maluoi/StereoKit/issues/189
-
-                // Simply setting the renderer camera root does not work, as its transform appears to be applied in the wrong order.
-                // E.g., if the starting StereoKit pose is at a yaw rotation of 180 degrees, we would want to apply that transform
-                // first, then apply the transform of the headset pose (perhaps pitching up). Instead, it appears that the headset
-                // pose is applied first (e.g., pitching up), and *then* the Renderer.CameraRoot transform is applied (yaw of 180 degrees)
-                // which in this example manifests as the pitch going down, opposite of what we desired.
-                ////Renderer.CameraRoot = stereoKitTransform.Inverse;
+                // Initialize the various static transforms we use for ensuring all 3d information is represented in the same world coordinate system.
+                WorldSpatialCoordinateSystem = worldSpatialAnchor.CoordinateSystem;
+                worldAnchorPose = World.FromPerceptionAnchor(worldSpatialAnchor);
+                StereoKitTransforms.Initialize(worldAnchorPose);
+                LocalizationState = LocalizationState.Localized;
             }
+
+            // Register a step function that checks for when StereoKit's "World" has changed or become invalid due to lost localization.
+            // Remove any existing step function that may have been registered in a previous call.
+            SK.RemoveStepper<StereoKitTransformsUpdater>();
+            SK.AddStepper(new StereoKitTransformsUpdater(worldAnchorPose));
+
+            // TODO: It would be nice if we could actually just shift the origin coordinate system in StereoKit
+            // to the pose currently defined in StereoKitTransforms.WorldPose.
+            // There's currently an open issue for this: https://github.com/maluoi/StereoKit/issues/189
+
+            // Simply setting the renderer camera root does not work, as its transform appears to be applied in the wrong order.
+            // E.g., if the starting StereoKit pose is at a yaw rotation of 180 degrees, we would want to apply that transform
+            // first, then apply the transform of the headset pose (perhaps pitching up). Instead, it appears that the headset
+            // pose is applied first (e.g., pitching up), and *then* the Renderer.CameraRoot transform is applied (yaw of 180 degrees)
+            // which in this example manifests as the pitch going down, opposite of what we desired.
+            ////Renderer.CameraRoot = stereoKitTransform.Inverse;
         }
 
-        private class SpatialTransformsUpdater : IStepper
+        /// <summary>
+        /// An internal StereoKit stepper that checks at each frame whether the world spatial anchor has
+        /// changed or become invalid due to lost localization and updates the transforms accordingly.
+        /// </summary>
+        private class StereoKitTransformsUpdater : IStepper
         {
-            private readonly SpatialAnchor worldSpatialAnchor;
-            private SpatialCoordinateSystem stereoKitSpatialCoordinateSystem;
+            private Pose? currentWorldAnchorPose;
 
-            public SpatialTransformsUpdater(SpatialAnchor worldSpatialAnchor)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StereoKitTransformsUpdater"/> class.
+            /// </summary>
+            /// <param name="worldAnchorPose">The pose of the world anchor in StereoKit terms.</param>
+            public StereoKitTransformsUpdater(Pose? worldAnchorPose)
             {
-                this.worldSpatialAnchor = worldSpatialAnchor;
-                this.stereoKitSpatialCoordinateSystem = StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
+                this.currentWorldAnchorPose = worldAnchorPose;
             }
 
             /// <inheritdoc />
@@ -176,32 +204,79 @@ namespace Microsoft.Psi.MixedReality
             /// <inheritdoc />
             public void Step()
             {
-                this.stereoKitSpatialCoordinateSystem ??= StereoKitTransforms.StereoKitToWorld.TryConvertPsiCoordinateSystemToSpatialCoordinateSystem();
-
-                if (this.stereoKitSpatialCoordinateSystem is not null)
+                try
                 {
-                    if (this.stereoKitSpatialCoordinateSystem.TryConvertSpatialCoordinateSystemToPsiCoordinateSystem() is null)
+                    var worldSpatialAnchor = SpatialAnchorProvider.TryGetSpatialAnchor(WorldSpatialAnchorId);
+
+                    if (worldSpatialAnchor != null)
                     {
-                        StereoKitTransforms.StereoKitToWorld = null;
-                        StereoKitTransforms.WorldToStereoKit = null;
-                        StereoKitTransforms.WorldHierarchy = null;
+                        var worldAnchorPose = World.FromPerceptionAnchor(worldSpatialAnchor);
+
+                        // Check if the world anchor pose is valid (to be a valid orientation, the length of the quaternion vector should be ~1)
+                        var quaternionLength = worldAnchorPose.orientation.q.Length();
+                        var validWorldAnchorPose = !PosesEqual(worldAnchorPose, Pose.Identity, 0) && quaternionLength >= 0.9f && quaternionLength <= 1.1f;
+
+                        if (validWorldAnchorPose)
+                        {
+                            if (!PosesEqual(this.currentWorldAnchorPose, worldAnchorPose, 0.1f))
+                            {
+                                // If the pose of the world anchor has changed sufficiently, it usually means that StereoKit has refreshed its own
+                                // "World" coordinate system, so we need to update our transforms accordingly.
+                                WorldSpatialCoordinateSystem = worldSpatialAnchor.CoordinateSystem;
+                                StereoKitTransforms.Initialize(worldAnchorPose);
+                                this.currentWorldAnchorPose = worldAnchorPose;
+                            }
+
+                            LocalizationState = LocalizationState.Localized;
+                        }
+                        else if (this.currentWorldAnchorPose != null)
+                        {
+                            // Failure to localize the world anchor can be indicated by StereoKit returning an invalid pose
+                            this.currentWorldAnchorPose = null;
+                            StereoKitTransforms.Initialize(null);
+
+                            // World anchor was found but is invalid in the current state
+                            LocalizationState = LocalizationState.Invalidated;
+                        }
+                        else
+                        {
+                            // World anchor was previously invalidated and is still not valid
+                            LocalizationState = LocalizationState.Localizing;
+                        }
                     }
                     else
                     {
-                        // Query the pose of the world anchor. We use this pose for rendering correctly in the world,
-                        // and for transforming from world coordinates to StereoKit coordinates.
-                        StereoKitTransforms.WorldHierarchy = World.FromPerceptionAnchor(this.worldSpatialAnchor).ToMatrix();
-                        StereoKitTransforms.WorldToStereoKit = StereoKitTransforms.WorldHierarchy.Value.ToCoordinateSystem();
-
-                        // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
-                        StereoKitTransforms.StereoKitToWorld = StereoKitTransforms.WorldToStereoKit.Invert();
+                        // Still trying to locate the world anchor
+                        LocalizationState = LocalizationState.Localizing;
                     }
+                }
+                catch
+                {
+                    // If an exception occurs, remove this stepper
+                    SK.RemoveStepper(this);
+                    throw;
                 }
             }
 
             /// <inheritdoc />
             public void Shutdown()
             {
+            }
+
+            private static bool PosesEqual(Pose? pose1, Pose? pose2, float epsilon)
+            {
+                if (pose1 == null || pose2 == null)
+                {
+                    return false;
+                }
+
+                return Math.Abs(pose1.Value.position.x - pose2.Value.position.x) <= epsilon &&
+                    Math.Abs(pose1.Value.position.y - pose2.Value.position.y) <= epsilon &&
+                    Math.Abs(pose1.Value.position.z - pose2.Value.position.z) <= epsilon &&
+                    Math.Abs(pose1.Value.orientation.x - pose2.Value.orientation.x) <= epsilon &&
+                    Math.Abs(pose1.Value.orientation.y - pose2.Value.orientation.y) <= epsilon &&
+                    Math.Abs(pose1.Value.orientation.z - pose2.Value.orientation.z) <= epsilon &&
+                    Math.Abs(pose1.Value.orientation.w - pose2.Value.orientation.w) <= epsilon;
             }
         }
     }

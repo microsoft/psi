@@ -11,6 +11,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Linq;
     using System.Runtime.Serialization;
     using System.Text;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Data;
     using GalaSoft.MvvmLight.CommandWpf;
@@ -120,6 +121,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             => this.goToTimeCommand ??= new RelayCommand(() => this.GoToTime());
 
         /// <summary>
+        /// Gets the delete visualization panel command.
+        /// </summary>
+        [IgnoreDataMember]
+        public RelayCommand<VisualizationPanel> DeleteVisualizationPanelCommand
+            => this.deleteVisualizationPanelCommand ??= new RelayCommand<VisualizationPanel>(o => this.RemovePanel(o));
+
+        /// <summary>
         /// Gets or sets the current visualization panel.
         /// </summary>
         [IgnoreDataMember]
@@ -180,13 +188,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             get => this.showNavigator;
             set => this.Set(nameof(this.ShowNavigator), ref this.showNavigator, value);
         }
-
-        /// <summary>
-        /// Gets the delete visualization panel command.
-        /// </summary>
-        [IgnoreDataMember]
-        public RelayCommand<VisualizationPanel> DeleteVisualizationPanelCommand
-            => this.deleteVisualizationPanelCommand ??= new RelayCommand<VisualizationPanel>(o => this.RemovePanel(o));
 
         /// <summary>
         /// Loads a visualization layout from the specified file.
@@ -420,15 +421,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
-        /// Saves the current layout to the specified file.
+        /// Serializes the container to a JSON string.
         /// </summary>
-        /// <param name="filename">The file to save the layout too.</param>
-        public void Save(string filename)
+        /// <returns>A string representing the serialized container in JSON format.</returns>
+        public string SerializeToJson()
         {
             var serializer = JsonSerializer.Create(
                 new JsonSerializerSettings()
                 {
-                    ContractResolver = new XYZValueVisualizationObjectContractResolver(),
+                    ContractResolver = new VisualizationObjectContractResolver(),
                     Formatting = Formatting.Indented,
                     NullValueHandling = NullValueHandling.Ignore,
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -438,31 +439,34 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     PreserveReferencesHandling = PreserveReferencesHandling.Objects,
                 });
 
-            StreamWriter jsonFile = null;
-            try
-            {
-                jsonFile = File.CreateText(filename);
-                using var jsonWriter = new JsonTextWriter(jsonFile);
-                jsonFile = null;
+            using var stringWriter = new StringWriter();
+            using var jsonWriter = new JsonTextWriter(stringWriter);
 
-                // Open the json
-                jsonWriter.WriteStartObject();
+            // Open the json
+            jsonWriter.WriteStartObject();
 
-                // Write the layout version
-                jsonWriter.WritePropertyName(LayoutVersionPropertyName);
-                jsonWriter.WriteValue(CurrentVisualizationContainerVersion);
+            // Write the layout version
+            jsonWriter.WritePropertyName(LayoutVersionPropertyName);
+            jsonWriter.WriteValue(CurrentVisualizationContainerVersion);
 
-                // Write the layout
-                jsonWriter.WritePropertyName(LayoutPropertyName);
-                serializer.Serialize(jsonWriter, this);
+            // Write the layout
+            jsonWriter.WritePropertyName(LayoutPropertyName);
+            serializer.Serialize(jsonWriter, this);
 
-                // Close the json
-                jsonWriter.WriteEndObject();
-            }
-            finally
-            {
-                jsonFile?.Dispose();
-            }
+            // Close the json
+            jsonWriter.WriteEndObject();
+
+            return stringWriter.ToString();
+        }
+
+        /// <summary>
+        /// Saves the current layout to the specified file.
+        /// </summary>
+        /// <param name="filename">The file to save the layout to.</param>
+        public void Save(string filename)
+        {
+            using var jsonFile = File.CreateText(filename);
+            jsonFile.Write(this.SerializeToJson());
         }
 
         /// <summary>
@@ -515,75 +519,63 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 "Go To Time",
                 "Time",
                 string.Empty,
-                value =>
-                {
-                    if (DateTime.TryParse(value, out var dateTime))
-                    {
-                        if (dateTime >= this.Navigator.DataRange.StartTime &&
-                            dateTime <= this.Navigator.DataRange.EndTime)
-                        {
-                            return (true, string.Empty);
-                        }
-                        else
-                        {
-                            return (false, "The specified date-time is outside the range of the current session.");
-                        }
-                    }
-                    else if (long.TryParse(value, out var ticks))
-                    {
-                        var ticksDateTime = new DateTime(ticks);
-                        if (ticksDateTime >= this.Navigator.DataRange.StartTime &&
-                            ticksDateTime <= this.Navigator.DataRange.EndTime)
-                        {
-                            return (true, string.Empty);
-                        }
-                        else
-                        {
-                            return (false, "The specified date-time is outside the range of the current session.");
-                        }
-                    }
-                    else
-                    {
-                        return (false, "Cannot convert the specified time to a valid date time.");
-                    }
-                });
+                value => (this.TryGetValidSessionNameAndDateTime(value, out var sessionName, out var dateTime, out var error), error));
 
             if (getTime.ShowDialog() == true)
             {
-                var cursor = default(DateTime);
-                if (DateTime.TryParse(getTime.ParameterValue, out var dateTime))
-                {
-                    cursor = dateTime;
-                }
-                else if (long.TryParse(getTime.ParameterValue, out var ticks))
-                {
-                    cursor = new DateTime(ticks);
-                }
+                // Get the session name and cursor
+                this.TryGetValidSessionNameAndDateTime(getTime.ParameterValue, out var sessionName, out var cursor, out var error);
 
-                // If the cursor falls outside the current view range, shift the view range
-                if (cursor <= this.Navigator.ViewRange.StartTime)
+                // Save the current view duration
+                var viewDurationTicks = this.Navigator.ViewRange.Duration.Ticks;
+
+                // Switch the current session if we need to
+                if (sessionName != VisualizationContext.Instance?.DatasetViewModel?.CurrentSessionViewModel?.Name)
                 {
-                    var viewDurationTicks = this.Navigator.ViewRange.Duration.Ticks;
+                    // Switch to the new session
+                    var session = VisualizationContext.Instance.DatasetViewModel.SessionViewModels.First(svm => svm.Name == sessionName);
+                    VisualizationContext.Instance.DatasetViewModel.VisualizeSession(session);
+
+                    // Compute and set the new view range
                     var viewStartTime = cursor - TimeSpan.FromTicks(viewDurationTicks / 2);
                     if (viewStartTime < this.Navigator.DataRange.StartTime)
                     {
                         viewStartTime = this.Navigator.DataRange.StartTime;
                     }
 
-                    var viewEndTime = viewStartTime + this.Navigator.ViewRange.Duration;
-                    this.Navigator.ViewRange.Set(viewStartTime, viewEndTime);
-                }
-                else if (cursor >= this.Navigator.ViewRange.EndTime)
-                {
-                    var viewDurationTicks = this.Navigator.ViewRange.Duration.Ticks;
                     var viewEndTime = cursor + TimeSpan.FromTicks(viewDurationTicks / 2);
                     if (viewEndTime > this.Navigator.DataRange.EndTime)
                     {
                         viewEndTime = this.Navigator.DataRange.EndTime;
                     }
 
-                    var viewStartTime = viewEndTime - this.Navigator.ViewRange.Duration;
                     this.Navigator.ViewRange.Set(viewStartTime, viewEndTime);
+                }
+                else
+                {
+                    // If the cursor falls outside the current view range, shift the view range
+                    if (cursor <= this.Navigator.ViewRange.StartTime)
+                    {
+                        var viewStartTime = cursor - TimeSpan.FromTicks(viewDurationTicks / 2);
+                        if (viewStartTime < this.Navigator.DataRange.StartTime)
+                        {
+                            viewStartTime = this.Navigator.DataRange.StartTime;
+                        }
+
+                        var viewEndTime = viewStartTime + this.Navigator.ViewRange.Duration;
+                        this.Navigator.ViewRange.Set(viewStartTime, viewEndTime);
+                    }
+                    else if (cursor >= this.Navigator.ViewRange.EndTime)
+                    {
+                        var viewEndTime = cursor + TimeSpan.FromTicks(viewDurationTicks / 2);
+                        if (viewEndTime > this.Navigator.DataRange.EndTime)
+                        {
+                            viewEndTime = this.Navigator.DataRange.EndTime;
+                        }
+
+                        var viewStartTime = viewEndTime - this.Navigator.ViewRange.Duration;
+                        this.Navigator.ViewRange.Set(viewStartTime, viewEndTime);
+                    }
                 }
 
                 this.Navigator.CursorFollowsMouse = true;
@@ -649,6 +641,73 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             text.AppendLine("The default layout will be loaded instead.");
 
             return text.ToString();
+        }
+
+        private bool TryGetValidSessionNameAndDateTime(string value, out string sessionName, out DateTime dateTime, out string error)
+        {
+            sessionName = VisualizationContext.Instance?.DatasetViewModel?.CurrentSessionViewModel?.Session?.Name;
+            dateTime = default;
+            error = default;
+            var dateTimeString = default(string);
+
+            if (value.Contains("@"))
+            {
+                var tokens = value.Split('@');
+                if (tokens.Length != 2)
+                {
+                    error = "Cannot convert to a valid temporal location. Expected: <time> or <session name>@<time>.";
+                    return false;
+                }
+
+                sessionName = tokens[0];
+                dateTimeString = tokens[1];
+            }
+            else
+            {
+                dateTimeString = value;
+            }
+
+            // Check that the session is a valid one
+            var name = sessionName;
+            var session = VisualizationContext.Instance?.DatasetViewModel?.SessionViewModels?.FirstOrDefault(svm => svm.Name == name);
+            if (session == null)
+            {
+                error = "Cannot convert to a valid temporal location. The specified session does not exist in the current dataset.";
+                return false;
+            }
+
+            if (DateTime.TryParse(dateTimeString, out dateTime))
+            {
+                if (dateTime >= session.OriginatingTimeInterval.Left &&
+                    dateTime <= session.OriginatingTimeInterval.Right)
+                {
+                    return true;
+                }
+                else
+                {
+                    error = "Cannot convert to a valid temporal location. The specified date-time is outside the range of the specified session.";
+                    return false;
+                }
+            }
+            else if (long.TryParse(dateTimeString, out var ticks))
+            {
+                dateTime = new DateTime(ticks);
+                if (dateTime >= session.OriginatingTimeInterval.Left &&
+                    dateTime <= session.OriginatingTimeInterval.Right)
+                {
+                    return true;
+                }
+                else
+                {
+                    error = "Cannot convert to a valid temporal location. The specified date-time is outside the range of the current session.";
+                    return false;
+                }
+            }
+            else
+            {
+                error = "Cannot convert the specified time to a valid date time.";
+                return false;
+            }
         }
 
         private void InitNew()

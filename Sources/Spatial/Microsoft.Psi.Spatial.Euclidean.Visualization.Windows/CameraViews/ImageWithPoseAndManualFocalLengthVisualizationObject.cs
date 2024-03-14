@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Camera intrinsics are determined from manually set focal length properties.
     /// </summary>
     [VisualizationObject("Image Camera View with Manual Focal Length")]
-    public class ImageWithPoseAndManualFocalLengthVisualizationObject : ModelVisual3DVisualizationObject<(Shared<Image>, CoordinateSystem)>
+    public class ImageWithPoseAndManualFocalLengthVisualizationObject : ModelVisual3DValueVisualizationObject<(Shared<Image>, CoordinateSystem)>
     {
         private ImageCameraViewVisualizationObject imageCameraView;
 
@@ -77,7 +77,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         protected override Action<(Shared<Image>, CoordinateSystem)> Deallocator => data => data.Item1?.Dispose();
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.image != null)
             {
@@ -112,7 +112,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.imageCameraView.ModelView, this.Visible && this.CurrentData != default);
+            this.UpdateChildVisibility(this.imageCameraView.ModelVisual3D, this.Visible && this.CurrentData != default);
         }
     }
 }

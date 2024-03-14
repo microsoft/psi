@@ -55,14 +55,21 @@ namespace Microsoft.Psi.Visualization.Summarizers
 
             // Summarizers must be directly derived from Summarizer<TSrc, TDest>
             Type baseType = summarizerType.BaseType;
-            if (baseType.Name != typeof(Summarizer<,>).Name || baseType.Module.Name != typeof(Summarizer<,>).Module.Name)
+            if (baseType.Name == typeof(Summarizer<,>).Name && baseType.Module.Name == typeof(Summarizer<,>).Module.Name)
             {
-                logWriter.WriteError("Summarizer {0} could not be loaded because it is not directly derived from Summarizer<TSrc, TDest>", summarizerType.Name);
+                // Create the summarizer metadata
+                return new SummarizerMetadata(summarizerType.BaseType.GenericTypeArguments[0], summarizerType.BaseType.GenericTypeArguments[1], summarizerType);
+            }
+            else if (baseType.Name == typeof(SamplingSummarizer<>).Name && baseType.Module.Name == typeof(SamplingSummarizer<>).Module.Name)
+            {
+                // Create the summarizer metadata
+                return new SummarizerMetadata(summarizerType.BaseType.GenericTypeArguments[0], summarizerType.BaseType.GenericTypeArguments[0], summarizerType);
+            }
+            else
+            {
+                logWriter.WriteError("Summarizer {0} could not be loaded because it is not directly derived from Summarizer<TSrc, TDest> or SamplingSummarizer<T>.", summarizerType.Name);
                 return null;
             }
-
-            // Create the summarizer metadata
-            return new SummarizerMetadata(summarizerType.BaseType.GenericTypeArguments[0], summarizerType.BaseType.GenericTypeArguments[1], summarizerType);
         }
     }
 }

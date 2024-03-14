@@ -2295,6 +2295,7 @@ namespace Test.Psi
             private readonly Pipeline pipeline;
             private readonly string name;
             private readonly List<string> log;
+            private readonly object stateLock = new ();
 
             private Action<DateTime> notifyCompletionTime;
             private int count = 0;
@@ -2372,7 +2373,7 @@ namespace Test.Psi
 
             private void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                lock (this)
+                lock (this.stateLock)
                 {
                     if (this.Generator.HasSubscribers && this.count < 3)
                     {

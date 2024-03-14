@@ -44,43 +44,62 @@ namespace Microsoft.Psi.Audio
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AudioBuffer"/> struct.
+        /// </summary>
+        /// <param name="timeSpan">The time span of the audio data.</param>
+        /// <param name="format">The format of the audio data.</param>
+        public AudioBuffer(TimeSpan timeSpan, WaveFormat format)
+        {
+            // Ensure that the length of the audio data is a multiple of the block size
+            int length = (int)Math.Ceiling(timeSpan.TotalSeconds * format.SamplesPerSec) * format.BlockAlign;
+            this.data = new byte[length];
+            this.format = format;
+        }
+
+        /// <summary>
         /// Gets the audio format.
         /// </summary>
-        public WaveFormat Format
-        {
-            get { return this.format; }
-        }
+        public readonly WaveFormat Format => this.format;
 
         /// <summary>
         /// Gets the byte array containing the audio data.
         /// </summary>
-        public byte[] Data
-        {
-            get { return this.data; }
-        }
+        public readonly byte[] Data => this.data;
 
         /// <summary>
         /// Gets the length in bytes of the audio data.
         /// </summary>
-        public int Length
-        {
-            get { return (this.data == null) ? 0 : this.data.Length; }
-        }
+        public readonly int Length => (this.data == null) ? 0 : this.data.Length;
 
         /// <summary>
         /// Gets the duration of the audio.
         /// </summary>
-        public TimeSpan Duration
-        {
-            get { return (this.data == null) ? TimeSpan.Zero : TimeSpan.FromTicks(10000000L * this.data.Length / this.format.AvgBytesPerSec); }
-        }
+        public readonly TimeSpan Duration
+            => (this.data == null) ? TimeSpan.Zero : TimeSpan.FromTicks(10000000L * this.data.Length / this.format.AvgBytesPerSec);
 
         /// <summary>
         /// Gets a value indicating whether or not this <see cref="AudioBuffer"/> contains valid data.
         /// </summary>
-        public bool HasValidData
+        public readonly bool HasValidData => (this.format != null) && (this.data != null);
+
+        /// <summary>
+        /// Implements the addition operator for combining two <see cref="AudioBuffer"/> objects.
+        /// </summary>
+        /// <param name="a">The first <see cref="AudioBuffer"/> to combine.</param>
+        /// <param name="b">The second <see cref="AudioBuffer"/> to combine.</param>
+        /// <returns>The audio buffer resulting from the concatenation of the two input audio buffers.</returns>
+        /// <exception cref="ArgumentException">AudioBuffer formats must match.</exception>
+        public static AudioBuffer operator +(AudioBuffer a, AudioBuffer b)
         {
-            get { return (this.format != null) && (this.data != null); }
+            if (!WaveFormat.Equals(a.format, b.format))
+            {
+                throw new ArgumentException("AudioBuffer formats must match");
+            }
+
+            byte[] newData = new byte[a.data.Length + b.data.Length];
+            Array.Copy(a.data, newData, a.data.Length);
+            Array.Copy(b.data, 0, newData, a.data.Length, b.data.Length);
+            return new AudioBuffer(newData, a.format);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a visualization object for a spatial image.
     /// </summary>
     [VisualizationObject("3D Text")]
-    public class Text3DVisualizationObject : ModelVisual3DVisualizationObject<(string, CoordinateSystem)>
+    public class Text3DVisualizationObject : ModelVisual3DValueVisualizationObject<(string, CoordinateSystem)>
     {
         private readonly TextVisual3D textVisual3D;
         private CoordinateSystem position = null;
@@ -61,7 +61,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.text = this.CurrentData.Item1;
             this.position = this.CurrentData.Item2;

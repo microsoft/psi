@@ -27,8 +27,9 @@ namespace Microsoft.Psi.Common.Interpolators
         /// and the ratio between them.</param>
         /// <param name="orDefault">Indicates whether to output a default value when no result is found.</param>
         /// <param name="defaultValue">An optional default value to use.</param>
+        /// <param name="maxSpan">The maximal timespan between adjacent messages for which interpolation will be run.</param>
         /// <param name="name">An optional name for the interpolator (defaults to AdjacentValues).</param>
-        public AdjacentValuesInterpolator(Func<T, T, double, T> interpolatorFunc, bool orDefault, T defaultValue = default, string name = null)
+        public AdjacentValuesInterpolator(Func<T, T, double, T> interpolatorFunc, bool orDefault, T defaultValue = default, TimeSpan? maxSpan = null, string name = null)
         {
             T InterpolateWithEndpointHandling(T t1, T t2, double amount)
             {
@@ -43,7 +44,7 @@ namespace Microsoft.Psi.Common.Interpolators
                        interpolatorFunc(t1, t2, amount);
             }
 
-            this.interpolator = new (InterpolateWithEndpointHandling, orDefault, defaultValue, name);
+            this.interpolator = new (InterpolateWithEndpointHandling, orDefault, defaultValue, maxSpan, name);
         }
 
         /// <inheritdoc/>

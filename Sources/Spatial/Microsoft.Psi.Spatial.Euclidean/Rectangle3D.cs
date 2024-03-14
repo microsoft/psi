@@ -17,6 +17,14 @@ namespace Microsoft.Psi.Spatial.Euclidean
     public readonly struct Rectangle3D : IEquatable<Rectangle3D>
     {
         /// <summary>
+        /// Gets the indices for the edges of a <see cref="Rectangle3D"/>.
+        /// </summary>
+        public static readonly (int, int)[] EdgeIndices = new[]
+        {
+            (0, 1), (1, 2), (2, 3), (3, 0),
+        };
+
+        /// <summary>
         /// Gets the top-left corner of the rectangle.
         /// </summary>
         public readonly Point3D TopLeft;
@@ -171,7 +179,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// Computes the closest point in this planar rectangle to a specified 3D point.
         /// </summary>
         /// <param name="point3D">The 3D point to compute the closest point to.</param>
-        /// <returns>The intersection point, if one exists.</returns>
+        /// <returns>The closest point.</returns>
         public Point3D ClosestPointTo(Point3D point3D)
         {
             // compute the plane of the rectangle from three corner points

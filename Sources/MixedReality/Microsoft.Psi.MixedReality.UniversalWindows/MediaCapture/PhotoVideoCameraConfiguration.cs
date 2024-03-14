@@ -19,6 +19,36 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         public StreamSettings PreviewStreamSettings { get; set; } = null;
 
         /// <summary>
+        /// Gets or sets a value indicating whether to continuously auto-focus the camera.
+        /// </summary>
+        public bool ContinuousAutoFocus { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the video stream uses triggered outputs.
+        /// </summary>
+        /// <remarks>
+        /// When using triggered outputs, the component expects a trigger message on the <see cref="PhotoVideoCamera.TriggerInput"/>
+        /// receiver. Once a first (trigger) message is received on this stream, outputs will be generated based on the specified
+        /// <see cref="TriggeredOutputFrequency"/>, by selecting the nearest available video frame.
+        /// </remarks>
+        public bool VideoStreamUsesTriggeredOutputs { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the preview stream uses triggered outputs.
+        /// </summary>
+        /// <remarks>
+        /// When using triggered outputs, the component expects a trigger message on the <see cref="PhotoVideoCamera.TriggerInput"/>
+        /// receiver. Once a first (trigger) message is received on this stream, outputs will be generated based on the specified
+        /// <see cref="TriggeredOutputFrequency"/>, by selecting the nearest available video frame.
+        /// </remarks>
+        public bool PreviewStreamUsesTriggeredOutputs { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the triggered output frequency when the camera is configured to used triggered outputs.
+        /// </summary>
+        public double TriggeredOutputFrequency { get; set; } = 0;
+
+        /// <summary>
         /// Defines the capture settings for the Video or Preview streams.
         /// </summary>
         /// <remarks>

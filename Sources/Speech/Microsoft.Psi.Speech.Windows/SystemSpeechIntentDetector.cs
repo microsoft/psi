@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Speech
     /// <summary>
     /// Component that performs grammar-based intent detection using the desktop speech recognition engine from `System.Speech`.
     /// </summary>
-    public sealed class SystemSpeechIntentDetector : ConsumerProducer<string, IntentData>, ISourceComponent, IDisposable
+    public sealed class SystemSpeechIntentDetector : ConsumerProducer<string, IntentData>, IIntentDetector, ISourceComponent, IDisposable
     {
         /// <summary>
         /// The System.Speech speech recognition engine.
@@ -58,7 +58,7 @@ namespace Microsoft.Psi.Speech
         public SystemSpeechIntentDetector(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemSpeechIntentDetector))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemSpeechIntentDetectorConfiguration() : new ConfigurationHelper<SystemSpeechIntentDetectorConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new SystemSpeechIntentDetectorConfiguration(), true),
                 name)
         {
         }

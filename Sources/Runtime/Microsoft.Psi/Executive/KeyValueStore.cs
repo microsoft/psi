@@ -12,8 +12,8 @@ namespace Microsoft.Psi.Executive
     internal class KeyValueStore
     {
         public static readonly string GlobalNamespace = "global";
-        private ConcurrentDictionary<string, object> globalNamespace = new ConcurrentDictionary<string, object>();
-        private ConcurrentDictionary<string, ConcurrentDictionary<string, object>> namespaces = new ConcurrentDictionary<string, ConcurrentDictionary<string, object>>();
+        private readonly ConcurrentDictionary<string, object> globalNamespace = new ();
+        private readonly ConcurrentDictionary<string, ConcurrentDictionary<string, object>> namespaces = new ();
 
         public KeyValueStore()
         {
@@ -39,7 +39,7 @@ namespace Microsoft.Psi.Executive
         {
             if (!this.namespaces.ContainsKey(namespaceName) || !this.namespaces[namespaceName].ContainsKey(name))
             {
-                value = default(T);
+                value = default;
                 return false;
             }
 

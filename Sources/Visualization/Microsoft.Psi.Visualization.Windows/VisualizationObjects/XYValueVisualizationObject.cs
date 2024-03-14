@@ -15,8 +15,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     [VisualizationPanelType(VisualizationPanelType.XY)]
     public abstract class XYValueVisualizationObject<TData> : StreamValueVisualizationObject<TData>, IXValueRangeProvider, IYValueRangeProvider
     {
-        #pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
-
         /// <summary>
         /// The X value range of the current data.
         /// </summary>
@@ -26,8 +24,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The Y value range of the current data.
         /// </summary>
         private ValueRange<double> yValueRange = null;
-
-        #pragma warning restore SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
 
         /// <inheritdoc/>
         public event EventHandler<EventArgs> XValueRangeChanged;
@@ -49,8 +45,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         public Axis YAxis => (this.Panel as XYVisualizationPanel)?.YAxis;
 
-        #pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
-
         /// <summary>
         /// Gets the current mouse position within the image (in image pixels).
         /// </summary>
@@ -58,8 +52,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [DisplayName("Mouse Position")]
         [Description("The position of the mouse in the visualization object.")]
         public string MousePositionString => (this.Panel is XYVisualizationPanel xYVisualizationPanel) ? xYVisualizationPanel.MousePositionString : default;
-
-        #pragma warning restore SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
 
         /// <inheritdoc/>
         [IgnoreDataMember]

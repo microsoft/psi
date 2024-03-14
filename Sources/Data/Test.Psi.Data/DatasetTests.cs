@@ -33,7 +33,7 @@ namespace Test.Psi.Data
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetAddSession()
+        public async Task DatasetAddSessionAsync()
         {
             var dataset = new Dataset();
             Assert.AreEqual(0, dataset.Sessions.Count);
@@ -43,7 +43,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            var session0 = await dataset.AddSessionFromPsiStoreAsync("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -55,7 +55,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second session with a different name
-            var session1 = dataset.AddSessionFromPsiStore("NewStore", StorePath, "Session_1");
+            var session1 = await dataset.AddSessionFromPsiStoreAsync("NewStore", StorePath, "Session_1");
             Assert.AreEqual(2, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
             Assert.AreEqual("Session_1", dataset.Sessions[1].Name);
@@ -68,7 +68,7 @@ namespace Test.Psi.Data
         [TestMethod]
         [Timeout(60000)]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void DatasetAddSessionDuplicateName()
+        public async Task DatasetAddSessionDuplicateNameAsync()
         {
             var dataset = new Dataset();
             Assert.AreEqual(0, dataset.Sessions.Count);
@@ -77,7 +77,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            await dataset.AddSessionFromPsiStoreAsync("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -85,12 +85,12 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second session with a duplicate name
-            dataset.AddSessionFromPsiStore("NewStore", StorePath, "Session_0"); // should throw
+            await dataset.AddSessionFromPsiStoreAsync("NewStore", StorePath, "Session_0"); // should throw
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetAppend()
+        public async Task DatasetAppendAsync()
         {
             var dataset = new Dataset();
             Assert.AreEqual(0, dataset.Sessions.Count);
@@ -99,7 +99,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            var session0 = dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            var session0 = await dataset.AddSessionFromPsiStoreAsync("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -112,9 +112,9 @@ namespace Test.Psi.Data
 
             // create a second dataset from the new store and append it to the first
             var dataset1 = new Dataset();
-            var session1 = dataset1.AddSessionFromPsiStore("NewStore", StorePath, "Session_1");
+            var session1 = await dataset1.AddSessionFromPsiStoreAsync("NewStore", StorePath, "Session_1");
 
-            dataset.Append(dataset1);
+            await dataset.AppendAsync(dataset1);
             Assert.AreEqual(2, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
             Assert.AreEqual("Session_1", dataset.Sessions[1].Name);
@@ -127,7 +127,7 @@ namespace Test.Psi.Data
         [TestMethod]
         [Timeout(60000)]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void DatasetAppendDuplicateName()
+        public async Task DatasetAppendDuplicateNameAsync()
         {
             var dataset = new Dataset();
             Assert.AreEqual(0, dataset.Sessions.Count);
@@ -136,7 +136,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session
-            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            await dataset.AddSessionFromPsiStoreAsync("PsiStore", StorePath, "Session_0");
             Assert.AreEqual(1, dataset.Sessions.Count);
             Assert.AreEqual("Session_0", dataset.Sessions[0].Name);
 
@@ -145,24 +145,24 @@ namespace Test.Psi.Data
 
             // create a second dataset with a duplicate session name and append it to the first
             var dataset1 = new Dataset();
-            dataset1.AddSessionFromPsiStore("NewStore", StorePath, "Session_0");
+            await dataset1.AddSessionFromPsiStoreAsync("NewStore", StorePath, "Session_0");
 
-            dataset.Append(dataset1); // should throw
+            await dataset.AppendAsync(dataset1); // should throw
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void SessionAddPartition()
+        public async Task SessionAddPartitionAsync()
         {
             var dataset = new Dataset();
-            var session = dataset.CreateSession();
+            var session = dataset.AddEmptySession();
             Assert.AreEqual(0, session.Partitions.Count);
 
             // generate a test store
             GenerateTestStore("PsiStore", StorePath);
 
             // add a partition
-            var partition0 = session.AddPsiStorePartition("PsiStore", StorePath, "Partition_0");
+            var partition0 = await session.AddPartitionFromPsiStoreAsync("PsiStore", StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -176,7 +176,7 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second partition with a different name
-            var partition1 = session.AddPsiStorePartition("NewStore", StorePath, "Partition_1");
+            var partition1 = await session.AddPartitionFromPsiStoreAsync("NewStore", StorePath, "Partition_1");
             Assert.AreEqual(2, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
             Assert.AreEqual("Partition_1", session.Partitions[1].Name);
@@ -191,17 +191,17 @@ namespace Test.Psi.Data
         [TestMethod]
         [Timeout(60000)]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void SessionAddPartitionDuplicateName()
+        public async Task SessionAddPartitionDuplicateName()
         {
             var dataset = new Dataset();
-            var session = dataset.CreateSession();
+            var session = dataset.AddEmptySession();
             Assert.AreEqual(0, session.Partitions.Count);
 
             // generate a test store
             GenerateTestStore("PsiStore", StorePath);
 
             // add a partition
-            session.AddPsiStorePartition("PsiStore", StorePath, "Partition_0");
+            await session.AddPartitionFromPsiStoreAsync("PsiStore", StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -209,12 +209,12 @@ namespace Test.Psi.Data
             GenerateTestStore("NewStore", StorePath);
 
             // add a second partition with a duplicate name
-            session.AddPsiStorePartition("NewStore", StorePath, "Partition_0"); // should throw
+            await session.AddPartitionFromPsiStoreAsync("NewStore", StorePath, "Partition_0"); // should throw
         }
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetRelativePaths()
+        public async Task DatasetRelativePathsAsync()
         {
             var dataset = new Dataset();
 
@@ -222,7 +222,7 @@ namespace Test.Psi.Data
             GenerateTestStore("PsiStore", StorePath);
 
             // add a session and assume it loaded correctly if it has a partition containing a stream
-            dataset.AddSessionFromPsiStore("PsiStore", StorePath, "Session_0");
+            await dataset.AddSessionFromPsiStoreAsync("PsiStore", StorePath, "Session_0");
             Assert.IsTrue(dataset.Sessions[0].Partitions[0].AvailableStreams.Count() > 0);
 
             // save dataset with relative store paths
@@ -245,24 +245,24 @@ namespace Test.Psi.Data
 
         [TestMethod]
         [Timeout(60000)]
-        public async Task SessionCreateDerivedPartition()
+        public async Task SessionCreateDerivedPartitionAsync()
         {
             var dataset = new Dataset();
-            var session = dataset.CreateSession();
+            var session = dataset.AddEmptySession();
 
             // generate a test store
             var originalStoreName = "OriginalStore";
             GenerateTestStore(originalStoreName, StorePath);
 
             // add a partition
-            var partition0 = session.AddPsiStorePartition(originalStoreName, StorePath, "Partition_0");
+            var partition0 = await session.AddPartitionFromPsiStoreAsync(originalStoreName, StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
             int multiplier = 7;
 
             // create a derived partition which contains the values from the original stream multiplied by a multiplier
-            await session.CreateDerivedPsiPartitionAsync(
+            await session.CreateDerivedPsiStorePartitionAsync(
                 (pipeline, importer, exporter, parameter) =>
                 {
                     var inputStream = importer.OpenStream<int>("Root");
@@ -332,17 +332,17 @@ namespace Test.Psi.Data
         [TestMethod]
         [Timeout(60000)]
         [ExpectedException(typeof(OperationCanceledException))]
-        public async Task SessionCreateDerivedPartitionCancellation()
+        public async Task SessionCreateDerivedPartitionCancellationAsync()
         {
             var dataset = new Dataset();
-            var session = dataset.CreateSession();
+            var session = dataset.AddEmptySession();
 
             // generate a test store
             var originalStoreName = "OriginalStore";
             GenerateTestStore(originalStoreName, StorePath);
 
             // add a partition
-            var partition0 = session.AddPsiStorePartition(originalStoreName, StorePath, "Partition_0");
+            var partition0 = await session.AddPartitionFromPsiStoreAsync(originalStoreName, StorePath, "Partition_0");
             Assert.AreEqual(1, session.Partitions.Count);
             Assert.AreEqual("Partition_0", session.Partitions[0].Name);
 
@@ -354,7 +354,7 @@ namespace Test.Psi.Data
                 var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(500));
 
                 // create a derived partition which contains the values from the original stream multiplied by a multiplier
-                await session.CreateDerivedPsiPartitionAsync(
+                await session.CreateDerivedPsiStorePartitionAsync(
                     (pipeline, importer, exporter, parameter) =>
                     {
                         var inputStream = importer.OpenStream<int>("Root");
@@ -395,7 +395,7 @@ namespace Test.Psi.Data
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetAutoSave()
+        public async Task DatasetAutoSaveAsync()
         {
             var datasetPath = Path.Join(StorePath, "autosave.pds");
 
@@ -403,8 +403,8 @@ namespace Test.Psi.Data
             dataset.Name = "autosave-saved";
             GenerateTestStore("store1", StorePath);
 
-            var session1 = dataset.CreateSession("test-session1");
-            var session2 = dataset.AddSessionFromPsiStore("store1", StorePath);
+            var session1 = dataset.AddEmptySession("test-session1");
+            var session2 = await dataset.AddSessionFromPsiStoreAsync("store1", StorePath);
             session1.Name = "no-longer-test-session1";
 
             // open the dataset file as a different dataset and validate information
@@ -425,7 +425,7 @@ namespace Test.Psi.Data
 
             // now we edit the session and we want to make sure the changes stick!
             GenerateTestStore("store3", StorePath);
-            session2.AddPsiStorePartition("store3", StorePath);
+            await session2.AddPartitionFromPsiStoreAsync("store3", StorePath);
             sameDataset = Dataset.Load(datasetPath);
             Assert.AreEqual(session2.Name, sameDataset.Sessions[0].Name);
             Assert.AreEqual(2, sameDataset.Sessions[0].Partitions.Count);
@@ -434,14 +434,14 @@ namespace Test.Psi.Data
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetAutoSaveAsync()
+        public async Task DatasetAutoSave2Async()
         {
             var datasetPath = Path.Join(StorePath, "autosave.pds");
             GenerateTestStore("base1", StorePath);
             GenerateTestStore("base2", StorePath);
             var dataset = new Dataset("autosave", datasetPath, autoSave: true);
-            dataset.AddSessionFromPsiStore("base1", StorePath, "s1");
-            dataset.AddSessionFromPsiStore("base2", StorePath, "s2");
+            await dataset.AddSessionFromPsiStoreAsync("base1", StorePath, "s1");
+            await dataset.AddSessionFromPsiStoreAsync("base2", StorePath, "s2");
             Assert.AreEqual(1, dataset.Sessions[0].Partitions.Count());
             Assert.AreEqual(1, dataset.Sessions[1].Partitions.Count());
             Task.Run(async () =>
@@ -470,7 +470,7 @@ namespace Test.Psi.Data
         public void DatasetUnsavedChanges()
         {
             var dataset = new Dataset("autosave");
-            dataset.CreateSession("test-session1");
+            dataset.AddEmptySession("test-session1");
             Assert.IsTrue(dataset.HasUnsavedChanges);
             dataset.SaveAs("unsave.pds");
             Assert.IsTrue(!dataset.HasUnsavedChanges);
@@ -478,14 +478,14 @@ namespace Test.Psi.Data
 
         [TestMethod]
         [Timeout(60000)]
-        public void DatasetChangeEvent()
+        public async Task DatasetChangeEventAsync()
         {
             var sessionEventCalled = false;
             var datasetEventCalled = false;
             var dataset = new Dataset("autosave");
 
             GenerateTestStore("base1", StorePath);
-            var session1 = dataset.AddSessionFromPsiStore("base1", StorePath, "session1");
+            var session1 = await dataset.AddSessionFromPsiStoreAsync("base1", StorePath, "session1");
             dataset.DatasetChanged += (s, e) =>
             {
                 Assert.AreEqual(e, EventArgs.Empty);

@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a 3D rectangles visualization object.
     /// </summary>
     [VisualizationObject("3D Rectangle")]
-    public class Rect3DVisualizationObject : ModelVisual3DVisualizationObject<Rect3D?>
+    public class Rect3DVisualizationObject : ModelVisual3DValueVisualizationObject<Rect3D?>
     {
         private Color color = Colors.White;
         private double thicknessMm = 15;
@@ -79,7 +79,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData.HasValue)
             {

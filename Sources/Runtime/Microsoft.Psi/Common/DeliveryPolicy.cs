@@ -18,7 +18,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// A delivery policy which lets the queue grow as much as needed, with no latency constraints.
         /// </summary>
-        private static readonly DeliveryPolicy UnlimitedPolicy = new DeliveryPolicy(
+        private static readonly DeliveryPolicy UnlimitedPolicy = new (
             initialQueueSize: DefaultInitialQueueSize,
             maximumQueueSize: int.MaxValue,
             maximumLatency: null,
@@ -29,7 +29,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// A delivery policy which limits the queue to one message, with no latency constraints.
         /// </summary>
-        private static readonly DeliveryPolicy LatestMessagePolicy = new DeliveryPolicy(
+        private static readonly DeliveryPolicy LatestMessagePolicy = new (
             initialQueueSize: 1,
             maximumQueueSize: 1,
             maximumLatency: null,
@@ -41,7 +41,7 @@ namespace Microsoft.Psi
         /// The throttle policy limits the queue to one message and throttles its source as long as
         /// there is a message in the queue waiting to be processed.
         /// </summary>
-        private static readonly DeliveryPolicy ThrottlePolicy = new DeliveryPolicy(
+        private static readonly DeliveryPolicy ThrottlePolicy = new (
             initialQueueSize: 1,
             maximumQueueSize: int.MaxValue,
             maximumLatency: null,
@@ -52,7 +52,7 @@ namespace Microsoft.Psi
         /// <summary>
         /// A delivery policy which attempts synchronous message delivery; if synchronous delivery fails, the source is throttled.
         /// </summary>
-        private static readonly DeliveryPolicy SynchronousOrThrottlePolicy = new DeliveryPolicy(
+        private static readonly DeliveryPolicy SynchronousOrThrottlePolicy = new (
             initialQueueSize: 1,
             maximumQueueSize: int.MaxValue,
             maximumLatency: null,
@@ -135,6 +135,20 @@ namespace Microsoft.Psi
         /// Gets name used for debugging and diagnostics.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Implicit cast operator from <see cref="DeliveryPolicySpec"/> to <see cref="DeliveryPolicy"/>.
+        /// </summary>
+        /// <param name="deliveryPolicySpec">The delivery policy specification.</param>
+        public static implicit operator DeliveryPolicy(DeliveryPolicySpec deliveryPolicySpec)
+            => deliveryPolicySpec switch
+            {
+                DeliveryPolicySpec.Unlimited => Unlimited,
+                DeliveryPolicySpec.LatestMessage => LatestMessage,
+                DeliveryPolicySpec.Throttle => Throttle,
+                DeliveryPolicySpec.SynchronousOrThrottle => SynchronousOrThrottle,
+                _ => Unlimited,
+            };
 
         /// <summary>
         /// Creates a latency-constrained delivery policy. Messages older than the specified maximum latency are discarded.

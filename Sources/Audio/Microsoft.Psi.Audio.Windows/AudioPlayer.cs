@@ -63,7 +63,7 @@ namespace Microsoft.Psi.Audio
         public AudioPlayer(Pipeline pipeline, string configurationFilename = null, string name = nameof(AudioPlayer))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AudioPlayerConfiguration() : new ConfigurationHelper<AudioPlayerConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AudioPlayerConfiguration(), true),
                 name)
         {
         }

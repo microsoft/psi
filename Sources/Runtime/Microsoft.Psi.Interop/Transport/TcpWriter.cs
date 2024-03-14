@@ -21,6 +21,7 @@ namespace Microsoft.Psi.Interop.Transport
         private readonly string name;
 
         private TcpListener listener;
+        private TcpClient client;
         private NetworkStream networkStream;
 
         /// <summary>
@@ -51,8 +52,7 @@ namespace Microsoft.Psi.Interop.Transport
         /// <inheritdoc/>
         public void Dispose()
         {
-            this.networkStream?.Dispose();
-            this.listener.Stop();
+            this.Stop();
             this.listener = null;
         }
 
@@ -74,9 +74,9 @@ namespace Microsoft.Psi.Interop.Transport
             catch (Exception ex)
             {
                 Trace.WriteLine($"TcpWriter Exception: {ex.Message}");
-                this.listener.Stop();
-                this.networkStream.Dispose();
-                this.networkStream = null;
+
+                // Restart the server
+                this.Stop();
                 this.Start();
             }
         }
@@ -86,6 +86,17 @@ namespace Microsoft.Psi.Interop.Transport
             new Thread(new ThreadStart(this.Listen)) { IsBackground = true }.Start();
         }
 
+        private void Stop()
+        {
+            // Dispose active client if any
+            this.networkStream?.Dispose();
+            this.networkStream = null;
+            this.client?.Dispose();
+            this.client = null;
+
+            this.listener.Stop();
+        }
+
         private void Listen()
         {
             if (this.listener != null)
@@ -93,7 +104,8 @@ namespace Microsoft.Psi.Interop.Transport
                 try
                 {
                     this.listener.Start();
-                    this.networkStream = this.listener.AcceptTcpClient().GetStream();
+                    this.client = this.listener.AcceptTcpClient();
+                    this.networkStream = this.client.GetStream();
                 }
                 catch (Exception ex)
                 {

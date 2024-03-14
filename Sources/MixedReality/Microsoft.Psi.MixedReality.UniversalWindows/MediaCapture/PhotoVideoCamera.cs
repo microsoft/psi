@@ -19,6 +19,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
     using Windows.Graphics.Imaging;
     using Windows.Media.Capture;
     using Windows.Media.Capture.Frames;
+    using Windows.Media.Devices;
     using Windows.Media.MediaProperties;
 
     /// <summary>
@@ -36,6 +37,10 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         private MediaFrameReader previewFrameReader;
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> videoFrameHandler;
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> previewFrameHandler;
+
+        private DateTime triggerTime = DateTime.MinValue;
+        private double triggerSamplingIntervalTicks = 0;
+        private double triggerGenerateMaxOffset = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PhotoVideoCamera"/> class.
@@ -64,6 +69,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             ValidateImageOutput(this.configuration.PreviewStreamSettings);
             ValidateImageOutput(this.configuration.VideoStreamSettings);
 
+            this.TriggerInput = pipeline.CreateReceiver<int>(this, this.ReceiveTrigger, nameof(this.TriggerInput));
             this.VideoImage = pipeline.CreateEmitter<Shared<Image>>(this, nameof(this.VideoImage));
             this.VideoEncodedImage = pipeline.CreateEmitter<Shared<EncodedImage>>(this, nameof(this.VideoEncodedImage));
             this.VideoIntrinsics = pipeline.CreateEmitter<ICameraIntrinsics>(this, nameof(this.VideoIntrinsics));
@@ -84,6 +90,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             // https://docs.microsoft.com/en-us/uwp/api/windows.media.capture.mediacapture.initializeasync
             this.initMediaCaptureTask = this.InitializeMediaCaptureAsync();
         }
+
+        /// <summary>
+        /// Gets the trigger input stream.
+        /// </summary>
+        public Receiver<int> TriggerInput { get; }
 
         /// <summary>
         /// Gets the BGRA-converted image stream.
@@ -189,6 +200,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 // (if configured) are then posted on the respective output emitters.
                 this.videoFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration.VideoStreamSettings,
+                    this.configuration.VideoStreamUsesTriggeredOutputs,
                     this.VideoImage,
                     this.VideoEncodedImage,
                     this.VideoIntrinsics,
@@ -221,6 +233,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 // (if configured) are then posted on the respective output emitters.
                 this.previewFrameHandler = this.CreateMediaFrameHandler(
                     this.configuration.PreviewStreamSettings,
+                    this.configuration.PreviewStreamUsesTriggeredOutputs,
                     this.PreviewImage,
                     this.PreviewEncodedImage,
                     this.PreviewIntrinsics,
@@ -229,6 +242,16 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     this.PreviewEncodedImageCameraView);
 
                 this.previewFrameReader.FrameArrived += this.previewFrameHandler;
+            }
+
+            if (!this.configuration.ContinuousAutoFocus)
+            {
+                // Turn off the auto-focus. Instead, focus once and then maintain that value.
+                var focusControl = this.mediaCapture.VideoDeviceController.FocusControl;
+                await focusControl.UnlockAsync();
+                focusControl.Configure(new () { Mode = FocusMode.Single });
+                await focusControl.FocusAsync();
+                await focusControl.LockAsync();
             }
         }
 
@@ -258,6 +281,17 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
 
         /// <inheritdoc/>
         public override string ToString() => this.name;
+
+        private void ReceiveTrigger(int trigger, Envelope envelope)
+        {
+            // Capture the trigger time if one has not already been set
+            if (this.triggerTime == DateTime.MinValue)
+            {
+                this.triggerTime = envelope.OriginatingTime;
+                this.triggerSamplingIntervalTicks = TimeSpan.FromSeconds(1).Ticks / this.configuration.TriggeredOutputFrequency;
+                this.triggerGenerateMaxOffset = TimeSpan.FromSeconds(1).Ticks / (this.configuration.VideoStreamSettings.FrameRate * 2);
+            }
+        }
 
         /// <summary>
         /// Initializes the MediaCapture object and creates the MediaFrameReaders for the configured capture streams.
@@ -519,6 +553,7 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// Creates an event handler that handles the FrameArrived event of the MediaFrameReader.
         /// </summary>
         /// <param name="streamSettings">The stream settings.</param>
+        /// <param name="useTriggeredOutputs">A value indicating whether to use triggered outputs for this stream.</param>
         /// <param name="imageStream">The stream on which to post the output image.</param>
         /// <param name="encodedImageStream">The stream on which to post the output encoded image.</param>
         /// <param name="intrinsicsStream">The stream on which to post the camera intrinsics.</param>
@@ -528,14 +563,14 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// <returns>The event handler.</returns>
         private TypedEventHandler<MediaFrameReader, MediaFrameArrivedEventArgs> CreateMediaFrameHandler(
             PhotoVideoCameraConfiguration.StreamSettings streamSettings,
+            bool useTriggeredOutputs,
             Emitter<Shared<Image>> imageStream,
             Emitter<Shared<EncodedImage>> encodedImageStream,
             Emitter<ICameraIntrinsics> intrinsicsStream,
             Emitter<CoordinateSystem> poseStream,
             Emitter<ImageCameraView> imageCameraViewStream,
-            Emitter<EncodedImageCameraView> encodedImageCameraViewStream)
-        {
-            return (sender, args) =>
+            Emitter<EncodedImageCameraView> encodedImageCameraViewStream) =>
+            (sender, args) =>
             {
                 using var frame = sender.TryAcquireLatestFrame();
                 if (frame != null)
@@ -543,6 +578,21 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     // Convert frame QPC time to pipeline time
                     var frameTimestamp = frame.SystemRelativeTime.Value.Ticks;
                     var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(frameTimestamp);
+
+                    // Now compute whether we are generating an output, based on originating time, and configuration
+                    // settings
+                    var generateOutput = true;
+                    if (useTriggeredOutputs)
+                    {
+                        var delta = (originatingTime - this.triggerTime).Ticks % this.triggerSamplingIntervalTicks;
+                        var offset = Math.Min(this.triggerSamplingIntervalTicks - delta, delta);
+                        generateOutput = offset <= this.triggerGenerateMaxOffset;
+                    }
+
+                    if (!generateOutput)
+                    {
+                        return;
+                    }
 
                     // Compute the camera intrinsics if needed
                     var cameraIntrinsics = default(ICameraIntrinsics);
@@ -645,7 +695,6 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                     }
                 }
             };
-        }
 
         /// <summary>
         /// Extracts the camera intrinsics from the supplied frame.

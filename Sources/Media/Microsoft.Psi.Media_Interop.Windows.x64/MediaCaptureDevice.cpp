@@ -99,10 +99,6 @@ void MediaCaptureDevice::InitializeFromActivate(IMFActivate *pActivate, String^ 
     m_symbolicLink = MediaFoundationUtility::GetStringProperty(pActivate, MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_SYMBOLIC_LINK);
 }
 
-// This is a temporary work around until MF_DEVICESTREAM_FRAMESERVER_SHARED is made public in RS4 (it's currently internal in RS3)
-// TODO: Remove this attribute after it becomes public (in the RS4 release of Windows)
-EXTERN_GUID(MF_DEVSOURCE_ATTRIBUTE_FRAMESERVER_SHARE_MODE, 0x44d1a9bc, 0x2999, 0x4238, 0xae, 0x43, 0x7, 0x30, 0xce, 0xb2, 0xab, 0x1b);
-
 /// <summary>
 /// Uses the symbolic link or device path for a capture device to create an  activate object.
 /// </summary>
@@ -127,7 +123,7 @@ IMFActivate *MediaCaptureDevice::GetActivate(String^ symbolicLink, bool useInSha
 		if (useInSharedMode)
 		{
 			hr = pAttributes->SetUINT32(
-				MF_DEVSOURCE_ATTRIBUTE_FRAMESERVER_SHARE_MODE /* Replace with MF_DEVICESTREAM_FRAMESERVER_SHARED once it is public in RS4 release of Windows */,
+                MF_DEVICESTREAM_FRAMESERVER_SHARED,
 				1);
 			MF_THROWHR(hr);
 		}

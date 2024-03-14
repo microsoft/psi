@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="configurationFilename">The component configuration file.</param>
         /// <param name="name">An optional name for the component.</param>
         public AcousticFeaturesExtractor(Pipeline pipeline, string configurationFilename = null, string name = nameof(AcousticFeaturesExtractor))
-            : this(pipeline, new ConfigurationHelper<AcousticFeaturesExtractorConfiguration>(configurationFilename).Configuration, name)
+            : this(pipeline, ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AcousticFeaturesExtractorConfiguration(), true), name)
         {
         }
 

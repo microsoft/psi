@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Data
 
         private SessionImporter(Pipeline pipeline, Session session, bool usePerStreamReaders)
         {
-            foreach (var partition in session.Partitions)
+            foreach (var partition in session.Partitions.Where(p => p.IsStoreValid))
             {
                 var reader = StreamReader.Create(partition.StoreName, partition.StorePath, partition.StreamReaderTypeName);
                 var importer = new Importer(pipeline, reader, usePerStreamReaders);
@@ -97,7 +97,7 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Opens the first stream that matched the specified name.
+        /// Opens the first stream that matches the specified name.
         /// </summary>
         /// <typeparam name="T">The type of stream to open.</typeparam>
         /// <param name="streamName">The name of stream to open.</param>
@@ -123,6 +123,17 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
+        /// Opens the first stream that matches the specified name, if one exists.
+        /// </summary>
+        /// <typeparam name="T">The type of stream to open.</typeparam>
+        /// <param name="streamName">The name of stream to open.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
+        /// <returns>The opened stream, or null if no stream with the specified name exists.</returns>
+        public IProducer<T> OpenStreamOrDefault<T>(string streamName, Func<T> allocator = null, Action<T> deallocator = null)
+            => this.Contains(streamName) ? this.OpenStream(streamName, allocator, deallocator) : null;
+
+        /// <summary>
         /// Opens the named stream in a specific partition.
         /// </summary>
         /// <typeparam name="T">The type of stream to open.</typeparam>
@@ -132,18 +143,18 @@ namespace Microsoft.Psi.Data
         /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
         /// <returns>The opened stream.</returns>
         public IProducer<T> OpenStream<T>(string partitionName, string streamName, Func<T> allocator = null, Action<T> deallocator = null)
-        {
-            return this.importers[partitionName].OpenStream(streamName, allocator, deallocator);
-        }
+            => this.importers[partitionName].OpenStream(streamName, allocator, deallocator);
 
         /// <summary>
-        /// Gets list of importer names that contain the named stream.
+        /// Opens the named stream in a specific partition, if one exists.
         /// </summary>
-        /// <param name="streamName">The stream to search for.</param>
-        /// <returns>The list of importer names that contain the named stream.</returns>
-        private IEnumerable<string> GetContainingUsages(string streamName)
-        {
-            return this.importers.Values.Where(importer => importer.Contains(streamName)).Select(i => i.StoreName);
-        }
+        /// <typeparam name="T">The type of stream to open.</typeparam>
+        /// <param name="partitionName">The partition to open stream in.</param>
+        /// <param name="streamName">The name of stream to open.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
+        /// <returns>The opened stream, or null if no stream with the specified name exists in the specified partition.</returns>
+        public IProducer<T> OpenStreamOrDefault<T>(string partitionName, string streamName, Func<T> allocator = null, Action<T> deallocator = null)
+            => this.importers[partitionName].OpenStreamOrDefault(streamName, allocator, deallocator);
     }
 }

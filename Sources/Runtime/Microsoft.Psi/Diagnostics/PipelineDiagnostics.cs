@@ -539,11 +539,15 @@ namespace Microsoft.Psi.Diagnostics
                 nameof(LastDeliveryQueueSize),
                 nameof(ReceiverIsThrottled),
                 nameof(TotalMessageDroppedCount),
+                nameof(TotalMessageDroppedPercentage),
                 nameof(TotalMessageEmittedCount),
                 nameof(TotalMessageProcessedCount),
+                nameof(TotalMessageProcessedPercentage),
                 nameof(WindowMessageDroppedCount),
+                nameof(WindowMessageDroppedPercentage),
                 nameof(WindowMessageEmittedCount),
                 nameof(WindowMessageProcessedCount),
+                nameof(WindowMessageProcessedPercentage),
             };
 
             /// <summary>
@@ -597,9 +601,19 @@ namespace Microsoft.Psi.Diagnostics
             public int TotalMessageProcessedCount { get; }
 
             /// <summary>
+            /// Gets the total message processed percentage.
+            /// </summary>
+            public double TotalMessageProcessedPercentage => this.TotalMessageEmittedCount != 0 ? 100d * this.TotalMessageProcessedCount / this.TotalMessageEmittedCount : double.NaN;
+
+            /// <summary>
             /// Gets count of processed messages in last averaging time window.
             /// </summary>
             public int WindowMessageProcessedCount { get; }
+
+            /// <summary>
+            /// Gets the message processed percentage in last averaging time window.
+            /// </summary>
+            public double WindowMessageProcessedPercentage => this.WindowMessageEmittedCount != 0 ? 100d * this.WindowMessageProcessedCount / this.WindowMessageEmittedCount : double.NaN;
 
             /// <summary>
             /// Gets total count of dropped messages.
@@ -607,9 +621,19 @@ namespace Microsoft.Psi.Diagnostics
             public int TotalMessageDroppedCount { get; }
 
             /// <summary>
+            /// Gets the total message dropped percentage.
+            /// </summary>
+            public double TotalMessageDroppedPercentage => this.TotalMessageEmittedCount != 0 ? 100d * this.TotalMessageDroppedCount / this.TotalMessageEmittedCount : double.NaN;
+
+            /// <summary>
             /// Gets count of dropped messages in last averaging time window.
             /// </summary>
             public int WindowMessageDroppedCount { get; }
+
+            /// <summary>
+            /// Gets the message dropped percentage in last averaging time window.
+            /// </summary>
+            public double WindowMessageDroppedPercentage => this.WindowMessageEmittedCount != 0 ? 100d * this.WindowMessageDroppedCount / this.WindowMessageEmittedCount : double.NaN;
 
             /// <summary>
             /// Gets latency with which the last message was created.

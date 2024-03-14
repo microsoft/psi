@@ -46,8 +46,7 @@ namespace Microsoft.Psi.Media
         : this(pipeline)
         {
             this.name = name;
-            var configurationHelper = new ConfigurationHelper<MediaCaptureConfiguration>(configurationFilename);
-            this.configuration = configurationHelper.Configuration;
+            this.configuration = ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new MediaCaptureConfiguration(), true);
             if (this.configuration.CaptureAudio)
             {
                 this.audio = new Audio.AudioCapture(pipeline, Psi.Audio.WaveFormat.Create16kHz1Channel16BitPcm());

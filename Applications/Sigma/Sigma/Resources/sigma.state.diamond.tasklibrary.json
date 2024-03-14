@@ -1,0 +1,197 @@
+{
+  "Tasks": [
+    {
+      "Name": "Replace a hard-drive in a PC",
+      "Steps": [
+        {
+          "$type": "Sigma.GatherStep, Sigma",
+          "Label": "1",
+          "Verb": "Gather",
+          "Noun": "Objects",
+          "Objects": [
+            "hard-drive",
+            "screwdriver"
+          ]
+        },
+        {
+          "$type": "Sigma.ComplexStep, Sigma",
+          "Label": "2",
+          "Description": "Open the PC case",
+          "SubSteps": [
+            {
+              "Label": "1",
+              "Description": "Unscrew the case screw using the screwdriver.",
+              "VirtualObjects": [
+                {
+                  "Name": "Unscrew PC case",
+                  "ModelType": "Half circle",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "unscrew PC case"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "2",
+              "Description": "Pull the handle and open and remove the case lid. Place the case lid on the table next to you.",
+              "VirtualObjects": [
+                {
+                  "Name": "Open PC case",
+                  "ModelType": "Quarter Circle",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "Open PC case"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$type": "Sigma.ComplexStep, Sigma",
+          "Label": "3",
+          "Description": "Remove the existing hard-drive.",
+          "SubSteps": [
+            {
+              "Label": "1",
+              "Description": "Disconnect the wide connector.",
+              "VirtualObjects": [
+                {
+                  "Name": "Disconnect wide connector",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "disconnect wide connector"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "2",
+              "Description": "Disconnect the narrow connector.",
+              "VirtualObjects": [
+                {
+                  "Name": "Disconnect narrow connector",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "disconnect narrow connector"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "3",
+              "Description": "Lift the hard-drive out by pushing the two green tabs towards each other and pulling up.",
+              "VirtualObjects": [
+                {
+                  "Name": "Lift hard-drive",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "lift hard-drive"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "4",
+              "Description": "Remove the plastic casing from around the hard-drive.",
+              "VirtualObjects": []
+            }
+          ]
+        },
+        {
+          "$type": "Sigma.ComplexStep, Sigma",
+          "Label": "4",
+          "Description": "Insert the new hard-drive.",
+          "SubSteps": [
+            {
+              "Label": "1",
+              "Description": "Place the plastic casing around the new hard-drive.",
+              "VirtualObjects": []
+            },
+            {
+              "Label": "2",
+              "Description": "Insert the hard-drive into the bay.",
+              "VirtualObjects": [
+                {
+                  "Name": "Insert hard-drive",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "insert hard-drive"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "3",
+              "Description": "Plug the narrow connector into the hard-drive.",
+              "VirtualObjects": [
+                {
+                  "Name": "Insert narrow connector",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "insert narrow connector"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "4",
+              "Description": "Plug the wide connector into the hard-drive.",
+              "VirtualObjects": [
+                {
+                  "Name": "Insert wide connector",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "insert wide connector"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$type": "Sigma.ComplexStep, Sigma",
+          "Label": "5",
+          "Description": "Close the PC case",
+          "SubSteps": [
+            {
+              "Label": "1",
+              "Description": "Slide the case lid in and close it down.",
+              "VirtualObjects": [
+                {
+                  "Name": "Close PC case",
+                  "ModelType": "Straight",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "Close PC case"
+                  }
+                }
+              ]
+            },
+            {
+              "Label": "2",
+              "Description": "Screw the case screw back using the screwdriver.",
+              "VirtualObjects": [
+                {
+                  "Name": "Screw PC case",
+                  "ModelType": "Half circle",
+                  "SpatialPose": {
+                    "$type": "Sigma.AtKnownSpatialLocation, Sigma",
+                    "SpatialLocationName": "screw PC case"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

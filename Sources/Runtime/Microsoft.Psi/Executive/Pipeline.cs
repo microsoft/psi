@@ -145,7 +145,7 @@ namespace Microsoft.Psi
                 this.DiagnosticsConfiguration = diagnosticsConfig ?? DiagnosticsConfiguration.Default;
                 this.DiagnosticsCollector = diagnosticsCollector;
                 this.DiagnosticsCollector.PipelineCreate(this);
-                if (!(this is Subpipeline))
+                if (this is not Subpipeline)
                 {
                     this.Diagnostics = new DiagnosticsSampler(this, this.DiagnosticsCollector, this.DiagnosticsConfiguration).Diagnostics;
                 }
@@ -474,10 +474,11 @@ namespace Microsoft.Psi
         /// Runs the pipeline synchronously.
         /// </summary>
         /// <param name="descriptor">An optional replay descriptor to apply when replaying data from a store.</param>
-        public void Run(ReplayDescriptor descriptor = null)
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        public void Run(ReplayDescriptor descriptor = null, IProgress<double> progress = null)
         {
             this.enableExceptionHandling = true; // suppress exceptions while running
-            this.RunAsync(descriptor);
+            this.RunAsync(descriptor, progress);
             this.WaitAll();
             this.enableExceptionHandling = false;
 
@@ -499,9 +500,10 @@ namespace Microsoft.Psi
         /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
         /// store(s) will be delivered as soon as possible irrespective of their originating times.
         /// </param>
-        public void Run(TimeInterval replayInterval, bool enforceReplayClock = true)
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        public void Run(TimeInterval replayInterval, bool enforceReplayClock = true, IProgress<double> progress = null)
         {
-            this.Run(new ReplayDescriptor(replayInterval, enforceReplayClock));
+            this.Run(new ReplayDescriptor(replayInterval, enforceReplayClock), progress);
         }
 
         /// <summary>
@@ -514,9 +516,10 @@ namespace Microsoft.Psi
         /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
         /// store(s) will be delivered as soon as possible irrespective of their originating times.
         /// </param>
-        public void Run(DateTime replayStartTime, DateTime replayEndTime, bool enforceReplayClock = true)
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        public void Run(DateTime replayStartTime, DateTime replayEndTime, bool enforceReplayClock = true, IProgress<double> progress = null)
         {
-            this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, enforceReplayClock));
+            this.Run(new ReplayDescriptor(replayStartTime, replayEndTime, enforceReplayClock), progress);
         }
 
         /// <summary>
@@ -528,9 +531,10 @@ namespace Microsoft.Psi
         /// to their originating times, as though they were being generated in real-time. If false, messages retrieved from
         /// store(s) will be delivered as soon as possible irrespective of their originating times.
         /// </param>
-        public void Run(DateTime replayStartTime, bool enforceReplayClock = true)
+        /// <param name="progress">An optional progress reporter for progress updates.</param>
+        public void Run(DateTime replayStartTime, bool enforceReplayClock = true, IProgress<double> progress = null)
         {
-            this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, enforceReplayClock));
+            this.Run(new ReplayDescriptor(replayStartTime, DateTime.MaxValue, enforceReplayClock), progress);
         }
 
         /// <summary>
@@ -685,14 +689,22 @@ namespace Microsoft.Psi
                 return;
             }
 
-            this.Stop(this.GetCurrentTime(), abandonPendingWorkItems);
+            // Subpipelines may have already been notified of the final originating time via a call to NotifyPipelineFinalizing
+            // by the parent pipeline. If so, the FinalOriginatingTime will have been set to a value other than DateTime.MinValue
+            // and we should use that as the finalOriginatingTime in the call to Stop() instead of GetCurrentTime().
+            this.Stop(this.FinalOriginatingTime != DateTime.MinValue ? this.FinalOriginatingTime : this.GetCurrentTime(), abandonPendingWorkItems);
             this.DisposeComponents();
             this.components = null;
             this.DiagnosticsCollector?.PipelineDisposed(this);
             this.completed.Dispose();
-            this.scheduler.Dispose();
             this.schedulerContext.Dispose();
             this.activationContext.Dispose();
+
+            // Dispose the scheduler if this is the main pipeline
+            if (this is not Subpipeline)
+            {
+                this.scheduler.Dispose();
+            }
         }
 
         internal void AddComponent(PipelineElement pe)
@@ -805,7 +817,7 @@ namespace Microsoft.Psi
                 var name = component.GetType().Name;
                 var fullName = $"{id}.{name}";
                 node = new PipelineElement(id, fullName, component);
-                if (this.IsRunning && node.IsSource && !(component is Subpipeline))
+                if (this.IsRunning && node.IsSource && component is not Subpipeline)
                 {
                     throw new InvalidOperationException($"Source component added when pipeline already running. Consider using Subpipeline.");
                 }
@@ -869,7 +881,7 @@ namespace Microsoft.Psi
             }
 
             // stop the scheduler if this is the main pipeline
-            if (!(this is Subpipeline))
+            if (this is not Subpipeline)
             {
                 this.scheduler.Stop(abandonPendingWorkitems);
             }

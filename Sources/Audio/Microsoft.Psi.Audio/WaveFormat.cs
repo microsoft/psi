@@ -17,6 +17,13 @@ namespace Microsoft.Psi.Audio
     public class WaveFormat
     {
         /// <summary>
+        /// Gets the size in bytes of the base <see cref="WaveFormat"/> class, not including
+        /// any extra bytes specified by the <see cref="ExtraSize"/> property (but including
+        /// the 2 bytes representing the <see cref="ExtraSize"/> property itself).
+        /// </summary>
+        public static readonly int Size = Marshal.SizeOf<WaveFormat>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WaveFormat"/> class.
         /// </summary>
         internal WaveFormat()
@@ -324,7 +331,7 @@ namespace Microsoft.Psi.Audio
         /// <returns>The unmanaged size of the object.</returns>
         public static int MarshalSizeOf(WaveFormat format)
         {
-            return Marshal.SizeOf<WaveFormat>() + format?.ExtraSize ?? 0;
+            return WaveFormat.Size + format?.ExtraSize ?? 0;
         }
 
         /// <summary>

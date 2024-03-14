@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a 3D point visualization object.
     /// </summary>
     [VisualizationObject("3D Sphere")]
-    public class Point3DAsSphereVisualizationObject : ModelVisual3DVisualizationObject<Point3D?>
+    public class Point3DAsSphereVisualizationObject : ModelVisual3DValueVisualizationObject<Point3D?>
     {
         private SphereVisual3D sphereVisual;
         private Color color = Colors.White;
@@ -79,7 +79,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData.HasValue)
             {

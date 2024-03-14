@@ -3,16 +3,21 @@
 
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Runtime.Serialization;
     using System.Windows;
     using GalaSoft.MvvmLight.CommandWpf;
+    using Microsoft.Psi.Audio;
+    using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization;
+    using Microsoft.Psi.Visualization.Adapters;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
     /// Implements an audio visualization object.
@@ -21,6 +26,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     public class AudioVisualizationObject : PlotVisualizationObject<double>
     {
         private RelayCommand enableAudioCommand;
+        private bool playDisplayChannelOnly;
+        private WaveFormat audioFormat;
 
         /// <summary>
         /// The audio channel to plot.
@@ -71,6 +78,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets or sets the audio channel to plot.
         /// </summary>
         [DataMember]
+        [DisplayName("Display Channel")]
+        [Description("The audio channel to display.")]
+        [PropertyOrder(0)]
         public short Channel
         {
             get
@@ -80,28 +90,91 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             set
             {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(this.Channel), "Channel must be greater than or equal to 0.");
+                }
+
+                if (value >= this.ChannelCount)
+                {
+                    throw new ArgumentOutOfRangeException(nameof(this.Channel), $"Channel must be less than the number of channels ({this.ChannelCount}) in the audio stream.");
+                }
+
                 this.Set(nameof(this.Channel), ref this.channel, value);
 
                 if (this.Panel != null)
                 {
-                    // NOTE: Only open a stream when this visualization object is connected to it's parent
+                    // NOTE: Only open a stream when this visualization object is connected to its parent
 
-                    // Create a new binding with a different channel argument and re-open the stream
+                    // Create a new binding with a different channel argument and update the stream
                     this.StreamBinding = new StreamBinding(
                         this.StreamBinding.SourceStreamName,
                         this.StreamBinding.PartitionName,
                         this.StreamBinding.StreamName,
                         this.StreamBinding.DerivedStreamAdapterType,
                         this.StreamBinding.DerivedStreamAdapterArguments,
-                        this.StreamBinding.VisualizerStreamAdapterType,
-                        this.StreamBinding.VisualizerStreamAdapterArguments,
+                        typeof(AudioChannelAdapter),
+                        new object[] { this.Channel },
                         this.StreamBinding.VisualizerSummarizerType,
-                        new object[] { this.Channel });
+                        null);
 
-                    this.OnStreamBound();
+                    // Update the stream source to refresh the data
+                    this.UpdateStreamSource(VisualizationContext.Instance.DatasetViewModel.CurrentSessionViewModel);
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to play only the displayed channel.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Play Display Channel Only")]
+        [Description("Play only the displayed channel.")]
+        [PropertyOrder(1)]
+        public bool PlayDisplayChannelOnly
+        {
+            get => this.playDisplayChannelOnly;
+            set
+            {
+                this.Set(nameof(this.PlayDisplayChannelOnly), ref this.playDisplayChannelOnly, value);
+
+                // Restart playback if this is an audio playback source
+                if (this.Navigator != null && this.Navigator.IsAudioPlaybackVisualizationObject(this))
+                {
+                    this.Navigator.AddOrUpdateAudioPlaybackSource(this, this.StreamSource);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of channels in the audio stream.
+        /// </summary>
+        [Browsable(true)]
+        [DisplayName("Channel Count")]
+        [Description("The number of audio channels.")]
+        [IgnoreDataMember]
+        [PropertyOrder(2)]
+        public int? ChannelCount => this.audioFormat?.Channels;
+
+        /// <summary>
+        /// Gets the sampling rate of the audio stream.
+        /// </summary>
+        [Browsable(true)]
+        [DisplayName("Sampling Rate")]
+        [Description("The audio sampling rate.")]
+        [IgnoreDataMember]
+        [PropertyOrder(3)]
+        public uint? SamplingRate => this.audioFormat?.SamplesPerSec;
+
+        /// <summary>
+        /// Gets the format of the audio stream.
+        /// </summary>
+        [Browsable(true)]
+        [DisplayName("Format")]
+        [Description("The audio format.")]
+        [IgnoreDataMember]
+        [PropertyOrder(4)]
+        public WaveFormatTag? Format => this.audioFormat?.FormatTag;
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -174,6 +247,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             base.OnStreamBound();
 
+            if (this.audioFormat == null)
+            {
+                this.ReadAudioFormat();
+            }
+
             // If this audio visualization object is an audio playback source, notify the navigator of the new stream source.
             if (this.Navigator.IsAudioPlaybackVisualizationObject(this))
             {
@@ -189,6 +267,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             {
                 this.Navigator.AddOrUpdateAudioPlaybackSource(this, null);
             }
+
+            this.audioFormat = null;
 
             base.OnStreamUnbound();
         }
@@ -222,6 +302,21 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
 
             base.OnRemoveFromPanel();
+        }
+
+        private void ReadAudioFormat()
+        {
+            using var streamReader = StreamReader.Create(this.StreamSource.StoreName, this.StreamSource.StorePath, this.StreamSource.StreamReaderType);
+            streamReader.OpenStream<AudioBuffer>(
+                this.StreamSource.StreamName,
+                (data, envelope) =>
+                {
+                    this.audioFormat = data.Format;
+                });
+
+            // Read the first message to get the audio format
+            streamReader.Seek(TimeInterval.Infinite);
+            streamReader.MoveNext(out _);
         }
     }
 }

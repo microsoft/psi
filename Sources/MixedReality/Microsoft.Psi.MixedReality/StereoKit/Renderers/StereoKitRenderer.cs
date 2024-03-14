@@ -27,8 +27,15 @@ namespace Microsoft.Psi.MixedReality.StereoKit
             if (StereoKitTransforms.WorldHierarchy.HasValue)
             {
                 Hierarchy.Push(StereoKitTransforms.WorldHierarchy.Value);
-                this.Render();
-                Hierarchy.Pop();
+                try
+                {
+                    this.Render();
+                }
+                finally
+                {
+                    // Ensures Hierarchy is popped even if an exception was thrown
+                    Hierarchy.Pop();
+                }
             }
         }
 

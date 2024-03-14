@@ -19,10 +19,12 @@ namespace Microsoft.Psi.MixedReality.WinRT
     /// in alignment with the timestamp of each eye gaze sample.
     /// See here for more information about the WinRT APIs:
     /// https://learn.microsoft.com/en-us/windows/mixed-reality/develop/native/gaze-in-directx.</remarks>
-    public class GazeSensor : Generator
+    public class GazeSensor : Generator, IProducer<(Eyes, CoordinateSystem)>
     {
         private readonly Pipeline pipeline;
         private readonly GazeSensorConfiguration configuration;
+        private Emitter<Eyes> eyesEmitter;
+        private Emitter<CoordinateSystem> headEmitter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GazeSensor"/> class.
@@ -34,8 +36,7 @@ namespace Microsoft.Psi.MixedReality.WinRT
             : base(pipeline, true, name)
         {
             this.pipeline = pipeline;
-            this.Eyes = this.pipeline.CreateEmitter<Eyes>(this, nameof(this.Eyes));
-            this.Head = this.pipeline.CreateEmitter<CoordinateSystem>(this, nameof(this.Head));
+            this.Out = this.pipeline.CreateEmitter<(Eyes, CoordinateSystem)>(this, nameof(this.Out));
             this.configuration = configuration ?? new GazeSensorConfiguration();
 
             // If configured to emit eye gaze, make sure that eye gaze is supported and accessible on the device.
@@ -58,58 +59,70 @@ namespace Microsoft.Psi.MixedReality.WinRT
         }
 
         /// <summary>
+        /// Gets the emitter for the eyes and head gaze.
+        /// </summary>
+        public Emitter<(Eyes, CoordinateSystem)> Out { get; }
+
+        /// <summary>
         /// Gets the emitter for the eye gaze.
         /// </summary>
         /// <remarks>The origin of the pose ray is between the user's eyes.</remarks>
-        public Emitter<Eyes> Eyes { get; }
+        public Emitter<Eyes> Eyes => this.eyesEmitter ??= this.Out.Select(t => t.Item1, DeliveryPolicy.SynchronousOrThrottle).Out;
 
         /// <summary>
-        /// Gets the emitter for the head gaze.
+        /// Gets the emitter for the head pose.
         /// </summary>
-        /// <remarks>The origin of the pose is between the user's eyes.</remarks>
-        public Emitter<CoordinateSystem> Head { get; }
+        public Emitter<CoordinateSystem> Head => this.headEmitter ??= this.Out.Select(t => t.Item2, DeliveryPolicy.SynchronousOrThrottle).Out;
 
         /// <inheritdoc/>
         protected override DateTime GenerateNext(DateTime currentTime)
         {
-            // Get the current timestamp
-            var perceptionTimestamp = PerceptionTimestampHelper.FromHistoricalTargetTime(currentTime);
-            var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(perceptionTimestamp.SystemRelativeTargetTime.Ticks);
-
             // Query for the gaze
+            var perceptionTimestamp = PerceptionTimestampHelper.FromHistoricalTargetTime(currentTime);
             var spatialPointerPose = SpatialPointerPose.TryGetAtTimestamp(MixedReality.WorldSpatialCoordinateSystem, perceptionTimestamp);
             var headPose = spatialPointerPose?.Head;
             var eyesPose = spatialPointerPose?.Eyes;
 
-            if (this.configuration.OutputEyeGaze && eyesPose is null)
-            {
-                // If configured to output eye gaze, but we received a null result, and thus have no timestamp from the
-                // eye tracking device, simply return without posting anything for the eyes or head.
-                return currentTime + this.configuration.Interval;
-            }
-
-            // Eyes
+            // If outputting eye gaze
             if (this.configuration.OutputEyeGaze)
             {
-                // Get the actual timestamp for this eye gaze result, as reported by the underlying eye tracker device
-                originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(eyesPose.UpdateTimestamp.SystemRelativeTargetTime.Ticks);
+                // Compute the originating time. If eyePose is null, we have no timestamp from the eye tracking device.
+                // In this case we use the originating time based on the perception timestamp. O/w get the actual timestamp
+                // for this eye gaze result, as reported by the underlying eye tracker device
+                var originatingTime = eyesPose is null ?
+                    this.pipeline.GetCurrentTimeFromElapsedTicks(perceptionTimestamp.SystemRelativeTargetTime.Ticks) :
+                    this.pipeline.GetCurrentTimeFromElapsedTicks(eyesPose.UpdateTimestamp.SystemRelativeTargetTime.Ticks);
 
-                if (originatingTime > this.Eyes.LastEnvelope.OriginatingTime)
+                if (originatingTime > this.Out.LastEnvelope.OriginatingTime)
                 {
-                    this.Eyes.Post(new Eyes(eyesPose.Gaze?.ToRay3D(), eyesPose.IsCalibrationValid), originatingTime);
-                }
+                    // Construct the eyes object
+                    var eyes = eyesPose is null ? null : new Eyes(eyesPose.Gaze?.ToRay3D(), eyesPose.IsCalibrationValid);
 
-                if (this.configuration.OutputHeadGaze)
-                {
-                    // Use the actual time of the eye gaze result to re-query for the head pose at the exact same time.
-                    headPose = SpatialPointerPose.TryGetAtTimestamp(MixedReality.WorldSpatialCoordinateSystem, eyesPose.UpdateTimestamp)?.Head;
+                    // If also outputting head gaze
+                    var head = default(CoordinateSystem);
+                    if (this.configuration.OutputHeadGaze)
+                    {
+                        // If the eyes pose is null, use the current headpose. O/w use the actual time of the eye gaze result
+                        // to re-query for the head pose at the exact same time.
+                        head = eyesPose is null ?
+                            headPose?.ToCoordinateSystem() :
+                            SpatialPointerPose.TryGetAtTimestamp(MixedReality.WorldSpatialCoordinateSystem, eyesPose.UpdateTimestamp)?.Head?.ToCoordinateSystem();
+                    }
+
+                    // Post results
+                    this.Out.Post((eyes, head), originatingTime);
                 }
             }
-
-            // Head
-            if (this.configuration.OutputHeadGaze && originatingTime > this.Head.LastEnvelope.OriginatingTime)
+            else if (this.configuration.OutputHeadGaze)
             {
-                this.Head.Post(headPose?.ToCoordinateSystem(), originatingTime);
+                // Get the current timestamp
+                var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(perceptionTimestamp.SystemRelativeTargetTime.Ticks);
+
+                // Post results
+                if (originatingTime > this.Out.LastEnvelope.OriginatingTime)
+                {
+                    this.Out.Post((default, headPose?.ToCoordinateSystem()), originatingTime);
+                }
             }
 
             return currentTime + this.configuration.Interval;

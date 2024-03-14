@@ -4,7 +4,6 @@
 namespace Microsoft.Psi.Data.Json
 {
     using System;
-    using System.Linq;
     using System.Threading;
     using Microsoft.Psi.Components;
     using Newtonsoft.Json.Linq;
@@ -17,7 +16,7 @@ namespace Microsoft.Psi.Data.Json
         private readonly JsonStoreWriter writer;
         private readonly Merger<Message<JToken>, string> merger;
         private readonly Pipeline pipeline;
-        private readonly ManualResetEvent throttle = new ManualResetEvent(true);
+        private readonly ManualResetEvent throttle = new (true);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JsonExporter"/> class.
@@ -65,11 +64,7 @@ namespace Microsoft.Psi.Data.Json
         public override void Dispose()
         {
             base.Dispose();
-            if (this.writer != null)
-            {
-                this.writer.Dispose();
-            }
-
+            this.writer?.Dispose();
             this.throttle.Dispose();
         }
 
@@ -87,7 +82,7 @@ namespace Microsoft.Psi.Data.Json
             var mergeInput = this.merger.Add(name);
 
             // name the stream if it's not already named
-            source.Name = source.Name ?? name;
+            source.Name ??= name;
 
             // tell the writer to write the serialized stream
             var metadata = this.writer.OpenStream(source.Id, name, typeof(T).AssemblyQualifiedName);

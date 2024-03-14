@@ -36,10 +36,10 @@ namespace Test.Psi
 #endif
 
         // Modify these preprocessor directives if the TargetFramework is changed in Test.Psi.csproj or Test.Psi.Windows.csproj
-#if NETCOREAPP3_1
+#if NETCOREAPP
         private static readonly string OtherTestExe = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $@"..\..\..\..\Test.Psi.Windows\bin\{Configuration}\net472\Test.Psi.Windows.exe");
 #elif NET472
-        private static readonly string OtherTestExe = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $@"..\..\..\..\Test.Psi\bin\{Configuration}\netcoreapp3.1\Test.Psi.exe");
+        private static readonly string OtherTestExe = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $@"..\..\..\..\Test.Psi\bin\{Configuration}\net8.0\Test.Psi.exe");
 #endif
 
         // Folder in which to create stores for testing

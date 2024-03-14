@@ -109,6 +109,7 @@ namespace Microsoft.Psi.Visualization.Views
                 var data = new DataObject();
                 data.SetData(DragDropDataName.DragDropOperation, DragDropOperation.ReorderPanel);
                 data.SetData(DragDropDataName.VisualizationPanel, this.VisualizationPanel);
+                data.SetData(DragDropDataName.VisualizationPanelView, this);
                 data.SetData(DragDropDataName.MouseOffsetFromTop, mousePosition.Y);
                 data.SetData(DragDropDataName.PanelSize, new Size?(new Size(this.ActualWidth, this.ActualHeight)));
                 var renderTargetBitmap = new RenderTargetBitmap((int)this.ActualWidth, (int)this.ActualHeight, 96, 96, PixelFormats.Pbgra32);

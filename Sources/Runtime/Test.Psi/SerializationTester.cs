@@ -71,8 +71,13 @@ namespace Test.Psi
             catch (AggregateException ex)
             {
                 Assert.AreEqual(1, ex.InnerExceptions.Count);
+#if NET6_0_OR_GREATER
+                Assert.IsTrue(ex.InnerExceptions[0].GetType() == typeof(ArgumentException));
+                Assert.IsTrue(ex.InnerExceptions[0].Message.StartsWith("Type is not supported"));
+#else
                 Assert.IsTrue(ex.InnerExceptions[0].GetType() == typeof(NotSupportedException));
                 Assert.IsTrue(ex.InnerExceptions[0].Message.StartsWith("Cannot clone Func"));
+#endif
                 return;
             }
 
@@ -326,10 +331,18 @@ namespace Test.Psi
                 var clone = source.DeepClone();
                 Assert.Fail("Should have thrown while attempting to clone IEnumerable query");
             }
+#if NET6_0_OR_GREATER
+            catch (ArgumentException ex)
+            {
+                // .NET 6 and above throws ArgumentException in GetUninitializedObject for delegate types
+                Assert.IsTrue(ex.Message.StartsWith("Type is not supported"));
+            }
+#else
             catch (NotSupportedException ex)
             {
                 Assert.IsTrue(ex.Message.StartsWith("Cannot clone Func"));
             }
+#endif
         }
 
         [TestMethod]
@@ -406,15 +419,66 @@ namespace Test.Psi
             // Represents a Dictionary<int, string> { { 0, "zero" }, { 1, "one" } } serialized using the previous scheme (auto-generated ClassSerializer)
             var buf = new byte[]
             {
-                0, 0, 0, 128, 0, 0, 0, 128, 3, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 3, 0, 0, 0,
-                255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 4, 0, 0, 0, 122, 101, 114, 111, 255, 255, 255, 255,
-                1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 128, 3, 0, 0, 0, 111, 110, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                2, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 0, 0, 0, 64, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 128, 0, 0, 0, 128, 3, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 3, 0, 0, 0, 0, 0, 0, 0,
+                255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 128, 4, 0, 0, 0, 122, 101, 114, 111, 1, 0, 0, 0, 255, 255, 255, 255,
+                1, 0, 0, 0, 0, 0, 0, 128, 3, 0, 0, 0, 111, 110, 101, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 86, 85, 85, 85,
+                85, 85, 85, 85, 2, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             };
 
-            // Create the known serializers and register the old version of the Dictionary schema. This simulates what would be read from an older store.
+            // Create the known serializers and register the old version of the Dictionary schema. This simulates what would be read from an older store
+            // created prior to the introduction of the .NET version-independent custom DictionarySerializer.
             var serializers = new KnownSerializers();
-            var oldSchema = TypeSchema.FromType(typeof(Dictionary<int, string>), null, serializationSystemVersion: 2);
+            var oldSchema = new TypeSchema(
+                "System.Collections.Generic.Dictionary`2[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                TypeFlags.IsClass,
+                new[]
+                {
+                    new TypeMemberSchema(
+                        "_buckets",
+                        "System.Int32[], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_entries",
+                        "System.Collections.Generic.Dictionary`2+Entry[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]][], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_fastModMultiplier",
+                        "System.UInt64, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_count",
+                        "System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_freeList",
+                        "System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_freeCount",
+                        "System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_version",
+                        "System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_comparer",
+                        "System.Collections.Generic.IEqualityComparer`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_keys",
+                        "System.Collections.Generic.Dictionary`2+KeyCollection[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                    new TypeMemberSchema(
+                        "_values",
+                        "System.Collections.Generic.Dictionary`2+ValueCollection[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                        true),
+                },
+                "System.Collections.Generic.Dictionary`2[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e",
+                532890964,
+                2,
+                null,
+                2);
             serializers.RegisterSchema(oldSchema);
 
             // Deserialize the buffer using a SerializationContext initialized with the old schema

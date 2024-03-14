@@ -437,6 +437,77 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Determine intersection of intervals.
+        /// </summary>
+        /// <param name="intervals">Sequence of intervals.</param>
+        /// <param name="ctor">Constructor function for interval type.</param>
+        /// <param name="empty">Empty instance.</param>
+        /// <remarks>Returns empty interval when sequence is empty or contains only empty intervals.</remarks>
+        /// <returns>Intersection of intervals.</returns>
+        protected static T Intersection(IEnumerable<Interval<TPoint, TSpan, TEndpoint, T>> intervals, Func<TEndpoint, TEndpoint, T> ctor, Interval<TPoint, TSpan, TEndpoint, T> empty)
+        {
+            var leftEndpoint = empty.LeftEndpoint;
+            var rightEndpoint = empty.RightEndpoint;
+            var first = true;
+            foreach (var interval in intervals)
+            {
+                if (!interval.IsEmpty)
+                {
+                    var neg = interval.IsNegative;
+                    var min = neg ? interval.RightEndpoint : interval.LeftEndpoint;
+                    var max = neg ? interval.LeftEndpoint : interval.RightEndpoint;
+
+                    var compLeft = interval.ComparePoints(min.Point, leftEndpoint.Point);
+                    if (first || compLeft > 0)
+                    {
+                        leftEndpoint = min;
+                    }
+                    else if (compLeft == 0)
+                    {
+                        if ((!leftEndpoint.Bounded && min.Bounded) ||
+                            (leftEndpoint.Inclusive && !min.Inclusive))
+                        {
+                            leftEndpoint = min;
+                        }
+                    }
+
+                    var compRight = interval.ComparePoints(max.Point, rightEndpoint.Point);
+                    if (first || compRight < 0)
+                    {
+                        rightEndpoint = max;
+                    }
+                    else if (compRight == 0)
+                    {
+                        if ((!rightEndpoint.Bounded && max.Bounded) ||
+                            (rightEndpoint.Inclusive && !max.Inclusive))
+                        {
+                            rightEndpoint = max;
+                        }
+                    }
+
+                    // Now check if the leftEndpoint is past the rightEndpoint
+                    var comp = interval.ComparePoints(leftEndpoint.Point, rightEndpoint.Point);
+                    if (comp > 0)
+                    {
+                        return ctor(empty.LeftEndpoint, empty.RightEndpoint);
+                    }
+                    else if (comp == 0 && (!leftEndpoint.Inclusive || !rightEndpoint.Inclusive))
+                    {
+                        return ctor(empty.LeftEndpoint, empty.RightEndpoint);
+                    }
+
+                    first = false;
+                }
+                else
+                {
+                    return ctor(empty.LeftEndpoint, empty.RightEndpoint);
+                }
+            }
+
+            return ctor(leftEndpoint, rightEndpoint);
+        }
+
+        /// <summary>
         /// Compare points.
         /// </summary>
         /// <param name="a">First point.</param>

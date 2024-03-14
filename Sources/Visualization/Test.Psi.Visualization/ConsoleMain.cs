@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-namespace Test.Psi.Visualization.Client
+namespace Test.Psi.Visualization
 {
     using Test.Psi.Common;
 
