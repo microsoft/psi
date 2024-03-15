@@ -13,7 +13,7 @@ The framework provides:
 
 <br>
 
-![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
+![Psi Overview](https://github.com/microsoft/psi-samples/blob/main/Psi-Gif2-960-Corrected.gif)
 
 A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). A webinar containing a brief introduction and tutorial on how to code with \\psi is available [as an online video](https://youtu.be/A6nr8MWwM3o). An in-depth description of the framework is available in [this technical report](https://arxiv.org/abs/2103.15975).
 
