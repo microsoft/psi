@@ -19,11 +19,11 @@ We hope SIGMA can accelerate research at the intersection of mixed-reality and A
 
 ## License
 
-All SIGMA source code (any files under the [Applications](https://github.com/microsoft/psi/tree/master/Sources) folder in this repo) is released under the [Microsoft Research license agreement](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt).
+All SIGMA source code (any files under the [Applications](https://github.com/microsoft/psi/tree/master/Applications) folder in this repo) is released under the [Microsoft Research license agreement](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt).
 
 ## Transparency Notes
 
-To enable responsible AI use and development, system transparency notes for SIGMA are available [here](https://github.com/microsoft/psi/wiki/Sigma-Transparency-Notes). These transparency notes are intended to help you understand how SIGMA works, what are the system's intended uses, what are its limitations and risks, and the choices researchers can make that influence system performance and behavior. Please read these carefully before using the system in your own research.
+To enable responsible AI use and development, system transparency notes for SIGMA are available [here](https://github.com/microsoft/psi/wiki/Sigma-Transparency-Note). These transparency notes are intended to help you understand how SIGMA works, what are the system's intended uses, what are its limitations and risks, and the choices researchers can make that influence system performance and behavior. Please read these carefully before using the system in your own research.
 
 ## Getting Started
 
@@ -36,7 +36,7 @@ Here are some useful links to get you started:
 
 ## Technical Report
 
-A high level description of SIGMA is available in [an IEEE VR extended abstract describing the system](to-add-link)
+A high level description of SIGMA is available in an IEEE VR extended abstract describing the system (link forthcoming).
 
 If you find the system helpful in your work, please cite this abstract as:
 
@@ -50,7 +50,7 @@ If you find the system helpful in your work, please cite this abstract as:
 }
 ```
 
-We also plan to publish to arXiv shortly a technical report with additional details about SIGMA's architecture, implementation and current functionality. Please stay tuned and watch the repo to be notified when this update happens.
+We also plan to publish to arXiv a technical report with additional details about SIGMA's architecture, implementation and current functionality. Please stay tuned and watch the repo to be notified when this update happens.
 
 ## Contributing
 
