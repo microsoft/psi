@@ -25,7 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Readme.md" />
-    <Content Include="requirements_windows.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -1,6 +1,6 @@
 # Installation
 
-Modified instructions from: https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once/blob/v1.0/assets/readmes/INSTALL.md
+Modified instructions from: [https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once/blob/v1.0/assets/readmes/INSTALL.md](https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once/blob/7b2e76dbb17d0b7831c6813a921fe2bc8de22926/assets/readmes/INSTALL.md)
 
 In order to run the SEEM server, a Python environment must first be created manually following these instructions.
 
@@ -14,19 +14,25 @@ conda activate seem
 # Under your working directory
 git clone https://github.com/UX-Decoder/Segment-Everything-Everywhere-All-At-Once
 cd Segment-Everything-Everywhere-All-At-Once
+
+# Specific commit that these instructions were tested with
+git checkout 7b2e76dbb17d0b7831c6813a921fe2bc8de22926
 ```
 
-Next, install the dependencies based on Windows or Linux:
+_**Only if running on Windows**_, edit the file 'assets/requirements/requirements.txt' as follows:
 ```
-# On Windows
-pip install -r /path/to/psi/Integrations/Models/SEEM/SEEMServer/requirements_windows.txt
-pip install -r assets/requirements/requirements_custom.txt
+Replace: torch==2.1.0         with: --extra-index-url=https://download.pytorch.org/whl/cu118 torch==2.1.0+cu118
+Replace: torchvision==0.16.0  with: torchvision==0.16.0+cu118
+Replace: pillow==9.4.0        with: pillow==9.5.0
+Delete:  deepspeed==0.10.3
+```
 
-# On Linux
+Next, install the dependencies:
+```
 pip install -r assets/requirements/requirements.txt
 pip install -r assets/requirements/requirements_custom.txt
 
-# Install additional dependencies required by the SEEM server
+# Additional dependencies required by the SEEM server
 pip install zmq msgpack
 ```
 

@@ -13,13 +13,13 @@ The framework provides:
 
 <br>
 
-![Psi Overview](https://www.microsoft.com/en-us/research/uploads/prod/2018/01/Psi-Gif2-960-Corrected.gif)
+![Psi Overview](https://github.com/microsoft/psi-samples/blob/main/Psi-Gif2-960-Corrected.gif)
 
 A high-level overview of the framework is available in [this blog post](https://www.microsoft.com/en-us/research/blog/platform-for-situated-intelligence-an-open-source-framework-for-multimodal-integrative-ai/). A webinar containing a brief introduction and tutorial on how to code with \\psi is available [as an online video](https://youtu.be/A6nr8MWwM3o). An in-depth description of the framework is available in [this technical report](https://arxiv.org/abs/2103.15975).
 
 # What's New
 
-**03/04/2024**: In addition to the next [beta version 0.19](https://github.com/microsoft/psi/wiki/Release-Notes#20240314-beta-release-version-0191001), we are excited to announce the release of a new application called [Situated Interactive Guidance Monitoring and Assistance (SIGMA)](https://github.com/microsoft/psi/tree/master/Applications/Sigma/Readme.md). Built on \\psi, SIGMA is a baseline prototype and testbed system intended to accelerate research on mixed-reality task assistive agents. It is available under a [research-only license](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt), and researchers can experiment with and build upon this prototype to investigate the many challenges with developing real-time interactive mixed-reality agents. Check it out!
+**03/14/2024**: In addition to the next [beta version 0.19](https://github.com/microsoft/psi/wiki/Release-Notes#20240314-beta-release-version-0191001), we are excited to announce the release of a new application called [Situated Interactive Guidance Monitoring and Assistance (SIGMA)](https://github.com/microsoft/psi/tree/master/Applications/Sigma/Readme.md). Built on \\psi, SIGMA is a baseline prototype and testbed system intended to accelerate research on mixed-reality task assistive agents. It is available under a [research-only license](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt), and researchers can experiment with and build upon this prototype to investigate the many challenges with developing real-time interactive mixed-reality agents. Check it out!
 
 **12/08/2022**: This week we have released [beta version 0.18](https://github.com/microsoft/psi/wiki/Release-Notes#20221206-beta-release-version-018721), continuing to refine support for building mixed reality applications with \psi, and further evolving debugging and visualization capabilities in PsiStudio.
 
@@ -101,7 +101,7 @@ While the Platform for Situated Intelligence source code and the `Microsoft.Psi.
 
 # Licenses
 
-Platform for Situated Intelligence is available under an [MIT License](LICENSE.txt), with the exception of all files under the [Applications](https://github.com/microsoft/psi/tree/master/Sources) folder (including the SIGMA application), which are released under the [Microsoft Research license agreement](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt). See also [Third Party Notices](ThirdPartyNotices.txt).
+Platform for Situated Intelligence is available under an [MIT License](LICENSE.txt), with the exception of all files under the [Applications](https://github.com/microsoft/psi/tree/master/Applications) folder (including the SIGMA application), which are released under the [Microsoft Research license agreement](https://github.com/microsoft/psi/blob/master/LICENSE-APPLICATIONS.txt). See also [Third Party Notices](ThirdPartyNotices.txt).
 
 # Trademarks
 
