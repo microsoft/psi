@@ -1506,8 +1506,19 @@ namespace Test.Psi
                 readStream.Do(_ => Thread.Sleep(5));
                 readStream.Do(_ => Thread.Sleep(10));
 
+                var progressListLock = new object();
+
+                // Capture progress reports
+                var progressReporter = new Progress<double>(x =>
+                {
+                    lock (progressListLock)
+                    {
+                        progress.Add(x);
+                    }
+                });
+
                 // replay as fast as possible from store
-                p2.RunAsync(TimeInterval.Infinite, false, new Progress<double>(x => progress.Add(x)));
+                p2.RunAsync(TimeInterval.Infinite, false, progressReporter);
                 p2.WaitAll();
             }
 
