@@ -34,7 +34,7 @@ namespace Sigma
         /// <summary>
         /// Gets or sets the thickness (m) of editing handle.
         /// </summary>
-        public float Height { get; set; } = 0.15f;
+        public float Height { get; set; } = 0.18f;
 
         /// <summary>
         /// Gets or sets the text style for the task name.

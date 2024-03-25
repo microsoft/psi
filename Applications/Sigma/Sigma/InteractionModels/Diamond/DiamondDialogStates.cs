@@ -71,8 +71,8 @@ namespace Sigma.Diamond
                 {
                     if (speechRecognitionInputEvent.SpeechRecognitionResult.Contains("ready"))
                     {
-                        yield return DialogAction.Execute(interactionModel.StartTask);
-                        yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
+                        var isKnownTask = interactionModel.TryGetKnownTask();
+                        yield return DialogAction.Execute(interactionModel.BeginTask(isKnownTask));
                     }
                     else
                     {
@@ -129,104 +129,8 @@ namespace Sigma.Diamond
                         // Move to a glanceable position
                         yield return DialogAction.Execute(interactionModel.MoveToGlanceablePosition);
 
-                        if (interactionModel.Configuration.TaskGenerationPolicy == TaskGenerationPolicy.FromLibraryOnly)
-                        {
-                            if (isKnownTask)
-                            {
-                                yield return DialogAction.Execute(interactionModel.StartTask);
-                                yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
-                            }
-                            else
-                            {
-                                yield return DialogAction.Speak("I'm sorry but I don't know how to help with this task.");
-                                yield return DialogAction.Speak("Is there anything else you'd like to do today?");
-                                yield return DialogAction.ContinueWith<WhatAreWeDoing>(noSpeechSynthesis: true);
-                            }
-                        }
-                        else if (interactionModel.Configuration.TaskGenerationPolicy == TaskGenerationPolicy.FromLibraryOrLLMGenerate)
-                        {
-                            if (isKnownTask)
-                            {
-                                yield return DialogAction.Execute(interactionModel.StartTask);
-                                yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
-                            }
-                            else
-                            {
-                                // O/w if we are setup to ask context questions
-                                if (interactionModel.Configuration.AskContextQuestionsBeforeGeneratingTask)
-                                {
-                                    // Get the context questions
-                                    yield return DialogAction.Execute(interactionModel.GetContextQuestions);
-                                    if (interactionModel.InteractionState.ContextQuestions == null)
-                                    {
-                                        yield return DialogAction.Speak("I'm sorry but I don't think I can actually help with this task.");
-                                        yield return DialogAction.Speak("Is there anything else you'd like to do today?");
-                                        yield return DialogAction.ContinueWith<WhatAreWeDoing>(noSpeechSynthesis: true);
-                                    }
-                                    else
-                                    {
-                                        yield return DialogAction.Speak("First, a couple of quick questions.");
-                                        yield return DialogAction.ContinueWith<AskContextQuestions>();
-                                    }
-                                }
-                                else
-                                {
-                                    // Generate the task
-                                    yield return DialogAction.Execute(interactionModel.GenerateTask);
-                                    if (interactionModel.InteractionState.Task == null)
-                                    {
-                                        yield return DialogAction.Speak("I'm sorry but I don't think I can actually help with this task.");
-                                        yield return DialogAction.Speak("Is there anything else you'd like to do today?");
-                                        yield return DialogAction.ContinueWith<WhatAreWeDoing>(noSpeechSynthesis: true);
-                                    }
-                                    else
-                                    {
-                                        yield return DialogAction.Execute(interactionModel.StartTask);
-                                        yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
-                                    }
-                                }
-                            }
-                        }
-                        else if (interactionModel.Configuration.TaskGenerationPolicy == TaskGenerationPolicy.AlwaysLLMGenerate)
-                        {
-                            // O/w if we are setup to ask context questions
-                            if (interactionModel.Configuration.AskContextQuestionsBeforeGeneratingTask)
-                            {
-                                // Get the context questions
-                                yield return DialogAction.Execute(interactionModel.GetContextQuestions);
-                                if (interactionModel.InteractionState.ContextQuestions == null)
-                                {
-                                    yield return DialogAction.Speak("I'm sorry but I don't think I can actually help with this task.");
-                                    yield return DialogAction.Speak("Is there anything else you'd like to do today?");
-                                    yield return DialogAction.ContinueWith<WhatAreWeDoing>(noSpeechSynthesis: true);
-                                }
-                                else
-                                {
-                                    yield return DialogAction.Speak("First, a couple of quick questions.");
-                                    yield return DialogAction.ContinueWith<AskContextQuestions>();
-                                }
-                            }
-                            else
-                            {
-                                // Generate the task
-                                yield return DialogAction.Execute(interactionModel.GenerateTask);
-                                if (interactionModel.InteractionState.Task == null)
-                                {
-                                    yield return DialogAction.Speak("I'm sorry but I don't think I can actually help with this task.");
-                                    yield return DialogAction.Speak("Is there anything else you'd like to do today?");
-                                    yield return DialogAction.ContinueWith<WhatAreWeDoing>(noSpeechSynthesis: true);
-                                }
-                                else
-                                {
-                                    yield return DialogAction.Execute(interactionModel.StartTask);
-                                    yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            throw new System.Exception("Unexpected GuidanceTaskGenerationPolicy.");
-                        }
+                        // And begin the task
+                        yield return DialogAction.Execute(interactionModel.BeginTask(isKnownTask));
                     }
                     else if (interactionModel.InteractionState.TopLevelIntent == "list")
                     {

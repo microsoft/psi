@@ -82,7 +82,7 @@ namespace Sigma
         /// <param name="taskLibrary">The task library.</param>
         public void Initialize(TaskLibrary<TTask> taskLibrary)
         {
-            this.taskList = taskLibrary.Tasks.Select(t => t.Name).ToList();
+            this.taskList = taskLibrary.Tasks?.Select(t => t.Name)?.ToList();
         }
 
         /// <summary>
@@ -142,12 +142,22 @@ namespace Sigma
                 // Update the collection of step panels
                 this.stepPanels.Update(
                     taskPanelCommand.ShowOnlySelectedStep ? new int[] { taskPanelCommand.SelectedStepIndex.Value } : Enumerable.Range(0, taskPanelCommand.Task.Steps.Count),
-                    createKey: i => taskPanelCommand.Task.Steps[i].UpdateStepPanel(null, taskPanelCommand, this.configuration, $"{this.Name}.Step[{i}]"));
+                    createKey: i => taskPanelCommand.Task.Steps[i].UpdateStepPanel(
+                        null,
+                        taskPanelCommand,
+                        this.configuration,
+                        this.configuration.Height - this.taskNameParagraph.Height - this.configuration.Padding,
+                        $"{this.Name}.Step[{i}]"));
 
                 // Now perform an update on each of the panels
                 foreach (var i in this.stepPanels.Keys.ToList())
                 {
-                    this.stepPanels[i] = taskPanelCommand.Task.Steps[i].UpdateStepPanel(this.stepPanels[i], taskPanelCommand, this.configuration, $"{this.Name}.Step[{i}]");
+                    this.stepPanels[i] = taskPanelCommand.Task.Steps[i].UpdateStepPanel(
+                        this.stepPanels[i],
+                        taskPanelCommand,
+                        this.configuration,
+                        this.configuration.Height - this.taskNameParagraph.Height - this.configuration.Padding,
+                        $"{this.Name}.Step[{i}]");
                 }
             }
         }
@@ -239,7 +249,7 @@ namespace Sigma
                     // Finally, draw the steps. Draw at least one step and draw as long as we're not beyond the panel
                     for (int i = this.topStepPanelIndex;
                         (i < this.stepPanels.Count && i == this.topStepPanelIndex) ||
-                        (i < this.stepPanels.Count && offsetV + this.stepPanels[i].Height < this.configuration.Height);
+                        (i < this.stepPanels.Count && offsetV + this.stepPanels[i].Height <= this.configuration.Height);
                         i++)
                     {
                         // Draw the step

@@ -64,7 +64,12 @@ namespace Sigma
         public override string GetDisplayInstructions() => this.Description.TrimEnd('.');
 
         /// <inheritdoc/>
-        public override StepPanel UpdateStepPanel(StepPanel stepPanel, TaskPanelUserInterfaceCommand taskPanelUserInterfaceCommand, TaskPanelUserInterfaceConfiguration taskPanelUserInterfaceConfiguration, string name)
+        public override StepPanel UpdateStepPanel(
+            StepPanel stepPanel,
+            TaskPanelUserInterfaceCommand taskPanelUserInterfaceComman,
+            TaskPanelUserInterfaceConfiguration taskPanelUserInterfaceConfiguration,
+            float maxHeight,
+            string name)
         {
             var doStepPanel = stepPanel as DoStepPanel ?? new DoStepPanel(
                 taskPanelUserInterfaceConfiguration.Width,

@@ -348,6 +348,7 @@ namespace Sigma
                 this.InteractionState.Task = new TTask()
                 {
                     Name = this.InteractionState.TaskName,
+                    Steps = new (),
                 };
 
                 this.InteractionState.Task.Steps.Add(new GatherStep("1", "Gather", "Objects", objects));
