@@ -53,7 +53,12 @@ namespace Sigma
         public override string GetSpokenInstructions() => this.Description.TrimEnd('.');
 
         /// <inheritdoc/>
-        public override StepPanel UpdateStepPanel(StepPanel stepPanel, TaskPanelUserInterfaceCommand taskPanelUserInterfaceCommand, TaskPanelUserInterfaceConfiguration taskPanelUserInterfaceConfiguration, string name)
+        public override StepPanel UpdateStepPanel(
+            StepPanel stepPanel,
+            TaskPanelUserInterfaceCommand taskPanelUserInterfaceCommand,
+            TaskPanelUserInterfaceConfiguration taskPanelUserInterfaceConfiguration,
+            float maxHeight,
+            string name)
         {
             // If it's a complex step panel, update
             var showObjectsChecklist = new List<(string Name, bool Checked, bool Highlight)>();
@@ -78,12 +83,14 @@ namespace Sigma
                 taskPanelUserInterfaceConfiguration.ComplexStepTaughtObjectTextStyle,
                 taskPanelUserInterfaceConfiguration.SelectionColor,
                 name);
+
             complexStepPanel.Update(
                 this.Label,
                 this.GetDisplayInstructions(),
                 taskPanelUserInterfaceCommand.SelectedSubStepIndex,
                 showObjectsChecklist,
-                subSteps);
+                subSteps,
+                maxHeight);
             return complexStepPanel;
         }
 

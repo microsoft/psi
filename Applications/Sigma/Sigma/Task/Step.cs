@@ -36,9 +36,15 @@ namespace Sigma
         /// <param name="stepPanel">The step panel to update.</param>
         /// <param name="taskPanelUserInterfaceCommand">The task panel user interface command.</param>
         /// <param name="taskPanelUserInterfaceConfiguration">The task panel configuration options.</param>
+        /// <param name="maxHeight">The maximum height for the step panel user interface.</param>
         /// <param name="name">The name for the user interface.</param>
         /// <returns>The user interface for the step.</returns>
-        public virtual StepPanel UpdateStepPanel(StepPanel stepPanel, TaskPanelUserInterfaceCommand taskPanelUserInterfaceCommand, TaskPanelUserInterfaceConfiguration taskPanelUserInterfaceConfiguration, string name)
+        public virtual StepPanel UpdateStepPanel(
+            StepPanel stepPanel,
+            TaskPanelUserInterfaceCommand taskPanelUserInterfaceCommand,
+            TaskPanelUserInterfaceConfiguration taskPanelUserInterfaceConfiguration,
+            float maxHeight,
+            string name)
             => stepPanel;
 
         /// <inheritdoc/>

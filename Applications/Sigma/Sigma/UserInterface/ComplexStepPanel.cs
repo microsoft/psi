@@ -35,6 +35,9 @@ namespace Sigma
         private string instructions;
         private int? selectedSubStepIndex = null;
 
+        private int topSubStepPanelIndex = 0;
+        private int bottomSubStepPanelIndex = 0;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexStepPanel"/> class.
         /// </summary>
@@ -77,12 +80,14 @@ namespace Sigma
         /// <param name="selectedSubStepIndex">The selected substep index.</param>
         /// <param name="objectsChecklist">The objects checklist.</param>
         /// <param name="subSteps">The substeps for the complex step.</param>
+        /// <param name="maxHeight">The maximum height for the complex step panel.</param>
         public void Update(
             string label,
             string instructions,
             int? selectedSubStepIndex,
             List<(string Name, bool Check, bool Highlight)> objectsChecklist,
-            List<(string Label, string Description)> subSteps)
+            List<(string Label, string Description)> subSteps,
+            float maxHeight)
         {
             // Get the corresponding step, step index and instructions
             this.label = label;
@@ -100,7 +105,7 @@ namespace Sigma
 
             var offsetV = this.instructionsParagraph.Height;
 
-            if (objectsChecklist.Any())
+            if (objectsChecklist.Count != 0)
             {
                 this.physicalObjectsParagraphs.Update(
                     Enumerable.Range(0, objectsChecklist.Count),
@@ -123,8 +128,10 @@ namespace Sigma
 
                 this.subStepPanels.Clear();
             }
-            else if (subSteps.Any())
+            else if (subSteps.Count != 0)
             {
+                this.physicalObjectsParagraphs.Clear();
+
                 this.selectedSubStepIndex = selectedSubStepIndex;
 
                 // Update the collection of sub-step panels
@@ -136,15 +143,47 @@ namespace Sigma
                 if (this.subStepPanels.Count > 0)
                 {
                     offsetV += this.padding;
-                }
 
-                for (int i = 0; i < this.subStepPanels.Count; i++)
-                {
-                    this.subStepPanels[i].Update(subSteps[i].Label, subSteps[i].Description);
-                    offsetV += this.subStepPanels[i].Height;
-                }
+                    // If we have a selection
+                    if (this.selectedSubStepIndex.HasValue)
+                    {
+                        // Recompute the topSubStepIndex so that the selected sub-step and the next sub-step are in view.
+                        if (this.topSubStepPanelIndex > this.selectedSubStepIndex.Value)
+                        {
+                            this.topSubStepPanelIndex = this.selectedSubStepIndex.Value;
+                        }
+                        else
+                        {
+                            // Compute the vertical offsets for all panels starting with the top panel
+                            // index
+                            var verticalEndPoint = new Dictionary<int, double>();
+                            var v = offsetV;
+                            for (int i = this.topSubStepPanelIndex; i < this.subStepPanels.Count; i++)
+                            {
+                                v += this.subStepPanels[i].Height;
+                                verticalEndPoint[i] = v;
+                            }
 
-                this.physicalObjectsParagraphs.Clear();
+                            var selectedStepVerticalEndPoint = verticalEndPoint[this.selectedSubStepIndex.Value];
+                            var nextStepVerticalEndPoint = this.selectedSubStepIndex.Value < this.subStepPanels.Count - 1 ? verticalEndPoint[this.selectedSubStepIndex.Value + 1] : 0;
+                            if (selectedStepVerticalEndPoint > maxHeight || nextStepVerticalEndPoint > maxHeight)
+                            {
+                                this.topSubStepPanelIndex = this.selectedSubStepIndex.Value;
+                            }
+                        }
+
+                        // Compute the bottom substep panel index
+                        for (int i = this.topSubStepPanelIndex;
+                            (i < this.subStepPanels.Count && i == this.topSubStepPanelIndex) ||
+                            (i < this.subStepPanels.Count && offsetV + this.subStepPanels[i].Height <= maxHeight);
+                            i++)
+                        {
+                            this.bottomSubStepPanelIndex = i;
+                            this.subStepPanels[i].Update(subSteps[i].Label, subSteps[i].Description);
+                            offsetV += this.subStepPanels[i].Height;
+                        }
+                    }
+                }
             }
             else
             {
@@ -182,37 +221,38 @@ namespace Sigma
                 offsetV += this.physicalObjectsParagraphs[i].Height;
             }
 
-            // Finally, draw the steps. Draw at least one step and draw as long as we're not beyond the panel
-            var hasSelection = false;
-            var selectionOffsetV = 0f;
-            var selectionHeight = 0f;
-
+            // Finally, draw the substeps
             if (this.subStepPanels.Count > 0)
             {
                 offsetV += this.padding;
-            }
 
-            for (int i = 0; i < this.subStepPanels.Count; ++i)
-            {
-                // Draw the step
-                this.subStepPanels[i].Render(renderer, pose.ApplyUV(this.padding + this.labelCircle.Radius * 2 + this.padding, offsetV));
-                offsetV += this.subStepPanels[i].Height;
+                // Finally, draw the steps. Draw at least one step and draw as long as we're not beyond the panel
+                var hasSelection = false;
+                var selectionOffsetV = 0f;
+                var selectionHeight = 0f;
 
-                // If this is the selected step
-                if (this.selectedSubStepIndex.HasValue && this.selectedSubStepIndex.Value == i)
+                for (int i = this.topSubStepPanelIndex; i <= this.bottomSubStepPanelIndex; i++)
                 {
-                    hasSelection = true;
-                    selectionOffsetV = offsetV - this.subStepPanels[i].Height;
-                    selectionHeight = this.subStepPanels[i].Height;
-                }
-            }
+                    // Draw the step
+                    this.subStepPanels[i].Render(renderer, pose.ApplyUV(this.padding + this.labelCircle.Radius * 2 + this.padding, offsetV));
+                    offsetV += this.subStepPanels[i].Height;
 
-            // Now if we have a selection to render
-            if (hasSelection)
-            {
-                var selectionMeshPose = new CoordinateSystem(new Point3D(0, 0, -selectionOffsetV), UnitVector3D.XAxis, UnitVector3D.YAxis, UnitVector3D.ZAxis).TransformBy(pose);
-                var selectionMesh = this.GetOrCreateSelectionMesh(renderer, selectionHeight);
-                renderer.RenderMesh(selectionMeshPose, selectionMesh, this.selectionMeshMaterial);
+                    // If this is the selected sub-step
+                    if (this.selectedSubStepIndex.HasValue && this.selectedSubStepIndex.Value == i)
+                    {
+                        hasSelection = true;
+                        selectionOffsetV = offsetV - this.subStepPanels[i].Height;
+                        selectionHeight = this.subStepPanels[i].Height;
+                    }
+                }
+
+                // Now if we have a selection to render
+                if (hasSelection)
+                {
+                    var selectionMeshPose = new CoordinateSystem(new Point3D(0, 0, -selectionOffsetV), UnitVector3D.XAxis, UnitVector3D.YAxis, UnitVector3D.ZAxis).TransformBy(pose);
+                    var selectionMesh = this.GetOrCreateSelectionMesh(renderer, selectionHeight);
+                    renderer.RenderMesh(selectionMeshPose, selectionMesh, this.selectionMeshMaterial);
+                }
             }
 
             return this.GetUserInterfaceState(pose);
@@ -220,24 +260,25 @@ namespace Sigma
 
         private Mesh GetOrCreateSelectionMesh(Renderer renderer, float height)
         {
-            if (!this.selectionMeshes.ContainsKey(height))
+            if (!this.selectionMeshes.TryGetValue(height, out Mesh value))
             {
                 // Create the selection mesh
                 var selectionMeshCorners = new List<Point3D>()
                 {
-                    new Point3D(-0.002f, 0, 0),
-                    new Point3D(-0.002f, 0, -height),
-                    new Point3D(-0.002f, this.Width, -height),
-                    new Point3D(-0.002f, this.Width, 0),
+                    new (-0.002f, 0, 0),
+                    new (-0.002f, 0, -height),
+                    new (-0.002f, this.Width, -height),
+                    new (-0.002f, this.Width, 0),
                 };
                 var indices = new List<uint>() { 0, 1, 2, 0, 2, 3 };
                 var selectionMesh = renderer.CreateMesh(selectionMeshCorners, indices);
-                this.selectionMeshes.Add(height, selectionMesh);
+                value = selectionMesh;
+                this.selectionMeshes.Add(height, value);
             }
 
             this.selectionMeshMaterial ??= renderer.GetOrCreateMaterial(this.selectionColor);
 
-            return this.selectionMeshes[height];
+            return value;
         }
     }
 }
