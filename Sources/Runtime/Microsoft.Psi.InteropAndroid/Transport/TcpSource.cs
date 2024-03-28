@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Interop.Transport
         /// Reads a data frame into the frame buffer. Will re-allocate the frame buffer if necessary.
         /// </summary>
         /// <param name="binaryReader">The binary reader.</param>
-        private (dynamic, DateTime) ReadNextFrame(BinaryReader binaryReader)
+        private (T, DateTime) ReadNextFrame(BinaryReader binaryReader)
         {
             int frameLength = binaryReader.ReadInt32();
 
