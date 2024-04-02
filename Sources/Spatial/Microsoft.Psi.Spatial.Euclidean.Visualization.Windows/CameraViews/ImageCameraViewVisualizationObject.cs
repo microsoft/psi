@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a visualization object for a image view, from an <see cref="ImageCameraView"/>.
     /// </summary>
     [VisualizationObject("Image Camera View")]
-    public class ImageCameraViewVisualizationObject : ModelVisual3DVisualizationObject<ImageCameraView>
+    public class ImageCameraViewVisualizationObject : ModelVisual3DValueVisualizationObject<ImageCameraView>
     {
         private readonly MeshGeometryVisual3D imageModelVisual;
         private readonly DisplayImage displayImage;
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.image != null)
             {
@@ -194,7 +194,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         {
             var visible = this.Visible && this.CurrentData != default && this.image != null && this.image.Resource != null && this.intrinsics != null && this.pose != null;
             this.UpdateChildVisibility(this.imageModelVisual, visible);
-            this.UpdateChildVisibility(this.frustum.ModelView, visible);
+            this.UpdateChildVisibility(this.frustum.ModelVisual3D, visible);
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Microsoft.Psi.MixedReality.OpenXR.Visualization
     using System.Linq;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi;
-    using Microsoft.Psi.Common.Interpolators;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Imaging;
     using Microsoft.Psi.PsiStudio.TypeSpec;
@@ -96,17 +95,9 @@ namespace Microsoft.Psi.MixedReality.OpenXR.Visualization
             IProducer<Hand> handStream,
             string cameraStreamName,
             SessionImporter sessionImporter)
-            where TCamera : CameraView<T>
-        {
-            IProducer<TCamera> cameraStream = sessionImporter.OpenStream<TCamera>(cameraStreamName);
-            return cameraStream.Join(
-                    handStream,
-                    new AdjacentValuesInterpolator<Hand>(
-                        OpenXR.Operators.InterpolateHands,
-                        false,
-                        name: nameof(OpenXR.Operators.InterpolateHands)))
+            where TCamera : CameraView<T> => handStream
+                .InterpolateAt(sessionImporter.OpenStream<TCamera>(cameraStreamName))
                 .Select(tuple => tuple.Item2.Joints.Where(j => j is not null).Select(j => tuple.Item1.GetPixelPosition(j.Origin, true)).ToList());
-        }
     }
 
 #pragma warning disable SA1402 // File may only contain a single type

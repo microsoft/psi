@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// </summary>
     /// <typeparam name="TVoxelVisual3D">The type of the voxel visual.</typeparam>
     /// <typeparam name="TVoxelData">The type of data contained in the voxel.</typeparam>
-    public abstract class VoxelGridVisualizationObject<TVoxelVisual3D, TVoxelData> : ModelVisual3DVisualizationObject<VoxelGrid<TVoxelData>>
+    public abstract class VoxelGridVisualizationObject<TVoxelVisual3D, TVoxelData> : ModelVisual3DValueVisualizationObject<VoxelGrid<TVoxelData>>
         where TVoxelVisual3D : Visual3D, new()
     {
         /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         protected UpdatableVisual3DDictionary<(int, int, int), TVoxelVisual3D> VoxelVisuals { get; }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.VoxelVisuals.BeginUpdate();
 

@@ -52,9 +52,7 @@ namespace Microsoft.Psi.Serialization
             }
 
             // Initialize the latest version serializer
-            this.latestVersionSerializer.Initialize(serializers, latestVersionSchema);
-
-            return targetSchema ?? latestVersionSchema;
+            return this.latestVersionSerializer.Initialize(serializers, targetSchema ?? latestVersionSchema);
         }
 
         /// <summary>

@@ -57,7 +57,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
         public AudioPlayer(Pipeline pipeline, string configurationFilename = null)
-            : this(pipeline, (configurationFilename == null) ? new AudioPlayerConfiguration() : new ConfigurationHelper<AudioPlayerConfiguration>(configurationFilename).Configuration)
+            : this(pipeline, ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AudioPlayerConfiguration(), true))
         {
         }
 

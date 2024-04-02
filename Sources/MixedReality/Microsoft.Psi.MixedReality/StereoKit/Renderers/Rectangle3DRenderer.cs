@@ -52,7 +52,7 @@ namespace Microsoft.Psi.MixedReality.StereoKit
 
             var pose = rectangle3D.GetCenteredCoordinateSystem().ToStereoKitMatrix();
             var scale = Matrix.S(new Vec3((float)rectangle3D.Width, (float)rectangle3D.Height, 1));
-            this.MeshTransform = scale * pose;
+            this.ModelTransform = scale * pose;
         }
     }
 }

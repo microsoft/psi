@@ -56,6 +56,24 @@ namespace Microsoft.Psi.Diagnostics
         public ConcurrentDictionary<int, PipelineDiagnosticsInternal> Subpipelines { get; private set; }
 
         /// <summary>
+        /// Closes the sample statistics, i.e., performs various computations once we know the end of the
+        /// sample.
+        /// </summary>
+        /// <param name="windowStartTime">The start time for the sampling window.</param>
+        public void CloseSample(DateTime windowStartTime)
+        {
+            foreach (var pipelineElementDiagnostics in this.PipelineElements.Values)
+            {
+                pipelineElementDiagnostics.CloseSample(windowStartTime);
+            }
+
+            foreach (var pipelineDiagnosticsInternal in this.Subpipelines.Values)
+            {
+                pipelineDiagnosticsInternal.CloseSample(windowStartTime);
+            }
+        }
+
+        /// <summary>
         /// Represents diagnostic information about a pipeline element.
         /// </summary>
         public class PipelineElementDiagnostics
@@ -149,6 +167,24 @@ namespace Microsoft.Psi.Diagnostics
             /// Gets or sets bridge to pipeline element in another pipeline (e.g. Connectors).
             /// </summary>
             public PipelineElementDiagnostics ConnectorBridgeToPipelineElement { get; set; }
+
+            /// <summary>
+            /// Closes the sample statistics, i.e., performs various computations once we know the end of the
+            /// sample.
+            /// </summary>
+            /// <param name="windowStartTime">The start time for the sampling window.</param>
+            public void CloseSample(DateTime windowStartTime)
+            {
+                foreach (var emitterDiagnostics in this.Emitters.Values)
+                {
+                    emitterDiagnostics.CloseSample(windowStartTime);
+                }
+
+                foreach (var receiverDiagnostics in this.Receivers.Values)
+                {
+                    receiverDiagnostics.CloseSample(windowStartTime);
+                }
+            }
         }
 
         /// <summary>
@@ -276,105 +312,94 @@ namespace Microsoft.Psi.Diagnostics
             public ConcurrentQueue<(int, DateTime)> MessageSizeHistory { get; private set; }
 
             /// <summary>
+            /// Closes the sample statistics, i.e., performs various computations once we know the end of the
+            /// sample.
+            /// </summary>
+            /// <param name="windowStartTime">The start time for the sampling window.</param>
+            internal void CloseSample(DateTime windowStartTime)
+            {
+                this.PurgeQueueAtCutoff(this.MessageEmittedCountHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageProcessedCountHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageDroppedCountHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.DeliveryQueueSizeHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageCreatedLatencyHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageEmittedLatencyHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageReceivedLatencyHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageProcessTimeHistory, windowStartTime);
+                this.PurgeQueueAtCutoff(this.MessageSizeHistory, windowStartTime);
+            }
+
+            /// <summary>
             /// Add emitted message to pipeline element statistics.
             /// </summary>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageEmitted(DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(++this.TotalMessageEmittedCount, this.MessageEmittedCountHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageEmitted(DateTime diagnosticsTime)
+                => this.MessageEmittedCountHistory.Enqueue((++this.TotalMessageEmittedCount, diagnosticsTime));
 
             /// <summary>
             /// Add processed message time to pipeline element statistics.
             /// </summary>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageProcessed(DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(++this.TotalMessageProcessedCount, this.MessageProcessedCountHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageProcessed(DateTime diagnosticsTime)
+                => this.MessageProcessedCountHistory.Enqueue((++this.TotalMessageProcessedCount, diagnosticsTime));
 
             /// <summary>
             /// Add dropped message time to pipeline element statistics.
             /// </summary>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageDropped(DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(++this.TotalMessageDroppedCount, this.MessageDroppedCountHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageDropped(DateTime diagnosticsTime)
+                => this.MessageDroppedCountHistory.Enqueue((++this.TotalMessageDroppedCount, diagnosticsTime));
 
             /// <summary>
             /// Add current delivery queue size to pipeline element statistics.
             /// </summary>
             /// <param name="deliveryQueueSize">Current delivery queue size.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddDeliveryQueueSize(int deliveryQueueSize, DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(deliveryQueueSize, this.DeliveryQueueSizeHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddDeliveryQueueSize(int deliveryQueueSize, DateTime diagnosticsTime)
+                => this.DeliveryQueueSizeHistory.Enqueue((deliveryQueueSize, diagnosticsTime));
 
             /// <summary>
             /// Add message created latency to pipeline element statistics.
             /// </summary>
             /// <param name="messageCreatedLatency">The latency with which the message was created.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageCreatedLatency(TimeSpan messageCreatedLatency, DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(messageCreatedLatency, this.MessageCreatedLatencyHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageCreatedLatency(TimeSpan messageCreatedLatency, DateTime diagnosticsTime)
+                => this.MessageCreatedLatencyHistory.Enqueue((messageCreatedLatency, diagnosticsTime));
 
             /// <summary>
             /// Add message emitted latency to pipeline element statistics.
             /// </summary>
             /// <param name="messageEmittedLatency">The latency with which the message is emitted.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageEmittedLatency(TimeSpan messageEmittedLatency, DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(messageEmittedLatency, this.MessageEmittedLatencyHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageEmittedLatency(TimeSpan messageEmittedLatency, DateTime diagnosticsTime)
+                => this.MessageEmittedLatencyHistory.Enqueue((messageEmittedLatency, diagnosticsTime));
 
             /// <summary>
             /// Add message received latency to pipeline element statistics.
             /// </summary>
             /// <param name="messageReceivedLatency">The latency with which the message is received.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageReceivedLatency(TimeSpan messageReceivedLatency, DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(messageReceivedLatency, this.MessageReceivedLatencyHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageReceivedLatency(TimeSpan messageReceivedLatency, DateTime diagnosticsTime)
+                => this.MessageReceivedLatencyHistory.Enqueue((messageReceivedLatency, diagnosticsTime));
 
             /// <summary>
             /// Add message process time to pipeline element statistics.
             /// </summary>
             /// <param name="processTime">Time spent processing message.</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageProcessTime(TimeSpan processTime, DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(processTime, this.MessageProcessTimeHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageProcessTime(TimeSpan processTime, DateTime diagnosticsTime)
+                => this.MessageProcessTimeHistory.Enqueue((processTime, diagnosticsTime));
 
             /// <summary>
             /// Add message size to pipeline element statistics.
             /// </summary>
             /// <param name="size">Message size (bytes).</param>
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
-            /// <param name="averagingWindow">Window in which to compute averages.</param>
-            internal void AddMessageSize(int size, DateTime diagnosticsTime, TimeSpan averagingWindow)
-            {
-                this.AddStatistic(size, this.MessageSizeHistory, diagnosticsTime, averagingWindow);
-            }
+            internal void AddMessageSize(int size, DateTime diagnosticsTime)
+                => this.MessageSizeHistory.Enqueue((size, diagnosticsTime));
 
-            private void AddStatistic<T>(T val, ConcurrentQueue<(T, DateTime)> queue, DateTime current, TimeSpan averagingWindow)
+            private void PurgeQueueAtCutoff<T>(ConcurrentQueue<(T, DateTime)> queue, DateTime cutoff)
             {
-                queue.Enqueue((val, current));
-                var cutoff = current - averagingWindow;
                 while (queue.TryPeek(out var result) && result.Item2 < cutoff)
                 {
                     queue.TryDequeue(out var _);
@@ -427,6 +452,19 @@ namespace Microsoft.Psi.Diagnostics
             /// Gets emitter target receivers.
             /// </summary>
             public ConcurrentDictionary<int, ReceiverDiagnostics> Targets { get; private set; }
+
+            /// <summary>
+            /// Closes the sample statistics, i.e., performs various computations once we know the end of the
+            /// sample.
+            /// </summary>
+            /// <param name="windowStartTime">The start time for the sampling window.</param>
+            internal void CloseSample(DateTime windowStartTime)
+            {
+                foreach (var receiverDiagnostics in this.Targets.Values)
+                {
+                    receiverDiagnostics.CloseSample(windowStartTime);
+                }
+            }
         }
     }
 }

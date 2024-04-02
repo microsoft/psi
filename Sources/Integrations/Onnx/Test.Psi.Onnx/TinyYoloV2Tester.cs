@@ -55,7 +55,7 @@ namespace Test.Psi.Onnx
                 Generators.Return(p, image).PipeTo(tinyYolo)
                     .Do(list =>
                     {
-                        foreach (var det in list)
+                        foreach (var det in list.Detections)
                         {
                             labelsResults.Add(det.Label);
                             confidencesResults.Add(det.Confidence);

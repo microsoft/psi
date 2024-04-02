@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a visualization object for <see cref="PointCloud3D"/>.
     /// </summary>
     [VisualizationObject("Point Cloud 3D")]
-    public class PointCloud3DVisualizationObject : ModelVisual3DVisualizationObject<PointCloud3D>
+    public class PointCloud3DVisualizationObject : ModelVisual3DValueVisualizationObject<PointCloud3D>
     {
         private readonly PointsVisual3D pointsVisual3D;
 
@@ -74,7 +74,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.NumberOfPoints = this.CurrentData != null ? this.CurrentData.NumberOfPoints.ToString() : "N/A";
             this.UpdateVisuals();

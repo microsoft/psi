@@ -117,7 +117,7 @@ namespace Microsoft.Psi.Visualization.Adapters
                 }
             }
 
-            return (TDestination)targetObject;
+            return targetObject == null ? default : (TDestination)targetObject;
         }
 
         private void Initialize(string path)

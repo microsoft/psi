@@ -137,12 +137,22 @@ namespace Microsoft.Psi.Serialization
         /// <summary>
         /// Initializes a new instance of the <see cref="KnownSerializers"/> class.
         /// </summary>
-        /// <param name="runtimeInfo">
-        /// The version of the runtime to be compatible with. This dictates the behavior of automatic serialization.
-        /// </param>
-        public KnownSerializers(RuntimeInfo runtimeInfo = null)
+        /// <param name="runtimeInfo">The version of the runtime to be compatible with. This dictates the behavior of automatic serialization.</param>
+        /// <param name="knownSerializers">A set of known serializers to initialize with.</param>
+        public KnownSerializers(RuntimeInfo runtimeInfo = null, KnownSerializers knownSerializers = null)
             : this(false, runtimeInfo ?? RuntimeInfo.Latest)
         {
+            if (knownSerializers != null)
+            {
+                // all other instances start off with the Default rules
+                this.templates = new Dictionary<Type, Type>(knownSerializers.templates);
+                this.serializers = new Dictionary<Type, Type>(knownSerializers.serializers);
+                this.knownTypes = new ConcurrentDictionary<string, Type>(knownSerializers.knownTypes);
+                this.knownNames = new ConcurrentDictionary<Type, string>(knownSerializers.knownNames);
+                this.schemas = new ConcurrentDictionary<string, TypeSchema>(knownSerializers.schemas);
+                this.schemasById = new ConcurrentDictionary<int, TypeSchema>(knownSerializers.schemasById);
+                this.cloningFlags = new ConcurrentDictionary<Type, CloningFlags>(knownSerializers.cloningFlags);
+            }
         }
 
         private KnownSerializers(bool isDefault, RuntimeInfo runtimeInfo)

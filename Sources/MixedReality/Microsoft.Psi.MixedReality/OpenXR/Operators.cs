@@ -5,12 +5,56 @@ namespace Microsoft.Psi.MixedReality.OpenXR
 {
     using System;
     using MathNet.Spatial.Euclidean;
+    using Microsoft.Psi.Common.Interpolators;
 
     /// <summary>
     /// Implements operators.
     /// </summary>
     public static partial class Operators
     {
+        /// <summary>
+        /// Interpolate a <see cref="Hand"/> stream by aligning to another stream.
+        /// </summary>
+        /// <typeparam name="T">The data type on the stream to align with.</typeparam>
+        /// <param name="handStream">The <see cref="Hand"/> stream to interpolate.</param>
+        /// <param name="alignStream">The <typeparamref name="T"/> stream to align with when interpolating.</param>
+        /// <param name="handStreamDeliveryPolicy">Optional delivery policy for the <paramref name="handStream"/>.</param>
+        /// <param name="alignStreamDeliveryPolicy">Optional delivery policy for the <paramref name="alignStream"/>.</param>
+        /// <returns>Joined stream as a tuple of <typeparamref name="T"/> and interpolated <see cref="Hand"/>
+        /// at the cadence of <paramref name="alignStream"/>.</returns>
+        public static IProducer<(T, Hand)> InterpolateAt<T>(
+            this IProducer<Hand> handStream,
+            IProducer<T> alignStream,
+            DeliveryPolicy<Hand> handStreamDeliveryPolicy = null,
+            DeliveryPolicy<T> alignStreamDeliveryPolicy = null) => alignStream.Join(
+                handStream,
+                new AdjacentValuesInterpolator<Hand>(InterpolateHands, false, name: nameof(InterpolateHands)),
+                alignStreamDeliveryPolicy,
+                handStreamDeliveryPolicy);
+
+        /// <summary>
+        /// Interpolate a <see cref="ValueTuple{Hand, Hand}"/> stream by aligning to another stream.
+        /// </summary>
+        /// <typeparam name="T">The data type on the stream to align with.</typeparam>
+        /// <param name="handsStream">The <see cref="ValueTuple{Hand, Hand}"/> stream to interpolate.</param>
+        /// <param name="alignStream">The <typeparamref name="T"/> stream to align with when interpolating.</param>
+        /// <param name="handsStreamDeliveryPolicy">Optional delivery policy for the <paramref name="handsStream"/>.</param>
+        /// <param name="alignStreamDeliveryPolicy">Optional delivery policy for the <paramref name="alignStream"/>.</param>
+        /// <returns>Joined stream as a tuple of <typeparamref name="T"/> and interpolated hands"/>
+        /// at the cadence of <paramref name="alignStream"/>.</returns>
+        public static IProducer<(T, Hand, Hand)> InterpolateAt<T>(
+            this IProducer<(Hand, Hand)> handsStream,
+            IProducer<T> alignStream,
+            DeliveryPolicy<(Hand, Hand)> handsStreamDeliveryPolicy = null,
+            DeliveryPolicy<T> alignStreamDeliveryPolicy = null) => alignStream.Join(
+                handsStream,
+                new AdjacentValuesInterpolator<(Hand, Hand)>(
+                    (hands1, hands2, amount) => (InterpolateHands(hands1.Item1, hands2.Item1, amount), InterpolateHands(hands1.Item2, hands2.Item2, amount)),
+                    false,
+                    name: nameof(InterpolateHands)),
+                alignStreamDeliveryPolicy,
+                handsStreamDeliveryPolicy);
+
         /// <summary>
         /// Interpolates between two <see cref="Hand"/> poses by interpolating the <see cref="CoordinateSystem"/>
         /// poses of each joint. Spherical linear interpolation (<see cref="System.Numerics.Quaternion.Slerp"/>)

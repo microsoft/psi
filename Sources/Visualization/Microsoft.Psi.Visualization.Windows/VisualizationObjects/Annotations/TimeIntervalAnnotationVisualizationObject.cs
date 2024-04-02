@@ -12,6 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using System.Runtime.Serialization;
     using System.Text;
     using System.Windows;
+    using System.Windows.Annotations;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -57,6 +58,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private const string ErrorEditingDisabled = "Annotation add/delete is currently disabled in the visualization object properties.";
         private const string ErrorSelectionMarkersUnset = "Both the start and end selection markers must be set.\r\n\r\nYou can set the start and end selection markers with SHIFT + Left mouse button and SHIFT + Right mouse button.";
         private const string ErrorOverlappingAnnotations = "Time interval annotations may not overlap.";
+        private const string ErrorCannotCopyAnnotationBoundariesWhenAnnotationsPresent = "Annotation segment boundaries can only be copied if no annotations are present in the current stream.";
 
         private readonly Dictionary<string, int> trackIndex = new ();
         private int trackUnderMouseIndex = 0;
@@ -378,6 +380,27 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     renameCurrentTrackCommand,
                     isEnabled: renameCurrentTrackCommand != null));
 
+            // Find other panels containing time interval annotation visualization objects
+            var otherAnnotationPanels = VisualizationContext.Instance.VisualizationContainer.Panels.Where(
+                p => p.VisualizationObjects.Count == 1 && p.VisualizationObjects[0] != this && p.VisualizationObjects[0] is TimeIntervalAnnotationVisualizationObject);
+
+            // If found
+            if (otherAnnotationPanels.Any())
+            {
+                // Then generate the copy annotations submenu
+                var copyAnnotationsCommands = new ContextMenuItemInfo("Copy Annotation Boundaries from");
+                foreach (var otherAnnotationPanel in otherAnnotationPanels)
+                {
+                    copyAnnotationsCommands.SubItems.Add(
+                        new ContextMenuItemInfo(
+                            null,
+                            otherAnnotationPanel.VisualizationObjects[0].Name,
+                            this.GetCopyAnnotationBoundariesFromCommand(otherAnnotationPanel.VisualizationObjects[0] as TimeIntervalAnnotationVisualizationObject)));
+                }
+
+                items.Add(copyAnnotationsCommands);
+            }
+
             // Add the command to show all tracks
             var showAllTracksCommand = this.GetShowAllTracksCommand();
             if (showAllTracksCommand != null)
@@ -438,22 +461,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (!this.IsBound)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+                return this.CreateErrorCommand(ErrorStreamNotBound);
             }
 
             if (!this.AllowAddOrDeleteAnnotation)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+                return this.CreateErrorCommand(ErrorEditingDisabled);
             }
 
             if ((selectionTimeInterval.Left <= DateTime.MinValue) || (selectionTimeInterval.Right >= DateTime.MaxValue))
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorSelectionMarkersUnset);
+                return this.CreateErrorCommand(ErrorSelectionMarkersUnset);
             }
 
             if (this.Data != null && this.Data.Select(m => m.Data).GetAnnotationTimeIntervalOverlappingWith(track, selectionTimeInterval, out var _))
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorOverlappingAnnotations);
+                return this.CreateErrorCommand(ErrorOverlappingAnnotations);
             }
 
             return new PsiCommand(() => this.CreateAnnotation(selectionTimeInterval, track));
@@ -481,22 +504,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // If one of these conditions does not hold, display an error message
             if (!this.IsBound)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+                return this.CreateErrorCommand(ErrorStreamNotBound);
             }
 
             if (!this.AllowAddOrDeleteAnnotation)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+                return this.CreateErrorCommand(ErrorEditingDisabled);
             }
 
             if ((annotation.Interval.Left <= DateTime.MinValue) || (annotation.Interval.Right >= DateTime.MaxValue))
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorSelectionMarkersUnset);
+                return this.CreateErrorCommand(ErrorSelectionMarkersUnset);
             }
 
             if (this.Data != null && this.Data.Select(m => m.Data).GetAnnotationTimeIntervalOverlappingWith(annotation.Track, annotation.Interval, out var _))
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorOverlappingAnnotations);
+                return this.CreateErrorCommand(ErrorOverlappingAnnotations);
             }
 
             return new PsiCommand(() => this.AddAnnotation(annotation));
@@ -519,17 +542,17 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (!this.IsBound)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+                return this.CreateErrorCommand(ErrorStreamNotBound);
             }
 
             if (!this.AllowAddOrDeleteAnnotation)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+                return this.CreateErrorCommand(ErrorEditingDisabled);
             }
 
             if ((selectionTimeInterval.Left <= DateTime.MinValue) || (selectionTimeInterval.Right >= DateTime.MaxValue))
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorSelectionMarkersUnset);
+                return this.CreateErrorCommand(ErrorSelectionMarkersUnset);
             }
 
             return new PsiCommand(() => this.CreateAnnotation(selectionTimeInterval, null));
@@ -559,12 +582,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (!this.IsBound)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+                return this.CreateErrorCommand(ErrorStreamNotBound);
             }
 
             if (!this.AllowEditAnnotationBoundaries)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+                return this.CreateErrorCommand(ErrorEditingDisabled);
             }
 
             // Get the annotation under the cursor on the specified track
@@ -581,7 +604,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if ((intersectingTimeInterval.Left != annotation.Interval.Left) ||
                     (intersectingTimeInterval.Right != annotation.Interval.Right))
                 {
-                    return this.CreateEditAnnotationErrorCommand(ErrorOverlappingAnnotations);
+                    return this.CreateErrorCommand(ErrorOverlappingAnnotations);
                 }
             }
 
@@ -610,12 +633,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             if (!this.IsBound)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorStreamNotBound);
+                return this.CreateErrorCommand(ErrorStreamNotBound);
             }
 
             if (!this.AllowAddOrDeleteAnnotation)
             {
-                return this.CreateEditAnnotationErrorCommand(ErrorEditingDisabled);
+                return this.CreateErrorCommand(ErrorEditingDisabled);
             }
 
             // Get the index of the annotation under the cursor on the specified track
@@ -649,6 +672,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             => new PsiCommand(() => this.RenameTrack(track));
 
         /// <summary>
+        /// Gets the command for copying the annotation boundaries from another time interval visualization object.
+        /// </summary>
+        /// <param name="timeIntervalAnnotationVisualizationObject">The time interval visualization object to copy the annotation boundaries from.</param>
+        /// <returns>The command for copying the annotation boundaries from another time interval visualization object.</returns>
+        public ICommand GetCopyAnnotationBoundariesFromCommand(TimeIntervalAnnotationVisualizationObject timeIntervalAnnotationVisualizationObject)
+        {
+            if (this.Data.Count > 0)
+            {
+                return this.CreateErrorCommand(ErrorCannotCopyAnnotationBoundariesWhenAnnotationsPresent);
+            }
+            else
+            {
+                return new PsiCommand(() => this.CopyAnnotationBoundariesFrom(timeIntervalAnnotationVisualizationObject));
+            }
+        }
+
+        /// <summary>
         /// Gets the command to show all tracks.
         /// </summary>
         /// <returns>The command to show all tracks.</returns>
@@ -668,6 +708,86 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="index">The track index.</param>
         /// <returns>The name of the track with the specified index.</returns>
         public string GetTrackByIndex(int index) => this.trackIndex.FirstOrDefault(kvp => kvp.Value == index).Key;
+
+        /// <summary>
+        /// Moves the selection to the next annotation.
+        /// </summary>
+        public void MoveSelectionToNextAnnotation()
+        {
+            if (this.Navigator.SelectionRange.IsFinite && this.Data != null)
+            {
+                var ordered = this.Data.SelectMany(m => m.Data.Annotations).OrderBy(tia => tia.Interval.Left).ThenBy(tia => tia.Interval.Right).ToList();
+                var next = ordered.FirstOrDefault(
+                    tia =>
+                        (tia.Interval.Left == this.Navigator.SelectionRange.StartTime && tia.Interval.Right > this.Navigator.SelectionRange.EndTime) ||
+                        tia.Interval.Left > this.Navigator.SelectionRange.StartTime);
+                if (next != null)
+                {
+                    this.Navigator.SelectionRange.Set(next.Interval.Left, next.Interval.Right);
+                    this.Navigator.Cursor = next.Interval.Left;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the selection can be moved to the next annotation.
+        /// </summary>
+        /// <returns>True if the selection can be moved to the next annotation, or false otherwise.</returns>
+        public bool CanMoveSelectionToNextAnnotation()
+        {
+            if (this.Navigator.SelectionRange.IsFinite && this.Data != null)
+            {
+                var ordered = this.Data.SelectMany(m => m.Data.Annotations).OrderBy(tia => tia.Interval.Left).ThenBy(tia => tia.Interval.Right).ToList();
+                return ordered.FirstOrDefault(
+                    tia =>
+                        (tia.Interval.Left == this.Navigator.SelectionRange.StartTime && tia.Interval.Right > this.Navigator.SelectionRange.EndTime) ||
+                        tia.Interval.Left > this.Navigator.SelectionRange.StartTime) != null;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Moves the selection to the previous annotation.
+        /// </summary>
+        public void MoveSelectionToPreviousAnnotation()
+        {
+            if (this.Navigator.SelectionRange.IsFinite && this.Data != null)
+            {
+                var ordered = this.Data.SelectMany(m => m.Data.Annotations).OrderBy(tia => tia.Interval.Left).ThenBy(tia => tia.Interval.Right).ToList();
+                var previous = ordered.LastOrDefault(
+                    tia =>
+                        (tia.Interval.Left == this.Navigator.SelectionRange.StartTime && tia.Interval.Right < this.Navigator.SelectionRange.EndTime) ||
+                        tia.Interval.Left < this.Navigator.SelectionRange.StartTime);
+                if (previous != null)
+                {
+                    this.Navigator.SelectionRange.Set(previous.Interval.Left, previous.Interval.Right);
+                    this.Navigator.Cursor = previous.Interval.Left;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the selection can be moved to the previous annotation.
+        /// </summary>
+        /// <returns>True if the selection can be moved to the previous annotation, or false otherwise.</returns>
+        public bool CanMoveSelectionToPreviousAnnotation()
+        {
+            if (this.Navigator.SelectionRange.IsFinite && this.Data != null)
+            {
+                var ordered = this.Data.SelectMany(m => m.Data.Annotations).OrderBy(tia => tia.Interval.Left).ThenBy(tia => tia.Interval.Right).ToList();
+                return ordered.LastOrDefault(
+                    tia =>
+                        (tia.Interval.Left == this.Navigator.SelectionRange.StartTime && tia.Interval.Right < this.Navigator.SelectionRange.EndTime) ||
+                        tia.Interval.Left < this.Navigator.SelectionRange.StartTime) != null;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <inheritdoc/>
         protected override (DateTime StartTime, DateTime EndTime) GetTimeInterval() => (this.Navigator.DataRange.StartTime, this.Navigator.DataRange.EndTime);
@@ -723,8 +843,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        private PsiCommand CreateEditAnnotationErrorCommand(string errorMessage)
-            => new (() => new MessageBoxWindow(Application.Current.MainWindow, "Error Editing Annotation", errorMessage, "Close", null).ShowDialog());
+        private PsiCommand CreateErrorCommand(string errorMessage)
+            => new (() => new MessageBoxWindow(Application.Current.MainWindow, "Error Editing Annotations", errorMessage, "Close", null).ShowDialog());
 
         /// <summary>
         /// Creates a new annotation on a specified track.
@@ -908,6 +1028,47 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <summary>
+        /// Copies annotation boundariss from another time interval annotation visualization object.
+        /// </summary>
+        /// <param name="timeIntervalAnnotationVisualizationObject">The time interval annotation visualization object.</param>
+        private void CopyAnnotationBoundariesFrom(TimeIntervalAnnotationVisualizationObject timeIntervalAnnotationVisualizationObject)
+        {
+            var streamUpdates = new List<StreamUpdate<TimeIntervalAnnotationSet>>();
+
+            foreach (var message in timeIntervalAnnotationVisualizationObject.Data)
+            {
+                var timeIntervalAnnotationSet = default(TimeIntervalAnnotationSet);
+                foreach (var track in message.Data.Tracks)
+                {
+                    var copyFromAnnotation = message.Data[track];
+                    var annotation = this.AnnotationSchema.CreateDefaultTimeIntervalAnnotation(copyFromAnnotation.Interval, track);
+                    if (timeIntervalAnnotationSet == null)
+                    {
+                        timeIntervalAnnotationSet = new TimeIntervalAnnotationSet(annotation);
+                    }
+                    else
+                    {
+                        timeIntervalAnnotationSet.AddAnnotation(annotation);
+                    }
+                }
+
+                var timeIntervalAnnotationSetMessage = new Message<TimeIntervalAnnotationSet>(
+                    timeIntervalAnnotationSet,
+                    message.OriginatingTime,
+                    message.CreationTime,
+                    message.SourceId,
+                    message.SequenceId);
+                streamUpdates.Add(new (StreamUpdateType.Add, timeIntervalAnnotationSetMessage));
+            }
+
+            // Update the stream
+            DataManager.Instance.UpdateStream(this.StreamSource, streamUpdates);
+
+            // Update the data
+            this.UpdateDisplayData();
+        }
+
+        /// <summary>
         /// Rename a specified track.
         /// </summary>
         /// <param name="track">The name of the track.</param>
@@ -1034,27 +1195,23 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void DoMouseDoubleClick(MouseButtonEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("DoMouseDoubleClick");
-
-            // First figure out the canvas and get the track under the mouse cursor.
-            var canvas = this.FindCanvas(e.Source);
-            var trackUnderMouse = this.GetTrackUnderMouse(e, canvas);
-
-            // Get the time at the mouse cursor
-            var cursorTime = (this.Panel as TimelineVisualizationPanel).GetTimeAtMousePointer(e, false);
-
-            // Get the annotation (if any) that straddles this time
-            var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, trackUnderMouse);
-            if (annotation != null)
+            // On Shift + Double-Click move the selection range to the annotation interval
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                // Set the navigator selection to the bounds of the annotation
-                this.Navigator.SelectionRange.Set(annotation.Interval);
+                // First figure out the canvas and get the track under the mouse cursor.
+                var timelineViewCanvas = this.TimelineVisualizationPanel.GetTimelineViewCanvas(e.Source);
+                var trackUnderMouse = this.GetTrackUnderMouse(e, timelineViewCanvas);
 
-                // If the shift key was down, then also zoom to the annotation (with 10% empty space to the left and right)
-                if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                // Get the time at the mouse cursor
+                var cursorTime = (this.Panel as TimelineVisualizationPanel).GetTimeAtMousePointer(e, false);
+
+                // Get the annotation (if any) that straddles this time
+                var annotation = this.Data?.Select(m => m.Data).GetTimeIntervalAnnotationAtTime(cursorTime, trackUnderMouse);
+                if (annotation != null)
                 {
-                    double bufferSeconds = annotation.Interval.Span.TotalSeconds * 0.1d;
-                    this.Navigator.ViewRange.Set(annotation.Interval.Left.AddSeconds(-bufferSeconds), annotation.Interval.Right.AddSeconds(bufferSeconds));
+                    // Set the navigator selection to the bounds of the annotation
+                    this.Navigator.SelectionRange.Set(annotation.Interval);
+                    this.Navigator.Cursor = annotation.Interval.Left;
                 }
             }
         }
@@ -1062,14 +1219,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private void DoMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             // First figure out the canvas and get the track under the mouse cursor.
-            var canvas = this.FindCanvas(e.Source);
-            var trackUnderMouse = this.GetTrackUnderMouse(e, canvas);
+            var timelineViewCanvas = this.TimelineVisualizationPanel.GetTimelineViewCanvas(e.Source);
+            var trackUnderMouse = this.GetTrackUnderMouse(e, timelineViewCanvas);
+            var mousePosition = e.GetPosition(timelineViewCanvas);
 
             // Get the time at the mouse cursor
             var cursorTime = this.TimelineVisualizationPanel.GetTimeAtMousePointer(e, false);
-
-            // Get the track index to be edited based on the mouse position, and also the attributeIndex
-            var timelineScroller = this.TimelineVisualizationPanel.GetTimelineScroller(e.Source);
 
             var annotationSetMessage = default(Message<TimeIntervalAnnotationSet>);
             var annotationSetMessageIndex = -1;
@@ -1087,7 +1242,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 annotationSetMessageIndex = this.Data.IndexOf(annotationSetMessage);
 
                 // Check if the mouse is over an edge of the annotation
-                annotationEdge = this.GetMouseOverAnnotationEdge(cursorTime, annotation, timelineScroller);
+                annotationEdge = this.GetMouseOverAnnotationEdge(cursorTime, annotation, timelineViewCanvas);
             }
 
             // If the shift key is down, the user is dropping the start selection marker. If there is no VO currently being snapped
@@ -1119,10 +1274,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     if (this.AllowEditAnnotationValue)
                     {
                         // Compute the attribute index
-                        var point = e.GetPosition(timelineScroller);
-                        var trackActualHeight = timelineScroller.ActualHeight / this.TrackCount;
+                        var trackActualHeight = timelineViewCanvas.ActualHeight / this.TrackCount;
                         var attributeActualHeight = trackActualHeight / this.AttributeCount;
-                        var attributeIndex = (int)((point.Y - this.trackIndex[trackUnderMouse] * trackActualHeight) / attributeActualHeight);
+                        var attributeIndex = (int)((mousePosition.Y - this.trackIndex[trackUnderMouse] * trackActualHeight) / attributeActualHeight);
 
                         // Find the display data object corresponding to the annotation and fire an edit event to the view
                         var displayData = this.DisplayData.FirstOrDefault(d => d.Annotation.Track == trackUnderMouse && d.Annotation.Interval.Right == annotation.Interval.Right);
@@ -1219,8 +1373,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private void DoMouseRightButtonDown(MouseButtonEventArgs e)
         {
             // First figure out the canvas and get the track under the mouse cursor.
-            var canvas = this.FindCanvas(e.Source);
-            var trackUnderMouse = this.GetTrackUnderMouse(e, canvas);
+            var timelineViewCanvas = this.TimelineVisualizationPanel.GetTimelineViewCanvas(e.Source);
+            var trackUnderMouse = this.GetTrackUnderMouse(e, timelineViewCanvas);
 
             // Get the time at the mouse cursor
             DateTime cursorTime = this.TimelineVisualizationPanel.GetTimeAtMousePointer(e, false);
@@ -1232,7 +1386,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (annotation != null && trackUnderMouse != null)
             {
                 // Check if the mouse is over an edge of the annotation
-                annotationEdge = this.GetMouseOverAnnotationEdge(cursorTime, annotation, this.TimelineVisualizationPanel.GetTimelineScroller(e.Source));
+                annotationEdge = this.GetMouseOverAnnotationEdge(cursorTime, annotation, timelineViewCanvas);
             }
 
             // If the shift key is down, the user is dropping the end selection marker. If there is no VO currently being snapped
@@ -1252,8 +1406,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private void DoMouseMove(MouseEventArgs e)
         {
             // First figure out the canvas and get the track under the mouse cursor.
-            var canvas = this.FindCanvas(e.Source);
-            var trackUnderMouse = this.GetTrackUnderMouse(e, canvas);
+            var timelineViewCanvas = this.TimelineVisualizationPanel.GetTimelineViewCanvas(e.Source);
+            var trackUnderMouse = this.GetTrackUnderMouse(e, timelineViewCanvas);
 
             if (this.annotationDragInfo != null)
             {
@@ -1273,20 +1427,20 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     if (annotation != null && trackUnderMouse != null)
                     {
                         // Check if the mouse is over an edge of the annotation
-                        var annotationEdge = this.GetMouseOverAnnotationEdge(timeAtMousePointer, annotation, this.TimelineVisualizationPanel.GetTimelineScroller(e.Source));
+                        var annotationEdge = this.GetMouseOverAnnotationEdge(timeAtMousePointer, annotation, timelineViewCanvas);
 
                         if (annotationEdge != AnnotationEdge.None)
                         {
-                            canvas.Cursor = Cursors.SizeWE;
+                            timelineViewCanvas.Cursor = Cursors.SizeWE;
                         }
                         else
                         {
-                            canvas.Cursor = Cursors.Arrow;
+                            timelineViewCanvas.Cursor = Cursors.Arrow;
                         }
                     }
                     else
                     {
-                        canvas.Cursor = Cursors.Arrow;
+                        timelineViewCanvas.Cursor = Cursors.Arrow;
                     }
                 }
             }
@@ -1310,9 +1464,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             }
         }
 
-        private string GetTrackUnderMouse(MouseEventArgs e, Canvas canvas)
+        private string GetTrackUnderMouse(MouseEventArgs e, Canvas timelineViewCanvas)
         {
-            this.TrackUnderMouseIndex = (int)(e.GetPosition(canvas).Y * this.trackIndex.Count / canvas.ActualHeight);
+            this.TrackUnderMouseIndex = (int)(e.GetPosition(timelineViewCanvas).Y * this.trackIndex.Count / timelineViewCanvas.ActualHeight);
             return this.GetTrackByIndex(this.TrackUnderMouseIndex);
         }
 
@@ -1409,14 +1563,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             DataManager.Instance.UpdateStream(this.StreamSource, updates);
         }
 
-        private AnnotationEdge GetMouseOverAnnotationEdge(DateTime cursorTime, TimeIntervalAnnotation annotation, TimelineScroller timelineScroller)
+        private AnnotationEdge GetMouseOverAnnotationEdge(DateTime cursorTime, TimeIntervalAnnotation annotation, Canvas canvas)
         {
-            // Work out what time interval is expressed in 3 pixels at the current zoom
-            double percent = 5.0d / timelineScroller.ActualWidth;
-            var viewRange = this.Navigator.ViewRange;
-            TimeSpan hitTargetWidth = TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
+            // Work out what time interval is expressed in 5 pixels at the current zoom
+            var hitTargetWidth = TimeSpan.FromTicks((long)(5.0d * this.Navigator.ViewRange.Duration.Ticks / canvas.ActualWidth));
 
-            // Check if the mouse cursor is within 3 pixels of the left or right edge of the annoation
+            // Check if the mouse cursor is within 5 pixels of the left or right edge of the annoation
             if (Math.Abs((annotation.Interval.Left - cursorTime).Ticks) <= hitTargetWidth.Ticks)
             {
                 return AnnotationEdge.Left;
@@ -1460,19 +1612,6 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.UpdateDisplayData();
 
             this.Navigator.Cursor = timeAtMousePointer;
-        }
-
-        private Canvas FindCanvas(object sourceElement)
-        {
-            // Walk up the visual tree until we either find the
-            // Timeline Scroller or fall off the top of the tree
-            var target = sourceElement as DependencyObject;
-            while (target != null && target is not Canvas && target is not TimeIntervalAnnotationVisualizationObjectView)
-            {
-                target = VisualTreeHelper.GetParent(target);
-            }
-
-            return target is Canvas ? target as Canvas : (target as TimeIntervalAnnotationVisualizationObjectView).Canvas;
         }
 
         private void GenerateLegendValue()

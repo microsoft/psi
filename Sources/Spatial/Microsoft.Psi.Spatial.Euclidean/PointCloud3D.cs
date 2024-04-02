@@ -29,13 +29,12 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <param name="points">The set of points.</param>
         public PointCloud3D(IEnumerable<Point3D> points)
         {
-            var count = points.Count();
-            if (count == 0)
+            if (points is null || !points.Any())
             {
                 return;
             }
 
-            this.points = Matrix<double>.Build.Dense(4, count);
+            this.points = Matrix<double>.Build.Dense(4, points.Count());
             int i = 0;
             foreach (var point in points)
             {
@@ -92,6 +91,36 @@ namespace Microsoft.Psi.Spatial.Euclidean
                 return new Point3D(x, y, z);
             }
         }
+
+        /// <summary>
+        /// Gets the minimum X-value in the point could.
+        /// </summary>
+        public double MinX => this.points.Row(0).Min();
+
+        /// <summary>
+        /// Gets the maximum X-value in the point could.
+        /// </summary>
+        public double MaxX => this.points.Row(0).Max();
+
+        /// <summary>
+        /// Gets the minimum Y-value in the point could.
+        /// </summary>
+        public double MinY => this.points.Row(1).Min();
+
+        /// <summary>
+        /// Gets the maximum Y-value in the point could.
+        /// </summary>
+        public double MaxY => this.points.Row(1).Max();
+
+        /// <summary>
+        /// Gets the minimum Z-value in the point could.
+        /// </summary>
+        public double MinZ => this.points.Row(2).Min();
+
+        /// <summary>
+        /// Gets the maximum Z-value in the point could.
+        /// </summary>
+        public double MaxZ => this.points.Row(2).Max();
 
         /// <summary>
         /// Create a point cloud from a shared depth image.

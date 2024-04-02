@@ -5,12 +5,34 @@ namespace Microsoft.Psi.PsiStudio
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Xml;
     using System.Xml.Serialization;
     using Microsoft.Psi.Visualization.Windows;
+
+    /// <summary>
+    /// An enumeration of save behavior values.
+    /// </summary>
+    public enum SaveBehavior
+    {
+        /// <summary>
+        /// User must manually save changes.
+        /// </summary>
+        Manual,
+
+        /// <summary>
+        /// Changes will automatically be saved.
+        /// </summary>
+        Auto,
+
+        /// <summary>
+        /// User will be prompted to save if there are changes.
+        /// </summary>
+        Prompt,
+    }
 
     /// <summary>
     /// Persisted application settings.
@@ -24,7 +46,7 @@ namespace Microsoft.Psi.PsiStudio
         /// It is not necessary to bump the version when adding or removing properties unless the serialized
         /// schema for an existing property has changed in a way which necessitates special handling.
         /// </remarks>
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
 
         private string settingsFilename;
 
@@ -84,6 +106,11 @@ namespace Microsoft.Psi.PsiStudio
         public string DatasetsTabHeight { get; set; } = "400";
 
         /// <summary>
+        /// Gets or sets a value specifying how changes to the current layout should be saved.
+        /// </summary>
+        public SaveBehavior SaveLayoutBehavior { get; set; } = SaveBehavior.Manual;
+
+        /// <summary>
         /// Gets or sets the name of the most recently used layout.
         /// </summary>
         public string MostRecentlyUsedLayoutName { get; set; } = null;
@@ -111,14 +138,26 @@ namespace Microsoft.Psi.PsiStudio
         /// <summary>
         /// Gets or sets a value indicating whether to automatically load the most recently used dataset upon startup.
         /// </summary>
-        public bool AutoLoadMostRecentlyUsedDatasetOnStartUp { get; set; } = false;
+        public bool AutoLoadMostRecentlyUsedFileOnStartUp { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the list of most recently used dataset filenames.
+        /// Gets or sets a value indicating whether the most recently used file is a dataset or a store.
+        /// </summary>
+        public bool MostRecentlyUsedFileIsDataset { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the list of most recently used datasets.
         /// </summary>
         [XmlArray("MostRecentlyUsedDatasetFilenames")]
         [XmlArrayItem("Filename")]
-        public List<string> MostRecentlyUsedDatasetFilenames { get; set; } = new ();
+        public ObservableCollection<string> MostRecentlyUsedDatasetFilenames { get; set; } = new ();
+
+        /// <summary>
+        /// Gets or sets the list of most recently used stores.
+        /// </summary>
+        [XmlArray("MostRecentlyUsedStoreFilenames")]
+        [XmlArrayItem("Filename")]
+        public ObservableCollection<string> MostRecentlyUsedStoreFilenames { get; set; } = new ();
 
         /// <summary>
         /// Gets or sets the list of add-in assemblies.
@@ -254,27 +293,42 @@ namespace Microsoft.Psi.PsiStudio
         }
 
         /// <summary>
-        /// Adds the most recently used dataset filename to the most recently used list.
-        /// Will promote it to the top if already present in the list.
+        /// Adds a specified dataset at the top of the most recently used list.
         /// </summary>
         /// <param name="filename">The dataset filename to add to the most recently used list.</param>
-        public void AddRecentlyUsedDatasetFilename(string filename)
+        public void AddMostRecentlyUsedDatasetFilename(string filename)
         {
-            int index = this.MostRecentlyUsedDatasetFilenames.IndexOf(filename);
+            this.MostRecentlyUsedFileIsDataset = true;
+            this.AddMostRecentlyUsedFilename(filename, this.MostRecentlyUsedDatasetFilenames);
+        }
+
+        /// <summary>
+        /// Adds a specified store at the top of the most recently used list.
+        /// </summary>
+        /// <param name="filename">The store filename to add to the most recently used list.</param>
+        public void AddMostRecentlyUsedStoreFilename(string filename)
+        {
+            this.MostRecentlyUsedFileIsDataset = false;
+            this.AddMostRecentlyUsedFilename(filename, this.MostRecentlyUsedStoreFilenames);
+        }
+
+        private void AddMostRecentlyUsedFilename(string filename, ObservableCollection<string> mostRecentlyUsedList)
+        {
+            int index = mostRecentlyUsedList.IndexOf(filename);
             if (index == -1)
             {
-                if (this.MostRecentlyUsedDatasetFilenames.Count() == 10)
+                if (mostRecentlyUsedList.Count() == 10)
                 {
-                    this.MostRecentlyUsedDatasetFilenames.RemoveAt(9);
+                    mostRecentlyUsedList.RemoveAt(9);
                 }
 
-                this.MostRecentlyUsedDatasetFilenames.Insert(0, filename);
+                mostRecentlyUsedList.Insert(0, filename);
             }
             else if (index > 0)
             {
                 // Move filename to the top of MRU list
-                this.MostRecentlyUsedDatasetFilenames.RemoveAt(index);
-                this.MostRecentlyUsedDatasetFilenames.Insert(0, filename);
+                mostRecentlyUsedList.RemoveAt(index);
+                mostRecentlyUsedList.Insert(0, filename);
             }
         }
 
@@ -298,6 +352,26 @@ namespace Microsoft.Psi.PsiStudio
                     var reader = XmlReader.Create(textReader, new XmlReaderSettings() { XmlResolver = null });
                     settingsDocument.Load(reader);
 
+                    if (this.Version == 2)
+                    {
+                        // In version 2, all store and dataset file names are in the MostRecentlyUsedDatasetFilenames.
+                        // We need to separate them into MostRecentlyUsedDatasetFilenames and MostRecentlyUsedStoreFilenames.
+                        this.MostRecentlyUsedFileIsDataset = this.MostRecentlyUsedDatasetFilenames?.FirstOrDefault(f => f.EndsWith(".pds", StringComparison.OrdinalIgnoreCase)) != null;
+                        var stores = this.MostRecentlyUsedDatasetFilenames.Where(f => f.EndsWith(".psi", StringComparison.OrdinalIgnoreCase)).ToList();
+                        this.MostRecentlyUsedStoreFilenames = new ObservableCollection<string>(stores);
+                        foreach (var store in stores)
+                        {
+                            this.MostRecentlyUsedDatasetFilenames.Remove(store);
+                        }
+
+                        // The AutoLoadMostRecentlyUsedFileOnStartUp setting was named differently in version 2
+                        var node = settingsDocument.DocumentElement.SelectSingleNode(string.Format("/{0}/{1}", typeof(PsiStudioSettings).Name, "AutoLoadMostRecentlyUsedDatasetOnStartUp"));
+                        if (node?.FirstChild?.NodeType == XmlNodeType.Text)
+                        {
+                            this.AutoLoadMostRecentlyUsedFileOnStartUp = bool.Parse(node.InnerText);
+                        }
+                    }
+
                     if (this.Version < 2)
                     {
                         var node = settingsDocument.DocumentElement.SelectSingleNode(string.Format("/{0}/{1}", typeof(PsiStudioSettings).Name, "MostRecentlyUsedDatasetFilename"));
@@ -305,7 +379,7 @@ namespace Microsoft.Psi.PsiStudio
                         // Settings files prior to version 2 only saved a single MostRecentlyUsedDatasetFilename rather than a list of most recently used datasets
                         if (node?.FirstChild?.NodeType == XmlNodeType.Text)
                         {
-                            this.AddRecentlyUsedDatasetFilename(node.InnerText);
+                            this.AddMostRecentlyUsedDatasetFilename(node.InnerText);
                         }
                     }
 

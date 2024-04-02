@@ -69,9 +69,9 @@ namespace Microsoft.Psi.Persistence
         }
 
         internal static long GetSize(string storeName, string storePath)
-            => EnumerateStoreFiles(storeName, storePath).Select(fi => fi.Length).Sum();
+            => EnumerateStoreFileInfos(storeName, storePath).Select(fi => fi.Length).Sum();
 
-        internal static IEnumerable<FileInfo> EnumerateStoreFiles(string storeName, string storePath)
+        internal static IEnumerable<FileInfo> EnumerateStoreFileInfos(string storeName, string storePath)
         {
             string escapedStoreName = Regex.Escape(storeName);
             foreach (var fileName in Directory.EnumerateFiles(storePath))
@@ -80,7 +80,8 @@ namespace Microsoft.Psi.Persistence
                 if (Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Catalog_\d\d\d\d\d\d\.psi$").Success ||
                     Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Data_\d\d\d\d\d\d\.psi$").Success ||
                     Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.LargeData_\d\d\d\d\d\d\.psi$").Success ||
-                    Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Index_\d\d\d\d\d\d\.psi$").Success)
+                    Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Index_\d\d\d\d\d\d\.psi$").Success ||
+                    Regex.Match(fileInfo.Name, $@"^{escapedStoreName}\.Live$").Success)
                 {
                     yield return fileInfo;
                 }

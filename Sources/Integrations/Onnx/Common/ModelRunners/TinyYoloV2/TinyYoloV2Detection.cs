@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Onnx
 {
     using System.Drawing;
+    using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// Represents an object detection result from the <see cref="TinyYoloV2OnnxModelRunner"/>.
@@ -34,5 +35,19 @@ namespace Microsoft.Psi.Onnx
         /// Gets or sets the confidence level.
         /// </summary>
         public float Confidence { get; set; }
+
+        /// <summary>
+        /// Converts the <see cref="TinyYoloV2Detection"/> to <see cref="Object2DDetection"/>.
+        /// </summary>
+        /// <returns>The corresponding <see cref="Object2DDetection"/>.</returns>
+        public Object2DDetection ToObject2DDetection()
+            => new ()
+            {
+                Class = this.Label,
+                InstanceId = null,
+                DetectionScore = this.Confidence,
+                BoundingBox = this.BoundingBox,
+                Mask = null,
+            };
     }
 }

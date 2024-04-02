@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
-
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
     using System;
@@ -147,7 +145,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <summary>
         /// Gets or sets the padding of the items control within the panel.
         /// </summary>
-        [DataMember]
+        [IgnoreDataMember]
         [Browsable(false)]
         public Thickness ViewportPadding
         {
@@ -355,6 +353,18 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         [IgnoreDataMember]
         public RelayCommand SetAutoAxisComputeModeCommand
             => this.setAutoAxisComputeModeCommand ??= new RelayCommand(() => this.AxisComputeMode = AxisComputeMode.Auto);
+
+        /// <summary>
+        /// Don't serialize the XAxis property if AxisComputeMode is Auto as it will be data-dependent.
+        /// </summary>
+        /// <returns>A value indicating whether the XAxis property should be serialized.</returns>
+        public bool ShouldSerializeXAxis() => this.AxisComputeMode != AxisComputeMode.Auto;
+
+        /// <summary>
+        /// Don't serialize the YAxis property if AxisComputeMode is Auto as it will be data-dependent.
+        /// </summary>
+        /// <returns>A value indicating whether the YAxis property should be serialized.</returns>
+        public bool ShouldSerializeYAxis() => this.AxisComputeMode != AxisComputeMode.Auto;
 
         /// <inheritdoc/>
         public override List<ContextMenuItemInfo> ContextMenuItemsInfo()

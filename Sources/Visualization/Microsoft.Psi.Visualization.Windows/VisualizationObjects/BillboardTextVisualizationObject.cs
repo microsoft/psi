@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a 3D text billboard visualization object.
     /// </summary>
     [VisualizationObject("3D Text Billboard")]
-    public class BillboardTextVisualizationObject : ModelVisual3DVisualizationObject<Tuple<Point3D, string>>
+    public class BillboardTextVisualizationObject : ModelVisual3DValueVisualizationObject<Tuple<Point3D, string>>
     {
         private readonly BillboardTextVisual3D billboard;
 
@@ -141,7 +141,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {

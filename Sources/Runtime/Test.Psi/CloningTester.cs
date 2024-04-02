@@ -73,11 +73,20 @@ namespace Test.Psi
                 Serializer.Clone(fn, ref fn2, new SerializationContext());
                 Assert.Fail("Should have thrown while attempting to clone Func");
             }
+#if NET6_0_OR_GREATER
+            catch (ArgumentException ex)
+            {
+                // .NET 6 and above throws ArgumentException in GetUninitializedObject for delegate types
+                Assert.IsTrue(ex.Message.StartsWith("Type is not supported"));
+            }
+#else
             catch (NotSupportedException ex)
             {
                 Assert.IsTrue(ex.Message.StartsWith("Cannot clone Func"));
             }
+#endif
 
+#if !NET6_0_OR_GREATER // Cannot clone delegate types in .NET 6 and above even with CloneIntPtrFields
             // register to allow IntPtr cloning in Func<int, int> and repeat - should now succeed
             var serializers = new KnownSerializers();
             serializers.Register<Func<int, int>>(CloningFlags.CloneIntPtrFields);
@@ -85,6 +94,7 @@ namespace Test.Psi
             Serializer.Clone(fn, ref fn3, new SerializationContext(serializers));
             var res = fn3(10);
             Assert.AreEqual(11, res);
+#endif
         }
 
         [TestMethod]
@@ -101,11 +111,20 @@ namespace Test.Psi
                 Serializer.Clone(fn, ref fn2, new SerializationContext());
                 Assert.Fail("Should have thrown while attempting to clone Func");
             }
+#if NET6_0_OR_GREATER
+            catch (ArgumentException ex)
+            {
+                // .NET 6 and above throws ArgumentException in GetUninitializedObject for delegate types
+                Assert.IsTrue(ex.Message.StartsWith("Type is not supported"));
+            }
+#else
             catch (NotSupportedException ex)
             {
                 Assert.IsTrue(ex.Message.StartsWith("Cannot clone Func"));
             }
+#endif
 
+#if !NET6_0_OR_GREATER // Cannot clone delegate types in .NET 6 and above even with CloneIntPtrFields
             // register to allow IntPtr cloning in Func<int, int> and repeat - should now succeed
             var serializers = new KnownSerializers();
             serializers.Register<Func<int, int[]>>(CloningFlags.CloneIntPtrFields);
@@ -115,6 +134,7 @@ namespace Test.Psi
             Assert.AreEqual(11, res[0]);
             Assert.AreEqual(12, res[1]);
             Assert.AreEqual(13, res[2]);
+#endif
         }
 
         [TestMethod]

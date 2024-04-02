@@ -12,10 +12,9 @@ namespace Microsoft.Psi.MixedReality.StereoKit
     /// <summary>
     /// Component that visually renders a single <see cref="global::StereoKit.Mesh"/>.
     /// </summary>
-    public class MeshRenderer : StereoKitRenderer
+    public class MeshRenderer : ModelRenderer
     {
-        private Matrix pose = Matrix.Identity;
-        private Matrix scale = Matrix.Identity;
+        private Mesh mesh = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MeshRenderer"/> class.
@@ -29,22 +28,16 @@ namespace Microsoft.Psi.MixedReality.StereoKit
         /// <param name="visible">Visibility.</param>
         /// <param name="name">An optional name for the component.</param>
         public MeshRenderer(Pipeline pipeline, Mesh mesh, CoordinateSystem pose, Vector3D scale, Color color, bool wireframe = false, bool visible = true, string name = nameof(MeshRenderer))
-            : base(pipeline, name)
+            : base(pipeline, null, pose, scale, visible, name)
         {
-            this.Mesh = mesh;
-            this.ReceivePose(pose);
-            this.ReceiveScale(scale);
-
             // initialize the material
-            this.Material = Default.Material.Copy();
             this.Material.FaceCull = Cull.None;
             this.ReceiveColor(color);
             this.ReceiveWireframe(wireframe);
-            this.IsVisible = visible;
 
-            this.Pose = pipeline.CreateReceiver<CoordinateSystem>(this, this.ReceivePose, nameof(this.Pose));
-            this.Scale = pipeline.CreateReceiver<Vector3D>(this, this.ReceiveScale, nameof(this.Scale));
-            this.Visible = pipeline.CreateReceiver<bool>(this, this.ReceiveVisible, nameof(this.Visible));
+            // initialize the mesh
+            this.Mesh = mesh;
+
             this.Color = pipeline.CreateReceiver<Color>(this, this.ReceiveColor, nameof(this.Color));
             this.Wireframe = pipeline.CreateReceiver<bool>(this, this.ReceiveWireframe, nameof(this.Wireframe));
         }
@@ -64,21 +57,6 @@ namespace Microsoft.Psi.MixedReality.StereoKit
         }
 
         /// <summary>
-        /// Gets receiver for geometry pose (in \psi basis).
-        /// </summary>
-        public Receiver<CoordinateSystem> Pose { get; private set; }
-
-        /// <summary>
-        /// Gets receiver for geometry scale (in \psi basis).
-        /// </summary>
-        public Receiver<Vector3D> Scale { get; private set; }
-
-        /// <summary>
-        /// Gets receiver for visibility.
-        /// </summary>
-        public Receiver<bool> Visible { get; private set; }
-
-        /// <summary>
         /// Gets receiver for material color.
         /// </summary>
         public Receiver<Color> Color { get; private set; }
@@ -91,27 +69,24 @@ namespace Microsoft.Psi.MixedReality.StereoKit
         /// <summary>
         /// Gets or sets the mesh to be rendered.
         /// </summary>
-        protected Mesh Mesh { get; set; } = null;
+        protected Mesh Mesh
+        {
+            get => this.mesh;
+            set
+            {
+                this.mesh = value;
+
+                if (this.mesh is not null)
+                {
+                    this.Model = Model.FromMesh(this.mesh, this.Material);
+                }
+            }
+        }
 
         /// <summary>
-        /// Gets the overall render transform (scale * pose).
+        /// Gets or sets the material used for rendering the mesh.
         /// </summary>
-        protected Matrix RenderTransform { get; private set; } = Matrix.Identity;
-
-        /// <summary>
-        /// Gets or sets the transform for drawing the mesh (relative to the overall render transform).
-        /// </summary>
-        protected Matrix MeshTransform { get; set; } = Matrix.Identity;
-
-        /// <summary>
-        /// Gets the material used for rendering the mesh.
-        /// </summary>
-        protected Material Material { get; }
-
-        /// <summary>
-        /// Gets a value indicating whether the renderer should be currently visibile or not.
-        /// </summary>
-        protected bool IsVisible { get; private set; }
+        protected Material Material { get; set; } = Default.Material.Copy();
 
         /// <summary>
         /// Get a mesh from an embedded resource asset.
@@ -124,39 +99,6 @@ namespace Microsoft.Psi.MixedReality.StereoKit
             using var mem = new MemoryStream();
             stream.CopyTo(mem);
             return Model.FromMemory(name, mem.ToArray()).Visuals[0].Mesh;
-        }
-
-        /// <inheritdoc />
-        protected override void Render()
-        {
-            if (this.IsVisible && this.Mesh is not null)
-            {
-                Hierarchy.Push(this.RenderTransform);
-                this.Mesh.Draw(this.Material, this.MeshTransform);
-                Hierarchy.Pop();
-            }
-        }
-
-        /// <summary>
-        /// Update visibility.
-        /// </summary>
-        /// <param name="visible">Desired visibility.</param>
-        /// <param name="envelope">Message envelope.</param>
-        protected virtual void ReceiveVisible(bool visible, Envelope envelope)
-        {
-            this.IsVisible = visible;
-        }
-
-        private void ReceivePose(CoordinateSystem pose)
-        {
-            this.pose = pose is null ? Matrix.Identity : pose.ToStereoKitMatrix();
-            this.RenderTransform = this.scale * this.pose;
-        }
-
-        private void ReceiveScale(Vector3D scale)
-        {
-            this.scale = Matrix.S(new Vec3((float)scale.Y, (float)scale.Z, (float)scale.X));
-            this.RenderTransform = this.scale * this.pose;
         }
 
         private void ReceiveColor(Color color)

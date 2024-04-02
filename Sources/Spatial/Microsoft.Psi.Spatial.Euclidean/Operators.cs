@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
     using System.Numerics;
     using MathNet.Numerics.LinearAlgebra;
     using MathNet.Spatial.Euclidean;
+    using Plane = MathNet.Spatial.Euclidean.Plane;
     using Quaternion = System.Numerics.Quaternion;
 
     /// <summary>
@@ -78,9 +79,27 @@ namespace Microsoft.Psi.Spatial.Euclidean
                 (t, envelope, emitter) =>
                 {
                     var point3D = getLocation(t);
-                    if (point3D.HasValue && lastPoint3D.HasValue && lastDateTime > DateTime.MinValue)
+                    if (point3D.HasValue &&
+                        lastPoint3D.HasValue &&
+                        !point3D.Value.ToVector().Any(d => double.IsNaN(d)) &&
+                        !lastPoint3D.Value.ToVector().Any(d => double.IsNaN(d)) &&
+                        lastDateTime > DateTime.MinValue)
                     {
-                        var velocity3D = new LinearVelocity3D(point3D.Value, (point3D.Value - lastPoint3D.Value).Normalize(), point3D.Value.DistanceTo(lastPoint3D.Value) / (envelope.OriginatingTime - lastDateTime).TotalSeconds);
+                        var distance = point3D.Value.DistanceTo(lastPoint3D.Value);
+                        UnitVector3D direction;
+                        double magnitude;
+                        if (distance < float.Epsilon)
+                        {
+                            direction = default;
+                            magnitude = 0;
+                        }
+                        else
+                        {
+                            direction = (point3D.Value - lastPoint3D.Value).Normalize();
+                            magnitude = distance / (envelope.OriginatingTime - lastDateTime).TotalSeconds;
+                        }
+
+                        var velocity3D = new LinearVelocity3D(point3D.Value, direction, magnitude);
                         emitter.Post(velocity3D, envelope.OriginatingTime);
                     }
 
@@ -102,11 +121,11 @@ namespace Microsoft.Psi.Spatial.Euclidean
             this IProducer<CoordinateSystem> source,
             DeliveryPolicy<CoordinateSystem> deliveryPolicy = null,
             string name = nameof(ComputeVelocity))
-                => source.Window(
+                => source.Where(cs => cs != null, deliveryPolicy).Window(
                     -1,
                     0,
                     values => new CoordinateSystemVelocity3D(values.First().Data, values.Last().Data, values.Last().OriginatingTime - values.First().OriginatingTime),
-                    deliveryPolicy,
+                    DeliveryPolicy.SynchronousOrThrottle,
                     name);
 
         /// <summary>
@@ -187,6 +206,23 @@ namespace Microsoft.Psi.Spatial.Euclidean
         }
 
         /// <summary>
+        /// Interpolates between two <see cref="Ray3D"/> rays.
+        /// </summary>
+        /// <param name="ray3D1">The first <see cref="Ray3D"/>.</param>
+        /// <param name="ray3D2">The second <see cref="Ray3D"/>.</param>
+        /// <param name="amount">The amount to interpolate between the two <see cref="Ray3D"/> objects.
+        /// A value between 0 and 1 will return an interpolation between the two values.
+        /// A value outside the 0-1 range will generate an extrapolated result.</param>
+        /// <returns>The interpolated <see cref="Ray3D"/>.</returns>
+        public static Ray3D InterpolateRay3D(Ray3D ray3D1, Ray3D ray3D2, double amount)
+            => new (
+                new Point3D(
+                    (ray3D1.ThroughPoint.X * (1 - amount)) + (ray3D2.ThroughPoint.X * amount),
+                    (ray3D1.ThroughPoint.Y * (1 - amount)) + (ray3D2.ThroughPoint.Y * amount),
+                    (ray3D1.ThroughPoint.Z * (1 - amount)) + (ray3D2.ThroughPoint.Z * amount)),
+                (ray3D1.Direction.ScaleBy(1 - amount) + ray3D2.Direction.ScaleBy(amount)).Normalize());
+
+        /// <summary>
         /// Interpolates between two <see cref="CoordinateSystem"/> poses, using spherical linear interpolation
         /// (<see cref="Quaternion.Slerp"/>) for rotation, and linear interpolation for translation.
         /// </summary>
@@ -216,6 +252,57 @@ namespace Microsoft.Psi.Spatial.Euclidean
             var t = t1 + (amount * (t2 - t1));
             var r = Quaternion.Slerp(r1, r2, (float)amount);
             return Matrix4x4.CreateFromQuaternion(r).ToCoordinateSystem().SetTranslation(t);
+        }
+
+        /// <summary>
+        /// Try to compute a plane from three points.
+        /// </summary>
+        /// <param name="point1">First point.</param>
+        /// <param name="point2">Second point.</param>
+        /// <param name="point3">Third point.</param>
+        /// <param name="plane">(out) The computed plane.</param>
+        /// <returns>True if successful, or false if the three points are collinear.</returns>
+        public static bool TryComputePlane(Point3D point1, Point3D point2, Point3D point3, out Plane plane)
+        {
+            try
+            {
+                plane = Plane.FromPoints(point1, point2, point3);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                // This will fail if all three points are on a line
+                plane = default;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Use barycentric coordinates to determine whether a triangle contains a point.
+        /// The triangle is represented as three vertices.
+        /// </summary>
+        /// <param name="queryPoint">The point to test.</param>
+        /// <param name="triangleVertexA">Triangle's first vertex.</param>
+        /// <param name="triangleVertexB">Triangle's second vertex.</param>
+        /// <param name="triangleVertexC">Triangle's third vertex.</param>
+        /// <returns>True if the triangle contains the point.</returns>
+        public static bool TriangleContainsPoint(Point3D queryPoint, Point3D triangleVertexA, Point3D triangleVertexB, Point3D triangleVertexC)
+        {
+            var v0 = triangleVertexC - triangleVertexA;
+            var v1 = triangleVertexB - triangleVertexA;
+            var v2 = queryPoint - triangleVertexA;
+
+            // Compute barycentric coordinates
+            var dot00 = v0.DotProduct(v0);
+            var dot01 = v0.DotProduct(v1);
+            var dot02 = v0.DotProduct(v2);
+            var dot11 = v1.DotProduct(v1);
+            var dot12 = v1.DotProduct(v2);
+            var denominator = dot00 * dot11 - dot01 * dot01;
+            var u = (dot11 * dot02 - dot01 * dot12) / denominator;
+            var v = (dot00 * dot12 - dot01 * dot02) / denominator;
+
+            return u >= 0 && v >= 0 && (u + v <= 1);
         }
     }
 }

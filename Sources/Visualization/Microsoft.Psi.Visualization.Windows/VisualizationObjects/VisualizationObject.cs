@@ -240,24 +240,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand ToggleVisibilityCommand
-        {
-            get
-            {
-                if (this.toggleVisibilityCommand == null)
-                {
-                    this.toggleVisibilityCommand = new RelayCommand(() => this.Panel.ToggleVisualizationObjectVisibility(this));
-                }
-
-                return this.toggleVisibilityCommand;
-            }
-        }
-
-        /// <summary>
-        /// Gets the contract resolver. Default is null.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        protected virtual IContractResolver ContractResolver => null;
+            => this.toggleVisibilityCommand ??= new RelayCommand(() => this.Panel.ToggleVisualizationObjectVisibility(this));
 
         /// <inheritdoc/>
         public virtual List<ContextMenuItemInfo> ContextMenuItemsInfo()

@@ -115,6 +115,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="e">The event arguments.</param>
         protected virtual void OnDataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            this.UpdateView();
         }
 
         /// <summary>
@@ -124,6 +125,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <param name="e">The event arguments.</param>
         protected virtual void OnSummaryDataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            this.UpdateView();
         }
     }
 }

@@ -136,7 +136,6 @@ namespace Microsoft.Psi.Data
 
         /// <summary>
         /// Opens the specified stream for reading and returns a stream instance that can be used to consume the messages.
-        /// The returned stream will publish data read from the store once the pipeline is running.
         /// </summary>
         /// <typeparam name="T">The expected type of the stream to open.
         /// This type will be used to deserialize the stream messages.</typeparam>
@@ -149,6 +148,18 @@ namespace Microsoft.Psi.Data
             // preserve the envelope of the deserialized message in the output connector
             return this.BridgeOut(this.getStreamImporter().OpenStream(streamName, allocator, deallocator), streamName);
         }
+
+        /// <summary>
+        /// Opens the specified stream for reading if the stream exists, and returns a stream instance that can be used to consume the messages.
+        /// </summary>
+        /// <typeparam name="T">The expected type of the stream to open.
+        /// This type will be used to deserialize the stream messages.</typeparam>
+        /// <param name="streamName">The name of the stream to open.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
+        /// <returns>A stream that publishes the data read from the store, or null if the stream does not exist.</returns>
+        public IProducer<T> OpenStreamOrDefault<T>(string streamName, Func<T> allocator = null, Action<T> deallocator = null)
+            => this.Contains(streamName) ? this.OpenStream(streamName, allocator, deallocator) : null;
 
         /// <summary>
         /// Opens the specified stream as dynamic for reading and returns a stream instance that can be used to consume the messages.

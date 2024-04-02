@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// </summary>
     /// <typeparam name="TKey">The type of the key for each point 3D graph.</typeparam>
     [VisualizationObject("Point3D graph")]
-    public class Point3DGraphVisualizationObject<TKey> : ModelVisual3DGraphVisualizationObject<SphereVisual3D, PipeVisual3D, TKey, Point3D, bool>
+    public class Point3DGraphVisualizationObject<TKey> : GraphVisualizationObject<SphereVisual3D, PipeVisual3D, TKey, Point3D, bool>
     {
         private Color edgeColor = Colors.White;
         private double edgeDiameterMm = 20;

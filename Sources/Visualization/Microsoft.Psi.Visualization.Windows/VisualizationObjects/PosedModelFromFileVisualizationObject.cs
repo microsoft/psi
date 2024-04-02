@@ -23,7 +23,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Supported file formats include .obj, .stl, .3ds, .lwo, .objz, .off, and .ply.
     /// </remarks>
     [VisualizationObject("Posed Model (from file)")]
-    public class PosedModelFromFileVisualizationObject : ModelVisual3DVisualizationObject<CoordinateSystem>
+    public class PosedModelFromFileVisualizationObject : ModelVisual3DValueVisualizationObject<CoordinateSystem>
     {
         private readonly ModelImporter modelImporter = new ();
         private readonly SolidColorBrush materialBrush = new ();
@@ -115,7 +115,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.UpdateVisuals();
             this.UpdateVisibility();
@@ -159,9 +159,9 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void ResetModel()
         {
-            if (this.ModelView.Children.Contains(this.modelVisual))
+            if (this.ModelVisual3D.Children.Contains(this.modelVisual))
             {
-                this.ModelView.Children.Remove(this.modelVisual);
+                this.ModelVisual3D.Children.Remove(this.modelVisual);
             }
 
             this.modelVisual = new SphereVisual3D();

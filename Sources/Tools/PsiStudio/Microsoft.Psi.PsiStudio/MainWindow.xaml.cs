@@ -37,6 +37,11 @@ namespace Microsoft.Psi.PsiStudio
         {
             this.InitializeComponent();
 
+            // Register platform specific resources
+            Imaging.Resources.RegisterPlatformResources();
+            Speech.Resources.RegisterPlatformResources();
+            Audio.Resources.RegisterPlatformResources();
+
             // Create the visualization container and set the navigator range to an arbitrary default
             VisualizationContext visualizationContext = VisualizationContext.Instance;
             visualizationContext.VisualizationContainer = new VisualizationContainer();

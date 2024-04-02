@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Data
     public class BatchProcessingTaskConfiguration : ObservableObject
     {
         private bool replayAllRealTime = false;
-        private bool deliveryPolicyLatestMessage = false;
+        private DeliveryPolicySpec deliveryPolicySpec = DeliveryPolicySpec.Unlimited;
         private bool enableDiagnostics = false;
         private string outputStoreName = null;
         private string outputStorePath = null;
@@ -50,12 +50,12 @@ namespace Microsoft.Psi.Data
         /// Gets or sets a value indicating whether to use the <see cref="DeliveryPolicy.LatestMessage"/> pipeline-level delivery policy when executing this batch task.
         /// </summary>
         [DataMember]
-        [DisplayName("Use Latest Message Delivery Policy")]
-        [Description("Indicates whether the task will execute with a latest message global delivery policy.")]
-        public bool DeliveryPolicyLatestMessage
+        [DisplayName("Delivery Policy")]
+        [Description("Indicates the type of global delivery policy to use for the batch task processing pipeline.")]
+        public DeliveryPolicySpec DeliveryPolicySpec
         {
-            get => this.deliveryPolicyLatestMessage;
-            set { this.Set(nameof(this.DeliveryPolicyLatestMessage), ref this.deliveryPolicyLatestMessage, value); }
+            get => this.deliveryPolicySpec;
+            set { this.Set(nameof(this.DeliveryPolicySpec), ref this.deliveryPolicySpec, value); }
         }
 
         /// <summary>

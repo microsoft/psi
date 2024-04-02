@@ -65,8 +65,8 @@ namespace Microsoft.Psi.Audio
                 // this component is constructed by specifying either an output frame size or duration
                 if (this.frameSizeInBytes == 0)
                 {
-                    // initialize the output frame size based on a specified duration
-                    this.frameSizeInBytes = (int)(this.frameDuration.TotalSeconds * audio.Format.AvgBytesPerSec);
+                    // initialize the output frame size (maintaining block-alignment) based on a specified duration
+                    this.frameSizeInBytes = (int)Math.Ceiling(this.frameDuration.TotalSeconds * audio.Format.SamplesPerSec) * audio.Format.BlockAlign;
                 }
                 else
                 {

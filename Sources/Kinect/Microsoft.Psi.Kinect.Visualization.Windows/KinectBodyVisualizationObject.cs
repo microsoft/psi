@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Kinect.Visualization
     /// Represents a visualization object for Kinect bodies.
     /// </summary>
     [VisualizationObject("Kinect Body")]
-    public class KinectBodyVisualizationObject : ModelVisual3DVisualizationObject<KinectBody>
+    public class KinectBodyVisualizationObject : ModelVisual3DValueVisualizationObject<KinectBody>
     {
         private readonly UpdatableVisual3DDictionary<JointType, SphereVisual3D> visualJoints;
         private readonly UpdatableVisual3DDictionary<(JointType ChildJoint, JointType ParentJoint), PipeVisual3D> visualBones;
@@ -139,7 +139,7 @@ namespace Microsoft.Psi.Kinect.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {
@@ -298,7 +298,7 @@ namespace Microsoft.Psi.Kinect.Visualization
 
         private void UpdateBillboardVisibility()
         {
-            this.UpdateChildVisibility(this.Billboard.ModelView, this.Visible && this.CurrentData != default && this.ShowBillboard);
+            this.UpdateChildVisibility(this.Billboard.ModelVisual3D, this.Visible && this.CurrentData != default && this.ShowBillboard);
         }
     }
 }

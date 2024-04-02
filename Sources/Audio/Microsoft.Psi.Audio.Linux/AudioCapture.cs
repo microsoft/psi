@@ -65,7 +65,7 @@ namespace Microsoft.Psi.Audio
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <param name="configurationFilename">The component configuration file.</param>
         public AudioCapture(Pipeline pipeline, string configurationFilename = null)
-            : this(pipeline, (configurationFilename == null) ? new AudioCaptureConfiguration() : new ConfigurationHelper<AudioCaptureConfiguration>(configurationFilename).Configuration)
+            : this(pipeline, ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AudioCaptureConfiguration(), true))
         {
         }
 

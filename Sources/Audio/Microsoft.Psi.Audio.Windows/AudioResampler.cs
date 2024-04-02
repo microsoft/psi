@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Audio
     /// <br/>
     /// **Please note**: This component uses Media APIs that are available on Windows only.
     /// </remarks>
-    public sealed class AudioResampler : ConsumerProducer<AudioBuffer, AudioBuffer>, IDisposable
+    public sealed class AudioResampler : ConsumerProducer<AudioBuffer, AudioBuffer>, IAudioResampler, IDisposable
     {
         /// <summary>
         /// The configuration for this component.
@@ -78,7 +78,7 @@ namespace Microsoft.Psi.Audio
         public AudioResampler(Pipeline pipeline, string configurationFilename = null, string name = nameof(AudioResampler))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AudioResamplerConfiguration() : new ConfigurationHelper<AudioResamplerConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AudioResamplerConfiguration(), true),
                 name)
         {
         }
@@ -183,7 +183,7 @@ namespace Microsoft.Psi.Audio
 
                 // use the end of the last sample in the packet as the originating time
                 // The QPC ticks from the resampler are converted back to a DateTime.
-                DateTime originatingTime = new DateTime(
+                DateTime originatingTime = new (
                     timestamp + (10000000L * length / this.Configuration.OutputFormat.AvgBytesPerSec),
                     DateTimeKind.Utc);
 

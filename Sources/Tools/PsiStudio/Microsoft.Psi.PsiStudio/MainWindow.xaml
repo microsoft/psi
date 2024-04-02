@@ -23,13 +23,18 @@
     Background="{StaticResource WindowBackgroundBrush}">
     
     <Window.InputBindings>
-        <KeyBinding Command="{Binding PlayPauseCommand}" Key="F10" />
+        <KeyBinding Command="{Binding PlayPauseFromCursorCommand}" Key="Space"/>
+        <KeyBinding Command="{Binding PlayPauseFromSelectionStartCommand}" Key="Space" Modifiers="Ctrl"/>
         <KeyBinding Command="{Binding GoToTimeCommand}" Key="G" Modifiers="Ctrl" />
         <KeyBinding Command="{Binding ZoomToSessionExtentsCommand}" Key="A" Modifiers="Ctrl" />
         <KeyBinding Command="{Binding ZoomToSelectionCommand}" Key="S" Modifiers="Ctrl" />
         <KeyBinding Command="{Binding ToggleCursorFollowsMouseCommand}" Key="F" Modifiers="Alt" />
+        <KeyBinding Command="{Binding MoveCursorToSelectionStartCommand}" Key="S" Modifiers="Alt"/>
+        <KeyBinding Command="{Binding MoveCursorToSelectionEndCommand}" Key="E" Modifiers="Alt"/>
         <KeyBinding Command="{Binding MoveSelectionLeftCommand}" Key="Left" Modifiers="Alt" />
         <KeyBinding Command="{Binding MoveSelectionRightCommand}" Key="Right" Modifiers="Alt" />
+        <KeyBinding Command="{Binding MoveSelectionToPreviousAnnotationCommand}" Key="Left" Modifiers="Shift" />
+        <KeyBinding Command="{Binding MoveSelectionToNextAnnotationCommand}" Key="Right" Modifiers="Shift" />
         <KeyBinding Command="{Binding ClearSelectionCommand}" Key="C" Modifiers="Alt" />
         <KeyBinding Command="{Binding NudgeRightCommand}" Key="OemPeriod" Modifiers="Ctrl" />
         <KeyBinding Command="{Binding NudgeLeftCommand}" Key="OemComma" Modifiers="Ctrl" />
@@ -71,21 +76,39 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <!-- https://stackoverflow.com/questions/17830587/bind-items-to-menuitem-use-command -->
-                <MenuItem Header="Open _Recently Used Dataset" ItemsSource="{Binding Settings.MostRecentlyUsedDatasetFilenames}" Height="25">
-                    <MenuItem.ItemContainerStyle>
-                        <Style TargetType="MenuItem">
-                            <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}, Path=DataContext.OpenRecentlyUsedDatasetCommand}"/>
-                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
-                            <Setter Property="Height" Value="25"/>
-                            <Setter Property="HeaderTemplate">
-                                <Setter.Value>
-                                    <DataTemplate>
-                                        <TextBlock VerticalAlignment="Center" Text="{Binding Header, RelativeSource={RelativeSource x:AncestorType=MenuItem}}"/>
-                                    </DataTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </MenuItem.ItemContainerStyle>
+                <MenuItem Header="Open Recently Used">
+                    <MenuItem Header="Dataset" ItemsSource="{Binding Settings.MostRecentlyUsedDatasetFilenames}" Height="25">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}, Path=DataContext.OpenRecentlyUsedDatasetCommand}"/>
+                                <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                                <Setter Property="Height" Value="25"/>
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Header, RelativeSource={RelativeSource x:AncestorType=MenuItem}}"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
+                    <MenuItem Header="Store" ItemsSource="{Binding Settings.MostRecentlyUsedStoreFilenames}" Height="25">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="MenuItem">
+                                <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}, Path=DataContext.OpenRecentlyUsedStoreCommand}"/>
+                                <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}, Path=Header}"/>
+                                <Setter Property="Height" Value="25"/>
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Header, RelativeSource={RelativeSource x:AncestorType=MenuItem}}"/>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Save Dataset As" Command="{Binding SaveDatasetAsCommand}" Height="25">
                     <MenuItem.Icon>
@@ -159,7 +182,7 @@
                 <Button Command="{Binding MoveCursorToSelectionStartCommand}" Margin="1" ToolTip="Move cursor to the start of the selection" AutomationProperties.Name="MoveCursorToStartOfSelectionButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=move-to-beginning.png}"/>
                 </Button>
-                <Button Command="{Binding PlayPauseCommand}" Margin="1" AutomationProperties.Name="PlayPauseButton">
+                <Button Command="{Binding PlayPauseFromSelectionStartCommand}" Margin="1" AutomationProperties.Name="PlayPauseButton">
                     <Image>
                         <Image.Style>
                             <Style TargetType="Image">
@@ -229,6 +252,10 @@
                 <Separator AutomationProperties.IsOffscreenBehavior="Offscreen"/>
                 <Button Command="{Binding EditSettingsCommand}" ToolTip="Edit Settings" AutomationProperties.Name="EditSettingsButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=settings.png}"/>
+                </Button>
+                <Separator AutomationProperties.IsOffscreenBehavior="Offscreen"/>
+                <Button Command="{Binding HelpCommand}" ToolTip="Help" AutomationProperties.Name="HelpButton">
+                    <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=help.png}"/>
                 </Button>
             </ToolBar>
         </ToolBarTray>

@@ -12,7 +12,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <typeparam name="TData">The type of data of each item in the collection.</typeparam>
     public abstract class ModelVisual3DListVisualizationObject<TVisualizationObject, TData> :
         ModelVisual3DCollectionVisualizationObject<TVisualizationObject, List<TData>>
-        where TVisualizationObject : ModelVisual3DVisualizationObject<TData>, new()
+        where TVisualizationObject : ModelVisual3DValueVisualizationObject<TData>, new()
     {
         // The collection of child visualization objects.
         private readonly List<TVisualizationObject> children = new ();
@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {
@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 foreach (TData datum in this.CurrentData)
                 {
                     // If we don't have enough visualization objects, create a new one
-                    while (index >= this.ModelView.Children.Count)
+                    while (index >= this.ModelVisual3D.Children.Count)
                     {
                         this.AddNew();
                     }
@@ -46,7 +46,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 }
 
                 // If we have more visualization objects than data, remove the extras
-                while (index < this.ModelView.Children.Count)
+                while (index < this.ModelVisual3D.Children.Count)
                 {
                     this.Remove(index);
                 }
@@ -68,13 +68,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.children.Add(child);
 
             // Ad the new visualization object's model view as a child of our model view
-            this.ModelView.Children.Add(child.ModelView);
+            this.ModelVisual3D.Children.Add(child.ModelVisual3D);
         }
 
         private void Remove(int index)
         {
             // Remove the visualization object's model view from our model view
-            this.ModelView.Children.RemoveAt(index);
+            this.ModelVisual3D.Children.RemoveAt(index);
 
             // remove the visualization object
             this.children.RemoveAt(index);
@@ -82,7 +82,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void RemoveAll()
         {
-            this.ModelView.Children.Clear();
+            this.ModelVisual3D.Children.Clear();
             this.children.Clear();
         }
     }

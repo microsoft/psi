@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Visualization
         /// <summary>
         /// Add session from store.
         /// </summary>
-        public const string SessionAddFromStore = IconPrefix + "session-from-store.png";
+        public const string SessionAddFromFile = IconPrefix + "session-from-store.png";
 
         /// <summary>
         /// Add session from folder.

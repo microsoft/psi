@@ -194,6 +194,17 @@ namespace Microsoft.Psi.Diagnostics
         }
 
         /// <summary>
+        /// Gets dropped message percentage across receivers within pipeline and descendant.
+        /// </summary>
+        /// <param name="pipeline">Root pipeline diagnostics.</param>
+        /// <param name="predicate">Predicate expression filtering receiver diagnostics.</param>
+        /// <returns>Dropped message percentage.</returns>
+        public static double GetDroppedMessagePercentage(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
+        {
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.TotalMessageDroppedPercentage).Sum();
+        }
+
+        /// <summary>
         /// Gets dropped message count in last averaging time span across receivers within pipeline and descendant.
         /// </summary>
         /// <param name="pipeline">Root pipeline diagnostics.</param>
@@ -213,6 +224,17 @@ namespace Microsoft.Psi.Diagnostics
         public static int GetProcessedMessageCount(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
         {
             return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.TotalMessageProcessedCount).Sum();
+        }
+
+        /// <summary>
+        /// Gets processed message percentage across receivers within pipeline and descendant.
+        /// </summary>
+        /// <param name="pipeline">Root pipeline diagnostics.</param>
+        /// <param name="predicate">Predicate expression filtering receiver diagnostics.</param>
+        /// <returns>Processed message percentage.</returns>
+        public static double GetProcessedMessagePercentage(this PipelineDiagnostics pipeline, Func<PipelineDiagnostics.ReceiverDiagnostics, bool> predicate = null)
+        {
+            return pipeline.GetAllReceiverDiagnostics().Where(r => predicate == null ? true : predicate(r)).Select(r => r.TotalMessageProcessedPercentage).Sum();
         }
 
         /// <summary>

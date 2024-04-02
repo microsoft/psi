@@ -4,7 +4,9 @@
 namespace Microsoft.Psi.Onnx
 {
     using System.Collections.Generic;
+    using System.Drawing;
     using System.Linq;
+    using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// Represents a set of detection results from the <see cref="MaskRCNNModelRunner"/>.
@@ -38,5 +40,14 @@ namespace Microsoft.Psi.Onnx
         /// Gets the original image height.
         /// </summary>
         public int ImageHeight { get; }
+
+        /// <summary>
+        /// Converts the <see cref="MaskRCNNDetectionResults"/> to <see cref="Object2DDetectionResults"/>.
+        /// </summary>
+        /// <returns>The corresponding <see cref="Object2DDetectionResults"/>.</returns>
+        public Object2DDetectionResults ToObject2DDetectionResults()
+            => new (
+                new Size(this.ImageWidth, this.ImageHeight),
+                this.Detections.Select(d => d.ToObject2DDetection()).ToList());
     }
 }

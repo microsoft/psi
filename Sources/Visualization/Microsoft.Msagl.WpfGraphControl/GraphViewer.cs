@@ -53,6 +53,7 @@ namespace Microsoft.Msagl.WpfGraphControl
         private readonly object processGraphLock = new object();
         private readonly Dictionary<DrawingObject, Func<DrawingObject, FrameworkElement>> registeredCreators = new Dictionary<DrawingObject, Func<DrawingObject, FrameworkElement>>();
         private readonly ClickCounter clickCounter;
+        private readonly object stateLock = new object();
 
         private Path targetArrowheadPathForRubberEdge;
         private Path rubberEdgePath;
@@ -651,7 +652,7 @@ namespace Microsoft.Msagl.WpfGraphControl
         /// <returns>Framework element.</returns>
         public FrameworkElement CreateAndRegisterFrameworkElementOfDrawingNode(Msagl.Drawing.Node node)
         {
-            lock (this)
+            lock (this.stateLock)
             {
                 return this.drawingObjectsToFrameworkElements[node] = this.CreateTextBlockForDrawingObj(node);
             }
@@ -847,7 +848,7 @@ namespace Microsoft.Msagl.WpfGraphControl
         /// <param name="registerForUndo">Whether to register for undo.</param>
         public void RemoveEdge(IViewerEdge edge, bool registerForUndo)
         {
-            lock (this)
+            lock (this.stateLock)
             {
                 var vedge = (VEdge)edge;
                 var dedge = vedge.Edge;
@@ -867,7 +868,7 @@ namespace Microsoft.Msagl.WpfGraphControl
         /// <param name="registerForUndo">Whether to register for undo.</param>
         public void RemoveNode(IViewerNode node, bool registerForUndo)
         {
-            lock (this)
+            lock (this.stateLock)
             {
                 this.RemoveEdges(node.Node.OutEdges);
                 this.RemoveEdges(node.Node.InEdges);
@@ -1730,7 +1731,7 @@ namespace Microsoft.Msagl.WpfGraphControl
 
         private VEdge CreateEdge(DrawingEdge edge, LgLayoutSettings layoutSettings)
         {
-            lock (this)
+            lock (this.stateLock)
             {
                 if (this.drawingObjectsToIViewerObjects.ContainsKey(edge))
                 {
@@ -1822,7 +1823,7 @@ namespace Microsoft.Msagl.WpfGraphControl
 
         private IViewerNode CreateVNode(Msagl.Drawing.Node node)
         {
-            lock (this)
+            lock (this.stateLock)
             {
                 if (this.drawingObjectsToIViewerObjects.ContainsKey(node))
                 {
@@ -2158,7 +2159,7 @@ namespace Microsoft.Msagl.WpfGraphControl
 
         private FrameworkElement CreateDefaultFrameworkElementForDrawingObject(DrawingObject drawingObject)
         {
-            lock (this)
+            lock (this.stateLock)
             {
                 var textBlock = this.CreateTextBlockForDrawingObj(drawingObject);
                 if (textBlock != null)

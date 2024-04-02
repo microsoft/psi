@@ -60,7 +60,7 @@ namespace Microsoft.Psi.Visualization.Adapters
                 baseStreamAdapterType = baseStreamAdapterType.BaseType;
             }
 
-            // Make sure ouor type really derives from the base stream adapter type.
+            // Make sure our type really derives from the base stream adapter type.
             if (baseStreamAdapterType == null)
             {
                 logWriter.WriteError("StreamAdapter {0} could not be loaded because it is not derived from StreamAdapter<TSrc, TDest>", streamAdapterType.Name);

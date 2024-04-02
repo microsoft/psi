@@ -19,7 +19,7 @@ namespace Microsoft.Psi.MixedReality.StereoKit.Visualization
     /// Implements a visualization object for <see cref="Hand"/>.
     /// </summary>
     [VisualizationObject("Hand")]
-    public class HandVisualizationObject : ModelVisual3DVisualizationObject<Hand>
+    public class HandVisualizationObject : ModelVisual3DValueVisualizationObject<Hand>
     {
         private static readonly Dictionary<(HandJointIndex, HandJointIndex), bool> BoneEdges = Hand.Bones.ToDictionary(j => j, j => true);
 
@@ -72,7 +72,7 @@ namespace Microsoft.Psi.MixedReality.StereoKit.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.UpdateJoints();
             this.UpdateVisibility();
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.MixedReality.StereoKit.Visualization
         private void UpdateVisibility()
         {
             var visible = this.Visible && this.CurrentData is not null;
-            this.UpdateChildVisibility(this.Joints.ModelView, this.ShowTrackedOnly ? visible && this.CurrentData.IsTracked : visible);
+            this.UpdateChildVisibility(this.Joints.ModelVisual3D, this.ShowTrackedOnly ? visible && this.CurrentData.IsTracked : visible);
         }
     }
 }

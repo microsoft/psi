@@ -534,8 +534,9 @@ namespace Microsoft.Psi.Common
             }
             else if (requiredBytes > this.buffer.Length - this.currentPosition)
             {
-                int freeSpace = this.buffer.Length + requiredBytes;
-                var newBuffer = new byte[freeSpace];
+                // Double the buffer size, but if that's not enough, allocate the required size.
+                int newBufferSize = Math.Max(2 * this.buffer.Length, this.currentPosition + requiredBytes);
+                var newBuffer = new byte[newBufferSize];
                 Array.Copy(this.buffer, newBuffer, this.currentPosition);
                 this.buffer = newBuffer;
             }

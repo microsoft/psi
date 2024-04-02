@@ -1078,5 +1078,27 @@ namespace Microsoft.Psi.Imaging
             DeliveryPolicy<Shared<EncodedDepthImage>> deliveryPolicy = null,
             string name = nameof(Decode))
             => source.Decode(p => new DepthImageDecoder(p, decoder, name), deliveryPolicy);
+
+        /// <summary>
+        /// Render <see cref="Object2DDetectionResults"/> to a stream of transparent images
+        /// with object bounding boxes, labels and masks.
+        /// </summary>
+        /// <param name="source">Stream of <see cref="Object2DDetectionResults"/>.</param>
+        /// <param name="font">The font to use.</param>
+        /// <param name="fontBrush">The font color brush.</param>
+        /// <param name="colorPalette">The color palette to use.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="sharedImageAllocator ">Optional image allocator for creating new shared image.</param>
+        /// <param name="name">An optional name for this stream operator.</param>
+        /// <returns>Stream of rendered results.</returns>
+        public static IProducer<Shared<Image>> Render(
+            this IProducer<Object2DDetectionResults> source,
+            Font font,
+            Brush fontBrush,
+            (Pen, Color)[] colorPalette,
+            DeliveryPolicy<Object2DDetectionResults> deliveryPolicy = null,
+            Func<int, int, PixelFormat, Shared<Image>> sharedImageAllocator = null,
+            string name = nameof(Render))
+            => source.Select(r => r.Render(font, fontBrush, colorPalette, sharedImageAllocator), deliveryPolicy, name);
     }
 }

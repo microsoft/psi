@@ -3,6 +3,9 @@
 
 namespace Microsoft.Psi.MixedReality.MediaCapture
 {
+    using Windows.Media;
+    using Windows.Media.Capture;
+
     /// <summary>
     /// Configuration for the <see cref="Microphone"/> component.
     /// </summary>
@@ -22,5 +25,15 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
         /// Gets or sets the outputted audio channel number if more than one channels are available.
         /// </summary>
         public uint AudioChannelNumber { get; set; } = 1;
+
+        /// <summary>
+        /// Gets or sets the MediaCategory for the audio capture.
+        /// </summary>
+        public MediaCategory MediaCategory { get; set; } = MediaCategory.Speech;
+
+        /// <summary>
+        /// Gets or sets the AudioProcessing mode for the audio capture.
+        /// </summary>
+        public AudioProcessing AudioProcessing { get; set; } = AudioProcessing.Default;
     }
 }

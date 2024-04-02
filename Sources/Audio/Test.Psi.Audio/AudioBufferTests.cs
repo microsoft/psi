@@ -29,6 +29,35 @@ namespace Test.Psi.Audio
 
         [TestMethod]
         [Timeout(60000)]
+        public void AudioBuffer_Duration()
+        {
+            AudioBuffer buffer = new AudioBuffer(TimeSpan.Zero, WaveFormat.Create16kHz1Channel16BitPcm());
+            Assert.AreEqual(0, buffer.Length);
+            Assert.AreEqual(0, buffer.Data.Length);
+            Assert.AreEqual(WaveFormat.Create16kHz1Channel16BitPcm(), buffer.Format);
+            Assert.AreEqual(TimeSpan.Zero, buffer.Duration);
+
+            buffer = new AudioBuffer(TimeSpan.FromSeconds(1), WaveFormat.Create16kHz1Channel16BitPcm());
+            Assert.AreEqual(32000, buffer.Length);
+            Assert.AreEqual(32000, buffer.Data.Length);
+            Assert.AreEqual(WaveFormat.Create16kHz1Channel16BitPcm(), buffer.Format);
+            Assert.AreEqual(TimeSpan.FromSeconds(1), buffer.Duration);
+
+            // Test for block-alignment
+            buffer = new AudioBuffer(TimeSpan.FromSeconds(1.00004), WaveFormat.Create16kHz1Channel16BitPcm());
+            Assert.AreEqual(32002, buffer.Length);
+            Assert.AreEqual(32002, buffer.Data.Length);
+            Assert.AreEqual(WaveFormat.Create16kHz1Channel16BitPcm(), buffer.Format);
+            Assert.AreEqual(TimeSpan.FromSeconds(1.0000625), buffer.Duration);
+            buffer = new AudioBuffer(TimeSpan.FromSeconds(1.00004), WaveFormat.CreateIeeeFloat(16000, 2));
+            Assert.AreEqual(128008, buffer.Length);
+            Assert.AreEqual(128008, buffer.Data.Length);
+            Assert.AreEqual(WaveFormat.CreateIeeeFloat(16000, 2), buffer.Format);
+            Assert.AreEqual(TimeSpan.FromSeconds(1.0000625), buffer.Duration);
+        }
+
+        [TestMethod]
+        [Timeout(60000)]
         public void AudioBuffer_16kHz1Channel16BitPcm1Sample()
         {
             AudioBuffer buffer = new AudioBuffer(BitConverter.GetBytes((short)-12345), WaveFormat.Create16kHz1Channel16BitPcm());

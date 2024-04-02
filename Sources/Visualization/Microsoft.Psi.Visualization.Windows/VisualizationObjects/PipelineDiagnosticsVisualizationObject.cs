@@ -103,6 +103,36 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             TotalMessageProcessedCount,
 
             /// <summary>
+            /// Message processed percentage heatmap visualization.
+            /// </summary>
+            TotalMessageProcessedPercentage,
+
+            /// <summary>
+            /// Window message emitted count heatmap visualization.
+            /// </summary>
+            WindowMessageEmittedCount,
+
+            /// <summary>
+            /// Window message dropped count heatmap visualization.
+            /// </summary>
+            WindowMessageDroppedCount,
+
+            /// <summary>
+            /// Window message dropped percentage heatmap visualization.
+            /// </summary>
+            WindowMessageDroppedPercentage,
+
+            /// <summary>
+            /// Window message processed count heatmap visualization.
+            /// </summary>
+            WindowMessageProcessedCount,
+
+            /// <summary>
+            /// Window message processed percentage heatmap visualization.
+            /// </summary>
+            WindowMessageProcessedPercentage,
+
+            /// <summary>
             /// Message size heatmap visualization (logarithmic).
             /// </summary>
             AvgMessageSize,
@@ -439,14 +469,32 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 var addDiagnosticsCommands = new ContextMenuItemInfo($"Add derived diagnostics streams for receiver {this.edgeUnderCursor}");
                 items.Add(addDiagnosticsCommands);
 
+                // Do a local capture of the receiver id for passing it into the PsiCommand delegate
+                var receiverId = this.edgeUnderCursor;
                 foreach (var receiverDiagnosticsStatistic in PipelineDiagnostics.ReceiverDiagnostics.AllStatistics)
                 {
                     addDiagnosticsCommands.SubItems.Add(
                         new ContextMenuItemInfo(
                             null,
                             receiverDiagnosticsStatistic,
-                            new PsiCommand(() => this.AddReceiverDiagnosticsDerivedStream(this.edgeUnderCursor, receiverDiagnosticsStatistic))));
+                            new PsiCommand(() => this.AddReceiverDiagnosticsDerivedStream(receiverId, receiverDiagnosticsStatistic))));
                 }
+
+                // Add a separator
+                addDiagnosticsCommands.SubItems.Add(null);
+
+                // Add a command for all diagnostic streams
+                addDiagnosticsCommands.SubItems.Add(
+                    new ContextMenuItemInfo(
+                        null,
+                        "Add all diagnostics",
+                        new PsiCommand(() =>
+                        {
+                            foreach (var statistic in PipelineDiagnostics.ReceiverDiagnostics.AllStatistics)
+                            {
+                                this.AddReceiverDiagnosticsDerivedStream(receiverId, statistic);
+                            }
+                        })));
             }
 
             // Add a heatmap statistics context menu
@@ -468,6 +516,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                     HeatmapStats.TotalMessageDroppedCount => "Total Messages Dropped (Count)",
                     HeatmapStats.TotalMessageDroppedPercentage => "Total Messages Dropped (%)",
                     HeatmapStats.TotalMessageProcessedCount => "Total Messages Processed (Count)",
+                    HeatmapStats.TotalMessageProcessedPercentage => "Total Messages Processed (%)",
+                    HeatmapStats.WindowMessageEmittedCount => "Window Messages Emitted (Count)",
+                    HeatmapStats.WindowMessageDroppedCount => "Window Messages Dropped (Count)",
+                    HeatmapStats.WindowMessageDroppedPercentage => "Window Messages Dropped (%)",
+                    HeatmapStats.WindowMessageProcessedCount => "Window Messages Processed (Count)",
+                    HeatmapStats.WindowMessageProcessedPercentage => "Window Messages Processed (%)",
                     HeatmapStats.AvgMessageSize => "Message Size (Average)",
                     _ => throw new NotImplementedException(),
                 };
@@ -564,11 +618,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.LastDeliveryQueueSize) => typeof(double),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.ReceiverIsThrottled) => typeof(bool),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedPercentage) => typeof(double),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageEmittedCount) => typeof(int),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedPercentage) => typeof(double),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedPercentage) => typeof(double),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageEmittedCount) => typeof(int),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedCount) => typeof(int),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedPercentage) => typeof(double),
                 _ => throw new ArgumentException($"Unknown receiver diagnostics statistic: {receiverDiagnosticsStatistic}")
             };
 
@@ -589,11 +647,15 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.LastDeliveryQueueSize) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.LastDeliveryQueueSize),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.ReceiverIsThrottled) => (Func<PipelineDiagnostics.ReceiverDiagnostics, bool>)(rd => rd.ReceiverIsThrottled),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.TotalMessageDroppedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageDroppedPercentage) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.TotalMessageDroppedPercentage),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageEmittedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.TotalMessageEmittedCount),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.TotalMessageProcessedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.TotalMessageProcessedPercentage) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.TotalMessageProcessedPercentage),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.WindowMessageDroppedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageDroppedPercentage) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.WindowMessageDroppedPercentage),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageEmittedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.WindowMessageEmittedCount),
                 nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedCount) => (Func<PipelineDiagnostics.ReceiverDiagnostics, int>)(rd => rd.WindowMessageProcessedCount),
+                nameof(PipelineDiagnostics.ReceiverDiagnostics.WindowMessageProcessedPercentage) => (Func<PipelineDiagnostics.ReceiverDiagnostics, double>)(rd => rd.WindowMessageProcessedPercentage),
                 _ => throw new ArgumentException($"Unknown receiver diagnostics statistic: {receiverDiagnosticsStatistic}")
             };
     }

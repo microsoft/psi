@@ -9,6 +9,8 @@ namespace Microsoft.Psi.MixedReality.StereoKit
     /// <summary>
     /// Static StereoKit transforms which are applied in/out of StereoKit from \psi.
     /// </summary>
+    /// <remarks>These transforms are used for converting \psi world coordinates to/from StereoKit coordinates when needed,
+    /// including on input from StereoKit -> \psi, and on output (rendering) \psi -> StereoKit.</remarks>
     public static class StereoKitTransforms
     {
         /// <summary>
@@ -19,16 +21,43 @@ namespace Microsoft.Psi.MixedReality.StereoKit
         /// This matrix is pushed automatically by the <see cref="StereoKitRenderer"/> base class for new rendering components.
         /// The value is null when the HoloLens loses localization.
         /// </remarks>
-        public static Matrix? WorldHierarchy { get; internal set; } = Matrix.Identity;
+        public static Matrix? WorldHierarchy { get; private set; }
 
         /// <summary>
-        /// Gets or sets the transform from StereoKit to the world.
+        /// Gets the transform from StereoKit to the world.
         /// </summary>
-        internal static CoordinateSystem StereoKitToWorld { get; set; } = new CoordinateSystem();
+        public static CoordinateSystem StereoKitToWorld { get; private set; }
 
         /// <summary>
-        /// Gets or sets the the transform from the world to StereoKit.
+        /// Gets the transform from the world to StereoKit.
         /// </summary>
-        internal static CoordinateSystem WorldToStereoKit { get; set; } = new CoordinateSystem();
+        public static CoordinateSystem WorldToStereoKit { get; private set; }
+
+        /// <summary>
+        /// Initialize the various StereoKit transforms according to a given world pose.
+        /// </summary>
+        /// <param name="worldPose">World pose to initialize the various StereoKit transforms with.
+        /// If null, then set all transforms to null.</param>
+        internal static void Initialize(Pose? worldPose)
+        {
+            if (worldPose is null)
+            {
+                WorldHierarchy = null;
+                StereoKitToWorld = null;
+                WorldToStereoKit = null;
+                System.Diagnostics.Trace.WriteLine($"StereoKit transforms null");
+            }
+            else
+            {
+                // Use the world pose for converting from world coordinates to StereoKit coordinates (e.g., for rendering)
+                WorldHierarchy = worldPose.Value.ToMatrix();
+                WorldToStereoKit = WorldHierarchy.Value.ToCoordinateSystem();
+
+                // Inverting gives us a coordinate system that can be used for transforming from StereoKit to world coordinates.
+                StereoKitToWorld = WorldToStereoKit.Invert();
+
+                System.Diagnostics.Trace.WriteLine($"StereoKit transforms initialized: {StereoKitToWorld.Origin.X},{StereoKitToWorld.Origin.Y},{StereoKitToWorld.Origin.Z}");
+            }
+        }
     }
 }

@@ -136,19 +136,50 @@ namespace Microsoft.Psi.Data
         public IPartition this[string partitionName] => this.InternalPartitions.FirstOrDefault(p => p.Name == partitionName);
 
         /// <summary>
-        /// Creates and adds a data partition from an existing data store.
+        /// Adds a partition based on a specified stream reader.
         /// </summary>
-        /// <typeparam name="TStreamReader">Type of IStreamReader used to read data store.</typeparam>
-        /// <param name="streamReader">The stream reader of the data store.</param>
-        /// <param name="partitionName">The partition name. Default is stream reader name.</param>
-        /// <returns>The newly added data partition.</returns>
-        public Partition<TStreamReader> AddStorePartition<TStreamReader>(TStreamReader streamReader, string partitionName = null)
+        /// <typeparam name="TStreamReader">Type of <see cref="IStreamReader"/> used to read partition.</typeparam>
+        /// <param name="streamReader">The stream reader used to read the partition.</param>
+        /// <param name="partitionName">An optional partition name (defaults the the stream reader name).</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for adding a partition based on a specified stream raeder.</returns>
+        public async Task<Partition<TStreamReader>> AddPartitionAsync<TStreamReader>(
+            TStreamReader streamReader,
+            string partitionName = null,
+            IProgress<(string, double)> progress = null)
             where TStreamReader : IStreamReader
         {
-            var partition = new Partition<TStreamReader>(this, streamReader, partitionName);
-            this.AddPartition(partition);
-            return partition;
+            partitionName ??= streamReader.Name;
+
+            if (streamReader is PsiStoreStreamReader)
+            {
+                await PsiStore.RepairAsync(streamReader.Name, streamReader.Path, progress: new Progress<double>(t => progress?.Report(($"Repairing store {streamReader.Name} ...", t * 0.95))));
+            }
+
+            return await Task.Run(() =>
+            {
+                progress?.Report(($"Adding partition {partitionName} ...", 0.95));
+                var partition = new Partition<TStreamReader>(this, streamReader, partitionName);
+                this.AddPartition(partition);
+                progress?.Report((string.Empty, 1));
+                return partition;
+            });
         }
+
+        /// <summary>
+        /// Add a partition from a specified \psi store.
+        /// </summary>
+        /// <param name="storeName">The name of the \psi store.</param>
+        /// <param name="storePath">The path to the \psi store.</param>
+        /// <param name="partitionName">An optional name for the partition (defaults to the name of the \psi store).</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for adding a partition from a specified \psi store.</returns>
+        public async Task<Partition<PsiStoreStreamReader>> AddPartitionFromPsiStoreAsync(
+            string storeName,
+            string storePath,
+            string partitionName = null,
+            IProgress<(string, double)> progress = null)
+            => await this.AddPartitionAsync(new PsiStoreStreamReader(storeName, storePath), partitionName, progress);
 
         /// <summary>
         /// Asynchronously computes a derived partition for this session.
@@ -219,7 +250,7 @@ namespace Microsoft.Psi.Data
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
         {
-            await this.CreateDerivedPsiPartitionAsync(
+            await this.CreateDerivedPsiStorePartitionAsync(
                 computeDerived,
                 parameter,
                 outputPartitionName,
@@ -249,7 +280,7 @@ namespace Microsoft.Psi.Data
         /// <param name="progress">An optional progress object to be used for reporting progress.</param>
         /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
         /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
-        public async Task CreateDerivedPsiPartitionAsync<TParameter>(
+        public async Task CreateDerivedPsiStorePartitionAsync<TParameter>(
             Action<Pipeline, SessionImporter, Exporter, TParameter> computeDerived,
             TParameter parameter,
             string outputPartitionName,
@@ -262,9 +293,9 @@ namespace Microsoft.Psi.Data
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
         {
-            if (outputStoreName == null || outputStorePath == null)
+            if (!string.IsNullOrEmpty(outputPartitionName) && (string.IsNullOrEmpty(outputStoreName) || string.IsNullOrEmpty(outputStorePath)))
             {
-                throw new InvalidOperationException("The output store path and store name need to be specified.");
+                throw new InvalidOperationException("If an output partition name is specified, then an output store path and store name also need to be specified.");
             }
 
             // check for cancellation before making any changes
@@ -292,17 +323,14 @@ namespace Microsoft.Psi.Data
                         // create and run the pipeline
                         using var pipeline = Pipeline.Create(enableDiagnostics: enableDiagnostics, deliveryPolicy: deliveryPolicy);
                         var importer = SessionImporter.Open(pipeline, this);
-                        var exporter = PsiStore.Create(pipeline, outputStoreName, outputStorePath, createSubdirectory: false);
+                        var exporter = outputPartitionName != null ? PsiStore.Create(pipeline, outputStoreName, outputStorePath, createSubdirectory: false) : null;
 
                         computeDerived(pipeline, importer, exporter, parameter);
 
-                        // Add a default replay strategy
-                        if (replayDescriptor == null)
-                        {
-                            replayDescriptor = ReplayDescriptor.ReplayAll;
-                        }
+                        // Setup the default replay strategy
+                        replayDescriptor ??= ReplayDescriptor.ReplayAll;
 
-                        pipeline.RunAsync(replayDescriptor, progress != null ? new Progress<double>(p => progress.Report((this.Name, p))) : null);
+                        pipeline.RunAsync(replayDescriptor, new Progress<double>(p => progress?.Report((this.Name, p * 0.95))));
 
                         var durationTicks = pipeline.ReplayDescriptor.End.Ticks - pipeline.ReplayDescriptor.Start.Ticks;
                         while (!pipeline.WaitAll(100))
@@ -314,7 +342,10 @@ namespace Microsoft.Psi.Data
                     catch (OperationCanceledException)
                     {
                         // if operation was canceled, remove the store
-                        PsiStore.Delete((outputStoreName, outputStorePath));
+                        if (outputPartitionName != null)
+                        {
+                            PsiStore.Delete((outputStoreName, outputStorePath));
+                        }
 
                         throw;
                     }
@@ -322,7 +353,110 @@ namespace Microsoft.Psi.Data
                 cancellationToken);
 
             // add the partition
-            this.AddPsiStorePartition(outputStoreName, outputStorePath, outputPartitionName);
+            if (outputPartitionName != null)
+            {
+                await this.AddPartitionFromPsiStoreAsync(
+                    outputStoreName,
+                    outputStorePath,
+                    outputPartitionName,
+                    new Progress<(string, double)>(
+                        t => progress?.Report((t.Item1, 0.95 + 0.05 * t.Item2))));
+            }
+        }
+
+        /// <summary>
+        /// Asynchronously runs a batch processing task of a specified task on the session.
+        /// </summary>
+        /// <typeparam name="TBatchProcessingTask">The type of the batch processing task.</typeparam>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous run batch task operation.</returns>
+        public async Task RunBatchProcessingTaskAsync<TBatchProcessingTask>(
+            BatchProcessingTaskConfiguration configuration,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+            where TBatchProcessingTask : IBatchProcessingTask
+            => await this.RunBatchProcessingTaskAsync<long>(Activator.CreateInstance<TBatchProcessingTask>(), configuration, 0, progress, cancellationToken);
+
+        /// <summary>
+        /// Asynchronously runs a specified batch processing task on the session.
+        /// </summary>
+        /// <param name="batchProcessingTask">The batch processing task to run.</param>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous run batch task operation.</returns>
+        public async Task RunBatchProcessingTaskAsync(
+            IBatchProcessingTask batchProcessingTask,
+            BatchProcessingTaskConfiguration configuration,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+            => await this.RunBatchProcessingTaskAsync<long>(batchProcessingTask, configuration, 0, progress, cancellationToken);
+
+        /// <summary>
+        /// Asynchronously runs a batch processing task of a specified type on the session.
+        /// </summary>
+        /// <typeparam name="TBatchProcessingTask">The type of the batch processing task.</typeparam>
+        /// <typeparam name="TParameter">The type of parameter passed to the batch processing task.</typeparam>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="parameter">The parameter to be passed to the batch processing task.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous run batch task operation.</returns>
+        public async Task RunBatchProcessingTaskAsync<TBatchProcessingTask, TParameter>(
+            BatchProcessingTaskConfiguration configuration,
+            TParameter parameter,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+            where TBatchProcessingTask : IBatchProcessingTask
+            => await this.RunBatchProcessingTaskAsync(Activator.CreateInstance<TBatchProcessingTask>(), configuration, parameter, progress, cancellationToken);
+
+        /// <summary>
+        /// Asynchronously runs a specified batch processing task on the session.
+        /// </summary>
+        /// <typeparam name="TParameter">The type of parameter passed to the batch processing task.</typeparam>
+        /// <param name="batchProcessingTask">The batch processing task to run.</param>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="parameter">The parameter to be passed to the batch processing task.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous run batch task operation.</returns>
+        public async Task RunBatchProcessingTaskAsync<TParameter>(
+            IBatchProcessingTask batchProcessingTask,
+            BatchProcessingTaskConfiguration configuration,
+            TParameter parameter,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+        {
+            batchProcessingTask.OnStartProcessingSession();
+            try
+            {
+                await this.CreateDerivedPsiStorePartitionAsync(
+                    (pipeline, sessionImporter, exporter, parameter) => batchProcessingTask.Run(pipeline, sessionImporter, exporter, configuration),
+                    parameter,
+                    configuration.OutputPartitionName,
+                    overwrite: true,
+                    outputStoreName: configuration.OutputStoreName,
+                    outputStorePath: configuration.OutputStorePath ?? this.Partitions.First().StorePath,
+                    replayDescriptor: configuration.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
+                    deliveryPolicy: configuration.DeliveryPolicySpec,
+                    enableDiagnostics: configuration.EnableDiagnostics,
+                    progress: progress,
+                    cancellationToken: cancellationToken);
+            }
+            catch (OperationCanceledException)
+            {
+                batchProcessingTask.OnCanceledProcessingSession();
+                throw;
+            }
+            catch (Exception)
+            {
+                batchProcessingTask.OnExceptionProcessingSession();
+                throw;
+            }
+
+            batchProcessingTask.OnEndProcessingSession();
         }
 
         /// <summary>

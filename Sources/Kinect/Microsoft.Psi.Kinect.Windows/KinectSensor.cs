@@ -45,8 +45,7 @@ namespace Microsoft.Psi.Kinect
         public KinectSensor(Pipeline pipeline, string configurationFilename)
         : this(pipeline)
         {
-            var configurationHelper = new ConfigurationHelper<KinectSensorConfiguration>(configurationFilename);
-            this.Configuration = configurationHelper.Configuration;
+            this.Configuration = ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new KinectSensorConfiguration(), true);
         }
 
         /// <summary>

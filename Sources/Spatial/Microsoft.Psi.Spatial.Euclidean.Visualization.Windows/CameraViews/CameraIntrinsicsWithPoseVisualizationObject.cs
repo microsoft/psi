@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a visualization object for camera frustrum described via camera intrinsics and position.
     /// </summary>
     [VisualizationObject("Camera Intrinsics with Pose")]
-    public class CameraIntrinsicsWithPoseVisualizationObject : ModelVisual3DVisualizationObject<(ICameraIntrinsics, CoordinateSystem)>
+    public class CameraIntrinsicsWithPoseVisualizationObject : ModelVisual3DValueVisualizationObject<(ICameraIntrinsics, CoordinateSystem)>
     {
         private readonly List<LinesVisual3D> frustum = new ();
         private CoordinateSystem position = null;
@@ -72,7 +72,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.intrinsics = this.CurrentData.Item1;
             this.position = this.CurrentData.Item2;

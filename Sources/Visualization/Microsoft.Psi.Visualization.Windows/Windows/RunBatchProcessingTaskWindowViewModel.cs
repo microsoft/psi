@@ -281,17 +281,8 @@ namespace Microsoft.Psi.Visualization.Windows
                     this.EstimatedRemainingTime = "about " + TimeSpanHelper.FormatTimeSpanApproximate(estimatedRemainingTime);
                 });
 
-                await this.datasetViewModel.Dataset.CreateDerivedPartitionAsync(
-                    (pipeline, sessionImporter, exporter) => this.batchProcessingTaskMetadata.Run(pipeline, sessionImporter, exporter, this.Configuration),
-                    this.Configuration.OutputPartitionName,
-                    overwrite: true,
-                    outputStoreName: this.Configuration.OutputStoreName,
-                    outputStorePath: this.Configuration.OutputStorePath,
-                    replayDescriptor: this.Configuration.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
-                    deliveryPolicy: this.Configuration.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : null,
-                    enableDiagnostics: this.Configuration.EnableDiagnostics,
-                    progress: progress,
-                    cancellationToken: cancellationToken);
+                var batchProcessingTask = this.batchProcessingTaskMetadata.CreateBatchProcessingTask();
+                await this.datasetViewModel.Dataset.RunBatchProcessingTaskAsync(batchProcessingTask, this.Configuration, progress, cancellationToken);
             }
             else
             {
@@ -311,17 +302,8 @@ namespace Microsoft.Psi.Visualization.Windows
                     this.EstimatedRemainingTime = "about " + TimeSpanHelper.FormatTimeSpanApproximate(estimatedRemainingTime);
                 });
 
-                await this.sessionViewModel.Session.CreateDerivedPartitionAsync(
-                    (pipeline, sessionImporter, exporter) => this.batchProcessingTaskMetadata.Run(pipeline, sessionImporter, exporter, this.Configuration),
-                    this.Configuration.OutputPartitionName,
-                    overwrite: true,
-                    outputStoreName: this.Configuration.OutputStoreName,
-                    outputStorePath: this.Configuration.OutputStorePath,
-                    replayDescriptor: this.Configuration.ReplayAllRealTime ? ReplayDescriptor.ReplayAllRealTime : ReplayDescriptor.ReplayAll,
-                    deliveryPolicy: this.Configuration.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : null,
-                    enableDiagnostics: this.Configuration.EnableDiagnostics,
-                    progress: progress,
-                    cancellationToken: cancellationToken);
+                var batchProcessingTask = this.batchProcessingTaskMetadata.CreateBatchProcessingTask();
+                await this.sessionViewModel.Session.RunBatchProcessingTaskAsync(batchProcessingTask, this.Configuration, progress, cancellationToken);
             }
         }
 
@@ -354,7 +336,7 @@ namespace Microsoft.Psi.Visualization.Windows
             if (this.CurrentConfiguration == DefaultConfiguration)
             {
                 // Reset the configuration to the default values
-                this.Configuration = this.batchProcessingTaskMetadata.GetDefaultConfiguration();
+                this.ResetConfiguration();
             }
             else
             {
@@ -502,7 +484,7 @@ namespace Microsoft.Psi.Visualization.Windows
         /// <returns>A <see cref="DirectoryInfo"/> object representing the directory.</returns>
         private DirectoryInfo EnsureDirectoryExists(string directoryPath)
         {
-            var directoryInfo = new DirectoryInfo(this.batchProcessingTaskMetadata.ConfigurationsPath);
+            var directoryInfo = new DirectoryInfo(directoryPath);
             if (!directoryInfo.Exists)
             {
                 directoryInfo.Create();

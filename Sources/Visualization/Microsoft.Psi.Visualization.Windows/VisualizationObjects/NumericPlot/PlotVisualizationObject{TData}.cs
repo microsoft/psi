@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
-
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;

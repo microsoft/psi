@@ -66,6 +66,7 @@ namespace HoloLensCaptureApp
         private static readonly int PhotoVideoFps = 30;
         private static readonly int PhotoVideoImageWidth = 896;
         private static readonly int PhotoVideoImageHeight = 504;
+        private static readonly bool PhotoVideoContinuousAutoFocus = true;
 
         private static readonly bool IncludeDepth = true;
         private static readonly bool IncludeDepthCalibrationMap = false;
@@ -155,7 +156,7 @@ namespace HoloLensCaptureApp
             }
 
             // Initialize MixedReality statics
-            MixedReality.Initialize(regenerateDefaultWorldSpatialAnchorIfNeeded: true);
+            MixedReality.SetWorldCoordinateSystem(regenerateWorldSpatialAnchorIfNeeded: true);
 
             // Attempt to get server address from config file
             var docs = KnownFolders.DocumentsLibrary;
@@ -225,7 +226,7 @@ namespace HoloLensCaptureApp
                         if (UI.Button("Exit"))
                         {
                             state = State.Exited;
-                            Task.Run(() => SK.Shutdown());
+                            Task.Run(() => SK.Quit());
                         }
 
                         UI.HandleEnd();
@@ -290,6 +291,7 @@ namespace HoloLensCaptureApp
                             {
                                 VideoStreamSettings = videoStreamSettings,
                                 PreviewStreamSettings = previewStreamSettings,
+                                ContinuousAutoFocus = PhotoVideoContinuousAutoFocus,
                             })
                             : null;
 
@@ -510,46 +512,46 @@ namespace HoloLensCaptureApp
 
                                 if (IncludeImu)
                                 {
-                                    Write("Accelerometer", accelerometer?.Out, port++, Serializers.ImuFormat(), DeliveryPolicy.LatestMessage);
-                                    Write("Gyroscope", gyroscope?.Out, port++, Serializers.ImuFormat(), DeliveryPolicy.LatestMessage);
-                                    Write("Magnetometer", magnetometer?.Out, port++, Serializers.ImuFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Accelerometer", accelerometer?.Out, port++, Serialization.ImuFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Gyroscope", gyroscope?.Out, port++, Serialization.ImuFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Magnetometer", magnetometer?.Out, port++, Serialization.ImuFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeHead)
                                 {
-                                    Write("Head", head?.Out, port++, Serializers.CoordinateSystemFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Head", head?.Out, port++, Serialization.CoordinateSystemFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeEyes)
                                 {
-                                    Write("Eyes", eyes?.Eyes, port++, Serializers.WinRTEyesFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Eyes", eyes?.Eyes, port++, Serialization.WinRTEyesFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeHands)
                                 {
-                                    Write("Hands", hands?.Out, port++, Serializers.OpenXRHandsFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("Hands", hands?.Out, port++, Serialization.OpenXRHandsFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeAudio)
                                 {
-                                    Write("Audio", audio?.Out, port++, Serializers.AudioBufferFormat(), DeliveryPolicy.Unlimited);
+                                    Write("Audio", audio?.Out, port++, Serialization.AudioBufferFormat(), DeliveryPolicy.Unlimited);
                                 }
 
                                 if (IncludeVideo)
                                 {
-                                    Write("VideoEncodedImageCameraView", camera.VideoEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("VideoEncodedImageCameraView", camera.VideoEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludePreview)
                                 {
-                                    Write("PreviewEncodedImageCameraView", camera.PreviewEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("PreviewEncodedImageCameraView", camera.PreviewEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeDepth)
                                 {
-                                    Write("DepthImageCameraView", depthCamera?.DepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("DepthImageCameraView", depthCamera?.DepthImageCameraView, port++, Serialization.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 #if DEBUG
-                                    Write("DepthDebugOutOfOrderFrames", depthCamera?.DebugOutOfOrderFrames, port++, Serializers.Int32Format(), DeliveryPolicy.Unlimited);
+                                    Write("DepthDebugOutOfOrderFrames", depthCamera?.DebugOutOfOrderFrames, port++, InteropSerialization.Int32Format(), DeliveryPolicy.Unlimited);
 #endif
                                 }
 
@@ -558,24 +560,24 @@ namespace HoloLensCaptureApp
                                     if (EncodeInfrared)
                                     {
                                         var infraredEncodedImageCameraView = depthCamera?.InfraredImageCameraView.Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.LatestMessage);
-                                        Write("DepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                        Write("DepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                     }
                                     else
                                     {
-                                        Write("DepthInfraredImageCameraView", depthCamera?.InfraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                        Write("DepthInfraredImageCameraView", depthCamera?.InfraredImageCameraView, port++, Serialization.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                     }
                                 }
 
                                 if (IncludeDepthCalibrationMap)
                                 {
-                                    Write("DepthCalibrationMap", depthCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                    Write("DepthCalibrationMap", depthCamera?.CalibrationPointsMap, port++, Serialization.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
                                 }
 
                                 if (IncludeAhat)
                                 {
-                                    Write("AhatDepthImageCameraView", depthAhatCamera?.DepthImageCameraView, port++, Serializers.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("AhatDepthImageCameraView", depthAhatCamera?.DepthImageCameraView, port++, Serialization.DepthImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 #if DEBUG
-                                    Write("AhatDebugOutOfOrderFrames", depthAhatCamera?.DebugOutOfOrderFrames, port++, Serializers.Int32Format(), DeliveryPolicy.Unlimited);
+                                    Write("AhatDebugOutOfOrderFrames", depthAhatCamera?.DebugOutOfOrderFrames, port++, InteropSerialization.Int32Format(), DeliveryPolicy.Unlimited);
 #endif
                                 }
 
@@ -584,17 +586,17 @@ namespace HoloLensCaptureApp
                                     if (EncodeInfrared)
                                     {
                                         var infraredEncodedImageCameraView = depthAhatCamera?.InfraredImageCameraView.Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.LatestMessage);
-                                        Write("AhatDepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                        Write("AhatDepthInfraredEncodedImageCameraView", infraredEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                     }
                                     else
                                     {
-                                        Write("AhatDepthInfraredImageCameraView", depthAhatCamera?.InfraredImageCameraView, port++, Serializers.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                        Write("AhatDepthInfraredImageCameraView", depthAhatCamera?.InfraredImageCameraView, port++, Serialization.ImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
                                     }
                                 }
 
                                 if (IncludeAhatCalibrationMap)
                                 {
-                                    Write("AhatDepthCalibrationMap", depthAhatCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                    Write("AhatDepthCalibrationMap", depthAhatCamera?.CalibrationPointsMap, port++, Serialization.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
                                 }
 
                                 if (IncludeGrayFrontCameras)
@@ -605,12 +607,12 @@ namespace HoloLensCaptureApp
                                             var leftFrontJpegEncodedImageCameraView = leftFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("LeftFrontEncodedImageCameraView", leftFrontJpegEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("LeftFrontEncodedImageCameraView", leftFrontJpegEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             var rightFrontJpegEncodedImageCameraView = rightFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("RightFrontEncodedImageCameraView", rightFrontJpegEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("RightFrontEncodedImageCameraView", rightFrontJpegEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             break;
 
@@ -618,29 +620,29 @@ namespace HoloLensCaptureApp
                                             var leftFrontGZipEncodedImageCameraView = leftFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("LeftFrontGzipImageCameraView", leftFrontGZipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("LeftFrontGzipImageCameraView", leftFrontGZipEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             var rightFrontGZipEncodedImageCameraView = rightFrontCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("RightFrontGzipImageCameraView", rightFrontGZipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("RightFrontGzipImageCameraView", rightFrontGZipEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             break;
 
                                         case GrayImageEncode.None:
                                             var leftFrontImageView = leftFrontCamera.ImageCameraView;
-                                            Write("LeftFrontImageView", leftFrontImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("LeftFrontImageView", leftFrontImageView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             var rightFrontImageView = rightFrontCamera.ImageCameraView;
-                                            Write("RightFrontImageView", rightFrontImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("RightFrontImageView", rightFrontImageView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             break;
                                     }
 
                                     if (IncludeGrayFrontCameraCalibrationMap)
                                     {
-                                        Write("LeftFrontCalibrationMap", leftFrontCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
-                                        Write("RightFrontCalibrationMap", rightFrontCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                        Write("LeftFrontCalibrationMap", leftFrontCamera?.CalibrationPointsMap, port++, Serialization.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                        Write("RightFrontCalibrationMap", rightFrontCamera?.CalibrationPointsMap, port++, Serialization.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
                                     }
                                 }
 
@@ -652,12 +654,12 @@ namespace HoloLensCaptureApp
                                             var leftLeftJpegEncodedImageCameraView = leftLeftCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("LeftLeftEncodedImageCameraView", leftLeftJpegEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("LeftLeftEncodedImageCameraView", leftLeftJpegEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             var rightRightJpegEncodedImageCameraView = rightRightCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToJpegStreamEncoder(GrayImageJpegQuality), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("RightRightEncodedImageCameraView", rightRightJpegEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("RightRightEncodedImageCameraView", rightRightJpegEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             break;
 
@@ -665,40 +667,40 @@ namespace HoloLensCaptureApp
                                             var leftLeftGZipEncodedImageCameraView = leftLeftCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("LeftLeftGzipImageCameraView", leftLeftGZipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("LeftLeftGzipImageCameraView", leftLeftGZipEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             var rightRightGZipEncodedImageCameraView = rightRightCamera?.ImageCameraView
                                                 .Convert(PixelFormat.BGRA_32bpp, DeliveryPolicy.LatestMessage)
                                                 .Encode(new ImageToGZipStreamEncoder(), DeliveryPolicy.SynchronousOrThrottle);
-                                            Write("RightRightGzipImageCameraView", rightRightGZipEncodedImageCameraView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("RightRightGzipImageCameraView", rightRightGZipEncodedImageCameraView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             break;
 
                                         case GrayImageEncode.None:
                                             var leftLeftImageView = leftLeftCamera.ImageCameraView;
-                                            Write("LeftLeftImageView", leftLeftImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("LeftLeftImageView", leftLeftImageView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             var rightRightImageView = rightRightCamera.ImageCameraView;
-                                            Write("RightRightImageView", rightRightImageView, port++, Serializers.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
+                                            Write("RightRightImageView", rightRightImageView, port++, Serialization.EncodedImageCameraViewFormat(), DeliveryPolicy.LatestMessage);
 
                                             break;
                                     }
 
                                     if (IncludeGraySideCameraCalibrationMap)
                                     {
-                                        Write("LeftLeftCalibrationMap", leftLeftCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
-                                        Write("RightRightCalibrationMap", rightRightCamera?.CalibrationPointsMap, port++, Serializers.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                        Write("LeftLeftCalibrationMap", leftLeftCamera?.CalibrationPointsMap, port++, Serialization.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
+                                        Write("RightRightCalibrationMap", rightRightCamera?.CalibrationPointsMap, port++, Serialization.CalibrationPointsMapFormat(), DeliveryPolicy.Unlimited);
                                     }
                                 }
 
                                 if (IncludeSceneUnderstanding)
                                 {
-                                    Write("SceneUnderstanding", scene?.Out, port++, Serializers.SceneObjectCollectionFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("SceneUnderstanding", scene?.Out, port++, Serialization.SceneObjectCollectionFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 if (IncludeDiagnostics)
                                 {
-                                    Write("HoloLensDiagnostics", pipeline.Diagnostics, port++, Serializers.PipelineDiagnosticsFormat(), DeliveryPolicy.LatestMessage);
+                                    Write("HoloLensDiagnostics", pipeline.Diagnostics, port++, InteropSerialization.PipelineDiagnosticsFormat(), DeliveryPolicy.LatestMessage);
                                 }
 
                                 rendezvousClient.Rendezvous.ProcessAdded += (_, process) =>
@@ -735,7 +737,7 @@ namespace HoloLensCaptureApp
                             if (UI.Button("Exit"))
                             {
                                 state = State.Exited;
-                                Task.Run(() => SK.Shutdown());
+                                Task.Run(() => SK.Quit());
                             }
                         }
                         else
@@ -767,7 +769,7 @@ namespace HoloLensCaptureApp
                                         if (stream.StreamName == $"ServerHeartbeat")
                                         {
                                             // note: using captureServerAddress -- ignoring tcpEndpoint.Host (0.0.0.0)
-                                            var serverHeartbeat = new TcpSource<(float, float)>(pipeline, captureServerAddress, tcpEndpoint.Port, Serializers.HeartbeatFormat());
+                                            var serverHeartbeat = new TcpSource<(float, float)>(pipeline, captureServerAddress, tcpEndpoint.Port, Serialization.HeartbeatFormat());
                                             serverHeartbeat.Do(fps =>
                                             {
                                                 (videoFps, depthFps) = fps;

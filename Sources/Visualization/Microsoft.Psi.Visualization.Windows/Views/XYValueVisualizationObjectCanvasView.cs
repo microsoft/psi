@@ -57,7 +57,16 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             if (this.XYValueVisualizationObject != null)
             {
                 double contentWidth = this.XYValueVisualizationObject.XAxis.Maximum - this.XYValueVisualizationObject.XAxis.Minimum;
+                if (contentWidth <= 0)
+                {
+                    contentWidth = 1;
+                }
+
                 double contentHeight = this.XYValueVisualizationObject.YAxis.Maximum - this.XYValueVisualizationObject.YAxis.Minimum;
+                if (contentHeight <= 0)
+                {
+                    contentHeight = 1;
+                }
 
                 this.ScaleTransform.ScaleX = this.ActualWidth / contentWidth;
                 this.TranslateTransform.X = -this.XYValueVisualizationObject.XAxis.Minimum;

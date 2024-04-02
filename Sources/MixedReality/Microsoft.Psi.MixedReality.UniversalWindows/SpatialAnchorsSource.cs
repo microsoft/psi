@@ -42,7 +42,7 @@ namespace Microsoft.Psi.MixedReality
         /// <inheritdoc />
         protected override DateTime GenerateNext(DateTime currentTime)
         {
-            this.Out.Post(MixedReality.SpatialAnchorHelper.GetAllSpatialAnchorCoordinateSystems(), currentTime);
+            this.Out.Post(MixedReality.SpatialAnchorProvider.GetAllSpatialAnchorCoordinateSystems(), currentTime);
             return currentTime + this.interval;
         }
 
@@ -50,7 +50,7 @@ namespace Microsoft.Psi.MixedReality
         {
             foreach (var spatialAnchor in spatialAnchors)
             {
-                MixedReality.SpatialAnchorHelper.TryUpdateSpatialAnchor(spatialAnchor.Key, spatialAnchor.Value);
+                MixedReality.SpatialAnchorProvider.TryUpdateSpatialAnchor(spatialAnchor.Key, spatialAnchor.Value);
             }
         }
     }

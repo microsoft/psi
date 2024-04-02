@@ -88,7 +88,7 @@ namespace Microsoft.Psi.Audio
         public AudioCapture(Pipeline pipeline, string configurationFilename = null, string name = nameof(AudioCapture))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new AudioCaptureConfiguration() : new ConfigurationHelper<AudioCaptureConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new AudioCaptureConfiguration(), true),
                 name)
         {
         }
@@ -221,7 +221,7 @@ namespace Microsoft.Psi.Audio
                     (10000000L * e.Length / this.sourceFormat.AvgBytesPerSec));
 
                 // Detect out of order originating times
-                if (originatingTime < this.lastPostedAudioTime)
+                if (originatingTime <= this.lastPostedAudioTime)
                 {
                     if (this.configuration.DropOutOfOrderPackets)
                     {
