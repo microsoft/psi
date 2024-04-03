@@ -5,6 +5,8 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.CognitiveServices.Speech;
@@ -21,7 +23,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
         private readonly Pipeline pipeline;
         private readonly SpeechSynthesizerConfiguration configuration;
         private readonly WaveFormat format = WaveFormat.Create16kHz1Channel16BitPcm();
-        private readonly List<(ulong AudioOffset, string Text)> textProgress = new ();
+        private readonly List<(string Text, ulong Offset)> textProgress = new ();
 
         private Synthesizer synthesizer;
         private DateTime currentStartTime;
@@ -41,7 +43,9 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             : base(pipeline, name)
         {
             this.configuration = configuration;
-            this.synthesizer = new Synthesizer(SpeechConfig.FromSubscription(this.configuration.SubscriptionKey, this.configuration.Region), null);
+            var speechConfig = SpeechConfig.FromSubscription(this.configuration.SubscriptionKey, this.configuration.Region);
+            speechConfig.SpeechSynthesisVoiceName = this.configuration.VoiceName;
+            this.synthesizer = new Synthesizer(speechConfig, null);
 
             this.synthesizer.SynthesisStarted += this.OnSynthesisStarted;
             this.synthesizer.Synthesizing += this.OnSynthesizing;
@@ -177,66 +181,56 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             this.textProgress.Clear();
             this.textOriginatingTime = originatingTime;
 
-            // The following logic for incrementally streaming the output audio was inspired by this sample:
-            // https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/speech_synthesis_server_scenario_sample.cs
-            var result = await this.synthesizer.StartSpeakingTextAsync(text);
-            if (result.Reason == ResultReason.SynthesizingAudioStarted)
+            if (this.configuration.Cache != null && this.configuration.Cache.TryGetValue(text, out var audioBuffer, out var textMapping))
             {
-                using var audioDataStream = AudioDataStream.FromResult(result);
-                var buffer = new byte[this.configuration.AudioPacketSize];
-                uint totalSize = 0;
-                uint filledSize = 0;
-
-                // Known Issue: If input text strings are provide too close together, this could fail because the current time
-                // might be earlier than the last posted time.
+                this.textProgress.AddRange(textMapping);
                 this.currentStartTime = this.pipeline.GetCurrentTime();
-                originatingTime = this.currentStartTime;
 
-                var firstAudioOutput = true;
-                var synthesisProgress = default(SpeechSynthesisProgress);
-                var synthesisProgressText = string.Empty;
+                // Compute the list of all offsets
+                var offsets = new List<long>() { 0 };
+                offsets.AddRange(
+                    this.textProgress.Select(t =>
+                    {
+                        // Compute the sample-aligned offset
+                        var offset = (long)(TimeSpan.FromTicks((long)t.Offset).TotalSeconds * this.format.AvgBytesPerSec);
+                        return offset - offset % this.format.BlockAlign;
+                    }));
+                offsets.Add(audioBuffer.Length);
 
-                // read audio block in a loop here
-                // if it is the end of the audio stream, it will return 0
-                while ((filledSize = audioDataStream.ReadData(buffer)) > 0)
+                // Post a synthesis started event
+                this.SynthesisProgress.Post(SpeechSynthesisProgress.SynthesisStarted(), this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+
+                // Now post all the audio buffers
+                for (int i = 0; i < offsets.Count - 1; i++)
                 {
-                    // If there is no previous synthesis progress, then post the start
-                    if (firstAudioOutput)
-                    {
-                        this.SynthesisProgress.Post(SpeechSynthesisProgress.SynthesisStarted(), this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
-                        firstAudioOutput = false;
-                    }
+                    var startIndex = offsets[i];
+                    var endIndex = offsets[i + 1];
 
-                    // If we had a synthesis progress already computed, output it. This is done here,
-                    // rather than immediately after the computation of the synthesis progress to ensure
-                    // that we are in a condition where there is actually more data and the synthesis
-                    // progress computed does not actually correspond to a completion of synthesis (in
-                    // the later case we will output a completed type of synthesis progress event.
-                    if (synthesisProgress != null)
-                    {
-                        this.SynthesisProgress.Post(synthesisProgress, this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
-                        synthesisProgress = null;
-                    }
-
-                    // Check for cancellation after posting the previous synthesis progress
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    if (this.currentAudioBuffer.Data == null || this.currentAudioBuffer.Data.Length != (int)filledSize)
-                    {
-                        this.currentAudioBuffer = new AudioBuffer((int)filledSize, this.format);
-                    }
-
-                    Array.Copy(buffer, this.currentAudioBuffer.Data, filledSize);
+                    // Construct the audio buffer
+                    this.currentAudioBuffer = new AudioBuffer((int)(endIndex - startIndex), this.format);
+                    Array.Copy(audioBuffer.Data, (int)startIndex, this.currentAudioBuffer.Data, 0, (int)(endIndex - startIndex));
 
                     // Compute an originating time based on the position of the audio.
-                    var audioOffset = TimeSpan.FromSeconds((double)totalSize / this.format.AvgBytesPerSec);
-                    originatingTime = this.currentStartTime + audioOffset;
+                    originatingTime = this.currentStartTime + TimeSpan.FromSeconds((double)endIndex / this.format.AvgBytesPerSec);
 
-                    // If the originatingTime is in the future, then wait until it is time to post the audio buffer.
-                    var waitTime = originatingTime - this.pipeline.GetCurrentTime();
-                    if (waitTime > TimeSpan.Zero)
+                    // Post the synthesis in progress event
+                    if (i > 1)
                     {
-                        await Task.Delay(waitTime, cancellationToken);
+                        this.SynthesisProgress.Post(
+                            SpeechSynthesisProgress.SynthesisInProgress(this.textProgress[i - 1].Text),
+                            this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+                    }
+
+                    // If we are configured to stream the audio buffers in real time
+                    if (this.configuration.StreamAudioBuffersInRealTime)
+                    {
+                        // If the originatingTime is in the future, then wait until it is time to post the audio buffer.
+                        var waitTime = originatingTime - this.configuration.MaxRealTimeAnticipationWhenStreamingAudioBuffersInRealTime - this.pipeline.GetCurrentTime();
+
+                        if (waitTime > TimeSpan.Zero)
+                        {
+                            await Task.Delay(waitTime, cancellationToken);
+                        }
                     }
 
                     // Check for cancellation after waiting and before posting the next audio buffer
@@ -244,19 +238,119 @@ namespace Microsoft.Psi.CognitiveServices.Speech
 
                     // Post the audio buffer output
                     this.Out.Post(this.currentAudioBuffer, this.GetCompliantOriginatingTime(originatingTime, this.Out));
-
-                    // Now compute whether we have made more progress since the previous synthesis progress
-                    var textSpokenSoFar = this.GetTextSpokenSoFar(audioOffset);
-                    if (textSpokenSoFar != synthesisProgressText)
-                    {
-                        synthesisProgress = SpeechSynthesisProgress.SynthesisInProgress(textSpokenSoFar);
-                        synthesisProgressText = textSpokenSoFar;
-                    }
-
-                    totalSize += filledSize;
                 }
 
-                this.SynthesisProgress.Post(SpeechSynthesisProgress.SynthesisCompleted(text), this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+                // Post the synthesis completed event
+                originatingTime = this.currentStartTime + TimeSpan.FromSeconds(audioBuffer.Length / this.format.AvgBytesPerSec);
+
+                this.SynthesisProgress.Post(
+                    SpeechSynthesisProgress.SynthesisCompleted(text),
+                    this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+            }
+            else
+            {
+                // The following logic for incrementally streaming the output audio was inspired by this sample:
+                // https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/csharp/sharedcontent/console/speech_synthesis_server_scenario_sample.cs
+                var result = await this.synthesizer.StartSpeakingTextAsync(text);
+                if (result.Reason == ResultReason.SynthesizingAudioStarted)
+                {
+                    using var audioDataStream = AudioDataStream.FromResult(result);
+                    using var cacheAudioStream = this.configuration.Cache != null ? new MemoryStream() : default;
+                    var buffer = new byte[this.configuration.AudioPacketSize];
+                    uint totalSize = 0;
+                    uint filledSize = 0;
+
+                    this.currentStartTime = this.pipeline.GetCurrentTime();
+                    originatingTime = this.currentStartTime;
+
+                    var firstAudioOutput = true;
+                    var synthesisProgress = default(SpeechSynthesisProgress);
+                    var synthesisProgressText = string.Empty;
+
+                    // read audio block in a loop here
+                    // if it is the end of the audio stream, it will return 0
+                    while ((filledSize = audioDataStream.ReadData(buffer)) > 0)
+                    {
+                        // Write to the audio cache stream
+                        if (this.configuration.Cache != null)
+                        {
+                            cacheAudioStream.Write(buffer, 0, (int)filledSize);
+                        }
+
+                        // If there is no previous synthesis progress, then post the start
+                        if (firstAudioOutput)
+                        {
+                            this.SynthesisProgress.Post(SpeechSynthesisProgress.SynthesisStarted(), this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+                            firstAudioOutput = false;
+                        }
+
+                        // If we had a synthesis progress already computed, output it. This is done here,
+                        // rather than immediately after the computation of the synthesis progress to ensure
+                        // that we are in a condition where there is actually more data and the synthesis
+                        // progress computed does not actually correspond to a completion of synthesis (in
+                        // the later case we will output a completed type of synthesis progress event.
+                        if (synthesisProgress != null)
+                        {
+                            this.SynthesisProgress.Post(synthesisProgress, this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+                            synthesisProgress = null;
+                        }
+
+                        // Check for cancellation after posting the previous synthesis progress
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        if (this.currentAudioBuffer.Data == null || this.currentAudioBuffer.Data.Length != (int)filledSize)
+                        {
+                            this.currentAudioBuffer = new AudioBuffer((int)filledSize, this.format);
+                        }
+
+                        Array.Copy(buffer, this.currentAudioBuffer.Data, filledSize);
+
+                        // Compute an originating time based on the position of the audio.
+                        var audioOffset = TimeSpan.FromSeconds((double)totalSize / this.format.AvgBytesPerSec);
+                        originatingTime = this.currentStartTime + audioOffset;
+
+                        // If we are configured to stream the audio buffers in real time
+                        if (this.configuration.StreamAudioBuffersInRealTime)
+                        {
+                            // If the originatingTime is in the future, then wait until it is time to post the audio buffer.
+                            var waitTime = originatingTime - this.configuration.MaxRealTimeAnticipationWhenStreamingAudioBuffersInRealTime - this.pipeline.GetCurrentTime();
+
+                            if (waitTime > TimeSpan.Zero)
+                            {
+                                await Task.Delay(waitTime, cancellationToken);
+                            }
+                        }
+
+                        // Check for cancellation after waiting and before posting the next audio buffer
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        // Post the audio buffer output
+                        this.Out.Post(this.currentAudioBuffer, this.GetCompliantOriginatingTime(originatingTime, this.Out));
+
+                        // Now compute whether we have made more progress since the previous synthesis progress
+                        var textSpokenSoFar = this.GetTextSpokenSoFar(audioOffset);
+                        if (textSpokenSoFar != synthesisProgressText)
+                        {
+                            synthesisProgress = SpeechSynthesisProgress.SynthesisInProgress(textSpokenSoFar);
+                            synthesisProgressText = textSpokenSoFar;
+                        }
+
+                        totalSize += filledSize;
+                    }
+
+                    // Post the synthesis completed event
+                    this.SynthesisProgress.Post(SpeechSynthesisProgress.SynthesisCompleted(text), this.GetCompliantOriginatingTime(originatingTime, this.SynthesisProgress));
+
+                    // Save the generated audio to the cache
+                    if (this.configuration.Cache != null)
+                    {
+                        var cacheAudioData = new byte[cacheAudioStream.Length];
+                        cacheAudioStream.Position = 0;
+                        cacheAudioStream.Read(cacheAudioData, 0, cacheAudioData.Length);
+                        var cacheAudioBuffer = new AudioBuffer(cacheAudioData, this.format);
+                        this.configuration.Cache.Add(text, cacheAudioBuffer, this.textProgress.DeepClone());
+                    }
+                }
             }
         }
 
@@ -291,7 +385,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             var originatingTime = this.currentStartTime.AddTicks((long)args.AudioOffset);
             lock (this.textProgress)
             {
-                this.textProgress.Add((args.AudioOffset, this.text.Substring(0, (int)args.TextOffset)));
+                this.textProgress.Add((this.text.Substring(0, (int)args.TextOffset), args.AudioOffset));
             }
 
             this.WordBoundaryEvent.Post((int)args.TextOffset, this.GetCompliantOriginatingTime(originatingTime, this.WordBoundaryEvent));
@@ -304,7 +398,7 @@ namespace Microsoft.Psi.CognitiveServices.Speech
             {
                 for (int i = 0; i < this.textProgress.Count; i++)
                 {
-                    if ((ulong)audioOffset.Ticks > this.textProgress[i].AudioOffset)
+                    if ((ulong)audioOffset.Ticks > this.textProgress[i].Offset)
                     {
                         textSpokenSoFar = this.textProgress[i].Text;
                     }

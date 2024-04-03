@@ -207,6 +207,7 @@ namespace Microsoft.Psi.MixedReality.Applications
                 state = State.StoppingPipeline;
                 Task.Run(() =>
                 {
+                    this.OnStoppingPipeline();
                     try
                     {
                         pipeline?.Dispose();
@@ -822,7 +823,7 @@ namespace Microsoft.Psi.MixedReality.Applications
         }
 
         /// <summary>
-        /// Populates the UI at the waiting to start point.
+        /// Virtual method that populates the UI at the waiting to start point.
         /// </summary>
         public virtual void OnWaitingForStart()
         {
@@ -871,6 +872,13 @@ namespace Microsoft.Psi.MixedReality.Applications
             {
                 this.selectedIgnoreComputeServerHeartbeat[this.SelectedConfiguration.Name] = false;
             }
+        }
+
+        /// <summary>
+        /// Virtual method that performs any relevant tasks just prior to stopping (disposing) the pipeline.
+        /// </summary>
+        public virtual void OnStoppingPipeline()
+        {
         }
 
         /// <summary>

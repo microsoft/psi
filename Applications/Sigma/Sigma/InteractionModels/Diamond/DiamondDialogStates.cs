@@ -36,7 +36,7 @@ namespace Sigma.Diamond
                     interactionModel.InteractionState.TaskName = interactionModel.Configuration.AutoStartTaskName;
                     if (interactionModel.TryGetKnownTask())
                     {
-                        yield return DialogAction.Speak($"Today I'm here to help you {interactionModel.Configuration.AutoStartTaskName}.");
+                        yield return DialogAction.Speak($"Today I'm here to help you {interactionModel.Configuration.AutoStartTaskName.ToLower().TrimEnd('.')}.");
 
                         // Move to a glanceable position
                         yield return DialogAction.Execute(interactionModel.MoveToGlanceablePosition);
@@ -119,7 +119,7 @@ namespace Sigma.Diamond
 
                         if (isKnownTask)
                         {
-                            yield return DialogAction.Speak($"Sure. I can help you {interactionModel.InteractionState.TaskName.ToLower()}.");
+                            yield return DialogAction.Speak($"Sure. I can help you {interactionModel.InteractionState.TaskName.ToLower().TrimEnd('.')}.");
                         }
                         else
                         {
@@ -158,6 +158,24 @@ namespace Sigma.Diamond
         /// </summary>
         public class ExecuteStep : DialogState<DiamondInteractionModel>
         {
+            private readonly bool usePreamble = true;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExecuteStep"/> class.
+            /// </summary>
+            public ExecuteStep()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExecuteStep"/> class.
+            /// </summary>
+            /// <param name="usePreamble">Indicates whether to use a preamble for the step (e.g., first, next, finally...)</param>
+            public ExecuteStep(bool usePreamble)
+            {
+                this.usePreamble = usePreamble;
+            }
+
             /// <inheritdoc/>
             public override void OnEnter(DiamondInteractionModel interactionModel)
             {
@@ -182,8 +200,15 @@ namespace Sigma.Diamond
                     (interactionModel.InteractionState.TryGetSelectedStepOfType<DoStep>(out var doStep) && doStep.Label == "1");
 
                 var systemPrompt = isFirstStep ?
-                    $"The first step is to {interactionModel.InteractionState.SelectedStep.GetSpokenInstructions().ToLower()}" :
-                    $"{interactionModel.InteractionState.SelectedStep.GetSpokenInstructions()}";
+                    $"{interactionModel.InteractionState.SelectedStep.GetSpokenInstructions().Trim('.')}." :
+                    $"{interactionModel.InteractionState.SelectedStep.GetSpokenInstructions().Trim('.')}.";
+
+                if (this.usePreamble)
+                {
+                    systemPrompt = isFirstStep ?
+                        $"The first step is to {systemPrompt.ToLower()}" :
+                        $"Next, {systemPrompt.ToLower()}";
+                }
 
                 var userResponseSet = new List<string>()
                 {
@@ -228,18 +253,25 @@ namespace Sigma.Diamond
                             yield return DialogAction.ContinueWith<ExecuteStep>(noSpeechSynthesis: true);
                         }
                     }
-                    else if (speechRecognition.Contains("previous"))
+                    else if (speechRecognition.Contains("previous") && speechRecognition.Contains("step"))
                     {
                         if (interactionModel.InteractionState.SelectedStepIndex > 0)
                         {
-                            interactionModel.InteractionState.GemState = GemState.AtUserInterface();
                             interactionModel.InteractionState.SelectedStepIndex--;
-                            yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
+                            if (interactionModel.InteractionState.TryGetSelectedStepOfType<ComplexStep>(out var complexStep))
+                            {
+                                interactionModel.InteractionState.SelectedSubStepIndex = complexStep.SubSteps.Count - 1;
+                                yield return DialogAction.ContinueWith(new ExecuteSubStep(usePreamble: false));
+                            }
+                            else
+                            {
+                                yield return DialogAction.ContinueWith(new ExecuteStep(usePreamble: false));
+                            }
                         }
                         else
                         {
-                            yield return DialogAction.Speak("This is the first step of the task.");
-                            yield return DialogAction.ContinueWith<ExecuteStep>(noSpeechSynthesis: true);
+                            yield return DialogAction.Speak("We are already at the first step of the task.");
+                            yield return DialogAction.ContinueWith<ExecuteSubStep>(noSpeechSynthesis: true);
                         }
                     }
                     else if (speechRecognition.Contains("start") && speechRecognition.Contains("timer") && interactionModel.InteractionState.SelectedStep is DoStep doStep)
@@ -436,6 +468,24 @@ namespace Sigma.Diamond
         /// </summary>
         public class ExecuteSubStep : DialogState<DiamondInteractionModel>
         {
+            private readonly bool usePreamble = true;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExecuteSubStep"/> class.
+            /// </summary>
+            public ExecuteSubStep()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ExecuteSubStep"/> class.
+            /// </summary>
+            /// <param name="usePreamble">Indicates whether to use a preamble for the step (e.g., first, next, finally...)</param>
+            public ExecuteSubStep(bool usePreamble)
+            {
+                this.usePreamble = usePreamble;
+            }
+
             /// <inheritdoc/>
             public override void OnEnter(DiamondInteractionModel interactionModel)
             {
@@ -446,28 +496,37 @@ namespace Sigma.Diamond
             /// <inheritdoc/>
             public override (string SystemPrompt, string[] UserResponseSet) GetSystemPromptAndUserResponseSet(DiamondInteractionModel interactionModel)
             {
-                string systemPrompt;
-                if (interactionModel.InteractionState.SelectedSubStepIndex == 0)
+                string systemPrompt = (interactionModel.InteractionState.SelectedStep as ComplexStep).SubSteps[interactionModel.InteractionState.SelectedSubStepIndex.Value].Description.TrimEnd('.');
+
+                if (this.usePreamble)
                 {
-                    systemPrompt = $"First, {(interactionModel.InteractionState.SelectedStep as ComplexStep).SubSteps[interactionModel.InteractionState.SelectedSubStepIndex.Value].Description.ToLower()}.";
-                }
-                else if (interactionModel.InteractionState.SelectedSubStepIndex > 1 && interactionModel.InteractionState.SelectedSubStepIndex == (interactionModel.InteractionState.SelectedStep as ComplexStep).SubSteps.Count - 1)
-                {
-                    systemPrompt = $"Finally, {(interactionModel.InteractionState.SelectedStep as ComplexStep).SubSteps[interactionModel.InteractionState.SelectedSubStepIndex.Value].Description.ToLower()}.";
+                    if (interactionModel.InteractionState.SelectedSubStepIndex == 0)
+                    {
+                        systemPrompt = $"First, {systemPrompt.ToLower()}.";
+                    }
+                    else if (interactionModel.InteractionState.SelectedSubStepIndex > 1 && interactionModel.InteractionState.SelectedSubStepIndex == (interactionModel.InteractionState.SelectedStep as ComplexStep).SubSteps.Count - 1)
+                    {
+                        systemPrompt = $"Finally, {systemPrompt.ToLower()}.";
+                    }
+                    else
+                    {
+                        systemPrompt = $"Next, {systemPrompt.ToLower()}.";
+                    }
                 }
                 else
                 {
-                    systemPrompt = $"Next, {(interactionModel.InteractionState.SelectedStep as ComplexStep).SubSteps[interactionModel.InteractionState.SelectedSubStepIndex.Value].Description.ToLower()}.";
+                    systemPrompt = $"{systemPrompt.Capitalize()}.";
                 }
 
-                var userRespose = new string[]
+                var userResponseSet = new List<string>() { "Next step." };
+                if ((interactionModel.InteractionState.SelectedSubStepIndex > 0) || (interactionModel.InteractionState.SelectedStepIndex > 0))
                 {
-                    "Next step.",
-                    "Go to the previous step.",
-                    "Let's abandon this task.",
-                };
+                    userResponseSet.Add("Previous step.");
+                }
 
-                return (systemPrompt, userRespose);
+                userResponseSet.Add("Let's abandon this task.");
+
+                return (systemPrompt, userResponseSet.ToArray());
             }
 
             /// <inheritdoc/>
@@ -488,6 +547,7 @@ namespace Sigma.Diamond
                     {
                         yield return DialogAction.Speak("Great.");
                         interactionModel.InteractionState.SelectedStepIndex++;
+                        interactionModel.InteractionState.SelectedSubStepIndex = null;
                         yield return DialogAction.Execute(interactionModel.ContinueWithSelectedStep);
                     }
 
@@ -506,6 +566,35 @@ namespace Sigma.Diamond
                             yield return DialogAction.Speak("I'll see you next time. Bye bye.");
                             yield return DialogAction.ExitCommand();
                         }
+                    }
+                }
+                else if (speechRecognitionResult != null &&
+                    speechRecognitionResult.Contains("previous") &&
+                    speechRecognitionResult.Contains("step"))
+                {
+                    if (interactionModel.InteractionState.SelectedSubStepIndex > 0)
+                    {
+                        interactionModel.InteractionState.SelectedSubStepIndex--;
+                        yield return DialogAction.ContinueWith(new ExecuteSubStep(usePreamble: false));
+                    }
+                    else if (interactionModel.InteractionState.SelectedStepIndex > 0)
+                    {
+                        interactionModel.InteractionState.SelectedStepIndex--;
+                        if (interactionModel.InteractionState.TryGetSelectedStepOfType<ComplexStep>(out var complexStep))
+                        {
+                            interactionModel.InteractionState.SelectedSubStepIndex = complexStep.SubSteps.Count - 1;
+                            yield return DialogAction.ContinueWith(new ExecuteSubStep(usePreamble: false));
+                        }
+                        else
+                        {
+                            interactionModel.InteractionState.SelectedSubStepIndex = null;
+                            yield return DialogAction.ContinueWith(new ExecuteStep(usePreamble: false));
+                        }
+                    }
+                    else
+                    {
+                        yield return DialogAction.Speak("We are already at the first step of the task.");
+                        yield return DialogAction.ContinueWith<ExecuteSubStep>(noSpeechSynthesis: true);
                     }
                 }
                 else if (speechRecognitionResult != null && speechRecognitionResult.ContainsOneOf("freeze", "pause"))

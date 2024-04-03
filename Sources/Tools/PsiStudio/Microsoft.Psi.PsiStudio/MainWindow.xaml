@@ -210,7 +210,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <ToggleButton Command="{Binding TogglePlayRepeatCommand}" Margin="1" ToolTip="Repeat playback" AutomationProperties.Name="RepeatPlaybackToggleButton">
+                <ToggleButton IsChecked="{Binding VisualizationContainer.Navigator.RepeatPlayback, Mode=TwoWay}" Margin="1" ToolTip="Repeat playback" AutomationProperties.Name="RepeatPlaybackToggleButton">
                     <Image Source="{Binding ., Converter={StaticResource IconUriConverter}, ConverterParameter=play-repeat.png}"/>
                 </ToggleButton>
                 <Button Command="{Binding MoveCursorToSelectionEndCommand}" Margin="1" ToolTip="Move cursor to the end of the selection" AutomationProperties.Name="MoveCursorToEndOfSelectionButton">

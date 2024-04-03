@@ -17,7 +17,7 @@ namespace Sigma
     /// Batch task that runs the object 2D detection based tracker.
     /// </summary>
     [BatchProcessingTask(
-        "Sigma - Run the object 2D detection based tracker",
+        "Run the object 2D detection based tracker",
         Description = "This task generates a new partition with results from object 2D detection based tracking.")]
     public class Object2DDetectionBasedObjectTrackerTask : BatchProcessingTask<Object2DDetectionBasedObjectTrackerTaskConfiguration>
     {

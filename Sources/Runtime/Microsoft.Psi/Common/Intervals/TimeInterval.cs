@@ -15,13 +15,13 @@ namespace Microsoft.Psi
         /// Canonical infinite interval (unbounded on both ends).
         /// </summary>
         public static readonly TimeInterval Infinite =
-            new TimeInterval(DateTime.MinValue, false, false, DateTime.MaxValue, false, false);
+            new (DateTime.MinValue, false, false, DateTime.MaxValue, false, false);
 
         /// <summary>
         /// Canonical empty instance (bounded, non-inclusive, single point).
         /// </summary>
         public static readonly TimeInterval Empty =
-            new TimeInterval(DateTime.MinValue, false, true, DateTime.MinValue, false, true);
+            new (DateTime.MinValue, false, true, DateTime.MinValue, false, true);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeInterval"/> class.
@@ -87,53 +87,44 @@ namespace Microsoft.Psi
         /// <summary>
         /// Gets the point minimum value.
         /// </summary>
-        protected override DateTime PointMinValue
-        {
-            get { return DateTime.MinValue; }
-        }
+        protected override DateTime PointMinValue => DateTime.MinValue;
 
         /// <summary>
         /// Gets the point maximum value.
         /// </summary>
-        protected override DateTime PointMaxValue
-        {
-            get { return DateTime.MaxValue; }
-        }
+        protected override DateTime PointMaxValue => DateTime.MaxValue;
 
         /// <summary>
         /// Gets the span zero value.
         /// </summary>
-        protected override TimeSpan SpanZeroValue
-        {
-            get { return TimeSpan.Zero; }
-        }
+        protected override TimeSpan SpanZeroValue => TimeSpan.Zero;
 
         /// <summary>
         /// Gets the span minimum value.
         /// </summary>
-        protected override TimeSpan SpanMinValue
-        {
-            get { return TimeSpan.MinValue; }
-        }
+        protected override TimeSpan SpanMinValue => TimeSpan.MinValue;
 
         /// <summary>
         /// Gets the span maximum value.
         /// </summary>
-        protected override TimeSpan SpanMaxValue
-        {
-            get { return TimeSpan.MaxValue; }
-        }
+        protected override TimeSpan SpanMaxValue => TimeSpan.MaxValue;
 
         /// <summary>
-        /// Determine coverage from minimum left to maximum right.
+        /// Merges a specified set of time intervals into a set of non-overlapping time intervals that cover the specified intervals.
         /// </summary>
-        /// <param name="intervals">Sequence of intervals.</param>
-        /// <remarks>Returns negative interval from max to min point when sequence is empty.</remarks>
+        /// <param name="intervals">A set of time intervals to cover.</param>
+        /// <returns>Set of non-overlapping time intervals that cover the given time intervals.</returns>
+        public static IEnumerable<TimeInterval> Merge(IEnumerable<TimeInterval> intervals)
+            => Merge(intervals, (left, right) => new TimeInterval(left, right));
+
+        /// <summary>
+        /// Determine coverage from minimum left to maximum right for a set of given intervals.
+        /// </summary>
+        /// <param name="intervals">The set of intervals.</param>
+        /// <remarks>Returns empty interval when sequence is empty or contains only empty intervals.</remarks>
         /// <returns>Interval from minimum left to maximum right value.</returns>
         public static TimeInterval Coverage(IEnumerable<TimeInterval> intervals)
-        {
-            return Coverage(intervals, (left, right) => new TimeInterval(left, right), TimeInterval.Empty);
-        }
+            => Coverage(intervals, (left, right) => new TimeInterval(left, right), TimeInterval.Empty);
 
         /// <summary>
         /// Determine intersection of a specified set of intervals.
@@ -142,9 +133,7 @@ namespace Microsoft.Psi
         /// <remarks>Returns empty when sequence is empty.</remarks>
         /// <returns>Intersection of the specified set of intervals.</returns>
         public static TimeInterval Intersection(IEnumerable<TimeInterval> intervals)
-        {
-            return Intersection(intervals, (left, right) => new TimeInterval(left, right), TimeInterval.Empty);
-        }
+            => Intersection(intervals, (left, right) => new TimeInterval(left, right), TimeInterval.Empty);
 
         /// <summary>
         /// Constructor helper for left-bound instances.
@@ -153,9 +142,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Whether left point is inclusive.</param>
         /// <returns>A left-bound instance of the <see cref="TimeInterval"/> class.</returns>
         public static TimeInterval LeftBounded(DateTime left, bool inclusive)
-        {
-            return new TimeInterval(left, inclusive, true, DateTime.MaxValue, false, false);
-        }
+            => new (left, inclusive, true, DateTime.MaxValue, false, false);
 
         /// <summary>
         /// Constructor helper for left-bound instances.
@@ -163,10 +150,7 @@ namespace Microsoft.Psi
         /// <remarks>Defaults to inclusive.</remarks>
         /// <param name="left">Left bound point.</param>
         /// <returns>A left-bound instance of the <see cref="TimeInterval"/> class.</returns>
-        public static TimeInterval LeftBounded(DateTime left)
-        {
-            return LeftBounded(left, true);
-        }
+        public static TimeInterval LeftBounded(DateTime left) => LeftBounded(left, true);
 
         /// <summary>
         /// Constructor helper for right-bound instances.
@@ -175,9 +159,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Whether right point is inclusive.</param>
         /// <returns>A right-bound instance of the <see cref="TimeInterval"/> class.</returns>
         public static TimeInterval RightBounded(DateTime right, bool inclusive)
-        {
-            return new TimeInterval(DateTime.MinValue, false, false, right, inclusive, true);
-        }
+            => new (DateTime.MinValue, false, false, right, inclusive, true);
 
         /// <summary>
         /// Constructor helper for right-bound instances.
@@ -185,10 +167,7 @@ namespace Microsoft.Psi
         /// <remarks>Defaults to inclusive.</remarks>
         /// <param name="right">Right bound point.</param>
         /// <returns>A right-bound instance of the <see cref="TimeInterval"/> class.</returns>
-        public static TimeInterval RightBounded(DateTime right)
-        {
-            return RightBounded(right, true);
-        }
+        public static TimeInterval RightBounded(DateTime right) => RightBounded(right, true);
 
         /// <summary>
         /// Intersects with a specified time interval.
@@ -205,9 +184,7 @@ namespace Microsoft.Psi
         /// <param name="span">Span by which to translate.</param>
         /// <returns>Translated interval.</returns>
         public override TimeInterval Translate(TimeSpan span)
-        {
-            return this.Translate(span, (lp, li, lb, rp, ri, rb) => new TimeInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Translate(span, (lp, li, lb, rp, ri, rb) => new TimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale endpoints by span distances.
@@ -216,9 +193,7 @@ namespace Microsoft.Psi
         /// <param name="right">Span by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         public override TimeInterval Scale(TimeSpan left, TimeSpan right)
-        {
-            return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new TimeInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new TimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale endpoints by factors.
@@ -227,9 +202,7 @@ namespace Microsoft.Psi
         /// <param name="right">Factor by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         public override TimeInterval Scale(float left, float right)
-        {
-            return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new TimeInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new TimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale a span by a given factor.
@@ -238,19 +211,14 @@ namespace Microsoft.Psi
         /// <param name="factor">Factor by which to scale.</param>
         /// <returns>Scaled span.</returns>
         protected override TimeSpan ScaleSpan(TimeSpan span, double factor)
-        {
-            return TimeSpan.FromTicks((long)Math.Round(span.Ticks * factor));
-        }
+            => TimeSpan.FromTicks((long)Math.Round(span.Ticks * factor));
 
         /// <summary>
         /// Negate span.
         /// </summary>
         /// <param name="span">Span to be negated.</param>
         /// <returns>Negated span.</returns>
-        protected override TimeSpan NegateSpan(TimeSpan span)
-        {
-            return span.Negate();
-        }
+        protected override TimeSpan NegateSpan(TimeSpan span) => span.Negate();
 
         /// <summary>
         /// Translate point by given span.
@@ -258,10 +226,7 @@ namespace Microsoft.Psi
         /// <param name="point">Point value.</param>
         /// <param name="span">Span by which to translate.</param>
         /// <returns>Translated point.</returns>
-        protected override DateTime TranslatePoint(DateTime point, TimeSpan span)
-        {
-            return point + span;
-        }
+        protected override DateTime TranslatePoint(DateTime point, TimeSpan span) => point + span;
 
         /// <summary>
         /// Determine span between two given points.
@@ -269,10 +234,7 @@ namespace Microsoft.Psi
         /// <param name="x">First point.</param>
         /// <param name="y">Second point.</param>
         /// <returns>Span between points.</returns>
-        protected override TimeSpan Difference(DateTime x, DateTime y)
-        {
-            return x - y;
-        }
+        protected override TimeSpan Difference(DateTime x, DateTime y) => x - y;
 
         /// <summary>
         /// Compare points.
@@ -280,9 +242,6 @@ namespace Microsoft.Psi
         /// <param name="a">First point.</param>
         /// <param name="b">Second point.</param>
         /// <returns>Less (-1), greater (+1) or equal (0).</returns>
-        protected override int ComparePoints(DateTime a, DateTime b)
-        {
-            return a.CompareTo(b);
-        }
+        protected override int ComparePoints(DateTime a, DateTime b) => a.CompareTo(b);
     }
 }

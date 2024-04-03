@@ -5,6 +5,7 @@ namespace Sigma
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using MathNet.Spatial.Euclidean;
     using Microsoft.Psi;
@@ -14,6 +15,7 @@ namespace Sigma
     using Microsoft.Psi.MixedReality.Applications;
     using Microsoft.Psi.MixedReality.ResearchMode;
     using Microsoft.Psi.MixedReality.StereoKit;
+    using Microsoft.Psi.Speech;
     using StereoKit;
     using Windows.Storage;
     using GazeSensor = Microsoft.Psi.MixedReality.WinRT.GazeSensor;
@@ -29,6 +31,7 @@ namespace Sigma
         private readonly Type[] sigmaAppConfigurationTypes;
         private UserStateConstructor userStateConstructor;
         private ISigmaUserInterface sigmaUserInterface;
+        private SpeechSynthesisCache speechSynthesisCache;
 
         private Dictionary<string, bool> selectedOutputPreviewStream = default;
 
@@ -76,6 +79,30 @@ namespace Sigma
         }
 
         /// <inheritdoc/>
+        public override async void OnStoppingPipeline()
+        {
+            base.OnStoppingPipeline();
+
+            // Write the speech synthesis cache to a file
+            if (this.speechSynthesisCache != null)
+            {
+                try
+                {
+                    using var stream = await KnownFolders.DocumentsLibrary.OpenStreamForWriteAsync("SpeechSynthesisCache.dat", CreationCollisionOption.ReplaceExisting);
+                    this.speechSynthesisCache.Write(stream);
+                }
+                catch
+                {
+                    var cacheFile = KnownFolders.DocumentsLibrary.GetFileAsync("SpeechSynthesisCache.dat").AsTask().GetAwaiter().GetResult();
+                    if (cacheFile != null)
+                    {
+                        await cacheFile.DeleteAsync();
+                    }
+                }
+            }
+        }
+
+        /// <inheritdoc/>
         public override HoloLensStreams GetHoloLensStreams(Pipeline pipeline, out DepthCamera depthCamera)
             => LiveHoloLensStreams.Create(pipeline, out depthCamera, this.SelectedConfiguration, this.selectedOutputPreviewStream[this.SelectedConfiguration.Name]);
 
@@ -112,11 +139,35 @@ namespace Sigma
             // Construct the speech synthesis components
             var speechSynthesisKey = this.ReadFileAsync(KnownFolders.DocumentsLibrary, "CognitiveServicesSpeechKey.txt").GetAwaiter().GetResult();
 
-            // Setup the speech synthesis
+            // Open the speech synthesis cache file if it exists
+            var speechSynthesisCacheFileStream = default(Stream);
+            try
+            {
+                speechSynthesisCacheFileStream = KnownFolders.DocumentsLibrary.OpenStreamForReadAsync("SpeechSynthesisCache.dat").GetAwaiter().GetResult();
+                this.speechSynthesisCache = new SpeechSynthesisCache(speechSynthesisCacheFileStream);
+            }
+            catch
+            {
+                this.speechSynthesisCache = new SpeechSynthesisCache(this.SelectedConfiguration.SpeechSynthesizerVoiceName);
+            }
+            finally
+            {
+                speechSynthesisCacheFileStream?.Dispose();
+            }
+
+            // If the cache is of a different voice, re-initialize
+            if (this.speechSynthesisCache.SpeechSynthesisVoiceName != this.SelectedConfiguration.SpeechSynthesizerVoiceName)
+            {
+                this.speechSynthesisCache = new SpeechSynthesisCache(this.SelectedConfiguration.SpeechSynthesizerVoiceName);
+            }
+
+            // Construct the speech synthesizer configuration
             var config = new SpeechSynthesizerConfiguration()
             {
                 SubscriptionKey = speechSynthesisKey,
                 Region = "westus",
+                VoiceName = this.SelectedConfiguration.SpeechSynthesizerVoiceName,
+                Cache = this.speechSynthesisCache,
             };
 
             // Construct the speech sythesizer

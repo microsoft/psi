@@ -5,6 +5,7 @@ namespace Microsoft.Psi
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Represents an interval with bounded/unbounded and inclusive/exclusive end points.
@@ -378,6 +379,48 @@ namespace Microsoft.Psi
             var matchLR = this.LeftEndpoint.Inclusive == other.RightEndpoint.Inclusive && this.Left.CompareTo(other.Right) == 0;
             var matchRL = this.RightEndpoint.Inclusive == other.LeftEndpoint.Inclusive && this.Right.CompareTo(other.Left) == 0;
             return this.IsSubsetOf(other) && !((matchLL && matchRR) || (matchLR && matchRL));
+        }
+
+        /// <summary>
+        /// Merges a specified set of intervals into a set of non-overlapping intervals that cover the specified intervals.
+        /// </summary>
+        /// <param name="intervals">A set of intervals to cover.</param>
+        /// <param name="ctor">Constructor function for interval type.</param>
+        /// <returns>A set of non-overlapping intervals that cover the given intervals.</returns>
+        protected static IEnumerable<T> Merge(IEnumerable<Interval<TPoint, TSpan, TEndpoint, T>> intervals, Func<TEndpoint, TEndpoint, T> ctor)
+        {
+            var cover = new List<T>();
+
+            if (!intervals.Any())
+            {
+                return cover;
+            }
+
+            var sortedIntervals = intervals.OrderBy(i => i.Left).ToList();
+            var leftEndpoint = sortedIntervals[0].LeftEndpoint;
+            var rightEndpoint = sortedIntervals[0].RightEndpoint;
+
+            for (int i = 1; i < sortedIntervals.Count; i++)
+            {
+                // If the next interval starts after the current right endpoint, add the current interval to the cover
+                if (sortedIntervals[i].Left.CompareTo(rightEndpoint.Point) > 0 ||
+                    (sortedIntervals[i].Left.CompareTo(rightEndpoint.Point) == 0 && !sortedIntervals[i].LeftEndpoint.Inclusive && !rightEndpoint.Inclusive))
+                {
+                    cover.Add(ctor(leftEndpoint, rightEndpoint));
+                    leftEndpoint = sortedIntervals[i].LeftEndpoint;
+                    rightEndpoint = sortedIntervals[i].RightEndpoint;
+                }
+                else if (sortedIntervals[i].Right.CompareTo(rightEndpoint.Point) > 0 ||
+                    (sortedIntervals[i].Right.CompareTo(rightEndpoint.Point) == 0 && !rightEndpoint.Inclusive && sortedIntervals[i].RightEndpoint.Inclusive))
+                {
+                    // O/w if the next interval ends after the current right endpoint, extend the current interval to cover it
+                    rightEndpoint = sortedIntervals[i].RightEndpoint;
+                }
+            }
+
+            cover.Add(ctor(leftEndpoint, rightEndpoint));
+
+            return cover;
         }
 
         /// <summary>

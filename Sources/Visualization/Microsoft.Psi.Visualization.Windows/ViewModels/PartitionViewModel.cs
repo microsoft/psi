@@ -380,8 +380,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 this.newMetadataCallback = new UpdateStreamMetadataDelegate(this.UpdateStreamMetadata);
                 this.MonitorLivePartition();
             }
-
-            this.IsTreeNodeExpanded = true;
         }
 
         /// <summary>

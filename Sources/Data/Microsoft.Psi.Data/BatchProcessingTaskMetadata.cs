@@ -50,6 +50,11 @@ namespace Microsoft.Psi.Data
         public string ConfigurationsPath => this.batchProcessingTaskConfigurationsPath;
 
         /// <summary>
+        /// Gets the namespace for the batch processing task type.
+        /// </summary>
+        public string Namespace => this.batchProcessingTaskType.Namespace;
+
+        /// <summary>
         /// Gets or sets the name of the most recently used configuration.
         /// </summary>
         public string MostRecentlyUsedConfiguration { get; set; }
