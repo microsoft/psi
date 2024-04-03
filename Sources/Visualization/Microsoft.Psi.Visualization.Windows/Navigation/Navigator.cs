@@ -903,7 +903,7 @@ namespace Microsoft.Psi.Visualization.Navigation
                 this.audioPlaybackPipeline.IsRunning &&
                 (this.playSpeed != 1.0d || !this.audioPlaybackSources.Any(s => s.Value != null)))
             {
-                // O/w if we an audio playback pipeline running and the play speed has changed from 1x or there are
+                // O/w if we have an audio playback pipeline running and the play speed has changed from 1x or there are
                 // no more audio sources to play, then stop the audio playback pipeline
                 this.audioPlaybackPipeline.PipelineExceptionNotHandled -= this.OnAudioPlaybackPipelineError;
                 this.audioPlaybackPipeline.PipelineCompleted -= this.OnAudioPlaybackPipelineCompleted;
