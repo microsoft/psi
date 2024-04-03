@@ -6,6 +6,7 @@ namespace Microsoft.Psi.Data
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Defines a class used in importing data into a session.
@@ -62,21 +63,22 @@ namespace Microsoft.Psi.Data
         /// <param name="usePerStreamReaders">Optional flag indicating whether to use per-stream readers.</param>
         /// <returns>The newly created session importer.</returns>
         public static SessionImporter Open(Pipeline pipeline, Session session, bool usePerStreamReaders = true)
-        {
-            return new SessionImporter(pipeline, session, usePerStreamReaders);
-        }
+            => new (pipeline, session, usePerStreamReaders);
 
         /// <summary>
-        /// Determines if any importer contains the named stream.
+        /// Determines if any importer contains the specified stream.
         /// </summary>
-        /// <param name="streamName">The stream to search for.</param>
+        /// <param name="streamSpecification">A stream specification in the form of a stream name or [PartitionName]:StreamName.</param>
         /// <returns>true if any importer contains the named stream; otherwise false.</returns>
-        public bool Contains(string streamName)
+        public bool Contains(string streamSpecification)
         {
-            var all = this.importers.Values.Where(importer => importer.Contains(streamName));
-            var count = all.Count();
-            if (count > 0)
+            if (this.TryGetImporterAndStreamName(streamSpecification, out var _, out var _, out var streamSpecificationIsAmbiguous))
             {
+                return true;
+            }
+            else if (streamSpecificationIsAmbiguous)
+            {
+                // If the stream specification is ambiguous that means multiple streams matching the specification exist.
                 return true;
             }
             else
@@ -92,46 +94,95 @@ namespace Microsoft.Psi.Data
         /// <param name="streamName">The stream to search for.</param>
         /// <returns>true if the specific importer contains the named stream; otherwise false.</returns>
         public bool HasStream(string partitionName, string streamName)
-        {
-            return this.importers[partitionName].Contains(streamName);
-        }
+            => this.importers[partitionName].Contains(streamName);
 
         /// <summary>
-        /// Opens the first stream that matches the specified name.
+        /// Opens a specified stream via an importer open stream function.
         /// </summary>
         /// <typeparam name="T">The type of stream to open.</typeparam>
-        /// <param name="streamName">The name of stream to open.</param>
+        /// <param name="streamSpecification">The stream specification in the form of a stream name or [PartitionName]:StreamName.</param>
+        /// <param name="openStreamFunc">A function that opens the stream given an importer and optional allocator and deallocator.</param>
         /// <param name="allocator">An optional allocator of messages.</param>
-        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
+        /// <param name="deallocator">An optional deallocator of messages.</param>
         /// <returns>The opened stream.</returns>
-        public IProducer<T> OpenStream<T>(string streamName, Func<T> allocator = null, Action<T> deallocator = null)
+        /// <exception cref="Exception">An exception is thrown when the stream specification is ambiguous.</exception>
+        public IProducer<T> OpenStream<T>(string streamSpecification, Func<Importer, string, Func<T>, Action<T>, IProducer<T>> openStreamFunc, Func<T> allocator = null, Action<T> deallocator = null)
         {
-            var all = this.importers.Values.Where(importer => importer.Contains(streamName));
-            var count = all.Count();
-            if (count == 1)
+            if (this.TryGetImporterAndStreamName(streamSpecification, out var importer, out var streamName, out var streamSpecificationIsAmbiguous))
             {
-                return all.First().OpenStream(streamName, allocator, deallocator);
+                return openStreamFunc(importer, streamName, allocator, deallocator);
             }
-            else if (count > 1)
+            else if (streamSpecificationIsAmbiguous)
             {
-                throw new Exception($"Underspecified access to session: multiple partitions contain stream {streamName}");
+                if (streamSpecification.StartsWith("["))
+                {
+                    throw new Exception($"The stream specification is ambiguous. To open the stream, please use the {nameof(Importer.OpenStream)} API with a specific partition importer.");
+                }
+                else
+                {
+                    throw new Exception($"The stream specification is ambiguous. To open the stream, please use a [PartitionName]:StreamName specification, or use the {nameof(Importer.OpenStream)} API with a specific partition importer.");
+                }
             }
             else
             {
-                throw new Exception($"Cannot find {streamName}");
+                throw new Exception($"Stream specification not found: {streamSpecification}");
             }
         }
 
         /// <summary>
-        /// Opens the first stream that matches the specified name, if one exists.
+        /// Opens a specified stream via an importer open stream function, or returns null if the stream does not exist.
         /// </summary>
         /// <typeparam name="T">The type of stream to open.</typeparam>
-        /// <param name="streamName">The name of stream to open.</param>
+        /// <param name="streamSpecification">The stream specification in the form of a stream name or [PartitionName]:StreamName.</param>
+        /// <param name="openStreamFunc">A function that opens the stream given an importer and optional allocator and deallocator.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator of messages.</param>
+        /// <returns>The opened stream, or null if the stream does not exist.</returns>
+        /// <exception cref="Exception">An exception is thrown when the stream specification is ambiguous.</exception>
+        public IProducer<T> OpenStreamOrDefault<T>(string streamSpecification, Func<Importer, string, Func<T>, Action<T>, IProducer<T>> openStreamFunc, Func<T> allocator = null, Action<T> deallocator = null)
+        {
+            if (this.TryGetImporterAndStreamName(streamSpecification, out var importer, out var streamName, out var streamSpecificationIsAmbiguous))
+            {
+                return openStreamFunc(importer, streamName, allocator, deallocator);
+            }
+            else if (streamSpecificationIsAmbiguous)
+            {
+                if (streamSpecification.StartsWith("["))
+                {
+                    throw new Exception($"The stream specification is ambiguous. To open the stream, please use the {nameof(Importer.OpenStream)} API with a specific partition importer.");
+                }
+                else
+                {
+                    throw new Exception($"The stream specification is ambiguous. To open the stream, please use a [PartitionName]:StreamName specification, or use the {nameof(Importer.OpenStream)} API with a specific partition importer.");
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Opens a specified stream.
+        /// </summary>
+        /// <typeparam name="T">The type of stream to open.</typeparam>
+        /// <param name="streamSpecification">A stream specification in the form of a stream name or [PartitionName]:StreamName.</param>
+        /// <param name="allocator">An optional allocator of messages.</param>
+        /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
+        /// <returns>The opened stream.</returns>
+        public IProducer<T> OpenStream<T>(string streamSpecification, Func<T> allocator = null, Action<T> deallocator = null)
+            => this.OpenStream(streamSpecification, (importer, streamName, allocator, deallocator) => importer.OpenStream(streamName, allocator, deallocator), allocator, deallocator);
+
+        /// <summary>
+        /// Opens a specified stream, or returns null if the stream does not exist.
+        /// </summary>
+        /// <typeparam name="T">The type of stream to open.</typeparam>
+        /// <param name="streamSpecification">A stream specification in the form of a stream name or [PartitionName]:StreamName.</param>
         /// <param name="allocator">An optional allocator of messages.</param>
         /// <param name="deallocator">An optional deallocator to use after the messages have been sent out (defaults to disposing <see cref="IDisposable"/> messages.)</param>
         /// <returns>The opened stream, or null if no stream with the specified name exists.</returns>
-        public IProducer<T> OpenStreamOrDefault<T>(string streamName, Func<T> allocator = null, Action<T> deallocator = null)
-            => this.Contains(streamName) ? this.OpenStream(streamName, allocator, deallocator) : null;
+        public IProducer<T> OpenStreamOrDefault<T>(string streamSpecification, Func<T> allocator = null, Action<T> deallocator = null)
+            => this.OpenStreamOrDefault(streamSpecification, (importer, streamName, allocator, deallocator) => importer.OpenStream(streamName, allocator, deallocator), allocator, deallocator);
 
         /// <summary>
         /// Opens the named stream in a specific partition.
@@ -156,5 +207,72 @@ namespace Microsoft.Psi.Data
         /// <returns>The opened stream, or null if no stream with the specified name exists in the specified partition.</returns>
         public IProducer<T> OpenStreamOrDefault<T>(string partitionName, string streamName, Func<T> allocator = null, Action<T> deallocator = null)
             => this.importers[partitionName].OpenStreamOrDefault(streamName, allocator, deallocator);
+
+        private bool TryGetImporterAndStreamName(string streamSpecification, out Importer importer, out string streamName, out bool streamSpecificationIsAmbiguous)
+        {
+            if (streamSpecification.StartsWith("["))
+            {
+                var matches = Regex.Matches(streamSpecification, @"^\[(.*?)\]\:(.*?)$");
+                if (matches.Count == 1)
+                {
+                    // Determine the partition and stream name within that partition
+                    var partitionName = matches[0].Groups[1].Value;
+                    streamName = matches[0].Groups[2].Value;
+
+                    // Determine if the same stream specification appears in one of the partitions
+                    // i.e. a stream name that starts with the partition name.
+                    var importerContainingStreamSpecification = this.importers.Values.FirstOrDefault(importer => importer.AvailableStreams.Any(s => s.Name == streamSpecification));
+
+                    if (importerContainingStreamSpecification != default)
+                    {
+                        importer = default;
+                        streamName = default;
+                        streamSpecificationIsAmbiguous = true;
+                        return false;
+                    }
+                    else if (this.importers.TryGetValue(partitionName, out importer))
+                    {
+                        streamSpecificationIsAmbiguous = false;
+                        return true;
+                    }
+                    else
+                    {
+                        streamName = default;
+                        streamSpecificationIsAmbiguous = false;
+                        return false;
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Invalid stream specification/name: {streamSpecification}");
+                }
+            }
+            else
+            {
+                var all = this.importers.Values.Where(importer => importer.Contains(streamSpecification));
+                var count = all.Count();
+                if (count == 1)
+                {
+                    importer = all.First();
+                    streamName = streamSpecification;
+                    streamSpecificationIsAmbiguous = false;
+                    return true;
+                }
+                else if (count > 1)
+                {
+                    importer = default;
+                    streamName = default;
+                    streamSpecificationIsAmbiguous = true;
+                    return false;
+                }
+                else
+                {
+                    importer = default;
+                    streamName = default;
+                    streamSpecificationIsAmbiguous = false;
+                    return false;
+                }
+            }
+        }
     }
 }

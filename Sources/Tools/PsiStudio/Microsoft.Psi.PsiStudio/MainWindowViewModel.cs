@@ -130,7 +130,6 @@ namespace Microsoft.Psi.PsiStudio
         private RelayCommand moveSelectionToNextAnnotationCommand;
         private RelayCommand clearSelectionCommand;
         private RelayCommand moveToSelectionStartCommand;
-        private RelayCommand togglePlayRepeatCommand;
         private RelayCommand moveToSelectionEndCommand;
         private RelayCommand increasePlaySpeedCommand;
         private RelayCommand decreasePlaySpeedCommand;
@@ -569,16 +568,6 @@ namespace Microsoft.Psi.PsiStudio
             => this.moveToSelectionStartCommand ??= new RelayCommand(
                 () => this.VisualizationContainer.Navigator.MoveCursorToSelectionStart(),
                 () => this.VisualizationContainer.Navigator.CanMoveCursorToSelectionStart());
-
-        /// <summary>
-        /// Gets the toggle play repeat command.
-        /// </summary>
-        [Browsable(false)]
-        [IgnoreDataMember]
-        public RelayCommand TogglePlayRepeatCommand
-            => this.togglePlayRepeatCommand ??= new RelayCommand(
-                () => this.VisualizationContainer.Navigator.RepeatPlayback = !this.VisualizationContainer.Navigator.RepeatPlayback,
-                () => VisualizationContext.Instance.IsDatasetLoaded());
 
         /// <summary>
         /// Gets the command to move the cursor to the selection end.

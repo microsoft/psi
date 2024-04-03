@@ -146,8 +146,7 @@ namespace Microsoft.Psi
         /// <param name="origin">Origin time point.</param>
         /// <param name="relative">Relative endpoints.</param>
         /// <returns>Translated interval.</returns>
-        public static TimeInterval operator +(DateTime origin, RelativeTimeInterval relative)
-            => new (origin, relative);
+        public static TimeInterval operator +(DateTime origin, RelativeTimeInterval relative) => new (origin, relative);
 
         /// <summary>
         /// Returns a relative time interval describing the past. The returned interval includes the present moment.
@@ -180,10 +179,18 @@ namespace Microsoft.Psi
             => new (TimeSpan.Zero, true, true, duration, inclusive, true);
 
         /// <summary>
-        /// Determine coverage from minimum left to maximum right.
+        /// Merges a specified set of relative time intervals into a set of non-overlapping relative time intervals that cover the specified intervals.
         /// </summary>
-        /// <param name="intervals">Sequence of intervals.</param>
-        /// <remarks>Returns negative interval from max to min point when sequence is empty.</remarks>
+        /// <param name="intervals">A set of relative time intervals to cover.</param>
+        /// <returns>Set of non-overlapping time intervals that cover the given time intervals.</returns>
+        public static IEnumerable<RelativeTimeInterval> Merge(IEnumerable<RelativeTimeInterval> intervals)
+            => Merge(intervals, (left, right) => new RelativeTimeInterval(left, right));
+
+        /// <summary>
+        /// Determine coverage from minimum left to maximum right for a set of given intervals.
+        /// </summary>
+        /// <param name="intervals">The set of intervals.</param>
+        /// <remarks>Returns empty interval when sequence is empty or contains only empty intervals.</remarks>
         /// <returns>Interval from minimum left to maximum right value.</returns>
         public static RelativeTimeInterval Coverage(IEnumerable<RelativeTimeInterval> intervals)
             => Coverage(intervals, (left, right) => new RelativeTimeInterval(left, right), RelativeTimeInterval.Empty);
@@ -250,8 +257,7 @@ namespace Microsoft.Psi
             => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new RelativeTimeInterval(lp, li, lb, rp, ri, rb));
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
-            => (obj is RelativeTimeInterval other) && this.Equals(other);
+        public override bool Equals(object obj) => (obj is RelativeTimeInterval other) && this.Equals(other);
 
         /// <inheritdoc/>
         public bool Equals(RelativeTimeInterval other)
@@ -283,8 +289,7 @@ namespace Microsoft.Psi
         /// <param name="span">Span value.</param>
         /// <param name="factor">Factor by which to scale.</param>
         /// <returns>Scaled span.</returns>
-        protected override TimeSpan ScaleSpan(TimeSpan span, double factor)
-            => new ((long)Math.Round(span.Ticks * factor));
+        protected override TimeSpan ScaleSpan(TimeSpan span, double factor) => new ((long)Math.Round(span.Ticks * factor));
 
         /// <summary>
         /// Negate span.

@@ -17,7 +17,7 @@ namespace Sigma
     /// Batch task for exporting Sigma data.
     /// </summary>
     [BatchProcessingTask(
-        "Sigma - Export User Notes",
+        "Export User Notes",
         Description = "This task exports notes taken by the user to a tab-delimited file.")]
     public class ExportNotesTask : BatchProcessingTask<ExportNotesTask.ExportNotesTaskConfiguration>
     {

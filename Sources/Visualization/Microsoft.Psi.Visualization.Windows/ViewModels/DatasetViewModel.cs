@@ -620,7 +620,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
             visualizationContainer.Navigator.CursorFollowsMouse = true;
 
             // We need to ensure we're not in Live or Playback mode before we unbind
-            visualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
+            visualizationContainer.Navigator.SetManualCursorMode();
 
             // Update the current session
             this.Set(nameof(this.CurrentSessionViewModel), ref this.currentSessionViewModel, sessionViewModel);
@@ -641,7 +641,7 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 // If the current session has live data, switch to live mode
                 if (this.CurrentSessionViewModel.ContainsLivePartitions)
                 {
-                    visualizationContainer.Navigator.SetCursorMode(CursorMode.Live);
+                    visualizationContainer.Navigator.SetLiveCursorMode();
                 }
             }
             else
@@ -1073,16 +1073,26 @@ namespace Microsoft.Psi.Visualization.ViewModels
             var runTasksMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Run Batch Processing Task", null);
             var batchProcessingTasks = VisualizationContext.Instance.PluginMap.BatchProcessingTasks;
             runTasksMenuItem.IsEnabled = batchProcessingTasks.Any();
-            foreach (var batchProcessingTask in batchProcessingTasks)
+            foreach (var batchProcessingTaskNamespace in batchProcessingTasks.Select(bpt => bpt.Namespace).Distinct())
             {
-                runTasksMenuItem.Items.Add(
-                    MenuItemHelper.CreateMenuItem(
-                        batchProcessingTask.IconSourcePath,
-                        batchProcessingTask.Name,
-                        new VisualizationCommand<BatchProcessingTaskMetadata>(async bpt => await VisualizationContext.Instance.RunDatasetBatchProcessingTaskAsync(this, bpt)),
-                        tag: batchProcessingTask,
-                        isEnabled: true,
-                        commandParameter: batchProcessingTask));
+                var namespaceMenuItem = MenuItemHelper.CreateMenuItem(
+                    null,
+                    batchProcessingTaskNamespace,
+                    null);
+
+                foreach (var batchProcessingTask in batchProcessingTasks.Where(bpt => bpt.Namespace == batchProcessingTaskNamespace))
+                {
+                    namespaceMenuItem.Items.Add(
+                        MenuItemHelper.CreateMenuItem(
+                            batchProcessingTask.IconSourcePath,
+                            batchProcessingTask.Name,
+                            new VisualizationCommand<BatchProcessingTaskMetadata>(async bpt => await VisualizationContext.Instance.RunDatasetBatchProcessingTaskAsync(this, bpt)),
+                            tag: batchProcessingTask,
+                            isEnabled: true,
+                            commandParameter: batchProcessingTask));
+                }
+
+                runTasksMenuItem.Items.Add(namespaceMenuItem);
             }
 
             contextMenu.Items.Add(runTasksMenuItem);

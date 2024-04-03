@@ -43,7 +43,11 @@ namespace Microsoft.Psi.Visualization.Navigation
         private DateTime cursor;
         private CursorMode cursorMode;
 
+        private DateTime playbackStartTime = DateTime.MinValue;
+        private DateTime playbackEndTime = DateTime.MinValue;
+
         private Pipeline audioPlaybackPipeline = null;
+        private DateTime audioPlaybackDateTime = DateTime.MinValue;
 
         // The time offset of the Cursor when in Live mode from the left hand edge of the view window
         private TimeSpan liveCursorOffsetFromViewRangeStart;
@@ -62,10 +66,10 @@ namespace Microsoft.Psi.Visualization.Navigation
         // The playback speed
         private double playSpeed = 1.0d;
 
-        private DispatcherTimer playTimer = null;
+        private DispatcherTimer playbackTimer = null;
 
-        // The current clock time (in ticks) of the last time the play timer fired
-        private DateTime lastPlayTimerTickTime;
+        // The current clock time (in ticks) of the last time the playback timer fired
+        private DateTime lastPlaybackTimerTickTime;
 
         // Repeats playback in a loop if true, otherwise stops playback at the selection end marker
         private bool repeatPlayback = false;
@@ -197,7 +201,11 @@ namespace Microsoft.Psi.Visualization.Navigation
                     this.RaisePropertyChanging(nameof(this.PlaySpeed));
                     this.playSpeed = value;
                     this.RaisePropertyChanged(nameof(this.PlaySpeed));
-                    this.UpdateAudioPlayback();
+
+                    if (this.CursorMode == CursorMode.Playback)
+                    {
+                        this.UpdatePlayback();
+                    }
                 }
             }
         }
@@ -447,8 +455,11 @@ namespace Microsoft.Psi.Visualization.Navigation
         public void AddOrUpdateAudioPlaybackSource(AudioVisualizationObject audioVisualizationObject, StreamSource streamSource)
         {
             this.audioPlaybackSources[audioVisualizationObject] = streamSource;
-            this.UpdateAudioPlayback();
-            ////this.RaisePropertyChanged(nameof(this.AudioPlaybackStreams));
+
+            if (this.CursorMode == CursorMode.Playback)
+            {
+                this.UpdatePlayback();
+            }
         }
 
         /// <summary>
@@ -458,7 +469,11 @@ namespace Microsoft.Psi.Visualization.Navigation
         public void RemoveAudioPlaybackSource(AudioVisualizationObject audioVisualizationObject)
         {
             this.audioPlaybackSources.Remove(audioVisualizationObject);
-            this.UpdateAudioPlayback();
+
+            if (this.CursorMode == CursorMode.Playback)
+            {
+                this.UpdatePlayback();
+            }
         }
 
         /// <summary>
@@ -469,55 +484,42 @@ namespace Microsoft.Psi.Visualization.Navigation
         public bool IsAudioPlaybackVisualizationObject(AudioVisualizationObject audioVisualizationObject) => this.audioPlaybackSources.ContainsKey(audioVisualizationObject);
 
         /// <summary>
-        /// Sets the cursor mode.
+        /// Set the cursor mode to manual.
         /// </summary>
-        /// <param name="cursorMode">The cursor mode to set.</param>
-        public void SetCursorMode(CursorMode cursorMode)
+        public void SetManualCursorMode()
         {
-            switch (cursorMode)
+            if (this.CursorMode == CursorMode.Playback || this.CursorMode == CursorMode.Live)
             {
-                // Switch into Manual mode
-                case CursorMode.Manual:
-                    switch (this.CursorMode)
-                    {
-                        case CursorMode.Playback:
-                        case CursorMode.Live:
-                            this.StopPlayback();
-                            break;
-                    }
+                this.StopPlaybackMode();
+            }
+        }
 
-                    break;
+        /// <summary>
+        /// Set the cursor mode to playback.
+        /// </summary>
+        /// <param name="playbackStartTime">The playback start time.</param>
+        /// <param name="playbackEndTime">The playback end time.</param>
+        public void SetPlaybackCursorMode(DateTime playbackStartTime, DateTime playbackEndTime)
+        {
+            if (this.CursorMode == CursorMode.Manual || this.CursorMode == CursorMode.Live)
+            {
+                this.StartPlaybackMode(playbackStartTime, playbackEndTime);
+            }
+        }
 
-                // Switch into Playback mode
-                case CursorMode.Playback:
-                    switch (this.CursorMode)
-                    {
-                        case CursorMode.Manual:
-                        case CursorMode.Live:
-                            this.StartPlayback();
-                            break;
-                    }
-
-                    break;
-
-                // Switch into Live mode
-                case CursorMode.Live:
-                    switch (this.CursorMode)
-                    {
-                        case CursorMode.Manual:
-                            this.EnterLiveMode();
-                            break;
-
-                        case CursorMode.Playback:
-                            this.StopPlayback();
-                            this.EnterLiveMode();
-                            break;
-                    }
-
-                    break;
-
-                default:
-                    throw new ApplicationException(string.Format("Navigator.SetCursorMode() - Don't know how to handle CursorMode.{0}", cursorMode));
+        /// <summary>
+        /// Set the cursor model to live.
+        /// </summary>
+        public void SetLiveCursorMode()
+        {
+            if (this.CursorMode == CursorMode.Manual)
+            {
+                this.StartLiveMode();
+            }
+            else if (this.CursorMode == CursorMode.Playback)
+            {
+                this.StopPlaybackMode();
+                this.StartLiveMode();
             }
         }
 
@@ -794,56 +796,82 @@ namespace Microsoft.Psi.Visualization.Navigation
             this.CursorMode != CursorMode.Live && (this.SelectionRange.StartTime != DateTime.MinValue || this.SelectionRange.EndTime != DateTime.MaxValue);
 
         /// <summary>
-        /// Animates the navigator cursor based on indicated speed.
+        /// Start the playback mode for a specified time range.
         /// </summary>
-        private void StartPlayback()
+        private void StartPlaybackMode(DateTime playbackStartTime, DateTime playbackEndTime)
         {
-            // Create the play timer if it doesn't exist yet
-            this.playTimer ??= new DispatcherTimer(TimeSpan.FromMilliseconds(this.playTimerTickIntervalMs), DispatcherPriority.Background, new EventHandler(this.OnPlaytimerTick), Dispatcher.CurrentDispatcher);
+            // Set the playback start and end time
+            this.playbackStartTime = playbackStartTime;
+            this.playbackEndTime = playbackEndTime;
 
-            // Make sure that the cursor is visible
+            // Set the cursor to the playback start time and make sure it's visible
+            this.Cursor = playbackStartTime;
             this.EnsureCursorVisible();
 
-            // Update the cursor mode
+            // Update the cursor mode to playback
             this.CursorMode = CursorMode.Playback;
 
-            // Start the play timer running
-            this.lastPlayTimerTickTime = DateTime.UtcNow;
-            this.playTimer.Start();
-
-            // Start audio playback
-            this.UpdateAudioPlayback();
+            // Update the playback to the current conditions (i.e. start audio if necessary, etc.)
+            this.UpdatePlayback();
         }
 
         /// <summary>
-        /// Stop animating the navigator cursor.
+        /// Stops the playback mode and go back to manual.
         /// </summary>
-        private void StopPlayback()
+        private void StopPlaybackMode()
         {
-            // Pause the play timer
-            this.playTimer?.Stop();
+            // Pause the playback timer
+            this.playbackTimer.Stop();
 
-            // Update the cursor mode
-            this.CursorMode = CursorMode.Manual;
-
-            // Stop audio playback
-            this.UpdateAudioPlayback();
-        }
-
-        private void UpdateAudioPlayback()
-        {
-            if (this.audioPlaybackPipeline != null)
+            // If we have an audio playback pipeline that's still running
+            if (this.audioPlaybackPipeline != null && this.audioPlaybackPipeline.IsRunning)
             {
+                // Then stop the audio playback pipeline
+                this.audioPlaybackPipeline.PipelineExceptionNotHandled -= this.OnAudioPlaybackPipelineError;
+                this.audioPlaybackPipeline.PipelineCompleted -= this.OnAudioPlaybackPipelineCompleted;
                 this.audioPlaybackPipeline.Dispose();
                 this.audioPlaybackPipeline = null;
+                this.audioPlaybackDateTime = DateTime.MinValue;
             }
 
-            // If we're in playback mode, and the playback speed is 1x, and we have any bound audio streams to play back, then create the audio player
-            if ((this.CursorMode == CursorMode.Playback) && (this.playSpeed == 1.0d) && this.audioPlaybackSources.Any(s => s.Value != null))
+            // Set the cursor mode to manual
+            this.CursorMode = CursorMode.Manual;
+        }
+
+        /// <summary>
+        /// Updates the playback to the current play speed and audio sources.
+        /// </summary>
+        private void UpdatePlayback()
+        {
+            // If the playback speed is 1x, and we have any bound audio streams to play back
+            if ((this.playSpeed == 1.0d) && this.audioPlaybackSources.Any(s => s.Value != null))
             {
-                // Create the playback pipeline
-                this.audioPlaybackPipeline = Pipeline.Create("AudioPlayer");
+                // Then create or update the audio playback pipeline for the playback region
+                var audioPlaybackStartTime = this.playbackStartTime;
+                var audioPlaybackEndTime = this.playbackEndTime;
+
+                // If we have an audio playback pipeline that is currently playing
+                if (this.audioPlaybackPipeline != null && this.audioPlaybackPipeline.IsRunning)
+                {
+                    // Stop the pipeline
+                    this.audioPlaybackPipeline.PipelineExceptionNotHandled -= this.OnAudioPlaybackPipelineError;
+                    this.audioPlaybackPipeline.PipelineCompleted -= this.OnAudioPlaybackPipelineCompleted;
+                    this.audioPlaybackPipeline.Dispose();
+                    this.audioPlaybackPipeline = null;
+                    this.audioPlaybackDateTime = DateTime.MinValue;
+                }
+
+                // If we have a playback in progress (either an audio or a regular playback)
+                if (this.playbackTimer != null && this.playbackTimer.IsEnabled)
+                {
+                    // Then we will start the audio playback pipeline from the current cursor position
+                    audioPlaybackStartTime = this.Cursor;
+                }
+
+                // Now create the audio playback pipeline
+                this.audioPlaybackPipeline = Pipeline.Create($"AudioPlayer@{DateTime.Now.TimeOfDay}");
                 this.audioPlaybackPipeline.PipelineExceptionNotHandled += this.OnAudioPlaybackPipelineError;
+                this.audioPlaybackPipeline.PipelineCompleted += this.OnAudioPlaybackPipelineCompleted;
 
                 foreach (var (audio, streamSource) in this.audioPlaybackSources.Select(source => (source.Key, source.Value)))
                 {
@@ -859,24 +887,53 @@ namespace Microsoft.Psi.Visualization.Navigation
                         }
 
                         // Create the audio player
-                        var audioPlayer = new AudioPlayer(this.audioPlaybackPipeline, new AudioPlayerConfiguration());
+                        var audioPlayer = new AudioPlayer(this.audioPlaybackPipeline, new AudioPlayerConfiguration() { Format = audio.AudioFormat });
                         stream.PipeTo(audioPlayer.In);
                     }
                 }
 
+                // Update the audio playback date time based on the pipeline streaming position
+                this.audioPlaybackDateTime = DateTime.MinValue;
+                Generators.Repeat(this.audioPlaybackPipeline, 0, TimeSpan.FromMilliseconds(20)).Do((_, e) => this.audioPlaybackDateTime = e.OriginatingTime);
+
                 // Start playing back the audio
-                var endTime = this.SelectionRange.EndTime != DateTime.MaxValue ? this.SelectionRange.EndTime : this.DataRange.EndTime;
-                this.audioPlaybackPipeline.RunAsync(new ReplayDescriptor(this.Cursor, endTime));
+                this.audioPlaybackPipeline.RunAsync(new ReplayDescriptor(audioPlaybackStartTime, audioPlaybackEndTime));
+            }
+            else if (this.audioPlaybackPipeline != null &&
+                this.audioPlaybackPipeline.IsRunning &&
+                (this.playSpeed != 1.0d || !this.audioPlaybackSources.Any(s => s.Value != null)))
+            {
+                // O/w if we have an audio playback pipeline running and the play speed has changed from 1x or there are
+                // no more audio sources to play, then stop the audio playback pipeline
+                this.audioPlaybackPipeline.PipelineExceptionNotHandled -= this.OnAudioPlaybackPipelineError;
+                this.audioPlaybackPipeline.PipelineCompleted -= this.OnAudioPlaybackPipelineCompleted;
+                this.audioPlaybackPipeline.Dispose();
+                this.audioPlaybackPipeline = null;
+                this.audioPlaybackDateTime = DateTime.MinValue;
+            }
+
+            // Create the playback timer if one doesn't exist already
+            this.playbackTimer ??= new DispatcherTimer(
+                TimeSpan.FromMilliseconds(this.playTimerTickIntervalMs),
+                DispatcherPriority.Background,
+                new EventHandler(this.OnPlaybackTimerTick),
+                Dispatcher.CurrentDispatcher);
+
+            // Start the playback timer if not already running
+            this.lastPlaybackTimerTickTime = DateTime.UtcNow;
+            if (!this.playbackTimer.IsEnabled)
+            {
+                this.playbackTimer.Start();
             }
         }
 
         private void OnAudioPlaybackPipelineError(object sender, PipelineExceptionNotHandledEventArgs e)
         {
-            Application.Current.Dispatcher.BeginInvoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
             {
                 if (this.audioPlaybackPipeline != null)
                 {
-                    this.StopPlayback();
+                    this.StopPlaybackMode();
 
                     new MessageBoxWindow(
                         Application.Current.MainWindow,
@@ -888,10 +945,29 @@ namespace Microsoft.Psi.Visualization.Navigation
             });
         }
 
+        private void OnAudioPlaybackPipelineCompleted(object sender, PipelineCompletedEventArgs e)
+        {
+            // If Repeat is enabled, then restart the playback, o/w stop it.
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // If looping playback is enabled
+                if (this.RepeatPlayback)
+                {
+                    // Then clear out the audio playback pipeline and restart the playback
+                    this.StartPlaybackMode(this.playbackStartTime, this.playbackEndTime);
+                }
+                else
+                {
+                    // O/w stop the playback
+                    this.StopPlaybackMode();
+                }
+            });
+        }
+
         /// <summary>
         /// Sets the cursor mode to live.
         /// </summary>
-        private void EnterLiveMode()
+        private void StartLiveMode()
         {
             // Update the cursor mode
             this.CursorMode = CursorMode.Live;
@@ -903,39 +979,45 @@ namespace Microsoft.Psi.Visualization.Navigation
             }
         }
 
-        private void OnPlaytimerTick(object sender, EventArgs e)
+        private void OnPlaybackTimerTick(object sender, EventArgs e)
         {
-            // Calculate the new cursor position
-            DateTime now = DateTime.UtcNow;
-            this.Cursor = this.Cursor.AddTicks((long)((now - this.lastPlayTimerTickTime).Ticks * this.playSpeed));
+            // Update the cursor position based on audio playback pipeline or playback timer
 
-            // Check if we've hit the end of the selection (or of the data)
-            var endTime = this.SelectionRange.EndTime != DateTime.MaxValue ? this.SelectionRange.EndTime : this.DataRange.EndTime;
-            if (this.Cursor >= endTime)
+            // If we have audio playback running
+            if (this.audioPlaybackPipeline != null)
             {
-                // If Repeat is enabled, then move the cursor back to the
-                // selection start marker, otherwise stop the play timer
+                // Calculate the cursor position based on the audio playback
+                if (this.audioPlaybackDateTime != DateTime.MinValue)
+                {
+                    this.Cursor = this.audioPlaybackDateTime;
+                }
+            }
+            else
+            {
+                // O/w calculate the new cursor position according to the playback timer
+                var now = DateTime.UtcNow;
+                this.Cursor = this.Cursor.AddTicks((long)((now - this.lastPlaybackTimerTickTime).Ticks * this.playSpeed));
+                this.lastPlaybackTimerTickTime = now;
+            }
+
+            // Make sure the view window adjust to keep the cursor visible
+            this.EnsureCursorVisible();
+
+            // Check if we're at the end of the playback range
+            if (this.Cursor > this.playbackEndTime)
+            {
+                // If looping playback is enabled
                 if (this.RepeatPlayback)
                 {
-                    this.Cursor = this.SelectionRange.StartTime != DateTime.MinValue ? this.SelectionRange.StartTime : this.DataRange.StartTime;
-                    this.EnsureCursorVisible();
-                    this.UpdateAudioPlayback();
+                    // Then clear out the audio playback pipeline and restart the playback
+                    this.StartPlaybackMode(this.playbackStartTime, this.playbackEndTime);
                 }
                 else
                 {
-                    this.Cursor = endTime;
-                    this.playTimer.Stop();
-                    this.CursorMode = CursorMode.Manual;
+                    // O/w stop the playback
+                    this.StopPlaybackMode();
                 }
             }
-
-            // Make sure the cursor is visible in the view window
-            if (this.Cursor > this.ViewRange.EndTime)
-            {
-                this.ViewRange.Set(this.Cursor, this.ViewRange.Duration);
-            }
-
-            this.lastPlayTimerTickTime = now;
         }
 
         private void EnsureCursorVisible()

@@ -1436,6 +1436,15 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 copyToClipboardMenuItem.Items.Add(
                     MenuItemHelper.CreateMenuItem(
                         null,
+                        "[Partition Name]:Stream Name",
+                        VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
+                        null,
+                        true,
+                        $"[{this.PartitionViewModel.Name}]:{this.FullName}"));
+
+                copyToClipboardMenuItem.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        null,
                         "Source Stream Name",
                         VisualizationContext.Instance.VisualizationContainer.Navigator.CopyToClipboardCommand,
                         null,

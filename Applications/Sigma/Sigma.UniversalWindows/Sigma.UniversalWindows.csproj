@@ -127,6 +127,10 @@
       <Project>{d55700d9-6050-44ac-abc0-ac1fbf9dfd3f}</Project>
       <Name>Microsoft.Psi.Spatial.Euclidean</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Sources\Speech\Microsoft.Psi.Speech\Microsoft.Psi.Speech.csproj">
+      <Project>{3889F11A-B537-47F9-8819-146DB7E66B0C}</Project>
+      <Name>Microsoft.Psi.Speech</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.Psi.MixedReality.Applications.UniversalWindows\Microsoft.Psi.MixedReality.Applications.UniversalWindows.csproj">
       <Project>{1afbbd50-ce3a-4792-be84-15e897d281dd}</Project>
       <Name>Microsoft.Psi.MixedReality.Applications.UniversalWindows</Name>
