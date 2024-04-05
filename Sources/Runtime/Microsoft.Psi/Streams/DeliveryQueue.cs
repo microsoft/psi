@@ -147,7 +147,8 @@ namespace Microsoft.Psi.Streams
             lock (this.queue)
             {
                 bool dropIncomingMessage = false;
-                bool IsClosingMessage(Message<T> m) => m.SequenceId == int.MaxValue;
+
+                static bool IsClosingMessage(Message<T> m) => m.SequenceId == int.MaxValue;
 
                 // If the queue size is more than the allowed size in the policy, try to drop messages in the queue
                 // if possible, until we create enough space to hold the new message

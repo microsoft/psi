@@ -49,6 +49,64 @@ namespace Microsoft.Psi.Spatial.Euclidean
     /// </summary>
     public class Box3D : IEquatable<Box3D>
     {
+        // Corner indices
+        //   3------2
+        //  /|     /|       Z
+        // 1-+----0 |       |
+        // | |    | |       |
+        // | 7----+-6       +---Y
+        // |/     |/       /
+        // 5------4       X
+
+        /// <summary>
+        /// Gets the indices of all corners of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly int[] AllCornerIndices = new[] { 0, 1, 2, 3, 4, 5, 6, 7 };
+
+        /// <summary>
+        /// Gets the indices of the top corners (max-Z) of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly int[] TopCornerIndices = new[] { 0, 1, 2, 3 };
+
+        /// <summary>
+        /// Gets the indices of the bottom corners (min-Z) of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly int[] BottomCornerIndices = new[] { 4, 5, 6, 7 };
+
+        /// <summary>
+        /// Gets the indices for all edges of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly (int, int)[] AllEdgeIndices = new[]
+        {
+            (0, 1), (0, 2), (2, 3), (3, 1),
+            (0, 4), (1, 5), (3, 7), (2, 6),
+            (4, 5), (4, 6), (6, 7), (5, 7),
+        };
+
+        /// <summary>
+        /// Gets the indices for the top edges (max-Z plane) of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly (int, int)[] TopEdgeIndices = new[]
+        {
+            (0, 1), (0, 2), (2, 3), (3, 1),
+        };
+
+        /// <summary>
+        /// Gets the indices for the side edges (Z-axis aligned) of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly (int, int)[] SideEdgeIndices = new[]
+        {
+            (0, 4), (1, 5), (3, 7), (2, 6),
+        };
+
+        /// <summary>
+        /// Gets the indices for the bottom edges (min-Z plane) of a <see cref="Box3D"/>.
+        /// </summary>
+        public static readonly (int, int)[] BottomEdgeIndices = new[]
+        {
+            (4, 5), (4, 6), (6, 7), (5, 7),
+        };
+
         /// <summary>
         /// The private pose (used to determine if the Pose has been mutated and update the inversePose).
         /// </summary>
@@ -108,7 +166,6 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// The box is defined by two opposite corners whose offsets are specified relative to its origin.
         /// The edges of the box are aligned to the specified x, y and z axes.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:Field names should not use Hungarian notation", Justification = "Allow use of param names xAxis, yAxis and zAxis.")]
         public Box3D(Point3D origin, UnitVector3D xAxis, UnitVector3D yAxis, UnitVector3D zAxis, double x1, double x2, double y1, double y2, double z1, double z2)
             : this(x1, x2, y1, y2, z1, z2, new CoordinateSystem(origin, xAxis, yAxis, zAxis))
         {
@@ -210,11 +267,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// Gets the corner points of the box.
         /// </summary>
         /// <returns>An enumeration containing the corner points for the box.</returns>
-        public IEnumerable<Point3D> GetCorners()
-        {
-            var pose = this.Pose;
-            return this.Bounds.GetCorners().Select(p => p.TransformBy(pose));
-        }
+        public IEnumerable<Point3D> GetCorners() => this.Bounds.GetCorners().Select(p => p.TransformBy(this.Pose));
 
         /// <summary>
         /// Determines whether the <see cref="Box3D"/> contains a point.
@@ -241,7 +294,7 @@ namespace Microsoft.Psi.Spatial.Euclidean
         public Point3D? IntersectionWith(Ray3D ray3D)
         {
             // If the box is degenerate, return.
-            // TODO: Better handle degenerate (e.g. planar) cases
+            // TODO: Implement better handling for degenerate (e.g. planar) cases
             if (this.IsDegenerate)
             {
                 return null;
@@ -261,6 +314,18 @@ namespace Microsoft.Psi.Spatial.Euclidean
 
             // If there are any intersection points, get the closest one
             return results.Any() ? results.OrderBy(p => p.DistanceTo(ray3D.ThroughPoint)).First() : null;
+        }
+
+        /// <summary>
+        /// Computes the closest point on the box to a specified 3D point.
+        /// </summary>
+        /// <param name="point3D">The 3D point to compute the closest point to.</param>
+        /// <returns>The closest point.</returns>
+        public Point3D ClosestPointTo(Point3D point3D)
+        {
+            var candidates = this.GetFacets().Select(f => f.ClosestPointTo(point3D));
+            var minDistance = candidates.Min(c => c.DistanceTo(point3D));
+            return candidates.First(c => c.DistanceTo(point3D) == minDistance);
         }
 
         /// <inheritdoc/>

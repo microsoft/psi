@@ -76,6 +76,34 @@ namespace Microsoft.Psi.MixedReality
             => new (-vector3.Z, -vector3.X, vector3.Y);
 
         /// <summary>
+        /// Convert a <see cref="StereoKit.Hand"/> to a <see cref="OpenXR.Hand"/>.
+        /// </summary>
+        /// <param name="stereoKitHand">The <see cref="StereoKit.Hand"/> to convert.</param>
+        /// <returns>The corresponding <see cref="OpenXR.Hand"/>.</returns>
+        public static OpenXR.Hand ToOpenXRHand(this StereoKit.Hand stereoKitHand)
+        {
+            if (stereoKitHand == null)
+            {
+                return null;
+            }
+            else if (stereoKitHand.IsTracked)
+            {
+                var jointsValid = new bool[(int)HandJointIndex.MaxIndex];
+                var jointsTracked = new bool[(int)HandJointIndex.MaxIndex];
+                for (int i = 0; i < (int)HandJointIndex.MaxIndex; i++)
+                {
+                    jointsValid[i] = jointsTracked[i] = true;
+                }
+
+                return new (true, stereoKitHand.Joints, jointsValid, jointsTracked);
+            }
+            else
+            {
+                return OpenXR.Hand.Empty;
+            }
+        }
+
+        /// <summary>
         /// Converts and rebases a MathNet <see cref="CoordinateSystem"/> to a HoloLens <see cref="Matrix4x4"/>.
         /// </summary>
         /// <param name="coordinateSystem">The MathNet basis <see cref="CoordinateSystem"/>.</param>

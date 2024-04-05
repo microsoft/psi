@@ -404,12 +404,22 @@ namespace Microsoft.Psi.Calibration
         /// <param name="maxDistance">The maximum distance to search for (default is 5 meters).</param>
         /// <param name="skipFactor">Distance to march on each step along ray (default is 5 cm).</param>
         /// <param name="undistort">Whether undistortion should be applied to the point.</param>
+        /// <param name="interpolateDepthIfInvalid">If true, interpolate invalid depth pixels when computing intersection.</param>
+        /// <param name="depthInvalidValue">Value for considering a depth pixel invalid. Defaults to 0.</param>
         /// <returns>Returns point of intersection, or null if no intersection was found.</returns>
         /// <remarks>
         /// The ray is assumed to be defined relative to the pose of the depth camera,
         /// i.e., (0, 0, 0) is the position of the camera itself.
         /// </remarks>
-        public static Point3D? ComputeRayIntersection(this DepthImage depthImage, ICameraIntrinsics depthIntrinsics, Ray3D ray, double maxDistance = 5, double skipFactor = 0.05, bool undistort = true)
+        public static Point3D? ComputeRayIntersection(
+            this DepthImage depthImage,
+            ICameraIntrinsics depthIntrinsics,
+            Ray3D ray,
+            double maxDistance = 5,
+            double skipFactor = 0.05,
+            bool undistort = true,
+            bool interpolateDepthIfInvalid = true,
+            ushort depthInvalidValue = 0)
         {
             // max distance to check for intersection with the scene
             int maxSteps = (int)(maxDistance / skipFactor);
@@ -423,29 +433,35 @@ namespace Microsoft.Psi.Calibration
                 hypothesisPoint += delta;
 
                 // get the mesh distance at the hypothesis point
-                if (depthIntrinsics.TryGetPixelPosition(hypothesisPoint, undistort, out var depthPixel) &&
-                    depthImage.TryGetPixel((int)Math.Floor(depthPixel.X), (int)Math.Floor(depthPixel.Y), out var depthValue) &&
-                    depthValue != 0)
+                if (depthIntrinsics.TryGetPixelPosition(hypothesisPoint, undistort, out var pixel))
                 {
-                    // if the mesh distance is less than the distance to the point we've hit the mesh
-                    var meshDistanceMeters = (double)depthValue * depthImage.DepthValueToMetersScaleFactor;
-                    if (depthImage.DepthValueSemantics == DepthValueSemantics.DistanceToPlane)
+                    ushort depthValue = depthInvalidValue;
+                    var getPixelSuccess = interpolateDepthIfInvalid ?
+                        depthImage.TryGetInterpolatedPixel((int)Math.Floor(pixel.X), (int)Math.Floor(pixel.Y), out depthValue) :
+                        depthImage.TryGetPixel((int)Math.Floor(pixel.X), (int)Math.Floor(pixel.Y), out depthValue);
+
+                    if (getPixelSuccess && depthValue != depthInvalidValue)
                     {
-                        if (meshDistanceMeters < hypothesisPoint.X)
+                        // if the mesh distance is less than the distance to the point we've hit the mesh
+                        var meshDistanceMeters = depthValue * depthImage.DepthValueToMetersScaleFactor;
+                        if (depthImage.DepthValueSemantics == DepthValueSemantics.DistanceToPlane)
                         {
-                            return hypothesisPoint;
+                            if (meshDistanceMeters < hypothesisPoint.X)
+                            {
+                                return hypothesisPoint;
+                            }
                         }
-                    }
-                    else if (depthImage.DepthValueSemantics == DepthValueSemantics.DistanceToPoint)
-                    {
-                        if (meshDistanceMeters < hypothesisPoint.ToVector3D().Length)
+                        else if (depthImage.DepthValueSemantics == DepthValueSemantics.DistanceToPoint)
                         {
-                            return hypothesisPoint;
+                            if (meshDistanceMeters < hypothesisPoint.ToVector3D().Length)
+                            {
+                                return hypothesisPoint;
+                            }
                         }
-                    }
-                    else
-                    {
-                        throw new ArgumentException($"Unhandled {nameof(DepthValueSemantics)}: {depthImage.DepthValueSemantics}");
+                        else
+                        {
+                            throw new ArgumentException($"Unhandled {nameof(DepthValueSemantics)}: {depthImage.DepthValueSemantics}");
+                        }
                     }
                 }
             }

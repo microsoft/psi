@@ -22,7 +22,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a visualization object for a <see cref="DepthImageCameraView"/>.
     /// </summary>
     [VisualizationObject("Depth Camera View (Mesh)")]
-    public class DepthImageCameraViewAsMeshVisualizationObject : ModelVisual3DVisualizationObject<DepthImageCameraView>
+    public class DepthImageCameraViewAsMeshVisualizationObject : ModelVisual3DValueVisualizationObject<DepthImageCameraView>
     {
         private readonly ModelVisual3D depthImageMesh;
         private CameraIntrinsicsWithPoseVisualizationObject frustum;
@@ -86,7 +86,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         protected override Action<DepthImageCameraView> Deallocator => data => data.ViewedObject?.Dispose();
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.depthImage != null)
             {
@@ -137,7 +137,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         private void UpdateVisibility()
         {
             this.UpdateChildVisibility(this.depthImageMesh, this.Visible && this.CurrentData != default && this.depthImage != null && this.depthImage.Resource != null && this.intrinsics != null && this.position != null);
-            this.UpdateChildVisibility(this.frustum.ModelView, this.Visible && this.CurrentData != default && this.intrinsics != null && this.position != null);
+            this.UpdateChildVisibility(this.frustum.ModelVisual3D, this.Visible && this.CurrentData != default && this.intrinsics != null && this.position != null);
         }
 
         private void UpdateMaterial()

@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Camera intrinsics are determined from manually set focal length properties.
     /// </summary>
     [VisualizationObject("Depth Camera View (Mesh) with Manual Focal Length")]
-    public class DepthImageWithPoseAndManualFocalLengthAsMeshVisualizationObject : ModelVisual3DVisualizationObject<(Shared<DepthImage>, CoordinateSystem)>
+    public class DepthImageWithPoseAndManualFocalLengthAsMeshVisualizationObject : ModelVisual3DValueVisualizationObject<(Shared<DepthImage>, CoordinateSystem)>
     {
         private DepthImageCameraViewAsMeshVisualizationObject depthImageCameraViewAsMesh;
 
@@ -77,7 +77,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         protected override Action<(Shared<DepthImage>, CoordinateSystem)> Deallocator => data => data.Item1?.Dispose();
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.depthImage != null)
             {
@@ -112,7 +112,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.depthImageCameraViewAsMesh.ModelView, this.Visible && this.CurrentData != default);
+            this.UpdateChildVisibility(this.depthImageCameraViewAsMesh.ModelVisual3D, this.Visible && this.CurrentData != default);
         }
     }
 }

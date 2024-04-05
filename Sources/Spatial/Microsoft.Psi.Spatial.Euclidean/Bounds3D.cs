@@ -108,14 +108,14 @@ namespace Microsoft.Psi.Spatial.Euclidean
         /// <returns>An enumeration of corner points for the bounds.</returns>
         public IEnumerable<Point3D> GetCorners()
         {
-            // Corner indices (0 = Min, 7 = Max)
-            //   2------3
-            //  /|     /|
-            // 0-+----1 |
-            // | |    | |
-            // | 6----+-7
-            // |/     |/
-            // 4------5
+            // Corner indices
+            //   3------2
+            //  /|     /|       Z
+            // 1-+----0 |       |
+            // | |    | |       |
+            // | 7----+-6       +---Y
+            // |/     |/       /
+            // 5------4       X
             yield return new Point3D(this.Max.X, this.Max.Y, this.Max.Z);
             yield return new Point3D(this.Max.X, this.Min.Y, this.Max.Z);
             yield return new Point3D(this.Min.X, this.Max.Y, this.Max.Z);

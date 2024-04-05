@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
-
 namespace Microsoft.Psi.Visualization.VisualizationObjects
 {
     using System;
@@ -248,7 +246,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             base.OnPanelPropertyChanged(sender, e);
         }
 
-        // Compute the rangwe of Y values in the dataset
+        // Compute the range of Y values in the dataset
         private void ComputeYValueRange()
         {
             double min = double.MaxValue;

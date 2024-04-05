@@ -90,7 +90,7 @@ namespace Microsoft.Psi.MixedReality.StereoKit
 
             var scale = Matrix.S(new Vec3((float)box3D.LengthY, (float)box3D.LengthZ, (float)box3D.LengthX));
             var pose = new CoordinateSystem(box3D.Center, box3D.XAxis, box3D.YAxis, box3D.ZAxis);
-            this.MeshTransform = scale * pose.ToStereoKitMatrix();
+            this.ModelTransform = scale * pose.ToStereoKitMatrix();
         }
     }
 }

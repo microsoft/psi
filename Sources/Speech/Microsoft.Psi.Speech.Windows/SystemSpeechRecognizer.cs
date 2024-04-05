@@ -34,7 +34,7 @@ namespace Microsoft.Psi.Speech
     /// position offset of the recognized audio as reported by the recognition engine to compute an estimate of the originating time. For
     /// partial hypotheses, we use the engine's current offset into the audio stream to estimate the originating time.
     /// </remarks>
-    public sealed class SystemSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, ISourceComponent, IDisposable
+    public sealed class SystemSpeechRecognizer : ConsumerProducer<AudioBuffer, IStreamingSpeechRecognitionResult>, ISpeechRecognizer, ISourceComponent, IDisposable
     {
         /// <summary>
         /// Stream for buffering audio samples to send to the speech recognition engine.
@@ -129,7 +129,7 @@ namespace Microsoft.Psi.Speech
         public SystemSpeechRecognizer(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemSpeechRecognizer))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemSpeechRecognizerConfiguration() : new ConfigurationHelper<SystemSpeechRecognizerConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new SystemSpeechRecognizerConfiguration(), true),
                 name)
         {
         }

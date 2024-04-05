@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner" 
+        WindowStartupLocation="CenterOwner"
         WindowStyle="None"
         BorderBrush="DodgerBlue"
         BorderThickness="1"
@@ -21,10 +21,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="{Binding ProgressText}"/>
-        <ProgressBar Grid.Row="1" Height ="12" Maximum="1" IsIndeterminate="False" Margin="5,10" Value="{Binding Progress}" />
-        <Button Grid.Row="2" Visibility="{Binding ShowCancelButton, Converter={StaticResource BoolToVisibilityConverter}}" IsCancel="True" HorizontalAlignment="Right" Margin="0,0,5,0">Cancel</Button>
+        <Label Grid.Row="0" Content="{Binding OperationName}"/>
+        <Label Grid.Row="1" Content="{Binding ProgressStatus}"/>
+        <ProgressBar Grid.Row="2" Height ="12" IsIndeterminate="False" Margin="5,10" Value="{Binding ProgressValue}" />
+        <Button Grid.Row="3" Visibility="{Binding IsCancellable, Converter={StaticResource BoolToVisibilityConverter}}" IsCancel="True" Click="CancelButton_Click" HorizontalAlignment="Right" Margin="0,0,5,0">Cancel</Button>
     </Grid>
 </Window>

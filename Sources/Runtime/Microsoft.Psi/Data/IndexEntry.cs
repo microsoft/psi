@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Data
 {
     using System;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// Structure describing a position in a data file.
@@ -21,28 +22,33 @@ namespace Microsoft.Psi.Data
     /// When writing large messages, an index entry is written into the main data file,
     /// pointing to a location in the large data file where the actual message resides.
     /// </remarks>
+    [StructLayout(LayoutKind.Explicit)]
     public struct IndexEntry
     {
-        /// <summary>
-        /// The largest time value seen up to the position specified by this entry.
-        /// </summary>
-        public DateTime CreationTime;
-
-        /// <summary>
-        /// The largest originating time value seen up to the position specified by this entry.
-        /// </summary>
-        public DateTime OriginatingTime;
-
         /// <summary>
         /// The id of the extent this index entry refers to.
         /// A negative extentId indicates an entry in the large file for \psi stores.
         /// </summary>
+        [FieldOffset(0)]
         public int ExtentId;
 
         /// <summary>
         /// The position within the extent to which this index entry points.
         /// </summary>
+        [FieldOffset(4)]
         public int Position;
+
+        /// <summary>
+        /// The largest time value seen up to the position specified by this entry.
+        /// </summary>
+        [FieldOffset(8)]
+        public DateTime CreationTime;
+
+        /// <summary>
+        /// The largest originating time value seen up to the position specified by this entry.
+        /// </summary>
+        [FieldOffset(16)]
+        public DateTime OriginatingTime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IndexEntry"/> struct.

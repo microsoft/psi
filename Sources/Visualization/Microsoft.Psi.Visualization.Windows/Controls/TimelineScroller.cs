@@ -40,6 +40,7 @@ namespace Microsoft.Psi.Visualization.Controls
         {
             // Only move the cursor if we're currently paused and if the cursor is currently following the mouse
             if (this.Navigator.CursorMode == CursorMode.Manual &&
+                this.Navigator.HasFiniteRange &&
                 this.Navigator.CursorFollowsMouse &&
                 !(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
             {

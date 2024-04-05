@@ -1976,36 +1976,35 @@ namespace Test.Psi
             var log = new List<string>();
             PipelineDiagnostics graph = null;
 
-            using (var p = Pipeline.Create(enableDiagnostics: true, diagnosticsConfiguration: new DiagnosticsConfiguration() { SamplingInterval = TimeSpan.FromMilliseconds(1) }))
+            using var p = Pipeline.Create(enableDiagnostics: true, diagnosticsConfiguration: new DiagnosticsConfiguration() { SamplingInterval = TimeSpan.FromMilliseconds(10) });
+
+            /*
+             *         .........
+             *  =---=  . =---= .  =---=
+             *  | A |--->| B |--->| D |---+
+             *  =---=  . =---= .  =---=   |
+             *    ^    .........          |
+             *    |                       |
+             *    +-----------------------+
+             */
+            var sub = new Subpipeline(p);
+            var cIn = new Connector<int>(p, sub);
+            var cOut = new Connector<int>(sub, p);
+            var d = new FinalizationTestComponent(p, "C", log);
+            var b = new FinalizationTestComponent(sub, "B", log);
+            var a = new FinalizationTestComponent(p, "A", log);
+            var timer = Generators.Range(p, 0, 100, TimeSpan.FromMilliseconds(10));
+            timer.PipeTo(cIn.In);
+            cIn.Out.PipeTo(b.ReceiverX);
+            b.RelayFromX.PipeTo(cOut.In);
+            cOut.Out.PipeTo(d.ReceiverX);
+
+            p.Diagnostics.Do(diag => graph = diag.DeepClone());
+
+            p.RunAsync();
+            while (graph == null)
             {
-                /*
-                 *         .........
-                 *  =---=  . =---= .  =---=
-                 *  | A |--->| B |--->| D |---+
-                 *  =---=  . =---= .  =---=   |
-                 *    ^    .........          |
-                 *    |                       |
-                 *    +-----------------------+
-                 */
-                var sub = new Subpipeline(p);
-                var cIn = new Connector<int>(p, sub);
-                var cOut = new Connector<int>(sub, p);
-                var d = new FinalizationTestComponent(p, "C", log);
-                var b = new FinalizationTestComponent(sub, "B", log);
-                var a = new FinalizationTestComponent(p, "A", log);
-                var timer = Generators.Range(p, 0, 100, TimeSpan.FromMilliseconds(10));
-                timer.PipeTo(cIn.In);
-                cIn.Out.PipeTo(b.ReceiverX);
-                b.RelayFromX.PipeTo(cOut.In);
-                cOut.Out.PipeTo(d.ReceiverX);
-
-                p.Diagnostics.Do(diag => graph = diag.DeepClone());
-
-                p.RunAsync();
-                while (graph == null)
-                {
-                    Thread.Sleep(10);
-                }
+                Thread.Sleep(10);
             }
 
             Assert.AreEqual(2, graph.GetPipelineCount()); // total graphs
@@ -2295,6 +2294,7 @@ namespace Test.Psi
             private readonly Pipeline pipeline;
             private readonly string name;
             private readonly List<string> log;
+            private readonly object stateLock = new ();
 
             private Action<DateTime> notifyCompletionTime;
             private int count = 0;
@@ -2372,7 +2372,7 @@ namespace Test.Psi
 
             private void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
             {
-                lock (this)
+                lock (this.stateLock)
                 {
                     if (this.Generator.HasSubscribers && this.count < 3)
                     {

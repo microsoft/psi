@@ -20,6 +20,7 @@ namespace Microsoft.Psi.MixedReality.StereoKit
 
         private bool active;
         private Pose pose;
+        private DateTime lastPostTime = DateTime.MinValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Handle"/> class.
@@ -59,19 +60,18 @@ namespace Microsoft.Psi.MixedReality.StereoKit
         }
 
         /// <inheritdoc />
-        public override void Step()
+        protected override void Render()
         {
             if (this.active)
             {
-                base.Step();
-                this.Out.Post(this.pose.ToCoordinateSystem(), this.pipeline.GetCurrentTime());
+                UI.Handle(this.id, ref this.pose, this.bounds, this.show);
+                var currentTime = this.pipeline.GetCurrentTimeFromOpenXr();
+                if (currentTime > this.lastPostTime)
+                {
+                    this.Out.Post(this.pose.ToCoordinateSystem(), currentTime);
+                    this.lastPostTime = currentTime;
+                }
             }
-        }
-
-        /// <inheritdoc />
-        protected override void Render()
-        {
-            UI.Handle(this.id, ref this.pose, this.bounds, this.show);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Media
     /// <summary>
     /// Component that writes video and audio streams into an MPEG-4 file.
     /// </summary>
-    public class Mpeg4Writer : IConsumer<Shared<Image>>, IDisposable
+    public class Mpeg4Writer : IConsumer<Shared<Image>>, IMpeg4Writer, IDisposable
     {
         private readonly string name;
         private readonly Mpeg4WriterConfiguration configuration;
@@ -32,8 +32,7 @@ namespace Microsoft.Psi.Media
         public Mpeg4Writer(Pipeline pipeline, string filename, string configurationFilename, string name = nameof(Mpeg4Writer))
             : this(pipeline, filename, name)
         {
-            var configurationHelper = new ConfigurationHelper<Mpeg4WriterConfiguration>(configurationFilename);
-            this.configuration = configurationHelper.Configuration;
+            this.configuration = ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new Mpeg4WriterConfiguration(), true);
         }
 
         /// <summary>
@@ -57,14 +56,46 @@ namespace Microsoft.Psi.Media
         /// <param name="width">Width of output image in pixels.</param>
         /// <param name="height">Height of output image in pixels.</param>
         /// <param name="pixelFormat">Format of input images.</param>
+        /// <param name="frameRateNumerator">The numerator of the output frame rate.</param>
+        /// <param name="frameRateDenominator">The denominator of the output frame rate.</param>
+        /// <param name="targetBitrate">The output bitrate.</param>
+        /// <param name="containsAudio">A flag indicating whether the media contains an audio stream.</param>
+        /// <param name="audioBitsPerSample">The number of bits per audio sample.</param>
+        /// <param name="audioSamplesPerSecond">The number of audio samples per second.</param>
+        /// <param name="audioChannels">The number of audio channels.</param>
+        /// <param name="disableThrottling">A value indicating whether the MP4 writer should throttle the incoming data.</param>
         /// <param name="name">An optional name for the component.</param>
-        public Mpeg4Writer(Pipeline pipeline, string filename, uint width, uint height, PixelFormat pixelFormat, string name = nameof(Mpeg4Writer))
+        public Mpeg4Writer(
+            Pipeline pipeline,
+            string filename,
+            uint width,
+            uint height,
+            PixelFormat pixelFormat,
+            uint frameRateNumerator = 30,
+            uint frameRateDenominator = 1,
+            uint targetBitrate = 10000000,
+            bool containsAudio = true,
+            uint audioBitsPerSample = 16,
+            uint audioSamplesPerSecond = 48000,
+            uint audioChannels = 2,
+            bool disableThrottling = false,
+            string name = nameof(Mpeg4Writer))
             : this(pipeline, filename, name)
         {
-            this.configuration = Mpeg4WriterConfiguration.Default;
-            this.configuration.ImageWidth = width;
-            this.configuration.ImageHeight = height;
-            this.configuration.PixelFormat = pixelFormat;
+            this.configuration = new Mpeg4WriterConfiguration
+            {
+                ImageWidth = width,
+                ImageHeight = height,
+                PixelFormat = pixelFormat,
+                FrameRateDenominator = frameRateDenominator,
+                FrameRateNumerator = frameRateNumerator,
+                TargetBitrate = targetBitrate,
+                ContainsAudio = containsAudio,
+                AudioBitsPerSample = audioBitsPerSample,
+                AudioSamplesPerSecond = audioSamplesPerSecond,
+                AudioChannels = audioChannels,
+                DisableThrottling = disableThrottling,
+            };
         }
 
         private Mpeg4Writer(Pipeline pipeline, string filename, string name)
@@ -96,7 +127,7 @@ namespace Microsoft.Psi.Media
         public Receiver<Shared<Image>> ImageIn { get; set; }
 
         /// <summary>
-        /// Gets or sets the input stream of images.
+        /// Gets or sets the input audio stream.
         /// </summary>
         public Receiver<AudioBuffer> AudioIn { get; set; }
 

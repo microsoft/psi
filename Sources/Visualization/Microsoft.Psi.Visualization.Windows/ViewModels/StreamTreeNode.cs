@@ -7,8 +7,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Data;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -2001,14 +2003,8 @@ namespace Microsoft.Psi.Visualization.ViewModels
             var keysToAdd = new Dictionary<string, TKey>();
             keysNotAdded = new List<string>();
 
-            // Create the progress dialog to displayed while we traverse the entire stream for keys
-            var progressWindow = new ProgressWindow(Application.Current.MainWindow, $"Extracting dictionary keys", showCancelButton: true);
-            bool? dialogResult;
-
             void GetAllDictionaryKeys(Dictionary<TKey, TValue> dictionary, Envelope envelope)
             {
-                string errorString = default;
-
                 foreach (var kvp in dictionary)
                 {
                     var keyString = kvp.Key.ToString();
@@ -2018,86 +2014,62 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     {
                         if (!kvp.Key.Equals(existingKey))
                         {
-                            errorString = $"Could not expand the dictionary keys as the dictionary contains multiple keys which map to the same key string: {keyString}.";
+                            throw new InvalidOperationException($"Could not expand the dictionary keys as the dictionary contains multiple keys which map to the same key string: {keyString}.");
                         }
                     }
                     else if (keyString.Contains('.'))
                     {
-                        errorString = $"Could not expand the dictionary keys as one of the key strings contains an illegal character [.]: {keyString}.";
+                        throw new InvalidOperationException($"Could not expand the dictionary keys as one of the key strings contains an illegal character [.]: {keyString}.");
                     }
                     else
                     {
                         // OK to add this new key
                         keysToAdd.Add(keyString, kvp.Key);
                     }
+                }
+            }
 
-                    // If there was a problem with any key, abort the pipeline and display an error
-                    if (!string.IsNullOrEmpty(errorString))
+            try
+            {
+                ProgressWindow.RunWithProgress(
+                    $"Extracting dictionary keys",
+                    action: (progress, cancellationToken) =>
                     {
-                        // Abort without adding any keys
-                        keysToAdd.Clear();
-
-                        // Setting the DialogResult to false will close the modal dialog window and dispose the pipeline
-                        Application.Current.Dispatcher.Invoke(() => progressWindow.DialogResult = false);
-
-                        // Display an error dialog
-                        Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                        // Create and run a pipeline to read all the keys from the store. This will also perform checks to
+                        // ensure that all keys map to a unique key string and that no key string contains a '.' character.
+                        using (var pipeline = Pipeline.Create(deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle))
                         {
-                            new MessageBoxWindow(
-                                Application.Current.MainWindow,
-                                "Error",
-                                errorString,
-                                "Close",
-                                null).ShowDialog();
-                        }));
+                            var reader = StreamReader.Create(this.PartitionViewModel.StoreName, this.PartitionViewModel.StorePath, this.PartitionViewModel.Partition.StreamReaderTypeName);
+                            var store = new Importer(pipeline, reader, usePerStreamReaders: true);
 
-                        return;
-                    }
-                }
-            }
+                            if (!this.IsDerivedStream)
+                            {
+                                // Apply the GetAllDictionaryKeys function directly to the source stream
+                                var stream = store.OpenStream<Dictionary<TKey, TValue>>(this.SourceStreamMetadata.Name);
+                                stream.Do(GetAllDictionaryKeys);
 
-            // Create and run a pipeline to read all the keys from the store. This will also perform checks to
-            // ensure that all keys map to a unique key string and that no key string contains a '.' character.
-            using (var pipeline = Pipeline.Create(deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle))
-            {
-                var reader = StreamReader.Create(this.PartitionViewModel.StoreName, this.PartitionViewModel.StorePath, this.PartitionViewModel.Partition.StreamReaderTypeName);
-                var store = new Importer(pipeline, reader, usePerStreamReaders: true);
+                                // Attach an operator that checks if the user canceled the operation
+                                stream.Do(_ => { cancellationToken.ThrowIfCancellationRequested(); });
+                            }
+                            else
+                            {
+                                // If this is a derived stream, we need to adapt the GetAllDictionaryKeys function using the derived stream adapter
+                                dynamic derivedStreamAdapter = Activator.CreateInstance(this.DerivedStreamAdapterType, this.DerivedStreamAdapterArguments);
+                                dynamic adaptedGetAllDictionaryKeys = derivedStreamAdapter.AdaptReceiver(new Action<Dictionary<TKey, TValue>, Envelope>(GetAllDictionaryKeys));
 
-                if (!this.IsDerivedStream)
-                {
-                    // Apply the GetAllDictionaryKeys function directly to the source stream
-                    var stream = store.OpenStream<Dictionary<TKey, TValue>>(this.SourceStreamMetadata.Name);
-                    stream.Do(GetAllDictionaryKeys);
-                }
-                else
-                {
-                    // If this is a derived stream, we need to adapt the GetAllDictionaryKeys function using the derived stream adapter
-                    dynamic derivedStreamAdapter = Activator.CreateInstance(this.DerivedStreamAdapterType, this.DerivedStreamAdapterArguments);
-                    dynamic adaptedGetAllDictionaryKeys = derivedStreamAdapter.AdaptReceiver(new Action<Dictionary<TKey, TValue>, Envelope>(GetAllDictionaryKeys));
+                                // Apply the adapted GetAllDictionaryKeys function to the source stream
+                                var stream = store.OpenStream(this.SourceStreamMetadata.Name, derivedStreamAdapter.SourceAllocator, derivedStreamAdapter.SourceDeallocator);
+                                Psi.Operators.Do(stream, adaptedGetAllDictionaryKeys);
 
-                    // Apply the adapted GetAllDictionaryKeys function to the source stream
-                    var stream = store.OpenStream(this.SourceStreamMetadata.Name, derivedStreamAdapter.SourceAllocator, derivedStreamAdapter.SourceDeallocator);
-                    Psi.Operators.Do(stream, adaptedGetAllDictionaryKeys);
-                }
+                                // Attach an operator that checks if the user canceled the operation
+                                Psi.Operators.Do(stream, new Action<dynamic>(_ => cancellationToken.ThrowIfCancellationRequested()));
+                            }
 
-                IProgress<double> progress = new Progress<double>(p =>
-                {
-                    progressWindow.Progress = p;
+                            cancellationToken.ThrowIfCancellationRequested();
+                            pipeline.Run(ReplayDescriptor.ReplayAll, new Progress<double>(p => progress.Report((string.Empty, p))));
+                        }
+                    });
 
-                    if (p == 1.0 && !progressWindow.DialogResult.HasValue)
-                    {
-                        // close the progress window when the pipeline reports completion
-                        progressWindow.DialogResult = true;
-                    }
-                });
-
-                pipeline.RunAsync(ReplayDescriptor.ReplayAll, progress);
-                dialogResult = progressWindow.ShowDialog();
-            }
-
-            // This means the key extraction pipeline ran to completion successfully and we can add the keys
-            if (dialogResult == true)
-            {
                 // Create a child node for each key
                 foreach (var keyString in keysToAdd.Keys)
                 {
@@ -2107,6 +2079,25 @@ namespace Microsoft.Psi.Visualization.ViewModels
                         keysNotAdded.InsertSorted(keyString);
                     }
                 }
+            }
+            catch (AggregateException ae)
+            {
+                // Flatten the aggregate exception hierarchy and remove duplicates
+                string AggregateExceptionMessage(AggregateException ae)
+                {
+                    return string.Join(Environment.NewLine, ae.InnerExceptions.Select(e => e is AggregateException ae2 ? AggregateExceptionMessage(ae2) : e.Message).Distinct());
+                }
+
+                // Display an error dialog
+                Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Error",
+                        AggregateExceptionMessage(ae),
+                        "Close",
+                        null).ShowDialog();
+                }));
             }
         }
 

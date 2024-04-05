@@ -254,6 +254,11 @@ namespace Microsoft.Psi.MixedReality.ResearchMode
         /// <returns>The coordinate system representing the camera pose.</returns>
         protected CoordinateSystem ToCameraPose(SpatialLocation rigNodeLocation)
         {
+            if (rigNodeLocation == null)
+            {
+                return null;
+            }
+
             var q = rigNodeLocation.Orientation;
             var m = Matrix4x4.CreateFromQuaternion(q);
             var p = rigNodeLocation.Position;
@@ -341,12 +346,8 @@ namespace Microsoft.Psi.MixedReality.ResearchMode
                             var timestamp = PerceptionTimestampHelper.FromSystemRelativeTargetTime(TimeSpan.FromTicks((long)frameTicks));
                             var rigNodeLocation = this.RigNodeLocator.TryLocateAtTimestamp(timestamp, MixedReality.WorldSpatialCoordinateSystem);
 
-                            // The rig node may not always be locatable, so we need a null check
-                            if (rigNodeLocation != null)
-                            {
-                                // Compute the camera pose from the rig node location
-                                this.cameraPose = this.ToCameraPose(rigNodeLocation);
-                            }
+                            // Compute the camera pose from the rig node location. The pose will be null if the rig node was not locatable.
+                            this.cameraPose = this.ToCameraPose(rigNodeLocation);
                         }
 
                         // Post the camera pose if requested

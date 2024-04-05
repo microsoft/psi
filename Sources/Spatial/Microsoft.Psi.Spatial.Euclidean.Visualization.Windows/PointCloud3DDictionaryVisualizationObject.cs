@@ -20,9 +20,9 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         private readonly Dictionary<int, Color> pointCloudColors = new ();
 
         /// <inheritdoc />
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
-            base.UpdateData();
+            base.UpdateVisual3D();
             this.BeginUpdate();
 
             foreach (var key in this.Keys)

@@ -18,7 +18,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a 3D mesh visualization object.
     /// </summary>
     [VisualizationObject("3D Mesh")]
-    public class Mesh3DVisualizationObject : ModelVisual3DVisualizationObject<Mesh3D>
+    public class Mesh3DVisualizationObject : ModelVisual3DValueVisualizationObject<Mesh3D>
     {
         private readonly MeshGeometryVisual3D modelVisual;
 
@@ -77,13 +77,17 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             var mesh = this.CurrentData;
-            var geometry = new MeshGeometry3D();
-            geometry.Positions = new Point3DCollection(mesh.Vertices.Select(p => p.ToPoint3D()));
-            geometry.TriangleIndices = new Int32Collection(mesh.TriangleIndices.Select(i => (int)i));
-            this.modelVisual.MeshGeometry = geometry;
+            if (mesh is not null)
+            {
+                this.modelVisual.MeshGeometry = new ()
+                {
+                    Positions = new Point3DCollection(mesh.Vertices.Select(p => mesh.Pose == null ? p.ToPoint3D() : mesh.Pose.Transform(p).ToPoint3D())),
+                    TriangleIndices = new Int32Collection(mesh.TriangleIndices.Select(i => (int)i)),
+                };
+            }
 
             this.UpdateVisibility();
         }
@@ -118,7 +122,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.modelVisual, this.Visible && this.FillVisible);
+            this.UpdateChildVisibility(this.modelVisual, this.CurrentData is not null && this.Visible && this.FillVisible);
         }
     }
 }

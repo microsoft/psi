@@ -102,7 +102,9 @@ namespace Microsoft.Psi.Diagnostics
             var root = this.collector.CurrentRoot;
             if (root != null)
             {
-                this.Diagnostics.Post(new PipelineDiagnostics(root, this.Config.IncludeStoppedPipelines, this.Config.IncludeStoppedPipelineElements), this.pipeline.GetCurrentTime());
+                var currentTime = this.pipeline.GetCurrentTime();
+                root.CloseSample(currentTime - this.Config.AveragingTimeSpan);
+                this.Diagnostics.Post(new PipelineDiagnostics(root, this.Config.IncludeStoppedPipelines, this.Config.IncludeStoppedPipelineElements), currentTime);
             }
         }
     }

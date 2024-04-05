@@ -14,9 +14,9 @@ namespace Microsoft.Psi.Diagnostics
     {
         private readonly DiagnosticsConfiguration diagnosticsConfig;
 
-        private readonly ConcurrentDictionary<int, PipelineDiagnosticsInternal> graphs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal>();
-        private readonly ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics> outputs = new ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics>();
-        private readonly ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics> connectors = new ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics>();
+        private readonly ConcurrentDictionary<int, PipelineDiagnosticsInternal> graphs = new ();
+        private readonly ConcurrentDictionary<int, PipelineDiagnosticsInternal.EmitterDiagnostics> outputs = new ();
+        private readonly ConcurrentDictionary<object, PipelineDiagnosticsInternal.PipelineElementDiagnostics> connectors = new ();
 
         public DiagnosticsCollector(DiagnosticsConfiguration diagnosticsConfig)
         {
@@ -41,7 +41,7 @@ namespace Microsoft.Psi.Diagnostics
                 throw new InvalidOperationException("Failed to add created graph");
             }
 
-            if (this.CurrentRoot == null && !(pipeline is Subpipeline))
+            if (this.CurrentRoot == null && pipeline is not Subpipeline)
             {
                 this.CurrentRoot = graph;
             }
@@ -240,9 +240,7 @@ namespace Microsoft.Psi.Diagnostics
         /// <param name="element">Element to which receiver belongs.</param>
         /// <param name="receiver">Receiver having completed processing.</param>
         public ReceiverCollector GetReceiverDiagnosticsCollector(Pipeline pipeline, PipelineElement element, IReceiver receiver)
-        {
-            return new ReceiverCollector(this.graphs[pipeline.Id].PipelineElements[element.Id], receiver.Id, this.diagnosticsConfig);
-        }
+            => new (this.graphs[pipeline.Id].PipelineElements[element.Id], receiver.Id, this.diagnosticsConfig);
 
         /// <summary>
         /// Class that collects diagnostics message flow statistics for a single receiver.
@@ -285,9 +283,9 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void MessageEmitted(Envelope envelope, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddMessageEmitted(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageCreatedLatency(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageEmittedLatency(diagnosticsTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageEmitted(diagnosticsTime);
+                this.receiverDiagnostics.AddMessageCreatedLatency(envelope.CreationTime - envelope.OriginatingTime, diagnosticsTime);
+                this.receiverDiagnostics.AddMessageEmittedLatency(diagnosticsTime - envelope.OriginatingTime, diagnosticsTime);
             }
 
             /// <summary>
@@ -297,7 +295,7 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void QueueSizeUpdate(int queueSize, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddDeliveryQueueSize(queueSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddDeliveryQueueSize(queueSize, diagnosticsTime);
             }
 
             /// <summary>
@@ -306,7 +304,7 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void MessageDropped(DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddMessageDropped(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageDropped(diagnosticsTime);
             }
 
             /// <summary>
@@ -328,10 +326,10 @@ namespace Microsoft.Psi.Diagnostics
             /// <param name="diagnosticsTime">Time at which to record the diagnostic information.</param>
             public void MessageProcessed(Envelope envelope, DateTime receiverStartTime, DateTime receiverEndTime, int messageSize, DateTime diagnosticsTime)
             {
-                this.receiverDiagnostics.AddMessageProcessed(diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageSize(messageSize, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageReceivedLatency(receiverStartTime - envelope.OriginatingTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
-                this.receiverDiagnostics.AddMessageProcessTime(receiverEndTime - receiverStartTime, diagnosticsTime, this.diagnosticsConfig.AveragingTimeSpan);
+                this.receiverDiagnostics.AddMessageProcessed(diagnosticsTime);
+                this.receiverDiagnostics.AddMessageSize(messageSize, diagnosticsTime);
+                this.receiverDiagnostics.AddMessageReceivedLatency(receiverStartTime - envelope.OriginatingTime, diagnosticsTime);
+                this.receiverDiagnostics.AddMessageProcessTime(receiverEndTime - receiverStartTime, diagnosticsTime);
             }
         }
     }

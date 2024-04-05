@@ -28,16 +28,12 @@
     <Compile Include="..\Common\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <!-- The following overrides a transitive reference from Microsoft.ML.OnnxTransformer to an older version of Google.Protobuf which contains a security vulnerability  -->
-    <PackageReference Include="Google.Protobuf" Version="3.19.5" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.11.0" />
-    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="1.7.1" />
-    <!-- The following overrides a transitive reference from Microsoft.ML.OnnxTransformer to an older version of Newtonsoft.Json which contains a security vulnerability  -->
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" Version="1.17.1" />
+    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="2.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>

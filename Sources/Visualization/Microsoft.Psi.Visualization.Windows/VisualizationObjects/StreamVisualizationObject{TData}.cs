@@ -487,8 +487,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return false;
             }
 
-            // The stores differ if either the store name or the store path are different.
-            return (streamSource1.StoreName != streamSource2.StoreName) || (streamSource1.StorePath != streamSource2.StorePath);
+            // The stores differ if either the store name, the store path, or stream adapter are different.
+            return (streamSource1.StoreName != streamSource2.StoreName) ||
+                (streamSource1.StorePath != streamSource2.StorePath) ||
+                (streamSource1.StreamAdapter != streamSource2.StreamAdapter);
         }
 
         private void StreamSource_PropertyChanging(object sender, PropertyChangingEventArgs e)

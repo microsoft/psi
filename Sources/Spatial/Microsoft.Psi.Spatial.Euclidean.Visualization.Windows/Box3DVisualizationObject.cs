@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a 3D box visualization object.
     /// </summary>
     [VisualizationObject("3D box")]
-    public class Box3DVisualizationObject : ModelVisual3DVisualizationObject<Box3D>
+    public class Box3DVisualizationObject : ModelVisual3DValueVisualizationObject<Box3D>
     {
         // Edge properties
         private Color edgeColor = Colors.White;
@@ -144,7 +144,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {

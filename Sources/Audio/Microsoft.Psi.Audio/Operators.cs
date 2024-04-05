@@ -39,6 +39,58 @@ namespace Microsoft.Psi.Audio
             => source.PipeTo(new Reframe(source.Out.Pipeline, frameDuration, name), deliveryPolicy);
 
         /// <summary>
+        /// Extracts the specified channel from the input audio stream.
+        /// </summary>
+        /// <param name="source">The input audio stream.</param>
+        /// <param name="channel">The channel to select.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">An optional name for the stream operator.</param>
+        /// <returns>A stream containing the selected audio channel.</returns>
+        public static IProducer<AudioBuffer> SelectChannel(this IProducer<AudioBuffer> source, int channel, DeliveryPolicy<AudioBuffer> deliveryPolicy = null, string name = nameof(SelectChannel))
+            => source.Select(x => x.SelectChannel(channel), deliveryPolicy, name);
+
+        /// <summary>
+        /// Selects the specified channel from the input audio buffer.
+        /// </summary>
+        /// <param name="source">The input audio.</param>
+        /// <param name="channel">The channel to select.</param>
+        /// <returns>An audio buffer containing the selected channel.</returns>
+        public static AudioBuffer SelectChannel(this AudioBuffer source, int channel)
+        {
+            if (source.HasValidData && source.Format.Channels > 1)
+            {
+                var format = source.Format;
+                int bytesPerSample = format.BitsPerSample / 8;
+                int numSamples = source.Length / format.BlockAlign;
+                int byteOffset = 0 + ((channel % format.Channels) * bytesPerSample);
+                int outOffset = 0;
+
+                // Copy the selected channel to a new buffer
+                byte[] outData = new byte[numSamples * bytesPerSample];
+                for (int offset = byteOffset; outOffset < outData.Length; offset += format.BlockAlign)
+                {
+                    Array.Copy(source.Data, offset, outData, outOffset, bytesPerSample);
+                    outOffset += bytesPerSample;
+                }
+
+                // Return a new AudioBuffer with the format adjusted to reflect only one channel
+                return new AudioBuffer(
+                    outData,
+                    WaveFormat.Create(
+                        format.FormatTag,
+                        (int)format.SamplesPerSec,
+                        format.BitsPerSample,
+                        1,
+                        bytesPerSample,
+                        bytesPerSample * (int)format.SamplesPerSec));
+            }
+            else
+            {
+                return source;
+            }
+        }
+
+        /// <summary>
         /// Transforms an <see cref="AudioBuffer"/> stream to a stream of byte arrays containing the raw audio.
         /// </summary>
         /// <param name="source">A stream of audio buffers.</param>

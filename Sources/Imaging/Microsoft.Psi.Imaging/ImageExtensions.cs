@@ -4,8 +4,10 @@
 namespace Microsoft.Psi.Imaging
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
@@ -992,7 +994,7 @@ namespace Microsoft.Psi.Imaging
         /// </summary>
         /// <param name="depthImage">Depth image to pseudo-colorize.</param>
         /// <param name="colorizedImage">Target color image. Must be in BGRA_32bpp format.</param>
-        /// <param name="range">A tuple indicating the range (MinValue, MaxValue) of the depth values in the image.</param>
+        /// <param name="range">A tuple indicating the range (MinValue, MaxValue) of the depth values in the image. Depth values outside this range will be considered invalid, and are left black, or set to transparent based on the invalidAsTransparent parameter.</param>
         /// <param name="invalidValue">Indicates invalid depth values. These values are left black, or set to transparent based on the invalidAsTransparent parameter.</param>
         /// <param name="invalidAsTransparent">Indicates whether to render invalid values as transparent in the image.</param>
         public static void PseudoColorize(
@@ -1025,7 +1027,9 @@ namespace Microsoft.Psi.Imaging
                     {
                         ushort depth = *src;
 
-                        if (invalidValue.HasValue && depth == invalidValue.Value)
+                        if ((invalidValue.HasValue && depth == invalidValue.Value) ||
+                            (depth > range.MaxValue) ||
+                            (depth < range.MinValue))
                         {
                             dst[0] = 0;
                             dst[1] = 0;
@@ -1037,12 +1041,8 @@ namespace Microsoft.Psi.Imaging
                             continue;
                         }
 
-                        // clamp the pixel
-                        ushort clampedDepth = depth > range.MaxValue ? range.MaxValue : depth;
-                        clampedDepth = depth < range.MinValue ? range.MinValue : depth;
-
                         // get the scaled depth (0-1 range)
-                        float scaledDepth = range.MaxValue == range.MinValue ? 0 : (clampedDepth - range.MinValue) / (float)(range.MaxValue - range.MinValue);
+                        float scaledDepth = range.MaxValue == range.MinValue ? 0 : (depth - range.MinValue) / (float)(range.MaxValue - range.MinValue);
                         scaledDepth = 1 - scaledDepth;
 
                         // We want to go from blue (at 2/3 in hue space) to red (at 0 in hue space), so
@@ -1086,6 +1086,137 @@ namespace Microsoft.Psi.Imaging
                         src += 1;
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets the value of a pixel in the depth image.
+        /// If the pixel is invalid, an interpolated value is computed from surrounding pixels.
+        /// </summary>
+        /// <param name="depthImage">The depth image.</param>
+        /// <param name="x">Pixel's X coordinate.</param>
+        /// <param name="y">Pixel's Y coordinate.</param>
+        /// <param name="value">The output value (possibly interpolated) of the pixel.</param>
+        /// <param name="invalidValue">The value to consider as invalid. Defaults to 0.</param>
+        /// <returns>True if a pixel value is returned, otherwise false.</returns>
+        public static bool TryGetInterpolatedPixel(this DepthImage depthImage, int x, int y, out ushort value, ushort invalidValue = 0)
+        {
+            if (depthImage.TryGetPixel(x, y, out value))
+            {
+                if (value == invalidValue)
+                {
+                    // Progressively expand a patch in all directions until at least one valid pixel is found
+                    // to the left, right, top, and bottom (or the edge of the image is reached).
+                    var leftSearchDone = false;
+                    var rightSearchDone = false;
+                    var topSearchDone = false;
+                    var bottomSearchDone = false;
+                    var edgeValues = new List<(ushort, double)>();
+
+                    int offset = 1;
+                    while (!leftSearchDone || !rightSearchDone || !topSearchDone || !bottomSearchDone)
+                    {
+                        // Search a column of pixels to the left
+                        if (!leftSearchDone)
+                        {
+                            var lx = x - offset;
+                            if (lx < 0)
+                            {
+                                leftSearchDone = true;
+                            }
+                            else
+                            {
+                                for (int ly = y - offset; ly <= y + offset; ly++)
+                                {
+                                    if (depthImage.TryGetPixel(lx, ly, out var lValue) && lValue != invalidValue)
+                                    {
+                                        edgeValues.Add((lValue, 1.0 / offset));
+                                        leftSearchDone = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Search a column of pixels to the right
+                        if (!rightSearchDone)
+                        {
+                            var rx = x + offset;
+                            if (rx >= depthImage.Width)
+                            {
+                                rightSearchDone = true;
+                            }
+                            else
+                            {
+                                for (int ry = y - offset; ry <= y + offset; ry++)
+                                {
+                                    if (depthImage.TryGetPixel(rx, ry, out var rValue) && rValue != invalidValue)
+                                    {
+                                        edgeValues.Add((rValue, 1.0 / offset));
+                                        rightSearchDone = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Search a row of pixels to the top
+                        if (!topSearchDone)
+                        {
+                            var ty = y - offset;
+                            if (ty < 0)
+                            {
+                                topSearchDone = true;
+                            }
+                            else
+                            {
+                                for (int tx = x - offset; tx <= x + offset; tx++)
+                                {
+                                    if (depthImage.TryGetPixel(tx, ty, out var tValue) && tValue != invalidValue)
+                                    {
+                                        edgeValues.Add((tValue, 1.0 / offset));
+                                        topSearchDone = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Search a row of pixels to the bottom
+                        if (!bottomSearchDone)
+                        {
+                            var by = y + offset;
+                            if (by >= depthImage.Height)
+                            {
+                                bottomSearchDone = true;
+                            }
+                            else
+                            {
+                                for (int bx = x - offset; bx <= x + offset; bx++)
+                                {
+                                    if (depthImage.TryGetPixel(bx, by, out var bValue) && bValue != invalidValue)
+                                    {
+                                        edgeValues.Add((bValue, 1.0 / offset));
+                                        bottomSearchDone = true;
+                                    }
+                                }
+                            }
+                        }
+
+                        // Expand the search
+                        offset++;
+                    }
+
+                    // Compute an interpolated value from the edge values we found
+                    if (edgeValues.Any())
+                    {
+                        var sumWeights = edgeValues.Sum(tuple => tuple.Item2);
+                        value = (ushort)edgeValues.Sum(tuple => tuple.Item1 * (tuple.Item2 / sumWeights));
+                    }
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

@@ -33,8 +33,7 @@ namespace Microsoft.Psi.Media
         public MediaCapture(Pipeline pipeline, string configurationFilename, string name = nameof(MediaCapture))
             : this(pipeline, name)
         {
-            var configurationHelper = new ConfigurationHelper<MediaCaptureConfiguration>(configurationFilename);
-            this.configuration = configurationHelper.Configuration;
+            this.configuration = ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new MediaCaptureConfiguration(), true);
         }
 
         /// <summary>

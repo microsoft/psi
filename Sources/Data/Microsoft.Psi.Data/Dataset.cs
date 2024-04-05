@@ -12,7 +12,6 @@ namespace Microsoft.Psi.Data
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Psi.Data.Helpers;
-    using Microsoft.Psi.Persistence;
     using Newtonsoft.Json;
 
     /// <summary>
@@ -158,16 +157,21 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Creates a new dataset from an existing data store.
+        /// Creates a new dataset with a single session and partition from a specified stream reader.
         /// </summary>
-        /// <param name="streamReader">The stream reader of the data store.</param>
-        /// <param name="sessionName">The session name (optional, defaults to streamReader.Name).</param>
-        /// <param name="partitionName">The partition name (optional, defaults to streamReader.).</param>
-        /// <returns>The newly created dataset.</returns>
-        public static Dataset CreateFromStore(IStreamReader streamReader, string sessionName = null, string partitionName = null)
+        /// <param name="streamReader">The stream reader.</param>
+        /// <param name="sessionName">An optional session name (defaults to the stream reader name).</param>
+        /// <param name="partitionName">An optional partition name (defaults to the stream reader name.).</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for creating a new dataset with a single session and partition from a specified stream reader.</returns>
+        public static async Task<Dataset> CreateAsync(
+            IStreamReader streamReader,
+            string sessionName = null,
+            string partitionName = null,
+            IProgress<(string, double)> progress = null)
         {
             var dataset = new Dataset();
-            dataset.AddSessionFromStore(streamReader, sessionName, partitionName);
+            await dataset.AddSessionAsync(streamReader, sessionName, partitionName, progress);
             return dataset;
         }
 
@@ -176,11 +180,10 @@ namespace Microsoft.Psi.Data
         /// </summary>
         /// <param name="sessionName">The session name.</param>
         /// <returns>The newly created session.</returns>
-        public Session CreateSession(string sessionName = Session.DefaultName)
+        public Session AddEmptySession(string sessionName = Session.DefaultName)
         {
             var session = new Session(this, sessionName);
-            this.InternalSessions.Add(session);
-            this.OnDatasetChanged();
+            this.AddSession(session);
             return session;
         }
 
@@ -195,18 +198,25 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Appends sessions from an input dataset to this dataset.
+        /// Appends sessions from a specified dataset to this dataset.
         /// </summary>
         /// <param name="inputDataset">The dataset to append from.</param>
-        public void Append(Dataset inputDataset)
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for appending sessions to this dataset.</returns>
+        public async Task AppendAsync(Dataset inputDataset, IProgress<(string, double)> progress = null)
         {
             foreach (var session in inputDataset.Sessions)
             {
-                var newSession = this.CreateSession();
+                var newSession = this.AddEmptySession();
                 newSession.Name = session.Name;
-                foreach (var p in session.Partitions)
+                var partitionsCount = session.Partitions.Count;
+                for (int i = 0; i < partitionsCount; i++)
                 {
-                    newSession.AddStorePartition(StreamReader.Create(p.StoreName, p.StorePath, p.StreamReaderTypeName), p.Name);
+                    var partition = session.Partitions[i];
+                    await newSession.AddPartitionAsync(
+                        StreamReader.Create(partition.StoreName, partition.StorePath, partition.StreamReaderTypeName),
+                        partition.Name,
+                        new Progress<(string, double)>(t => progress?.Report(($"Adding session {session.Name}\n{t.Item1}", (i + t.Item2) / partitionsCount))));
                 }
             }
 
@@ -252,31 +262,41 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Creates and adds an empty session with the specified name to the dataset.
+        /// Adds a session containing a single partition using the specified stream reader.
         /// </summary>
-        /// <param name="sessionName">The session name.</param>
-        /// <returns>The session.</returns>
-        public Session AddSession(string sessionName)
+        /// <param name="streamReader">The stream reader of the partition.</param>
+        /// <param name="sessionName">An optional name for the session (defaults to the stream reader name).</param>
+        /// <param name="partitionName">An optional name for the partition (defaults to the stream reader name).</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for adding a session containing a single partition using the specified stream reader..</returns>
+        public async Task<Session> AddSessionAsync(
+            IStreamReader streamReader,
+            string sessionName = null,
+            string partitionName = null,
+            IProgress<(string, double)> progress = null)
         {
-            var session = new Session(this, sessionName);
+            var session = new Session(this, sessionName ?? streamReader.Name);
+            await session.AddPartitionAsync(streamReader, partitionName, progress);
             this.AddSession(session);
             return session;
         }
 
         /// <summary>
-        /// Creates and adds a session to this dataset using the specified parameters.
+        /// Adds a session containing a single partition from a specified \psi store.
         /// </summary>
-        /// <param name="streamReader">The stream reader of the data store.</param>
-        /// <param name="sessionName">The name of the session (optional, defaults to streamReader.Name).</param>
-        /// <param name="partitionName">The partition name.</param>
-        /// <returns>The newly added session.</returns>
-        public Session AddSessionFromStore(IStreamReader streamReader, string sessionName = null, string partitionName = null)
-        {
-            var session = new Session(this, sessionName ?? streamReader.Name);
-            session.AddStorePartition(streamReader, partitionName);
-            this.AddSession(session);
-            return session;
-        }
+        /// <param name="storeName">The name of the \psi store.</param>
+        /// <param name="storePath">The path to the \psi store.</param>
+        /// <param name="sessionName">An optional name for the session (defaults to the \psi store name).</param>
+        /// <param name="partitionName">An optional name for the partition (defaults to the \psi store name).</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for adding a session containing a single partition from a specified \psi store.</returns>
+        public async Task<Session> AddSessionFromPsiStoreAsync(
+            string storeName,
+            string storePath,
+            string sessionName = null,
+            string partitionName = null,
+            IProgress<(string, double)> progress = null)
+            => await this.AddSessionAsync(new PsiStoreStreamReader(storeName, storePath), sessionName, partitionName, progress);
 
         /// <summary>
         /// Compute derived results for each session in the dataset.
@@ -339,8 +359,7 @@ namespace Microsoft.Psi.Data
             bool enableDiagnostics = false,
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
-        {
-            await this.CreateDerivedPartitionAsync<long>(
+            => await this.CreateDerivedPartitionAsync<long>(
                 (p, si, e, _) => computeDerived(p, si, e),
                 0,
                 outputPartitionName,
@@ -352,7 +371,6 @@ namespace Microsoft.Psi.Data
                 enableDiagnostics,
                 progress,
                 cancellationToken);
-        }
 
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
@@ -379,8 +397,7 @@ namespace Microsoft.Psi.Data
             bool enableDiagnostics = false,
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
-        {
-            await this.CreateDerivedPartitionAsync<long>(
+            => await this.CreateDerivedPartitionAsync<long>(
                 (p, si, e, _) => computeDerived(p, si, e),
                 0,
                 outputPartitionName,
@@ -392,7 +409,6 @@ namespace Microsoft.Psi.Data
                 enableDiagnostics,
                 progress,
                 cancellationToken);
-        }
 
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
@@ -422,8 +438,7 @@ namespace Microsoft.Psi.Data
             bool enableDiagnostics = false,
             IProgress<(string, double)> progress = null,
             CancellationToken cancellationToken = default)
-        {
-            await this.CreateDerivedPartitionAsync(
+            => await this.CreateDerivedPartitionAsync(
                 computeDerived,
                 parameter,
                 outputPartitionName,
@@ -435,7 +450,6 @@ namespace Microsoft.Psi.Data
                 enableDiagnostics,
                 progress,
                 cancellationToken);
-        }
 
         /// <summary>
         /// Asynchronously computes a derived partition for each session in the dataset.
@@ -478,7 +492,7 @@ namespace Microsoft.Psi.Data
             for (int i = 0; i < this.Sessions.Count; i++)
             {
                 var session = this.Sessions[i];
-                await session.CreateDerivedPsiPartitionAsync(
+                await session.CreateDerivedPsiStorePartitionAsync(
                     computeDerived,
                     parameter,
                     outputPartitionName,
@@ -494,16 +508,101 @@ namespace Microsoft.Psi.Data
         }
 
         /// <summary>
-        /// Adds sessions from data stores located in the specified path.
+        /// Asynchronously runs a batch processing task of a specified type on the dataset.
         /// </summary>
-        /// <param name="path">The path that contains the data stores.</param>
-        /// <param name="partitionName">The name of the partition to be added when adding a new session. Default is null.</param>
-        public void AddSessionsFromPsiStores(string path, string partitionName = null)
+        /// <typeparam name="TBatchProcessingTask">The type of the batch processing task.</typeparam>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
+        public async Task RunBatchProcessingTaskAsync<TBatchProcessingTask>(
+            BatchProcessingTaskConfiguration configuration,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+            where TBatchProcessingTask : IBatchProcessingTask
+            => await this.RunBatchProcessingTaskAsync(Activator.CreateInstance<TBatchProcessingTask>(), configuration, 0L, progress, cancellationToken);
+
+        /// <summary>
+        /// Asynchronously runs a specified batch processing task on the dataset.
+        /// </summary>
+        /// <param name="batchProcessingTask">The batch processing task to run.</param>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
+        public async Task RunBatchProcessingTaskAsync(
+            IBatchProcessingTask batchProcessingTask,
+            BatchProcessingTaskConfiguration configuration,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+            => await this.RunBatchProcessingTaskAsync(batchProcessingTask, configuration, 0L, progress, cancellationToken);
+
+        /// <summary>
+        /// Asynchronously runs a batch processing task of a specified type on the dataset.
+        /// </summary>
+        /// <typeparam name="TBatchProcessingTask">The type of the batch processing task.</typeparam>
+        /// <typeparam name="TParameter">The type of parameter passed to the batch processing task.</typeparam>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="parameter">The parameter to be passed to the action.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
+        public async Task RunBatchProcessingTaskAsync<TBatchProcessingTask, TParameter>(
+            BatchProcessingTaskConfiguration configuration,
+            TParameter parameter,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
+            where TBatchProcessingTask : IBatchProcessingTask
+            => await this.RunBatchProcessingTaskAsync(Activator.CreateInstance<TBatchProcessingTask>(), configuration, parameter, progress, cancellationToken);
+
+        /// <summary>
+        /// Asynchronously runs a specified batch processing task on the dataset.
+        /// </summary>
+        /// <typeparam name="TParameter">The type of parameter passed to the batch processing task.</typeparam>
+        /// <param name="batchProcessingTask">The batch processing task to run.</param>
+        /// <param name="configuration">The batch processing task configuration.</param>
+        /// <param name="parameter">The parameter to be passed to the action.</param>
+        /// <param name="progress">An optional progress object to be used for reporting progress.</param>
+        /// <param name="cancellationToken">An optional token for canceling the asynchronous task.</param>
+        /// <returns>A task that represents the asynchronous compute derive partition operation.</returns>
+        public async Task RunBatchProcessingTaskAsync<TParameter>(
+            IBatchProcessingTask batchProcessingTask,
+            BatchProcessingTaskConfiguration configuration,
+            TParameter parameter,
+            IProgress<(string, double)> progress = null,
+            CancellationToken cancellationToken = default)
         {
-            foreach (var store in PsiStoreCommon.EnumerateStores(path))
+            var totalDuration = default(double);
+            var sessionStart = this.Sessions.Select(s =>
             {
-                this.AddSessionFromPsiStore(store.Name, store.Path, store.Session, partitionName);
+                var currentDuration = totalDuration;
+                totalDuration += s.TimeInterval.Span.TotalSeconds;
+                return currentDuration;
+            }).ToList();
+            var sessionDuration = this.Sessions.Select(s => s.TimeInterval.Span.TotalSeconds).ToList();
+
+            batchProcessingTask.OnStartProcessingDataset();
+
+            try
+            {
+                for (int i = 0; i < this.Sessions.Count; i++)
+                {
+                    var sessionProgress = progress != null ? new Progress<(string, double)>(tuple => progress.Report((tuple.Item1, (sessionStart[i] + tuple.Item2 * sessionDuration[i]) / totalDuration))) : null;
+                    await this.Sessions[i].RunBatchProcessingTaskAsync(batchProcessingTask, configuration, parameter, sessionProgress, cancellationToken);
+                }
             }
+            catch (OperationCanceledException)
+            {
+                batchProcessingTask.OnCanceledProcessingDataset();
+                throw;
+            }
+            catch (Exception)
+            {
+                batchProcessingTask.OnExceptionProcessingDataset();
+                throw;
+            }
+
+            batchProcessingTask.OnEndProcessingDataset();
         }
 
         /// <summary>

@@ -39,7 +39,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         public PipelineDiagnostics DiagnosticsGraph => this.model.Graph;
 
         /// <summary>
-        /// Gets visual graph. TODO: arg to update.
+        /// Gets visual graph.
         /// </summary>
         public Graph VisualGraph { get; private set; }
 
@@ -56,7 +56,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// <summary>
         /// Gets edge color.
         /// </summary>
-        public Color EdgeColor { get; private set; } //// TODO: private
+        public Color EdgeColor { get; private set; }
 
         /// <summary>
         /// Gets node color.
@@ -344,23 +344,27 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             sb.Append($"Id: {receiverDiagnostics.Id}" + Environment.NewLine);
             sb.Append($"Type: {TypeSpec.Simplify(receiverDiagnostics.TypeName)}" + Environment.NewLine);
             sb.Append($"Delivery Policy: {receiverDiagnostics.DeliveryPolicyName}" + Environment.NewLine);
-            sb.Append($"Delivery Queue Size (avg): {receiverDiagnostics.AvgDeliveryQueueSize:0.###}" + Environment.NewLine);
+            sb.Append($"Delivery Queue Size (window avg): {receiverDiagnostics.AvgDeliveryQueueSize:0.###}" + Environment.NewLine);
             sb.Append($"Delivery Queue Size (last): {receiverDiagnostics.LastDeliveryQueueSize:0.###}" + Environment.NewLine);
             sb.Append($"# Emitted (total): {receiverDiagnostics.TotalMessageEmittedCount}" + Environment.NewLine);
-            sb.Append($"# Emitted (window): {receiverDiagnostics.WindowMessageEmittedCount:0.###}" + Environment.NewLine);
             sb.Append($"# Processed (total): {receiverDiagnostics.TotalMessageProcessedCount}" + Environment.NewLine);
-            sb.Append($"# Processed (window): {receiverDiagnostics.WindowMessageProcessedCount:0.###}" + Environment.NewLine);
             sb.Append($"# Dropped (total): {receiverDiagnostics.TotalMessageDroppedCount}" + Environment.NewLine);
+            sb.Append($"% Processed (total): {receiverDiagnostics.TotalMessageProcessedPercentage:0.###}%" + Environment.NewLine);
+            sb.Append($"% Dropped (total): {receiverDiagnostics.TotalMessageDroppedPercentage:0.###} %" + Environment.NewLine);
+            sb.Append($"# Emitted (window): {receiverDiagnostics.WindowMessageEmittedCount:0.###}" + Environment.NewLine);
+            sb.Append($"# Processed (window): {receiverDiagnostics.WindowMessageProcessedCount:0.###}" + Environment.NewLine);
             sb.Append($"# Dropped (window): {receiverDiagnostics.WindowMessageDroppedCount:0.###}" + Environment.NewLine);
-            sb.Append($"Message Size (avg): {receiverDiagnostics.AvgMessageSize:0}" + Environment.NewLine);
+            sb.Append($"% Processed (window): {receiverDiagnostics.WindowMessageProcessedPercentage:0.###} %" + Environment.NewLine);
+            sb.Append($"% Dropped (window): {receiverDiagnostics.WindowMessageDroppedPercentage:0.###} %" + Environment.NewLine);
+            sb.Append($"Message Size (window avg): {receiverDiagnostics.AvgMessageSize:0}" + Environment.NewLine);
             sb.Append($"Message Size (last): {receiverDiagnostics.LastMessageSize:0}" + Environment.NewLine);
-            sb.Append($"Message Created Latency (avg): {receiverDiagnostics.AvgMessageCreatedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Created Latency (window avg): {receiverDiagnostics.AvgMessageCreatedLatency:0.###}ms" + Environment.NewLine);
             sb.Append($"Message Created Latency (last): {receiverDiagnostics.LastMessageCreatedLatency:0.###}ms" + Environment.NewLine);
-            sb.Append($"Message Emitted Latency (avg): {receiverDiagnostics.AvgMessageEmittedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Emitted Latency (window avg): {receiverDiagnostics.AvgMessageEmittedLatency:0.###}ms" + Environment.NewLine);
             sb.Append($"Message Emitted Latency (last): {receiverDiagnostics.LastMessageEmittedLatency:0.###}ms" + Environment.NewLine);
-            sb.Append($"Message Received Latency (avg): {receiverDiagnostics.AvgMessageReceivedLatency:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Received Latency (window avg): {receiverDiagnostics.AvgMessageReceivedLatency:0.###}ms" + Environment.NewLine);
             sb.Append($"Message Received Latency (last): {receiverDiagnostics.LastMessageReceivedLatency:0.###}ms" + Environment.NewLine);
-            sb.Append($"Message Process Time (avg): {receiverDiagnostics.AvgMessageProcessTime:0.###}ms" + Environment.NewLine);
+            sb.Append($"Message Process Time (window avg): {receiverDiagnostics.AvgMessageProcessTime:0.###}ms" + Environment.NewLine);
             sb.Append($"Message Process Time (last): {receiverDiagnostics.LastMessageProcessTime:0.###}ms" + Environment.NewLine);
             this.model.SelectedEdgeDetails = sb.ToString();
             this.view.Update(clicked);
@@ -374,9 +378,14 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgDeliveryQueueSize => i => i.AvgDeliveryQueueSize,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageEmittedCount => i => i.TotalMessageEmittedCount,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedCount => i => i.TotalMessageProcessedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageProcessedPercentage => i => i.TotalMessageProcessedPercentage,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedCount => i => i.TotalMessageDroppedCount,
-                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedPercentage => i =>
-                    i.TotalMessageEmittedCount > 0 ? 100 * i.TotalMessageDroppedCount / (double)i.TotalMessageEmittedCount : double.NaN,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.TotalMessageDroppedPercentage => i => i.TotalMessageDroppedPercentage,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.WindowMessageEmittedCount => i => i.WindowMessageEmittedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.WindowMessageProcessedCount => i => i.WindowMessageProcessedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.WindowMessageProcessedPercentage => i => i.WindowMessageProcessedPercentage,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.WindowMessageDroppedCount => i => i.WindowMessageDroppedCount,
+                PipelineDiagnosticsVisualizationObject.HeatmapStats.WindowMessageDroppedPercentage => i => i.WindowMessageDroppedPercentage,
                 PipelineDiagnosticsVisualizationObject.HeatmapStats.AvgMessageSize => i =>
                 {
                     var avg = i.AvgMessageSize;
@@ -468,7 +477,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
             // Color the edges
             foreach (var (edge, stat) in edgeStats)
             {
-                var edgeColor = this.HeatmapColor(max > 0 ? stat / max : 0, this.EdgeColor);
+                var edgeColor = this.HeatmapColor(max > 0 && !double.IsNaN(stat) ? stat / max : 0, this.EdgeColor);
                 if ((int)edge.UserData != -1 && this.HilightEdge(this.GetReceiverDiagnostics(edge)))
                 {
                     edge.Attr.Color = edgeColor;

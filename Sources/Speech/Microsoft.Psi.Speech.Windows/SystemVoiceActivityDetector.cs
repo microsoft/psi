@@ -24,7 +24,7 @@ namespace Microsoft.Psi.Speech
     /// These results may be further fine-tuned to potentially obtain better estimates with the VoiceActivityStartOffsetMs
     /// and VoiceActivityEndOffsetMs configuration parameters, which are added to the inferred times.
     /// </remarks>
-    public sealed class SystemVoiceActivityDetector : ConsumerProducer<AudioBuffer, bool>, IDisposable
+    public sealed class SystemVoiceActivityDetector : ConsumerProducer<AudioBuffer, bool>, IVoiceActivityDetector, IDisposable
     {
         /// <summary>
         /// The configuration for this component.
@@ -106,7 +106,7 @@ namespace Microsoft.Psi.Speech
         public SystemVoiceActivityDetector(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemVoiceActivityDetector))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemVoiceActivityDetectorConfiguration() : new ConfigurationHelper<SystemVoiceActivityDetectorConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new SystemVoiceActivityDetectorConfiguration(), true),
                 name)
         {
         }

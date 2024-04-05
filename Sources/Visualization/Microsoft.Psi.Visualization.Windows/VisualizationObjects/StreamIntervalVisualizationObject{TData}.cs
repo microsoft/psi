@@ -14,12 +14,71 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Navigation;
 
     /// <summary>
-    /// Provides a base, abstract class for stream visualization objects that show data from a stream interval.
+    /// Defines the types of stream data intervals to be visualized.
+    /// </summary>
+    public enum DataInterval
+    {
+        /// <summary>
+        /// Visualize a custom stream data interval
+        /// </summary>
+        Custom,
+
+        /// <summary>
+        /// Visualize the data in view
+        /// </summary>
+        ViewRange,
+
+        /// <summary>
+        /// Visualize the data in the selection
+        /// </summary>
+        SelectionRange,
+
+        /// <summary>
+        /// Visualize the data in a cursor epsilon range
+        /// </summary>
+        CursorEpsilonRange,
+
+        /// <summary>
+        /// Visualize all the data
+        /// </summary>
+        DataRange,
+    }
+
+    /// <summary>
+    /// The interval to visualize.
+    /// </summary>
+    public enum VisualizationInterval
+    {
+        /// <summary>
+        /// The data in the current view range.
+        /// </summary>
+        View,
+
+        /// <summary>
+        /// The data in the selection.
+        /// </summary>
+        Selection,
+
+        /// <summary>
+        /// The data in a relative time interval around the cursor.
+        /// </summary>
+        CursorEpsilon,
+
+        /// <summary>
+        /// All the data.
+        /// </summary>
+        All,
+    }
+
+    /// <summary>
+    /// Provides a base, abstract class for stream visualization objects that show data from a specific interval.
     /// </summary>
     /// <typeparam name="TData">The type of the stream data.</typeparam>
     public abstract class StreamIntervalVisualizationObject<TData> : StreamVisualizationObject<TData>
     {
-        private (DateTime StartTime, DateTime EndTime) timeInterval;
+        private DataInterval dataInterval = DataInterval.ViewRange;
+        private VisualizationInterval visualizationInterval = VisualizationInterval.View;
+        private (DateTime StartTime, DateTime EndTime) timeInterval = default;
         private string legendFormat = string.Empty;
 
         /// <summary>
@@ -31,6 +90,48 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// The interval data summarized from the stream data.
         /// </summary>
         private ObservableKeyedCache<DateTime, IntervalData<TData>>.ObservableKeyedView summaryData;
+
+        /// <summary>
+        /// Gets or sets the interval to visualize.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public DataInterval DataInterval
+        {
+            get => this.dataInterval;
+            protected set
+            {
+                if (this.dataInterval != value)
+                {
+                    this.dataInterval = value;
+                    this.RefreshData();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the visualization interval.
+        /// </summary>
+        [DataMember]
+        [DisplayName("Visualization Interval")]
+        [Description("The stream interval to visualize.")]
+        public VisualizationInterval VisualizationInterval
+        {
+            get => this.visualizationInterval;
+            set
+            {
+                this.Set(nameof(this.VisualizationInterval), ref this.visualizationInterval, value);
+
+                this.DataInterval = value switch
+                {
+                    VisualizationInterval.All => DataInterval.DataRange,
+                    VisualizationInterval.View => DataInterval.ViewRange,
+                    VisualizationInterval.Selection => DataInterval.SelectionRange,
+                    VisualizationInterval.CursorEpsilon => DataInterval.CursorEpsilonRange,
+                    _ => throw new NotSupportedException(),
+                };
+            }
+        }
 
         /// <summary>
         /// Gets or sets the data view.
@@ -137,7 +238,60 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// Gets the time interval of stream messages required for visualization.
         /// </summary>
         /// <returns>The time interval of stream messages required for visualization.</returns>
-        protected virtual (DateTime StartTime, DateTime EndTime) GetTimeInterval() => (this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime);
+        protected virtual (DateTime StartTime, DateTime EndTime) GetTimeInterval()
+        {
+            var startTime = DateTime.MinValue;
+            var endTime = DateTime.MaxValue;
+            if (this.DataInterval == DataInterval.ViewRange)
+            {
+                if (this.Navigator?.ViewRange != null)
+                {
+                    startTime = this.Navigator.ViewRange.StartTime;
+                    endTime = this.Navigator.ViewRange.EndTime;
+                }
+            }
+            else if (this.DataInterval == DataInterval.SelectionRange)
+            {
+                if (this.Navigator?.SelectionRange != null)
+                {
+                    if (this.Navigator.SelectionRange.StartTime != DateTime.MinValue)
+                    {
+                        startTime = this.Navigator.SelectionRange.StartTime;
+                    }
+                    else if (this.Navigator?.DataRange != null && this.Navigator.DataRange.StartTime != DateTime.MinValue)
+                    {
+                        startTime = this.Navigator.DataRange.StartTime;
+                    }
+
+                    if (this.Navigator.SelectionRange.EndTime != DateTime.MaxValue)
+                    {
+                        endTime = this.Navigator.SelectionRange.EndTime;
+                    }
+                    else if (this.Navigator?.DataRange != null && this.Navigator.DataRange.EndTime != DateTime.MaxValue)
+                    {
+                        endTime = this.Navigator.DataRange.EndTime;
+                    }
+                }
+            }
+            else if (this.DataInterval == DataInterval.CursorEpsilonRange)
+            {
+                if (this.Navigator != null)
+                {
+                    startTime = this.Navigator.Cursor - TimeSpan.FromMilliseconds(this.CursorEpsilonNegMs);
+                    endTime = this.Navigator.Cursor + TimeSpan.FromMilliseconds(this.CursorEpsilonPosMs);
+                }
+            }
+            else if (this.DataInterval == DataInterval.DataRange)
+            {
+                if (this.Navigator?.DataRange != null)
+                {
+                    startTime = this.Navigator.DataRange.StartTime;
+                    endTime = this.Navigator.DataRange.EndTime;
+                }
+            }
+
+            return (startTime, endTime);
+        }
 
         /// <inheritdoc/>
         protected override void OnCursorModeChanged(object sender, CursorModeChangedEventArgs cursorModeChangedEventArgs)
@@ -146,7 +300,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if ((cursorModeChangedEventArgs.OriginalValue != cursorModeChangedEventArgs.NewValue) &&
                 ((cursorModeChangedEventArgs.OriginalValue == CursorMode.Live) || (cursorModeChangedEventArgs.NewValue == CursorMode.Live)))
             {
-                this.RefreshData();
+                this.RefreshData(forceRefresh: true);
             }
 
             base.OnCursorModeChanged(sender, cursorModeChangedEventArgs);
@@ -176,11 +330,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
             // Register for view range changed events which will cause us to make a new read request
             this.Navigator.ViewRange.RangeChanged += this.OnViewRangeChanged;
+            this.Navigator.SelectionRange.RangeChanged += this.OnSelectionRangeChanged;
 
-            // Initially, make a read request using the current view range.
-            this.OnViewRangeChanged(
-                this.Navigator.ViewRange,
-                new NavigatorTimeRangeChangedEventArgs(this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.StartTime, this.Navigator.ViewRange.EndTime, this.Navigator.ViewRange.EndTime));
+            // Refresh the data
+            this.RefreshData();
         }
 
         /// <inheritdoc />
@@ -198,6 +351,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             this.SubscriberId = Guid.Empty;
 
             this.Navigator.ViewRange.RangeChanged -= this.OnViewRangeChanged;
+            this.Navigator.SelectionRange.RangeChanged -= this.OnSelectionRangeChanged;
 
             this.Data = null;
             this.SummaryData = null;
@@ -220,6 +374,10 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (e.PropertyName == nameof(this.CurrentValue))
             {
                 this.RaisePropertyChanged(nameof(this.LegendValue));
+            }
+            else if (e.PropertyName == nameof(this.CursorEpsilon) && this.DataInterval == DataInterval.CursorEpsilonRange)
+            {
+                this.RefreshData();
             }
 
             base.OnPropertyChanged(sender, e);
@@ -281,7 +439,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 return;
             }
 
-            if (this.Navigator.IsCursorModePlayback)
+            if (this.Navigator.IsCursorModePlayback && this.SummaryData != null)
             {
                 IntervalData<TData> last = this.SummaryData.LastOrDefault();
                 if (last != default)
@@ -295,6 +453,11 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         protected override void OnCursorChanged(object sender, NavigatorTimeChangedEventArgs e)
         {
             DateTime currentTime = e.NewTime;
+
+            if (this.DataInterval == DataInterval.CursorEpsilonRange)
+            {
+                this.RefreshData();
+            }
 
             if (this.SummaryData != null)
             {
@@ -335,7 +498,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                 if (this.StreamBinding?.VisualizerSummarizerType != null)
                 {
                     // Then refresh the data as the sampling rate for summarization will be different
-                    this.RefreshData();
+                    this.RefreshData(forceRefresh: true);
                 }
             }
 
@@ -349,32 +512,43 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// <param name="e">The event arguments.</param>
         protected virtual void OnViewRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
         {
-            var newTimeInterval = this.GetTimeInterval();
-
-            // If in live mode
-            if (this.Navigator.CursorMode == CursorMode.Live)
+            if (this.DataInterval == DataInterval.ViewRange)
             {
-                // Then we need to refresh if the new time interval has a different duration
-                if ((newTimeInterval.EndTime - newTimeInterval.StartTime) != (this.timeInterval.EndTime - this.timeInterval.StartTime))
-                {
-                    this.timeInterval = newTimeInterval;
-                    this.RefreshData();
-                }
-            }
-            else
-            {
-                // O/w we need to refresh if the time interval is different or if data is not
-                // available (stream was not bound)
-                if ((newTimeInterval != this.timeInterval) || (this.Data == null))
-                {
-                    this.timeInterval = newTimeInterval;
-                    this.RefreshData();
-                }
+                this.RefreshData();
             }
         }
 
-        private void RefreshData()
+        /// <summary>
+        /// Implements a response to a notification that the selection range has changed.
+        /// </summary>
+        /// <param name="sender">The sender of the event.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnSelectionRangeChanged(object sender, NavigatorTimeRangeChangedEventArgs e)
         {
+            if (this.DataInterval == DataInterval.SelectionRange)
+            {
+                this.RefreshData();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the data.
+        /// </summary>
+        /// <param name="forceRefresh">Forces the refresh, even if the time interval has not changed.</param>
+        protected void RefreshData(bool forceRefresh = false)
+        {
+            // Compute the new time interval
+            var newTimeInterval = this.GetTimeInterval();
+
+            // Don't force the refresh if we don't need to.
+            if (!forceRefresh && (newTimeInterval == this.timeInterval) && (this.Data != null || this.SummaryData != null))
+            {
+                return;
+            }
+
+            // Setup the new time interval
+            this.timeInterval = newTimeInterval;
+
             // Check that we're actually bound to a store
             if (this.IsBound)
             {

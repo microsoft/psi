@@ -22,7 +22,10 @@ namespace Test.Psi.Data
             // Test RelativePathConverter path conversion relative to rootFile
             var serializerSettings = new JsonSerializerSettings()
             {
+                // StreamingContext is obsolete from .NET 8 onwards but we still need it to test RelativePathConverter
+#pragma warning disable SYSLIB0050
                 Context = new StreamingContext(StreamingContextStates.File, rootFile),
+#pragma warning restore SYSLIB0050
                 Converters = new[] { new RelativePathConverter() },
             };
 
@@ -83,7 +86,10 @@ namespace Test.Psi.Data
             // Test RelativePathConverter path conversion relative to rootFile
             var serializerSettings = new JsonSerializerSettings()
             {
+                // StreamingContext is obsolete from .NET 8 onwards but we still need it to test RelativePathConverter
+#pragma warning disable SYSLIB0050
                 Context = new StreamingContext(StreamingContextStates.File, rootFile),
+#pragma warning restore SYSLIB0050
                 Converters = new[] { new RelativePathConverter() },
             };
 

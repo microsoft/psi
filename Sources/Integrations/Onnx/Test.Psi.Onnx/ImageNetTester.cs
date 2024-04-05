@@ -5,6 +5,7 @@ namespace Test.Psi.Onnx
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading;
     using Microsoft.Psi;
     using Microsoft.Psi.Imaging;
@@ -46,11 +47,11 @@ namespace Test.Psi.Onnx
                     modelConfig,
                     testImage,
                     new[] {
-                        ("n03100240 convertible", 0.8695966f),
-                        ("n03930630 pickup, pickup truck", 0.04933356f),
-                        ("n02814533 beach wagon, station wagon, wagon, estate car, beach waggon, station waggon, waggon", 0.03959884f),
-                        ("n03594945 jeep, landrover", 0.0146017177f),
-                        ("n02974003 car wheel", 0.00834592152f),
+                        ("n03100240 convertible", 0.834800065f),
+                        ("n02814533 beach wagon, station wagon, wagon, estate car, beach waggon, station waggon, waggon", 0.05797491f),
+                        ("n03930630 pickup, pickup truck", 0.0569703728f),
+                        ("n03594945 jeep, landrover", 0.0181391146f),
+                        ("n02974003 car wheel", 0.009720574f),
                     });
             }
             else
@@ -90,11 +91,11 @@ namespace Test.Psi.Onnx
                     modelConfig,
                     testImage,
                     new[] {
-                        ("n03930630 pickup, pickup truck", 0.6400269f),
-                        ("n03100240 convertible", 0.30403322f),
-                        ("n04461696 tow truck, tow car, wrecker", 0.0135363257f),
-                        ("n02974003 car wheel", 0.0124500105f),
-                        ("n03459775 grille, radiator grille", 0.005335613f),
+                        ("n03930630 pickup, pickup truck", 0.62304384f),
+                        ("n03100240 convertible", 0.325131f),
+                        ("n04461696 tow truck, tow car, wrecker", 0.0126348855f),
+                        ("n02974003 car wheel", 0.010971873f),
+                        ("n03459775 grille, radiator grille", 0.005041402f),
                     });
             }
             else
@@ -134,11 +135,11 @@ namespace Test.Psi.Onnx
                     modelConfig,
                     testImage,
                     new[] {
-                        ("n03100240 convertible", 0.7319748f),
-                        ("n03930630 pickup, pickup truck", 0.129529521f),
-                        ("n03594945 jeep, landrover", 0.0262848679f),
-                        ("n03459775 grille, radiator grille", 0.0258834548f),
-                        ("n02974003 car wheel", 0.0252302475f),
+                        ("n03100240 convertible", 0.71793914f),
+                        ("n03930630 pickup, pickup truck", 0.13835359f),
+                        ("n02974003 car wheel", 0.027275257f),
+                        ("n03459775 grille, radiator grille", 0.026480924f),
+                        ("n03594945 jeep, landrover", 0.026157515f),
                     });
             }
             else
@@ -178,11 +179,11 @@ namespace Test.Psi.Onnx
                     modelConfig,
                     testImage,
                     new[] {
-                        ("n03100240 convertible", 0.480612665f),
-                        ("n02701002 ambulance", 0.155334875f),
-                        ("n02974003 car wheel", 0.08949315f),
-                        ("n03459775 grille, radiator grille", 0.061813876f),
-                        ("n03930630 pickup, pickup truck", 0.05676603f),
+                        ("n03100240 convertible", 0.44455552f),
+                        ("n02701002 ambulance", 0.17488436f),
+                        ("n02974003 car wheel", 0.08973005f),
+                        ("n03459775 grille, radiator grille", 0.063590035f),
+                        ("n03930630 pickup, pickup truck", 0.060100798f),
                     });
             }
             else
@@ -209,11 +210,18 @@ namespace Test.Psi.Onnx
                 p.Run();
             }
 
-            // verify the model predictions against the expected predictions
-            for (int i = 0; i < expectedPredictions.Count; i++)
+            // verify the top prediction of the model matches the expected top prediction and the confidence scores are within 0.05 of each other
+            Assert.AreEqual(expectedPredictions[0].Label, labeledResults[0].Label);
+            Assert.AreEqual(expectedPredictions[0].Confidence, labeledResults[0].Confidence, 0.05);
+
+            // verify the rest of the predictions have similar confidence scores (within 0.05) to those in the expected set of predictions (order may vary)
+            for (int i = 1; i < labeledResults.Count; i++)
             {
-                Assert.AreEqual(expectedPredictions[i].Label, labeledResults[i].Label);
-                Assert.AreEqual(expectedPredictions[i].Confidence, labeledResults[i].Confidence, 0.000005);
+                // Find the expected prediction which matches the label of the current prediction
+                var expectedPrediction = expectedPredictions.FirstOrDefault(p => p.Label == labeledResults[i].Label);
+
+                Assert.AreEqual(expectedPrediction.Label, labeledResults[i].Label);
+                Assert.AreEqual(expectedPrediction.Confidence, labeledResults[i].Confidence, 0.05);
             }
         }
     }

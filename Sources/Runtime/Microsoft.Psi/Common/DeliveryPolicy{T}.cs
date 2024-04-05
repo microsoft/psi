@@ -80,8 +80,7 @@ namespace Microsoft.Psi
         /// </summary>
         /// <param name="policy">The untyped delivery policy.</param>
         public static implicit operator DeliveryPolicy<T>(DeliveryPolicy policy)
-        {
-            return policy == null ? null : new DeliveryPolicy<T>(
+            => policy == null ? null : new (
                 policy.InitialQueueSize,
                 policy.MaximumQueueSize,
                 policy.MaximumLatency,
@@ -89,7 +88,20 @@ namespace Microsoft.Psi
                 policy.AttemptSynchronousDelivery,
                 null,
                 policy.Name);
-        }
+
+        /// <summary>
+        /// Implicit cast operator from <see cref="DeliveryPolicySpec"/> to <see cref="DeliveryPolicy{T}"/>.
+        /// </summary>
+        /// <param name="deliveryPolicySpec">The delivery policy specification.</param>
+        public static implicit operator DeliveryPolicy<T>(DeliveryPolicySpec deliveryPolicySpec)
+            => deliveryPolicySpec switch
+            {
+                DeliveryPolicySpec.Unlimited => DeliveryPolicy.Unlimited,
+                DeliveryPolicySpec.LatestMessage => DeliveryPolicy.LatestMessage,
+                DeliveryPolicySpec.Throttle => DeliveryPolicy.Throttle,
+                DeliveryPolicySpec.SynchronousOrThrottle => DeliveryPolicy.SynchronousOrThrottle,
+                _ => DeliveryPolicy.Unlimited,
+            };
 
         /// <summary>
         /// Creates a delivery policy with guarantees by adding a message guaranteed function to an existing delivery policy.
@@ -97,8 +109,7 @@ namespace Microsoft.Psi
         /// <param name="guaranteeDelivery">A function that evaluates whether the delivery of a given message should be guaranteed.</param>
         /// <returns>The typed delivery policy with guarantees.</returns>
         public DeliveryPolicy<T> WithGuarantees(Func<T, bool> guaranteeDelivery)
-        {
-            return new DeliveryPolicy<T>(
+            => new (
                 DeliveryPolicy.DefaultInitialQueueSize,
                 this.MaximumQueueSize,
                 this.MaximumLatency,
@@ -106,6 +117,5 @@ namespace Microsoft.Psi
                 this.AttemptSynchronousDelivery,
                 this.GuaranteeDelivery == null ? guaranteeDelivery : t => this.GuaranteeDelivery(t) || guaranteeDelivery(t),
                 $"{this.Name}.WithGuarantees");
-        }
     }
 }

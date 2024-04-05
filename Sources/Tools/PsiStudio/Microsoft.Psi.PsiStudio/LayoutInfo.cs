@@ -36,10 +36,58 @@ namespace Microsoft.Psi.PsiStudio
         /// </summary>
         public string Path { get; set; }
 
+        /// <summary>
+        /// Equality operator.
+        /// </summary>
+        /// <param name="a">The first value.</param>
+        /// <param name="b">The second value.</param>
+        /// <returns>True if the first value is equivalent to the second value. False otherwise.</returns>
+        public static bool operator ==(LayoutInfo a, LayoutInfo b)
+        {
+            if (object.ReferenceEquals(a, null))
+            {
+                return object.ReferenceEquals(b, null);
+            }
+
+            return a.Equals(b);
+        }
+
+        /// <summary>
+        /// Inequality operator.
+        /// </summary>
+        /// <param name="a">The first value.</param>
+        /// <param name="b">The second value.</param>
+        /// <returns>True if the first value is not equivalent to the second value. False otherwise.</returns>
+        public static bool operator !=(LayoutInfo a, LayoutInfo b)
+        {
+            return !(a == b);
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
             return this.Name;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
+            var other = obj as LayoutInfo;
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.Name == other.Name && this.Path == other.Path;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            hash = hash * 23 + (this.Name?.GetHashCode() ?? 0);
+            hash = hash * 23 + (this.Path?.GetHashCode() ?? 0);
+            return hash;
         }
     }
 }

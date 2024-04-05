@@ -45,9 +45,6 @@ namespace Microsoft.Psi.Visualization
         // This list of stream readers that were found during discovery.
         private readonly List<(string Name, string Extension, Type ReaderType)> streamReaders = new ();
 
-        // This dictionary provides a set of additional type mappings.
-        private readonly Dictionary<string, Type> additionalTypeMappings = new ();
-
         /// <summary>
         /// Gets a value indicating whether or not Initialize() has been called.
         /// </summary>
@@ -61,7 +58,7 @@ namespace Microsoft.Psi.Visualization
         /// <summary>
         /// Gets the set of additional type mappings.
         /// </summary>
-        public IReadOnlyDictionary<string, Type> AdditionalTypeMappings => this.additionalTypeMappings;
+        public IReadOnlyDictionary<string, string> AdditionalTypeMappings { get; private set; }
 
         /// <summary>
         /// Gets the set of available batch processing tasks.
@@ -105,14 +102,7 @@ namespace Microsoft.Psi.Visualization
             this.DiscoverPlugins(assembliesToSearch, loadLogFilename, showErrorLog, batchProcessingTaskConfigurationsPath);
 
             // Set up the additional type mappings
-            foreach (var kvp in additionalTypeMappings)
-            {
-                var verifiedType = TypeResolutionHelper.GetVerifiedType(kvp.Value);
-                if (verifiedType != null)
-                {
-                    this.additionalTypeMappings.Add(kvp.Key, verifiedType);
-                }
-            }
+            this.AdditionalTypeMappings = additionalTypeMappings;
 
             this.IsInitialized = true;
         }
@@ -213,7 +203,7 @@ namespace Microsoft.Psi.Visualization
                             {
                                 foreach (var attr in method.GetCustomAttributes(typeof(BatchProcessingTaskAttribute)))
                                 {
-                                    this.AddBatchProcessingTask(method, (BatchProcessingTaskAttribute)attr, logWriter, assemblyPath, batchProcessingTaskConfigurationsPath);
+                                    logWriter.WriteError($"Ignoring method batch processing task defined by method {method.Name} on type {type.FullName} in assembly {assemblyPath}. Method-defined batch processing tasks are no longer supported. Please convert this batch processing task to the class-based approach (derive a class from BatchProcessingTask<TConfiguration>).");
                                 }
                             }
                         }
@@ -326,21 +316,6 @@ namespace Microsoft.Psi.Visualization
         {
             logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", batchProcessingTaskAttribute.Name, assemblyPath);
             var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingTaskType, batchProcessingTaskAttribute, batchProcessingTaskConfigurationsPath);
-            if (batchProcessingTaskMetadata != null)
-            {
-                this.batchProcessingTasks.Add(batchProcessingTaskMetadata);
-            }
-        }
-
-        private void AddBatchProcessingTask(
-            MethodInfo batchProcessingMethodInfo,
-            BatchProcessingTaskAttribute batchProcessingTaskAttribute,
-            VisualizationLogWriter logWriter,
-            string assemblyPath,
-            string batchProcessingTaskConfigurationsPath)
-        {
-            logWriter.WriteLine("Loading Batch Processing Task {0} from {1}...", batchProcessingTaskAttribute.Name, assemblyPath);
-            var batchProcessingTaskMetadata = new BatchProcessingTaskMetadata(batchProcessingMethodInfo, batchProcessingTaskAttribute, batchProcessingTaskConfigurationsPath);
             if (batchProcessingTaskMetadata != null)
             {
                 this.batchProcessingTasks.Add(batchProcessingTaskMetadata);

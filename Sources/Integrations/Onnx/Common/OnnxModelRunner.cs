@@ -16,7 +16,7 @@ namespace Microsoft.Psi.Onnx
     /// object that describes where to load the model from, and runs the
     /// bare-bones model.
     /// </remarks>
-    public class OnnxModelRunner : OnnxModelRunner<float[], float[]>
+    public class OnnxModelRunner : OnnxModelRunner<float[], float[], float, float>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OnnxModelRunner"/> class, based on a given configuration.

@@ -20,36 +20,31 @@ namespace Microsoft.Psi.Diagnostics
         /// </summary>
         public DiagnosticsConfiguration()
         {
-            this.SamplingInterval = TimeSpan.FromMilliseconds(100);
-            this.TrackMessageSize = false;
-            this.AveragingTimeSpan = TimeSpan.FromSeconds(1);
-            this.IncludeStoppedPipelines = false;
-            this.IncludeStoppedPipelineElements = false;
         }
 
         /// <summary>
         /// Gets or sets sampling interval.
         /// </summary>
-        public TimeSpan SamplingInterval { get; set; }
+        public TimeSpan SamplingInterval { get; set; } = TimeSpan.FromMilliseconds(100);
 
         /// <summary>
         /// Gets or sets a value indicating whether to track message sizes (notable performance penalty).
         /// </summary>
-        public bool TrackMessageSize { get; set; }
+        public bool TrackMessageSize { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the time span over which to average latencies, processing time, message sizes, ...
         /// </summary>
-        public TimeSpan AveragingTimeSpan { get; set; }
+        public TimeSpan AveragingTimeSpan { get; set; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
         /// Gets or sets a value indicating whether to include stopped pipelines.
         /// </summary>
-        public bool IncludeStoppedPipelines { get; set; }
+        public bool IncludeStoppedPipelines { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether to include stopped pipeline elements.
         /// </summary>
-        public bool IncludeStoppedPipelineElements { get; set; }
+        public bool IncludeStoppedPipelineElements { get; set; } = false;
     }
 }

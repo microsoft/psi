@@ -21,7 +21,7 @@ namespace Microsoft.Psi.AzureKinect.Visualization
     /// Implements a visualization object for Azure Kinect bodies.
     /// </summary>
     [VisualizationObject("Azure Kinect Body")]
-    public class AzureKinectBodyVisualizationObject : ModelVisual3DVisualizationObject<AzureKinectBody>
+    public class AzureKinectBodyVisualizationObject : ModelVisual3DValueVisualizationObject<AzureKinectBody>
     {
         private static readonly Dictionary<(JointId ChildJoint, JointId ParentJoint), bool> AzureKinectBodyGraph = AzureKinectBody.Bones.ToDictionary(j => j, j => true);
 
@@ -124,7 +124,7 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         public SkeletonVisualizationObject<JointId> Skeleton { get; private set; }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {
@@ -178,8 +178,8 @@ namespace Microsoft.Psi.AzureKinect.Visualization
         {
             bool childrenVisible = this.Visible && this.CurrentData != default;
 
-            this.UpdateChildVisibility(this.Skeleton.ModelView, childrenVisible);
-            this.UpdateChildVisibility(this.Billboard.ModelView, childrenVisible);
+            this.UpdateChildVisibility(this.Skeleton.ModelVisual3D, childrenVisible);
+            this.UpdateChildVisibility(this.Billboard.ModelVisual3D, childrenVisible);
         }
     }
 }

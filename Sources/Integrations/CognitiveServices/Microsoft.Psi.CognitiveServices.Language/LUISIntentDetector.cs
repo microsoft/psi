@@ -49,7 +49,7 @@ namespace Microsoft.Psi.CognitiveServices.Language
         public LUISIntentDetector(Pipeline pipeline, string configurationFilename = null)
             : this(
                 pipeline,
-                (configurationFilename == null) ? new LUISIntentDetectorConfiguration() : new ConfigurationHelper<LUISIntentDetectorConfiguration>(configurationFilename).Configuration)
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new LUISIntentDetectorConfiguration(), true))
         {
         }
 

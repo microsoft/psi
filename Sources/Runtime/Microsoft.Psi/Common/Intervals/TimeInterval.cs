@@ -136,6 +136,17 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
+        /// Determine intersection of a specified set of intervals.
+        /// </summary>
+        /// <param name="intervals">Set of intervals.</param>
+        /// <remarks>Returns empty when sequence is empty.</remarks>
+        /// <returns>Intersection of the specified set of intervals.</returns>
+        public static TimeInterval Intersection(IEnumerable<TimeInterval> intervals)
+        {
+            return Intersection(intervals, (left, right) => new TimeInterval(left, right), TimeInterval.Empty);
+        }
+
+        /// <summary>
         /// Constructor helper for left-bound instances.
         /// </summary>
         /// <param name="left">Left bound point.</param>
@@ -178,6 +189,14 @@ namespace Microsoft.Psi
         {
             return RightBounded(right, true);
         }
+
+        /// <summary>
+        /// Intersects with a specified time interval.
+        /// </summary>
+        /// <param name="timeInterval">The time interval to intersect with.</param>
+        /// <returns>The intersection time interval.</returns>
+        public TimeInterval Intersect(TimeInterval timeInterval)
+            => Intersection(new List<TimeInterval>() { this, timeInterval });
 
         /// <summary>
         /// Translate by a span distance.

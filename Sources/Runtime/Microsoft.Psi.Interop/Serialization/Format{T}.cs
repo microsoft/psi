@@ -46,15 +46,15 @@ namespace Microsoft.Psi.Interop.Serialization
             {
                 this.memoryStream.Position = 0;
                 using var writer = new BinaryWriter(this.memoryStream, Encoding.UTF8, true);
-                writer.Write(originatingTime.ToFileTimeUtc());
+                writer.Write(originatingTime.ToBinary());
                 serializeAction(val, writer);
-                return (this.memoryStream.GetBuffer(), 0, (int)this.memoryStream.Length);
+                return (this.memoryStream.GetBuffer(), 0, (int)this.memoryStream.Position);
             };
 
             this.deserialize = (payload, offset, length) =>
             {
                 using var reader = new BinaryReader(new MemoryStream(payload, offset, length), Encoding.UTF8);
-                var originatingTime = DateTime.FromFileTimeUtc(reader.ReadInt64());
+                var originatingTime = DateTime.FromBinary(reader.ReadInt64());
                 var val = deserializeFunc(reader, payload, offset, length);
                 return (val, originatingTime);
             };
@@ -75,23 +75,14 @@ namespace Microsoft.Psi.Interop.Serialization
 
         /// <inheritdoc />
         public (byte[] Bytes, int Index, int Count) SerializeMessage(dynamic message, DateTime originatingTime)
-        {
-            return this.serialize(message, originatingTime);
-        }
+            => this.serialize(message, originatingTime);
 
         /// <inheritdoc />
         public (dynamic Message, DateTime OriginatingTime) DeserializeMessage(byte[] payload, int index, int count)
-        {
-            return this.deserialize(payload, index, count);
-        }
+            => this.deserialize(payload, index, count);
 
         /// <inheritdoc />
         public void Dispose()
-        {
-            if (this.memoryStream != null)
-            {
-                this.memoryStream.Dispose();
-            }
-        }
+            => this.memoryStream?.Dispose();
     }
 }

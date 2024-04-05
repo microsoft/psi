@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a labeled 3D point visualization object.
     /// </summary>
     [VisualizationObject("Labeled 3D Sphere")]
-    public class LabeledPoint3DVisualizationObject : ModelVisual3DVisualizationObject<Tuple<string, Point3D>>
+    public class LabeledPoint3DVisualizationObject : ModelVisual3DValueVisualizationObject<Tuple<string, Point3D>>
     {
         private double billboardHeightCm = 100;
 
@@ -66,7 +66,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public BillboardTextVisualizationObject Billboard { get; private set; }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null)
             {
@@ -129,12 +129,12 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
 
         private void UpdatePointVisibility()
         {
-            this.UpdateChildVisibility(this.Point.ModelView, this.Visible && this.CurrentData != default && this.Point.Visible);
+            this.UpdateChildVisibility(this.Point.ModelVisual3D, this.Visible && this.CurrentData != default && this.Point.Visible);
         }
 
         private void UpdateBillboardVisibility()
         {
-            this.UpdateChildVisibility(this.Billboard.ModelView, this.Visible && this.CurrentData != default && this.Billboard.Visible);
+            this.UpdateChildVisibility(this.Billboard.ModelVisual3D, this.Visible && this.CurrentData != default && this.Billboard.Visible);
         }
     }
 }

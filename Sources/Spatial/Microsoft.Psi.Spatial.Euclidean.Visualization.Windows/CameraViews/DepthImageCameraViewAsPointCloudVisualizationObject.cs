@@ -26,7 +26,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a visualization object for <see cref="DepthImageCameraView"/> as a point cloud.
     /// </summary>
     [VisualizationObject("Depth Camera View (Point Cloud)")]
-    public class DepthImageCameraViewAsPointCloudVisualizationObject : ModelVisual3DVisualizationObject<DepthImageCameraView>
+    public class DepthImageCameraViewAsPointCloudVisualizationObject : ModelVisual3DValueVisualizationObject<DepthImageCameraView>
     {
         private Point3DListAsPointCloudVisualizationObject pointCloud;
         private CameraIntrinsicsWithPoseVisualizationObject frustum;
@@ -102,7 +102,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.depthImage != null)
             {
@@ -200,8 +200,8 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
 
         private void UpdateVisibility()
         {
-            this.UpdateChildVisibility(this.pointCloud.ModelView, this.Visible && this.CurrentData != default && this.depthImage != null && this.depthImage.Resource != null && this.intrinsics != null && this.position != null);
-            this.UpdateChildVisibility(this.frustum.ModelView, this.Visible && this.CurrentData != default && this.intrinsics != null && this.position != null);
+            this.UpdateChildVisibility(this.pointCloud.ModelVisual3D, this.Visible && this.CurrentData != default && this.depthImage != null && this.depthImage.Resource != null && this.intrinsics != null && this.position != null);
+            this.UpdateChildVisibility(this.frustum.ModelVisual3D, this.Visible && this.CurrentData != default && this.intrinsics != null && this.position != null);
         }
 
         private void ExportPointCloudToPly()

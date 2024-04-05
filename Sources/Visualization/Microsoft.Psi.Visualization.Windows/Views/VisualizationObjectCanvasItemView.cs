@@ -3,23 +3,19 @@
 
 namespace Microsoft.Psi.Visualization.Views.Visuals2D
 {
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows;
     using Microsoft.Psi.Visualization.VisualizationObjects;
 
     /// <summary>
-    /// Provides a base class for individual items views for a stream visualization object view.
+    /// Provides a base class for individual canvas items views.
     /// </summary>
-    /// <typeparam name="TStreamVisualizationObject">The type of the stream visualization object.</typeparam>
     /// <typeparam name="TItem">The type of the item.</typeparam>
-    /// <typeparam name="TEnumerable">The type of the enumeration of items.</typeparam>
-    public abstract class VisualizationObjectCanvasItemView<TStreamVisualizationObject, TItem, TEnumerable>
-        where TEnumerable : IEnumerable<TItem>
-        where TStreamVisualizationObject : StreamVisualizationObject<TEnumerable>, new()
+    public abstract class VisualizationObjectCanvasItemView<TItem>
+        : IVisualizationObjectCanvasItemView<TItem>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="VisualizationObjectCanvasItemView{TStreamVisualizationObject, TItem, TEnumerable}"/> class.
+        /// Initializes a new instance of the <see cref="VisualizationObjectCanvasItemView{TItem}"/> class.
         /// </summary>
         public VisualizationObjectCanvasItemView()
         {
@@ -35,19 +31,13 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
         /// </summary>
         /// <param name="canvasView">The canvas view.</param>
         /// <param name="visualizationObject">The stream visualization object.</param>
-        public abstract void Configure(
-            StreamVisualizationObjectCanvasView<TStreamVisualizationObject, TEnumerable> canvasView,
-            TStreamVisualizationObject visualizationObject);
+        public abstract void Configure(IStreamVisualizationObjectCanvasView canvasView, VisualizationObject visualizationObject);
 
         /// <summary>
         /// Updaets the view.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="canvasView">The canvas view.</param>
-        /// <param name="visualizationObject">The stream visualization object.</param>
-        public abstract void UpdateView(
-            TItem item,
-            StreamVisualizationObjectCanvasView<TStreamVisualizationObject, TEnumerable> canvasView,
-            TStreamVisualizationObject visualizationObject);
+        public abstract void UpdateView(TItem item, IStreamVisualizationObjectCanvasView canvasView);
     }
 }

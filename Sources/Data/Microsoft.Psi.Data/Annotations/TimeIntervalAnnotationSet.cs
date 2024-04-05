@@ -41,6 +41,11 @@ namespace Microsoft.Psi.Data.Annotations
         public IEnumerable<string> Tracks => this.data.Keys;
 
         /// <summary>
+        /// Gets the set of annotations.
+        /// </summary>
+        public IEnumerable<TimeIntervalAnnotation> Annotations => this.data.Values;
+
+        /// <summary>
         /// Gets the time interval annotation for a specified track name.
         /// </summary>
         /// <param name="track">The track name.</param>

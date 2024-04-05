@@ -200,10 +200,11 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
             // Specify the media capture settings for the requested capture configuration
             var settings = new MediaCaptureInitializationSettings
             {
-                AudioProcessing = AudioProcessing.Default,
+                AudioProcessing = this.configuration.AudioProcessing,
                 StreamingCaptureMode = StreamingCaptureMode.Audio,
                 MemoryPreference = MediaCaptureMemoryPreference.Cpu,
                 SharingMode = MediaCaptureSharingMode.ExclusiveControl,
+                MediaCategory = this.configuration.MediaCategory,
             };
 
             // Initialize the MediaCapture object
@@ -252,8 +253,13 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                 if (frame != null)
                 {
                     // Convert frame QPC time to pipeline time
-                    var frameTimestamp = frame.SystemRelativeTime.Value.Ticks;
-                    var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(frameTimestamp);
+
+                    // We have noticed that the timestamps coming out of the microphone component are
+                    // lagging behind in long sessions. Moved to using the pipeline time instead as a
+                    // temporary patch in while we investigate the problem and find (hopefully) a more real solution.
+                    /*var frameTimestamp = frame.SystemRelativeTime.Value.Ticks;
+                    var originatingTime = this.pipeline.GetCurrentTimeFromElapsedTicks(frameTimestamp);*/
+                    var originatingTime = this.pipeline.GetCurrentTime();
 
                     // Post the audio buffer stream if requested
                     if (audioSettings.OutputAudio)
@@ -267,16 +273,17 @@ namespace Microsoft.Psi.MixedReality.MediaCapture
                         {
                             ushort channelCount = (ushort)audioEncodingProperties.ChannelCount;
 
-                            if (this.configuration.AudioChannelNumber > channelCount)
-                            {
-                                throw new Exception(
-                                    $"The audio channel requested, Channel {this.configuration.AudioChannelNumber}, exceeds " +
-                                    $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
-                            }
-
-                            // The audio buffer output should be the contents of one channel.
                             if (this.configuration.SingleChannel)
                             {
+                                // If we're only outputting a single channel, make sure the requested channel number is valid.
+                                if (this.configuration.AudioChannelNumber > channelCount)
+                                {
+                                    throw new Exception(
+                                        $"The audio channel requested, Channel {this.configuration.AudioChannelNumber}, exceeds " +
+                                        $"the {audioEncodingProperties.ChannelCount} channel(s) available for this audio source.");
+                                }
+
+                                // The audio buffer output should be the contents of one channel.
                                 channelCount = 1;
                             }
 

@@ -21,9 +21,9 @@ namespace Microsoft.Psi.Visualization.Views
         XYValueVisualizationObjectCanvasView<TXYValueEnumerableVisualizationObject, TEnumerable>
         where TEnumerable : IEnumerable<TItem>
         where TXYValueEnumerableVisualizationObject : XYValueEnumerableVisualizationObject<TItem, TEnumerable>, new()
-        where TItemView : VisualizationObjectCanvasItemView<TXYValueEnumerableVisualizationObject, TItem, TEnumerable>, new()
+        where TItemView : IVisualizationObjectCanvasItemView<TItem>, new()
     {
-        private readonly List<TItemView> itemViews = new List<TItemView>();
+        private readonly List<TItemView> itemViews = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XYValueEnumerableVisualizationObjectCanvasView{TXYVisualizationObject, TItem, TEnumerable, TViewItem}"/> class.
@@ -44,9 +44,9 @@ namespace Microsoft.Psi.Visualization.Views
         protected override void UpdateView()
         {
             int itemsIndex = 0;
-            if (this.StreamVisualizationObject.HasCurrentValue)
+            if (this.XYValueEnumerableVisualizationObject.HasCurrentValue && this.XYValueEnumerableVisualizationObject.CurrentData != null)
             {
-                foreach (var item in this.StreamVisualizationObject.CurrentData)
+                foreach (var item in this.XYValueEnumerableVisualizationObject.CurrentData)
                 {
                     TItemView viewItem;
                     if (itemsIndex < this.itemViews.Count)
@@ -70,7 +70,7 @@ namespace Microsoft.Psi.Visualization.Views
                         this.itemViews.Add(viewItem);
                     }
 
-                    viewItem.UpdateView(item, this, this.XYValueEnumerableVisualizationObject);
+                    viewItem.UpdateView(item, this);
                     itemsIndex++;
                 }
             }

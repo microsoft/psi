@@ -45,7 +45,7 @@ namespace Microsoft.Psi.Data
             : base(pipeline, $"{nameof(Exporter)}[{name}]")
         {
             this.pipeline = pipeline;
-            this.serializers = serializers ?? new KnownSerializers();
+            this.serializers = serializers ?? new KnownSerializers(knownSerializers: KnownSerializers.Default);
             this.writer = new PsiStoreWriter(name, path, createSubdirectory);
             this.pipeline.PipelineRun += (_, e) => this.writer.InitializeStreamOpenedTimes(e.StartOriginatingTime);
 

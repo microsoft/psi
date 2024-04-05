@@ -21,7 +21,7 @@ namespace Microsoft.Psi.Visualization.Views.Visuals2D
     /// This base abstract class defines virtual methods for responding to resizing events,
     /// updating the set of scaling and translation transforms and updating the view.
     /// </remarks>
-    public abstract class StreamVisualizationObjectCanvasView<TStreamVisualizationObject, TData> : VisualizationObjectView
+    public abstract class StreamVisualizationObjectCanvasView<TStreamVisualizationObject, TData> : VisualizationObjectView, IStreamVisualizationObjectCanvasView
         where TStreamVisualizationObject : StreamVisualizationObject<TData>, new()
     {
         private readonly ScaleTransform scaleTransform = new ();

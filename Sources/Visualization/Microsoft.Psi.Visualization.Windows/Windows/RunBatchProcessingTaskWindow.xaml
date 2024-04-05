@@ -51,8 +51,10 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right">
             <Label Content="{Binding PercentageCompleteAsString}"/>
         </StackPanel>
-        <Label Grid.Row="1" Grid.Column="0" Content="Task Description:" HorizontalAlignment="Right" />
-        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Description}" HorizontalAlignment="Left"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Task Description:" VerticalAlignment="Top"/>
+        <Label Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+            <TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Description}"/>
+        </Label>
         <Label Grid.Row="2" Grid.Column="0" Content="Run On:" HorizontalAlignment="Right" />
         <Label Grid.Row="2" Grid.Column="1" Content="{Binding Target}" HorizontalAlignment="Left"/>
         <Label Grid.Row="3" Grid.Column="0" Content="Data Size:" HorizontalAlignment="Right"/>
@@ -73,7 +75,8 @@
             ShowSortOptions="False"
             ShowSearchBox="False"
             ShowTitle="False"
-            Visibility="{Binding ConfigVisibility}"/>
+            Visibility="{Binding ConfigVisibility}"
+            PreparePropertyItem="OnPreparePropertyItem"/>
         <Label Grid.Row="8" Grid.Column="0" Content="Task Configuration:" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="{Binding ConfigVisibility}"/>
         <StackPanel Grid.Row="8" Grid.Column="1" Margin="10,4,0,0" Orientation="Horizontal" Visibility="{Binding ConfigVisibility}">
             <ComboBox Name="ConfigurationsComboBox" 
@@ -108,7 +111,7 @@
                 </Style>
             </StackPanel.Resources>
             <Button Name="RunButton" Click="RunButtonClick" IsDefault="True" Margin="0,5,10,0" Visibility="{Binding ConfigVisibility}">Run</Button>
-            <Button Name="CancelButton" Click="CancelButtonClick" Margin="2,5,0,0">Cancel</Button>
+            <Button Name="CancelButton" Click="CancelButtonClick" IsCancel="True" Margin="2,5,0,0">Cancel</Button>
         </StackPanel>
     </Grid>
 </Window>

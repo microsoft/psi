@@ -7,9 +7,11 @@ namespace Microsoft.Psi.Visualization.ViewModels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Runtime.Serialization;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -38,9 +40,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
         private string auxiliaryInfo = string.Empty;
 
-        private RelayCommand addPartitionFromStoreCommand;
+        private RelayCommand addPartitionFromFileCommand;
         private RelayCommand addMultiplePartitionsFromFolderCommand;
         private RelayCommand removeSessionCommand;
+        private RelayCommand deleteSessionCommand;
         private RelayCommand visualizeSessionCommand;
         private RelayCommand<MouseButtonEventArgs> mouseDoubleClickCommand;
         private RelayCommand<Grid> contextMenuOpeningCommand;
@@ -88,6 +91,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the session view models contains invalid partitions.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public bool ContainsInvalidPartitions => this.PartitionViewModels.Any(p => !p.IsValidPartition);
 
         /// <summary>
         /// Gets the auxiliary info.
@@ -176,14 +186,14 @@ namespace Microsoft.Psi.Visualization.ViewModels
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand AddPartitionFromStoreCommand => this.addPartitionFromStoreCommand ??= new RelayCommand(() => this.AddPartitionFromStore());
+        public RelayCommand AddPartitionFromFileCommand => this.addPartitionFromFileCommand ??= new RelayCommand(async () => await this.AddPartitionFromFileAsync());
 
         /// <summary>
         /// Gets the add multiple partitions command.
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand AddMultiplePartitionsFromFolderCommand => this.addMultiplePartitionsFromFolderCommand ??= new RelayCommand(() => this.AddMultiplePartitionsFromFolder());
+        public RelayCommand AddMultiplePsiStorePartitionsFromFolderCommand => this.addMultiplePartitionsFromFolderCommand ??= new RelayCommand(async () => await this.AddMultiplePsiStorePartitionsFromFolderAsync());
 
         /// <summary>
         /// Gets the remove session command.
@@ -191,6 +201,13 @@ namespace Microsoft.Psi.Visualization.ViewModels
         [Browsable(false)]
         [IgnoreDataMember]
         public RelayCommand RemoveSessionCommand => this.removeSessionCommand ??= new RelayCommand(() => this.RemoveSession());
+
+        /// <summary>
+        /// Gets the delete session command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand DeleteSessionCommand => this.deleteSessionCommand ??= new RelayCommand(() => this.DeleteSession(), () => !this.ContainsLivePartitions);
 
         /// <summary>
         /// Gets the visualize session command.
@@ -255,20 +272,23 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Creates and a new store partition but does not add it to the session.
+        /// Adds a new partition based on a specified stream reader.
         /// </summary>
         /// <param name="streamReader">The stream reader for the data store.</param>
-        /// <param name="partitionName">The partition name. Default is null.</param>
-        public void AddStorePartition(IStreamReader streamReader, string partitionName = null)
+        /// <param name="partitionName">The partition name (defaults to the stream reader name).</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for adding a new partition based on a specified stream reader.</returns>
+        public async Task AddPartitionAsync(IStreamReader streamReader, string partitionName = null, IProgress<(string, double)> progress = null)
         {
             partitionName = this.EnsureUniquePartitionName(partitionName ?? streamReader.Name);
-            this.AddPartition(this.session.AddStorePartition(streamReader, partitionName));
+            this.AddPartition(await this.session.AddPartitionAsync(streamReader, partitionName, progress));
         }
 
         /// <summary>
-        /// Adds a new partition to the session.
+        /// Adds a new partition from a user-specified file.
         /// </summary>
-        public void AddPartitionFromStore()
+        /// <returns>The task for adding a new partition from a user-specified file.</returns>
+        public async Task AddPartitionFromFileAsync()
         {
             var formats = VisualizationContext.Instance.PluginMap.GetStreamReaderExtensions();
             var openFileDialog = new Win32.OpenFileDialog
@@ -291,9 +311,12 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 var name = fileInfo.Name.Split('.')[0];
                 var path = fileInfo.DirectoryName;
 
+                // Get the stream reader type and add the partition
                 var readerType = VisualizationContext.Instance.PluginMap.GetStreamReaderType(fileInfo.Extension);
                 var streamReader = Psi.Data.StreamReader.Create(name, path, readerType);
-                this.AddStorePartition(streamReader);
+                await ProgressWindow.RunWithProgressAsync(
+                    $"Adding partition from {openFileDialog.FileName} ...",
+                    progress => this.AddPartitionAsync(streamReader, progress: progress));
 
                 // Update stream bindings if this is the current session being visualized
                 if (this.IsCurrentSession)
@@ -307,9 +330,10 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Adds multiple partitions from a folder to the session.
+        /// Adds multiple partitions from a user-specified folder.
         /// </summary>
-        public void AddMultiplePartitionsFromFolder()
+        /// <returns>The task for adding multiple partitions from a user-specified folder.</returns>
+        public async Task AddMultiplePsiStorePartitionsFromFolderAsync()
         {
             var selectFolderDialog = new System.Windows.Forms.FolderBrowserDialog
             {
@@ -326,7 +350,9 @@ namespace Microsoft.Psi.Visualization.ViewModels
 
             if (selectFolderDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                this.AddMultiplePartitionsFromFolder(selectFolderDialog.SelectedPath, out var existingPartitions);
+                var existingPartitions = await ProgressWindow.RunWithProgressAsync(
+                    $"Adding multiple partitions from {selectFolderDialog.SelectedPath} ...",
+                    async progress => await this.AddMultiplePsiStorePartitionsFromFolderAsync(selectFolderDialog.SelectedPath, progress));
 
                 if (existingPartitions.Count > 0)
                 {
@@ -354,14 +380,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
         }
 
         /// <summary>
-        /// Adds multiple partitions from a specified folder to the session.
+        /// Adds multiple psi store partitions from a specified folder.
         /// </summary>
         /// <param name="folderName">The folder to add partitions from.</param>
-        /// <param name="existingPartitions">A list of partitions that were already existing and were not added.</param>
-        public void AddMultiplePartitionsFromFolder(string folderName, out List<IPartition> existingPartitions)
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task of adding multiple psi store partitions from a specified folder.</returns>
+        public async Task<List<IPartition>> AddMultiplePsiStorePartitionsFromFolderAsync(string folderName, IProgress<(string, double)> progress = null)
         {
-            existingPartitions = new List<IPartition>();
-            foreach (var store in PsiStore.EnumerateStores(folderName, false))
+            var existingPartitions = new List<IPartition>();
+            var stores = PsiStore.EnumerateStores(folderName, false).ToArray();
+            var i = 0;
+            foreach (var store in stores)
             {
                 // Check if the session already contains a partition for this store
                 var partition = this.session.Partitions.FirstOrDefault(p => p.StoreName == store.Name && p.StorePath == store.Path);
@@ -372,9 +401,18 @@ namespace Microsoft.Psi.Visualization.ViewModels
                 }
 
                 // Add the new partition, ensuring that the partition name does not clash with an existing one
-                partition = this.session.AddPsiStorePartition(store.Name, store.Path, this.EnsureUniquePartitionName(store.Name));
+                partition = await this.session.AddPartitionAsync(
+                    new PsiStoreStreamReader(store.Name, store.Path),
+                    this.EnsureUniquePartitionName(store.Name),
+                    new Progress<(string, double)>(t => progress?.Report(($"Adding partition {store.Name}\n{t.Item1}", (i + t.Item2) / stores.Length))));
                 this.AddPartition(partition);
+
+                i++;
             }
+
+            progress?.Report((string.Empty, 1));
+
+            return existingPartitions;
         }
 
         /// <summary>
@@ -412,6 +450,42 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             this.datasetViewModel.RemoveSession(this);
+        }
+
+        /// <summary>
+        /// Removes this session and permanently deletes all of its partitions from disk.
+        /// </summary>
+        public void DeleteSession()
+        {
+            var confirmation = new MessageBoxWindow(
+               Application.Current.MainWindow,
+               "Are you sure?",
+               "Are you sure you want to delete this session? This will permanently delete all of its partitions from disk.",
+               "Yes",
+               "Cancel");
+
+            if (confirmation.ShowDialog() == true)
+            {
+                try
+                {
+                    // Delete all partitions from disk
+                    foreach (PartitionViewModel partitionViewModel in this.PartitionViewModels)
+                    {
+                        PsiStore.Delete((partitionViewModel.StoreName, partitionViewModel.StorePath), true);
+                    }
+
+                    this.datasetViewModel.RemoveSession(this);
+                }
+                catch (Exception e)
+                {
+                    new MessageBoxWindow(
+                        Application.Current.MainWindow,
+                        "Delete Partition Error",
+                        $"An error occurred while attempting to delete the session: {e.Message}",
+                        "Close",
+                        null).ShowDialog();
+                }
+            }
         }
 
         /// <summary>
@@ -556,37 +630,37 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.AuxiliaryInfo = string.Empty;
                     break;
                 case AuxiliarySessionInfo.Duration:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Span.ToString(@"d\.hh\:mm\:ss");
                     break;
                 case AuxiliarySessionInfo.StartDate:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToShortDateString();
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Left.ToShortDateString();
                     break;
                 case AuxiliarySessionInfo.StartDateLocal:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToLocalTime().ToShortDateString();
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Left.ToLocalTime().ToShortDateString();
                     break;
                 case AuxiliarySessionInfo.StartTime:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToShortTimeString();
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Left.ToShortTimeString();
                     break;
                 case AuxiliarySessionInfo.StartTimeLocal:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToLocalTime().ToShortTimeString();
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Left.ToLocalTime().ToShortTimeString();
                     break;
                 case AuxiliarySessionInfo.StartDateTime:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToString();
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Left.ToString();
                     break;
                 case AuxiliarySessionInfo.StartDateTimeLocal:
-                    this.AuxiliaryInfo = this.Session.TimeInterval.Left.ToLocalTime().ToString();
+                    this.AuxiliaryInfo = this.Session.MessageOriginatingTimeInterval.Left.ToLocalTime().ToString();
                     break;
                 case AuxiliarySessionInfo.Size:
                     this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatSize(this.Session.Size.Value) : "?";
                     break;
                 case AuxiliarySessionInfo.DataThroughputPerHour:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.TimeInterval.Span.TotalHours, "hour") : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.MessageOriginatingTimeInterval.Span.TotalHours, "hour") : "?";
                     break;
                 case AuxiliarySessionInfo.DataThroughputPerMinute:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.TimeInterval.Span.TotalMinutes, "min") : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.MessageOriginatingTimeInterval.Span.TotalMinutes, "min") : "?";
                     break;
                 case AuxiliarySessionInfo.DataThroughputPerSecond:
-                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.TimeInterval.Span.TotalSeconds, "sec") : "?";
+                    this.AuxiliaryInfo = this.Session.Size.HasValue ? SizeHelper.FormatThroughput(this.Session.Size.Value / this.Session.MessageOriginatingTimeInterval.Span.TotalSeconds, "sec") : "?";
                     break;
                 case AuxiliarySessionInfo.StreamCount:
                     this.AuxiliaryInfo = this.Session.StreamCount.HasValue ? (this.Session.StreamCount == 0 ? "0" : $"{this.Session.StreamCount.Value:0,0}") : "?";
@@ -601,17 +675,18 @@ namespace Microsoft.Psi.Visualization.ViewModels
             // Create the context menu
             var contextMenu = new ContextMenu();
 
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Add Partition from Store ...", this.AddPartitionFromStoreCommand));
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAddMultiple, "Add Multiple Partitions from Folder ...", this.AddMultiplePartitionsFromFolderCommand));
-            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionRemove, "Remove", this.RemoveSessionCommand));
-            contextMenu.Items.Add(new Separator());
-
             // Add the visualize session context menu if this is not the currently visualized session
             if (!this.IsCurrentSession)
             {
                 contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(string.Empty, ContextMenuName.VisualizeSession, this.VisualizeSessionCommand));
                 contextMenu.Items.Add(new Separator());
             }
+
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAdd, "Add Partition from File ...", this.AddPartitionFromFileCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.PartitionAddMultiple, "Add Multiple Partitions from Folder ...", this.AddMultiplePsiStorePartitionsFromFolderCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(IconSourcePath.SessionRemove, "Remove", this.RemoveSessionCommand));
+            contextMenu.Items.Add(MenuItemHelper.CreateMenuItem(null, "Delete Session", this.DeleteSessionCommand));
+            contextMenu.Items.Add(new Separator());
 
             // Add run batch processing task menu
             var runTasksMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Run Batch Processing Task", null);
@@ -648,7 +723,6 @@ namespace Microsoft.Psi.Visualization.ViewModels
                     this.Name));
 
             contextMenu.Items.Add(copyToClipboardMenuItem);
-            contextMenu.Items.Add(new Separator());
 
             // Add show session info menu
             var showSessionInfoMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Show Sessions Info", null);
@@ -682,6 +756,17 @@ namespace Microsoft.Psi.Visualization.ViewModels
             }
 
             contextMenu.Items.Add(showSessionInfoMenuItem);
+
+            // Add open session folder in windows explorer
+            if (this.PartitionViewModels.Any() && this.PartitionViewModels.Select(pvm => pvm.Partition.StorePath).Distinct().Count() == 1)
+            {
+                contextMenu.Items.Add(
+                    MenuItemHelper.CreateMenuItem(
+                        null,
+                        "Open Session Folder in Explorer",
+                        new VisualizationCommand(() => { Process.Start("explorer.exe", this.PartitionViewModels.First().StorePath); }),
+                        commandParameter: default));
+            }
 
             return contextMenu;
         }

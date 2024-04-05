@@ -17,7 +17,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <typeparam name="TData">The type of data being represented.</typeparam>
     public class ModelVisual3DDictionaryVisualizationObject<TVisualizationObject, TKey, TData> :
         ModelVisual3DCollectionVisualizationObject<TVisualizationObject, Dictionary<TKey, TData>>
-        where TVisualizationObject : ModelVisual3DVisualizationObject<TData>, new()
+        where TVisualizationObject : ModelVisual3DValueVisualizationObject<TData>, new()
     {
         private readonly Dictionary<TKey, TVisualizationObject> visuals = new ();
 
@@ -74,7 +74,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
                         this.visuals[key].Visible = this.visibilityPredicate(key);
                     }
 
-                    this.ModelView.Children.Add(visual.ModelView);
+                    this.ModelVisual3D.Children.Add(visual.ModelVisual3D);
                 }
 
                 if (!this.updatedKeys.Contains(key))
@@ -114,7 +114,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Remove all visuals that were not accessed during the update
             foreach (TKey key in this.visuals.Keys.Where(eid => !this.updatedKeys.Contains(eid)).ToList())
             {
-                this.ModelView.Children.Remove(this.visuals[key].ModelView);
+                this.ModelVisual3D.Children.Remove(this.visuals[key].ModelVisual3D);
                 this.visuals.Remove(key);
             }
 
@@ -122,7 +122,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData == null)
             {
@@ -157,7 +157,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         private void RemoveAll()
         {
             this.visuals.Clear();
-            this.ModelView.Children.Clear();
+            this.ModelVisual3D.Children.Clear();
         }
     }
 }

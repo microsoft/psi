@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a 3D line visualization object.
     /// </summary>
     [VisualizationObject("3D Line")]
-    public class Line3DVisualizationObject : ModelVisual3DVisualizationObject<Line3D?>
+    public class Line3DVisualizationObject : ModelVisual3DValueVisualizationObject<Line3D?>
     {
         private Color color = Colors.White;
         private double thicknessMm = 15;
@@ -81,7 +81,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData.HasValue)
             {

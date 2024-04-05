@@ -13,7 +13,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// <typeparam name="TVisualizationObject">The type of visualization objects in the collection.</typeparam>
     /// <typeparam name="TData">The type of data being represented.</typeparam>
     public abstract class ModelVisual3DCollectionVisualizationObject<TVisualizationObject, TData> :
-        ModelVisual3DVisualizationObject<TData>
+        ModelVisual3DValueVisualizationObject<TData>
         where TVisualizationObject : VisualizationObject, IModelVisual3DVisualizationObject, ICustomTypeDescriptor, new()
     {
         // The list of properties of the prototype (including the prototype's children)
@@ -52,7 +52,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (this.Items != null)
             {
                 // Get the first property path segment
-                this.GetNextPropertyPathSegment(path, out string nextSegment, out string pathRemainder);
+                ModelVisual3DVisualizationObjectsHelper.GetNextPropertyPathSegment(path, out string nextSegment, out string pathRemainder);
 
                 // If this is a property on our prototype, set the property on all our child visualization objects.
                 if (nextSegment == nameof(this.Prototype))
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Copy all of the prototype's updated properties into the new object.
             foreach (var property in this.updatedPrototypeProperties)
             {
-                this.CopyPropertyValue(visualizationObject, property.Key, property.Value);
+                ModelVisual3DVisualizationObjectsHelper.CopyPropertyValue(visualizationObject, property.Key, property.Value);
             }
 
             return visualizationObject;
@@ -119,66 +119,19 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             if (this.CustomPropertyDescriptors == null)
             {
                 // Get the list of properties in this collection class
-                PropertyDescriptorCollection localPropertyDescriptors = TypeDescriptor.GetProperties(this, true);
-
-                // Get the list of properties in the prototype child visualization object
-                PropertyDescriptorCollection childPropertyDescriptors = this.Prototype.GetProperties();
+                var localPropertyDescriptors = TypeDescriptor.GetProperties(this, true);
 
                 // Create the combined properties collection
                 this.CustomPropertyDescriptors = new PropertyDescriptorCollection(null);
 
                 // Copy in all the local properties
-                this.CopyPropertyDescriptors(localPropertyDescriptors, this.CustomPropertyDescriptors);
+                ModelVisual3DVisualizationObjectsHelper.CopyPropertyDescriptors(
+                    localPropertyDescriptors,
+                    this.CustomPropertyDescriptors);
 
                 // Copy in all the properties of the child (properties that already exist will not be copied)
-                this.CopyPropertyDescriptors(this.ConvertToChildPropertyDescriptors(childPropertyDescriptors), this.CustomPropertyDescriptors);
-            }
-        }
-
-        private void CopyPropertyValue(object destination, string path, object value)
-        {
-            // Get the next segment in the path to the property
-            this.GetNextPropertyPathSegment(path, out string nextSegment, out string pathRemainder);
-
-            // Get the property info for the next segment in the path
-            var propertyInfo = destination.GetType().GetProperty(nextSegment);
-
-            // If we're at the end of the path, set the value of
-            // the property, otherwise drill into the child object
-            if (string.IsNullOrWhiteSpace(pathRemainder))
-            {
-                if (propertyInfo.CanWrite)
-                {
-                    propertyInfo.SetValue(destination, value);
-                }
-            }
-            else
-            {
-                this.CopyPropertyValue(propertyInfo.GetValue(destination), pathRemainder, value);
-            }
-        }
-
-        private PropertyDescriptorCollection ConvertToChildPropertyDescriptors(PropertyDescriptorCollection properties)
-        {
-            // Creates a set of property descriptors for the child object
-            var newProps = new PropertyDescriptorCollection(null);
-            foreach (PropertyDescriptor propertyDescriptor in properties)
-            {
-                newProps.Add(new ChildVisualizationObjectPropertyDescriptor(this.Prototype, propertyDescriptor));
-            }
-
-            return newProps;
-        }
-
-        private void CopyPropertyDescriptors(PropertyDescriptorCollection source, PropertyDescriptorCollection target)
-        {
-            foreach (PropertyDescriptor propertyDescriptor in source)
-            {
-                // Do not add the property descriptor if it's already in the collection
-                if (target.Find(propertyDescriptor.Name, false) == null)
-                {
-                    target.Add(propertyDescriptor);
-                }
+                ModelVisual3DVisualizationObjectsHelper.CopyPropertyDescriptors(
+                    ModelVisual3DVisualizationObjectsHelper.GetChildPropertyDescriptors(this.Prototype), this.CustomPropertyDescriptors);
             }
         }
     }

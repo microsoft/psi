@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Speech
     /// This component performs text-to-speech synthesis, operating on an input stream of text strings and producing a
     /// stream of audio containing the synthesized speech.
     /// </remarks>
-    public sealed class SystemSpeechSynthesizer : ConsumerProducer<string, AudioBuffer>, ISourceComponent, IDisposable
+    public sealed class SystemSpeechSynthesizer : ConsumerProducer<string, AudioBuffer>, ISpeechSynthesizer, ISourceComponent, IDisposable
     {
         private static readonly string SpeakSsmlPrefix = "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xml:lang=\"en\">";
         private static readonly string SpeakSsmlPostfix = "</speak>";
@@ -79,7 +79,7 @@ namespace Microsoft.Psi.Speech
         public SystemSpeechSynthesizer(Pipeline pipeline, string configurationFilename = null, string name = nameof(SystemSpeechSynthesizer))
             : this(
                 pipeline,
-                (configurationFilename == null) ? new SystemSpeechSynthesizerConfiguration() : new ConfigurationHelper<SystemSpeechSynthesizerConfiguration>(configurationFilename).Configuration,
+                ConfigurationHelper.ReadFromFileOrDefault(configurationFilename, new SystemSpeechSynthesizerConfiguration(), true),
                 name)
         {
         }

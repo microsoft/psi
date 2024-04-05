@@ -9,6 +9,7 @@ namespace Microsoft.Psi
     using System.Linq;
     using System.Reflection;
     using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Psi.Common;
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Persistence;
@@ -186,13 +187,34 @@ namespace Microsoft.Psi
         /// <param name="name">The name of the store to check.</param>
         /// <param name="path">The path of the store to check.</param>
         /// <param name="deleteOriginalStore">Indicates whether the original store should be deleted.</param>
-        public static void Repair(string name, string path, bool deleteOriginalStore = true)
+        /// <param name="progress">An optional progress updates receiver.</param>
+        /// <returns>The task for repairing an invalid \psi store in place.</returns>
+        public static async Task RepairAsync(string name, string path, bool deleteOriginalStore = true, IProgress<double> progress = null)
         {
-            PerformStoreOperationInPlace(
-                (name, path),
-                nameof(Repair),
-                (name, path, temp) => PsiStore.Crop((name, path), (name, temp), TimeInterval.Infinite, false),
-                deleteOriginalStore);
+            if (!IsClosed(name, path) && !PsiStoreMonitor.IsStoreLive(name, path))
+            {
+                await Task.Run(() => Repair(name, path, deleteOriginalStore, progress));
+            }
+        }
+
+        /// <summary>
+        /// Repairs an invalid \psi store in place.
+        /// </summary>
+        /// <param name="name">The name of the store to check.</param>
+        /// <param name="path">The path of the store to check.</param>
+        /// <param name="deleteOriginalStore">Indicates whether the original store should be deleted.</param>
+        /// <param name="progress">An optional progress updates receiver.</param>
+        public static void Repair(string name, string path, bool deleteOriginalStore = true, IProgress<double> progress = null)
+        {
+            if (!IsClosed(name, path) && !PsiStoreMonitor.IsStoreLive(name, path))
+            {
+                PerformStoreOperationInPlace(
+                    (name, path),
+                    nameof(Repair),
+                    (name, path, temp, operationProgress) => Crop((name, path), (name, temp), TimeInterval.Infinite, false, operationProgress),
+                    deleteOriginalStore,
+                    progress);
+            }
         }
 
         /// <summary>
@@ -225,7 +247,13 @@ namespace Microsoft.Psi
         /// </param>
         /// <param name="progress">An optional progress reporter for progress updates.</param>
         /// <param name="loggingCallback">An optional callback to which human-friendly information will be logged.</param>
-        public static void Crop((string Name, string Path) input, (string Name, string Path) output, TimeInterval cropInterval, bool createSubdirectory = true, IProgress<double> progress = null, Action<string> loggingCallback = null)
+        public static void Crop(
+            (string Name, string Path) input,
+            (string Name, string Path) output,
+            TimeInterval cropInterval,
+            bool createSubdirectory = true,
+            IProgress<double> progress = null,
+            Action<string> loggingCallback = null)
         {
             Copy(input, output, _ => cropInterval, null, createSubdirectory, progress, loggingCallback);
         }
@@ -244,8 +272,9 @@ namespace Microsoft.Psi
             PerformStoreOperationInPlace(
                 input,
                 nameof(Crop),
-                (name, path, temp) => Copy((name, path), (name, temp), store => new TimeInterval(store.MessageOriginatingTimeInterval.Left + start, length), null, false, progress, loggingCallback),
-                deleteOriginalStore);
+                (name, path, temp, operationProgress) => Copy((name, path), (name, temp), store => new TimeInterval(store.MessageOriginatingTimeInterval.Left + start, length), null, false, operationProgress, loggingCallback),
+                deleteOriginalStore,
+                progress);
         }
 
         /// <summary>
@@ -261,8 +290,9 @@ namespace Microsoft.Psi
             PerformStoreOperationInPlace(
                 input,
                 nameof(Crop),
-                (name, path, temp) => Copy((name, path), (name, temp), _ => cropInterval, null, false, progress, loggingCallback),
-                deleteOriginalStore);
+                (name, path, temp, operationProgress) => Copy((name, path), (name, temp), _ => cropInterval, null, false, operationProgress, loggingCallback),
+                deleteOriginalStore,
+                progress);
         }
 
         /// <summary>
@@ -514,7 +544,7 @@ namespace Microsoft.Psi
         /// <param name="deleteDirectoryIfOtherwiseEmpty">Whether to delete the containing directory if it is empty after removing store files.</param>
         public static void Delete((string Name, string Path) store, bool deleteDirectoryIfOtherwiseEmpty = false)
         {
-            foreach (var fileInfo in PsiStoreCommon.EnumerateStoreFiles(store.Name, store.Path))
+            foreach (var fileInfo in PsiStoreCommon.EnumerateStoreFileInfos(store.Name, store.Path))
             {
                 File.Delete(fileInfo.FullName);
             }
@@ -665,8 +695,9 @@ namespace Microsoft.Psi
             PerformStoreOperationInPlace(
                 input,
                 nameof(Edit),
-                (name, path, temp) => Edit((name, path), (name, temp), streamEdits, includeStreamPredicate, false, progress, loggingCallback),
-                deleteOriginalStore);
+                (name, path, temp, operationProgress) => Edit((name, path), (name, temp), streamEdits, includeStreamPredicate, false, operationProgress, loggingCallback),
+                deleteOriginalStore,
+                progress);
         }
 
         /// <summary>
@@ -691,8 +722,9 @@ namespace Microsoft.Psi
             PerformStoreOperationInPlace(
                 input,
                 nameof(AddStream),
-                (name, path, temp) => AddStream<T, TSupplementalMetadata>((name, path), (name, temp), streamName, supplementalMetadata, false, progress, loggingCallback),
-                deleteOriginalStore);
+                (name, path, temp, operationProgress) => AddStream<T, TSupplementalMetadata>((name, path), (name, temp), streamName, supplementalMetadata, false, operationProgress, loggingCallback),
+                deleteOriginalStore,
+                progress);
         }
 
         /// <summary>
@@ -754,13 +786,25 @@ namespace Microsoft.Psi
         /// <param name="operationName">Name of operation to perform.</param>
         /// <param name="operationAction">Operation function to perform.</param>
         /// <param name="deleteOriginalStore">Indicates whether the original store should be deleted.</param>
-        private static void PerformStoreOperationInPlace((string Name, string Path) input, string operationName, Action<string, string, string> operationAction, bool deleteOriginalStore)
+        /// <param name="progress">An optional progress updates receiver.</param>
+        private static void PerformStoreOperationInPlace(
+            (string Name, string Path) input,
+            string operationName,
+            Action<string, string, string, IProgress<double>> operationAction,
+            bool deleteOriginalStore,
+            IProgress<double> progress = null)
         {
+            progress?.Report(0);
+
             string storePath = PsiStore.GetPathToLatestVersion(input.Name, input.Path);
             string tempFolderPath = Path.Combine(input.Path, $"{operationName}-{Guid.NewGuid()}");
 
             // invoke operation over the store; expected to generate a resulting store in the temp folder
-            operationAction(input.Name, storePath, tempFolderPath);
+            operationAction(
+                input.Name,
+                storePath,
+                tempFolderPath,
+                new Progress<double>(p => progress?.Report(p * 0.8)));
 
             // create a Before* folder in which to save the original store files
             var beforePath = Path.Combine(storePath, $"Before{operationName}-{Guid.NewGuid()}");
@@ -772,15 +816,25 @@ namespace Microsoft.Psi
             // thread, which may still be in progress. If deleteOriginalStore is true, we will delete the
             // Before* folder at the very end (by which time any open MemoryMappedViews will likely
             // have finished disposing).
-            foreach (var fileInfo in PsiStoreCommon.EnumerateStoreFiles(input.Name, storePath))
+            var storeFileInfos = PsiStoreCommon.EnumerateStoreFileInfos(input.Name, storePath);
+            var storeFileInfosCount = storeFileInfos.Count();
+            var i = 0;
+            foreach (var fileInfo in storeFileInfos)
             {
+                progress?.Report(0.8 + 0.05 * i / storeFileInfosCount);
                 File.Move(fileInfo.FullName, Path.Combine(beforePath, fileInfo.Name));
+                i++;
             }
 
             // move the new store files to the original folder
-            foreach (var fileInfo in PsiStoreCommon.EnumerateStoreFiles(input.Name, tempFolderPath))
+            var tempStoreFileInfos = PsiStoreCommon.EnumerateStoreFileInfos(input.Name, tempFolderPath);
+            var tempStoreFileInfosCount = tempStoreFileInfos.Count();
+            i = 0;
+            foreach (var fileInfo in tempStoreFileInfos)
             {
+                progress?.Report(0.85 + 0.05 * i / tempStoreFileInfosCount);
                 File.Move(fileInfo.FullName, Path.Combine(storePath, fileInfo.Name));
+                i++;
             }
 
             // cleanup temporary folder
@@ -791,6 +845,8 @@ namespace Microsoft.Psi
                 // delete the old store files
                 PsiStore.Delete((input.Name, beforePath), true);
             }
+
+            progress?.Report(1);
         }
     }
 }

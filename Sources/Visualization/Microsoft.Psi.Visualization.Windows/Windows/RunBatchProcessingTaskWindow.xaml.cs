@@ -3,13 +3,15 @@
 
 namespace Microsoft.Psi.Visualization.Windows
 {
+    using System;
     using System.Threading;
     using System.Windows;
+    using Microsoft.Psi.Data;
 
     /// <summary>
     /// Interaction logic for RunBatchProcessingTaskWindow.xaml.
     /// </summary>
-    public partial class RunBatchProcessingTaskWindow : Window
+    public partial class RunBatchProcessingTaskWindow : Window, IDisposable
     {
         private CancellationTokenSource cancellationTokenSource = null;
 
@@ -27,6 +29,12 @@ namespace Microsoft.Psi.Visualization.Windows
         }
 
         private RunBatchProcessingTaskWindowViewModel ViewModel => this.DataContext as RunBatchProcessingTaskWindowViewModel;
+
+        /// <inheritdoc />
+        public void Dispose()
+        {
+            this.cancellationTokenSource?.Dispose();
+        }
 
         private async void RunButtonClick(object sender, RoutedEventArgs e)
         {
@@ -53,6 +61,20 @@ namespace Microsoft.Psi.Visualization.Windows
         private void CancelButtonClick(object sender, RoutedEventArgs e)
         {
             this.cancellationTokenSource?.Cancel();
+        }
+
+        private void OnPreparePropertyItem(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyItemEventArgs e)
+        {
+            // Using pattern from: https://stackoverflow.com/questions/33517266/propertygrid-specify-expandableobject-if-i-dont-have-control-of-the-class
+            if (e.Item is not Xceed.Wpf.Toolkit.PropertyGrid.PropertyItem item)
+            {
+                return;
+            }
+
+            if (item.PropertyType.IsSubclassOf(typeof(ObservableObject)))
+            {
+                e.PropertyItem.IsExpandable = true;
+            }
         }
     }
 }

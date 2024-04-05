@@ -77,6 +77,13 @@ namespace Microsoft.Psi.Components
         /// <inheritdoc />
         public Emitter<TOut[]> Out => this.outConnector.Out;
 
+        /// <inheritdoc />
+        public override void Dispose()
+        {
+            this.splitter.Dispose();
+            base.Dispose();
+        }
+
         private void Receive(TIn[] message, Envelope e)
         {
             for (int i = 0; i < message.Length; i++)

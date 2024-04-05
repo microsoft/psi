@@ -4,6 +4,7 @@
 namespace Microsoft.Psi.Onnx
 {
     using System.Drawing;
+    using Microsoft.Psi.Imaging;
 
     /// <summary>
     /// Represents a masked object detection result from the <see cref="MaskRCNNModelRunner"/>.
@@ -44,5 +45,31 @@ namespace Microsoft.Psi.Onnx
         /// Gets the mask.
         /// </summary>
         public float[] Mask { get; }
+
+        /// <summary>
+        /// Converts the <see cref="MaskRCNNDetection"/> to <see cref="Object2DDetection"/>.
+        /// </summary>
+        /// <returns>The corresponding <see cref="Object2DDetection"/>.</returns>
+        public Object2DDetection ToObject2DDetection()
+        {
+            var mask = new float[28][];
+            for (var y = 0; y < 28; y++)
+            {
+                mask[y] = new float[28];
+                for (var x = 0; x < 28; x++)
+                {
+                    mask[y][x] = this.Mask[x + y * 28];
+                }
+            }
+
+            return new ()
+            {
+                Class = this.Label,
+                InstanceId = null,
+                DetectionScore = this.Confidence,
+                BoundingBox = this.Bounds,
+                Mask = mask,
+            };
+        }
     }
 }

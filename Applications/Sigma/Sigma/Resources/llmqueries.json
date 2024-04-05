@@ -1,0 +1,189 @@
+{
+  "Queries": [
+    {
+      "Name": "GetRecipe",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "You will breakdown a task into steps that a human will execute. \\nThe steps will be numbered, starting from 1, and each step should be a single sentence. \\nYou have to give me all the steps involved. \\nThe first step should be in the form \\\"Gather the following equipment: first tool, second tool, etc.\\\".\\nOnly display the steps, and do not display any additional notes.\\n\\nIf the task involves illegal or criminal activity, destruction of property, physical violence, harm to self or others, medical assistance or medical procedures, orany tasks with a high risk of accidental physical harm to novice users, simply respond [NO-INSTRUCTIONS].\\n\\n-----\\nExamples:\\nThe task is: make a drip pot of coffee\\nThe steps are:\\n1. Gather the following equipment: drip coffee maker, coffee filter, coffee grounds, measuring spoon, water, and a coffee mug.\\n2. Fill the coffee maker's water reservoir with the desired amount of water.\\n3. Place a coffee filter in the coffee maker's filter basket.\\n4. Measure the appropriate amount of coffee grounds using the measuring spoon and add them to the filter.\\n5. Close the filter basket and ensure it is properly seated in the coffee maker.\\n6. Turn on the coffee maker and wait for the brewing process to complete.\\n7. Once the brewing process is finished, carefully pour the coffee into your coffee mug.\\n8. Enjoy your freshly brewed drip pot of coffee.\\n\\nThe task is: tighten a wobbly table leg\\nThe steps are:\\n1. Gather the following equipment: screwdriver, wrench, wood glue, and a cloth.\\n2. Identify the wobbly table leg.\\n3. Check for any loose screws or bolts on the table leg.\\n4. Tighten the loose screws or bolts using the screwdriver or wrench.\\n5. Test the table leg to see if it is still wobbly.\\n6. If the table leg is still wobbly, apply wood glue to any loose joints.\\n7. Wipe away any excess glue with the cloth.\\n8. Allow the wood glue to dry according to the manufacturer's instructions.\\n9. Test the table leg again to ensure it is no longer wobbly.\\n\\nThe task is: repair a broken circuit breaker in my home\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n\\nThe task is: perform mouth-to-mouth resuscitation on someone\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n\\nThe task is: use power tools to shingle my roof\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n\\nThe task is: test my blood sugar levels\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n------\\n\\nRemember, DO NOT list steps for tasks that involve illegal or criminal activity, destruction of property, physical violence, harm to self or others, medical assistance or medical procedures, or for any tasks with a high risk of accidental physical harm to novice users. If the user could accidentally hurt themselves in a serious during the performance of any of the steps in the task, respond with [NO-INSTRUCTIONS]\\n\\nThe task is: $arg0\\nThe steps are:",
+          "TestCases": [
+            {
+              "ParameterValues": [
+                "change the toner\\nin a laser\\nprinter"
+              ],
+              "ExpectedResult": "1. gather the following equipment: new toner cartridge, paper towels, and a trash bag.\n2. turn off the printer and unplug it from the wall.\n3. open the printer cover and remove the old toner cartridge.\n4. take the new toner cartridge out of its packaging and remove any protective tape.\n5. gently shake the new toner cartridge to distribute the toner evenly.\n6. insert the new toner cartridge into the printer and push it firmly until it clicks into place.\n7. close the printer cover and plug the printer back in.\n8. turn on the printer and print a test page to ensure the toner is working properly.\n9. dispose of the old toner cartridge and any packaging in the trash bag.\n10. clean up any toner spills with a paper towel.<|im_end|>"
+            }
+          ],
+          "MinimumTestAccuracy": 0.5,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "Temperature": 0.0,
+          "MaxTokens": 2048,
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "GuideNameExtraction",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "I will give you a sentence that's a variant of one of the following items: $arg0.\\n\\nYou will have to guess which item in the list the sentence belongs to, or tell me if it doesn't belong to any of the items.\\n\\nFor example:\\n\\nSentence: cook bulgur with mushrooms\\nOutput: Cook bulgur with mushrooms and feta\\n\\nSentence: heat water\\nOutput: it doesn't belong\\n\\nNow it's your turn\\n\\nSentence: $arg1\\nOutput:",
+          "TestCases": [
+            {
+              "ParameterValues": [
+                "Make fried onions, Cook lentils with tahini and mushrooms",
+                "cook lentils with tahini"
+              ],
+              "ExpectedResult": "Cook lentils with tahini and mushrooms"
+            },
+            {
+              "ParameterValues": [
+                "Simple Task,Cook bulgur with mushrooms and feta,Make sesame oat crumble,Make sweet and spicy seeds and nuts,Cook lentils with tahini and crispy onions,Cook spicy herb salad with quick-pickled cucumber,Cook spicy roasted new potatoes with lemon and herbs,Make berry cobbler,Cook rigatoni with fennel sausage",
+                "do a simple task"
+              ],
+              "ExpectedResult": "Simple Task"
+            }
+          ],
+          "MinimumTestAccuracy": 0.5,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "Temperature": 0.0,
+          "MaxTokens": 2048,
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "IdentifyObjectName",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "I will give you a sentence that may specify one of the following items: 150 g bulgur wheat,250 ml boiling water,1 large onion,1 tsp cumin seeds,500 g mixed mushrooms,2 tbsp thyme leaves,2 tbsp balsamic vinegar,1/2 cup dill plus extra to serve,60g feta,1/2 tsp regular chilli flake\\n\\nYou will have to guess which item the sentence specifies, or tell me if it doesn't belong to any of the items.\\n\\nFor example:\\n\\nSentence: i found the bulgur\\nOutput: 150 g bulgur wheat\\n\\nSentence: i got the cumin seeds\\nOutput: 1 tsp cumin seeds\\n\\nSentence: bicycle\\nOutput: it doesn't belong\\n\\nNow it's your turn. Here is the list of items: $arg0\\nSentence: $arg1\\nOutput:",
+          "TestCases": [
+            {
+              "ParameterValues": [
+                "20g light soft brown sugar, 2 tsp flaked sea salt, 1 tsp mild curry powder, 1/4 tsp ground turmeric, 1/4 tsp chilli flakes, 180 g raw unsalted cashews, 20g sunflower seeds, 20g pumpkin seeds",
+                "sea salt"
+              ],
+              "ExpectedResult": "2 tsp flaked sea salt"
+            }
+          ],
+          "MinimumTestAccuracy": 0.5,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "Temperature": 0.0,
+          "MaxTokens": 2048,
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "ExtractObjects",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "Extract the list of objects from the following string: $arg0\\nEliminate all quantities. Eliminate attributes like old, new, clean, dirty, but keep color and size attributes.\\nProvide the answer as a comma-separated list.",
+          "TestCases": [
+            {
+              "ParameterValues": [
+                "50 g white sesame seeds,25 g black sesame seeds,150g rolled oats,50g sliced almonds,3/4 tsp flaky sea salt,1/4 tsp ground cardamom,3 tbsp smooth unsweetened peanut butter,100g date syrup,1 egg white,1 tbsp rose water"
+              ],
+              "ExpectedResult": "white sesame seeds, black sesame seeds, rolled oats, sliced almonds, flaky sea salt, ground cardamom, smooth unsweetened peanut butter, date syrup, egg white, rose water"
+            }
+          ],
+          "MinimumTestAccuracy": 0.5,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "Temperature": 0.0,
+          "MaxTokens": 2048,
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "GetOpenEndedResponse",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "The human is performing the following task: $arg0\\n\\nThe human is on this step: $arg1\\n\\nThe human uttered the following sentence: $arg2.\\n\\nIf this is a question from the human related to this step, please answer the question in a single sentence, in a concise manner. If not, please respond [no-question]\\n",
+          "TestCases": [
+            {
+              "ParameterValues": [
+                "run the cleaning cycle on my espresso machine",
+                "1. Gather the necessary equipment: espresso machine, cleaning tablets, and a container of water.",
+                "how large should the container be"
+              ],
+              "ExpectedResult": "The container should be large enough to hold at least two cups of water."
+            },
+            {
+              "ParameterValues": [
+                "run the cleaning cycle on my espresso machine",
+                "4. Insert the portafilter into the group head of the espresso machine.",
+                "what is the group head"
+              ],
+              "ExpectedResult": "The group head is the part of the espresso machine that holds the portafilter. It is usually located on the top of the machine and is the part that the espresso is extracted from."
+            }
+          ],
+          "MinimumTestAccuracy": 0.5,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "Temperature": 0.0,
+          "MaxTokens": 2048,
+          "SystemMessage": "You are a helpful assitant guiding a human via spoken interaction to perform a task in the physical world."
+        },
+        {
+          "Name": "OldPrompt",
+          "Template": "The human is performing the following task: $arg0\\n\\nThe human is on this step: $arg1\\n\\nThe human has this question: $arg2?\\n\\nPlease respond in a single sentence, in a concise manner. ",
+          "TestCases": [],
+          "MinimumTestAccuracy": 0.0,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "GetUserContext",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "You will be guiding a human to perform a task in the physical world by giving step by step instructions. The instructions will be spoken. The task is: $arg0.\\n\\nBefore starting the guidance, please list two GOOD questions for the human that will give you additional information so that you can give better instructions. \\n\\nYou already know certain things so the following types of questions are BAD questions. DO NOT ASK THEM. \\nYou already know that the human does not have a manual available. DO NOT ASK QUESTIONS ABOUT THE MANUAL.\\nYou already know that the human is not very familiar with this task. DO NOT ASK QUESTIONS ABOUT HOW FAMILIAR THE HUMAN IS WITH THE TASK.\\nYou already know that the human has all the objects and tools needed for this task. DO NOT ASK QUESTIONS ABOUT WHETHER CERTAIN OBJECTS ARE AVAILABLE.\\n\\nGOOD QUESTIONS can be for instance about the specifics of the various objects involved like type or the make and model of various objects, or how big or small they are. You might ask about whether the world is in a certain state, like if a machine is plugged in, or if something is turned on. \\n\\nWhen asking questions think about the instructions you would provide and how they might change depending on the answers to the questions. A question is GOOD if it changes the instructions you would provide. Otherwise, if the question does not affect the instructions you would provide it's a BAD question.\\n\\nDO NOT generate questions for tasks that involve illegal or criminal activity, destruction of property, physical violence, harm to self or others, medical assistance or medical procedures, or for any tasks with a high risk of accidental physical harm to novice users. If the user could accidentally hurt themselves in a serious during the performance of any of the steps in the task, respond with [NO-CONTEXT]\\n\\nExamples:\\n\\nTask: change the air filter in a vacuum cleaner\\nQuestions:\\n1: What type of vacuum cleaner is it?\\n2: Is the vacuum cleaner plugged in?\\n\\nTask: clean up a stain from a carpet\\nQuestions:\\n1: do you know what substance caused the stain?\\n2: is the stain new or old?\\n\\nTask: replace a light switch\\nQuestions:\\n1: is the electric master breaker off?\\n2: is it a dimmer switch? \\n\\nTask: repair a broken circuit breaker in my home\\nQuestions:\\n[NO-CONTEXT]\\n\\nTask: perform mouth-to-mouth resuscitation on someone\\nQuestions:\\n[NO-CONTEXT]\\n\\nTask: use power tools to shingle my roof\\nQuestions:\\n[NO-CONTEXT]\\n\\nTask: test my blood sugar levels\\nQuestions:\\n[NO-CONTEXT]\\n------\\n\\nRemember, Simply give a list of questions, without any preliminary heading or text. But DO NOT generate questions for tasks that involve illegal or criminal activity, destruction of property, physical violence, harm to self or others, medical assistance or medical procedures, or for any tasks with a high risk of accidental physical harm to novice users. If the user could accidentally hurt themselves in a serious during the performance of any of the steps in the task, respond with [NO-CONTEXT]\\n\\nTask: $arg0\\nQuestions:",
+          "TestCases": [],
+          "MinimumTestAccuracy": 0.0,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "GetRecipeWithUserContext",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "You will assist a human to perform a physical task in the world by giving step by step instructions. The task is: $arg0.\\n\\nYou have already asked the human a set of questions and the answers are below:\\n\\n$arg1\\n\\nYou will now breakdown the task into steps that a human will execute. \\nThe steps will be numbered, starting from 1, and each step should be a single sentence. \\nYou should display all the steps involved. \\nThe first step should be in the form \\\"Gather the following equipment: first tool, second tool, etc.\\\".\\nOnly display the steps, and do not display any additional notes.\\n\\nIf the task involves illegal or criminal activity, destruction of property, physical violence, harm to self or others, medical assistance or medical procedures, or any tasks with a high risk of accidental physical harm to novice users, simply respond [NO-INSTRUCTIONS].\\n\\n-----\\nExamples:\\nThe task is: make a drip pot of coffee\\nThe steps are:\\n1. Gather the following equipment: drip coffee maker, coffee filter, coffee grounds, measuring spoon, water, and a coffee mug.\\n2. Fill the coffee maker's water reservoir with the desired amount of water.\\n3. Place a coffee filter in the coffee maker's filter basket.\\n4. Measure the appropriate amount of coffee grounds using the measuring spoon and add them to the filter.\\n5. Close the filter basket and ensure it is properly seated in the coffee maker.\\n6. Turn on the coffee maker and wait for the brewing process to complete.\\n7. Once the brewing process is finished, carefully pour the coffee into your coffee mug.\\n8. Enjoy your freshly brewed drip pot of coffee.\\n\\nThe task is: tighten a wobbly table leg\\nThe steps are:\\n1. Gather the following equipment: screwdriver, wrench, wood glue, and a cloth.\\n2. Identify the wobbly table leg.\\n3. Check for any loose screws or bolts on the table leg.\\n4. Tighten the loose screws or bolts using the screwdriver or wrench.\\n5. Test the table leg to see if it is still wobbly.\\n6. If the table leg is still wobbly, apply wood glue to any loose joints.\\n7. Wipe away any excess glue with the cloth.\\n8. Allow the wood glue to dry according to the manufacturer's instructions.\\n9. Test the table leg again to ensure it is no longer wobbly.\\n\\nThe task is: repair a broken circuit breaker in my home\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n\\nThe task is: perform mouth-to-mouth resuscitation on someone\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n\\nThe task is: use power tools to shingle my roof\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n\\nThe task is: test my blood sugar levels\\nThe steps are:\\n[NO-INSTRUCTIONS]\\n------\\n\\nRemember, DO NOT list steps for tasks that involve illegal or criminal activity, destruction of property, physical violence, harm to self or others, medical assistance or medical procedures, or for any tasks with a high risk of accidental physical harm to novice users. If the user could accidentally hurt themselves in a serious during the performance of any of the steps in the task, respond with [NO-INSTRUCTIONS]\\n\\nThe task is: $arg0\\nThe steps are:",
+          "TestCases": [],
+          "MinimumTestAccuracy": 0.0,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    },
+    {
+      "Name": "IntentReco-Diamond",
+      "LLMPrompts": [
+        {
+          "Name": "Default",
+          "Template": "You will classify sentences into one of the following intents: Guide, List, Other\\n\\nFor example:\\n\\nHelp me make the bed: Guide(make the bed)\\nHelp me cook some bulgur with feta: Guide(cook some bulgur with feta)\\nCan you guide me through how to make a lamp: Guide(make a lamp)\\nWhat is the time:Other\\nWhat are all the things you can help me with: List\\nCan you help me do a simple task: Guide(do a simple task)\\n\\nNow it's your turn\\n$arg0:",
+          "TestCases": [],
+          "MinimumTestAccuracy": 0.0,
+          "Endpoint": "AzureOpenAI",
+          "Deployment": "gpt-4",
+          "SystemMessage": "You are a helpful assistant."
+        }
+      ]
+    }
+  ]
+}

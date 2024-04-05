@@ -130,24 +130,25 @@ namespace Microsoft.Psi.Interop.Transport
 
             var lastTimestamp = DateTime.MinValue;
 
-            var connected = false;
-            while (!connected)
-            {
-                try
-                {
-                    Trace.WriteLine($"Attempting to connect to {this.address}:{this.port}");
-                    this.client.Connect(this.address, this.port);
-                    Trace.WriteLine($"Connected to {this.address}:{this.port}.");
-                    connected = true;
-                }
-                catch
-                {
-                    Trace.WriteLine($"Failed to connect to port {this.address}:{this.port}. Retrying ...");
-                }
-            }
-
             try
             {
+                var connected = false;
+                while (!connected)
+                {
+                    try
+                    {
+                        Trace.WriteLine($"Attempting to connect to {this.address}:{this.port}");
+                        this.client.Connect(this.address, this.port);
+                        Trace.WriteLine($"Connected to {this.address}:{this.port}.");
+                        connected = true;
+                    }
+                    catch (SocketException)
+                    {
+                        // Retry for as long as the client has not been disposed
+                        Trace.WriteLine($"Failed to connect to port {this.address}:{this.port}. Retrying ...");
+                    }
+                }
+
                 using var reader = new BinaryReader(this.client.GetStream());
 
                 // read and deserialize frames from the stream reader

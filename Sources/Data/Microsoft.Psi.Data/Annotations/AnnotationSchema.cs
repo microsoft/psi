@@ -30,10 +30,11 @@ namespace Microsoft.Psi.Data.Annotations
         /// Initializes a new instance of the <see cref="AnnotationSchema"/> class.
         /// </summary>
         /// <param name="name">The name of the annotation schema.</param>
-        public AnnotationSchema(string name)
+        /// <param name="attributeSchemas">An optional list of attribute schemas.</param>
+        public AnnotationSchema(string name, params AnnotationAttributeSchema[] attributeSchemas)
         {
             this.Name = name;
-            this.AttributeSchemas = new List<AnnotationAttributeSchema>();
+            this.AttributeSchemas = attributeSchemas.ToList();
         }
 
         /// <summary>

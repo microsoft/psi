@@ -380,7 +380,7 @@ namespace PsiStoreTool
 
             // process task
             using (var pipeline = Pipeline.Create(
-                deliveryPolicy: task.Attribute.DeliveryPolicyLatestMessage ? DeliveryPolicy.LatestMessage : DeliveryPolicy.Unlimited,
+                deliveryPolicy: task.Attribute.DeliveryPolicySpec,
                 enableDiagnostics: task.Attribute.EnableDiagnostics))
             {
                 var importer = store != null ? PsiStore.Open(pipeline, store, Path.GetFullPath(path)) : null;

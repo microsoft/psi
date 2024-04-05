@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
 
-#pragma warning disable SA1305 // Field names must not use Hungarian notation (yMax, yMin, etc.).
-
 namespace Microsoft.Psi.Visualization.VisualizationPanels
 {
     using System;
@@ -18,10 +16,10 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
     using Microsoft.Psi.Data;
     using Microsoft.Psi.Visualization;
     using Microsoft.Psi.Visualization.Common;
-    using Microsoft.Psi.Visualization.Controls;
     using Microsoft.Psi.Visualization.Data;
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Views;
+    using Microsoft.Psi.Visualization.Views.Visuals2D;
     using Microsoft.Psi.Visualization.VisualizationObjects;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
@@ -38,6 +36,8 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// timeline panel view.
         /// </summary>
         private const double YAxisAutoComputeModePaddingPercent = 10.0d;
+
+        private readonly Dictionary<DependencyObject, Canvas> timelineViewCanvases = new Dictionary<DependencyObject, Canvas>();
 
         private Axis yAxis = new ();
         private Axis yAxisPropertyBrowser = new ();
@@ -58,8 +58,6 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         private RelayCommand<SizeChangedEventArgs> viewportSizeChangedCommand;
         private RelayCommand setAutoAxisComputeModeCommand;
         private TimelineValueThreshold threshold;
-
-        private TimelineScroller timelineScroller = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimelineVisualizationPanel"/> class.
@@ -131,7 +129,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                         }
                     }
 
-                    if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                    if ((Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)) && (e.ClickCount == 1))
                     {
                         var cursor = this.Navigator.Cursor;
                         this.Navigator.SelectionRange.Set(cursor, this.Navigator.SelectionRange.EndTime >= cursor ? this.Navigator.SelectionRange.EndTime : DateTime.MaxValue);
@@ -171,7 +169,7 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
                     // Get the current scale factor between the axes logical bounds and the items control size.
                     double scaleY = (this.YAxis.Maximum - this.YAxis.Minimum) / this.viewport.ActualHeight;
 
-                    // Set the mouse position in locical/image co-ordinates
+                    // Set the mouse position in logical/image coordinates
                     this.MousePosition = new TimelinePanelMousePosition(this.GetTimeAtMousePointer(e, false), this.YAxis.Maximum - newMousePosition.Y * scaleY /*+ this.YAxis.Minimum*/);
                 });
 
@@ -370,13 +368,13 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         /// <returns>The time represented by the mouse pointer.</returns>
         public DateTime GetTimeAtMousePointer(MouseEventArgs mouseEventArgs, bool useSnap)
         {
-            TimelineScroller root = this.GetTimelineScroller(mouseEventArgs.Source);
-            if (root != null)
+            var timelineViewCanvas = this.GetTimelineViewCanvas(mouseEventArgs.Source);
+            if (timelineViewCanvas != null)
             {
-                Point point = mouseEventArgs.GetPosition(root);
-                double percent = point.X / root.ActualWidth;
+                var mousePosition = mouseEventArgs.GetPosition(timelineViewCanvas);
+                double percent = mousePosition.X / timelineViewCanvas.ActualWidth;
                 var viewRange = this.Navigator.ViewRange;
-                DateTime time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
+                var time = viewRange.StartTime + TimeSpan.FromTicks((long)((double)viewRange.Duration.Ticks * percent));
 
                 // If we're currently snapping to some Visualization Object, adjust the time to the timestamp of the nearest message
                 DateTime? snappedTime = null;
@@ -392,27 +390,41 @@ namespace Microsoft.Psi.Visualization.VisualizationPanels
         }
 
         /// <summary>
-        /// Gets the timeline scroller parent of a framework element.
+        /// Gets the timeline canvas view based on a specified child framework element.
         /// </summary>
         /// <param name="sourceElement">The framework element to search from.</param>
-        /// <returns>The timeline scroller object.</returns>
-        public TimelineScroller GetTimelineScroller(object sourceElement)
+        /// <returns>The canvas for the timeline view.</returns>
+        public Canvas GetTimelineViewCanvas(object sourceElement)
         {
-            if (this.timelineScroller == null)
+            var target = sourceElement as DependencyObject;
+            if (this.timelineViewCanvases.ContainsKey(target))
             {
-                // Walk up the visual tree until we either find the
-                // Timeline Scroller or fall off the top of the tree
-                DependencyObject target = sourceElement as DependencyObject;
-                while (target != null && target is not TimelineScroller)
-                {
-                    target = VisualTreeHelper.GetParent(target);
-                }
-
-                this.timelineScroller = target as TimelineScroller;
+                return this.timelineViewCanvases[target];
             }
 
-            return this.timelineScroller;
+            // Walk up the visual tree until we either find the TimeIntervalAnnotationVisualizationObjectView
+            while (target != null && target is not TimeIntervalAnnotationVisualizationObjectView)
+            {
+                target = VisualTreeHelper.GetParent(target);
+            }
+
+            // return target is Canvas ? target as Canvas : (target as TimeIntervalAnnotationVisualizationObjectView).Canvas;
+            if (target is TimeIntervalAnnotationVisualizationObjectView timeIntervalAnnotationVisualizationObjectView)
+            {
+                this.timelineViewCanvases.Add(sourceElement as DependencyObject, timeIntervalAnnotationVisualizationObjectView.Canvas);
+                return timeIntervalAnnotationVisualizationObjectView.Canvas;
+            }
+            else
+            {
+                return null;
+            }
         }
+
+        /// <summary>
+        /// Don't serialize the YAxis property if AxisComputeMode is Auto as it will be data-dependent.
+        /// </summary>
+        /// <returns>A value indicating whether the YAxis property should be serialized.</returns>
+        public bool ShouldSerializeYAxis() => this.AxisComputeMode != AxisComputeMode.Auto;
 
         /// <inheritdoc />
         protected override DataTemplate CreateDefaultViewTemplate()

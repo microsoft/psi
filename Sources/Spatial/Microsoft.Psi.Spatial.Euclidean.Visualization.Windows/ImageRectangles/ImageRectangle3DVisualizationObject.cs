@@ -19,7 +19,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
     /// Implements a 3D image rectangle visualization object.
     /// </summary>
     [VisualizationObject("Image in 3D Rectangle")]
-    public class ImageRectangle3DVisualizationObject : ModelVisual3DVisualizationObject<ImageRectangle3D>
+    public class ImageRectangle3DVisualizationObject : ModelVisual3DValueVisualizationObject<ImageRectangle3D>
     {
         private readonly MeshGeometryVisual3D modelVisual;
         private readonly DisplayImage displayImage;
@@ -149,7 +149,7 @@ namespace Microsoft.Psi.Spatial.Euclidean.Visualization
         protected override Action<ImageRectangle3D> Deallocator => data => data?.Dispose();
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             if (this.CurrentData != null && !this.CurrentData.Rectangle3D.IsDegenerate &&
                 this.CurrentData.Image != null && this.CurrentData.Image.Resource != null)

@@ -19,7 +19,7 @@ namespace Microsoft.Psi.MixedReality.OpenXR.Visualization
     /// Implements a visualization object for <see cref="Hand"/>.
     /// </summary>
     [VisualizationObject("Hand")]
-    public class HandVisualizationObject : ModelVisual3DVisualizationObject<Hand>
+    public class HandVisualizationObject : ModelVisual3DValueVisualizationObject<Hand>
     {
         private static readonly Dictionary<(HandJointIndex, HandJointIndex), bool> BoneEdges = Hand.Bones.ToDictionary(j => j, j => true);
 
@@ -72,7 +72,7 @@ namespace Microsoft.Psi.MixedReality.OpenXR.Visualization
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.UpdateJoints();
             this.UpdateVisibility();
@@ -101,7 +101,7 @@ namespace Microsoft.Psi.MixedReality.OpenXR.Visualization
         private void UpdateVisibility()
         {
             var visible = this.Visible && this.CurrentData is not null;
-            this.UpdateChildVisibility(this.Joints.ModelView, this.ShowActiveOnly ? visible && this.CurrentData.IsActive : visible);
+            this.UpdateChildVisibility(this.Joints.ModelVisual3D, this.ShowActiveOnly ? visible && this.CurrentData.IsActive : visible);
         }
     }
 }

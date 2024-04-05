@@ -14,7 +14,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     /// Implements a Ray3D visualization object.
     /// </summary>
     [VisualizationObject("Ray 3D")]
-    public class Ray3DVisualizationObject : ModelVisual3DVisualizationObject<mathNet.Ray3D?>
+    public class Ray3DVisualizationObject : ModelVisual3DValueVisualizationObject<mathNet.Ray3D?>
     {
         private const int ThetaDivDefault = 5;
 
@@ -70,7 +70,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         }
 
         /// <inheritdoc/>
-        public override void UpdateData()
+        public override void UpdateVisual3D()
         {
             this.UpdateRay();
             this.UpdateVisibility();
