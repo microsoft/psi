@@ -46,15 +46,15 @@ namespace Microsoft.Psi.Interop.Serialization
             {
                 this.memoryStream.Position = 0;
                 using var writer = new BinaryWriter(this.memoryStream, Encoding.UTF8, true);
-                writer.Write(originatingTime.ToFileTimeUtc());
+                writer.Write(originatingTime.ToBinary());
                 serializeAction(val, writer);
-                return (this.memoryStream.GetBuffer(), 0, (int)this.memoryStream.Length);
+                return (this.memoryStream.GetBuffer(), 0, (int)this.memoryStream.Position);
             };
 
             this.deserialize = (payload, offset, length) =>
             {
                 using var reader = new BinaryReader(new MemoryStream(payload, offset, length), Encoding.UTF8);
-                var originatingTime = DateTime.FromFileTimeUtc(reader.ReadInt64());
+                var originatingTime = DateTime.FromBinary(reader.ReadInt64());
                 var val = deserializeFunc(reader, payload, offset, length);
                 return (val, originatingTime);
             };

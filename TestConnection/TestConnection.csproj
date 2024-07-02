@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sources\Data\Microsoft.Psi.Data\Microsoft.Psi.Data.csproj" />
+    <ProjectReference Include="..\Sources\Runtime\Microsoft.Psi.Interop\Microsoft.Psi.Interop.csproj" />
+    <ProjectReference Include="..\Sources\Runtime\Microsoft.Psi\Microsoft.Psi.csproj" />
+  </ItemGroup>
+
+</Project>
