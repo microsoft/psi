@@ -36,21 +36,33 @@ Here are some useful links to get you started:
 
 ## Technical Report
 
-A high level description of SIGMA is available in an IEEE VR extended abstract describing the system (link forthcoming).
+A description of the SIGMA system is available in the following [arxiv technical report](https://arxiv.org/abs/2405.13035) and in a short [IEEE VR extended abstract](https://ieeexplore.ieee.org/abstract/document/10536320).
 
-If you find the system helpful in your work, please cite this abstract as:
+If you find the system helpful in your work, please cite both these publications as follows:
 
 ```text
-@inproceedings{bohus2024sigma,
-  title={SIGMA: An Open-Source Interactive System for Mixed-Reality Task Assistance Research - Extended Abstract},
-  author={Bohus, Dan and Andrist, Sean and Saw, Nick and Paradiso, Ann and Chakraborty, Ishani and Rad, Mahdi},
-  booktitle={2024 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)},
+@misc{bohus2024sigmaopensourceinteractivemixedreality,
+  title={SIGMA: An Open-Source Interactive System for Mixed-Reality Task Assistance Research}, 
+  author={Dan Bohus and Sean Andrist and Nick Saw and Ann Paradiso and Ishani Chakraborty and Mahdi Rad},
   year={2024},
-  organization={IEEE}
+  eprint={2405.13035},
+  archivePrefix={arXiv},
+  primaryClass={cs.HC},
+  url={https://arxiv.org/abs/2405.13035}, 
+}
+
+@inproceedings{bohus2024sigmaextendedabstract,
+  author={Bohus, Dan and Andrist, Sean and Saw, Nick and Paradiso, Ann and Chakraborty, Ishani and Rad, Mahdi},
+  booktitle={2024 IEEE Conference on Virtual Reality and 3D User Interfaces Abstracts and Workshops (VRW)}, 
+  title={SIGMA: An Open-Source Interactive System for Mixed-Reality Task Assistance Research – Extended Abstract}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={889-890},
+  keywords={Solid modeling;Three-dimensional displays;Interactive systems;Multimodal sensors;Mixed reality;Virtual reality;User interfaces;mixed-reality;task assistance;artificial intelligence},
+  doi={10.1109/VRW62533.2024.00241}
 }
 ```
-
-We also plan to publish to arXiv a technical report with additional details about SIGMA's architecture, implementation and current functionality. Please stay tuned and watch the repo to be notified when this update happens.
 
 ## Contributing
 
