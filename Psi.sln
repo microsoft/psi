@@ -259,8 +259,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SigmaApp", "Applications\Si
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SigmaComputeServer", "Applications\Sigma\SigmaComputeServer\SigmaComputeServer.csproj", "{365D836D-AD15-428C-96D1-6C4870525FEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConnection", "TestConnection\TestConnection.csproj", "{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.InteropAndroid", "Sources\Runtime\Microsoft.Psi.InteropAndroid\Microsoft.Psi.InteropAndroid.csproj", "{DF585F32-54AA-4553-AF91-6BBD1732E147}"
 EndProject
 Global
@@ -895,14 +893,6 @@ Global
 		{365D836D-AD15-428C-96D1-6C4870525FEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{365D836D-AD15-428C-96D1-6C4870525FEF}.Release|x64.ActiveCfg = Release|Any CPU
 		{365D836D-AD15-428C-96D1-6C4870525FEF}.Release|x64.Build.0 = Release|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Debug|x64.Build.0 = Debug|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Release|x64.ActiveCfg = Release|Any CPU
-		{2D1CDFDE-31E9-45CC-98E9-E1E5716EFCC5}.Release|x64.Build.0 = Release|Any CPU
 		{DF585F32-54AA-4553-AF91-6BBD1732E147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DF585F32-54AA-4553-AF91-6BBD1732E147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF585F32-54AA-4553-AF91-6BBD1732E147}.Debug|x64.ActiveCfg = Debug|Any CPU
