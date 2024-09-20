@@ -142,11 +142,11 @@ namespace Sigma.Diamond
         {
             if (this.InteractionState.TryGetSelectedStepOfType<DoStep>(out var _) || this.InteractionState.TryGetSelectedStepOfType<GatherStep>(out var _))
             {
-                yield return DialogAction.ContinueWith<DiamondDialogStates.ExecuteStep>();
+                yield return DialogAction.ContinueWith<ExecuteStep>();
             }
             else if (this.InteractionState.TryGetSelectedStepOfType<ComplexStep>(out var _))
             {
-                yield return DialogAction.ContinueWith<DiamondDialogStates.ExecuteComplexStep>();
+                yield return DialogAction.ContinueWith<ExecuteComplexStep>();
             }
             else
             {

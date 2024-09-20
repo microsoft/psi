@@ -692,16 +692,26 @@ namespace Microsoft.Psi.Visualization.ViewModels
             var runTasksMenuItem = MenuItemHelper.CreateMenuItem(string.Empty, "Run Batch Processing Task", null);
             var batchProcessingTasks = VisualizationContext.Instance.PluginMap.BatchProcessingTasks;
             runTasksMenuItem.IsEnabled = batchProcessingTasks.Any();
-            foreach (var batchProcessingTask in batchProcessingTasks)
+            foreach (var batchProcessingTaskNamespace in batchProcessingTasks.Select(bpt => bpt.Namespace).Distinct())
             {
-                runTasksMenuItem.Items.Add(
-                    MenuItemHelper.CreateMenuItem(
-                        batchProcessingTask.IconSourcePath,
-                        batchProcessingTask.Name,
-                        new VisualizationCommand<BatchProcessingTaskMetadata>(async bpt => await VisualizationContext.Instance.RunSessionBatchProcessingTask(this, bpt)),
-                        tag: batchProcessingTask,
-                        isEnabled: true,
-                        commandParameter: batchProcessingTask));
+                var namespaceMenuItem = MenuItemHelper.CreateMenuItem(
+                    null,
+                    batchProcessingTaskNamespace,
+                    null);
+
+                foreach (var batchProcessingTask in batchProcessingTasks.Where(bpt => bpt.Namespace == batchProcessingTaskNamespace))
+                {
+                    namespaceMenuItem.Items.Add(
+                        MenuItemHelper.CreateMenuItem(
+                            batchProcessingTask.IconSourcePath,
+                            batchProcessingTask.Name,
+                            new VisualizationCommand<BatchProcessingTaskMetadata>(async bpt => await VisualizationContext.Instance.RunSessionBatchProcessingTask(this, bpt)),
+                            tag: batchProcessingTask,
+                            isEnabled: true,
+                            commandParameter: batchProcessingTask));
+                }
+
+                runTasksMenuItem.Items.Add(namespaceMenuItem);
             }
 
             contextMenu.Items.Add(runTasksMenuItem);

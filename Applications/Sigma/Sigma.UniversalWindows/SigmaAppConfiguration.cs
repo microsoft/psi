@@ -65,6 +65,12 @@ namespace Sigma
         public int AudioReframeSizeMs { get; set; } = 100;
 
         /// <summary>
+        /// Gets or sets the voice to use for the speech synthesizer. For possible options see
+        /// https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=tts#prebuilt-neural-voices.
+        /// </summary>
+        public string SpeechSynthesizerVoiceName { get; set; } = "en-US-JennyNeural";
+
+        /// <summary>
         /// Creates a Sigma user interface.
         /// </summary>
         /// <param name="pipeline">The pipeline to add the components to.</param>

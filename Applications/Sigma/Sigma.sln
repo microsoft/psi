@@ -57,6 +57,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Speech", "..\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Onnx.Cpu", "..\..\Sources\Integrations\Onnx\Microsoft.Psi.Onnx.Cpu\Microsoft.Psi.Onnx.Cpu.csproj", "{FF9F694A-6875-4CB7-A082-EC6AB2A1491A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Psi.Language", "..\..\Sources\Language\Microsoft.Psi.Language\Microsoft.Psi.Language.csproj", "{D6836392-53F6-4FDD-8827-48F5A07DFFCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,10 @@ Global
 		{FF9F694A-6875-4CB7-A082-EC6AB2A1491A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF9F694A-6875-4CB7-A082-EC6AB2A1491A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF9F694A-6875-4CB7-A082-EC6AB2A1491A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6836392-53F6-4FDD-8827-48F5A07DFFCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6836392-53F6-4FDD-8827-48F5A07DFFCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6836392-53F6-4FDD-8827-48F5A07DFFCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6836392-53F6-4FDD-8827-48F5A07DFFCC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,6 +201,7 @@ Global
 		{39269768-E65B-4D1B-86DE-40F04FCFDA24} = {6D723C07-226D-46D5-B354-64D617ACB271}
 		{0A9C740A-5733-43BD-ACBB-AF0133736CA2} = {6D723C07-226D-46D5-B354-64D617ACB271}
 		{FF9F694A-6875-4CB7-A082-EC6AB2A1491A} = {6D723C07-226D-46D5-B354-64D617ACB271}
+		{D6836392-53F6-4FDD-8827-48F5A07DFFCC} = {6D723C07-226D-46D5-B354-64D617ACB271}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F77E0748-A308-41A3-895F-EC106CC46058}

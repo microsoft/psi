@@ -130,18 +130,18 @@ namespace Microsoft.Psi.Audio
         /// Creates a new instance of the <see cref="WaveFormat"/> class.
         /// </summary>
         /// <param name="formatTag">The format tag.</param>
-        /// <param name="samplingRate">The sampling frequency.</param>
+        /// <param name="samplesPerSecond">The sampling frequency.</param>
         /// <param name="bitsPerSample">The number of bits per channel sample.</param>
         /// <param name="channels">The number of audio channels.</param>
         /// <param name="blockAlign">The block alignment.</param>
         /// <param name="avgBytesPerSecond">The average number of bytes per second.</param>
         /// <returns>The WaveFormat object.</returns>
-        public static WaveFormat Create(WaveFormatTag formatTag, int samplingRate, int bitsPerSample, int channels, int blockAlign, int avgBytesPerSecond)
+        public static WaveFormat Create(WaveFormatTag formatTag, int samplesPerSecond, int bitsPerSample, int channels, int blockAlign, int avgBytesPerSecond)
         {
             return new WaveFormat()
             {
                 FormatTag = formatTag,
-                SamplesPerSec = (uint)samplingRate,
+                SamplesPerSec = (uint)samplesPerSecond,
                 BitsPerSample = (ushort)bitsPerSample,
                 Channels = (ushort)channels,
                 BlockAlign = (ushort)blockAlign,

@@ -22,7 +22,7 @@ namespace Sigma
     /// Batch task for exporting Sigma data.
     /// </summary>
     [BatchProcessingTask(
-        "Sigma - Export Captured Data",
+        "Export Captured Data",
         Description = "This task exports the data collected by the Sigma app to a set of text files.")]
     public class ExportDataTask : BatchProcessingTask<ExportDataTaskConfiguration>
     {

@@ -68,13 +68,15 @@ To find more information about our future plans, please see the [Roadmap](https:
 Platform for Situated Intelligence has been and is currently used in several industry and academic research labs, including (but not limited to):
 
 - the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
+- the [PACCE team](https://www.imt-atlantique.fr/fr/recherche-innovation/collaborer/projet/saac) at IMT Atlantique / L2SN.
+- the [Interactive Robotics Group](https://interactive.mit.edu/) at MIT.
 - the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
 - the [Speech Language and Interactive Machines](https://coen.boisestate.edu/slim/) research group at Boise State University.
-- the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/), Northwestern University.
-- the [Intelligent Human Perception Lab](https://www.ihp-lab.org), at USC Institute for Creative Technologies.
-- the [Teledia research group](https://www.cs.cmu.edu/~cprose), at Carnegie Mellon University.
-- the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/), at Franklin and Marshall College.
-- the [Transportation, Bots, & Disability Lab](https://tbd.ri.cmu.edu) at the Carnegie Mellon University.
+- the [Qualitative Reasoning Group](http://www.qrg.northwestern.edu/) at Northwestern University.
+- the [Intelligent Human Perception Lab](https://www.ihp-lab.org) at USC Institute for Creative Technologies.
+- the [Teledia research group](https://www.cs.cmu.edu/~cprose) at Carnegie Mellon University.
+- the [F&M Computational, Affective, Robotic, and Ethical Sciences (F&M CARES) lab](https://fandm-cares.github.io/) at Franklin and Marshall College.
+- the [Transportation, Bots, & Disability Lab](https://tbd.ri.cmu.edu) at Carnegie Mellon University.
 
 If you would like to be added to this list, just file a [GitHub issue](https://github.com/Microsoft/psi/issues) and label it with the [`whoisusing`](https://github.com/Microsoft/psi/labels/whoisusing) label. Add a url for your research lab, website or project that you would like us to link to.
 
