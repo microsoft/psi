@@ -7,7 +7,6 @@ namespace Microsoft.Psi.Interop.Rendezvous
     using Microsoft.Psi.Interop.Serialization;
     using Microsoft.Psi.Interop.Transport;
     using Microsoft.Psi.Remoting;
-    using Microsoft.Psi.Serialization;
 
     /// <summary>
     /// Rendezvous related operators.
@@ -39,28 +38,11 @@ namespace Microsoft.Psi.Interop.Rendezvous
         public static TcpSource<T> ToTcpSource<T>(
             this Rendezvous.TcpSourceEndpoint endpoint,
             Pipeline pipeline,
-            IFormatDeserializer deserializer,
+            IFormatDeserializer<T> deserializer,
             Action<T> deallocator = null,
             bool useSourceOriginatingTimes = true,
             string name = nameof(TcpSource<T>))
             => new (pipeline, endpoint.Host, endpoint.Port, deserializer, deallocator, useSourceOriginatingTimes, name);
-
-        /// <summary>
-        /// Create a rendezvous endpoint from a <see cref="NetMQWriter"/>.
-        /// </summary>
-        /// <param name="writer"><see cref="NetMQWriter"/> from which to create endpoint.</param>
-        /// <returns>Rendezvous endpoint.</returns>
-        public static Rendezvous.Endpoint ToRendezvousEndpoint(this NetMQWriter writer)
-        {
-            // Each NetWriter is an endpoint emitting one or more topics/streams.
-            var endpoint = new Rendezvous.NetMQSourceEndpoint(writer.Address);
-            foreach (var (name, type) in writer.Topics)
-            {
-                endpoint.AddStream(new Rendezvous.Stream(name, type));
-            }
-
-            return endpoint;
-        }
 
         /// <summary>
         /// Create a rendezvous endpoint from a <see cref="RemoteClockExporter"/>.
@@ -70,19 +52,6 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <returns>Rendezvous endpoint.</returns>
         public static Rendezvous.Endpoint ToRendezvousEndpoint(this RemoteClockExporter exporter, string host)
             => new Rendezvous.RemoteClockExporterEndpoint(host, exporter.Port);
-
-        /// <summary>
-        /// Create a <see cref="NetMQSource{T}"/> from a <see cref="Rendezvous.NetMQSourceEndpoint"/>.
-        /// </summary>
-        /// <typeparam name="T">Type of data stream.</typeparam>
-        /// <param name="endpoint"><see cref="Rendezvous.NetMQSourceEndpoint"/> from which to create .</param>
-        /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="topic">Topic name.</param>
-        /// <param name="deserializer">The deserializer to use to deserialize messages.</param>
-        /// <param name="useSourceOriginatingTimes">Flag indicating whether or not to post with originating times received over the socket. If false, we ignore them and instead use pipeline's current time.</param>
-        /// <returns><see cref="NetMQSource{T}"/>.</returns>
-        public static NetMQSource<T> ToNetMQSource<T>(this Rendezvous.NetMQSourceEndpoint endpoint, Pipeline pipeline, string topic, IFormatDeserializer deserializer, bool useSourceOriginatingTimes = true)
-            => new (pipeline, topic, endpoint.Address, deserializer, useSourceOriginatingTimes);
 
         /// <summary>
         /// Create a rendezvous endpoint from a <see cref="RemoteExporter"/>.
@@ -101,17 +70,6 @@ namespace Microsoft.Psi.Interop.Rendezvous
 
             return endpoint;
         }
-
-        /// <summary>
-        /// Create a <see cref="RemoteImporter"/> from a <see cref="Rendezvous.RemoteExporterEndpoint"/>.
-        /// </summary>
-        /// <param name="endpoint"><see cref="Rendezvous.RemoteExporterEndpoint"/> from which to create .</param>
-        /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <param name="storePath">Path for PsiStore.</param>
-        /// <param name="knownSerializers">Custom known serializers.</param>
-        /// <returns><see cref="RemoteImporter"/>.</returns>
-        public static RemoteImporter ToRemoteImporter(this Rendezvous.RemoteExporterEndpoint endpoint, Pipeline pipeline, string storePath, KnownSerializers knownSerializers)
-            => new (pipeline, storePath, endpoint.Host, endpoint.Port, knownSerializers);
 
         /// <summary>
         /// Create a <see cref="RemoteImporter"/> from a <see cref="Rendezvous.RemoteExporterEndpoint"/>.
@@ -148,7 +106,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
             Rendezvous.Process rendezvousProcess,
             string address,
             int port,
-            IFormatSerializer serializer,
+            IFormatSerializer<T> serializer,
             DeliveryPolicy deliveryPolicy = null)
         {
             var tcpWriter = new TcpWriter<T>(source.Out.Pipeline, port, serializer);

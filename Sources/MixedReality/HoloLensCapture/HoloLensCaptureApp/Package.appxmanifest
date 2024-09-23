@@ -9,8 +9,8 @@
 
   <Identity
     Name="0e0b1c4d-d6a2-4761-8a1e-8fb7b914a071"
-    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, C=US"
-    Version="1.0.0.0" />
+    Publisher="CN=AurélienM"
+    Version="1.0.2.0" />
 
   <mp:PhoneIdentity PhoneProductId="0e0b1c4d-d6a2-4761-8a1e-8fb7b914a071" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

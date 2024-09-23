@@ -15,7 +15,7 @@ namespace Microsoft.Psi.Serialization
     /// <typeparam name="T">The type of objects the handler understands.</typeparam>
     internal sealed class StructHandler<T> : SerializationHandler<T>
     {
-        private static readonly CloneDelegate<object> CopyToBox = Generator.GenerateCloneMethod<object>(il => Generator.EmitCopyToBox(typeof(T), il));
+        // private static readonly CloneDelegate<object> CopyToBox = Generator.GenerateCloneMethod<object>(il => Generator.EmitCopyToBox(typeof(T), il));
 
         // the inner serializer and serializerEx
         private readonly ISerializer<T> innerSerializer;
@@ -71,7 +71,9 @@ namespace Microsoft.Psi.Serialization
 
             context.AddDeserializedObject(target);
             this.innerSerializer.Deserialize(reader, ref typedTarget, context);
-            CopyToBox(typedTarget, ref target, context);
+
+            // CopyToBox(typedTarget, ref target, context);
+            target = (object)typedTarget;
         }
 
         internal override void UntypedClone(object instance, ref object target, SerializationContext context)
@@ -88,7 +90,9 @@ namespace Microsoft.Psi.Serialization
 
             context.AddDeserializedObject(target);
             this.innerSerializer.Clone((T)instance, ref typedTarget, context);
-            CopyToBox(typedTarget, ref target, context);
+
+            // CopyToBox(typedTarget, ref target, context);
+            target = (object)typedTarget;
         }
 
         internal override void UntypedClear(ref object target, SerializationContext context)
@@ -105,7 +109,9 @@ namespace Microsoft.Psi.Serialization
 
             context.AddDeserializedObject(target);
             this.innerSerializer.Clear(ref typedTarget, context);
-            CopyToBox(typedTarget, ref target, context);
+
+            // CopyToBox(typedTarget, ref target, context);
+            target = (object)typedTarget;
         }
     }
 }
