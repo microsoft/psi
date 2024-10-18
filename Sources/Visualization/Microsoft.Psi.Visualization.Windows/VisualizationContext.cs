@@ -382,25 +382,43 @@ namespace Microsoft.Psi.Visualization
             switch (this.VisualizationContainer.Navigator.CursorMode)
             {
                 case CursorMode.Playback:
-                    this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
+                    this.VisualizationContainer.Navigator.SetManualCursorMode();
                     break;
+
                 case CursorMode.Manual:
 
-                    if (fromSelectionStart)
+                    if (this.VisualizationContainer.Navigator.DataRange != null &&
+                        this.VisualizationContainer.Navigator.DataRange.StartTime != DateTime.MinValue &&
+                        this.VisualizationContainer.Navigator.DataRange.EndTime != DateTime.MaxValue)
                     {
-                        if (this.VisualizationContainer.Navigator.SelectionRange != null &&
-                            this.VisualizationContainer.Navigator.SelectionRange.StartTime != DateTime.MinValue)
+                        var playbackStartTime = this.VisualizationContainer.Navigator.DataRange.StartTime;
+                        var playbackEndTime = this.VisualizationContainer.Navigator.DataRange.EndTime;
+
+                        if (fromSelectionStart)
                         {
-                            this.VisualizationContainer.Navigator.Cursor = this.VisualizationContainer.Navigator.SelectionRange.StartTime;
+                            if (this.VisualizationContainer.Navigator.SelectionRange != null &&
+                                this.VisualizationContainer.Navigator.SelectionRange.StartTime != DateTime.MinValue)
+                            {
+                                playbackStartTime = this.VisualizationContainer.Navigator.SelectionRange.StartTime;
+                            }
+
+                            if (this.VisualizationContainer.Navigator.SelectionRange != null &&
+                                this.VisualizationContainer.Navigator.SelectionRange.EndTime != DateTime.MaxValue)
+                            {
+                                playbackEndTime = this.VisualizationContainer.Navigator.SelectionRange.EndTime;
+                            }
                         }
-                        else if (this.VisualizationContainer.Navigator.DataRange != null &&
-                            this.VisualizationContainer.Navigator.DataRange.StartTime != DateTime.MinValue)
+                        else
                         {
-                            this.VisualizationContainer.Navigator.Cursor = this.VisualizationContainer.Navigator.DataRange.StartTime;
+                            // O/w if we're playing from cursor, set the repeat flag to false
+                            playbackStartTime = this.VisualizationContainer.Navigator.Cursor;
+                            playbackEndTime = this.VisualizationContainer.Navigator.DataRange.EndTime;
+                            this.VisualizationContainer.Navigator.RepeatPlayback = false;
                         }
+
+                        this.VisualizationContainer.Navigator.SetPlaybackCursorMode(playbackStartTime, playbackEndTime);
                     }
 
-                    this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Playback);
                     break;
             }
         }
@@ -422,11 +440,11 @@ namespace Microsoft.Psi.Visualization
             // Only enter live mode if the current session contains live partitions
             if (this.DatasetViewModel != null && this.DatasetViewModel.CurrentSessionViewModel.ContainsLivePartitions && this.VisualizationContainer.Navigator.CursorMode != CursorMode.Live)
             {
-                this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Live);
+                this.VisualizationContainer.Navigator.SetLiveCursorMode();
             }
             else
             {
-                this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
+                this.VisualizationContainer.Navigator.SetManualCursorMode();
             }
         }
 
@@ -536,7 +554,7 @@ namespace Microsoft.Psi.Visualization
                 // If there are no longer any live partitions, exit live mode
                 if ((this.DatasetViewModel.CurrentSessionViewModel?.ContainsLivePartitions == false) && (this.VisualizationContainer.Navigator.CursorMode == CursorMode.Live))
                 {
-                    this.VisualizationContainer.Navigator.SetCursorMode(CursorMode.Manual);
+                    this.VisualizationContainer.Navigator.SetManualCursorMode();
                 }
             }
         }

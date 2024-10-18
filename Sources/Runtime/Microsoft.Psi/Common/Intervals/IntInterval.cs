@@ -14,18 +14,17 @@ namespace Microsoft.Psi
         /// <summary>
         /// Canonical infinite interval (unbounded on both ends).
         /// </summary>
-        public static readonly IntInterval Infinite =
-            new IntInterval(int.MinValue, false, false, int.MaxValue, false, false);
+        public static readonly IntInterval Infinite = new (int.MinValue, false, false, int.MaxValue, false, false);
 
         /// <summary>
         /// Canonical empty instance (bounded, non-inclusive, single point).
         /// </summary>
-        public static readonly IntInterval Empty = new IntInterval(0, false, true, 0, false, true);
+        public static readonly IntInterval Empty = new (0, false, true, 0, false, true);
 
         /// <summary>
         /// Zero interval (unbounded but inclusive, zero value).
         /// </summary>
-        public static readonly IntInterval Zero = new IntInterval(0, true, true, 0, true, true);
+        public static readonly IntInterval Zero = new (0, true, true, 0, true, true);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IntInterval"/> class.
@@ -79,53 +78,44 @@ namespace Microsoft.Psi
         /// <summary>
         /// Gets the point minimum value.
         /// </summary>
-        protected override int PointMinValue
-        {
-            get { return int.MinValue; }
-        }
+        protected override int PointMinValue => int.MinValue;
 
         /// <summary>
         /// Gets the point maximum value.
         /// </summary>
-        protected override int PointMaxValue
-        {
-            get { return int.MaxValue; }
-        }
+        protected override int PointMaxValue => int.MaxValue;
 
         /// <summary>
         /// Gets the span zero value.
         /// </summary>
-        protected override int SpanZeroValue
-        {
-            get { return 0; }
-        }
+        protected override int SpanZeroValue => 0;
 
         /// <summary>
         /// Gets the span minimum value.
         /// </summary>
-        protected override int SpanMinValue
-        {
-            get { return int.MinValue; }
-        }
+        protected override int SpanMinValue => int.MinValue;
 
         /// <summary>
         /// Gets the span maximum value.
         /// </summary>
-        protected override int SpanMaxValue
-        {
-            get { return int.MaxValue; }
-        }
+        protected override int SpanMaxValue => int.MaxValue;
 
         /// <summary>
-        /// Determine coverage from minimum left to maximum right.
+        /// Merges a specified set of int intervals into a set of non-overlapping int intervals that cover the specified intervals.
         /// </summary>
-        /// <param name="intervals">Sequence of intervals.</param>
-        /// <remarks>Returns negative interval from max to min point when sequence is empty.</remarks>
+        /// <param name="intervals">A set of intervals to cover.</param>
+        /// <returns>Set of non-overlapping intervals that cover the given intervals.</returns>
+        public static IEnumerable<IntInterval> Merge(IEnumerable<IntInterval> intervals)
+            => Merge(intervals, (left, right) => new IntInterval(left, right));
+
+        /// <summary>
+        /// Determine coverage from minimum left to maximum right for a set of given intervals.
+        /// </summary>
+        /// <param name="intervals">The set of intervals.</param>
+        /// <remarks>Returns empty interval when sequence is empty or contains only empty intervals.</remarks>
         /// <returns>Interval from minimum left to maximum right value.</returns>
         public static IntInterval Coverage(IEnumerable<IntInterval> intervals)
-        {
-            return Coverage(intervals, (left, right) => new IntInterval(left, right), IntInterval.Empty);
-        }
+            => Coverage(intervals, (left, right) => new IntInterval(left, right), IntInterval.Empty);
 
         /// <summary>
         /// Constructor helper for left-bound instances.
@@ -134,9 +124,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Whether left point is inclusive.</param>
         /// <returns>A left-bound instance of the <see cref="IntInterval"/> class.</returns>
         public static IntInterval LeftBounded(int left, bool inclusive)
-        {
-            return new IntInterval(left, inclusive, true, int.MaxValue, false, false);
-        }
+            => new (left, inclusive, true, int.MaxValue, false, false);
 
         /// <summary>
         /// Constructor helper for left-bound instances.
@@ -144,10 +132,7 @@ namespace Microsoft.Psi
         /// <remarks>Defaults to inclusive.</remarks>
         /// <param name="left">Left bound point.</param>
         /// <returns>A left-bound instance of the <see cref="IntInterval"/> class.</returns>
-        public static IntInterval LeftBounded(int left)
-        {
-            return LeftBounded(left, true);
-        }
+        public static IntInterval LeftBounded(int left) => LeftBounded(left, true);
 
         /// <summary>
         /// Constructor helper for right-bound instances.
@@ -156,9 +141,7 @@ namespace Microsoft.Psi
         /// <param name="inclusive">Whether right point is inclusive.</param>
         /// <returns>A right-bound instance of the <see cref="IntInterval"/> class.</returns>
         public static IntInterval RightBounded(int right, bool inclusive)
-        {
-            return new IntInterval(int.MinValue, false, false, right, inclusive, true);
-        }
+            => new (int.MinValue, false, false, right, inclusive, true);
 
         /// <summary>
         /// Constructor helper for right-bound instances.
@@ -166,10 +149,7 @@ namespace Microsoft.Psi
         /// <remarks>Defaults to inclusive.</remarks>
         /// <param name="right">Right bound point.</param>
         /// <returns>A right-bound instance of the <see cref="IntInterval"/> class.</returns>
-        public static IntInterval RightBounded(int right)
-        {
-            return RightBounded(right, true);
-        }
+        public static IntInterval RightBounded(int right) => RightBounded(right, true);
 
         /// <summary>
         /// Translate by a span distance.
@@ -178,9 +158,7 @@ namespace Microsoft.Psi
         /// <param name="span">Span by which to translate.</param>
         /// <returns>Translated interval.</returns>
         public override IntInterval Translate(int span)
-        {
-            return this.Translate(span, (lp, li, lb, rp, ri, rb) => new IntInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Translate(span, (lp, li, lb, rp, ri, rb) => new IntInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale endpoints by span distances.
@@ -189,9 +167,7 @@ namespace Microsoft.Psi
         /// <param name="right">Span by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         public override IntInterval Scale(int left, int right)
-        {
-            return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new IntInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new IntInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale endpoints by factors.
@@ -200,9 +176,7 @@ namespace Microsoft.Psi
         /// <param name="right">Factor by which to scale right.</param>
         /// <returns>Scaled interval.</returns>
         public override IntInterval Scale(float left, float right)
-        {
-            return this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new IntInterval(lp, li, lb, rp, ri, rb));
-        }
+            => this.Scale(left, right, (lp, li, lb, rp, ri, rb) => new IntInterval(lp, li, lb, rp, ri, rb));
 
         /// <summary>
         /// Scale a span by a given factor.
@@ -210,20 +184,14 @@ namespace Microsoft.Psi
         /// <param name="span">Span value.</param>
         /// <param name="factor">Factor by which to scale.</param>
         /// <returns>Scaled span.</returns>
-        protected override int ScaleSpan(int span, double factor)
-        {
-            return (int)Math.Round(span * factor);
-        }
+        protected override int ScaleSpan(int span, double factor) => (int)Math.Round(span * factor);
 
         /// <summary>
         /// Negate span.
         /// </summary>
         /// <param name="span">Span to be negated.</param>
         /// <returns>Negated span..</returns>
-        protected override int NegateSpan(int span)
-        {
-            return -span;
-        }
+        protected override int NegateSpan(int span) => -span;
 
         /// <summary>
         /// Translate point by given span.
@@ -231,10 +199,7 @@ namespace Microsoft.Psi
         /// <param name="point">Point value.</param>
         /// <param name="span">Span by which to translate.</param>
         /// <returns>Translated point.</returns>
-        protected override int TranslatePoint(int point, int span)
-        {
-            return point + span;
-        }
+        protected override int TranslatePoint(int point, int span) => point + span;
 
         /// <summary>
         /// Determine span between two given points.
@@ -242,10 +207,7 @@ namespace Microsoft.Psi
         /// <param name="x">First point.</param>
         /// <param name="y">Second point.</param>
         /// <returns>Span between points.</returns>
-        protected override int Difference(int x, int y)
-        {
-            return x - y;
-        }
+        protected override int Difference(int x, int y) => x - y;
 
         /// <summary>
         /// Compare points.
@@ -253,9 +215,6 @@ namespace Microsoft.Psi
         /// <param name="a">First point.</param>
         /// <param name="b">Second point.</param>
         /// <returns>Less (-1), greater (+1) or equal (0).</returns>
-        protected override int ComparePoints(int a, int b)
-        {
-            return a.CompareTo(b);
-        }
+        protected override int ComparePoints(int a, int b) => a.CompareTo(b);
     }
 }

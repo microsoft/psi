@@ -17,6 +17,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     using Microsoft.Psi.Visualization.Helpers;
     using Microsoft.Psi.Visualization.Summarizers;
     using Microsoft.Psi.Visualization.Views.Visuals2D;
+    using Microsoft.Psi.Visualization.Windows;
     using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
     /// <summary>
@@ -26,6 +27,8 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
     public class AudioVisualizationObject : PlotVisualizationObject<double>
     {
         private RelayCommand enableAudioCommand;
+        private RelayCommand exportAudioCommand;
+        private RelayCommand exportAudioSelectionCommand;
         private bool playDisplayChannelOnly;
         private WaveFormat audioFormat;
 
@@ -44,35 +47,44 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         /// </summary>
         [Browsable(false)]
         [IgnoreDataMember]
-        public RelayCommand EnableAudioCommand
-        {
-            get
-            {
-                if (this.enableAudioCommand == null)
+        public RelayCommand EnableAudioCommand =>
+            this.enableAudioCommand ??= new RelayCommand(
+                () =>
                 {
-                    this.enableAudioCommand = new RelayCommand(
-                        () =>
-                        {
-                            this.RaisePropertyChanging(nameof(this.IconSource));
-                            this.RaisePropertyChanging(nameof(this.EnableAudioCommandText));
+                    this.RaisePropertyChanging(nameof(this.IconSource));
+                    this.RaisePropertyChanging(nameof(this.EnableAudioCommandText));
 
-                            if (this.Navigator.IsAudioPlaybackVisualizationObject(this))
-                            {
-                                this.Navigator.RemoveAudioPlaybackSource(this);
-                            }
-                            else
-                            {
-                                this.Navigator.AddOrUpdateAudioPlaybackSource(this, this.StreamSource);
-                            }
+                    if (this.Navigator.IsAudioPlaybackVisualizationObject(this))
+                    {
+                        this.Navigator.RemoveAudioPlaybackSource(this);
+                    }
+                    else
+                    {
+                        this.Navigator.AddOrUpdateAudioPlaybackSource(this, this.StreamSource);
+                    }
 
-                            this.RaisePropertyChanged(nameof(this.IconSource));
-                            this.RaisePropertyChanged(nameof(this.EnableAudioCommandText));
-                        });
-                }
+                    this.RaisePropertyChanged(nameof(this.IconSource));
+                    this.RaisePropertyChanged(nameof(this.EnableAudioCommandText));
+                });
 
-                return this.enableAudioCommand;
-            }
-        }
+        /// <summary>
+        /// Gets the export audio command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ExportAudioCommand =>
+            this.exportAudioCommand ??= new RelayCommand(
+                () => this.ExportAudio(null));
+
+        /// <summary>
+        /// Gets the export selected audio command.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public RelayCommand ExportAudioSelectionCommand =>
+            this.exportAudioSelectionCommand ??= new RelayCommand(
+                () => this.ExportAudio(this.Navigator.SelectionRange.AsTimeInterval),
+                () => this.Navigator.SelectionRange.StartTime != DateTime.MinValue && this.Navigator.SelectionRange.EndTime != DateTime.MaxValue);
 
         /// <summary>
         /// Gets or sets the audio channel to plot.
@@ -176,6 +188,13 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         [PropertyOrder(4)]
         public WaveFormatTag? Format => this.audioFormat?.FormatTag;
 
+        /// <summary>
+        /// Gets the audio format for the visualized stream.
+        /// </summary>
+        [Browsable(false)]
+        [IgnoreDataMember]
+        public WaveFormat AudioFormat => this.audioFormat;
+
         /// <inheritdoc/>
         [Browsable(false)]
         [IgnoreDataMember]
@@ -223,8 +242,14 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         {
             var items = new List<ContextMenuItemInfo>()
             {
-                new ContextMenuItemInfo(this.ContextMenuIconSource, this.EnableAudioCommandText, this.EnableAudioCommand),
+                new (this.ContextMenuIconSource, this.EnableAudioCommandText, this.EnableAudioCommand),
+                new (null, $"Export {this.Name} stream to wav file", this.ExportAudioCommand),
             };
+
+            if (this.Navigator.SelectionRange.StartTime != DateTime.MinValue && this.Navigator.SelectionRange.EndTime != DateTime.MaxValue)
+            {
+                items.Add(new (null, $"Export {this.Name} stream selection to wav file", this.ExportAudioSelectionCommand));
+            }
 
             items.AddRange(base.ContextMenuItemsInfo());
             return items;
@@ -317,6 +342,22 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
             // Read the first message to get the audio format
             streamReader.Seek(TimeInterval.Infinite);
             streamReader.MoveNext(out _);
+        }
+
+        private void ExportAudio(TimeInterval interval)
+        {
+            var getFilenameDialog = new GetParameterWindow(Application.Current.MainWindow, "Export Audio to wav file", "Wav file name", string.Empty);
+
+            if (getFilenameDialog.ShowDialog() == true)
+            {
+                using var p = Pipeline.Create("ExportAudio", DeliveryPolicy.Throttle);
+                var store = PsiStore.Open(p, this.StreamSource.StoreName, this.StreamSource.StorePath);
+                var audio = store.OpenStream<AudioBuffer>(this.StreamSource.StreamName);
+                var wavFileWriter = new WaveFileWriter(p, getFilenameDialog.ParameterValue);
+                audio.PipeTo(wavFileWriter);
+                var replayDescriptor = interval == null ? ReplayDescriptor.ReplayAll : new ReplayDescriptor(interval);
+                p.Run(replayDescriptor);
+            }
         }
     }
 }

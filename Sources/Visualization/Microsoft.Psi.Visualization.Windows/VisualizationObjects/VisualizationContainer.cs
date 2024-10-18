@@ -261,7 +261,7 @@ namespace Microsoft.Psi.Visualization.VisualizationObjects
         public void Dispose()
         {
             // Ensure playback is stopped
-            this.Navigator.SetCursorMode(CursorMode.Manual);
+            this.Navigator.SetManualCursorMode();
 
             // Clear container to give all panels a chance to clean up
             this.Clear();

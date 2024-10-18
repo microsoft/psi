@@ -323,7 +323,7 @@ namespace Microsoft.Psi.Data
                         // create and run the pipeline
                         using var pipeline = Pipeline.Create(enableDiagnostics: enableDiagnostics, deliveryPolicy: deliveryPolicy);
                         var importer = SessionImporter.Open(pipeline, this);
-                        var exporter = outputPartitionName != null ? PsiStore.Create(pipeline, outputStoreName, outputStorePath, createSubdirectory: false) : null;
+                        var exporter = string.IsNullOrEmpty(outputPartitionName) ? null : PsiStore.Create(pipeline, outputStoreName, outputStorePath, createSubdirectory: false);
 
                         computeDerived(pipeline, importer, exporter, parameter);
 
@@ -353,7 +353,7 @@ namespace Microsoft.Psi.Data
                 cancellationToken);
 
             // add the partition
-            if (outputPartitionName != null)
+            if (!string.IsNullOrEmpty(outputPartitionName))
             {
                 await this.AddPartitionFromPsiStoreAsync(
                     outputStoreName,

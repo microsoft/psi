@@ -4,6 +4,38 @@
 namespace Microsoft.Psi.Audio
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    /// <summary>
+    /// The method used to streamline audio buffers.
+    /// </summary>
+    public enum AudioStreamlineMethod
+    {
+        /// <summary>
+        /// Concatenates audio buffers.
+        /// </summary>
+        Concatenate,
+
+        /// <summary>
+        /// Pleats the audio buffers.
+        /// </summary>
+        /// <remarks>
+        /// If two consecutive audio buffers have overlapping data, the overlapping portion of the first one is retained.
+        /// If two consecutive audio buffers have a gap between them, the gap is filled with silence (zeros).
+        /// </remarks>
+        Pleat,
+
+        /// <summary>
+        /// Unpleats the audio buffers.
+        /// </summary>
+        /// <remarks>
+        /// If consecutive audio buffers have overlapping data or gaps, they are concatenated up until the offset between
+        /// the originating times of the buffers and the corresponding time of the concatenated audio frames is less than
+        /// a specified threshold. Once the offset exceeds the threshold, a corresponding pleat or silence is introduced.
+        /// </remarks>
+        Unpleat,
+    }
 
     /// <summary>
     /// Stream operators and extension methods for Microsoft.Psi.Audio.
@@ -243,5 +275,158 @@ namespace Microsoft.Psi.Audio
         /// <returns>A stream of spectral entropy values.</returns>
         public static IProducer<float> SpectralEntropy(this IProducer<float[]> source, int start, int end, DeliveryPolicy<float[]> deliveryPolicy = null, string name = nameof(SpectralEntropy))
             => source.PipeTo(new SpectralEntropy(source.Out.Pipeline, start, end, name), deliveryPolicy);
+
+        /// <summary>
+        /// Streamlines an audio stream with a specified method.
+        /// </summary>
+        /// <param name="source">The source audio stream.</param>
+        /// <param name="audioStreamlineMethod">The method used to streamline the audio stream.</param>
+        /// <param name="maxOffsetBeforeForcedRealignmentMs">Max offset before force realignment is done when using the <see cref="AudioStreamlineMethod.Unpleat"/> method.</param>
+        /// <param name="deliveryPolicy">An optional delivery policy.</param>
+        /// <param name="name">The name of the streamline operator.</param>
+        /// <returns>A streamlined audio stream.</returns>
+        public static IProducer<AudioBuffer> Streamline(
+            this IProducer<AudioBuffer> source,
+            AudioStreamlineMethod audioStreamlineMethod,
+            double maxOffsetBeforeForcedRealignmentMs = 0,
+            DeliveryPolicy<AudioBuffer> deliveryPolicy = null,
+            string name = nameof(Streamline))
+        {
+            if (audioStreamlineMethod == AudioStreamlineMethod.Concatenate)
+            {
+                var unpleatedAudioTime = DateTime.MinValue;
+                return source
+                    .Window(new IntInterval(-1, 0), x => x, deliveryPolicy)
+                    .Process<IEnumerable<Message<AudioBuffer>>, AudioBuffer>(
+                        (messages, envelope, emitter) =>
+                        {
+                            var last = messages.LastOrDefault();
+                            var first = messages.FirstOrDefault();
+
+                            var audioBuffer = default(AudioBuffer);
+                            if (unpleatedAudioTime == DateTime.MinValue)
+                            {
+                                unpleatedAudioTime = first.OriginatingTime + last.Data.Duration;
+                                audioBuffer = new AudioBuffer(first.Data.Duration + last.Data.Duration, last.Data.Format);
+                                Array.Copy(first.Data.Data, 0, audioBuffer.Data, 0, first.Data.Length);
+                                Array.Copy(last.Data.Data, 0, audioBuffer.Data, first.Data.Length, last.Data.Length);
+                            }
+                            else
+                            {
+                                unpleatedAudioTime += last.Data.Duration;
+                                audioBuffer = last.Data;
+                            }
+
+                            emitter.Post(audioBuffer, unpleatedAudioTime);
+                        },
+                        deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle,
+                        name: name);
+            }
+            else if (audioStreamlineMethod == AudioStreamlineMethod.Pleat)
+            {
+                var firstPleat = true;
+                return source.Window(
+                    -1,
+                    0,
+                    messages =>
+                    {
+                        var last = messages.LastOrDefault();
+                        var first = messages.FirstOrDefault();
+                        var delta = (last.OriginatingTime - last.Data.Duration - first.OriginatingTime).TotalSeconds;
+                        if (firstPleat)
+                        {
+                            firstPleat = false;
+                            var newBuffer = new AudioBuffer(last.OriginatingTime - first.OriginatingTime + first.Data.Duration, last.Data.Format);
+                            Array.Copy(first.Data.Data, 0, newBuffer.Data, 0, first.Data.Length);
+                            if (delta > 0)
+                            {
+                                Array.Copy(last.Data.Data, 0, newBuffer.Data, newBuffer.Data.Length - last.Data.Length, last.Data.Length);
+                            }
+                            else
+                            {
+                                Array.Copy(last.Data.Data, first.Data.Length + last.Data.Length - newBuffer.Data.Length, newBuffer.Data, first.Data.Length, newBuffer.Data.Length - first.Data.Length);
+                            }
+
+                            return newBuffer;
+                        }
+                        else
+                        {
+                            if (delta > 0)
+                            {
+                                var newBuffer = new AudioBuffer(last.OriginatingTime - first.OriginatingTime, last.Data.Format);
+                                Array.Copy(last.Data.Data, 0, newBuffer.Data, newBuffer.Data.Length - last.Data.Length, last.Data.Length);
+                                return newBuffer;
+                            }
+                            else if (delta < 0)
+                            {
+                                var newBuffer = new AudioBuffer(last.OriginatingTime - first.OriginatingTime, last.Data.Format);
+                                Array.Copy(last.Data.Data, last.Data.Data.Length - newBuffer.Data.Length, newBuffer.Data, 0, newBuffer.Data.Length);
+                                return newBuffer;
+                            }
+                            else
+                            {
+                                return last.Data;
+                            }
+                        }
+                    },
+                    deliveryPolicy,
+                    name);
+            }
+            else if (audioStreamlineMethod == AudioStreamlineMethod.Unpleat)
+            {
+                var unpleatedAudioTime = DateTime.MinValue;
+                return source
+                    .Window(new IntInterval(-1, 0), x => x, deliveryPolicy)
+                    .Process<IEnumerable<Message<AudioBuffer>>, AudioBuffer>(
+                        (messages, envelope, emitter) =>
+                        {
+                            var last = messages.LastOrDefault();
+                            var first = messages.FirstOrDefault();
+
+                            if (unpleatedAudioTime == DateTime.MinValue)
+                            {
+                                unpleatedAudioTime = first.OriginatingTime + last.Data.Duration;
+                            }
+                            else
+                            {
+                                unpleatedAudioTime += last.Data.Duration;
+                            }
+
+                            var offset = last.OriginatingTime - unpleatedAudioTime;
+
+                            var audioBuffer = default(AudioBuffer);
+                            if (offset > TimeSpan.FromMilliseconds(maxOffsetBeforeForcedRealignmentMs))
+                            {
+                                audioBuffer = new AudioBuffer(offset + last.Data.Duration, last.Data.Format);
+                                Array.Copy(last.Data.Data, 0, audioBuffer.Data, audioBuffer.Data.Length - last.Data.Length, last.Data.Length);
+                                unpleatedAudioTime = unpleatedAudioTime - last.Data.Duration + audioBuffer.Duration;
+                            }
+                            else if (offset < -TimeSpan.FromMilliseconds(maxOffsetBeforeForcedRealignmentMs))
+                            {
+                                if (offset + last.Data.Duration > TimeSpan.Zero)
+                                {
+                                    audioBuffer = new AudioBuffer(offset + last.Data.Duration, last.Data.Format);
+                                    Array.Copy(last.Data.Data, 0, audioBuffer.Data, 0, audioBuffer.Data.Length);
+                                    unpleatedAudioTime = unpleatedAudioTime - last.Data.Duration + audioBuffer.Duration;
+                                }
+                            }
+                            else
+                            {
+                                audioBuffer = last.Data;
+                            }
+
+                            if (audioBuffer.Length > 0)
+                            {
+                                emitter.Post(audioBuffer, unpleatedAudioTime);
+                            }
+                        },
+                        deliveryPolicy: DeliveryPolicy.SynchronousOrThrottle,
+                        name: name);
+            }
+            else
+            {
+                throw new ArgumentException("Invalid audio streamline method.");
+            }
+        }
     }
 }
