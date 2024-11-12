@@ -186,7 +186,7 @@ namespace Test.Psi
             this.AssertBinarySerialization(true, msg, msg);
             this.AssertBinarySerialization(2.71828, msg, msg);
             this.AssertBinarySerialization("Howdy", msg, msg);
-            this.AssertBinarySerialization(new[] { 1, 2, 3 }, msg, msg);
+            this.AssertBinarySerialization(new object[] { 1, 2, 3 }, msg, msg);
 
             var structured = new
             {
