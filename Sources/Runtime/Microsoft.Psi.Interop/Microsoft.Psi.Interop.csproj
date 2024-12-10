@@ -43,7 +43,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <!-- The following overrides a transitive reference from NetMQ to an older version of System.Security.Cryptography.Pkcs which contains a security vulnerability -->
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="6.0.3" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="6.0.5" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.3" />
   </ItemGroup>
 
