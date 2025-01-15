@@ -63,8 +63,6 @@ namespace Microsoft.Psi
         /// </summary>
         private ReplayDescriptor replayDescriptor;
 
-        private TimeInterval proposedOriginatingTimeInterval;
-
         private State state;
 
         private bool enableExceptionHandling;
@@ -253,6 +251,8 @@ namespace Microsoft.Psi
 
         internal Scheduler Scheduler => this.scheduler;
 
+        internal TimeInterval ProposedOriginatingTimeInterval { get; private set; }
+
         internal SchedulerContext ActivationContext => this.activationContext;
 
         internal SchedulerContext SchedulerContext => this.schedulerContext;
@@ -341,7 +341,7 @@ namespace Microsoft.Psi
                 throw new ArgumentException(nameof(originatingTimeInterval), "Replay time intervals must have a valid start time.");
             }
 
-            this.proposedOriginatingTimeInterval = (this.proposedOriginatingTimeInterval == null) ? originatingTimeInterval : TimeInterval.Coverage(new[] { this.proposedOriginatingTimeInterval, originatingTimeInterval });
+            this.ProposedOriginatingTimeInterval = (this.ProposedOriginatingTimeInterval == null) ? originatingTimeInterval : TimeInterval.Coverage(new[] { this.ProposedOriginatingTimeInterval, originatingTimeInterval });
         }
 
         /// <summary>
@@ -962,7 +962,7 @@ namespace Microsoft.Psi
         {
             this.state = State.Starting;
             descriptor ??= ReplayDescriptor.ReplayAllRealTime;
-            this.replayDescriptor = descriptor.Intersect(this.proposedOriginatingTimeInterval);
+            this.replayDescriptor = descriptor.Intersect(this.ProposedOriginatingTimeInterval);
 
             this.completed.Reset();
             if (clock == null)
