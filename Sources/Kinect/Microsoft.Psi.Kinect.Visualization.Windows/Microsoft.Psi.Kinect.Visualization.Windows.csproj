@@ -6,7 +6,8 @@
       <PlatformTarget>AnyCPU</PlatformTarget>
       <CodeAnalysisRuleSet>../../../Build/Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
       <Description>Provides visualizers for Kinect v2.</Description>
-    </PropertyGroup>
+		<PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
+	</PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
       <DefineConstants>DEBUG;TRACE</DefineConstants>
       <DocumentationFile>bin\Debug\net472\Microsoft.Psi.Kinect.Visualization.Windows.xml</DocumentationFile>
