@@ -4,6 +4,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Provides components for using Microsoft's Cognitive Services Language API.</Description>
     <RootNamespace>Microsoft.Psi.CognitiveServices.Language</RootNamespace>
+    <PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\net472\Microsoft.Psi.CognitiveServices.Language.Windows.xml</DocumentationFile>
