@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.LiveCharts.Visualization</RootNamespace>
     <Description>Provides visualization objects and APIs for using LiveCharts with Platform for Situated Intelligence Studio.</Description>
+    <PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\net472\Microsoft.Psi.LiveCharts.Visualization.Windows.xml</DocumentationFile>

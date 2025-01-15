@@ -5,6 +5,7 @@
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <PackageId>Microsoft.Psi.Runtime</PackageId>
 	  <Description>Provides the core APIs and components for Platform for Situated Intelligence.</Description>
+	  <PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(OS)'=='Unix'">

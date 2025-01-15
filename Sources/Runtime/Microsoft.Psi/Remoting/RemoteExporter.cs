@@ -8,6 +8,7 @@ namespace Microsoft.Psi.Remoting
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq.Expressions;
     using System.Net;
     using System.Net.Sockets;
     using System.Numerics;
@@ -261,6 +262,7 @@ namespace Microsoft.Psi.Remoting
 
             private readonly string storeName;
             private readonly string storePath;
+            private bool threadRunning;
 
             private TcpClient client;
             private Stream stream;
@@ -337,6 +339,7 @@ namespace Microsoft.Psi.Remoting
 
             public void JoinBackgroundThread(ITransportClient client)
             {
+                this.threadRunning = true;
                 this.connectionThread = new Thread(() => this.JoinBackground(client));
                 this.connectionThread.Start();
             }
@@ -354,48 +357,56 @@ namespace Microsoft.Psi.Remoting
 
                 this.storeReader.Seek(this.interval);
 
-                while (true)
+                while (this.threadRunning)
                 {
-                    if (this.storeReader.MoveNext(out Envelope envelope))
+                    try
                     {
-                        var length = this.storeReader.Read(ref buffer);
-                        this.exporter.Throttle.Reset();
-                        try
+                        if (this.storeReader.MoveNext(out Envelope envelope))
                         {
-                            client.WriteMessage(envelope, buffer);
-                            if (lastTime > DateTime.MinValue /* at least second message */)
+                            var length = this.storeReader.Read(ref buffer);
+                            this.exporter.Throttle.Reset();
+                            try
                             {
-                                if (this.maxBytesPerSecond < long.MaxValue)
+                                client.WriteMessage(envelope, buffer);
+                                if (lastTime > DateTime.MinValue /* at least second message */)
                                 {
-                                    // throttle to arbitrary max BPS
-                                    var elapsed = (envelope.OriginatingTime - lastTime).TotalSeconds;
-                                    var bytesPerSec = (envelopeSize + length) / elapsed;
-                                    double smoothingFactor = 1.0 / (this.bytesPerSecondSmoothingWindowSeconds / elapsed);
-                                    avgBytesPerSec = (bytesPerSec * smoothingFactor) + (avgBytesPerSec * (1.0 - smoothingFactor));
-                                    if (bytesPerSec > this.maxBytesPerSecond)
+                                    if (this.maxBytesPerSecond < long.MaxValue)
                                     {
-                                        var wait = (int)(((avgBytesPerSec / this.maxBytesPerSecond) - elapsed) * 1000.0);
-                                        if (wait > 0)
+                                        // throttle to arbitrary max BPS
+                                        var elapsed = (envelope.OriginatingTime - lastTime).TotalSeconds;
+                                        var bytesPerSec = (envelopeSize + length) / elapsed;
+                                        double smoothingFactor = 1.0 / (this.bytesPerSecondSmoothingWindowSeconds / elapsed);
+                                        avgBytesPerSec = (bytesPerSec * smoothingFactor) + (avgBytesPerSec * (1.0 - smoothingFactor));
+                                        if (bytesPerSec > this.maxBytesPerSecond)
                                         {
-                                            Thread.Sleep(wait);
+                                            var wait = (int)(((avgBytesPerSec / this.maxBytesPerSecond) - elapsed) * 1000.0);
+                                            if (wait > 0)
+                                            {
+                                                Thread.Sleep(wait);
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            lastTime = envelope.OriginatingTime;
+                                lastTime = envelope.OriginatingTime;
+                            }
+                            finally
+                            {
+                                // writers continue upon failure - meanwhile, remote client may reconnect and resume based on replay interval
+                                this.exporter.Throttle.Set();
+                            }
                         }
-                        finally
-                        {
-                            // writers continue upon failure - meanwhile, remote client may reconnect and resume based on replay interval
-                            this.exporter.Throttle.Set();
-                        }
+                    }
+                    catch (Exception)
+                    {
+                        this.threadRunning = false;
                     }
                 }
             }
 
             public void Dispose()
             {
+                this.threadRunning = false;
                 this.storeReader.Dispose();
                 this.storeReader = null;
                 this.client.Dispose();
