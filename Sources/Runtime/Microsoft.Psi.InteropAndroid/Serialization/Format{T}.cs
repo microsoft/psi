@@ -75,23 +75,14 @@ namespace Microsoft.Psi.Interop.Serialization
 
         /// <inheritdoc />
         public (byte[] Bytes, int Index, int Count) SerializeMessage(T message, DateTime originatingTime)
-        {
-            return this.serialize(message, originatingTime);
-        }
+            => this.serialize(message, originatingTime);
 
         /// <inheritdoc />
         public (T Message, DateTime OriginatingTime) DeserializeMessage(byte[] payload, int index, int count)
-        {
-            return this.deserialize(payload, index, count);
-        }
+            => this.deserialize(payload, index, count);
 
         /// <inheritdoc />
         public void Dispose()
-        {
-            if (this.memoryStream != null)
-            {
-                this.memoryStream.Dispose();
-            }
-        }
+            => this.memoryStream?.Dispose();
     }
 }

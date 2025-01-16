@@ -7,6 +7,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
     using Microsoft.Psi.Interop.Serialization;
     using Microsoft.Psi.Interop.Transport;
     using Microsoft.Psi.Remoting;
+    using Microsoft.Psi.Serialization;
 
     /// <summary>
     /// Rendezvous related operators.
@@ -54,6 +55,15 @@ namespace Microsoft.Psi.Interop.Rendezvous
             => new Rendezvous.RemoteClockExporterEndpoint(host, exporter.Port);
 
         /// <summary>
+        /// Create a rendezvous endpoint from a <see cref="RemotePipelineClockExporter"/>.
+        /// </summary>
+        /// <param name="exporter"><see cref="RemotePipelineClockExporter"/> from which to create endpoint.</param>
+        /// <param name="host">Host address with which to create endpoint.</param>
+        /// <returns>Rendezvous endpoint.</returns>
+        public static Rendezvous.Endpoint ToRendezvousEndpoint(this RemotePipelineClockExporter exporter, string host)
+            => new Rendezvous.RemotePipelineClockExporterEndpoint(host, exporter.Port);
+
+        /// <summary>
         /// Create a rendezvous endpoint from a <see cref="RemoteExporter"/>.
         /// </summary>
         /// <param name="exporter"><see cref="RemoteExporter"/> from which to create endpoint.</param>
@@ -76,6 +86,17 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// </summary>
         /// <param name="endpoint"><see cref="Rendezvous.RemoteExporterEndpoint"/> from which to create .</param>
         /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="storePath">Path for PsiStore.</param>
+        /// <param name="knownSerializers">Custom known serializers.</param>
+        /// <returns><see cref="RemoteImporter"/>.</returns>
+        public static RemoteImporter ToRemoteImporter(this Rendezvous.RemoteExporterEndpoint endpoint, Pipeline pipeline, string storePath, KnownSerializers knownSerializers)
+            => new (pipeline, storePath, endpoint.Host, endpoint.Port, knownSerializers);
+
+        /// <summary>
+        /// Create a <see cref="RemoteImporter"/> from a <see cref="Rendezvous.RemoteExporterEndpoint"/>.
+        /// </summary>
+        /// <param name="endpoint"><see cref="Rendezvous.RemoteExporterEndpoint"/> from which to create .</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <returns><see cref="RemoteImporter"/>.</returns>
         public static RemoteImporter ToRemoteImporter(this Rendezvous.RemoteExporterEndpoint endpoint, Pipeline pipeline)
             => new (pipeline, endpoint.Host, endpoint.Port);
@@ -87,6 +108,15 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// <param name="pipeline">The pipeline to add the component to.</param>
         /// <returns><see cref="RemoteClockImporter"/>.</returns>
         public static RemoteClockImporter ToRemoteClockImporter(this Rendezvous.RemoteClockExporterEndpoint endpoint, Pipeline pipeline)
+            => new (pipeline, endpoint.Host, endpoint.Port);
+
+        /// <summary>
+        /// Create a <see cref="RemotePipelineClockImporter"/> from a <see cref="Rendezvous.RemotePipelineClockExporterEndpoint"/>.
+        /// </summary>
+        /// <param name="endpoint"><see cref="Rendezvous.RemotePipelineClockExporterEndpoint"/> from which to create .</param>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <returns><see cref="RemotePipelineClockImporter"/>.</returns>
+        public static RemotePipelineClockImporter ToRemotePipelineClockImporter(this Rendezvous.RemotePipelineClockExporterEndpoint endpoint, Pipeline pipeline)
             => new (pipeline, endpoint.Host, endpoint.Port);
 
         /// <summary>

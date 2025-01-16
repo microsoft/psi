@@ -123,15 +123,6 @@ namespace Microsoft.Psi.Interop.Rendezvous
             => new (pipeline, storePath, endpoint.Host, endpoint.Port, knownSerializers);
 
         /// <summary>
-        /// Create a <see cref="RemoteImporter"/> from a <see cref="Rendezvous.RemoteExporterEndpoint"/>.
-        /// </summary>
-        /// <param name="endpoint"><see cref="Rendezvous.RemoteExporterEndpoint"/> from which to create .</param>
-        /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <returns><see cref="RemoteImporter"/>.</returns>
-        public static RemoteImporter ToRemoteImporter(this Rendezvous.RemoteExporterEndpoint endpoint, Pipeline pipeline)
-            => new (pipeline, endpoint.Host, endpoint.Port);
-
-        /// <summary>
         /// Create a <see cref="RemoteClockImporter"/> from a <see cref="Rendezvous.RemoteClockExporterEndpoint"/>.
         /// </summary>
         /// <param name="endpoint"><see cref="Rendezvous.RemoteClockExporterEndpoint"/> from which to create .</param>
@@ -145,7 +136,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// </summary>
         /// <param name="endpoint"><see cref="Rendezvous.RemotePipelineClockExporterEndpoint"/> from which to create .</param>
         /// <param name="pipeline">The pipeline to add the component to.</param>
-        /// <returns><see cref="RemoteClockImporter"/>.</returns>
+        /// <returns><see cref="RemotePipelineClockImporter"/>.</returns>
         public static RemotePipelineClockImporter ToRemotePipelineClockImporter(this Rendezvous.RemotePipelineClockExporterEndpoint endpoint, Pipeline pipeline)
             => new (pipeline, endpoint.Host, endpoint.Port);
 

@@ -32,6 +32,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
 
         private TcpListener listener;
         private bool active = false;
+        private string serverAddress;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RendezvousServer"/> class.
@@ -48,6 +49,11 @@ namespace Microsoft.Psi.Interop.Rendezvous
         /// Gets a value indicating whether the server is active.
         /// </summary>
         public bool IsActive => this.active;
+
+        /// <summary>
+        /// Gets the server address (on which the most recent client connection was received).
+        /// </summary>
+        public string ServerAddress => this.serverAddress;
 
         /// <summary>
         /// Start rendezvous client (blocking until connection is established).
@@ -98,6 +104,7 @@ namespace Microsoft.Psi.Interop.Rendezvous
                 {
                     var client = this.listener.AcceptTcpClient();
                     var remoteAddress = client.Client.RemoteEndPoint.ToString().Split(':')[0];
+                    var localAddress = client.Client.LocalEndPoint.ToString().Split(':')[0];
                     var stream = client.GetStream();
                     var reader = new BinaryReader(stream);
                     var version = reader.ReadInt16();
@@ -122,6 +129,9 @@ namespace Microsoft.Psi.Interop.Rendezvous
                     {
                         WriteAddProcess(process, writer);
                     }
+
+                    // set the server address to the address of the local endpoint from which the client was received
+                    this.serverAddress = localAddress;
 
                     new Thread(new ParameterizedThreadStart(this.ReadFromClient)) { IsBackground = true }
                         .Start(Tuple.Create(reader, guid));
