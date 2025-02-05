@@ -65,9 +65,20 @@ namespace Microsoft.Psi.Persistence
                 {
                     while (!this.disposed)
                     {
-                        this.localWritePulse.WaitOne();
-                        this.globalWritePulse.ReleaseMutex();
-                        this.globalWritePulse.WaitOne();
+                        if (this.localWritePulse != null)
+                        {
+                            this.localWritePulse.WaitOne();
+                        }
+
+                        if (this.globalWritePulse != null)
+                        {
+                            this.globalWritePulse.ReleaseMutex();
+                        }
+
+                        if (this.globalWritePulse != null)
+                        {
+                            this.globalWritePulse.WaitOne();
+                        }
                     }
                 }
                 catch (ObjectDisposedException)
@@ -219,6 +230,11 @@ namespace Microsoft.Psi.Persistence
 
         private static string MakeHandleName(string format, string path, string fileName)
         {
+            if (path == null)
+            {
+                return default;
+            }
+
             var name = string.Format(format, path.ToLower().GetDeterministicHashCode(), fileName.ToLower());
             if (name.Length > 260)
             {
