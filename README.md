@@ -68,6 +68,7 @@ To find more information about our future plans, please see the [Roadmap](https:
 Platform for Situated Intelligence has been and is currently used in several industry and academic research labs, including (but not limited to):
 
 - the [Situated Interaction](https://www.microsoft.com/en-us/research/project/situated-interaction/) project, as well as other research projects at Microsoft Research.
+- the [Interaction Research Lab](https://irl.tech.cornell.edu) at Cornell Tech.
 - the [PACCE team](https://www.imt-atlantique.fr/fr/recherche-innovation/collaborer/projet/saac) at IMT Atlantique / L2SN.
 - the [Interactive Robotics Group](https://interactive.mit.edu/) at MIT.
 - the [MultiComp Lab](http://multicomp.cs.cmu.edu/) at Carnegie Mellon University.
