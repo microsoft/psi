@@ -96,6 +96,7 @@ namespace Microsoft.Psi.Remoting
                     {
                         switch (state)
                         {
+                            case 2:
                             case 0:
                                 // Elapsed time includes the complete round trip latency between writing the header and receiving the
                                 // remote (exporter) machine's time. We assume that half of the time was from here to the exporter, meaning
@@ -108,8 +109,6 @@ namespace Microsoft.Psi.Remoting
                                 this.pipeline.ProposeReplayTime(new TimeInterval(new DateTime(timeAtExporter), DateTime.MaxValue));
                                 timeOffset = TimeSpan.FromTicks(elapsedTime / 2);
                                 break;
-                            case 2:
-                                throw new Exception($"{nameof(RemotePipelineClockImporter)} clock sync with ({pipelineName}) that is stopped or complete");
                         }
                     }
                     else

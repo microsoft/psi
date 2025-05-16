@@ -90,7 +90,7 @@ namespace Microsoft.Psi.Remoting
                         }
                         else
                         {
-                            writer.Write(DateTime.UtcNow.Ticks);
+                            writer.Write(this.pipeline.ReplayDescriptor.Start.Ticks);
                         }
                     }
                     else if (this.pipeline.IsInitial || this.pipeline.IsStarting)
@@ -100,8 +100,8 @@ namespace Microsoft.Psi.Remoting
                     }
                     else
                     {
-                        writer.Write(2);
-                        writer.Write(this.pipeline.GetCurrentTime().Ticks);
+                        writer.Write(2); 
+                        writer.Write(DateTime.UtcNow.Ticks);
                     }
 
                     // name of the pipeline
