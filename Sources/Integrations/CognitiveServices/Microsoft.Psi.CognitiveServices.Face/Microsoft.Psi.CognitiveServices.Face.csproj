@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <CodeAnalysisRuleSet>../../../../Build/Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
     <Description>Provides components for using Microsoft's Cognitive Services Face API.</Description>
+    <PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Microsoft.Psi.CognitiveServices.Face.xml</DocumentationFile>

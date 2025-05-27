@@ -4,6 +4,7 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Linq;
     using Microsoft.Psi.Components;
     using Microsoft.Psi.Executive;
@@ -100,6 +101,17 @@ namespace Microsoft.Psi
             {
                 this.notifyCompleted();
             }
+        }
+
+        /// <summary>
+        /// Remove subpipline from parent.
+        /// </summary>
+        public override void Dispose()
+        {
+            this.Stop(this.parentPipeline.GetCurrentTime(), true);
+            this.DisposeComponents();
+            this.parentPipeline.RemoveSubpipline(this);
+            this.SchedulerContext.Dispose();
         }
 
         /// <inheritdoc/>

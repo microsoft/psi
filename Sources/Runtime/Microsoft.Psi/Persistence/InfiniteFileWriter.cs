@@ -52,7 +52,8 @@ namespace Microsoft.Psi.Persistence
             {
                 try
                 {
-                    this.globalWritePulse = new Mutex(true, PulseEventName(path, fileName));
+                    // this.globalWritePulse = new Mutex(true, PulseEventName(path, fileName));
+                    this.globalWritePulse = new Mutex(true);
                 }
                 catch (UnauthorizedAccessException)
                 {
@@ -64,9 +65,20 @@ namespace Microsoft.Psi.Persistence
                 {
                     while (!this.disposed)
                     {
-                        this.localWritePulse?.WaitOne();
-                        this.globalWritePulse?.ReleaseMutex();
-                        this.globalWritePulse?.WaitOne();
+                        if (this.localWritePulse != null)
+                        {
+                            this.localWritePulse.WaitOne();
+                        }
+
+                        if (this.globalWritePulse != null)
+                        {
+                            this.globalWritePulse.ReleaseMutex();
+                        }
+
+                        if (this.globalWritePulse != null)
+                        {
+                            this.globalWritePulse.WaitOne();
+                        }
                     }
                 }
                 catch (ObjectDisposedException)
@@ -109,7 +121,7 @@ namespace Microsoft.Psi.Persistence
             this.localWritePulse.Set();
             this.localWritePulse.Dispose();
             this.localWritePulse = null;
-            this.globalWritePulse?.Dispose();
+            this.globalWritePulse.Dispose();
             this.globalWritePulse = null;
 
             // may have already been disposed in CloseCurrent
@@ -218,11 +230,16 @@ namespace Microsoft.Psi.Persistence
 
         private static string MakeHandleName(string format, string path, string fileName)
         {
-            var name = string.Format(format, path?.ToLower().GetDeterministicHashCode(), fileName.ToLower());
+            if (path == null)
+            {
+                return default;
+            }
+
+            var name = string.Format(format, path.ToLower().GetDeterministicHashCode(), fileName.ToLower());
             if (name.Length > 260)
             {
                 // exceeded the name length limit
-                return string.Format(format, path?.ToLower().GetDeterministicHashCode(), fileName.ToLower().GetDeterministicHashCode());
+                return string.Format(format, path.ToLower().GetDeterministicHashCode(), fileName.ToLower().GetDeterministicHashCode());
             }
 
             return name;
@@ -239,14 +256,16 @@ namespace Microsoft.Psi.Persistence
             if (!this.IsVolatile)
             {
                 this.extentName = System.IO.Path.Combine(this.Path, this.extentName);
-                var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
+
+                // var file = File.Open(this.extentName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read);
                 try
                 {
-                    newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
+                    // newMMF = MemoryMappedFile.CreateFromFile(file, null, this.extentSize, MemoryMappedFileAccess.ReadWrite, HandleInheritability.Inheritable, false);
+                    newMMF = MemoryMappedFile.CreateFromFile(this.extentName, FileMode.Create, null, this.extentSize);
                 }
                 catch (IOException)
                 {
-                    file.Dispose();
+                    // file.Dispose();
                     throw;
                 }
             }
