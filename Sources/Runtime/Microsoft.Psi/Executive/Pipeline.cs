@@ -308,29 +308,6 @@ namespace Microsoft.Psi
         }
 
         /// <summary>
-        /// Create new pipeline setting time offset and diagnostics collector from given pipeline.
-        /// </summary>
-        /// <param name="pipeline">Pipeline to retrieve time offset and diagonistic configuration.</param>
-        /// <param name="name">Pipeline name.</param>
-        /// <param name="threadCount">Number of threads.</param>
-        /// <param name="allowSchedulingOnExternalThreads">Whether to allow scheduling on external threads.</param>
-        /// <param name="enableDiagnostics">Indicates whether to enable collecting and publishing diagnostics information on the Pipeline.Diagnostics stream.</param>
-        /// <returns>Created pipeline.</returns>
-        public static Pipeline CreateSynchedPipeline(
-            Pipeline pipeline,
-            string name = null,
-            int threadCount = 0,
-            bool allowSchedulingOnExternalThreads = false,
-            bool enableDiagnostics = false)
-        {
-            Pipeline newPipeline = new Pipeline(name == null ? $"Synched|{pipeline.Name}" : name, pipeline.defaultDeliveryPolicy, threadCount, allowSchedulingOnExternalThreads);
-            newPipeline.VirtualTimeOffset = pipeline.VirtualTimeOffset;
-            newPipeline.DiagnosticsCollector = enableDiagnostics ? pipeline.DiagnosticsCollector : null;
-            newPipeline.DiagnosticsConfiguration = pipeline.DiagnosticsConfiguration;
-            return newPipeline;
-        }
-
-        /// <summary>
         /// Propose replay time.
         /// </summary>
         /// <param name="originatingTimeInterval">Originating time interval.</param>
