@@ -5,7 +5,8 @@
       <RootNamespace>Microsoft.Psi.AzureKinect.Visualization</RootNamespace>
       <PlatformTarget>x64</PlatformTarget>
       <CodeAnalysisRuleSet>../../../Build/Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
+		<PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
+	</PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
       <DefineConstants>DEBUG;TRACE</DefineConstants>
       <DocumentationFile>bin\Debug\net472\Microsoft.Psi.AzureKinect.Visualization.Windows.x64.xml</DocumentationFile>

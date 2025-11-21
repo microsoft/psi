@@ -142,7 +142,7 @@ namespace Microsoft.Psi
         /// <returns>True if the type is immutable.</returns>
         public static bool IsImmutableType<T>()
         {
-            return KnownSerializers.Default.GetHandler<T>().IsImmutableType;
+            return KnownSerializers.GetKnownSerializers().GetHandler<T>().IsImmutableType;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

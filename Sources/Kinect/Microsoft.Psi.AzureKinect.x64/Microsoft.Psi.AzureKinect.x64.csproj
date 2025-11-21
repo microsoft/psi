@@ -8,6 +8,7 @@
     <NuspecFile>Microsoft.Psi.AzureKinect.x64.nuspec</NuspecFile>
     <NuspecProperties>configuration=$(Configuration);version=$(Version)</NuspecProperties>
     <CodeAnalysisRuleSet>../../../Build/Microsoft.Psi.ruleset</CodeAnalysisRuleSet>
+    <PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>

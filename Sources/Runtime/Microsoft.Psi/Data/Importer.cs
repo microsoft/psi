@@ -69,7 +69,7 @@ namespace Microsoft.Psi.Data
                     return storeStreamReader.GetSerializers();
                 }
 
-                return KnownSerializers.Default;
+                return KnownSerializers.GetKnownSerializers();
             }
         }
 

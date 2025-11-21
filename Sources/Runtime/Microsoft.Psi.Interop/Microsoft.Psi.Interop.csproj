@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Provides APIs and components for interoperation with other data formats.</Description>
+	<PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

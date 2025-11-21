@@ -235,7 +235,7 @@ namespace Microsoft.Psi
         /// <inheritdoc />
         public T GetSupplementalMetadata<T>()
         {
-            return this.GetSupplementalMetadata<T>(KnownSerializers.Default);
+            return this.GetSupplementalMetadata<T>(KnownSerializers.GetKnownSerializers());
         }
 
         /// <summary>

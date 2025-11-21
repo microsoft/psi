@@ -422,7 +422,7 @@ namespace Microsoft.Psi
         {
             if (this.computeDataSize == null)
             {
-                var serializers = KnownSerializers.Default;
+                var serializers = KnownSerializers.GetKnownSerializers();
                 var context = new SerializationContext(serializers);
                 var handler = serializers.GetHandler<T>();
                 var writer = new BufferWriter(16);

@@ -4,6 +4,7 @@
 namespace Microsoft.Psi
 {
     using System;
+    using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -61,8 +62,6 @@ namespace Microsoft.Psi
         /// If set, indicates that the pipeline is in replay mode.
         /// </summary>
         private ReplayDescriptor replayDescriptor;
-
-        private TimeInterval proposedOriginatingTimeInterval;
 
         private State state;
 
@@ -252,6 +251,8 @@ namespace Microsoft.Psi
 
         internal Scheduler Scheduler => this.scheduler;
 
+        internal TimeInterval ProposedOriginatingTimeInterval { get; private set; }
+
         internal SchedulerContext ActivationContext => this.activationContext;
 
         internal SchedulerContext SchedulerContext => this.schedulerContext;
@@ -317,7 +318,7 @@ namespace Microsoft.Psi
                 throw new ArgumentException(nameof(originatingTimeInterval), "Replay time intervals must have a valid start time.");
             }
 
-            this.proposedOriginatingTimeInterval = (this.proposedOriginatingTimeInterval == null) ? originatingTimeInterval : TimeInterval.Coverage(new[] { this.proposedOriginatingTimeInterval, originatingTimeInterval });
+            this.ProposedOriginatingTimeInterval = (this.ProposedOriginatingTimeInterval == null) ? originatingTimeInterval : TimeInterval.Coverage(new[] { this.ProposedOriginatingTimeInterval, originatingTimeInterval });
         }
 
         /// <summary>
@@ -900,6 +901,33 @@ namespace Microsoft.Psi
             this.completed.Set();
         }
 
+        internal bool RemoveSubpipline(Subpipeline subpipeline)
+        {
+            PipelineElement node = this.components.FirstOrDefault(c => c.StateObject == subpipeline);
+            if (node == null)
+            {
+                return false;
+            }
+
+            if (!subpipeline.IsCompleted)
+            {
+                throw new InvalidOperationException($"Subpipeline is still running, it can't be removed from parent pipeline.");
+            }
+
+            List<PipelineElement> list = subpipeline.Components.ToList();
+            list.Add(node);
+            SynchronizationLock locker = new SynchronizationLock(this, true);
+            this.scheduler.Freeze(locker);
+            this.components = new ConcurrentQueue<PipelineElement>(this.components.Where(x => !list.Contains(x)));
+            foreach (PipelineElement child in list)
+            {
+                this.DiagnosticsCollector?.PipelineElementDisposed(this, child);
+            }
+
+            locker.Release();
+            return true;
+        }
+
         /// <summary>
         /// Run pipeline (asynchronously).
         /// </summary>
@@ -911,7 +939,7 @@ namespace Microsoft.Psi
         {
             this.state = State.Starting;
             descriptor ??= ReplayDescriptor.ReplayAllRealTime;
-            this.replayDescriptor = descriptor.Intersect(this.proposedOriginatingTimeInterval);
+            this.replayDescriptor = descriptor.Intersect(this.ProposedOriginatingTimeInterval);
 
             this.completed.Reset();
             if (clock == null)
@@ -974,6 +1002,18 @@ namespace Microsoft.Psi
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Dispose components within pipeline and recursively within subpipelines.
+        /// </summary>
+        protected void DisposeComponents()
+        {
+            foreach (var component in this.components)
+            {
+                this.DiagnosticsCollector?.PipelineElementDisposed(this, component);
+                component.Dispose();
+            }
         }
 
         /// <summary>
@@ -1398,15 +1438,6 @@ namespace Microsoft.Psi
                     sub.FinalOriginatingTime = finalOriginatingTime;
                     sub.schedulerContext.FinalizeTime = finalOriginatingTime;
                 }
-            }
-        }
-
-        private void DisposeComponents()
-        {
-            foreach (var component in this.components)
-            {
-                this.DiagnosticsCollector?.PipelineElementDisposed(this, component);
-                component.Dispose();
             }
         }
 
