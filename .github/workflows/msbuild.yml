@@ -28,10 +28,10 @@ jobs:
       SOLUTION_FILE_PATH: ./Psi.sln
       
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
     - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v2
+      uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce # v2.0.0
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -44,7 +44,7 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
 
     - name: Get Test Assemblies (.NET Framework)
-      uses: tj-actions/glob@v21
+      uses: tj-actions/glob@2b2eb154193dc39d3012743ab3bf2c89e3aa6019 # v21.0.0
       id: get-framework-tests
       with:
         files: |
@@ -59,7 +59,7 @@ jobs:
       run: dotnet test --filter "TestCategory!=Performance" -l "console;verbosity=detailed" ${{ steps.get-framework-tests.outputs.paths }}      
 
     - name: Get Test Assemblies (.NET Core)
-      uses: tj-actions/glob@v21
+      uses: tj-actions/glob@2b2eb154193dc39d3012743ab3bf2c89e3aa6019 # v21.0.0
       id: get-netcore-tests
       with:
         files: |
