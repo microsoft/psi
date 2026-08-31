@@ -5,6 +5,7 @@
     <RootNamespace>Microsoft.Psi.Spatial.Euclidean.Visualization</RootNamespace>
     <Description>Provides visualization objects and adapters for various types defined in Microsoft.Psi.Spatial.Euclidean.</Description>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	<PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

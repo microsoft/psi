@@ -27,6 +27,8 @@ namespace Microsoft.Psi.Remoting
                     return new TcpTransport();
                 case TransportKind.Udp:
                     return new UdpTransport();
+                case TransportKind.UdpBroadcast:
+                    return new UdpBroadcastTransport();
                 default:
                     throw new ArgumentException($"Unknown transport kind: {kind}");
             }

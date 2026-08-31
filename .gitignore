@@ -268,3 +268,6 @@ paket-files/
 /_site/
 /.sass-cache/
 Gemfile.lock
+
+#nugetGenerated
+/Build/PsiPackages/

@@ -27,7 +27,7 @@ namespace Microsoft.Psi.Serialization
         /// This will become internal. Use Serializer.Schema instead.
         /// </summary>
         public SerializationContext()
-            : this(KnownSerializers.Default)
+            : this(KnownSerializers.GetKnownSerializers())
         {
         }
 
@@ -37,7 +37,7 @@ namespace Microsoft.Psi.Serialization
         /// <param name="serializers">The set of custom serializers to use instead of the default ones.</param>
         public SerializationContext(KnownSerializers serializers)
         {
-            this.serializers = serializers ?? KnownSerializers.Default;
+            this.serializers = serializers ?? KnownSerializers.GetKnownSerializers();
         }
 
         internal KnownSerializers Serializers => this.serializers;

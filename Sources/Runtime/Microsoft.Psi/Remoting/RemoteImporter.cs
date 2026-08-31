@@ -75,6 +75,21 @@ namespace Microsoft.Psi.Remoting
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoteImporter"/> class.
         /// </summary>
+        /// <param name="pipeline">The pipeline to add the component to.</param>
+        /// <param name="storePath">Path for PsiStore.</param>
+        /// <param name="host">Remote host name.</param>
+        /// <param name="port">TCP port on which to connect (default 11411).</param>
+        /// <param name="serializers">Custom known serializers.</param>
+        /// <param name="allowSequenceRestart">Whether to allow sequence ID restarts upon connection loss/reacquire.</param>
+        /// <remarks>In this case the start is a special behavior that is `DateTime.UtcNow` _at the sending `RemoteExporter`_.</remarks>
+        public RemoteImporter(Pipeline pipeline, string storePath, string host, int port = RemoteExporter.DefaultPort, KnownSerializers serializers = null, bool allowSequenceRestart = true)
+            : this(name => PsiStore.Open(pipeline, serializers, name, storePath), new TimeInterval(DateTime.MinValue, DateTime.MaxValue), true, host, port, $"RemoteImporter_{Guid.NewGuid()}", storePath, allowSequenceRestart)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RemoteImporter"/> class.
+        /// </summary>
         /// <param name="importer">Importer to receive remoted streams.</param>
         /// <param name="replay">Time interval to be replayed from remote source.</param>
         /// <param name="host">Remote host name.</param>

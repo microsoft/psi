@@ -4,6 +4,7 @@
     <Description>Provides Windows-specific components for encoding and decoding images.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Microsoft.Psi.Imaging</RootNamespace>
+    <PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\net472\Microsoft.Psi.Imaging.Windows.xml</DocumentationFile>

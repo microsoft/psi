@@ -28,9 +28,12 @@ namespace Microsoft.Psi.Persistence
             this.path = path;
             this.fileName = fileName;
             this.fileId = fileId;
-            Mutex pulse;
-            Mutex.TryOpenExisting(InfiniteFileWriter.PulseEventName(path, fileName), out pulse);
-            this.writePulse = pulse ?? new Mutex(false);
+
+            // Mutex pulse;
+            // Mutex.TryOpenExisting(InfiniteFileWriter.PulseEventName(path, fileName), out pulse);
+            // this.writePulse = pulse ?? new Mutex(false);
+            InfiniteFileWriter.PulseEventName(path, fileName);
+            this.writePulse = new Mutex(false);
         }
 
         public InfiniteFileReader(string name, int fileId = 0)

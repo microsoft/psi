@@ -362,6 +362,42 @@ namespace Microsoft.Psi.Interop.Rendezvous
         }
 
         /// <summary>
+        /// Represents a remote clock exporter endpoint providing clock information.
+        /// </summary>
+        /// <remarks>
+        /// Endpoint does not provide any streams. Clock information is exchanged directly.
+        /// </remarks>
+        public class RemotePipelineClockExporterEndpoint : Endpoint
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="RemotePipelineClockExporterEndpoint"/> class.
+            /// </summary>
+            /// <param name="host">Host name used by the endpoint.</param>
+            /// <param name="port">Port used by the endpoint.</param>
+            public RemotePipelineClockExporterEndpoint(string host, int port)
+            {
+                this.Host = host;
+                this.Port = port;
+            }
+
+            /// <summary>
+            /// Gets the endpoint host name.
+            /// </summary>
+            public string Host { get; private set; }
+
+            /// <summary>
+            /// Gets the endpoint port.
+            /// </summary>
+            public int Port { get; private set; }
+
+            /// <inheritdoc/>
+            public override void AddStream(Stream stream)
+            {
+                throw new InvalidOperationException($"Cannot add streams to a {nameof(RemotePipelineClockExporterEndpoint)}");
+            }
+        }
+
+        /// <summary>
         /// Represents an application process hosting endpoints.
         /// </summary>
         public class Process

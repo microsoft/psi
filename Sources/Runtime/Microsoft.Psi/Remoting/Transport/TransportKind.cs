@@ -25,5 +25,11 @@ namespace Microsoft.Psi.Remoting
         /// </summary>
         /// <remarks>No packet loss. Supports security.</remarks>
         NamedPipes,
+
+        /// <summary>
+        /// User Datagram Protocol broadcast (one-to-many, subnet).
+        /// </summary>
+        /// <remarks>Possible packet loss. No connection required on receivers.</remarks>
+        UdpBroadcast,
     }
 }

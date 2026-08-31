@@ -4,6 +4,7 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>Microsoft.Psi.Onnx.Visualization</RootNamespace>
     <Description>Provides visualizers for ONNX model runner output types defined in Microsoft.Psi.Onnx.ModelRunners.</Description>
+	<PackageOutputPath>$(SolutionDir)\Build\PsiPackages</PackageOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
